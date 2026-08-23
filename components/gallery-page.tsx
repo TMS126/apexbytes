@@ -307,8 +307,8 @@ function GalleryPageInner() {
   )
 
   const handleSurprise = useCallback(() => {
-    if (PROJECTS.length === 0) return
-    setSurpriseFlash(true)
+if ((PROJECTS.length as number) === 0) return
+  setSurpriseFlash(true)
     setTimeout(() => {
       let pool = PROJECTS
       if (selectedProject && PROJECTS.length > 1) {
