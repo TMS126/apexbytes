@@ -26,7 +26,7 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main id="main-content" className="pt-32 pb-24 px-6 md:px-8">
+      <div className="pt-32 pb-24 px-6 md:px-8">
         <div className="max-w-[720px] mx-auto">
           <ScrollBounce>
             <div className="text-center mb-12">
@@ -84,8 +84,8 @@ export default function ToolsPage() {
             </div>
           </ScrollBounce>
         </div>
-      </main>
+      </div>
       <Footer />
     </div>
   )
-}
+            } 
