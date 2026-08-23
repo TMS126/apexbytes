@@ -3,6 +3,11 @@ import { MetadataRoute } from 'next'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 
+// Bump this date only when you actually change page content —
+// not on every deploy. Keeps crawlers from seeing every page as
+// "modified today" forever, which dilutes the signal's value.
+const LAST_CONTENT_UPDATE = new Date('2026-08-23')
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     { path: '',                     priority: 1.0, freq: 'weekly'  },
@@ -15,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/privacy',             priority: 0.3, freq: 'yearly'  },
   ].map(({ path, priority, freq }) => ({
     url:             `${SITE_URL}${path}`,
-    lastModified:    new Date().toISOString(),
+    lastModified:    LAST_CONTENT_UPDATE,
     changeFrequency: freq as MetadataRoute.Sitemap[number]['changeFrequency'],
     priority,
   }))
