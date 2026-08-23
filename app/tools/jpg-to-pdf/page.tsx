@@ -3,7 +3,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretLeft } from "@phosphor-icons/react"
 import { BRAND, THEME_BG } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -18,6 +18,7 @@ import { CropModal } from "./crop-modal"
 import { ReconvertBanner } from "./reconvert-banner"
 import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
+import Link from "next/link"
 import { PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
 
 export default function JpgToPdfPage() {
@@ -60,7 +61,6 @@ export default function JpgToPdfPage() {
       <Navbar />
       <>
         {/* ─── HERO ───────────────────────────────────────────────────── */}
-        // app/tools/jpg-to-pdf/page.tsx — hero section, only this block changed
         <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
