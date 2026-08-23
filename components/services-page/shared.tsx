@@ -132,7 +132,7 @@ export function useModalBackStack(
   return { closeHub, closeService }
 }
 
-export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTMLElement>) {
+export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTMLElement | null>) {
   const previouslyFocused = useRef<HTMLElement | null>(null)
   useEffect(() => {
     if (!active) return
