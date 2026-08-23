@@ -269,16 +269,6 @@ const ITEM_TIPS_MAP: Record<string, string[]> = {
     "What you get: Return prepared and submitted, with submission confirmation provided.",
     "Note: Late filing can lead to automatic penalty — filing a few days before deadline is safest.",
   ],
-  "eservice|nsfas status check": [
-    "What to bring: ID and email address used for NSFAS application.",
-    "What you get: Current status checked and explained — what 'submitted' vs 'provisionally funded' means.",
-    "Best result: Screenshot status for your records — portal can be offline later.",
-  ],
-  "eservice|nsfas banking update": [
-    "What to bring: ID and bank letter not older than 3 months — account must be in your name, not eWallet.",
-    "What you get: Banking details updated on NSFAS portal.",
-    "Turnaround: Takes about 14 days to reflect — personal bank account usually pays faster than NSFAS wallet.",
-  ],
   "eservice|learnership application": [
     "What to bring: Certified documents less than 3 months old and PDF CV named clearly like Name_Surname_CV.pdf.",
     "What you get: Learnership application submitted with confirmation provided.",
