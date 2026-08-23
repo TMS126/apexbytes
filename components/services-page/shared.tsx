@@ -132,7 +132,7 @@ export function useModalBackStack(
   return { closeHub, closeService }
 }
 
-export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTMLElement | null>) {
+onDragStart={(e) => (e as unknown as React.DragEvent<HTMLLIElement>).dataTransfer.setData("text/plain", String(index))}
   const previouslyFocused = useRef<HTMLElement | null>(null)
   useEffect(() => {
     if (!active) return
