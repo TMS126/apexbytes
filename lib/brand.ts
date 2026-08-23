@@ -89,6 +89,14 @@ export const BRAND = {
   whatsappAccessible: HEX.whatsappAccessible,
   whatsappAccessibleDark: HEX.whatsappAccessibleDark,
   whatsappText: HEX.whatsappText,
+
+  // NEW — moved here from a hardcoded local `const ADOBE_PDF_RED = '#EC1C24'`
+  // in components/pricing-page/lib.ts. Same exemption logic as WhatsApp's
+  // green above: this represents a fixed, real-world third-party brand
+  // (Adobe Acrobat's PDF icon red) for visual recognizability, not a
+  // semantic role in ApexbytesHub's own theme — so it's a raw, unchanging
+  // value rather than something that should flip light/dark via TOKEN.
+  adobePdfRed: "#EC1C24",
 } as const
 
 export const THEME_BG = {
@@ -167,14 +175,6 @@ export const WA = {
   contact: waLink(`Hi ${BIZ.name}! I'd like to get in touch.`),
 } as const
 
-// ─── MAINTENANCE BANNER ──────────────────────────────────────────────────────
-// Toggle `active` to show/hide the dismissible site-wide notice strip above
-// the nav. The site stays fully live and browsable either way — this is
-// NOT the same as `isMaintenanceMode` in middleware.ts, which fully
-// redirects every request to a standalone /maintenance page instead.
-// Bump `version` any time you change the message text — it forces the
-// banner to reappear even for people who already dismissed an older one,
-// since the dismiss state is keyed by version in localStorage.
 export const MAINTENANCE_BANNER = {
   active: true,
   version: "1",
