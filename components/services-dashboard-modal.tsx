@@ -46,11 +46,7 @@ export function ServicesDashboardModal({ isOpen, onClose, onNavigate }: Services
         </button>
 
         <div className="flex-1 overflow-y-auto pb-12 scrollbar-none">
-          <ServicesPage 
-            onNavigate={(page) => {
-              onClose()
-              onNavigate(page)
-            }} 
+          <ServicesPage  
           />
         </div>
       </div>
