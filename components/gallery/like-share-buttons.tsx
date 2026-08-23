@@ -11,8 +11,8 @@ export function ShareButton({ url, title }: { url: string; title: string }) {
   const isDark = resolvedTheme === "dark"
   const blueColor = isDark ? BRAND.lightBlue : BRAND.blue
   const [shared, setShared] = useState(false)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
-
+const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  
   useEffect(() => () => clearTimeout(timeoutRef.current), [])
 
   const handleShare = async (e: React.MouseEvent) => {
