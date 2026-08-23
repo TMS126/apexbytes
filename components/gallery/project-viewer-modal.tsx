@@ -446,7 +446,7 @@ export function ProjectViewerModal({
   if (!project) return null
 
   const accent = isDark ? HUB_COLORS[project.hub as HubKey].accentDark : HUB_COLORS[project.hub as HubKey].accentLight
-  const allImages = project.images?.length > 0 ? project.images : [project.image]
+const allImages = project.images?.length > 0 ? [...project.images] : [project.image]
   const hasBA = BA_HUBS.includes(project.hub as HubId) && !!(project as any).beforeImage && !!(project as any).afterImage
   const beforeImg = (project as any).beforeImage as string | undefined
   const afterImg = (project as any).afterImage as string | undefined
