@@ -84,7 +84,6 @@ function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
   )
 }
 
-// Diagonal "Bulk" ribbon — desktop 5-card landing view.
 function BulkRibbon() {
   return (
     <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
@@ -98,8 +97,6 @@ function BulkRibbon() {
   )
 }
 
-// Smaller ribbon variant for the mobile icon tile — same visual language
-// as BulkRibbon above, scaled down to fit the card icon tile corner.
 function MobileBulkRibbon({ fill }: { fill: string }) {
   return (
     <div className="absolute -top-1 -right-1 z-20 pointer-events-none w-16 h-16 overflow-hidden">
@@ -127,9 +124,6 @@ function NoticeBadge() {
   )
 }
 
-// ══════════════════════════════════════════════════════════════════════
-// MOBILE HUB CARD
-// ══════════════════════════════════════════════════════════════════════
 function MobileHubCard({
   hubId, hub, accent, primary, hubHasBulk, hubHasNotice, onClick, variant,
 }: {
@@ -144,8 +138,6 @@ function MobileHubCard({
 }) {
   const itemCount = hub.sections.reduce((sum, s) => sum + s.items.length, 0)
 
-  // No more solid hub-color fill on the tile — just a soft, muted glow
-  // behind the icon, on a neutral base so it holds up in both themes.
   const iconTile = (
     <div
       className={cn(
@@ -198,9 +190,6 @@ function MobileHubCard({
     </p>
   )
 
-  // Stat tag now uses `accent` (theme-flipped) instead of `primary`
-  // (fixed hex) — this is what was reading as always-dark text in
-  // dark mode.
   const statsLine = (
     <p className="text-[0.78rem] font-bold text-zinc-700 dark:text-zinc-300">
       {itemCount} services <span className="opacity-40 mx-0.5">•</span>
@@ -239,9 +228,6 @@ function MobileHubCard({
   )
 }
 
-// ══════════════════════════════════════════════════════════════════════
-// PILL
-// ══════════════════════════════════════════════════════════════════════
 function Pill({
   icon, label, accent, fill, isActive, onClick, size = "md",
 }: {
@@ -302,9 +288,6 @@ function BackPill({ onClick, label }: { onClick: () => void; label: string }) {
   )
 }
 
-// ══════════════════════════════════════════════════════════════════════
-// SECTION CARD — Level 1 (desktop)
-// ══════════════════════════════════════════════════════════════════════
 function SectionCard({
   section, accent, onClick,
 }: {
@@ -355,11 +338,6 @@ function SectionCard({
   )
 }
 
-// ══════════════════════════════════════════════════════════════════════
-// SERVICE CARD — Level 2 (desktop). Last step before the detail modal:
-// price is hidden here now, description shown instead, plus a CTA so
-// it reads as clickable rather than a static price tile.
-// ══════════════════════════════════════════════════════════════════════
 function ServiceCard({
   item, accent, onClick,
 }: {
@@ -450,6 +428,14 @@ export function ServicesPage() {
     if (hubId === desktopActiveHub) return
     trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
     setDesktopActiveHub(hubId)
+    setDesktopActiveSection(null)
+  }
+
+  // NEW — returns all the way to the Level 0 five-card landing grid,
+  // distinct from handleDesktopBackToSections (which only steps back one
+  // level, from a section's service grid to that hub's section list).
+  const handleDesktopBackToHubs = () => {
+    setDesktopActiveHub(null)
     setDesktopActiveSection(null)
   }
 
@@ -674,7 +660,12 @@ export function ServicesPage() {
         {desktopActiveHub && desktopHub && (
           <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
 
+            {/* Back-to-all-hubs pill added first so it always reads as
+                "go back one level from wherever you are" alongside the
+                hub pills — separate from the section-level BackPill
+                below, which only steps back from services to sections. */}
             <div className="flex flex-wrap justify-center gap-2.5 mb-6">
+              <BackPill onClick={handleDesktopBackToHubs} label="All Hubs" />
               {HUB_ORDER.map((hubId) => {
                 const colors = HUB_COLORS[hubId as HubKey]
                 const accent = isDark ? colors.accentDark : colors.accentLight
@@ -781,4 +772,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-      } 
+      }
