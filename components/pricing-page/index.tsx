@@ -129,6 +129,7 @@ export default function PricingPage() {
         <HubAccordionCard
           hubId={hubId}
           accent={accent}
+          isDark={isDark} 
           isOpen={openHubs.has(hubId)}
           onToggle={() => toggleHub(hubId)}
           justAdded={justAdded}
