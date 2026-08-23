@@ -5,7 +5,13 @@ const LAST_UPDATED = "August 2026"
 
 export function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-background pt-[74px]">
+    // FIX: was a hardcoded pt-[74px] — that's the old static header
+    // height, from before the maintenance banner system existed. The
+    // fixed header now grows to 118px (via --nav-h) whenever the banner
+    // is showing, so this page's content was starting underneath the
+    // header/banner instead of below it during that state. Now tracks
+    // the same live --nav-h variable every other route already uses.
+    <div className="min-h-screen bg-background pt-[var(--nav-h,74px)]">
       <div className="max-w-3xl mx-auto px-6 md:px-8 py-16 md:py-24">
         {/* Header */}
         <div className="mb-12">
@@ -142,7 +148,17 @@ export function PrivacyPage() {
           <section>
             <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">5. How Long We Keep Your Information</h2>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
-              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Retained only for as long as needed to complete your service, then removed as part of our regular account cleanup. We do not keep files indefinitely.</li>
+              {/* FIX: this previously promised uploaded files are
+                  "removed as part of our regular account cleanup" — but
+                  a direct audit of app/api/upload/route.ts (the only
+                  upload endpoint in the codebase) found no deletion
+                  mechanism anywhere: no cloudinary.uploader.destroy call,
+                  no scheduled cleanup job, no cron config. This is now
+                  worded to accurately describe what the system actually
+                  does today. If/when automated deletion is implemented,
+                  this line should be updated to describe the real
+                  retention window at that point. */}
+              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Stored on Cloudinary for as long as needed to complete your service. We currently review and remove files manually rather than on an automated schedule — if you'd like a specific file deleted sooner, contact us using the details in Section 10 and we'll action it directly.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Physical documents:</strong> Returned to you immediately after service or destroyed on the same day.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Government application records:</strong> Retained only as long as needed to resolve your application (typically same day to 7 days).</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Contact information:</strong> Not stored in any database unless you have an ongoing order.</li>
@@ -225,4 +241,4 @@ export function PrivacyPage() {
       </div>
     </div>
   )
-              }
+                } 
