@@ -28,10 +28,6 @@ export interface PriceEntry {
   unit: PriceUnit
 }
 
-// Parses ServiceItem.price strings (e.g. "R20", "R5/page", "R150/hr") into
-// a structured PriceEntry. If a price string doesn't match the expected
-// pattern, this logs a dev-only warning instead of silently producing a
-// wrong number — a malformed price should be loud, not invisible.
 const PRICE_PATTERN = /^R\s*(\d+(?:\.\d+)?)\s*(?:\/\s*(page|hr))?$/i
 
 function parsePrice(raw: string): PriceEntry {
@@ -55,24 +51,36 @@ export function formatPrice(entry: PriceEntry): string {
   return `${CURRENCY_SYMBOL}${entry.rate}${suffix}`
 }
 
+// NEW — public, numeric-only price parser. Exists so any component that
+// just needs a plain sortable/comparable number (e.g. components/
+// pricing-page/lib.ts's search-result sort) shares this exact parsing
+// logic instead of maintaining its own separate regex. Before this
+// existed, that pricing-page file had its own weaker local parser
+// (/\d+/, which truncates decimals — "R99.50" would become 99, silently
+// dropping the .50) — exactly the kind of two-sources-of-truth drift
+// that already caused a real bug once in this codebase (see the SASSA
+// item-name mismatch that motivated deriving PRICING from HUBS below).
+export function parseRate(price: string): number {
+  return parsePrice(price).rate
+}
+
 // ── SINGLE SOURCE OF TRUTH ────────────────────────────────────────────────
-// PRICING is now DERIVED, not hand-typed. It walks HUBS — the same data
-// every hub page, modal, and quote calculator already reads from — and
-// parses each ServiceItem.price string into a structured entry. There is
-// no second place to edit a price: change it on the ServiceItem inside
-// the relevant lib/data/hubs/*.ts file, and this updates automatically,
-// with zero risk of the two ever disagreeing again.
-//
-// Generic over the Hub/HubSection/ServiceItem interfaces in types.ts —
-// doesn't hardcode any hub-specific item names, so it's correct for all
-// five hubs regardless of their individual contents.
+// PRICING is derived, not hand-typed. It walks HUBS — the same data every
+// hub page, modal, and quote calculator already reads from — and parses
+// each ServiceItem.price string into a structured entry. There is no
+// second place to edit a price: change it on the ServiceItem inside the
+// relevant lib/data/hubs/*.ts file, and this updates automatically.
 //
 // Keyed by [hubId][sectionTitle][itemName] rather than a flat
-// [hubId][itemName]. This is NOT optional — item names are not unique
-// within a hub across sections (confirmed: Print Hub's "Black & White"
-// and "Colour" both appear under its "Printing" section, R5/page &
-// R8/page, AND separately under "Copying", R3/page & R5/page — a flat
-// lookup would let one silently overwrite the other).
+// [hubId][itemName] — item names are NOT unique within a hub across
+// sections (confirmed: Print Hub's "Black & White"/"Colour" both appear
+// under "Printing" AND separately under "Copying" at different prices —
+// a flat lookup would let one silently overwrite the other).
+//
+// CONFIRMED SAFE: repo-wide search found zero other imports of the old
+// hand-typed PRICING/formatPrice — components/pricing-page/lib.ts (the
+// only place that could plausibly need pricing data outside the hub
+// pages themselves) reads directly from HUBS already, not from PRICING.
 function derivePricing(hubs: Record<HubId, Hub>): Record<HubId, Record<string, Record<string, PriceEntry>>> {
   const result = {} as Record<HubId, Record<string, Record<string, PriceEntry>>>
   for (const hubId of Object.keys(hubs) as HubId[]) {
@@ -90,29 +98,16 @@ function derivePricing(hubs: Record<HubId, Hub>): Record<HubId, Record<string, R
 }
 
 /**
- * The live pricing table, generated fresh from HUBS at module load. Never
- * hand-edit a value here — there is nothing to edit; it isn't static data.
+ * The live pricing table, generated fresh from HUBS at module load.
  * Shape: PRICING[hubId][sectionTitle][itemName] -> { rate, unit }
- *
- * NOTE — SHAPE CHANGE from the old hand-typed version: this used to be a
- * flat PRICING[hubId][itemName] object. That flat shape is what let the
- * old data drift silently (see the SASSA name-mismatch example) and is
- * unsafe given the cross-section name collisions above. If anything in
- * the codebase still reads PRICING with the old flat two-level access
- * (e.g. `PRICING.print['B&W Print']`), it needs updating to either the
- * new three-level path or, better, the getServicePrice() helper below.
  */
 export const PRICING = derivePricing(HUBS)
 
 /**
- * Convenience lookup: "what does this exact service cost". Searches every
- * section in the given hub for an item with this exact name. Returns
- * undefined if not found — treat that as "unpriced," not as "free."
- *
- * If the same item name exists in more than one section of the hub, pass
- * sectionTitle to disambiguate. Without it, the first match is returned
- * and a dev-mode warning is logged so the ambiguity is visible rather
- * than silently picking (possibly) the wrong one.
+ * Convenience lookup: "what does this exact service cost". Pass
+ * sectionTitle to disambiguate if the same item name exists in more than
+ * one section of the hub — without it, the first match is returned and a
+ * dev-mode warning is logged so the ambiguity is visible.
  */
 export function getServicePrice(hubId: HubId, itemName: string, sectionTitle?: string): PriceEntry | undefined {
   const hub = PRICING[hubId]
@@ -127,4 +122,4 @@ export function getServicePrice(hubId: HubId, itemName: string, sectionTitle?: s
     )
   }
   return matches[0]?.[1]?.[itemName]
-  }
+} 
