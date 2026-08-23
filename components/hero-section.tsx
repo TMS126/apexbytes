@@ -145,7 +145,7 @@ function HubIconField({
   const iconRefs = useRef<(HTMLDivElement | null)[]>([])
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [shakingId, setShakingId] = useState<string | null>(null)
-  const shakeTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const shakeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const [labelsAutoVisible, setLabelsAutoVisible] = useState(true)
 
   useEffect(() => {
