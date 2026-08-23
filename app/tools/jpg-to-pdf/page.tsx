@@ -182,11 +182,11 @@ export default function JpgToPdfPage() {
         </section>
 
         <CtaBar
-          pillLabel="Tips"
-          title="While You're Here"
-          description={tip}
-          buttonText={waPhrase}
-        />
+  badgeText="Tips"
+  title="While You're Here"
+  description={tip}
+  buttonText={waPhrase}
+/>
       </>
       <Footer />
 
