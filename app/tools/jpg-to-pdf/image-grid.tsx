@@ -51,8 +51,7 @@ function GridItem({
       exit={{ opacity: 0, scale: 0.85 }}
       transition={{ duration: 0.18 }}
       draggable
-// after — cast to the native DOM event framer-motion's types are hiding:
-onDragStart={(e) => (e as unknown as React.DragEvent<HTMLLIElement>).dataTransfer.setData("text/plain", String(index))}
+      onDragStart={(e) => (e as unknown as React.DragEvent<HTMLLIElement>).dataTransfer.setData("text/plain", String(index))}
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => onReorder(Number(e.dataTransfer.getData("text/plain")), index)}
       className={`relative rounded-[14px] overflow-hidden border bg-zinc-100 dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "border-red-300 dark:border-red-800" : "border-zinc-200 dark:border-zinc-800"}`}
