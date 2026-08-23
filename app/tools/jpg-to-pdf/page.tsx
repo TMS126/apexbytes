@@ -63,6 +63,13 @@ export default function JpgToPdfPage() {
         <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
+              <Link
+                href="/tools"
+                className="inline-flex items-center gap-1 text-[0.8rem] font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-4"
+              >
+                <CaretLeft size={12} weight="bold" aria-hidden="true" />
+                All Tools
+              </Link>
               <FilePdf weight="fill" className="w-10 h-10 mx-auto mb-4" style={{ color: accentColor }} aria-hidden="true" />
               <h1 className="abh-page-title mb-3">JPG to PDF</h1>
             </ScrollBounce>
