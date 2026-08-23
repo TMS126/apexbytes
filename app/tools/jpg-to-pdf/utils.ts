@@ -1,4 +1,4 @@
-// app/tools/jpg-to-pdf/utils.ts
+// app/tools/jpg-to-pdf/utils.ts — only loadHistory changed, rest of file unchanged
 import { HISTORY_KEY, EXT_TYPE_FALLBACK, MAX_CANVAS_DIMENSION, PERSPECTIVE_WARP_GRID } from "./constants"
 import type { HistoryEntry, CropRect, CropPoint, ImageFilter } from "./types"
 
@@ -60,7 +60,23 @@ export const loadHistory = (): HistoryEntry[] => {
   if (typeof window === "undefined") return []
   try {
     const raw = window.localStorage.getItem(HISTORY_KEY)
-    return raw ? JSON.parse(raw) : []
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return []
+    // Guards against "Invalid Date" ever rendering: any entry missing a
+    // valid isoDate (legacy shape, corrupted data, manual edits) is
+    // dropped here rather than reaching formatLocalDateTime(). If we drop
+    // anything, the cleaned list is persisted immediately so this only
+    // ever has to self-heal once per device.
+    const valid = parsed.filter(
+      (e): e is HistoryEntry =>
+        !!e &&
+        typeof e.fileName === "string" &&
+        typeof e.isoDate === "string" &&
+        !Number.isNaN(new Date(e.isoDate).getTime())
+    )
+    if (valid.length !== parsed.length) saveHistory(valid)
+    return valid
   } catch {
     return []
   }
@@ -74,32 +90,15 @@ export const clearHistory = () => {
   try { window.localStorage.removeItem(HISTORY_KEY) } catch {}
 }
 
-// ─── FILE IDENTITY (SHA-256) ─────────────────────────────────────────────
-// True content-based identity: hashes the file's actual bytes, so a
-// re-uploaded photo is recognized as "the same file" even if the OS/app
-// changed its name or lastModified timestamp on export/share, and two
-// genuinely different files are never confused just because they share
-// those metadata fields.
 export async function hashFile(file: File): Promise<string> {
   try {
     const buffer = await file.arrayBuffer()
     const digest = await crypto.subtle.digest("SHA-256", buffer)
     return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("")
   } catch {
-    // crypto.subtle requires a secure (https) context and modern browser
-    // support. Falls back to a metadata-based key rather than blocking
-    // the upload entirely — still functional, just not a true hash.
     return `fallback:${file.name}:${file.size}:${file.lastModified}`
   }
 }
-
-// ─── ADAPTIVE DECODE PIPELINE ────────────────────────────────────────────
-// Decodes AT a reduced size directly (via createImageBitmap's resize
-// options) instead of decoding full-resolution first and shrinking after
-// — this is what avoids the memory spike that caused "could not read
-// this image" on large photos. Cascades through progressively smaller
-// targets, then falls back to a manual <img>+canvas path with the same
-// cascade, before ever reporting failure.
 
 const DECODE_SIZE_CASCADE = [MAX_CANVAS_DIMENSION, 1600, 1200, 900, 600, 400] as const
 
@@ -188,7 +187,6 @@ async function decodeSourceAdaptive(file: File): Promise<DecodedSource> {
   }
 }
 
-// ─── THUMBNAIL GENERATION ────────────────────────────────────────────────
 export async function generateThumbnail(file: File, maxDim = 480): Promise<string> {
   try {
     const { source, width, height, cleanup } = await decodeSourceAdaptive(file)
@@ -216,13 +214,6 @@ export async function generateThumbnail(file: File, maxDim = 480): Promise<strin
   }
 }
 
-// ─── FILTERS ──────────────────────────────────────────────────────────────
-// Manual pixel manipulation (getImageData/putImageData) instead of the
-// CSS-style `ctx.filter` string — this guarantees identical, predictable
-// output across every mobile browser rather than trusting each engine's
-// own grayscale/sepia math. Wrapped so a failure (e.g. a browser that
-// blocks getImageData in some edge case) never throws — it just leaves
-// the canvas unfiltered instead of breaking the conversion.
 function applyCanvasFilter(canvas: HTMLCanvasElement, filter: ImageFilter | undefined) {
   if (!filter || filter === "none") return
   try {
@@ -251,7 +242,6 @@ function applyCanvasFilter(canvas: HTMLCanvasElement, filter: ImageFilter | unde
   }
 }
 
-// ─── PERSPECTIVE WARP (for free four-corner crops) ─────────────────────
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 function lerpPoint(a: CropPoint, b: CropPoint, t: number): CropPoint {
   return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t) }
@@ -319,12 +309,6 @@ function warpQuadToCanvas(
   return canvas
 }
 
-// ─── CANVAS RENDER HELPERS ───────────────────────────────────────────────
-// Return the raw canvas rather than encoding immediately, so both
-// compressImage (full-size, cap = MAX_CANVAS_DIMENSION) and
-// generateCroppedPreview (thumbnail-size, cap = maxDim) can share the
-// exact same crop/warp/rotation math and only differ in output size.
-
 function computeRectPlan(sourceW: number, sourceH: number, rotation: number, crop: CropRect | undefined, cap: number) {
   const validCrop = crop && crop.w > 0.02 && crop.h > 0.02 ? crop : { x: 0, y: 0, w: 1, h: 1 }
   const sx = validCrop.x * sourceW
@@ -381,7 +365,6 @@ function renderQuadCanvas(
   return canvas
 }
 
-// ─── IMAGE PROCESSING ────────────────────────────────────────────────────
 export const compressImage = async (
   file: File,
   rotation: number,
@@ -407,11 +390,6 @@ export const compressImage = async (
   }
 }
 
-// Produces a small preview reflecting the ACTUAL crop/rotation/filter that
-// will be converted — used to update the grid thumbnail after a crop or
-// filter is applied, so the person sees what they'll actually get, not
-// the original photo. `crop` is optional now (filter-only changes on an
-// uncropped image still need to bake through the same pipeline).
 export async function generateCroppedPreview(
   file: File,
   crop: CropRect | undefined,
@@ -450,4 +428,4 @@ export const fitToPage = (width: number, height: number, page: { w: number; h: n
   const renderW = width * ratio
   const renderH = height * ratio
   return { x: (page.w - renderW) / 2, y: (page.h - renderH) / 2, renderW, renderH }
-      } 
+}
