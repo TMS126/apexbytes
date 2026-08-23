@@ -1,3 +1,4 @@
+// lib/contact-data.ts
 // ─────────────────────────────────────────────────────────────────────────
 // Contact page — static data & pure helper functions
 // (hub color mapping, vCard generation, map embed URL)
@@ -5,7 +6,6 @@
 
 import { BRAND, BIZ, HUB_COLORS, type HubKey } from "@/lib/brand"
 
-// ── Hub → color mapping for the service-select dropdown ──
 export const FORM_HUB_KEYS: Record<string, HubKey | null> = {
   "Print Hub":                  "print",
   "Document Hub":                "doc",
@@ -22,21 +22,31 @@ export function getFormHubColor(opt: string, isDark: boolean): string {
   return isDark ? c.accentDark : c.accentLight
 }
 
-export const CONTACT_GREY = { light: BRAND.dark100, dark: "#B8CCE0" }
+// FIX: was a hardcoded `dark: "#B8CCE0"` — that's the exact value already
+// defined as BRAND.techGreyDark. Referencing the token instead of
+// re-typing the hex means it only ever needs to change in one place.
+export const CONTACT_GREY = { light: BRAND.dark100, dark: BRAND.techGreyDark }
 
-// ── vCard download ──
 export function downloadBusinessVCard() {
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    `FN:Theji Meje ApexbytesHub`,
+    `FN:Theji Meje — Apexbytes Hub`,
     `N:ApexbytesHub;Theji Meje;;;`,
-    `ORG:ApexbytesHub`,
+    // FIX: was "ORG:ApexbytesHub" (no space) — contradicted this same
+    // file's own NOTE field below, which correctly uses the spaced
+    // "Apexbytes Hub" form. The earlier codebase audit already
+    // established spaced "Apexbytes Hub" as the correct public-facing
+    // brand form specifically for places like vCards.
+    `ORG:Apexbytes Hub`,
     `TITLE:Founder & Lead Designer`,
-    `TEL;TYPE=CELL,PREF:+27753338260`,
-    `EMAIL;TYPE=WORK:apexbytesza@gmail.com`,
+    // FIX: was a hardcoded literal duplicating BIZ.phoneE164.
+    `TEL;TYPE=CELL,PREF:${BIZ.phoneE164}`,
+    // FIX: was a hardcoded literal duplicating BIZ.email.
+    `EMAIL;TYPE=WORK:${BIZ.email}`,
     `ADR;TYPE=WORK:;;5878 Mpumalanga Section;Kgotsong;Bothaville;9660;South Africa`,
-    `URL:https://v0-apexbytes-hub-website.vercel.app/`,
+    // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.
+    `URL:https://apexbytes.vercel.app/`,
     `NOTE:Apexbytes Hub — Print\\, Design\\, Docs\\, Tech & E-Services in Kgotsong\\, Bothaville.`,
     "END:VCARD",
   ].join("\r\n")
@@ -46,16 +56,14 @@ export function downloadBusinessVCard() {
   const a    = document.createElement("a")
   a.href     = url
   a.download = "ApexbytesHub.vcf"
+  // FIX: same detached-element / premature-revoke issue as
+  // profile-drawer.tsx — see that file's comment for the reasoning.
+  document.body.appendChild(a)
   a.click()
-  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
-// ── Map embed URL ──
-// Uses OpenStreetMap's embed endpoint — no API key required and reliably
-// loads on Vercel's production environment. Google's no-key `output=embed`
-// trick was tried first but returned a broken/failed iframe in production
-// (works inconsistently depending on host/network, since it's an
-// undocumented workaround rather than a supported embed format).
 export function buildOsmEmbedSrc(lat: number, lng: number) {
   const deltaLat = 0.003
   const deltaLng = 0.004
@@ -64,4 +72,4 @@ export function buildOsmEmbedSrc(lat: number, lng: number) {
 }
 
 export const MAP_EMBED_SRC = buildOsmEmbedSrc(BIZ.lat, BIZ.lng)
-export const MAP_LOAD_TIMEOUT_MS = 7000
+export const MAP_LOAD_TIMEOUT_MS = 7000 
