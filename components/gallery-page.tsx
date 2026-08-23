@@ -312,7 +312,7 @@ if ((PROJECTS.length as number) === 0) return
     setTimeout(() => {
       let pool = PROJECTS
       if (selectedProject && PROJECTS.length > 1) {
-        pool = PROJECTS.filter(p => p.id !== selectedProject.id)
+let pool: (typeof PROJECTS)[number][] = [...PROJECTS]
       }
       const pick = pool[Math.floor(Math.random() * pool.length)]
       setActiveFilter(pick.hub as HubId)
