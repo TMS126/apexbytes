@@ -89,13 +89,6 @@ export const BRAND = {
   whatsappAccessible: HEX.whatsappAccessible,
   whatsappAccessibleDark: HEX.whatsappAccessibleDark,
   whatsappText: HEX.whatsappText,
-
-  // NEW — moved here from a hardcoded local `const ADOBE_PDF_RED = '#EC1C24'`
-  // in components/pricing-page/lib.ts. Same exemption logic as WhatsApp's
-  // green above: this represents a fixed, real-world third-party brand
-  // (Adobe Acrobat's PDF icon red) for visual recognizability, not a
-  // semantic role in ApexbytesHub's own theme — so it's a raw, unchanging
-  // value rather than something that should flip light/dark via TOKEN.
   adobePdfRed: "#EC1C24",
 } as const
 
@@ -222,7 +215,7 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "gallery", label: "Gallery", path: "/gallery" },
   { id: "pricing", label: "Pricing", path: "/pricing" },
   { id: "about", label: "About", path: "/about" },
-  { id: "tools", label: "Tools", path: "/tools/jpg-to-pdf" },
+  { id: "tools", label: "Tools", path: "/tools" },
   { id: "contact", label: "Contact", path: "/contact", isCta: true },
 ] as const
 
@@ -292,6 +285,6 @@ export const FOOTER_NAV = [
   { label: "Gallery", path: "/gallery" },
   { label: "Pricing", path: "/pricing" },
   { label: "About", path: "/about" },
-  { label: "Tools", path: "/tools/jpg-to-pdf" },
+  { label: "Tools", path: "/tools" },
   { label: "Contact", path: "/contact" },
-] as const 
+] as const
