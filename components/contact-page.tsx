@@ -179,7 +179,8 @@ function ContactPageInner() {
                 {GRID_CONTACT_LINKS.map((c, index) => {
                   const Icon = CONTACT_ICONS[c.title] ?? Phone
 // after — check for both keys so TS can confirm dotDark exists too:
-const dotColor = "dotLight" in c && "dotDark" in c ? (isDark ? c.dotDark : c.dotLight) : c.dot                  const isCopyable = COPYABLE_TITLES.has(c.title)
+									const dotColor = "dotLight" in c && "dotDark" in c ? (isDark ? c.dotDark : c.dotLight) : c.dot 
+									const isCopyable = COPYABLE_TITLES.has(c.title)
                   const justCopied = copiedTitle === c.title
                   return (
                     <ScrollBounce key={c.title} delay={index * 0.08}>
