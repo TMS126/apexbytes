@@ -1,11 +1,106 @@
 // app/tools/jpg-to-pdf/settings-bar.tsx
 "use client"
 
+import { useRef, useCallback } from "react"
 import { SimpleDropdown } from "@/components/ui/simple-dropdown"
 import { BRAND } from "@/lib/brand"
 import { PAGE_SIZES, MODE_LABELS } from "./constants"
 import { qualityLabel, formatBytes } from "./utils"
 import type { ConvertMode, PageSize } from "./types"
+
+const QUALITY_MIN = 0.4
+const QUALITY_MAX = 0.95
+
+// 60% blue / 30% green / 10% orange, blended smoothly rather than hard
+// color-stop cuts — each color holds its "core" briefly then eases into
+// the next over a short blend zone.
+const TRACK_GRADIENT = `linear-gradient(90deg,
+  ${BRAND.blue} 0%, ${BRAND.blue} 52%,
+  ${BRAND.green} 68%, ${BRAND.green} 82%,
+  ${BRAND.orange} 94%, ${BRAND.orange} 100%)`
+
+function QualitySlider({
+  quality, setQuality,
+}: {
+  quality: number
+  setQuality: (q: number) => void
+}) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const draggingRef = useRef(false)
+
+  const pct = ((quality - QUALITY_MIN) / (QUALITY_MAX - QUALITY_MIN)) * 100
+
+  const updateFromClientX = useCallback((clientX: number) => {
+    const track = trackRef.current
+    if (!track) return
+    const rect = track.getBoundingClientRect()
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width))
+    const raw = QUALITY_MIN + ratio * (QUALITY_MAX - QUALITY_MIN)
+    // Snap to the nearest 0.05 step, same granularity as before.
+    const stepped = Math.round(raw / 0.05) * 0.05
+    setQuality(Math.min(QUALITY_MAX, Math.max(QUALITY_MIN, Number(stepped.toFixed(2)))))
+  }, [setQuality])
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    draggingRef.current = true
+    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    updateFromClientX(e.clientX)
+  }
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) return
+    updateFromClientX(e.clientX)
+  }
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    draggingRef.current = false
+    ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      e.preventDefault()
+      setQuality(Math.max(QUALITY_MIN, Number((quality - 0.05).toFixed(2))))
+    } else if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      e.preventDefault()
+      setQuality(Math.min(QUALITY_MAX, Number((quality + 0.05).toFixed(2))))
+    }
+  }
+
+  return (
+    <div
+      ref={trackRef}
+      role="slider"
+      tabIndex={0}
+      aria-label="Conversion quality"
+      aria-valuemin={QUALITY_MIN}
+      aria-valuemax={QUALITY_MAX}
+      aria-valuenow={quality}
+      aria-valuetext={qualityLabel(quality)}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+      onKeyDown={handleKeyDown}
+      className="relative w-full h-6 flex items-center cursor-pointer touch-none select-none focus:outline-none"
+    >
+      {/* Track — smooth blue→green→orange gradient */}
+      <div className="absolute inset-x-0 h-2 rounded-full" style={{ background: TRACK_GRADIENT }} />
+
+      {/* Thumb — neutral (white/zinc), moves via left% with a transition
+          that's disabled mid-drag (so it never lags the pointer) and
+          re-enabled on release for a tiny smoothing snap. No native
+          input jank across browsers since this is fully custom. */}
+      <div
+        aria-hidden="true"
+        className="absolute w-5 h-5 rounded-full bg-white dark:bg-zinc-100 border-2 border-white dark:border-zinc-200"
+        style={{
+          left: `calc(${pct}% - 10px)`,
+          transition: draggingRef.current ? "none" : "left 120ms cubic-bezier(0.22, 1, 0.36, 1)",
+          boxShadow: "0 2px 6px -1px rgba(0,0,0,0.28), 0 1px 3px -1px rgba(0,0,0,0.18)",
+        }}
+      />
+    </div>
+  )
+}
 
 export function SettingsBar({
   mode, setMode, pageSize, setPageSize, quality, setQuality, originalBytes, estimatedBytes, accentColor,
@@ -38,39 +133,13 @@ export function SettingsBar({
 
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
       <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 p-4">
-        <div className="flex items-center justify-between mb-1.5">
-          <label htmlFor="quality-slider" className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</label>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
           <span className="text-sm font-bold" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
         </div>
 
-        {/* Track/thumb colors are set as CSS custom properties from the
-            real BRAND.green / BRAND.orange hex values, then referenced
-            via Tailwind's arbitrary-value bracket syntax
-            (bg-[var(--slider-track)]) — this bypasses any dependency on
-            "brand-green"/"brand-orange" existing as registered Tailwind
-            theme colors, which was the likely cause of the dim/dead
-            look if those names weren't defined in the config. */}
-        <input
-          id="quality-slider"
-          type="range"
-          min={0.4}
-          max={0.95}
-          step={0.05}
-          value={quality}
-          onChange={(e) => setQuality(Number(e.target.value))}
-          aria-label="Conversion quality"
-          aria-valuetext={qualityLabel(quality)}
-          style={{ "--slider-track": BRAND.green, "--slider-thumb": BRAND.orange } as React.CSSProperties}
-          className="w-full h-2 rounded-full appearance-none cursor-pointer bg-transparent
-            focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-            [&::-webkit-slider-runnable-track]:h-2 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-[var(--slider-track)]
-            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5
-            [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--slider-thumb)] [&::-webkit-slider-thumb]:border-2
-            [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow [&::-webkit-slider-thumb]:-mt-1.5 [&::-webkit-slider-thumb]:cursor-pointer
-            [&::-moz-range-track]:h-2 [&::-moz-range-track]:rounded-full [&::-moz-range-track]:bg-[var(--slider-track)]
-            [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[var(--slider-thumb)]
-            [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-moz-range-thumb]:cursor-pointer"
-        />
+        <QualitySlider quality={quality} setQuality={setQuality} />
+
         <div className="flex justify-between text-[0.7rem] text-zinc-400 mt-1">
           <span>Smaller file</span>
           <span>High quality</span>
@@ -83,4 +152,4 @@ export function SettingsBar({
       </div>
     </div>
   )
-            } 
+}
