@@ -1,17 +1,6 @@
 // next.config.mjs — full file, paste over the current one
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ── Build ──
-  typescript: {
-    // Temporarily true again while Day 1–5 stabilization work is still in
-    // progress. The app-level TypeScript error (duplicate TOKEN properties
-    // in lib/brand.ts) that this flag was masking is already fixed — this
-    // is now deliberately staying on until the full audit pass is complete,
-    // not because a real error is being hidden. Flip back to false once
-    // everything is verified (Day 5), then remove this flag entirely if no
-    // further errors surface.
-    ignoreBuildErrors: true,
-  },
   reactStrictMode: true,
   poweredByHeader: false, // ── hides "X-Powered-By: Next.js" header ──
   productionBrowserSourceMaps: false, // ── stops strangers reading your unminified source code in browser devtools ──
@@ -51,4 +40,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default nextConfig 
