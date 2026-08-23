@@ -1,3 +1,4 @@
+// app/about/page.tsx
 import { AboutPage } from "@/components/about-page"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -11,10 +12,10 @@ export default function AboutRoute() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main id="main-content">
+      <div>
         <AboutPage />
-      </main>
+      </div>
       <Footer />
     </div>
   )
-}
+} 
