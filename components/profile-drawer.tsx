@@ -1,3 +1,4 @@
+// components/profile-drawer.tsx
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -17,15 +18,19 @@ function downloadPersonalVCard() {
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    "FN:Theji Meje ApexbytesHub",
+    // FIX: was "Theji Meje ApexbytesHub" — name and brand ran together
+    // with no separator. Also now uses FOUNDER_ROLE/BIZ.phoneE164 below
+    // instead of duplicating those exact values as separate literals.
+    "FN:Theji Meje — Apexbytes Hub",
     "N:ApexbytesHub;Theji Meje;;;",
     "ORG:Apexbytes Hub",
-    "TITLE:Founder & Lead Designer",
+    `TITLE:${FOUNDER_ROLE}`,
     "TEL;TYPE=CELL,PREF:+27781294939",
-    "TEL;TYPE=CELL:+27753338260",
+    `TEL;TYPE=CELL:${BIZ.phoneE164}`,
     "EMAIL;TYPE=PERSONAL:teggyb.meje@gmail.com",
     "ADR;TYPE=HOME:;;5878 Mpumalanga Section;Kgotsong;Bothaville;9660;South Africa",
-    "URL:https://v0-apexbytes-hub-website.vercel.app/",
+    // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.
+    "URL:https://apexbytes.vercel.app/",
     "NOTE:Founder of Apexbytes Hub — contact directly for personal enquiries.",
     "END:VCARD",
   ].join("\r\n")
@@ -35,8 +40,16 @@ function downloadPersonalVCard() {
   const a    = document.createElement("a")
   a.href     = url
   a.download = "Theji-Meje-ApexbytesHub.vcf"
+  // FIX: the element was never attached to the DOM before .click() —
+  // some browsers (notably Firefox) can silently fail to trigger a
+  // download from a detached anchor. Append, click, then clean up.
+  document.body.appendChild(a)
   a.click()
-  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+  // FIX: revoking the object URL synchronously right after click() risks
+  // a race against the browser actually starting the download in some
+  // engines. A short deferred revoke is the standard-practice fix.
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
 
 interface ProfileDrawerProps {
@@ -51,7 +64,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
 
   useEffect(() => { if (open) closeRef.current?.focus() }, [open])
 
-  // Scroll lock
   useEffect(() => {
     if (!open) return
     const scrollY = window.scrollY
@@ -64,7 +76,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
     }
   }, [open])
 
-  // Back button
   useEffect(() => {
     if (!open) return
     window.history.pushState({ modal: "profile" }, "")
@@ -73,7 +84,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
     return () => window.removeEventListener("popstate", onPopState)
   }, [open, onClose])
 
-  // Keyboard trap
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -96,7 +106,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className={cn(
           "fixed inset-0 z-[10050] bg-black/40 backdrop-blur-sm transition-opacity duration-300 overscroll-contain",
@@ -106,7 +115,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
         aria-hidden="true"
       />
 
-      {/* Bottom sheet */}
       <div
         className={cn(
           "fixed inset-0 z-[10060] flex items-end justify-center transition-opacity duration-300 pointer-events-none",
@@ -125,20 +133,16 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
           )}
         >
           <div className="flex-1 overflow-y-auto overscroll-contain">
-
-            {/* ── Cover banner — blue only, noise + subtle depth ── */}
             <div
               className="relative h-36 md:h-44 w-full shrink-0 overflow-hidden flex items-end"
               style={{ background: `linear-gradient(150deg, ${BRAND.blue} 0%, ${BRAND.blueDark} 100%)` }}
             >
-              {/* Subtle inner highlight */}
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background: `radial-gradient(ellipse at 20% 40%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
                 }}
               />
-              {/* Noise texture */}
               <div
                 className="absolute inset-0 opacity-[0.045] pointer-events-none"
                 style={{
@@ -147,7 +151,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                 }}
               />
 
-              {/* Name on banner */}
               <div className="relative z-10 px-7 pb-5">
                 <p className="text-xl font-black text-white tracking-tight leading-tight drop-shadow-sm">
                   Theji Meje
@@ -157,7 +160,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                 </p>
               </div>
 
-              {/* Close */}
               <button
                 ref={closeRef}
                 onClick={onClose}
@@ -168,23 +170,16 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
               </button>
             </div>
 
-            {/* ── Content ── */}
             <div className="px-7 pb-8 pt-6 flex flex-col items-center text-center">
-
-              {/* Location */}
               <p className="text-[0.65rem] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-5">
                 {BIZ.address.replace(/^5878\s*/, "")}
               </p>
 
-              {/* Bio */}
               <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8 text-center">
                 {FOUNDER_BIO}
               </p>
 
-              {/* ── Side-by-side action buttons ── */}
               <div className="grid grid-cols-2 gap-3 w-full">
-
-                {/* Personal WhatsApp */}
                 <a
                   href={FOUNDER_WA_LINK}
                   target="_blank"
@@ -201,7 +196,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   <span className="text-sm font-black leading-tight">WhatsApp</span>
                 </a>
 
-                {/* Save contact */}
                 <button
                   onClick={handleVCard}
                   className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm text-white transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
@@ -224,7 +218,6 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                     </>
                   )}
                 </button>
-
               </div>
             </div>
           </div>
@@ -232,4 +225,4 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
       </div>
     </>
   )
-            } 
+                } 
