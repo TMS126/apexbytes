@@ -13,11 +13,6 @@ interface HubStatus {
   holidayNote?: string
 }
 
-// Pulls the state directly from getBusinessStatus() — no duplicated hour
-// logic here. Since sa-time.ts's labels no longer bake in the word
-// Open/Closed (see comment there), the pill below can safely show
-// "Open · closes at 20:00" or "Closed · opens today at 07:00" without
-// any repeated wording.
 function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techEtc: HubStatus } {
   const printDoc: HubStatus = {
     open: status.printAndDoc.open,
@@ -33,40 +28,24 @@ function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techE
   return { printDoc, techEtc }
 }
 
-// The dot+label span carries -ml-3 while the wrapping row carries pl-3:
-// the first line is unaffected (they cancel out), but if the row wraps,
-// the second line starts at the padded position — aligned with the
-// label text instead of the container's left edge.
-function StatusPill({ status }: { status: HubStatus }) {
-  if (!status.open) {
-    return (
-      <div className="flex flex-col gap-1 text-[0.74rem] font-bold tracking-wide text-zinc-500 dark:text-zinc-400">
-        <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 pl-3">
-          <span className="flex items-center gap-1.5 shrink-0 -ml-3">
-            <span className="w-1.5 h-1.5 rounded-full shrink-0 invisible" />
-            <span className="font-black">{status.label}</span>
-            <span className="font-normal opacity-70">Closed</span>
-          </span>
-          <span className="opacity-40">·</span>
-          <span className="shrink-0">{status.nextEvent}</span>
-        </div>
-        {status.holidayNote && <p className="text-[0.68rem] font-medium opacity-70">{status.holidayNote}</p>}
-      </div>
-    )
-  }
-
+// FIX: dropped the rounded/bordered pill background entirely — open and
+// closed states now share one minimal treatment: a dot + label, nothing
+// else. The old pl-3/-ml-3 indent-compensation trick existed only to make
+// wrapped second lines align under the pill's padding; with no pill left,
+// that's gone too — this is now a plain flex row, flush at the same left
+// edge as "Current Status" above it.
+function StatusLine({ status }: { status: HubStatus }) {
+  const dotColor = status.open ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"
   return (
-    <div className="inline-flex flex-col gap-1 px-2.5 py-1.5 rounded-2xl border text-[0.74rem] font-bold tracking-wide bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
-      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 pl-3">
-        <span className="flex items-center gap-1.5 shrink-0 -ml-3">
-          <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-green-500 animate-pulse" />
-          <span className="font-black">{status.label}</span>
-          <span className="font-normal opacity-70">Open</span>
-        </span>
+    <div className="flex flex-col gap-1 text-[0.74rem] font-bold tracking-wide text-zinc-500 dark:text-zinc-400">
+      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+        <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", dotColor)} />
+        <span className="font-black">{status.label}</span>
+        <span className="font-normal opacity-70">{status.open ? "Open" : "Closed"}</span>
         <span className="opacity-40">·</span>
-        <span className="shrink-0">{status.nextEvent}</span>
+        <span>{status.nextEvent}</span>
       </div>
-      {status.holidayNote && <p className="text-[0.68rem] font-medium opacity-70">{status.holidayNote}</p>}
+      {status.holidayNote && <p className="text-[0.68rem] font-medium opacity-70 ml-3">{status.holidayNote}</p>}
     </div>
   )
 }
@@ -183,9 +162,10 @@ export function BusinessStatusFull() {
   const { printDoc, techEtc } = deriveHubStatuses(status)
 
   return (
-    <div className="flex flex-col gap-2">
-      <StatusPill status={printDoc} />
-      <StatusPill status={techEtc} />
+    <div className="flex flex-col gap-2.5">
+      <StatusLine status={printDoc} />
+      <div className="border-t border-zinc-100 dark:border-zinc-800" aria-hidden="true" />
+      <StatusLine status={techEtc} />
     </div>
   )
 } 
