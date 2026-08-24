@@ -130,8 +130,6 @@ function ContactPageInner() {
         }
       `}</style>
 
-      {/* Sticky mobile WhatsApp bar replaces the global WhatsApp FAB on
-          mobile only, so they don't overlap. Desktop keeps the FAB. */}
       <style>{`
         @media (max-width: 767px) {
           [data-widget="whatsapp-fab"] { display: none !important; }
@@ -166,116 +164,114 @@ function ContactPageInner() {
 
       <section className="px-4 md:px-8 pb-16">
         <div className="max-w-[980px] mx-auto grid md:grid-cols-2 gap-10 items-stretch">
-          <div className="flex flex-col justify-between gap-6">
+          <div className="flex flex-col gap-6">
+
+            {/* ── Card 1: Get In Touch — every way to reach us, grouped as one action set ── */}
             <ScrollBounce>
-              <div className="text-center">
-                <h2 className="abh-section-heading mb-1">Get In Touch</h2>
-                <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
-              </div>
-            </ScrollBounce>
+              <div className="abh-card p-6">
+                <div className="text-center mb-5">
+                  <h2 className="abh-section-heading mb-1">Get In Touch</h2>
+                  <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
+                </div>
 
-            <div>
-              <div className="grid grid-cols-3 gap-3 items-stretch">
-                {GRID_CONTACT_LINKS.map((c, index) => {
-                const Icon = CONTACT_ICONS[c.title] ?? Phone
-const dotColor = ("dotLight" in c && "dotDark" in c ? (isDark ? c.dotDark : c.dotLight) : c.dot) as string;				
-  const isCopyable = COPYABLE_TITLES.has(c.title)
-                const justCopied = copiedTitle === c.title
-                return (
-                    <ScrollBounce key={c.title} delay={index * 0.08}>
-                      <div className="relative h-full">
-                        <a
-                          href={c.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={c.title}
-                          className="group flex flex-col items-center justify-center text-center gap-2 p-4 h-full min-h-[104px] abh-card abh-shadow-contact-card border-transparent transition-all duration-200 active:scale-[0.97]"
-                          style={{ borderColor: "transparent" }}
-                          onMouseEnter={(e) => (e.currentTarget.style.borderColor = dotColor)}
-                          onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
-                        >
-                          <Icon size={22} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
-                          <div className="min-w-0 w-full">
-                            <p className="text-base font-medium text-zinc-800 dark:text-zinc-200 truncate">{c.title}</p>
-                            <p className="abh-muted text-sm leading-snug break-words">{c.value}</p>
-                          </div>
-                        </a>
-                        {isCopyable && (
-                          <button
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleCopy(c.title, c.value) }}
-                            aria-label={justCopied ? `${c.title} copied` : `Copy ${c.title.toLowerCase()}`}
-                            className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-all active:scale-90"
+                <div className="grid grid-cols-3 gap-3 items-stretch">
+                  {GRID_CONTACT_LINKS.map((c, index) => {
+                    const Icon = CONTACT_ICONS[c.title] ?? Phone
+                    const dotColor = ("dotLight" in c && "dotDark" in c ? (isDark ? c.dotDark : c.dotLight) : c.dot) as string
+                    const isCopyable = COPYABLE_TITLES.has(c.title)
+                    const justCopied = copiedTitle === c.title
+                    return (
+                      <ScrollBounce key={c.title} delay={index * 0.08}>
+                        <div className="relative h-full">
+                          <a
+                            href={c.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={c.title}
+                            className="group flex flex-col items-center justify-center text-center gap-2 p-4 h-full min-h-[104px] rounded-[14px] border transition-all duration-200 active:scale-[0.97]"
+                            style={{ borderColor: "transparent" }}
+                            onMouseEnter={(e) => (e.currentTarget.style.borderColor = dotColor)}
+                            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
                           >
-                            {justCopied ? <Check size={12} weight="bold" className="text-green-500" /> : <Copy size={12} weight="bold" />}
-                          </button>
-                        )}
-                      </div>
-                    </ScrollBounce>
-                  )
-                })}
-              </div>
+                            <Icon size={22} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
+                            <div className="min-w-0 w-full">
+                              <p className="text-base font-medium text-zinc-800 dark:text-zinc-200 truncate">{c.title}</p>
+                              <p className="abh-muted text-sm leading-snug break-words">{c.value}</p>
+                            </div>
+                          </a>
+                          {isCopyable && (
+                            <button
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleCopy(c.title, c.value) }}
+                              aria-label={justCopied ? `${c.title} copied` : `Copy ${c.title.toLowerCase()}`}
+                              className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-all active:scale-90"
+                            >
+                              {justCopied ? <Check size={12} weight="bold" className="text-green-500" /> : <Copy size={12} weight="bold" />}
+                            </button>
+                          )}
+                        </div>
+                      </ScrollBounce>
+                    )
+                  })}
+                </div>
 
-              <ScrollBounce delay={0.28}>
                 <p className="flex items-center justify-center gap-1.5 text-sm font-medium text-zinc-400 dark:text-zinc-500 mt-3">
                   <Clock size={13} weight="bold" aria-hidden="true" />
                   We usually reply within 15–30 minutes during business hours
                 </p>
-              </ScrollBounce>
-            </div>
 
-            <ScrollBounce delay={0.24}>
-              <div id="contact-map" className="rounded-[14px] overflow-hidden" style={{ boxShadow: "0 2px 16px -2px rgba(0,0,0,0.10), 0 1px 4px -1px rgba(0,0,0,0.06)", ...SCROLL_MARGIN }}>
-                <LocationMap />
-              </div>
-            </ScrollBounce>
-
-            <ScrollBounce delay={0.1}>
-              <div className="abh-card p-5 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3 min-w-0">
-                  <AddressBook size={22} weight="fill" aria-hidden="true" style={{ color: greyColor }} />
-                  <div className="min-w-0">
-                    <p className="text-base font-medium text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
-                    <p className="abh-muted">Add ApexbytesHub to your phone</p>
+                {/* Save contact — folded in here since it's still a "reach us" action */}
+                <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <AddressBook size={20} weight="fill" aria-hidden="true" style={{ color: greyColor }} />
+                    <div className="min-w-0">
+                      <p className="text-base font-medium text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
+                      <p className="abh-muted">Add {BIZ.name} to your phone</p>
+                    </div>
                   </div>
+                  <button
+                    onClick={handleVCard}
+                    aria-label={vcardDone ? "Contact saved" : "Download contact card"}
+                    className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium"
+                  >
+                    <DownloadSimple size={16} weight="bold" aria-hidden="true" />
+                    {vcardDone ? "Saved!" : "Download"}
+                  </button>
                 </div>
-                <button
-                  onClick={handleVCard}
-                  aria-label={vcardDone ? "Contact saved" : "Download contact card"}
-                  className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium"
-                >
-                  <DownloadSimple size={16} weight="bold" aria-hidden="true" />
-                  {vcardDone ? "Saved!" : "Download"}
-                </button>
               </div>
             </ScrollBounce>
 
-            <ScrollBounce delay={0.15}>
-              <div id="contact-hours" className="abh-card p-5 flex-1" style={SCROLL_MARGIN}>
-                <span className="text-[0.78rem] font-black uppercase tracking-widest flex items-center gap-1.5 mb-3" style={{ color: greyColor }}>
-                  <Clock weight="fill" size={14} aria-hidden="true" /> Business Hours
-                </span>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 mb-1">{HOURS.printAndDoc.label}</p>
-                    <p className="text-base font-medium text-zinc-700 dark:text-zinc-300">{HOURS.printAndDoc.hours}</p>
-                    <p className="flex items-center gap-1.5 text-sm font-medium mt-1" style={{ color: BRAND.blue }}>
-                      <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: BRAND.blue }} aria-hidden="true" />
-                      Open on public holidays
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 mb-1">{HOURS.techDesignEservice.label}</p>
-                    {HOURS.techDesignEservice.lines.map((l) => (
-                      <p key={l} className="text-base font-medium text-zinc-700 dark:text-zinc-300">{l}</p>
-                    ))}
-                    <p className="flex items-center gap-1.5 text-sm font-medium mt-1 text-zinc-500 dark:text-zinc-400">
-                      <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-zinc-400 dark:bg-zinc-500" aria-hidden="true" />
-                      Sunday &amp; Public Holidays · Closed
-                    </p>
-                  </div>
-                  <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                    <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-400 mb-2">Current Status</p>
-                    <BusinessStatusFull />
+            {/* ── Card 2: Visit Us — map, hours, and live status, all "coming here" info ── */}
+            <ScrollBounce delay={0.1}>
+              <div className="abh-card overflow-hidden flex-1" id="contact-map" style={SCROLL_MARGIN}>
+                <LocationMap />
+
+                <div className="p-6" id="contact-hours" style={SCROLL_MARGIN}>
+                  <span className="text-[0.78rem] font-black uppercase tracking-widest flex items-center gap-1.5 mb-3" style={{ color: greyColor }}>
+                    <Clock weight="fill" size={14} aria-hidden="true" /> Business Hours
+                  </span>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 mb-1">{HOURS.printAndDoc.label}</p>
+                      <p className="text-base font-medium text-zinc-700 dark:text-zinc-300">{HOURS.printAndDoc.hours}</p>
+                      <p className="flex items-center gap-1.5 text-sm font-medium mt-1" style={{ color: BRAND.blue }}>
+                        <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: BRAND.blue }} aria-hidden="true" />
+                        Open on public holidays
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
+                      <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 mb-1">{HOURS.techDesignEservice.label}</p>
+                      {HOURS.techDesignEservice.lines.map((l) => (
+                        <p key={l} className="text-base font-medium text-zinc-700 dark:text-zinc-300">{l}</p>
+                      ))}
+                      <p className="flex items-center gap-1.5 text-sm font-medium mt-1 text-zinc-500 dark:text-zinc-400">
+                        <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-zinc-400 dark:bg-zinc-500" aria-hidden="true" />
+                        Sunday &amp; Public Holidays · Closed
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
+                      <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-400 mb-2">Current Status</p>
+                      <BusinessStatusFull />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -375,7 +371,7 @@ const dotColor = ("dotLight" in c && "dotDark" in c ? (isDark ? c.dotDark : c.do
         </a>
       </div>
 
-      <ScrollToBottomButton visible={showScrollToBottom} />
+      <ScrollToBottomButton visible={showScrollToBottom} bottomClass="bottom-40 md:bottom-24" />
       <BackToTopButton visible={showBackToTop} bottomClass="bottom-24 md:bottom-6" />
     </div>
   )
@@ -400,4 +396,4 @@ export function ContactPage() {
       <ContactPageInner />
     </Suspense>
   )
-    }  
+    } 
