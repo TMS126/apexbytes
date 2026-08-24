@@ -18,6 +18,8 @@ function FooterContent() {
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [isTermsOpen, setIsTermsOpen] = useState(false)
+  const [isFaqAccordionOpen, setIsFaqAccordionOpen] = useState(false)
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [phoneCopied, setPhoneCopied] = useState(false)
 
   useEffect(() => setMounted(true), [])
@@ -29,15 +31,23 @@ function FooterContent() {
     setTimeout(() => setPhoneCopied(false), 2000)
   }
 
+  const toggleFaqIndex = (i: number) => setOpenFaqIndex((prev) => (prev === i ? null : i))
   const showFaq = pathname !== "/contact"
 
   return (
     <div className="pt-16 pb-12">
       {showFaq && (
-  <div className="mb-14">
-    <FaqAccordion />
-  </div>
-)}
+        <ScrollBounce>
+          <div className="px-4 md:px-8 mb-14 flex justify-center">
+            <FaqAccordion
+              isOpen={isFaqAccordionOpen}
+              onToggle={() => setIsFaqAccordionOpen((v) => !v)}
+              openIndex={openFaqIndex}
+              onToggleIndex={toggleFaqIndex}
+            />
+          </div>
+        </ScrollBounce>
+      )}
 
       <ScrollBounce>
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 px-6 md:px-8">
@@ -68,8 +78,6 @@ function FooterContent() {
             <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-zinc-400">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
-                // Active-page check: exact match, except home ("/") which
-                // would otherwise match every path via startsWith-style logic.
                 const isActive = pathname === page.path
 
                 return (
@@ -197,4 +205,4 @@ export function Footer() {
       <FooterContent />
     </footer>
   )
-} 
+    } 
