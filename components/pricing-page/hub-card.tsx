@@ -2,8 +2,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { CaretDown, CaretUp, DownloadSimple, Plus, Check, SealPercent, Clock } from '@phosphor-icons/react'
+import { CaretDown, CaretUp, Plus, Check, SealPercent, Clock } from '@phosphor-icons/react'
 import { HUBS, type HubId } from '@/lib/data'
+import { HubIcon } from '@/components/services-page/shared'
+import { PdfPillButton } from './shared'
 import { parsePrice } from './lib'
 
 // ── Turnaround times per hub ──────────────────────────────────────────────────
@@ -45,21 +47,6 @@ function SectionHeader({ title, color }: { title: string; color: string }) {
         aria-hidden="true"
       />
     </div>
-  )
-}
-
-// ── Shared round download button ───────────────────────────────────────────────
-
-function DownloadPill({ onClick, size = 36 }: { onClick: () => void; size?: number }) {
-  return (
-    <button
-      onClick={onClick}
-      aria-label="Download hub PDF"
-      className="rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-900 transition-all duration-200 hover:bg-red-500 hover:border-red-500 hover:text-white active:scale-90 shrink-0"
-      style={{ width: size, height: size }}
-    >
-      <DownloadSimple size={Math.round(size * 0.48)} weight="bold" aria-hidden="true" />
-    </button>
   )
 }
 
@@ -155,23 +142,29 @@ function TurnaroundStrip({ hubId, hubColor }: { hubId: HubId; hubColor: string }
 }
 
 // ── HubCompactCard — desktop 5-column selector card ───────────────────────────
+//   Idle (not selected, not hovered)  → light floating pill, minimal border
+//   Selected or hovered               → solid card, tinted in hub color
 
 interface HubCompactCardProps {
   hubId: HubId
   isSelected: boolean
+  isActive: boolean
   isDark: boolean
   accent: string
   hubHasBulk: boolean
   onSelect: () => void
+  onHover: () => void
 }
 
 export function HubCompactCard({
   hubId,
   isSelected,
+  isActive,
   isDark,
   accent,
   hubHasBulk,
   onSelect,
+  onHover,
 }: HubCompactCardProps) {
   const hub = HUBS[hubId]
   const hubColor = isDark ? hub.tagStyleDark.color : hub.tagStyle.color
@@ -180,16 +173,16 @@ export function HubCompactCard({
   return (
     <button
       onClick={onSelect}
+      onMouseEnter={onHover}
       aria-pressed={isSelected}
       className={[
-        'w-full text-left rounded-2xl border px-4 py-4 transition-all duration-200',
-        'bg-white dark:bg-zinc-900 active:scale-[0.98]',
-        isSelected
-          ? 'shadow-sm ring-1 rounded-b-none border-b-0 relative z-10'
-          : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-sm',
+        'w-full text-left rounded-2xl px-4 py-4 transition-all duration-200 active:scale-[0.98]',
+        isActive
+          ? 'bg-white dark:bg-zinc-900 border shadow-sm rounded-b-none border-b-0 relative z-10'
+          : 'bg-white/60 dark:bg-zinc-900/40 border border-transparent hover:bg-white dark:hover:bg-zinc-900 hover:shadow-sm',
       ].join(' ')}
       style={
-        isSelected
+        isActive
           ? { borderColor: hubColor, ['--tw-ring-color' as string]: hubColor }
           : undefined
       }
@@ -197,26 +190,28 @@ export function HubCompactCard({
       {/* Hub name */}
       <p
         className="text-sm font-bold mb-2.5 truncate transition-colors duration-200"
-        style={{ color: hubColor }}
+        style={{ color: isActive ? hubColor : undefined }}
       >
         {hub.title}
       </p>
 
-      {/* Preview bullets */}
-      <ul className="space-y-1 mb-3">
-        {hub.previews.slice(0, 3).map(p => (
-          <li key={p} className="flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-600 shrink-0" />
-            <span className="text-sm text-zinc-500 dark:text-zinc-400 truncate">{p}</span>
-          </li>
-        ))}
-      </ul>
+      {/* Preview bullets — only shown once active, keeps idle pill minimal */}
+      {isActive && (
+        <ul className="space-y-1 mb-3">
+          {hub.previews.slice(0, 3).map(p => (
+            <li key={p} className="flex items-center gap-1.5">
+              <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-600 shrink-0" />
+              <span className="text-sm text-zinc-500 dark:text-zinc-400 truncate">{p}</span>
+            </li>
+          ))}
+        </ul>
+      )}
 
-      {/* Footer — service count accented when selected */}
+      {/* Footer — service count accented when active */}
       <div className="flex items-center justify-between">
         <span
           className="text-[10px] font-bold transition-colors duration-200"
-          style={isSelected ? { color: hubColor } : { color: '#a1a1aa' }}
+          style={{ color: isActive ? hubColor : '#a1a1aa' }}
         >
           {total} services
         </span>
@@ -232,9 +227,9 @@ export function HubCompactCard({
 }
 
 // ── HubExpandedPanel — desktop: two separate cards showing relation ────────────
-//   Left card  = hub identity (title, description, turnaround)
+//   Left card  = hub identity (big icon, title, description, turnaround)
 //   Right card = services list
-//   Connected by a subtle visual bridge (shared top border color + connector dot)
+//   Both footers pinned to matching heights via justify-between on both columns
 
 interface HubExpandedPanelProps {
   hubId: HubId
@@ -275,7 +270,7 @@ export function HubExpandedPanel({
 
   return (
     <div
-      className="grid grid-cols-[280px_1fr] gap-0 -mt-px"
+      className="grid grid-cols-[280px_1fr] gap-0 -mt-px items-stretch"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(10px)',
@@ -285,17 +280,17 @@ export function HubExpandedPanel({
     >
       {/* ── Left: Hub identity card ── */}
       <div
-        className="rounded-bl-2xl border border-t-0 border-r-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col"
+        className="h-full rounded-bl-2xl border border-t-0 border-r-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col justify-between"
         style={{ borderLeftColor: hubColor, borderLeftWidth: 3 }}
       >
-        {/* Connector dot bridging compact card → identity card */}
-        <div className="px-6 pt-6 pb-4 flex-1">
-          {/* Hub accent line */}
-          <span
-            className="block w-10 h-1 rounded-full mb-4"
-            style={{ backgroundColor: hubColor }}
-            aria-hidden="true"
-          />
+        <div className="px-6 pt-6 pb-4">
+          {/* Big hub icon */}
+          <div
+            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
+            style={{ backgroundColor: `${hubColor}14` }}
+          >
+            <HubIcon id={hubId} size={30} color={hubColor} />
+          </div>
 
           <h2
             className="text-2xl font-black tracking-tight mb-1 leading-tight"
@@ -322,14 +317,15 @@ export function HubExpandedPanel({
             ))}
           </ul>
 
-          {/* Download */}
-          <div className="flex items-center gap-2 mt-auto">
-            <DownloadPill onClick={onDownload} size={34} />
-            <span className="text-xs text-zinc-400">Download PDF</span>
-          </div>
+          {/* Download — reuses the polished pill button used site-wide */}
+          <PdfPillButton
+            label={`Download ${hub.title} PDF`}
+            onClick={onDownload}
+            size="sm"
+          />
         </div>
 
-        {/* Turnaround — bottom of identity card */}
+        {/* Turnaround — bottom of identity card, always last so it aligns with the right column's footer */}
         <div
           className="px-5 py-4 border-t border-zinc-100 dark:border-zinc-800 rounded-bl-2xl"
           style={{ borderLeftColor: hubColor }}
@@ -345,8 +341,8 @@ export function HubExpandedPanel({
       </div>
 
       {/* ── Right: Services card ── */}
-      <div className="rounded-br-2xl border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden flex flex-col">
-        {/* Section list — scrollable */}
+      <div className="h-full rounded-br-2xl border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden flex flex-col justify-between">
+        {/* Section list — scrollable, capped to keep the panel a reasonable height */}
         <div className="flex-1 overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800 max-h-[460px]">
           {hub.sections.map(section => {
             const sorted = [...section.items].sort(
@@ -373,7 +369,7 @@ export function HubExpandedPanel({
           })}
         </div>
 
-        {/* Relation bridge footer */}
+        {/* Relation bridge footer — always last, matches left column's turnaround footer height */}
         <div className="flex items-center gap-2 px-6 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
           <span
             className="w-2 h-2 rounded-full shrink-0"
@@ -496,15 +492,8 @@ export function HubAccordionCard({
 
               {/* Footer */}
               <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
-                <div className="flex items-center gap-1.5">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full shrink-0"
-                    style={{ backgroundColor: hubColor }}
-                    aria-hidden="true"
-                  />
-                  <p className="text-xs text-zinc-400">No hidden fees.</p>
-                </div>
-                <DownloadPill onClick={onDownload} size={32} />
+                <p className="text-xs text-zinc-400">No hidden fees.</p>
+                <PdfPillButton label="Download PDF" onClick={onDownload} size="sm" />
               </div>
             </div>
           </>
@@ -512,4 +501,4 @@ export function HubAccordionCard({
       </div>
     </div>
   )
-            } 
+        } 
