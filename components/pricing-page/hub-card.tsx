@@ -119,8 +119,10 @@ function ServiceRow({
 }
 
 // ── HubCompactCard — desktop 5-column selector card ───────────────────────────
-//   Idle    → floating pill, muted icon, hub description shown
-//   Active  → solid tinted card, colored icon, preview bullets shown
+//   Idle              → floating pill, muted icon, full (never-truncated) description
+//   Hovered, unselected → floating pill, colored icon, preview bullets — still no border
+//   Selected (clicked)  → icon-only, filling the card, hub-colored border — the ONLY
+//                         card in this row that ever shows a border
 
 interface HubCompactCardProps {
   hubId: HubId
@@ -147,24 +149,30 @@ export function HubCompactCard({
   const hubColor = isDark ? hub.tagStyleDark.color : hub.tagStyle.color
   const total = hub.sections.reduce((n, s) => n + s.items.length, 0)
 
+  if (isSelected) {
+    // ── Pinned/selected: icon only, fills the card, hub-colored border ──
+    return (
+      <button
+        onClick={onSelect}
+        onMouseEnter={onHover}
+        aria-pressed
+        className="h-full w-full rounded-[14px] bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
+        style={{ border: `1.5px solid ${hubColor}` }}
+      >
+        <HubIcon id={hubId} size={40} color={hubColor} />
+        <span className="sr-only">{hub.title} — selected</span>
+      </button>
+    )
+  }
+
   return (
     <button
       onClick={onSelect}
       onMouseEnter={onHover}
-      aria-pressed={isSelected}
-      className={[
-        'w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98]',
-        isActive
-          ? 'bg-white dark:bg-zinc-900 border shadow-sm rounded-b-none border-b-0 relative z-10'
-          : 'bg-white/60 dark:bg-zinc-900/40 border border-transparent hover:bg-white dark:hover:bg-zinc-900 hover:shadow-sm',
-      ].join(' ')}
-      style={
-        isActive
-          ? { borderColor: hubColor, ['--tw-ring-color' as string]: hubColor }
-          : undefined
-      }
+      aria-pressed={false}
+      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98] bg-white/60 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-zinc-900 hover:shadow-sm flex flex-col"
     >
-      {/* Icon + name row — icon only picks up hub color when active */}
+      {/* Icon + name row — icon only picks up hub color on hover */}
       <div className="flex items-center gap-2 mb-2.5">
         <HubIcon id={hubId} size={16} color={isActive ? hubColor : '#a1a1aa'} />
         <p
@@ -175,24 +183,24 @@ export function HubCompactCard({
         </p>
       </div>
 
-      {/* Idle: short description. Active: preview bullets. */}
+      {/* Hovered: preview bullets. Idle: full description, never truncated. */}
       {isActive ? (
         <ul className="space-y-1 mb-3">
           {hub.previews.slice(0, 3).map(p => (
             <li key={p} className="flex items-center gap-1.5">
               <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-600 shrink-0" />
-              <span className="text-sm text-zinc-500 dark:text-zinc-400 truncate">{p}</span>
+              <span className="text-sm text-zinc-500 dark:text-zinc-400">{p}</span>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-snug line-clamp-2 mb-3">
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-snug mb-3">
           {hub.desc}
         </p>
       )}
 
-      {/* Footer — service count accented when active */}
-      <div className="flex items-center justify-between">
+      {/* Footer — service count accented on hover */}
+      <div className="flex items-center justify-between mt-auto">
         <span
           className="text-[10px] font-bold transition-colors duration-200"
           style={{ color: isActive ? hubColor : '#a1a1aa' }}
@@ -210,7 +218,9 @@ export function HubCompactCard({
   )
 }
 
-// ── HubExpandedPanel — desktop: identity + services, ONE shared footer ─────────
+// ── HubExpandedPanel — desktop: identity + services, one shared footer ─────────
+//   Fully separate card now (no fusing with the selector row above), full
+//   rounding on every corner, hub-colored border around the whole panel
 
 interface HubExpandedPanelProps {
   hubId: HubId
@@ -250,9 +260,9 @@ export function HubExpandedPanel({
 
   return (
     <div
-      className="-mt-px rounded-[14px] rounded-t-none border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden"
-      style={{ borderLeftColor: hubColor, borderLeftWidth: 3 }}
-      >
+      className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 overflow-hidden shadow-sm"
+      style={{ border: `1.5px solid ${hubColor}` }}
+    >
       <div
         style={{
           opacity: visible ? 1 : 0,
@@ -263,7 +273,7 @@ export function HubExpandedPanel({
       >
         <div className="grid grid-cols-[280px_1fr] gap-0 items-stretch">
           {/* ── Left: Hub identity ── */}
-          <div className="px-6 pt-4 pb-6 border-r border-zinc-100 dark:border-zinc-800">
+          <div className="px-6 pt-6 pb-6">
             <h2
               className="text-2xl font-black tracking-tight mb-1 leading-tight"
               style={{ color: hubColor }}
@@ -325,7 +335,7 @@ export function HubExpandedPanel({
         </div>
 
         {/* ── One shared footer, spanning both columns ── */}
-        <div className="flex items-center justify-between gap-4 px-6 py-3.5 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-800/30">
+        <div className="flex items-center justify-between gap-4 px-6 py-3.5 bg-zinc-50/80 dark:bg-zinc-800/30">
           <div className="flex items-start gap-2 min-w-0">
             <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
             <div className="min-w-0">
@@ -340,7 +350,7 @@ export function HubExpandedPanel({
   )
 }
 
-// ── HubAccordionCard — mobile full-width accordion ────────────────────────────
+// ── HubAccordionCard — mobile full-width accordion (unchanged from before) ─────
 
 interface HubAccordionCardProps {
   hubId: HubId
@@ -380,7 +390,6 @@ export function HubAccordionCard({
       className="rounded-[14px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-shadow duration-200"
       style={isOpen ? { borderColor: hubColor } : undefined}
     >
-      {/* Toggle header */}
       <button
         onClick={onToggle}
         aria-expanded={isOpen}
@@ -404,7 +413,6 @@ export function HubAccordionCard({
         }
       </button>
 
-      {/* Expanded content */}
       <div
         className="overflow-hidden transition-all duration-300 ease-in-out"
         style={{ maxHeight: isOpen ? '9999px' : '0px' }}
@@ -438,7 +446,6 @@ export function HubAccordionCard({
               })}
             </div>
 
-            {/* Footer */}
             <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
               <p className="text-xs text-zinc-400">No hidden fees.</p>
               <PdfPillButton label={hub.title} onClick={onDownload} size="sm" color={hubColor} />
@@ -448,4 +455,4 @@ export function HubAccordionCard({
       </div>
     </div>
   )
-        } 
+  } 
