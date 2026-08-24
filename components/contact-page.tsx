@@ -1,4 +1,4 @@
-// components/contact/contact-page.tsx
+// components/contact-page.tsx
 "use client"
 
 import { useState, useEffect, useRef, Suspense } from "react"
@@ -194,8 +194,7 @@ function ContactPageInner() {
                             onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
                           >
                             <Icon size={34} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
-<p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
-                            </div>
+                            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
                           </a>
                           {isCopyable && (
                             <button
@@ -303,7 +302,7 @@ function ContactPageInner() {
                         aria-invalid={err}
                         className={cn(
                           "w-full px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none",
-														err ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
+                          err ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
                         )}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
@@ -326,8 +325,8 @@ function ContactPageInner() {
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       className={cn(
                         "w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none",
-touched.message && !isMessageValid(formData.message) ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
-					  )}
+                        touched.message && !isMessageValid(formData.message) ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
+                      )}
                       rows={4}
                       value={formData.message}
                       onBlur={() => setTouched({ ...touched, message: true })}
@@ -394,4 +393,4 @@ export function ContactPage() {
       <ContactPageInner />
     </Suspense>
   )
-    } 
+							  } 
