@@ -1,4 +1,4 @@
-// next.config.mjs — full file, paste over the current one
+// next.config.mjs — full file, only the CSP value line changed
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -27,7 +27,15 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://*.whatsapp.net https://res.cloudinary.com; font-src 'self'; connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://wa.me; frame-ancestors 'none'; upgrade-insecure-requests;",
+            // FIX: removed 'unsafe-eval' — confirmed nothing in this codebase
+            // calls eval()/new Function(), and production Next.js/GTM's
+            // standard tags don't require it (only dev-mode webpack and
+            // custom-HTML GTM tags would). 'unsafe-inline' is left as-is:
+            // removing it needs a nonce-based rewrite of every inline
+            // <style>/<script> across the app (WhatsApp widget, quote
+            // calculator, hero animations) — too large to change blind
+            // without a real build to verify against.
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://*.whatsapp.net https://res.cloudinary.com; font-src 'self'; connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://wa.me; frame-ancestors 'none'; upgrade-insecure-requests;",
           },
           { key: 'X-Content-Type-Options',  value: 'nosniff' },
           { key: 'X-Frame-Options',          value: 'DENY' },
@@ -40,4 +48,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig 
+export default nextConfig
