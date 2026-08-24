@@ -232,4 +232,284 @@ export function HubCompactCard({
 }
 
 // ── HubExpandedPanel — desktop: two separate cards showing relation ────────────
-//   Left card  = hub ident 
+//   Left card  = hub identity (title, description, turnaround)
+//   Right card = services list
+//   Connected by a subtle visual bridge (shared top border color + connector dot)
+
+interface HubExpandedPanelProps {
+  hubId: HubId
+  accent: string
+  isDark: boolean
+  justAdded: string | null
+  onAdd: (section: string, name: string, price: string) => void
+  onDownload: () => void
+  hasBulk: (section: string, name: string) => boolean
+}
+
+export function HubExpandedPanel({
+  hubId,
+  accent,
+  isDark,
+  justAdded,
+  onAdd,
+  onDownload,
+  hasBulk,
+}: HubExpandedPanelProps) {
+  const hub = HUBS[hubId]
+  const hubColor = isDark ? hub.tagStyleDark.color : hub.tagStyle.color
+  const total = hub.sections.reduce((n, s) => n + s.items.length, 0)
+  const turnaround = TURNAROUND[hubId]
+
+  // Animate in on hubId change
+  const [visible, setVisible] = useState(false)
+  const prevHub = useRef<HubId | null>(null)
+
+  useEffect(() => {
+    if (prevHub.current !== hubId) {
+      setVisible(false)
+      const t = setTimeout(() => setVisible(true), 30)
+      prevHub.current = hubId
+      return () => clearTimeout(t)
+    }
+  }, [hubId])
+
+  return (
+    <div
+      className="grid grid-cols-[280px_1fr] gap-0 -mt-px"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(10px)',
+        transition: 'opacity 220ms ease, transform 220ms ease',
+      }}
+      aria-live="polite"
+    >
+      {/* ── Left: Hub identity card ── */}
+      <div
+        className="rounded-bl-2xl border border-t-0 border-r-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col"
+        style={{ borderLeftColor: hubColor, borderLeftWidth: 3 }}
+      >
+        {/* Connector dot bridging compact card → identity card */}
+        <div className="px-6 pt-6 pb-4 flex-1">
+          {/* Hub accent line */}
+          <span
+            className="block w-10 h-1 rounded-full mb-4"
+            style={{ backgroundColor: hubColor }}
+            aria-hidden="true"
+          />
+
+          <h2
+            className="text-2xl font-black tracking-tight mb-1 leading-tight"
+            style={{ color: hubColor }}
+          >
+            {hub.title}
+          </h2>
+
+          {/* Service count — accented */}
+          <p className="text-sm font-bold mb-4" style={{ color: hubColor, opacity: 0.7 }}>
+            {total} services
+          </p>
+
+          {/* Previews */}
+          <ul className="space-y-1.5 mb-6">
+            {hub.previews.map(p => (
+              <li key={p} className="flex items-center gap-2">
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ backgroundColor: hubColor, opacity: 0.5 }}
+                />
+                <span className="text-sm text-zinc-500 dark:text-zinc-400">{p}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Download */}
+          <div className="flex items-center gap-2 mt-auto">
+            <DownloadPill onClick={onDownload} size={34} />
+            <span className="text-xs text-zinc-400">Download PDF</span>
+          </div>
+        </div>
+
+        {/* Turnaround — bottom of identity card */}
+        <div
+          className="px-5 py-4 border-t border-zinc-100 dark:border-zinc-800 rounded-bl-2xl"
+          style={{ borderLeftColor: hubColor }}
+        >
+          <div className="flex items-start gap-2">
+            <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
+            <div>
+              <p className="text-xs font-black" style={{ color: hubColor }}>{turnaround.label}</p>
+              <p className="text-xs text-zinc-400 mt-0.5 leading-snug">{turnaround.detail}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Right: Services card ── */}
+      <div className="rounded-br-2xl border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden flex flex-col">
+        {/* Section list — scrollable */}
+        <div className="flex-1 overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800 max-h-[460px]">
+          {hub.sections.map(section => {
+            const sorted = [...section.items].sort(
+              (a, b) => parsePrice(a.price) - parsePrice(b.price)
+            )
+            return (
+              <div key={section.title} className="px-6 py-4">
+                <SectionHeader title={section.title} color={hubColor} />
+                {sorted.map(item => (
+                  <ServiceRow
+                    key={item.name}
+                    hubId={hubId}
+                    section={section.title}
+                    item={item}
+                    accent={accent}
+                    justAdded={justAdded}
+                    isBulk={hasBulk(section.title, item.name)}
+                    onAdd={onAdd}
+                    alwaysShowAdd={false}
+                  />
+                ))}
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Relation bridge footer */}
+        <div className="flex items-center gap-2 px-6 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
+          <span
+            className="w-2 h-2 rounded-full shrink-0"
+            style={{ backgroundColor: hubColor }}
+            aria-hidden="true"
+          />
+          <p className="text-xs text-zinc-400">
+            Prices are fixed — no hidden fees.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── HubAccordionCard — mobile full-width accordion ────────────────────────────
+
+interface HubAccordionCardProps {
+  hubId: HubId
+  accent: string
+  isDark: boolean
+  isOpen: boolean
+  onToggle: () => void
+  justAdded: string | null
+  onAdd: (section: string, name: string, price: string) => void
+  onRemove: (section: string, name: string, price: string) => void
+  onDownload: () => void
+  hasBulk: (section: string, name: string) => boolean
+  hubHasBulk: boolean
+  cardRef: (el: HTMLDivElement | null) => void
+}
+
+export function HubAccordionCard({
+  hubId,
+  accent,
+  isDark,
+  isOpen,
+  onToggle,
+  justAdded,
+  onAdd,
+  onDownload,
+  hasBulk,
+  hubHasBulk,
+  cardRef,
+}: HubAccordionCardProps) {
+  const hub = HUBS[hubId]
+  const hubColor = isDark ? hub.tagStyleDark.color : hub.tagStyle.color
+  const total = hub.sections.reduce((n, s) => n + s.items.length, 0)
+
+  return (
+    <div
+      ref={cardRef}
+      className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-shadow duration-200"
+      style={isOpen ? { borderColor: hubColor } : undefined}
+    >
+      {/* Toggle header */}
+      <button
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        className="w-full flex items-center justify-between gap-3 px-4 py-4 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors duration-200"
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          <div
+            className="w-1 h-8 rounded-full shrink-0 transition-colors duration-200"
+            style={{ backgroundColor: hubColor }}
+          />
+          <div className="min-w-0">
+            <p className="text-base font-bold text-zinc-900 dark:text-white truncate">
+              {hub.title}
+            </p>
+            <p className="text-sm mt-0.5" style={{ color: isOpen ? hubColor : '#a1a1aa' }}>
+              <span className="font-bold">{total} services</span>
+              {hubHasBulk ? ' · Bulk deals available' : ''}
+            </p>
+          </div>
+        </div>
+        {isOpen
+          ? <CaretUp size={14} className="text-zinc-400 shrink-0 transition-transform duration-200" aria-hidden="true" />
+          : <CaretDown size={14} className="text-zinc-400 shrink-0 transition-transform duration-200" aria-hidden="true" />
+        }
+      </button>
+
+      {/* Expanded content — simple height animation via max-height */}
+      <div
+        className="overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxHeight: isOpen ? '9999px' : '0px' }}
+        aria-hidden={!isOpen}
+      >
+        {isOpen && (
+          <>
+            <div className="border-t border-zinc-100 dark:border-zinc-800">
+              <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+                {hub.sections.map(section => {
+                  const sorted = [...section.items].sort(
+                    (a, b) => parsePrice(a.price) - parsePrice(b.price)
+                  )
+                  return (
+                    <div key={section.title} className="px-4 py-3">
+                      <SectionHeader title={section.title} color={hubColor} />
+                      {sorted.map(item => (
+                        <ServiceRow
+                          key={item.name}
+                          hubId={hubId}
+                          section={section.title}
+                          item={item}
+                          accent={accent}
+                          justAdded={justAdded}
+                          isBulk={hasBulk(section.title, item.name)}
+                          onAdd={onAdd}
+                          alwaysShowAdd={true}
+                        />
+                      ))}
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Turnaround — mobile */}
+              <TurnaroundStrip hubId={hubId} hubColor={hubColor} />
+
+              {/* Footer */}
+              <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full shrink-0"
+                    style={{ backgroundColor: hubColor }}
+                    aria-hidden="true"
+                  />
+                  <p className="text-xs text-zinc-400">No hidden fees.</p>
+                </div>
+                <DownloadPill onClick={onDownload} size={32} />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+            } 
