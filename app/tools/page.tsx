@@ -1,7 +1,7 @@
 // app/tools/page.tsx
 import type { Metadata } from "next"
 import Link from "next/link"
-import { FilePdf, Wrench, Sparkle } from "@phosphor-icons/react/dist/ssr"
+import { FilePdf, Sparkle } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -26,25 +26,20 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-32 pb-24 px-6 md:px-8">
-        <div className="max-w-[720px] mx-auto">
+      <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
+        <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
-            <div className="text-center mb-12">
-              <div
-                className="inline-flex items-center justify-center w-14 h-14 rounded-[14px] mb-5"
-                style={{ backgroundColor: `${BRAND.blue}14` }}
-              >
-                <Wrench weight="fill" className="w-7 h-7" style={{ color: BRAND.blue }} />
-              </div>
-              <h1 className="font-sans font-black text-3xl md:text-4xl tracking-tight text-zinc-900 dark:text-white mb-3">
-                Tools
-              </h1>
-              <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
-                Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
-              </p>
-            </div>
+            <h1 className="abh-page-title mb-3">Tools</h1>
           </ScrollBounce>
+          <p className="abh-tagline max-w-md mx-auto">
+            Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
+          </p>
+          <div className="abh-divider mx-auto" />
+        </div>
+      </section>
 
+      <div className="px-6 md:px-8 pb-24">
+        <div className="max-w-[720px] mx-auto">
           <div className="flex flex-wrap justify-center gap-3">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
@@ -88,4 +83,4 @@ export default function ToolsPage() {
       <Footer />
     </div>
   )
-            } 
+} 
