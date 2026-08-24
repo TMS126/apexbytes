@@ -252,9 +252,7 @@ export function HubExpandedPanel({
     <div
       className="-mt-px rounded-[14px] rounded-t-none border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden"
       style={{ borderLeftColor: hubColor, borderLeftWidth: 3 }}
-      style2={undefined}
-      // (borderLeftColor kept as an inline override on the shared outer box)
-    >
+      >
       <div
         style={{
           opacity: visible ? 1 : 0,
