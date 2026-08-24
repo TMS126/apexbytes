@@ -362,9 +362,10 @@ const displayedHub = hoveredHub ?? selectedHub
             <ScrollBounce delay={0.24}>
               <div className="no-print flex justify-center pt-2">
                 <PdfPillButton
-                  label="Download Full Pricing Catalog"
+                  label="Download All-Hubs Pricing Catalog"
                   onClick={handleDownload}
                   size="lg"
+                  color={accent} 
                 />
               </div>
             </ScrollBounce>
