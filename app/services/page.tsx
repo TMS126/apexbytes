@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer"
 import { HUBS, type HubId } from "@/lib/data"
 import { BIZ } from "@/lib/brand"
 
+export const dynamic = 'force-dynamic'
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
