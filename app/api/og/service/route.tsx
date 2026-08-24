@@ -14,11 +14,10 @@ export async function GET(req: NextRequest) {
   const sectionParam = searchParams.get('section')
   const serviceParam = searchParams.get('service')
 
-  let title = BIZ.name
-  let subtitle = BIZ.tagline
-  let price = ''
-  let bg = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)'
-
+let title: string = BIZ.name
+let subtitle: string = BIZ.tagline
+let price: string = ''
+let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)'
   if (hubParam && HUB_ORDER.includes(hubParam as HubId) && sectionParam && serviceParam) {
     const hub = HUBS[hubParam as HubId]
     const section = hub.sections.find((s) => s.title === sectionParam)
