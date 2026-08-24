@@ -1,4 +1,4 @@
-/* components/services-page/service-detail-modal/index.tsx */
+/* components/services-page/service-detail-modal/index.tsx — PART 1 OF 2 — paste this, then Part 2, back-to-back into one file */
 "use client"
 
 import { useState, useEffect, useRef, type ChangeEvent, type TouchEvent } from "react"
@@ -27,6 +27,19 @@ const SWIPE_MIN_DX = 48
 const SWIPE_DOMINANCE = 1.4
 
 const ICON_BTN_FOCUS = "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-500"
+
+// NEW — the footer notice below only concerns "NSFAS Application" (the
+// item about submitting a NEW application). Deliberately NOT matched
+// against other NSFAS items in the same section (Status Check, Banking
+// Update, Appeal) since those stay relevant/actionable regardless of
+// whether the application window is currently open. Kept as a
+// component-level check rather than a lib/data field, per instruction
+// not to touch that file. Verified via search before writing: the most
+// recent NSFAS intake (TVET Trimester 3) ran 14–23 Aug 2026 and has
+// just closed as of today.
+const NSFAS_CLOSED_NOTICE_ITEM = "NSFAS Application"
+const NSFAS_CLOSED_NOTICE_TEXT =
+  "NSFAS applications are currently closed — the most recent window (TVET Trimester 3) closed 23 August 2026. We can still help you prepare your documents ahead of the next opening, or assist with other NSFAS services like status checks and appeals."
 
 type Tab = "bring" | "about"
 
@@ -251,7 +264,9 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const desc = svc.desc?.trim() || null
   const inQuote = quoteQty > 0
   const neutralIconColor = isDark ? "#e4e4e7" : "#3f3f46"
+  const showNsfasClosedNotice = svc.name === NSFAS_CLOSED_NOTICE_ITEM
 
+/* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
   return (
     <div className="fixed inset-0 z-[10200] flex items-center justify-center p-3 md:p-4">
       <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-200" onClick={onClose} />
@@ -501,6 +516,22 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
             onRetry={() => { setUploadPhase("idle"); setUploadErr(null); fileRef.current?.click() }}
           />
 
+          {/* NEW — NSFAS application-window closure notice. Only renders
+              for the "NSFAS Application" item specifically — see
+              showNsfasClosedNotice / NSFAS_CLOSED_NOTICE_ITEM in Part 1.
+              Styled to match the existing warning-notice visual language
+              (BRAND.orange + WarningCircle) already used by NoticeModal
+              elsewhere in this file, for visual consistency. */}
+          {showNsfasClosedNotice && (
+            <div
+              className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
+              style={{ backgroundColor: `${BRAND.orange}12` }}
+            >
+              <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
+              <p className="text-[0.82rem] leading-relaxed" style={{ color: BRAND.orange }}>{NSFAS_CLOSED_NOTICE_TEXT}</p>
+            </div>
+          )}
+
           <div className="h-px bg-zinc-100 dark:bg-zinc-800" />
 
           {/* CTA — was text-white on the #25D366 fill; switched to dark
@@ -542,4 +573,4 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       )}
     </div>
   )
-} 
+    }
