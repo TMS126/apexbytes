@@ -26,8 +26,10 @@ export default function PricingPage() {
   // Mobile accordion state
   const [openHubs, setOpenHubs] = useState<Set<HubId>>(new Set())
   // Desktop selected hub state
-  const [selectedHub, setSelectedHub] = useState<HubId | null>(null)
-
+  
+const [selectedHub, setSelectedHub] = useState<HubId | null>(null)
+const [hoveredHub, setHoveredHub] = useState<HubId | null>(null)
+const displayedHub = hoveredHub ?? selectedHub
   const [query, setQuery] = useState('')
   const [rushNoticeDismissed, setRushNoticeDismissed] = useState(false)
   const [bulkNoticeDismissed, setBulkNoticeDismissed] = useState(false)
@@ -309,48 +311,50 @@ export default function PricingPage() {
                 </div>
 
                 {/* ── Desktop: 5-card selector row + two-card expanded panel ── */}
-                <div className="hidden md:block">
+<div className="hidden md:block" onMouseLeave={() => setHoveredHub(null)}>
 
-                  {/* Selector row */}
-                  <ScrollBounce delay={0.06}>
-                    <div className="grid grid-cols-5 gap-3">
-                      {HUB_ORDER.map((hubId, idx) => (
-                        <ScrollBounce key={hubId} delay={idx * 0.05}>
-                          <HubCompactCard
-                            hubId={hubId}
-                            accent={accent}
-                            isDark={isDark}
-                            isSelected={selectedHub === hubId}
-                            hubHasBulk={hubHasBulk(hubId)}
-                            onSelect={() => selectHub(hubId)}
-                          />
-                        </ScrollBounce>
-                      ))}
-                    </div>
-                  </ScrollBounce>
+  {/* Selector row */}
+  <ScrollBounce delay={0.06}>
+    <div className="grid grid-cols-5 gap-3">
+      {HUB_ORDER.map((hubId, idx) => (
+        <ScrollBounce key={hubId} delay={idx * 0.05}>
+          <HubCompactCard
+            hubId={hubId}
+            accent={accent}
+            isDark={isDark}
+            isSelected={selectedHub === hubId}
+            isActive={displayedHub === hubId}
+            hubHasBulk={hubHasBulk(hubId)}
+            onSelect={() => selectHub(hubId)}
+            onHover={() => setHoveredHub(hubId)}
+          />
+        </ScrollBounce>
+      ))}
+    </div>
+  </ScrollBounce>
 
-                  {/* Expanded panel — two cards fused below selector */}
-                  {selectedHub && (
-                    <HubExpandedPanel
-                      hubId={selectedHub}
-                      accent={accent}
-                      isDark={isDark}
-                      justAdded={justAdded}
-                      onAdd={(section, name, price) =>
-                        handleAdd(selectedHub, section, name, price)
-                      }
-                      onDownload={() => handleHubDownload(selectedHub)}
-                      hasBulk={(section, name) => itemHasBulk(selectedHub, section, name)}
-                    />
-                  )}
+  {/* Expanded panel — two cards fused below selector */}
+  {displayedHub && (
+    <HubExpandedPanel
+      hubId={displayedHub}
+      accent={accent}
+      isDark={isDark}
+      justAdded={justAdded}
+      onAdd={(section, name, price) =>
+        handleAdd(displayedHub, section, name, price)
+      }
+      onDownload={() => handleHubDownload(displayedHub)}
+      hasBulk={(section, name) => itemHasBulk(displayedHub, section, name)}
+    />
+  )}
 
-                  {/* Hint when nothing is selected */}
-                  {!selectedHub && (
-                    <p className="text-center text-sm text-zinc-400 py-4 mt-4">
-                      Select a hub above to see its services and pricing.
-                    </p>
-                  )}
-                </div>
+  {/* Hint when nothing is selected or hovered */}
+  {!displayedHub && (
+    <p className="text-center text-sm text-zinc-400 py-4 mt-4">
+      Select a hub above to see its services and pricing.
+    </p>
+  )}
+</div>
               </>
             )}
 
