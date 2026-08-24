@@ -61,12 +61,15 @@ export const metadata: Metadata = {
   description: `We make technology and important services accessible to everyone — no jargon, no stress. Right here in ${BIZ.address}.`,
   keywords: ['printing Bothaville','printing Kgotsong','CV writing Kgotsong','SASSA help Kgotsong','ApexbytesHub'],
   authors: [{ name: BIZ.name }],
-  openGraph: {
-    type: 'website', locale: 'en_ZA', url: SITE_URL, siteName: BIZ.name,
-    title: `${BIZ.name} — ${BIZ.tagline}`,
-    description: `Printing, CVs, design, SASSA/SARS help, and tech support in ${BIZ.location}.`,
-  },
-  twitter: { card: 'summary_large_image', title: `${BIZ.name} — ${BIZ.tagline}` },
+  
+openGraph: {
+  type: 'website', locale: 'en_ZA', url: SITE_URL, siteName: BIZ.name,
+  title: `${BIZ.name} — ${BIZ.tagline}`,
+  description: `Printing, CVs, design, SASSA/SARS help, and tech support in ${BIZ.location}.`,
+  images: [{ url: '/api/og', width: 1200, height: 630, alt: BIZ.name }],
+},
+twitter: { card: 'summary_large_image', title: `${BIZ.name} — ${BIZ.tagline}`, images: ['/api/og'] },
+  
   icons: {
     icon: [
       { url: '/favicon-light-32.png', sizes: '32x32', type: 'image/png', media: '(prefers-color-scheme: light)' },
