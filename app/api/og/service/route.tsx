@@ -6,6 +6,7 @@ import { BIZ } from '@/lib/brand'
 
 export const runtime = 'edge'
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 const HUB_ORDER: HubId[] = ['print', 'doc', 'design', 'eservice', 'tech']
 
 export async function GET(req: NextRequest) {
@@ -36,6 +37,7 @@ let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)
         style={{
           width: '100%',
           height: '100%',
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -45,6 +47,24 @@ let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)
           backgroundImage: bg,
         }}
       >
+        {/* NEW — logo watermark, ported over from the generic /api/og
+            route. This route (og/service) is the one actually used for
+            shared per-service links, and previously had no watermark at
+            all. Dimensions computed from logo.png's real 1240×674 size
+            (ratio ≈1.84:1) so it doesn't stretch/distort — the generic
+            route's original 420×420 forced-square was doing exactly that. */}
+        <img
+          src={`${SITE_URL}/logo.png`}
+          width={420}
+          height={228}
+          style={{
+            position: 'absolute',
+            top: '-60px',
+            right: '-40px',
+            opacity: 0.12,
+            filter: 'brightness(0) invert(1)',
+          }}
+        />
         <div
           style={{
             display: 'flex',
@@ -70,4 +90,4 @@ let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)
     ),
     { width: 1200, height: 630 }
   )
-}
+      } 
