@@ -118,32 +118,9 @@ function ServiceRow({
   )
 }
 
-// ── Turnaround footer strip ───────────────────────────────────────────────────
-
-function TurnaroundStrip({ hubId, hubColor }: { hubId: HubId; hubColor: string }) {
-  const t = TURNAROUND[hubId]
-  return (
-    <div className="flex items-start gap-2.5 px-5 py-3.5 bg-zinc-50/80 dark:bg-zinc-800/30 border-t border-zinc-100 dark:border-zinc-800">
-      <Clock
-        size={14}
-        className="shrink-0 mt-0.5"
-        style={{ color: hubColor }}
-        aria-hidden="true"
-        weight="bold"
-      />
-      <div className="min-w-0">
-        <span className="text-xs font-black" style={{ color: hubColor }}>
-          {t.label}
-        </span>
-        <span className="text-xs text-zinc-400 ml-1.5">{t.detail}</span>
-      </div>
-    </div>
-  )
-}
-
 // ── HubCompactCard — desktop 5-column selector card ───────────────────────────
-//   Idle (not selected, not hovered)  → light floating pill, minimal border
-//   Selected or hovered               → solid card, tinted in hub color
+//   Idle    → floating pill, muted icon, hub description shown
+//   Active  → solid tinted card, colored icon, preview bullets shown
 
 interface HubCompactCardProps {
   hubId: HubId
@@ -176,7 +153,7 @@ export function HubCompactCard({
       onMouseEnter={onHover}
       aria-pressed={isSelected}
       className={[
-        'w-full text-left rounded-2xl px-4 py-4 transition-all duration-200 active:scale-[0.98]',
+        'w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98]',
         isActive
           ? 'bg-white dark:bg-zinc-900 border shadow-sm rounded-b-none border-b-0 relative z-10'
           : 'bg-white/60 dark:bg-zinc-900/40 border border-transparent hover:bg-white dark:hover:bg-zinc-900 hover:shadow-sm',
@@ -187,16 +164,19 @@ export function HubCompactCard({
           : undefined
       }
     >
-      {/* Hub name */}
-      <p
-        className="text-sm font-bold mb-2.5 truncate transition-colors duration-200"
-        style={{ color: isActive ? hubColor : undefined }}
-      >
-        {hub.title}
-      </p>
+      {/* Icon + name row — icon only picks up hub color when active */}
+      <div className="flex items-center gap-2 mb-2.5">
+        <HubIcon id={hubId} size={16} color={isActive ? hubColor : '#a1a1aa'} />
+        <p
+          className="text-sm font-bold truncate transition-colors duration-200"
+          style={{ color: isActive ? hubColor : undefined }}
+        >
+          {hub.title}
+        </p>
+      </div>
 
-      {/* Preview bullets — only shown once active, keeps idle pill minimal */}
-      {isActive && (
+      {/* Idle: short description. Active: preview bullets. */}
+      {isActive ? (
         <ul className="space-y-1 mb-3">
           {hub.previews.slice(0, 3).map(p => (
             <li key={p} className="flex items-center gap-1.5">
@@ -205,6 +185,10 @@ export function HubCompactCard({
             </li>
           ))}
         </ul>
+      ) : (
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-snug line-clamp-2 mb-3">
+          {hub.desc}
+        </p>
       )}
 
       {/* Footer — service count accented when active */}
@@ -226,10 +210,7 @@ export function HubCompactCard({
   )
 }
 
-// ── HubExpandedPanel — desktop: two separate cards showing relation ────────────
-//   Left card  = hub identity (big icon, title, description, turnaround)
-//   Right card = services list
-//   Both footers pinned to matching heights via justify-between on both columns
+// ── HubExpandedPanel — desktop: identity + services, ONE shared footer ─────────
 
 interface HubExpandedPanelProps {
   hubId: HubId
@@ -255,7 +236,6 @@ export function HubExpandedPanel({
   const total = hub.sections.reduce((n, s) => n + s.items.length, 0)
   const turnaround = TURNAROUND[hubId]
 
-  // Animate in on hubId change
   const [visible, setVisible] = useState(false)
   const prevHub = useRef<HubId | null>(null)
 
@@ -270,115 +250,92 @@ export function HubExpandedPanel({
 
   return (
     <div
-      className="grid grid-cols-[280px_1fr] gap-0 -mt-px items-stretch"
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(10px)',
-        transition: 'opacity 220ms ease, transform 220ms ease',
-      }}
-      aria-live="polite"
+      className="-mt-px rounded-[14px] rounded-t-none border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden"
+      style={{ borderLeftColor: hubColor, borderLeftWidth: 3 }}
+      style2={undefined}
+      // (borderLeftColor kept as an inline override on the shared outer box)
     >
-      {/* ── Left: Hub identity card ── */}
       <div
-        className="h-full rounded-bl-2xl border border-t-0 border-r-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex flex-col justify-between"
-        style={{ borderLeftColor: hubColor, borderLeftWidth: 3 }}
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(10px)',
+          transition: 'opacity 220ms ease, transform 220ms ease',
+        }}
+        aria-live="polite"
       >
-        <div className="px-6 pt-6 pb-4">
-          {/* Big hub icon */}
-          <div
-            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
-            style={{ backgroundColor: `${hubColor}14` }}
-          >
-            <HubIcon id={hubId} size={30} color={hubColor} />
+        <div className="grid grid-cols-[280px_1fr] gap-0 items-stretch">
+          {/* ── Left: Hub identity ── */}
+          <div className="px-6 pt-4 pb-6 border-r border-zinc-100 dark:border-zinc-800">
+            <h2
+              className="text-2xl font-black tracking-tight mb-1 leading-tight"
+              style={{ color: hubColor }}
+            >
+              {hub.title}
+            </h2>
+
+            <p className="text-sm font-bold mb-4" style={{ color: hubColor, opacity: 0.7 }}>
+              {total} services
+            </p>
+
+            {/* All sections served */}
+            <ul className="space-y-1.5 mb-6">
+              {hub.sections.map(s => (
+                <li key={s.title} className="flex items-center gap-2">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full shrink-0"
+                    style={{ backgroundColor: hubColor, opacity: 0.5 }}
+                  />
+                  <span className="text-sm text-zinc-600 dark:text-zinc-300">{s.title}</span>
+                </li>
+              ))}
+            </ul>
+
+            <PdfPillButton
+              label={hub.title}
+              onClick={onDownload}
+              size="sm"
+              color={hubColor}
+            />
           </div>
 
-          <h2
-            className="text-2xl font-black tracking-tight mb-1 leading-tight"
-            style={{ color: hubColor }}
-          >
-            {hub.title}
-          </h2>
-
-          {/* Service count — accented */}
-          <p className="text-sm font-bold mb-4" style={{ color: hubColor, opacity: 0.7 }}>
-            {total} services
-          </p>
-
-          {/* Previews */}
-          <ul className="space-y-1.5 mb-6">
-            {hub.previews.map(p => (
-              <li key={p} className="flex items-center gap-2">
-                <span
-                  className="w-1.5 h-1.5 rounded-full shrink-0"
-                  style={{ backgroundColor: hubColor, opacity: 0.5 }}
-                />
-                <span className="text-sm text-zinc-500 dark:text-zinc-400">{p}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* Download — reuses the polished pill button used site-wide */}
-          <PdfPillButton
-            label={`Download ${hub.title} PDF`}
-            onClick={onDownload}
-            size="sm"
-          />
+          {/* ── Right: Services list ── */}
+          <div className="overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800 max-h-[460px]">
+            {hub.sections.map(section => {
+              const sorted = [...section.items].sort(
+                (a, b) => parsePrice(a.price) - parsePrice(b.price)
+              )
+              return (
+                <div key={section.title} className="px-6 py-4">
+                  <SectionHeader title={section.title} color={hubColor} />
+                  {sorted.map(item => (
+                    <ServiceRow
+                      key={item.name}
+                      hubId={hubId}
+                      section={section.title}
+                      item={item}
+                      accent={accent}
+                      justAdded={justAdded}
+                      isBulk={hasBulk(section.title, item.name)}
+                      onAdd={onAdd}
+                      alwaysShowAdd={false}
+                    />
+                  ))}
+                </div>
+              )
+            })}
+          </div>
         </div>
 
-        {/* Turnaround — bottom of identity card, always last so it aligns with the right column's footer */}
-        <div
-          className="px-5 py-4 border-t border-zinc-100 dark:border-zinc-800 rounded-bl-2xl"
-          style={{ borderLeftColor: hubColor }}
-        >
-          <div className="flex items-start gap-2">
+        {/* ── One shared footer, spanning both columns ── */}
+        <div className="flex items-center justify-between gap-4 px-6 py-3.5 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-800/30">
+          <div className="flex items-start gap-2 min-w-0">
             <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
-            <div>
-              <p className="text-xs font-black" style={{ color: hubColor }}>{turnaround.label}</p>
-              <p className="text-xs text-zinc-400 mt-0.5 leading-snug">{turnaround.detail}</p>
+            <div className="min-w-0">
+              <span className="text-xs font-black" style={{ color: hubColor }}>{turnaround.label}</span>
+              <span className="text-xs text-zinc-400 ml-1.5">{turnaround.detail}</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* ── Right: Services card ── */}
-      <div className="h-full rounded-br-2xl border border-t-0 border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden flex flex-col justify-between">
-        {/* Section list — scrollable, capped to keep the panel a reasonable height */}
-        <div className="flex-1 overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800 max-h-[460px]">
-          {hub.sections.map(section => {
-            const sorted = [...section.items].sort(
-              (a, b) => parsePrice(a.price) - parsePrice(b.price)
-            )
-            return (
-              <div key={section.title} className="px-6 py-4">
-                <SectionHeader title={section.title} color={hubColor} />
-                {sorted.map(item => (
-                  <ServiceRow
-                    key={item.name}
-                    hubId={hubId}
-                    section={section.title}
-                    item={item}
-                    accent={accent}
-                    justAdded={justAdded}
-                    isBulk={hasBulk(section.title, item.name)}
-                    onAdd={onAdd}
-                    alwaysShowAdd={false}
-                  />
-                ))}
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Relation bridge footer — always last, matches left column's turnaround footer height */}
-        <div className="flex items-center gap-2 px-6 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
-          <span
-            className="w-2 h-2 rounded-full shrink-0"
-            style={{ backgroundColor: hubColor }}
-            aria-hidden="true"
-          />
-          <p className="text-xs text-zinc-400">
-            Prices are fixed — no hidden fees.
-          </p>
+          <p className="text-xs text-zinc-400 shrink-0">No hidden fees.</p>
         </div>
       </div>
     </div>
@@ -422,7 +379,7 @@ export function HubAccordionCard({
   return (
     <div
       ref={cardRef}
-      className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-shadow duration-200"
+      className="rounded-[14px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-shadow duration-200"
       style={isOpen ? { borderColor: hubColor } : undefined}
     >
       {/* Toggle header */}
@@ -432,10 +389,7 @@ export function HubAccordionCard({
         className="w-full flex items-center justify-between gap-3 px-4 py-4 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800/40 transition-colors duration-200"
       >
         <div className="flex items-center gap-3 min-w-0">
-          <div
-            className="w-1 h-8 rounded-full shrink-0 transition-colors duration-200"
-            style={{ backgroundColor: hubColor }}
-          />
+          <HubIcon id={hubId} size={18} color={isOpen ? hubColor : '#a1a1aa'} />
           <div className="min-w-0">
             <p className="text-base font-bold text-zinc-900 dark:text-white truncate">
               {hub.title}
@@ -452,51 +406,46 @@ export function HubAccordionCard({
         }
       </button>
 
-      {/* Expanded content — simple height animation via max-height */}
+      {/* Expanded content */}
       <div
         className="overflow-hidden transition-all duration-300 ease-in-out"
         style={{ maxHeight: isOpen ? '9999px' : '0px' }}
         aria-hidden={!isOpen}
       >
         {isOpen && (
-          <>
-            <div className="border-t border-zinc-100 dark:border-zinc-800">
-              <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
-                {hub.sections.map(section => {
-                  const sorted = [...section.items].sort(
-                    (a, b) => parsePrice(a.price) - parsePrice(b.price)
-                  )
-                  return (
-                    <div key={section.title} className="px-4 py-3">
-                      <SectionHeader title={section.title} color={hubColor} />
-                      {sorted.map(item => (
-                        <ServiceRow
-                          key={item.name}
-                          hubId={hubId}
-                          section={section.title}
-                          item={item}
-                          accent={accent}
-                          justAdded={justAdded}
-                          isBulk={hasBulk(section.title, item.name)}
-                          onAdd={onAdd}
-                          alwaysShowAdd={true}
-                        />
-                      ))}
-                    </div>
-                  )
-                })}
-              </div>
-
-              {/* Turnaround — mobile */}
-              <TurnaroundStrip hubId={hubId} hubColor={hubColor} />
-
-              {/* Footer */}
-              <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
-                <p className="text-xs text-zinc-400">No hidden fees.</p>
-                <PdfPillButton label="Download PDF" onClick={onDownload} size="sm" />
-              </div>
+          <div className="border-t border-zinc-100 dark:border-zinc-800">
+            <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
+              {hub.sections.map(section => {
+                const sorted = [...section.items].sort(
+                  (a, b) => parsePrice(a.price) - parsePrice(b.price)
+                )
+                return (
+                  <div key={section.title} className="px-4 py-3">
+                    <SectionHeader title={section.title} color={hubColor} />
+                    {sorted.map(item => (
+                      <ServiceRow
+                        key={item.name}
+                        hubId={hubId}
+                        section={section.title}
+                        item={item}
+                        accent={accent}
+                        justAdded={justAdded}
+                        isBulk={hasBulk(section.title, item.name)}
+                        onAdd={onAdd}
+                        alwaysShowAdd={true}
+                      />
+                    ))}
+                  </div>
+                )
+              })}
             </div>
-          </>
+
+            {/* Footer */}
+            <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
+              <p className="text-xs text-zinc-400">No hidden fees.</p>
+              <PdfPillButton label={hub.title} onClick={onDownload} size="sm" color={hubColor} />
+            </div>
+          </div>
         )}
       </div>
     </div>
