@@ -1,10 +1,11 @@
 // components/scroll-to-bottom-button.tsx
-// New — mirrors back-to-top-button.tsx exactly, inverted: appears while
-// there's still meaningful distance left to scroll, hides once the person
-// is within `threshold` of the actual bottom of the page. Sits near the
-// top of the viewport (under the fixed navbar) rather than at the bottom,
-// so it never overlaps BackToTopButton, which occupies the bottom of the
-// screen on every page that uses it.
+// Repositioned — was fixed near the top of the viewport, floating on its
+// own. Now stacks directly above BackToTopButton at the bottom, same
+// horizontal center, so the pair reads as one matched control instead of
+// two buttons in unrelated places. Any page using both should pass a
+// `bottomClass` here that sits ~70px above whatever bottomClass it gives
+// BackToTopButton (enough room for this button's own 48px height + a
+// gap), matching them the same way contact-page.tsx does.
 "use client"
 
 import { useState, useEffect } from "react"
@@ -13,11 +14,11 @@ import { cn } from "@/lib/utils"
 
 export function ScrollToBottomButton({
   visible,
-  topClass = "top-[calc(var(--nav-h,74px)+1rem)]",
+  bottomClass = "bottom-24",
   className,
 }: {
   visible: boolean
-  topClass?: string
+  bottomClass?: string
   className?: string
 }) {
   return (
@@ -28,10 +29,10 @@ export function ScrollToBottomButton({
       aria-label="Scroll to bottom"
       className={cn(
         "fixed left-1/2 -translate-x-1/2 z-[9990] w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105",
-        topClass,
+        bottomClass,
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 -translate-y-4 pointer-events-none",
+          : "opacity-0 translate-y-4 pointer-events-none",
         className
       )}
     >
@@ -41,9 +42,7 @@ export function ScrollToBottomButton({
 }
 
 // Visible whenever there's more than `threshold` px left to scroll before
-// hitting the bottom of the document — the mirror image of useBackToTop's
-// condition (which fires once you've scrolled past `threshold` px from
-// the top).
+// hitting the bottom of the document — mirror of useBackToTop's condition.
 export function useScrollToBottom(threshold = 600) {
   const [visible, setVisible] = useState(false)
   useEffect(() => {
@@ -61,4 +60,4 @@ export function useScrollToBottom(threshold = 600) {
     }
   }, [threshold])
   return visible
-}
+} 
