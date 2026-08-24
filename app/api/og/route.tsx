@@ -4,6 +4,8 @@ import { BIZ } from '@/lib/brand'
 
 export const runtime = 'edge'
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
+
 export async function GET() {
   return new ImageResponse(
     (
@@ -11,6 +13,7 @@ export async function GET() {
         style={{
           width: '100%',
           height: '100%',
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
@@ -21,6 +24,18 @@ export async function GET() {
             'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)',
         }}
       >
+        <img
+          src={`${SITE_URL}/logo.png`}
+          width={420}
+          height={420}
+          style={{
+            position: 'absolute',
+            top: '-60px',
+            right: '-40px',
+            opacity: 0.12,
+            filter: 'brightness(0) invert(1)',
+          }}
+        />
         <div style={{ display: 'flex', gap: '14px', marginBottom: '36px' }}>
           <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: '#4A8011' }} />
           <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: '#B9590D' }} />
@@ -36,4 +51,4 @@ export async function GET() {
     ),
     { width: 1200, height: 630 }
   )
-}
+} 
