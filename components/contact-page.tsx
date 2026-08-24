@@ -327,7 +327,7 @@ function ContactPageInner() {
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       className={cn(
-                        w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none",
+                        "w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none",
 touched.message && !isMessageValid(formData.message) ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
 					  )}
                       rows={4}
