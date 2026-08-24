@@ -304,8 +304,8 @@ function ContactPageInner() {
                         value={rawValue}
                         aria-invalid={err}
                         className={cn(
-                          "w-full px-4 py-3 border rounded-[14px] bg-white dark:bg-zinc-900 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none",
-                          err ? "border-red-500" : "border-zinc-100 dark:border-zinc-800 focus:border-brand-blue"
+                          "w-full px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none",
+														err ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
                         )}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
@@ -371,7 +371,7 @@ function ContactPageInner() {
         </a>
       </div>
 
-      <ScrollToBottomButton visible={showScrollToBottom} bottomClass="bottom-40 md:bottom-24" />
+      <ScrollToBottomButton visible={showScrollToBottom && !showBackToTop} bottomClass="bottom-24 md:bottom-6" />
       <BackToTopButton visible={showBackToTop} bottomClass="bottom-24 md:bottom-6" />
     </div>
   )
