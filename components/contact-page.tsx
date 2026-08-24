@@ -193,10 +193,8 @@ function ContactPageInner() {
                             onMouseEnter={(e) => (e.currentTarget.style.borderColor = dotColor)}
                             onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
                           >
-                            <Icon size={22} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
-                            <div className="min-w-0 w-full">
-                              <p className="text-base font-medium text-zinc-800 dark:text-zinc-200 truncate">{c.title}</p>
-                              <p className="abh-muted text-sm leading-snug break-words">{c.value}</p>
+                            <Icon size={34} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
+<p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
                             </div>
                           </a>
                           {isCopyable && (
