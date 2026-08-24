@@ -24,10 +24,13 @@ export async function GET() {
             'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)',
         }}
       >
+        {/* FIX: was width=420 height=420 forcing the real 1240×674 logo
+            (ratio ≈1.84:1) into a square — visibly stretched/squashed.
+            Height now computed to preserve the actual aspect ratio. */}
         <img
           src={`${SITE_URL}/logo.png`}
           width={420}
-          height={420}
+          height={228}
           style={{
             position: 'absolute',
             top: '-60px',
