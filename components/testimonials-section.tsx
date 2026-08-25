@@ -2,22 +2,11 @@
 "use client"
 
 import { useState, useRef, useCallback, useEffect } from "react"
-import { Star, Quotes, WhatsappLogo, CaretLeft, CaretRight, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
+import { Star, Quotes, WhatsappLogo, CaretLeft, CaretRight } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
-import { HUB_COLORS, HubKey, BIZ } from "@/lib/brand"
+import { HUB_COLORS, HUB_NAMES, HubKey, BIZ } from "@/lib/brand"
 import { HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-
-function HubIcon({ id, size = 12, color }: { id: HubId; size?: number; color?: string }) {
-  const p = { size, weight: "fill" as const, color: color ?? "currentColor", "aria-hidden": true }
-  switch (id) {
-    case "print":    return <Printer    {...p} />
-    case "doc":      return <FileText   {...p} />
-    case "design":   return <PaintBrush {...p} />
-    case "eservice": return <Globe      {...p} />
-    case "tech":     return <Desktop    {...p} />
-  }
-}
 
 interface Review {
   name: string
@@ -253,15 +242,15 @@ export function TestimonialsSection({
 
                     <p className="text-[1.05rem] font-black text-zinc-800 dark:text-zinc-200">{r.name}</p>
 
+                    {/* Solid colored pill, white text, hub name only — matches the reference image, same treatment in every state */}
                     <span
-                      className="flex items-center gap-1 text-[0.72rem] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full mt-1.5"
-                      style={{ backgroundColor: `${accent}15`, color: accent }}
+                      className="text-[0.76rem] font-bold px-3.5 py-1.5 rounded-full mt-2 text-white"
+                      style={{ backgroundColor: solid }}
                     >
-                      <HubIcon id={r.hubId} size={10} />
-                      {r.serviceUsed}
+                      {HUB_NAMES[r.hubId as HubKey]}
                     </span>
 
-                    <div className="mt-2">
+                    <div className="mt-2.5">
                       <Stars rating={r.rating} color={accent} />
                     </div>
                   </div>
@@ -324,4 +313,4 @@ export function TestimonialsSection({
       </div>
     </section>
   )
-  } 
+        } 
