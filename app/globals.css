@@ -80,8 +80,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --nav-bg: rgba(255, 255, 255, 0.97);
   --footer-bg: #0F3F66;
   --shadow: 0 4px 28px rgba(30, 111, 168, 0.07);
-  --card-border: transparent;
-
+  --card-border: #E5E7EB; /* was: transparent — now a real, visible, subtle border matching the reference card style */
   --background: #FFFFFF;
   --foreground: #333333;
   --card: #FFFFFF;
@@ -136,8 +135,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --nav-bg: rgba(13, 27, 42, 0.97);
   --footer-bg: #091524;
   --shadow: 0 4px 28px rgba(0, 0, 0, 0.3);
-  --card-border: #243648;
-
+  --card-border: #243648; /* unchanged — was already correct for dark mode, just finally being used */
   --brand-warning-bg: #7A3B0E;
 
   --brand-blue-text: #6693db;
@@ -292,7 +290,16 @@ button, a, [role="button"] {
   .abh-cta-pulse { animation: none; }
      }
 /* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file */
-@layer components {
+@layer components{
+  .abh-card {
+    @apply rounded-[14px] transition-all duration-300;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  }
+  .dark .abh-card {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
+    }
   .abh-page-title {
     @apply font-heading font-black text-4xl md:text-5xl tracking-tight leading-tight text-center;
     color: var(--brand-blue-dark);
