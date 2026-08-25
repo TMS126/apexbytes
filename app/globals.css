@@ -80,7 +80,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --nav-bg: rgba(255, 255, 255, 0.97);
   --footer-bg: #0F3F66;
   --shadow: 0 4px 28px rgba(30, 111, 168, 0.07);
-  --card-border: #E5E7EB; /* was: transparent — now a real, visible, subtle border matching the reference card style */
+  --card-border: #E5E7EB;
   --background: #FFFFFF;
   --foreground: #333333;
   --card: #FFFFFF;
@@ -102,40 +102,47 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --ring: #1E6FA8;
 }
 
-/* NEW — maintenance banner active state. Bumping --nav-h here (rather than
-   only --banner-h) means every page's existing
-   `pt-[calc(var(--nav-h,74px)+2rem)]` padding grows automatically too —
-   no page file needs to know the banner exists. */
 .banner-active {
   --banner-h: 44px;
   --nav-h: 118px;
 }
 
+/* ── Dark mode — background/card/border colors rebuilt to match the
+   reference screenshot exactly: a dark indigo-slate background (#24273A)
+   with cards one clear step lighter (#2F3348), a near-invisible card
+   border (barely distinguishable from the card itself, matching the
+   reference's borderless-but-separated look), and muted text tuned for
+   readability against this cooler, less-blue palette than before. Brand
+   hub colors (blue/green/orange/teal) are untouched — this only changes
+   the neutral page chrome, not hub identity colors used elsewhere. ── */
 .dark {
   --brand-error-text: #e76c6c;
-  --background: #0D1B2A;
-  --foreground: #E8EFF6;
-  --card: #1A2C3E;
-  --card-foreground: #E8EFF6;
-  --popover: #1A2C3E;
-  --popover-foreground: #E8EFF6;
+  --background: #24273A;
+  --foreground: #E9EAF2;
+  --card: #2F3348;
+  --card-foreground: #E9EAF2;
+  --popover: #2F3348;
+  --popover-foreground: #E9EAF2;
   --primary: #A9D6F2;
-  --primary-foreground: #0D1B2A;
-  --secondary: #1A2C3E;
-  --secondary-foreground: #E8EFF6;
-  --muted: #142233;
-  --muted-foreground: #8AABBF;
+  --primary-foreground: #24273A;
+  --secondary: #2F3348;
+  --secondary-foreground: #E9EAF2;
+  --muted: #363A52;
+  --muted-foreground: #A0A4BD;
   --accent: #CDEB9F;
-  --accent-foreground: #0D1B2A;
+  --accent-foreground: #24273A;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
-  --border: #243648;
-  --input: #243648;
+  --border: #3C4058;
+  --input: #3C4058;
   --ring: #A9D6F2;
-  --nav-bg: rgba(13, 27, 42, 0.97);
-  --footer-bg: #091524;
-  --shadow: 0 4px 28px rgba(0, 0, 0, 0.3);
-  --card-border: #243648; /* unchanged — was already correct for dark mode, just finally being used */
+  --nav-bg: rgba(36, 39, 58, 0.97);
+  --footer-bg: #1B1D2C;
+  /* Single soft shadow, no double-layer stacking — matches the flat,
+     gently-lifted card look in the reference instead of the previous
+     heavier multi-shadow stack. */
+  --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
+  --card-border: #363A50;
   --brand-warning-bg: #7A3B0E;
 
   --brand-blue-text: #6693db;
@@ -258,13 +265,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
-/* FIX: removed blanket `will-change: transform` — this was previously
-   flagged and fixed as a PageSpeed regression (forces a compositor layer
-   on every button/link/role=button on the page permanently, not just
-   while actually animating) but had crept back in. Only
-   -webkit-tap-highlight-color is a genuinely global concern; will-change
-   should be applied per-element only where something is actually
-   animating (e.g. .abh-shadow-tile:hover already does this correctly). */
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
 }
@@ -273,10 +273,6 @@ button, a, [role="button"] {
 @keyframes fadeUp { from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)} }
 @keyframes page-in { from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)} }
 @keyframes marquee-track { 0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-50%,0,0)} }
-/* NEW — moved from an inline <style> tag in components/navbar.tsx. That
-   tag was being re-injected into the DOM on every route change (Navbar
-   remounts per-page in this router setup), duplicating the same
-   keyframes repeatedly. Defined once, globally, here instead. */
 @keyframes abh-cta-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(30,111,168,0.45); }
   50% { box-shadow: 0 0 0 8px rgba(30,111,168,0); }
@@ -288,7 +284,7 @@ button, a, [role="button"] {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   .abh-cta-pulse { animation: none; }
-     }
+}
 /* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file */
 @layer components{
   .abh-card {
@@ -297,9 +293,11 @@ button, a, [role="button"] {
     border: 1px solid var(--card-border);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
   }
+  /* Flat single shadow in dark mode — matches the reference's soft, gently
+     lifted card look instead of a heavier stacked shadow. */
   .dark .abh-card {
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.2);
-    }
+    box-shadow: var(--shadow);
+  }
   .abh-page-title {
     @apply font-heading font-black text-4xl md:text-5xl tracking-tight leading-tight text-center;
     color: var(--brand-blue-dark);
@@ -349,40 +347,31 @@ button, a, [role="button"] {
     @apply px-4 md:px-8 py-8 md:py-12 text-center;
   }
 
-  .abh-card {
-    @apply rounded-[14px] transition-all duration-300;
-    background: var(--card);
-    box-shadow: 0 2px 16px -2px rgba(0, 0, 0, 0.10), 0 1px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-  .dark .abh-card {
-    box-shadow: 0 2px 20px -2px rgba(0, 0, 0, 0.55), 0 1px 6px -1px rgba(0, 0, 0, 0.3);
-  }
-
   .abh-shadow-card {
     box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
   }
   .dark .abh-shadow-card {
-    box-shadow: 0 2px 16px -2px rgba(0, 0, 0, 0.50), 0 1px 4px -1px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--shadow);
   }
   .abh-shadow-card:hover {
     box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.13), 0 3px 8px -2px rgba(0, 0, 0, 0.07);
   }
   .dark .abh-shadow-card:hover {
-    box-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.60), 0 3px 10px -2px rgba(0, 0, 0, 0.38);
+    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
   }
 
   .abh-shadow-nested-group {
     box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.06);
   }
   .dark .abh-shadow-nested-group {
-    box-shadow: 0 2px 14px -2px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow);
   }
 
   .abh-shadow-nested-item {
     box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.06);
   }
   .dark .abh-shadow-nested-item {
-    box-shadow: 0 1px 8px -1px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.3);
   }
 
   .abh-shadow-modal {
@@ -395,7 +384,7 @@ button, a, [role="button"] {
     box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.22);
   }
   .dark .abh-shadow-popover {
-    box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.65);
+    box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
   }
 
   .abh-shadow-project-card {
@@ -424,32 +413,32 @@ button, a, [role="button"] {
     box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
   }
   .dark .abh-shadow-contact-card {
-    box-shadow: 0 2px 16px -2px rgba(0, 0, 0, 0.50), 0 0 0 1px rgba(255, 255, 255, 0.04), 0 1px 4px -1px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--shadow);
   }
   .abh-shadow-contact-card:hover {
     box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.13), 0 3px 8px -2px rgba(0, 0, 0, 0.07);
   }
   .dark .abh-shadow-contact-card:hover {
-    box-shadow: 0 8px 28px -4px rgba(0, 0, 0, 0.60), 0 0 0 1px rgba(255, 255, 255, 0.06), 0 3px 10px -2px rgba(0, 0, 0, 0.38);
+    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
   }
   .abh-shadow-elevated {
     box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
   }
   .dark .abh-shadow-elevated {
-    box-shadow: 0 2px 16px -2px rgba(0, 0, 0, 0.50), 0 1px 4px -1px rgba(0, 0, 0, 0.28);
+    box-shadow: var(--shadow);
   }
 
   .abh-shadow-tile {
     box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.12);
   }
   .dark .abh-shadow-tile {
-    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
   }
   .abh-shadow-tile:hover {
     box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.18);
   }
   .dark .abh-shadow-tile:hover {
-    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.65);
+    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
   }
 
   .abh-divider {
@@ -462,15 +451,19 @@ button, a, [role="button"] {
     box-shadow: 0 0 8px rgba(169, 214, 242, 0.5);
   }
 
+  /* Flat buttons — background fill or border only, no gradient, no
+     multi-layer shadow, matching the reference's flat button treatment.
+     (These were already gradient-free; only the shadow weight/hover lift
+     is tuned to feel flatter/quieter, consistent with the new card style.) */
   .abh-wa-btn {
-    @apply font-heading flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95 hover:-translate-y-0.5;
+    @apply font-heading flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-whatsapp);
     color: var(--on-whatsapp);
   }
   .abh-wa-btn:hover { background: var(--brand-whatsapp-dark); }
 
   .abh-btn-primary {
-    @apply font-heading inline-flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95 hover:-translate-y-0.5 shadow-sm;
+    @apply font-heading inline-flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-blue);
     color: var(--on-brand-blue);
   }
@@ -504,5 +497,4 @@ button, a, [role="button"] {
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
-     }
-   
+                    } 
