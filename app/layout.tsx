@@ -13,7 +13,12 @@ import { FloatingSearchWidget } from '@/components/floating-search-widget'
 import { QuoteCalculatorWidget } from "@/components/quote-calculator"
 import { WhatsAppFAB } from '@/components/whatsapp-fab'
 import { MaintenanceBanner } from '@/components/maintenance-banner'
+import { headers } from 'next/headers'
 import './globals.css'
+
+// The middleware generates a per-request CSP nonce and forwards it to Next.js.
+// Request-time rendering is required so inline bootstrap/flight scripts receive that nonce.
+export const dynamic = 'force-dynamic'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
@@ -91,7 +96,8 @@ export const viewport: Viewport = {
   width: 'device-width', initialScale: 1,
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined
   const isProd = process.env.NODE_ENV === 'production'
 
   return (
@@ -107,7 +113,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
         <MaintenanceBanner />
 
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
+        <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <LocalBusinessJsonLd />
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
           <FloatingSearchWidget />
@@ -119,8 +125,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <>
             <Analytics />
             <SpeedInsights />
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
-            <Script id="ga4-init" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}</Script>
+            <Script nonce={nonce} src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
+            <Script nonce={nonce} id="ga4-init" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}</Script>
           </>
         )}
       </body>
