@@ -22,24 +22,25 @@ export const HUB_PREVIEWS: Record<HubId, [string, string, string]> = {
   tech:     ["Install Windows", "Remove Viruses", "Fix Laptops"],
 }
 
-export const CLD_CLOUD  = "dk30vh3ft"
-export const CLD_PRESET = "apexbyteshub"
-export const CLD_MAX_MB = 10
-
-export const BLOCKED_EXTENSIONS = /\.(exe|bat|sh|cmd|msi|dmg|apk|bin|scr|vbs|ps1|jar)$/i
-export const BLOCKED_MIME_TYPES = new Set([
-  "video/mp4", "video/avi", "video/quicktime", "video/x-matroska",
-  "video/x-msvideo", "video/webm", "video/ogg",
-  "application/x-msdownload", "application/x-executable",
-  "application/x-sh", "application/x-bat",
+export const MAX_UPLOAD_MB = 5
+// Keep the browser picker aligned with the stricter server-side allowlist.
+// The server remains authoritative and also verifies basic file signatures.
+export const ALLOWED_UPLOAD_EXTENSIONS = ".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx"
+export const ALLOWED_UPLOAD_MIME_TYPES = new Set([
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ])
 
 export const HUB_ACCEPT: Record<HubId, string> = {
-  print:    ".pdf,.jpg,.jpeg,.png,.doc,.docx",
-  doc:      ".pdf,.jpg,.jpeg,.png,.doc,.docx",
-  design:   ".pdf,.jpg,.jpeg,.png,.ai,.psd,.svg",
-  eservice: ".pdf,.jpg,.jpeg,.png,.doc,.docx",
-  tech:     ".pdf,.jpg,.jpeg,.png,.zip,.doc,.docx",
+  print: ALLOWED_UPLOAD_EXTENSIONS,
+  doc: ALLOWED_UPLOAD_EXTENSIONS,
+  design: ALLOWED_UPLOAD_EXTENSIONS,
+  eservice: ALLOWED_UPLOAD_EXTENSIONS,
+  tech: ALLOWED_UPLOAD_EXTENSIONS,
 }
 
 export const NOTICE = {
@@ -65,10 +66,6 @@ export function trackEvent(name: string, payload: Record<string, unknown> = {}) 
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
-export function getCldUrl(file: File) {
-  return `https://api.cloudinary.com/v1_1/${CLD_CLOUD}/${file.type.startsWith("image/") ? "image" : "raw"}/upload`
-}
-
 export function formatAcceptHint(accept: string) {
   return accept
     .split(",")
