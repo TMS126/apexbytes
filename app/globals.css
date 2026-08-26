@@ -16,9 +16,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 :root {
   --brand-green: #4A8011;
   --brand-orange: #B9590D;
-  --brand-light-blue: #A9D6F2;
-  --brand-light-green: #CDEB9F;
-  --brand-light-orange: #F9D1B0;
+  --brand-light-blue: #88A8F0;
+  --brand-light-green: #B8E880;
+  --brand-light-orange: #F09060;
 
   --brand-blue: #1E6FA8;
   --brand-blue-mid: #15537D;
@@ -74,8 +74,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --radius: 14px;
 
   --nav-h: 74px;
-  /* NEW — maintenance banner height, 0 by default. Toggled by
-     MaintenanceBanner adding/removing `.banner-active` on <html>. */
   --banner-h: 0px;
   --nav-bg: rgba(255, 255, 255, 0.97);
   --footer-bg: #0F3F66;
@@ -107,14 +105,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --nav-h: 118px;
 }
 
-/* ── Dark mode — background/card/border colors rebuilt to match the
-   reference screenshot exactly: a dark indigo-slate background (#24273A)
-   with cards one clear step lighter (#2F3348), a near-invisible card
-   border (barely distinguishable from the card itself, matching the
-   reference's borderless-but-separated look), and muted text tuned for
-   readability against this cooler, less-blue palette than before. Brand
-   hub colors (blue/green/orange/teal) are untouched — this only changes
-   the neutral page chrome, not hub identity colors used elsewhere. ── */
 .dark {
   --brand-error-text: #e76c6c;
   --background: #24273A;
@@ -138,9 +128,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --ring: #A9D6F2;
   --nav-bg: rgba(36, 39, 58, 0.97);
   --footer-bg: #1B1D2C;
-  /* Single soft shadow, no double-layer stacking — matches the flat,
-     gently-lifted card look in the reference instead of the previous
-     heavier multi-shadow stack. */
   --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
   --card-border: #363A50;
   --brand-warning-bg: #7A3B0E;
@@ -284,8 +271,9 @@ button, a, [role="button"] {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   .abh-cta-pulse { animation: none; }
-}
-/* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file */
+  }
+
+  /* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file, unchanged from your version */
 @layer components{
   .abh-card {
     @apply rounded-[14px] transition-all duration-300;
@@ -293,8 +281,6 @@ button, a, [role="button"] {
     border: 1px solid var(--card-border);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
   }
-  /* Flat single shadow in dark mode — matches the reference's soft, gently
-     lifted card look instead of a heavier stacked shadow. */
   .dark .abh-card {
     box-shadow: var(--shadow);
   }
@@ -451,10 +437,6 @@ button, a, [role="button"] {
     box-shadow: 0 0 8px rgba(169, 214, 242, 0.5);
   }
 
-  /* Flat buttons — background fill or border only, no gradient, no
-     multi-layer shadow, matching the reference's flat button treatment.
-     (These were already gradient-free; only the shadow weight/hover lift
-     is tuned to feel flatter/quieter, consistent with the new card style.) */
   .abh-wa-btn {
     @apply font-heading flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-whatsapp);
@@ -497,4 +479,4 @@ button, a, [role="button"] {
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
-                    } 
+    }
