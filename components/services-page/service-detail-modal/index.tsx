@@ -10,7 +10,7 @@ import { HUBS } from "@/lib/data"
 import { useFocusTrap, HubIcon } from "../shared"
 import {
   SelectedService, naturalServiceLabel, cleanText, formatAcceptHint,
-  HUB_ACCEPT, CLD_MAX_MB, BLOCKED_MIME_TYPES, BLOCKED_EXTENSIONS, trackEvent,
+  HUB_ACCEPT, MAX_UPLOAD_MB, ALLOWED_UPLOAD_MIME_TYPES, trackEvent,
 } from "../lib"
 import { getCartQtyForItem, getEffectiveRate, getBulkHint, parsePrice, itemHasBulk } from "@/components/quote-calculator/lib"
 import { UploadButton, UploadStatus } from "./UploadControl"
@@ -18,6 +18,7 @@ import { QuoteControl } from "./QuoteControl"
 import { BulkHint } from "./BulkHint"
 import { TipsModal } from "./TipsModal"
 import { NoticeModal } from "./NoticeModal"
+import { TurnstileWidget } from "./TurnstileWidget"
 import { getServiceTips } from "./fallback-tips"
 
 // ── Layout constants ──
@@ -25,6 +26,7 @@ const BULK_RIBBON_BLUE = BRAND.blue
 const HEADER_GRID = "grid grid-cols-[36px_1fr_36px] gap-2"
 const SWIPE_MIN_DX = 48
 const SWIPE_DOMINANCE = 1.4
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 const ICON_BTN_FOCUS = "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-500"
 
@@ -54,7 +56,9 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const [file, setFile] = useState<File | null>(null)
   const [uploadPhase, setUploadPhase] = useState<"idle" | "uploading" | "done" | "error">("idle")
   const [uploadProgress, setUploadProgress] = useState(0)
-  const [fileUrl, setFileUrl] = useState<string | null>(null)
+  const [uploadReference, setUploadReference] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
   const [uploadErr, setUploadErr] = useState<string | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
@@ -73,7 +77,9 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     setNoticeOpen(false)
     setAddedToQuote(false)
     setFile(null)
-    setFileUrl(null)
+    setUploadReference(null)
+    setTurnstileToken(null)
+    setTurnstileResetKey((value) => value + 1)
     setUploadPhase("idle")
     setUploadErr(null)
     setUploadProgress(0)
@@ -104,11 +110,12 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     return () => window.removeEventListener("keydown", onKey)
   }, [svc, tipsOpen, noticeOpen, onClose])
 
-  const doUpload = (f: File) => {
+  const doUpload = (f: File, verificationToken: string) => {
     setUploadPhase("uploading")
     setUploadProgress(0)
     const fd = new FormData()
     fd.append("file", f)
+    fd.append("turnstileToken", verificationToken)
     const xhr = new XMLHttpRequest()
     xhr.open("POST", "/api/upload")
     xhr.upload.onprogress = (e) => {
@@ -118,8 +125,10 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       try {
         const data = JSON.parse(xhr.responseText)
         if (xhr.status < 200 || xhr.status >= 300) throw new Error(data?.error || `HTTP ${xhr.status}`)
-        if (!data.secure_url) throw new Error("No URL returned")
-        setFileUrl(data.secure_url)
+        if (!data.upload_id) throw new Error("No upload reference returned")
+        setUploadReference(data.upload_id)
+        setTurnstileToken(null)
+        setTurnstileResetKey((value) => value + 1)
         setUploadPhase("done")
       } catch (err) {
         setUploadErr(`Upload failed: ${err instanceof Error ? err.message : "Unknown error"}`)
@@ -136,13 +145,18 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const handleFilePick = (e: ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
-    if (BLOCKED_MIME_TYPES.has(f.type) || BLOCKED_EXTENSIONS.test(f.name)) {
-      setUploadErr("That file type isn't allowed. Please send a document, image, or PDF only.")
+    if (!ALLOWED_UPLOAD_MIME_TYPES.has(f.type)) {
+      setUploadErr("Only PDF, JPG, PNG, WEBP, DOC, and DOCX files are accepted.")
       setUploadPhase("error")
       return
     }
-    if (f.size > CLD_MAX_MB * 1024 * 1024) {
-      setUploadErr(`File too large — please keep it under ${CLD_MAX_MB}MB.`)
+    if (f.size > MAX_UPLOAD_MB * 1024 * 1024) {
+      setUploadErr(`File too large — please keep it under ${MAX_UPLOAD_MB}MB.`)
+      setUploadPhase("error")
+      return
+    }
+    if (!turnstileToken) {
+      setUploadErr("Complete the upload verification before selecting a file.")
       setUploadPhase("error")
       return
     }
@@ -153,12 +167,14 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       return null
     })
     if (f.type.startsWith("image/")) setPreviewUrl(URL.createObjectURL(f))
-    doUpload(f)
+    doUpload(f, turnstileToken)
   }
 
   const clearFile = () => {
     setFile(null)
-    setFileUrl(null)
+    setUploadReference(null)
+    setTurnstileToken(null)
+    setTurnstileResetKey((value) => value + 1)
     setUploadPhase("idle")
     setUploadErr(null)
     setUploadProgress(0)
@@ -256,8 +272,8 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     else if (dx > 0 && idx > 0) setTab(tabs[idx - 1])
   }
 
-  const waMessage = fileUrl
-    ? `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. My file: ${fileUrl}`
+  const waMessage = uploadReference
+    ? `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. My secure upload reference: ${uploadReference}`
     : `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. Can you assist?`
 
   const requirements = svc.requirements?.length ? svc.requirements : ["Just bring your file, document or USB — we'll take care of the rest."]
@@ -480,8 +496,35 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         <div className="px-6 pb-8 pt-4 flex-shrink-0 border-t border-zinc-100 dark:border-zinc-800 space-y-3">
           <input ref={fileRef} type="file" accept={HUB_ACCEPT[svc.hubId]} onChange={handleFilePick} className="hidden" />
 
+          {TURNSTILE_SITE_KEY ? (
+            <TurnstileWidget
+              siteKey={TURNSTILE_SITE_KEY}
+              theme={isDark ? "dark" : "light"}
+              resetKey={turnstileResetKey}
+              onToken={setTurnstileToken}
+            />
+          ) : (
+            <p className="abh-muted text-xs text-center">Document upload is temporarily unavailable.</p>
+          )}
+
           <div className="grid grid-cols-[1fr_auto_1fr] gap-3">
-            <UploadButton phase={uploadPhase} accent={accent} onClick={() => fileRef.current?.click()} />
+            <UploadButton
+              phase={uploadPhase}
+              accent={accent}
+              onClick={() => {
+                if (!TURNSTILE_SITE_KEY) {
+                  setUploadErr("Document upload is temporarily unavailable.")
+                  setUploadPhase("error")
+                  return
+                }
+                if (!turnstileToken) {
+                  setUploadErr("Complete the upload verification first.")
+                  setUploadPhase("error")
+                  return
+                }
+                fileRef.current?.click()
+              }}
+            />
             <div className="w-px bg-zinc-200 dark:bg-zinc-700/60" aria-hidden="true" />
             <QuoteControl
               inQuote={inQuote}
