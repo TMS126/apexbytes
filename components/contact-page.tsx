@@ -49,6 +49,7 @@ function ContactPageInner() {
   const [glowActive, setGlowActive] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
   const formCardRef = useRef<HTMLDivElement>(null)
+  const messageRef = useRef<HTMLTextAreaElement>(null)
   const showBackToTop = useBackToTop()
   const showScrollToBottom = useScrollToBottom()
 
@@ -71,6 +72,7 @@ function ContactPageInner() {
     if (!prefilled || !mounted) return
     const id = requestAnimationFrame(() => {
       formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+      messageRef.current?.focus({ preventScroll: true })
       setGlowActive(true)
     })
     const stopTimer = setTimeout(() => setGlowActive(false), 2600)
@@ -117,25 +119,6 @@ function ContactPageInner() {
 
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-0">
-      <style>{`
-        @keyframes abh-inquire-glow {
-          0%   { box-shadow: 0 0 0 0 transparent; }
-          15%  { box-shadow: 0 0 0 2px var(--glow-color), 0 0 22px 3px var(--glow-color); }
-          40%  { box-shadow: 0 0 0 0 transparent; }
-          55%  { box-shadow: 0 0 0 2px var(--glow-color), 0 0 22px 3px var(--glow-color); }
-          80%, 100% { box-shadow: 0 0 0 0 transparent; }
-        }
-        .abh-inquire-glow-active {
-          animation: abh-inquire-glow 2.4s ease-in-out 1;
-        }
-      `}</style>
-
-      <style>{`
-        @media (max-width: 767px) {
-          [data-widget="whatsapp-fab"] { display: none !important; }
-        }
-      `}</style>
-
       <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
         <div className="max-w-[980px] mx-auto">
           <ScrollBounce>
@@ -322,6 +305,7 @@ function ContactPageInner() {
                   <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as any]: glowColor }}>
                     <textarea
                       id="contact-message"
+                      ref={messageRef}
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       className={cn(
                         "w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none",
