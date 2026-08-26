@@ -35,7 +35,7 @@ export const HEX = {
     orange: "#B9590D", orangeDark: "#B06225", orangeBrown: "#A86530",
     teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
     warningBg: "#9A4B12",
-    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
+    lightBlue: "#88A8F0", lightGreen: "#B8E880", lightOrange: "#F09060",
     dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
   },
   dark: {
@@ -44,7 +44,7 @@ export const HEX = {
     orange: "#B9590D", orangeDark: "#B06225", orangeBrown: "#A86530",
     teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
     warningBg: "#7A3B0E",
-    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
+    lightBlue: "#88A8F0", lightGreen: "#B8E880", lightOrange: "#F09060",
     dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
   },
   neutral100: "#EDEDED", neutral200: "#F4F4F4", neutral300: "#D6D6D6",
@@ -287,4 +287,4 @@ export const FOOTER_NAV = [
   { label: "About", path: "/about" },
   { label: "Tools", path: "/tools" },
   { label: "Contact", path: "/contact" },
-] as const
+] as const 
