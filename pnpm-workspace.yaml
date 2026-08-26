@@ -3,7 +3,11 @@ packages:
   - "."
 
 allowBuilds:
+  # Required by the image pipeline.
   sharp: true
+  # Explicitly reviewed after Vercel rejected their unapproved scripts.
+  core-js: true
+  unrs-resolver: true
 
 minimumReleaseAgeExclude:
   - '@next/env@16.3.3'
