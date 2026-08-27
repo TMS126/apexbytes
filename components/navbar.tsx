@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
+import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
 import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
@@ -170,10 +171,12 @@ export function Navbar() {
                 if (e.key === "Enter" || e.key === " ") { e.preventDefault(); navigate("/") }
               }}
             >
-              <img
+              <Image
                 src="/logo.png"
                 alt=""
                 aria-hidden="true"
+                width={36}
+                height={36}
                 className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 object-contain transition-[filter] duration-300"
                 style={{ filter: useLightLogoIcon ? "brightness(0) invert(1)" : "brightness(0)" }}
               />
