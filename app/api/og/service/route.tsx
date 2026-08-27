@@ -1,4 +1,5 @@
 // app/api/og/service/route.tsx
+/* eslint-disable @next/next/no-img-element -- ImageResponse requires a plain img element. */
 import { ImageResponse } from 'next/og'
 import { NextRequest } from 'next/server'
 import { HUBS, type HubId } from '@/lib/data'
@@ -55,6 +56,7 @@ let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)
             route's original 420×420 forced-square was doing exactly that. */}
         <img
           src={`${SITE_URL}/logo.png`}
+          alt=""
           width={420}
           height={228}
           style={{
