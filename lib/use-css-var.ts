@@ -1,7 +1,7 @@
 // lib/use-css-var.ts
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 // -----------------------------------------------------------------------
 // Reads a CSS custom property's live computed value off :root (e.g.
@@ -17,14 +17,16 @@ import { useEffect, useState } from "react"
 // resolvedTheme from next-themes) so the value re-reads on toggle.
 // -----------------------------------------------------------------------
 export function useCssVar(varName: string, themeKey: string | undefined, fallback: string) {
-  const [value, setValue] = useState(fallback)
+  const readValue = useCallback(() => {
+    if (typeof document === "undefined") return fallback
+    return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || fallback
+  }, [fallback, varName])
+  const [value, setValue] = useState(readValue)
 
   useEffect(() => {
-    const computed = getComputedStyle(document.documentElement)
-      .getPropertyValue(varName)
-      .trim()
-    if (computed) setValue(computed)
-  }, [varName, themeKey])
+    const frame = requestAnimationFrame(() => setValue(readValue()))
+    return () => cancelAnimationFrame(frame)
+  }, [readValue, themeKey])
 
   return value
 }
