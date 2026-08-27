@@ -1,7 +1,7 @@
 // components/ui/simple-dropdown.tsx
 "use client"
 
-import { useState, useRef, useEffect, useLayoutEffect } from "react"
+import { useState, useRef, useEffect, useLayoutEffect, useSyncExternalStore } from "react"
 import { createPortal } from "react-dom"
 import { CaretDown, Check } from "@phosphor-icons/react"
 
@@ -27,18 +27,21 @@ export function SimpleDropdown({
   accentColor: string
 }) {
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
   const [rect, setRect] = useState<{ top: number; left: number; width: number } | null>(null)
   const btnRef = useRef<HTMLButtonElement>(null)
   const current = options.find((o) => o.value === value)
 
-  useEffect(() => setMounted(true), [])
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false)
 
   useLayoutEffect(() => {
     if (!open || !btnRef.current) return
-    const r = btnRef.current.getBoundingClientRect()
-    const left = Math.min(Math.max(8, r.left), window.innerWidth - 232)
-    setRect({ top: r.bottom + 6, left, width: r.width })
+    const frame = requestAnimationFrame(() => {
+      if (!btnRef.current) return
+      const r = btnRef.current.getBoundingClientRect()
+      const left = Math.min(Math.max(8, r.left), window.innerWidth - 232)
+      setRect({ top: r.bottom + 6, left, width: r.width })
+    })
+    return () => cancelAnimationFrame(frame)
   }, [open])
 
   useEffect(() => {
