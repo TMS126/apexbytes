@@ -3,7 +3,6 @@
 
 import Image from "next/image"
 import { CaretRight, WarningCircle } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
 import { BRAND, TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 
