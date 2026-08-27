@@ -51,7 +51,7 @@ function StatusLine({ status }: { status: HubStatus }) {
 }
 
 export function BusinessStatusNavbar() {
-  const [status, setStatus] = useState<BusinessStatus | null>(null)
+  const [status, setStatus] = useState<BusinessStatus | null>(() => getBusinessStatus())
   const [expanded, setExpanded] = useState(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
 
@@ -60,7 +60,6 @@ export function BusinessStatusNavbar() {
   }
 
   useEffect(() => {
-    refresh()
     const id = setInterval(refresh, 60_000)
     return () => clearInterval(id)
   }, [])
@@ -146,14 +145,13 @@ export function BusinessStatusNavbar() {
 }
 
 export function BusinessStatusFull() {
-  const [status, setStatus] = useState<BusinessStatus | null>(null)
+  const [status, setStatus] = useState<BusinessStatus | null>(() => getBusinessStatus())
 
   function refresh() {
     setStatus(getBusinessStatus())
   }
 
   useEffect(() => {
-    refresh()
     const id = setInterval(refresh, 60_000)
     return () => clearInterval(id)
   }, [])
