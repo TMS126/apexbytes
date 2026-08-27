@@ -144,8 +144,16 @@ export function useJpgToPdf() {
       if (target) URL.revokeObjectURL(target.previewUrl)
       return prev.filter((img) => img.id !== id)
     })
-    setRotations((prev) => { const { [id]: _d, ...rest } = prev; return rest })
-    setFilters((prev) => { const { [id]: _f, ...rest } = prev; return rest })
+    setRotations((prev) => {
+      const next = { ...prev }
+      delete next[id]
+      return next
+    })
+    setFilters((prev) => {
+      const next = { ...prev }
+      delete next[id]
+      return next
+    })
     // A removed image's id could otherwise linger in convertedIds forever.
     setConvertedIds((prev) => { const next = new Set(prev); next.delete(id); return next })
   }
