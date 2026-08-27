@@ -116,11 +116,6 @@ export function Navbar() {
     [mounted, theme, isDarkBehind]
   )
 
-  const logoNeutralColor = useMemo(
-    () => resolveNeutralColor(mounted, theme, isLogoDarkBehind),
-    [mounted, theme, isLogoDarkBehind]
-  )
-
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
 
   const hubColor = useMemo(() => {

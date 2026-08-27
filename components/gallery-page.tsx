@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
 import { motion } from "framer-motion"
-import { X, Info, MagnifyingGlass, Shuffle, WarningCircle } from "@phosphor-icons/react"
+import { X, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
@@ -307,13 +307,11 @@ function GalleryPageInner() {
   )
 
   const handleSurprise = useCallback(() => {
-if ((PROJECTS.length as number) === 0) return
-  setSurpriseFlash(true)
+    setSurpriseFlash(true)
     setTimeout(() => {
-      const pool = PROJECTS
-      if (selectedProject && PROJECTS.length > 1) {
-const pool: (typeof PROJECTS)[number][] = [...PROJECTS]
-      }
+      const pool = selectedProject && PROJECTS.length > 1
+        ? PROJECTS.filter((project) => project.id !== selectedProject.id)
+        : PROJECTS
       const pick = pool[Math.floor(Math.random() * pool.length)]
       setActiveFilter(pick.hub as HubId)
       setSelectedProject(pick)
@@ -455,19 +453,6 @@ const pool: (typeof PROJECTS)[number][] = [...PROJECTS]
   )
 }
 
-function NoticeBadge() {
-  return (
-    <div className="absolute top-3 right-3 z-20 pointer-events-none">
-      <div
-        className="w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-sm"
-        style={{ backgroundColor: `${TOKEN.warningBg}1a` }}
-        aria-label="Notice for some services in this hub"
-      >
-        <WarningCircle size={17} weight="fill" style={{ color: TOKEN.warningBg }} aria-hidden="true" />
-      </div>
-    </div>
-  )
-}
 
 function GallerySkeleton() {
   return (
