@@ -40,7 +40,7 @@ export function CartItemRow({
         GLASS.item,
         isHighlighted && "ring-2 scale-[1.02]"
       )}
-      style={isHighlighted ? { ["--tw-ring-color" as any]: accent } : undefined}
+      style={isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : undefined}
     >
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">

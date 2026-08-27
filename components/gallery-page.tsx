@@ -99,7 +99,7 @@ function HubSectionDivider({ hubId, accent }: { hubId: HubId; accent: string }) 
       <div className="absolute inset-x-0 top-1/2 h-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true" />
       <h2
         className="group/pill relative z-10 bg-background px-4 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 py-2 text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400 transition-colors duration-200 hover:text-[var(--hub-accent)] hover:border-[var(--hub-accent)] focus-within:text-[var(--hub-accent)] focus-within:border-[var(--hub-accent)]"
-        style={{ ["--hub-accent" as any]: accent }}
+        style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       >
         <span className="text-zinc-400 dark:text-zinc-500 transition-colors duration-200 group-hover/pill:text-[var(--hub-accent)]">
           <HubIcon id={hubId} size={14} color="currentColor" />

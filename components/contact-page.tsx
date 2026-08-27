@@ -300,7 +300,7 @@ function ContactPageInner() {
 
                 <div className="flex-1 flex flex-col">
                   <label htmlFor="contact-message" className="abh-label block mb-1.5">Your Message</label>
-                  <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as any]: glowColor }}>
+                  <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: glowColor }}>
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}

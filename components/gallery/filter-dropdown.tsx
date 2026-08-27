@@ -61,8 +61,8 @@ export function FilterDropdown({
               )}
               style={
                 isActive
-                  ? { backgroundColor: activeBg, color: activeText, ["--tw-ring-color" as any]: activeBg }
-                  : { backgroundColor: isDark ? "#18181b" : "#ffffff", color: isDark ? "#e4e4e7" : "#3f3f46", ["--tw-ring-color" as any]: accent ?? blueColor }
+                  ? { backgroundColor: activeBg, color: activeText, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: activeBg }
+                  : { backgroundColor: isDark ? "#18181b" : "#ffffff", color: isDark ? "#e4e4e7" : "#3f3f46", ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
               }
             >
               {opt.label}
@@ -88,7 +88,7 @@ export function FilterDropdown({
               "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
               "border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200"
             )}
-            style={{ ["--tw-ring-color" as any]: blueColor }}
+            style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
             <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-zinc-100 dark:bg-zinc-800">
               {activeFilter !== "all" ? <HubIcon id={activeFilter} size={15} color={getAccent(activeFilter)} /> : <Funnel size={15} weight="bold" aria-hidden="true" />}
@@ -134,8 +134,8 @@ export function FilterDropdown({
                         )}
                         style={
                           isActive
-                            ? { backgroundColor: activeBg, color: activeText, ["--tw-ring-color" as any]: activeBg }
-                            : { backgroundColor: isDark ? "#18181b" : "#ffffff", color: accent ?? (isDark ? "#e4e4e7" : "#3f3f46"), ["--tw-ring-color" as any]: accent ?? blueColor }
+                            ? { backgroundColor: activeBg, color: activeText, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: activeBg }
+                            : { backgroundColor: isDark ? "#18181b" : "#ffffff", color: accent ?? (isDark ? "#e4e4e7" : "#3f3f46"), ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
                         }
                       >
                         {opt.id !== "all" && <HubIcon id={opt.id as HubId} size={13} color={isActive ? activeText : accent} />}

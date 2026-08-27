@@ -110,7 +110,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           onClick={onClose}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 text-[0.92rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
-          style={{ color: accent, ["--tw-ring-color" as any]: accent }}
+          style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
           Order
@@ -120,7 +120,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 text-[0.92rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
-          style={{ color: accent, ["--tw-ring-color" as any]: accent }}
+          style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
           Ask
@@ -147,7 +147,7 @@ function FloatingOtherProjectsWidget({ siblings, currentId, accent, onSelect }: 
             onClick={() => onSelect(p)}
             aria-label={`View ${p.title}`}
             className="shrink-0 flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60 bg-white/60 dark:bg-zinc-900/60 transition-colors hover:border-current focus-visible:outline-none focus-visible:ring-2"
-            style={{ color: accent, ["--tw-ring-color" as any]: accent }}
+            style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
           >
             <span className="relative w-7 h-7 rounded-full overflow-hidden shrink-0">
               <SafeImage src={p.image} alt={p.title} accent={accent} fill sizes="28px" className="object-cover" />
@@ -311,7 +311,7 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
         onClick={onClose}
         aria-label="Close project"
         className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        style={{ ["--tw-ring-color" as any]: accent }}
+        style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
       >
         <X size={16} weight="bold" />
       </button>

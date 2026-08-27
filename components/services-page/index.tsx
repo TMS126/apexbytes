@@ -42,7 +42,7 @@ function HubCta({ label, accent, pointsRight }: { label: string; accent: string;
   return (
     <span
       className="relative inline-flex items-center gap-1 text-[0.94rem] font-black text-muted-foreground transition-colors duration-200 group-hover/hubcard:text-[var(--hub-accent)]"
-      style={{ ["--hub-accent" as any]: accent }}
+      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
     >
       <span className="relative">
         {label}
@@ -63,7 +63,7 @@ function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
   return (
     <div
       className="pointer-events-none absolute -bottom-4 -right-4 w-24 h-24 flex items-center justify-center text-muted-foreground opacity-70 transition-all duration-300 group-hover/hubcard:opacity-100 group-hover/hubcard:text-[var(--hub-accent)] group-hover/hubcard:scale-105"
-      style={{ ["--hub-accent" as any]: accent }}
+      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       aria-hidden="true"
     >
       <HubIcon id={hubId} size={72} color="currentColor" />
@@ -467,7 +467,7 @@ export function ServicesPage() {
                       tabIndex={0}
                       onKeyDown={(e) => e.key === "Enter" && handleDesktopSelectHub(hubId)}
                       aria-label={`Open ${hub.title}`}
-                      style={{ ["--hub-accent" as any]: accent }}
+                      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
                     >
                       <HubCornerIcon hubId={hubId} accent={accent} />
                       {hubHasBulk && <BulkRibbon fill={colors.primary} />}

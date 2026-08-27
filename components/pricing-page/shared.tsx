@@ -67,7 +67,7 @@ export function PdfPillButton({
         borderColor: hovered ? hoverSolid : `${restColor}35`,
         backgroundColor: hovered ? hoverSolid : `${restColor}12`,
         border: '1px solid',
-        ['--tw-ring-color' as any]: restColor,
+        ['--tw-ring-color' as unknown as keyof import("react").CSSProperties]: restColor,
       }}
     >
       <FilePdf size={isLg ? 20 : 16} weight="fill" aria-hidden="true" />

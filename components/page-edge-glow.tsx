@@ -47,7 +47,7 @@ export function PageEdgeGlow() {
       key={`${pathname}-${runId}`}
       aria-hidden="true"
       className="fixed inset-x-0 top-0 z-[9999] pointer-events-none h-[320px] overflow-hidden abh-edge-glow"
-      style={{ ["--glow-color" as any]: color }}
+      style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: color }}
     >
       <style>{`
         @keyframes abh-edge-glow-kf {
