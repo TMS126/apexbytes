@@ -39,7 +39,7 @@ export function Navbar() {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
 
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [desktopNavOpen, setDesktopNavOpen] = useState(false)
   const [contactHovered, setContactHovered] = useState(false)
   const [ctaPulse, setCtaPulse] = useState(false)
@@ -53,8 +53,10 @@ export function Navbar() {
   const desktopNavRef = useRef<HTMLDivElement>(null)
   const desktopNavToggleRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => setMounted(true), [])
-  useEffect(() => setDesktopNavOpen(false), [pathname])
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setDesktopNavOpen(false))
+    return () => cancelAnimationFrame(frame)
+  }, [pathname])
 
   useEffect(() => {
     if (!desktopNavOpen) return
@@ -85,8 +87,8 @@ export function Navbar() {
   }, [desktopNavOpen])
 
   useEffect(() => {
-    setCtaPulse(false)
-    if (pathname === "/contact") return
+    const resetFrame = requestAnimationFrame(() => setCtaPulse(false))
+    if (pathname === "/contact") return () => cancelAnimationFrame(resetFrame)
     const onScroll = () => {
       if (window.scrollY > window.innerHeight * 2) {
         setCtaPulse(true)
@@ -94,7 +96,10 @@ export function Navbar() {
       }
     }
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      cancelAnimationFrame(resetFrame)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [pathname])
 
   const navigate = useCallback(

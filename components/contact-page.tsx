@@ -38,7 +38,7 @@ const QUICK_LINKS = [
 function ContactPageInner() {
   const searchParams = useSearchParams()
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
   const greyColor = isDark ? CONTACT_GREY.dark : CONTACT_GREY.light
 
@@ -52,19 +52,21 @@ function ContactPageInner() {
   const showBackToTop = useBackToTop()
   const showScrollToBottom = useScrollToBottom()
 
-  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     const serviceParam = searchParams.get("service")
     const messageParam = searchParams.get("message")
     if (!serviceParam && !messageParam) return
 
-    setFormData((prev) => ({
-      ...prev,
-      service: serviceParam && serviceParam in FORM_HUB_KEYS ? serviceParam : prev.service,
-      message: messageParam ?? prev.message,
-    }))
-    setPrefilled(true)
+    const frame = requestAnimationFrame(() => {
+      setFormData((prev) => ({
+        ...prev,
+        service: serviceParam && serviceParam in FORM_HUB_KEYS ? serviceParam : prev.service,
+        message: messageParam ?? prev.message,
+      }))
+      setPrefilled(true)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [searchParams])
 
   useEffect(() => {
