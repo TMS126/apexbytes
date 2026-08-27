@@ -425,6 +425,9 @@ const onDragRect = useCallback((e: PointerEvent) => {
                     role="slider"
                     aria-label={`Resize crop from ${corner === "nw" ? "top left" : corner === "ne" ? "top right" : corner === "sw" ? "bottom left" : "bottom right"} corner`}
                     aria-valuetext={cropDimsLabel}
+                    aria-valuenow={Math.round(corner === "nw" || corner === "sw" ? inset.left : inset.right)}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
                     tabIndex={0}
                     className={`absolute w-5 h-5 rounded-full bg-white shadow touch-none focus:ring-2 focus:outline-none ${
                       corner === "nw" ? "-top-2.5 -left-2.5 cursor-nwse-resize" :
@@ -461,6 +464,9 @@ const onDragRect = useCallback((e: PointerEvent) => {
                   role="slider"
                   aria-label={`Move corner ${idx + 1} of 4`}
                   aria-valuetext={cropDimsLabel}
+                  aria-valuenow={Math.round(c.x * 100)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
                   tabIndex={0}
                   className="absolute w-5 h-5 -mt-2.5 -ml-2.5 rounded-full border-2 border-white shadow touch-none cursor-move focus:ring-2 focus:outline-none"
                   style={{ top: `${toFrame(c.y * 100, "y")}%`, left: `${toFrame(c.x * 100, "x")}%`, backgroundColor: BRAND.orange }}
