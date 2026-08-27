@@ -20,7 +20,7 @@ import { NoticePill } from '@/components/notice-pill'
 
 export default function PricingPage() {
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === 'dark'
 
   // Mobile accordion state
@@ -39,7 +39,6 @@ const displayedHub = hoveredHub ?? selectedHub
   const addedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const showBackToTop = useBackToTop()
 
-  useEffect(() => { setMounted(true) }, [])
   useEffect(() => () => { if (addedTimerRef.current) clearTimeout(addedTimerRef.current) }, [])
 
   const accent = isDark ? BRAND.lightBlue : BRAND.blue
@@ -116,7 +115,7 @@ const displayedHub = hoveredHub ?? selectedHub
 
   const results = useMemo(
     () => (query.trim() ? searchHubs(query, () => accent) : null),
-    [query, isDark, accent]
+    [query, accent]
   )
 
   const noResultsWaLink = waLink(

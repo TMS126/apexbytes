@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useTheme } from "next-themes"
 import { BRAND } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
@@ -13,10 +13,9 @@ const WORDS = [
 
 export function ClassicTagline() {
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [hovered, setHovered] = useState(false)
 
-  useEffect(() => { setMounted(true) }, [])
   const isDark  = mounted && resolvedTheme === "dark"
   const pageBg  = isDark ? "#0D1B2A" : "#FFFFFF"
 
