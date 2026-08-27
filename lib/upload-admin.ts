@@ -149,7 +149,9 @@ export async function deleteExpiredPendingUploads({ retentionDays }: { retention
 
   configureCloudinary()
   const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000).toISOString()
-  const expression = `tags=${PENDING_UPLOAD_TAG} AND folder=${UPLOAD_FOLDER_PREFIX.slice(0, -1)} AND created_at<${cutoff}`
+  // Cloudinary search expressions require ISO timestamps containing reserved
+  // characters such as ':' to be quoted.
+  const expression = `tags=${PENDING_UPLOAD_TAG} AND folder=${UPLOAD_FOLDER_PREFIX.slice(0, -1)} AND created_at<"${cutoff}"`
   const resources: PendingUpload[] = []
   let nextCursor: string | undefined
   let pagesProcessed = 0
