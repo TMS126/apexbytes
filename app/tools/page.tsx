@@ -73,7 +73,7 @@ export default function ToolsPage() {
               <div>
                 <p className="text-[0.95rem] font-black text-zinc-800 dark:text-zinc-200 mb-1">More Tools — Coming Soon</p>
                 <p className="text-[0.85rem] text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                  We're building out more free tools for this page. Check back soon, or WhatsApp us if there's something specific you'd find useful.
+                  We&apos;re building out more free tools for this page. Check back soon, or WhatsApp us if there&apos;s something specific you&apos;d find useful.
                 </p>
               </div>
             </div>

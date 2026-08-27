@@ -25,7 +25,7 @@ export function AboutStory({
         <ScrollBounce delay={0.15}>
           <div className="mb-10 text-center max-w-[720px] mx-auto">
             <p className="font-sans font-semibold text-xl md:text-2xl leading-snug text-zinc-700 dark:text-zinc-300">
-              "Not everyone is tech-savvy — and that's exactly why we're here."
+              &quot;Not everyone is tech-savvy — and that&apos;s exactly why we&apos;re here.&quot;
             </p>
             <p className="abh-body mt-4 text-base max-w-lg mx-auto text-center">
               We started with one goal: make technology, design, and important government services accessible to
@@ -62,18 +62,18 @@ export function AboutStory({
               <p className="abh-body text-base leading-relaxed">
                 There was no ApexbytesHub yet — just a phone, WhatsApp, and a status update. A friend spotted a
                 simple edited image Theji had posted and asked if he could design a logo. That request was for
-                "<TheNakedTradersZAReveal accentColor={blueOnCard} accentOrange={orangeOnCard} />" — the very
-                first thing Theji ever designed with a vector program, and the first logo he'd ever made for
+                &quot;<TheNakedTradersZAReveal accentColor={blueOnCard} accentOrange={orangeOnCard} />&quot; — the very
+                first thing Theji ever designed with a vector program, and the first logo he&apos;d ever made for
                 anyone.
               </p>
               <p className="abh-body text-base leading-relaxed mt-3">
                 It was 2021, maybe early 2022. There was no plan, no brief, no clue where it would lead — just a
-                decision to give the person what they'd asked for. That one logo turned into the realization that
+                decision to give the person what they&apos;d asked for. That one logo turned into the realization that
                 this could be more than a favor. Theji kept going, kept learning, and kept saying yes to the next
                 request — until those requests became {BIZ.name}.
               </p>
               <p className="abh-body text-base leading-relaxed mt-3">
-                Today he's the owner, the founder — the one who built this from a WhatsApp status into a real hub
+                Today he&apos;s the owner, the founder — the one who built this from a WhatsApp status into a real hub
                 for the community that asked for it first.
               </p>
             </div>

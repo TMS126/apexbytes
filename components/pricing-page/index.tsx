@@ -280,7 +280,7 @@ const displayedHub = hoveredHub ?? selectedHub
                     <p className="abh-body mb-4">
                       No results for{' '}
                       <span className="font-semibold text-zinc-700 dark:text-zinc-300">
-                        "{query}"
+                        &quot;{query}&quot;
                       </span>
                     </p>
                     <a
@@ -290,7 +290,7 @@ const displayedHub = hoveredHub ?? selectedHub
                       className="abh-wa-btn inline-flex px-4 py-2.5 text-xs"
                     >
                       <WhatsappLogo size={14} weight="fill" aria-hidden="true" />
-                      Can't find it? Ask us on WhatsApp
+                      Can&apos;t find it? Ask us on WhatsApp
                     </a>
                   </div>
                 </ScrollBounce>

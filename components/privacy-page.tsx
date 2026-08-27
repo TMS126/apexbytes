@@ -158,7 +158,7 @@ export function PrivacyPage() {
                   does today. If/when automated deletion is implemented,
                   this line should be updated to describe the real
                   retention window at that point. */}
-              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Stored on Cloudinary for as long as needed to complete your service. We currently review and remove files manually rather than on an automated schedule — if you'd like a specific file deleted sooner, contact us using the details in Section 10 and we'll action it directly.</li>
+              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Stored on Cloudinary for as long as needed to complete your service. We currently review and remove files manually rather than on an automated schedule — if you&apos;d like a specific file deleted sooner, contact us using the details in Section 10 and we&apos;ll action it directly.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Physical documents:</strong> Returned to you immediately after service or destroyed on the same day.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Government application records:</strong> Retained only as long as needed to resolve your application (typically same day to 7 days).</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Contact information:</strong> Not stored in any database unless you have an ongoing order.</li>

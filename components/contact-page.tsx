@@ -122,7 +122,7 @@ function ContactPageInner() {
           <ScrollBounce>
             <h1 className="abh-page-title mb-3">Contact Us</h1>
           </ScrollBounce>
-          <p className="abh-tagline max-w-xl mx-auto text-center">We're here and ready to help — reach out any way you prefer.</p>
+          <p className="abh-tagline max-w-xl mx-auto text-center">We&apos;re here and ready to help — reach out any way you prefer.</p>
           <div className="abh-divider" />
         </div>
       </section>
