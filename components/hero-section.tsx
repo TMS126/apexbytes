@@ -41,11 +41,12 @@ function getArrowIconColor(bgHex: string) {
 // animations are all inline-style/JS-driven (wander loop, fly-in, hover
 // bounce, shake) so they need an explicit media query check instead.
 function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false)
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  )
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setReduced(mq.matches)
     const handler = (e: MediaQueryListEvent) => setReduced(e.matches)
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
@@ -295,22 +296,21 @@ function HubIconField({
 export function HeroSection() {
   const router = useRouter()
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [marqueePaused, setMarqueePaused] = useState(false)
-  const [status, setStatus] = useState<BusinessStatus | null>(null)
+  const [status, setStatus] = useState<BusinessStatus | null>(() => getBusinessStatus())
   const [weatherCategory, setWeatherCategory] = useState<WeatherCategory | null>(null)
-  const [canHover, setCanHover] = useState(false)
+  const [canHover, setCanHover] = useState(() =>
+    typeof window !== "undefined" && !!window.matchMedia?.("(hover: hover) and (pointer: fine)").matches
+  )
   const showBackToTop = useBackToTop()
   const prefersReducedMotion = usePrefersReducedMotion()
 
-  const [arrangement, setArrangement] = useState<IconEntry[]>(() => buildArrangement())
+  const [arrangement] = useState<IconEntry[]>(() => buildArrangement())
 
   const ctaBtnRef = useRef<HTMLButtonElement>(null)
 
   React.useEffect(() => {
-    setMounted(true)
-    setArrangement(buildArrangement())
-    setStatus(getBusinessStatus())
     const id = setInterval(() => setStatus(getBusinessStatus()), 60_000)
     return () => clearInterval(id)
   }, [])
@@ -318,7 +318,6 @@ export function HeroSection() {
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)")
-    setCanHover(mq.matches)
     const handler = (e: MediaQueryListEvent) => setCanHover(e.matches)
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
