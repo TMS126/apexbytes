@@ -72,11 +72,10 @@ function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
 }
 
 function Pill({
-  icon, label, accent, fill, isActive, onClick, size = "md",
+  icon, label, fill, isActive, onClick, size = "md",
 }: {
   icon?: React.ReactNode
   label: string
-  accent: string
   fill: string
   isActive: boolean
   onClick: () => void
@@ -314,20 +313,23 @@ export function ServicesPage() {
       const section = HUBS[hubParam as HubId].sections.find((s) => s.title === sectionParam)
       const item = section?.items.find((i) => i.name === serviceParam)
       if (section && item) {
-        handleSelectService({
-          name: item.name, price: item.price, hubId: hubParam as HubId,
-          sectionTitle: section.title, requirements: item.requirements,
-          desc: item.description, turnaround: getTurnaround(section.title, item.name),
-          tips: item.tips ? [...item.tips] : undefined,
-          notice: item.notice,
+        const frame = requestAnimationFrame(() => {
+          handleSelectService({
+            name: item.name, price: item.price, hubId: hubParam as HubId,
+            sectionTitle: section.title, requirements: item.requirements,
+            desc: item.description, turnaround: getTurnaround(section.title, item.name),
+            tips: item.tips ? [...item.tips] : undefined,
+            notice: item.notice,
+          })
         })
         router.replace("/services", { scroll: false })
-        return
+        return () => cancelAnimationFrame(frame)
       }
     }
 
-    handleOpenHub(hubParam as HubId, "right")
+    const frame = requestAnimationFrame(() => handleOpenHub(hubParam as HubId, "right"))
     router.replace("/services", { scroll: false })
+    return () => cancelAnimationFrame(frame)
   }, [searchParams, router])
 
   const { closeHub, closeService } = useModalBackStack(activeHub, setActiveHub, selectedService, setSelectedService)
@@ -513,7 +515,6 @@ export function ServicesPage() {
                   <Pill
                     key={hubId}
                     label={HUBS[hubId].title}
-                    accent={accent}
                     fill={colors.primary}
                     isActive={isActivePill}
                     onClick={() => handleDesktopSwitchHub(hubId)}
@@ -530,7 +531,6 @@ export function ServicesPage() {
                   <Pill
                     key={sIdx}
                     label={section.title}
-                    accent={desktopHubAccent}
                     fill={desktopHubFill}
                     isActive={sIdx === desktopActiveSection}
                     onClick={() => handleDesktopSwitchSection(sIdx)}
