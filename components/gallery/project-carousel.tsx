@@ -126,7 +126,10 @@ function SwipeCarousel({
     setDragX(dx)
   }
   const onTouchEnd = () => {
-    if (Math.abs(dragX) > 60) (dragX < 0 ? next() : prev())
+    if (Math.abs(dragX) > 60) {
+      if (dragX < 0) next()
+      else prev()
+    }
     setDragX(0)
     touchStartX.current = null
   }

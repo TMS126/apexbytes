@@ -261,7 +261,13 @@ function DesktopImageStack({
             onClick={() => (isActive ? onOpenZoom(idx) : setActiveIdx(idx))}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); isActive ? onOpenZoom(idx) : setActiveIdx(idx) } }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                if (isActive) onOpenZoom(idx)
+                else setActiveIdx(idx)
+              }
+            }}
             aria-label={isActive ? `Open image ${idx + 1} of ${images.length}` : `Focus image ${idx + 1} of ${images.length}`}
             className="group/stackimg relative w-full rounded-[14px] overflow-hidden cursor-pointer bg-zinc-100 dark:bg-zinc-900 transition-all duration-300"
             style={{

@@ -44,9 +44,8 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
     const dx = e.changedTouches[0].clientX - touchStartX.current
     const dy = Math.abs(e.changedTouches[0].clientY - touchStartY.current)
     if (Math.abs(dx) < 40 || dy > Math.abs(dx)) return
-    dx < 0
-      ? setIdx(i => (i + 1) % images.length)
-      : setIdx(i => (i - 1 + images.length) % images.length)
+    if (dx < 0) setIdx(i => (i + 1) % images.length)
+    else setIdx(i => (i - 1 + images.length) % images.length)
   }
 
   return (
