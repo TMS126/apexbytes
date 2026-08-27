@@ -96,7 +96,7 @@ export const PROJECTS = [
 
 export type ProjectData = {
   id: string; hub: string; title: string; tag: string; shortDesc: string
-  image: string; images: readonly string[]; clientType?: "client" | "practice" | "sample"
+  image: string; images: readonly string[]; beforeImage?: string; afterImage?: string; clientType?: "client" | "practice" | "sample"
   sensitive?: boolean; clientGoal: string; whatWeDid: readonly string[]
   tools: readonly string[]; result: string
 }
