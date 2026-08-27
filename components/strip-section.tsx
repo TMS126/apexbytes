@@ -35,7 +35,7 @@ export function StripSection() {
   )
 }
 
-function StripCard({ item }: { item: any }) {
+function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [hovered, setHovered] = useState(false)
