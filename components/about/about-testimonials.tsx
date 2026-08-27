@@ -53,7 +53,7 @@ function CompactTestimonials() {
   )
 }
 
-export function AboutTestimonials({ isDark }: { isDark: boolean }) {
+export function AboutTestimonials() {
   return (
     <section className="py-14 md:py-16 px-4 md:px-8 border-t border-zinc-100 dark:border-zinc-800/60" aria-labelledby="about-testimonials-title">
       <div className="max-w-[980px] mx-auto">

@@ -43,7 +43,7 @@ export function AboutPage() {
       <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
       <AboutTeam blueColor={blueColor} />
       <AboutStandards blueColor={blueColor} neutralColor={neutralColor} />
-      <AboutTestimonials isDark={isDark} />
+      <AboutTestimonials />
       <AboutMission blueOnPage={blueOnPage} missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
       <BackToTopButton visible={showBackToTop} />
     </div>
