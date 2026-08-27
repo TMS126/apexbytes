@@ -1,7 +1,7 @@
 // app/tools/jpg-to-pdf/settings-bar.tsx
 "use client"
 
-import { useRef, useCallback } from "react"
+import { useRef, useCallback, useState } from "react"
 import { SimpleDropdown } from "@/components/ui/simple-dropdown"
 import { BRAND } from "@/lib/brand"
 import { PAGE_SIZES, MODE_LABELS } from "./constants"
@@ -27,6 +27,7 @@ function QualitySlider({
 }) {
   const trackRef = useRef<HTMLDivElement>(null)
   const draggingRef = useRef(false)
+  const [dragging, setDragging] = useState(false)
 
   const pct = ((quality - QUALITY_MIN) / (QUALITY_MAX - QUALITY_MIN)) * 100
 
@@ -43,6 +44,7 @@ function QualitySlider({
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     draggingRef.current = true
+    setDragging(true)
     ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
     updateFromClientX(e.clientX)
   }
@@ -52,6 +54,7 @@ function QualitySlider({
   }
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     draggingRef.current = false
+    setDragging(false)
     ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
   }
 
@@ -94,7 +97,7 @@ function QualitySlider({
         className="absolute w-5 h-5 rounded-full bg-white dark:bg-zinc-100 border-2 border-white dark:border-zinc-200"
         style={{
           left: `calc(${pct}% - 10px)`,
-          transition: draggingRef.current ? "none" : "left 120ms cubic-bezier(0.22, 1, 0.36, 1)",
+          transition: dragging ? "none" : "left 120ms cubic-bezier(0.22, 1, 0.36, 1)",
           boxShadow: "0 2px 6px -1px rgba(0,0,0,0.28), 0 1px 3px -1px rgba(0,0,0,0.18)",
         }}
       />

@@ -185,17 +185,16 @@ const onDragRect = useCallback((e: PointerEvent) => {
     dragRef.current = null
     setMagnifierActive(false)
     window.removeEventListener("pointermove", onDragRect)
-    window.removeEventListener("pointerup", endDragRect)
   }, [onDragRect])
 
-  const startDragRect = (handle: string) => (e: React.PointerEvent) => {
+  const startDragRect = useCallback((handle: string, e: React.PointerEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setMagnifierActive(true)
     dragRef.current = { kind: "inset", handle, startX: e.clientX, startY: e.clientY, startInset: inset, startCorners: corners }
     window.addEventListener("pointermove", onDragRect)
-    window.addEventListener("pointerup", endDragRect)
-  }
+    window.addEventListener("pointerup", endDragRect, { once: true })
+  }, [inset, corners, onDragRect, endDragRect])
 
   const onDragQuad = useCallback((e: PointerEvent) => {
     const drag = dragRef.current
@@ -218,17 +217,16 @@ const onDragRect = useCallback((e: PointerEvent) => {
     dragRef.current = null
     setMagnifierActive(false)
     window.removeEventListener("pointermove", onDragQuad)
-    window.removeEventListener("pointerup", endDragQuad)
   }, [onDragQuad])
 
-  const startDragQuad = (idx: number) => (e: React.PointerEvent) => {
+  const startDragQuad = useCallback((idx: number, e: React.PointerEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setMagnifierActive(true)
     dragRef.current = { kind: "corner", handle: String(idx), startX: e.clientX, startY: e.clientY, startInset: inset, startCorners: corners }
     window.addEventListener("pointermove", onDragQuad)
-    window.addEventListener("pointerup", endDragQuad)
-  }
+    window.addEventListener("pointerup", endDragQuad, { once: true })
+  }, [inset, corners, onDragQuad, endDragQuad])
 
   const NUDGE = 1.5
   const onRectKeyDown = (handle: string) => (e: React.KeyboardEvent) => {
@@ -411,7 +409,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
                 }}
               />
               <div
-                onPointerDown={startDragRect("move")}
+                onPointerDown={(e) => startDragRect("move", e)}
                 className="absolute border-2 border-white cursor-move touch-none"
                 style={{
                   top: `${toFrame(inset.top, "y")}%`, left: `${toFrame(inset.left, "x")}%`,
@@ -421,7 +419,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
                 {(["nw", "ne", "sw", "se"] as const).map((corner) => (
                   <div
                     key={corner}
-                    onPointerDown={startDragRect(corner)}
+                    onPointerDown={(e) => startDragRect(corner, e)}
                     onKeyDown={onRectKeyDown(corner)}
                     role="slider"
                     aria-label={`Resize crop from ${corner === "nw" ? "top left" : corner === "ne" ? "top right" : corner === "sw" ? "bottom left" : "bottom right"} corner`}
@@ -460,7 +458,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
               {corners.map((c, idx) => (
                 <div
                   key={idx}
-                  onPointerDown={startDragQuad(idx)}
+                  onPointerDown={(e) => startDragQuad(idx, e)}
                   onKeyDown={onQuadKeyDown(idx)}
                   role="slider"
                   aria-label={`Move corner ${idx + 1} of 4`}
