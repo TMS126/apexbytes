@@ -318,7 +318,6 @@ const displayedHub = hoveredHub ?? selectedHub
         <ScrollBounce key={hubId} delay={idx * 0.05}>
           <HubCompactCard
             hubId={hubId}
-            accent={accent}
             isDark={isDark}
             isSelected={selectedHub === hubId}
             isActive={displayedHub === hubId}

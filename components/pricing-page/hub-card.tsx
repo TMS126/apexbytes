@@ -129,7 +129,6 @@ interface HubCompactCardProps {
   isSelected: boolean
   isActive: boolean
   isDark: boolean
-  accent: string
   hubHasBulk: boolean
   onSelect: () => void
   onHover: () => void
@@ -140,7 +139,6 @@ export function HubCompactCard({
   isSelected,
   isActive,
   isDark,
-  accent,
   hubHasBulk,
   onSelect,
   onHover,
