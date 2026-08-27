@@ -39,7 +39,10 @@ function HubCollectionCard({
 
   // Reset which image is "big" whenever the active project changes
   useEffect(() => {
-    setOrder([0, 1, 2].filter((i) => i < images.length))
+    const frame = requestAnimationFrame(() => {
+      setOrder([0, 1, 2].filter((i) => i < images.length))
+    })
+    return () => cancelAnimationFrame(frame)
   }, [project.id, images.length])
 
   const bigIdx = order[0] ?? 0

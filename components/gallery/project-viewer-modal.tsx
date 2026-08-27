@@ -16,10 +16,11 @@ import { ZoomOverlay } from "./zoom-overlay"
 import { LikeButton, ShareButton } from "./like-share-buttons"
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  )
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
-    setIsMobile(mq.matches)
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
@@ -415,8 +416,11 @@ export function ProjectViewerModal({
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setActiveImg(0)
-    setComparing(false)
+    const frame = requestAnimationFrame(() => {
+      setActiveImg(0)
+      setComparing(false)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [project?.id])
 
   const currentIdx = project ? siblings.findIndex((p) => p.id === project.id) : -1

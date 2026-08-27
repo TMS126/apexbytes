@@ -236,11 +236,14 @@ function GalleryPageInner() {
   const [photoNoticeDismissed, setPhotoNoticeDismissed] = useState(false)
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(LIKES_STORAGE_KEY)
-      if (raw) setLikedIds(new Set(JSON.parse(raw)))
-    } catch {}
-    likesHydrated.current = true
+    const frame = requestAnimationFrame(() => {
+      try {
+        const raw = localStorage.getItem(LIKES_STORAGE_KEY)
+        if (raw) setLikedIds(new Set(JSON.parse(raw)))
+      } catch {}
+      likesHydrated.current = true
+    })
+    return () => cancelAnimationFrame(frame)
   }, [])
   useEffect(() => {
     if (!likesHydrated.current) return
@@ -262,17 +265,21 @@ function GalleryPageInner() {
     const projectId = searchParams.get("project")
     if (!projectId) return
     const match = PROJECTS.find(p => p.id === projectId)
-    if (match) {
+    if (!match) return
+    const frame = requestAnimationFrame(() => {
       setActiveFilter(match.hub as HubId)
       setSelectedProject(match)
-    }
+    })
+    return () => cancelAnimationFrame(frame)
   }, [searchParams])
 
   useEffect(() => {
     const hubParam = searchParams.get("hub")
     if (!hubParam) return
     const isValidHub = ROW_ORDER.some(r => r.id === hubParam)
-    if (isValidHub) setActiveFilter(hubParam as HubId)
+    if (!isValidHub) return
+    const frame = requestAnimationFrame(() => setActiveFilter(hubParam as HubId))
+    return () => cancelAnimationFrame(frame)
   }, [searchParams])
 
   useEffect(() => {
