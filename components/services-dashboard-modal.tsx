@@ -7,10 +7,9 @@ import { ServicesPage } from "./services-page"
 interface ServicesDashboardModalProps {
   isOpen: boolean
   onClose: () => void
-  onNavigate: (page: string) => void
 }
 
-export function ServicesDashboardModal({ isOpen, onClose, onNavigate }: ServicesDashboardModalProps) {
+export function ServicesDashboardModal({ isOpen, onClose }: ServicesDashboardModalProps) {
   
   useEffect(() => {
     if (isOpen) {
