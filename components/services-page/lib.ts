@@ -60,7 +60,7 @@ export function trackEvent(name: string, payload: Record<string, unknown> = {}) 
     window.dispatchEvent(new CustomEvent("abh:track", { detail: { name, ...payload } }))
   }
   if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
+
     console.debug("[track]", name, payload)
   }
 }
@@ -163,4 +163,4 @@ export interface SelectedService {
   sectionTitle: string; requirements: string[]; desc?: string; turnaround?: string
   tips?: string[]
   notice?: string   // Set only when this specific service has an active warning to show
-} 
+}

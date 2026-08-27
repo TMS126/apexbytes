@@ -142,7 +142,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
     const imgPxH = (imageRect.height / 100) * rect.height
     const dx = ((e.clientX - drag.startX) / imgPxW) * 100
     const dy = ((e.clientY - drag.startY) / imgPxH) * 100
-    let next = { ...drag.startInset }
+    const next = { ...drag.startInset }
 
     if (drag.handle === "move") {
       next.top = clamp(drag.startInset.top + dy, 0, 100 - drag.startInset.bottom - 5)

@@ -310,9 +310,9 @@ function GalleryPageInner() {
 if ((PROJECTS.length as number) === 0) return
   setSurpriseFlash(true)
     setTimeout(() => {
-      let pool = PROJECTS
+      const pool = PROJECTS
       if (selectedProject && PROJECTS.length > 1) {
-let pool: (typeof PROJECTS)[number][] = [...PROJECTS]
+const pool: (typeof PROJECTS)[number][] = [...PROJECTS]
       }
       const pick = pool[Math.floor(Math.random() * pool.length)]
       setActiveFilter(pick.hub as HubId)
