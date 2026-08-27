@@ -138,7 +138,7 @@ export function QuoteCalculatorWidget() {
   useEffect(() => {
     if (!highlightId) return
     const id = highlightId
-    let raf1: number, raf2: number
+    let raf2: number | undefined
     const tryScroll = () => {
       const el = chipRefs.current[id]
       if (el) {
@@ -147,9 +147,13 @@ export function QuoteCalculatorWidget() {
         raf2 = requestAnimationFrame(tryScroll)
       }
     }
-    raf1 = requestAnimationFrame(tryScroll)
+    const raf1 = requestAnimationFrame(tryScroll)
     const clearT = setTimeout(() => setHighlightId(null), 900)
-    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); clearTimeout(clearT) }
+    return () => {
+      cancelAnimationFrame(raf1)
+      if (raf2 !== undefined) cancelAnimationFrame(raf2)
+      clearTimeout(clearT)
+    }
   }, [highlightId])
 
   useEffect(() => {
