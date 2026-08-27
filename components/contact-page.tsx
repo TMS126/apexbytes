@@ -49,7 +49,6 @@ function ContactPageInner() {
   const [glowActive, setGlowActive] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
   const formCardRef = useRef<HTMLDivElement>(null)
-  const messageRef = useRef<HTMLTextAreaElement>(null)
   const showBackToTop = useBackToTop()
   const showScrollToBottom = useScrollToBottom()
 
@@ -72,7 +71,6 @@ function ContactPageInner() {
     if (!prefilled || !mounted) return
     const id = requestAnimationFrame(() => {
       formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-      messageRef.current?.focus({ preventScroll: true })
       setGlowActive(true)
     })
     const stopTimer = setTimeout(() => setGlowActive(false), 2600)
@@ -305,7 +303,6 @@ function ContactPageInner() {
                   <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as any]: glowColor }}>
                     <textarea
                       id="contact-message"
-                      ref={messageRef}
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       className={cn(
                         "w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none",
