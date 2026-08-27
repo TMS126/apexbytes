@@ -185,7 +185,6 @@ const displayedHub = hoveredHub ?? selectedHub
                     Icon={Lightning}
                     collapsedLabel="Rush Fee"
                     expandedLabel="Rush Fee"
-                    isDark={isDark}
                     onDismiss={() => setRushNoticeDismissed(true)}
                   >
                     A{' '}
@@ -204,7 +203,6 @@ const displayedHub = hoveredHub ?? selectedHub
                     Icon={SealPercent}
                     collapsedLabel="Bulk Deals"
                     expandedLabel="Bulk Pricing"
-                    isDark={isDark}
                     onDismiss={() => setBulkNoticeDismissed(true)}
                   >
                     Look for the{' '}

@@ -64,7 +64,6 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
 
   const [shareCopied, setShareCopied] = useState(false)
   const [tipsCopied, setTipsCopied] = useState(false)
-  const [addedToQuote, setAddedToQuote] = useState(false)
   const [quoteQty, setQuoteQty] = useState(0)
 
   const fileRef = useRef<HTMLInputElement>(null)
@@ -75,7 +74,6 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     setTab("bring")
     setTipsOpen(false)
     setNoticeOpen(false)
-    setAddedToQuote(false)
     setFile(null)
     setUploadReference(null)
     setTurnstileToken(null)
@@ -243,8 +241,6 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       new CustomEvent("abh:add-to-quote", { detail: { hubId: svc.hubId, sectionTitle: svc.sectionTitle, name: svc.name, price: svc.price } })
     )
     trackEvent("add_to_quote", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price })
-    setAddedToQuote(true)
-    setTimeout(() => setAddedToQuote(false), 2200)
     setQuoteQty((prev) => prev + 1)
   }
 

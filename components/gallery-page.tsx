@@ -345,7 +345,6 @@ function GalleryPageInner() {
                 Icon={Info}
                 collapsedLabel="Notice"
                 expandedLabel="A Note on Our Photos"
-                isDark={isDark}
                 onDismiss={() => setPhotoNoticeDismissed(true)}
               >
                 We use high-quality sample photos to represent our services — the professional standard shown is exactly what you receive.

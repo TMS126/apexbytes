@@ -395,7 +395,6 @@ export function ServicesPage() {
               Icon={Megaphone}
               collapsedLabel="Notice"
               expandedLabel="Notice to Clients"
-              isDark={isDark}
               onDismiss={() => setClientNoticeDismissed(true)}
             >
               {NOTICE.text}

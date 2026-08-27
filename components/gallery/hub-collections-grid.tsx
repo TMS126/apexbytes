@@ -13,12 +13,11 @@ const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 const VISIBLE_COUNT = 3
 
 function HubCollectionCard({
-  hubId, projects, accent, isDark, likedIds, onToggleLike, onOpenProject, onSelectHub,
+  hubId, projects, accent, likedIds, onToggleLike, onOpenProject, onSelectHub,
 }: {
   hubId: HubId
   projects: ProjectData[]
   accent: string
-  isDark: boolean
   likedIds: Set<string>
   onToggleLike: (id: string) => void
   onOpenProject: (p: ProjectData) => void
@@ -214,7 +213,6 @@ export function HubCollectionsGrid({
             hubId={h.hubId}
             projects={h.projects}
             accent={h.accent}
-            isDark={isDark}
             likedIds={likedIds}
             onToggleLike={onToggleLike}
             onOpenProject={onOpenProject}
