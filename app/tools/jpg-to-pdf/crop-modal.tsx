@@ -1,5 +1,6 @@
 // app/tools/jpg-to-pdf/crop-modal.tsx
 "use client"
+/* eslint-disable @next/next/no-img-element -- crop previews use local object URLs. */
 
 import { useState, useRef, useCallback, useEffect, useMemo } from "react"
 import { X, Check, ArrowCounterClockwise, Rectangle, Shapes } from "@phosphor-icons/react"

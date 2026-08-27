@@ -1,4 +1,5 @@
 "use client"
+/* eslint-disable @next/next/no-img-element -- gallery URLs may be authenticated or arbitrary runtime assets. */
 
 import { useEffect, useRef, useState } from "react"
 import { X, CaretLeft, CaretRight } from "@phosphor-icons/react"
