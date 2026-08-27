@@ -71,23 +71,26 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
 
   useEffect(() => {
-    setTab("bring")
-    setTipsOpen(false)
-    setNoticeOpen(false)
-    setFile(null)
-    setUploadReference(null)
-    setTurnstileToken(null)
-    setTurnstileResetKey((value) => value + 1)
-    setUploadPhase("idle")
-    setUploadErr(null)
-    setUploadProgress(0)
-    setPreviewUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev)
-      return null
+    const frame = requestAnimationFrame(() => {
+      setTab("bring")
+      setTipsOpen(false)
+      setNoticeOpen(false)
+      setFile(null)
+      setUploadReference(null)
+      setTurnstileToken(null)
+      setTurnstileResetKey((value) => value + 1)
+      setUploadPhase("idle")
+      setUploadErr(null)
+      setUploadProgress(0)
+      setPreviewUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev)
+        return null
+      })
+      if (svc) setQuoteQty(getCartQtyForItem(`${svc.hubId}-${svc.sectionTitle}-${svc.name}`))
     })
     if (fileRef.current) fileRef.current.value = ""
-    if (svc) setQuoteQty(getCartQtyForItem(`${svc.hubId}-${svc.sectionTitle}-${svc.name}`))
-  }, [svc?.name])
+    return () => cancelAnimationFrame(frame)
+  }, [svc])
 
   useEffect(() => {
     return () => {
