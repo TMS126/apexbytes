@@ -23,7 +23,7 @@ export function useJpgToPdf() {
   const [convertedIds, setConvertedIds] = useState<Set<string>>(new Set())
   const [reconvertPrompt, setReconvertPrompt] = useState<ReconvertPrompt>(null)
   const [sendNotice, setSendNotice] = useState<string | null>(null)
-  const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [history, setHistory] = useState<HistoryEntry[]>(() => loadHistory())
   const [estimatedBytes, setEstimatedBytes] = useState<number | null>(null)
   const [retryingIds, setRetryingIds] = useState<Set<string>>(new Set())
 
@@ -32,12 +32,14 @@ export function useJpgToPdf() {
   const imagesRef = useRef<ImageItem[]>(images)
   useEffect(() => { imagesRef.current = images }, [images])
 
-  useEffect(() => setHistory(loadHistory()), [])
 
   // ─── LIVE SIZE ESTIMATE ─────────────────────────────────────────────────
   useEffect(() => {
     const selected = images.filter((img) => img.selected)
-    if (selected.length === 0) { setEstimatedBytes(null); return }
+    if (selected.length === 0) {
+      const frame = requestAnimationFrame(() => setEstimatedBytes(null))
+      return () => cancelAnimationFrame(frame)
+    }
     let cancelled = false
     const timer = setTimeout(async () => {
       try {
