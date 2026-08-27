@@ -116,7 +116,7 @@ const displayedHub = hoveredHub ?? selectedHub
 
   const results = useMemo(
     () => (query.trim() ? searchHubs(query, () => accent) : null),
-    [query, isDark]
+    [query, isDark, accent]
   )
 
   const noResultsWaLink = waLink(

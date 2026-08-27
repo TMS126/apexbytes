@@ -41,7 +41,7 @@ function HubCollectionCard({
   // Reset which image is "big" whenever the active project changes
   useEffect(() => {
     setOrder([0, 1, 2].filter((i) => i < images.length))
-  }, [project.id])
+  }, [project.id, images.length])
 
   const bigIdx = order[0] ?? 0
   const thumbIdxs = order.slice(1, 3)
