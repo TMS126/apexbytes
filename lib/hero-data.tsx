@@ -12,7 +12,7 @@ import {
   Globe,
   Desktop,
 } from "@phosphor-icons/react"
-import { BRAND, HUB_COLORS } from "@/lib/brand"
+import { HUB_COLORS } from "@/lib/brand"
 
 export const HUBS_DATA = [
   {

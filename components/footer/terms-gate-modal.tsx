@@ -13,9 +13,8 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
   const containerRef = useRef<HTMLDivElement>(null)
   const BUFFER = 5
   const { theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
 
-  useEffect(() => { setMounted(true) }, [])
 
   const resolveColor = (s: { colorLight: string; colorDark: string }) =>
     mounted && theme === "dark" ? s.colorDark : s.colorLight

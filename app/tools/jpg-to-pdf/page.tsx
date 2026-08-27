@@ -1,7 +1,7 @@
 // app/tools/jpg-to-pdf/page.tsx
 "use client"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft } from "@phosphor-icons/react"
 import { BRAND, THEME_BG } from "@/lib/brand"
@@ -31,8 +31,7 @@ export default function JpgToPdfPage() {
   const [waPhrase] = useState(() => WHATSAPP_MAGIC_PHRASES[Math.floor(Math.random() * WHATSAPP_MAGIC_PHRASES.length)])
 
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
   const pageBg = isDark ? THEME_BG.dark.page : THEME_BG.light.page
   const accentColor = ensureAccessible(BRAND.blue, pageBg, 4.5)

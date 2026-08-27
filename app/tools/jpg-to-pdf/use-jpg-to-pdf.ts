@@ -23,7 +23,7 @@ export function useJpgToPdf() {
   const [convertedIds, setConvertedIds] = useState<Set<string>>(new Set())
   const [reconvertPrompt, setReconvertPrompt] = useState<ReconvertPrompt>(null)
   const [sendNotice, setSendNotice] = useState<string | null>(null)
-  const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [history, setHistory] = useState<HistoryEntry[]>(() => loadHistory())
   const [estimatedBytes, setEstimatedBytes] = useState<number | null>(null)
   const [retryingIds, setRetryingIds] = useState<Set<string>>(new Set())
 
@@ -32,12 +32,14 @@ export function useJpgToPdf() {
   const imagesRef = useRef<ImageItem[]>(images)
   useEffect(() => { imagesRef.current = images }, [images])
 
-  useEffect(() => setHistory(loadHistory()), [])
 
   // ─── LIVE SIZE ESTIMATE ─────────────────────────────────────────────────
   useEffect(() => {
     const selected = images.filter((img) => img.selected)
-    if (selected.length === 0) { setEstimatedBytes(null); return }
+    if (selected.length === 0) {
+      const frame = requestAnimationFrame(() => setEstimatedBytes(null))
+      return () => cancelAnimationFrame(frame)
+    }
     let cancelled = false
     const timer = setTimeout(async () => {
       try {
@@ -144,8 +146,16 @@ export function useJpgToPdf() {
       if (target) URL.revokeObjectURL(target.previewUrl)
       return prev.filter((img) => img.id !== id)
     })
-    setRotations((prev) => { const { [id]: _d, ...rest } = prev; return rest })
-    setFilters((prev) => { const { [id]: _f, ...rest } = prev; return rest })
+    setRotations((prev) => {
+      const next = { ...prev }
+      delete next[id]
+      return next
+    })
+    setFilters((prev) => {
+      const next = { ...prev }
+      delete next[id]
+      return next
+    })
     // A removed image's id could otherwise linger in convertedIds forever.
     setConvertedIds((prev) => { const next = new Set(prev); next.delete(id); return next })
   }

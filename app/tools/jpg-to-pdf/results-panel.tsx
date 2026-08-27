@@ -18,7 +18,11 @@ export function ResultsPanel({
   onAddMore: () => void
 }) {
   const [fileName, setFileName] = useState(convertedFiles[0]?.fileName || "")
-  useEffect(() => { if (convertedFiles.length > 0) setFileName(convertedFiles[0].fileName) }, [convertedFiles])
+  useEffect(() => {
+    if (convertedFiles.length === 0) return
+    const frame = requestAnimationFrame(() => setFileName(convertedFiles[0].fileName))
+    return () => cancelAnimationFrame(frame)
+  }, [convertedFiles])
 
   const totalActualBytes = convertedFiles.reduce((sum, f) => sum + f.blob.size, 0)
 

@@ -264,9 +264,21 @@ button, a, [role="button"] {
   0%, 100% { box-shadow: 0 0 0 0 rgba(30,111,168,0.45); }
   50% { box-shadow: 0 0 0 8px rgba(30,111,168,0); }
 }
+@keyframes abh-inquire-glow {
+  0%   { box-shadow: 0 0 0 0 transparent; }
+  15%  { box-shadow: 0 0 0 2px var(--glow-color), 0 0 22px 3px var(--glow-color); }
+  40%  { box-shadow: 0 0 0 0 transparent; }
+  55%  { box-shadow: 0 0 0 2px var(--glow-color), 0 0 22px 3px var(--glow-color); }
+  80%, 100% { box-shadow: 0 0 0 0 transparent; }
+}
 
 .animate-marquee { animation: marquee-track 35s linear infinite; }
 .abh-cta-pulse { animation: abh-cta-pulse 1.8s ease-out 2; }
+.abh-inquire-glow-active { animation: abh-inquire-glow 2.4s ease-in-out 1; }
+
+@media (max-width: 767px) {
+  [data-widget="whatsapp-fab"] { display: none !important; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }

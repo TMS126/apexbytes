@@ -13,12 +13,11 @@ const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 const VISIBLE_COUNT = 3
 
 function HubCollectionCard({
-  hubId, projects, accent, isDark, likedIds, onToggleLike, onOpenProject, onSelectHub,
+  hubId, projects, accent, likedIds, onToggleLike, onOpenProject, onSelectHub,
 }: {
   hubId: HubId
   projects: ProjectData[]
   accent: string
-  isDark: boolean
   likedIds: Set<string>
   onToggleLike: (id: string) => void
   onOpenProject: (p: ProjectData) => void
@@ -40,8 +39,11 @@ function HubCollectionCard({
 
   // Reset which image is "big" whenever the active project changes
   useEffect(() => {
-    setOrder([0, 1, 2].filter((i) => i < images.length))
-  }, [project.id])
+    const frame = requestAnimationFrame(() => {
+      setOrder([0, 1, 2].filter((i) => i < images.length))
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [project.id, images.length])
 
   const bigIdx = order[0] ?? 0
   const thumbIdxs = order.slice(1, 3)
@@ -127,7 +129,7 @@ function HubCollectionCard({
             <button
               onClick={(e) => { e.stopPropagation(); step(-1) }}
               aria-label={`Previous ${HUBS[hubId].title} project`}
-              style={{ ["--hub-glow" as any]: accent }}
+              style={{ ["--hub-glow" as unknown as keyof import("react").CSSProperties]: accent }}
               className="hidden md:flex absolute top-3 left-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
             >
               <CaretLeft size={14} weight="bold" />
@@ -135,7 +137,7 @@ function HubCollectionCard({
             <button
               onClick={(e) => { e.stopPropagation(); step(1) }}
               aria-label={`Next ${HUBS[hubId].title} project`}
-              style={{ ["--hub-glow" as any]: accent }}
+              style={{ ["--hub-glow" as unknown as keyof import("react").CSSProperties]: accent }}
               className="hidden md:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
             >
               <CaretRight size={14} weight="bold" />
@@ -214,7 +216,6 @@ export function HubCollectionsGrid({
             hubId={h.hubId}
             projects={h.projects}
             accent={h.accent}
-            isDark={isDark}
             likedIds={likedIds}
             onToggleLike={onToggleLike}
             onOpenProject={onOpenProject}

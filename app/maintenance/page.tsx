@@ -256,10 +256,10 @@ export default function MaintenancePage() {
             <span className="badge-text">Maintenance in progress</span>
           </div>
 
-          <h1>We'll be right back.</h1>
+          <h1>We&apos;ll be right back.</h1>
 
           <p className="sub">
-            We're making improvements to give you a better experience. Everything will be back shortly.
+            We&apos;re making improvements to give you a better experience. Everything will be back shortly.
           </p>
           <p className="location">Apexbytes Hub · Kgotsong, Bothaville</p>
 
@@ -287,7 +287,7 @@ export default function MaintenancePage() {
             <div className="progress-bar" />
           </div>
 
-          <p className="wa-prompt">Need something urgent? We're still here.</p>
+          <p className="wa-prompt">Need something urgent? We&apos;re still here.</p>
           <a
             href="https://wa.me/27753338260?text=Hi%20Apexbytes%20Hub!%20I%20saw%20your%20site%20is%20under%20maintenance.%20Can%20you%20still%20help%20me%3F"
             className="wa-btn"

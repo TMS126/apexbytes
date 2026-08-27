@@ -15,7 +15,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
   const [query, setQuery] = useState("")
   const [focused, setFocused] = useState(false)
   const wrapRef = useRef<HTMLDivElement>(null)
-  const index = useMemo(buildSearchIndex, [])
+  const index = useMemo(() => buildSearchIndex(), [])
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()

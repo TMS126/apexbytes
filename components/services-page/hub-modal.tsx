@@ -33,10 +33,13 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
 
   useEffect(() => {
-    setOpenSectionIdx(0)
-    setIsScrolled(false)
-    setRevealedPrices(new Set())
+    const frame = requestAnimationFrame(() => {
+      setOpenSectionIdx(0)
+      setIsScrolled(false)
+      setRevealedPrices(new Set())
+    })
     if (bodyRef.current) bodyRef.current.scrollTop = 0
+    return () => cancelAnimationFrame(frame)
   }, [hubId])
   useFocusTrap(!!hubId, containerRef)
 

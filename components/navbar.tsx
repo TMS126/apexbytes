@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
+import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
 import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
@@ -38,7 +39,7 @@ export function Navbar() {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
 
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [desktopNavOpen, setDesktopNavOpen] = useState(false)
   const [contactHovered, setContactHovered] = useState(false)
   const [ctaPulse, setCtaPulse] = useState(false)
@@ -52,8 +53,10 @@ export function Navbar() {
   const desktopNavRef = useRef<HTMLDivElement>(null)
   const desktopNavToggleRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => setMounted(true), [])
-  useEffect(() => setDesktopNavOpen(false), [pathname])
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setDesktopNavOpen(false))
+    return () => cancelAnimationFrame(frame)
+  }, [pathname])
 
   useEffect(() => {
     if (!desktopNavOpen) return
@@ -84,8 +87,8 @@ export function Navbar() {
   }, [desktopNavOpen])
 
   useEffect(() => {
-    setCtaPulse(false)
-    if (pathname === "/contact") return
+    const resetFrame = requestAnimationFrame(() => setCtaPulse(false))
+    if (pathname === "/contact") return () => cancelAnimationFrame(resetFrame)
     const onScroll = () => {
       if (window.scrollY > window.innerHeight * 2) {
         setCtaPulse(true)
@@ -93,7 +96,10 @@ export function Navbar() {
       }
     }
     window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    return () => {
+      cancelAnimationFrame(resetFrame)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [pathname])
 
   const navigate = useCallback(
@@ -113,11 +119,6 @@ export function Navbar() {
   const neutralColor = useMemo(
     () => resolveNeutralColor(mounted, theme, isDarkBehind),
     [mounted, theme, isDarkBehind]
-  )
-
-  const logoNeutralColor = useMemo(
-    () => resolveNeutralColor(mounted, theme, isLogoDarkBehind),
-    [mounted, theme, isLogoDarkBehind]
   )
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
@@ -170,10 +171,12 @@ export function Navbar() {
                 if (e.key === "Enter" || e.key === " ") { e.preventDefault(); navigate("/") }
               }}
             >
-              <img
+              <Image
                 src="/logo.png"
                 alt=""
                 aria-hidden="true"
+                width={36}
+                height={36}
                 className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 object-contain transition-[filter] duration-300"
                 style={{ filter: useLightLogoIcon ? "brightness(0) invert(1)" : "brightness(0)" }}
               />

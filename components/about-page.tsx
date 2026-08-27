@@ -1,7 +1,7 @@
 // components/about-page.tsx
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useTheme } from "next-themes"
 import { BRAND, THEME_BG } from "@/lib/brand"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
@@ -20,8 +20,7 @@ export function AboutPage() {
   const showBackToTop = useBackToTop()
   
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
 
   const pageBg = isDark ? THEME_BG.dark.page : THEME_BG.light.page
@@ -43,7 +42,7 @@ export function AboutPage() {
       <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
       <AboutTeam blueColor={blueColor} />
       <AboutStandards blueColor={blueColor} neutralColor={neutralColor} />
-      <AboutTestimonials isDark={isDark} />
+      <AboutTestimonials />
       <AboutMission blueOnPage={blueOnPage} missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
       <BackToTopButton visible={showBackToTop} />
     </div>

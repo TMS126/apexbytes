@@ -39,7 +39,7 @@ export function CartItemCard({
       )}
       style={{
         boxShadow: `0 6px 16px -3px ${accent}40, 0 3px 8px -2px rgba(0,0,0,0.18)`,
-        ...(isHighlighted ? { ["--tw-ring-color" as any]: accent } : {}),
+        ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
       <div className="flex items-start justify-between gap-2">

@@ -5,11 +5,10 @@ import Image from "next/image"
 import { ProjectData } from "@/lib/data"
 
 export function ProjectsPopover({
-  projects, accent, isDark, onSelect,
+  projects, accent, onSelect,
 }: {
   projects: ProjectData[]
   accent: string
-  isDark: boolean
   onSelect: (p: ProjectData) => void
 }) {
   const [open, setOpen] = useState(false)

@@ -120,10 +120,9 @@ function dispatchSelectService(svc: SelectedService) {
 export function FloatingSearchWidget() {
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
 
-  useEffect(() => { setMounted(true) }, [])
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const [query, setQuery]         = useState("")
@@ -132,7 +131,7 @@ export function FloatingSearchWidget() {
 
   const inputRef     = useRef<HTMLInputElement>(null)
   const pushedRef    = useRef(false)
-  const index        = useMemo(buildSearchIndex, [])
+  const index        = useMemo(() => buildSearchIndex(), [])
 
   // ── Fly-from-icon animation refs ────────────────────────────────────
   // fabRef measures the closed-state trigger's on-screen position at the
@@ -160,16 +159,19 @@ export function FloatingSearchWidget() {
   // hides again if the inline search bar scrolls back into view (or
   // another widget opens, via useExclusiveWidget).
   useEffect(() => {
-    if (!onServicesPage) { setPastTrigger(false); return }
     const check = () => {
       const el = document.getElementById("abh-inline-search")
       if (!el) { setPastTrigger(false); return }
       setPastTrigger(el.getBoundingClientRect().bottom < 0)
     }
-    check()
+    const frame = requestAnimationFrame(() => {
+      if (!onServicesPage) setPastTrigger(false)
+      else check()
+    })
     window.addEventListener("scroll", check, { passive: true })
     window.addEventListener("resize", check)
     return () => {
+      cancelAnimationFrame(frame)
       window.removeEventListener("scroll", check)
       window.removeEventListener("resize", check)
     }

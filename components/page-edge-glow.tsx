@@ -1,7 +1,7 @@
 // components/page-edge-glow.tsx
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { BRAND } from "@/lib/brand"
@@ -23,18 +23,10 @@ const PAGE_GLOW_COLORS: Record<string, GlowColorPair> = {
 export function PageEdgeGlow() {
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  const [runId,   setRunId]   = useState(0)
+  const [mounted] = useState(() => typeof window !== "undefined")
 
-  useEffect(() => { setMounted(true) }, [])
-
-  // Bumping the key on every pathname change forces the glow div to
-  // remount, which restarts its CSS animation from 0 — this covers both
-  // in-app navigation AND a hard refresh/direct URL load (the effect
-  // fires once on initial mount too), per your call to replay every time.
-  useEffect(() => {
-    setRunId((n) => n + 1)
-  }, [pathname])
+  // The pathname key remounts the glow on every route change, replaying the
+  // animation on both in-app navigation and direct page loads.
 
   const pair = PAGE_GLOW_COLORS[pathname]
   if (!pair) return null
@@ -44,10 +36,10 @@ export function PageEdgeGlow() {
 
   return (
     <div
-      key={`${pathname}-${runId}`}
+      key={pathname}
       aria-hidden="true"
       className="fixed inset-x-0 top-0 z-[9999] pointer-events-none h-[320px] overflow-hidden abh-edge-glow"
-      style={{ ["--glow-color" as any]: color }}
+      style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: color }}
     >
       <style>{`
         @keyframes abh-edge-glow-kf {

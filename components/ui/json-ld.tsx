@@ -1,5 +1,5 @@
 // components/ui/json-ld.tsx
-import { BIZ, HOURS } from '@/lib/brand'
+import { BIZ } from '@/lib/brand'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 

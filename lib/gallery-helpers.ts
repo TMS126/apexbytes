@@ -37,7 +37,7 @@ export function buildInquireHref(project: ProjectData): string {
 
 export function playClickSound() {
   try {
-    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
+    const AudioCtx = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
     if (!AudioCtx) return
     const ctx  = new AudioCtx()
     const osc  = ctx.createOscillator()

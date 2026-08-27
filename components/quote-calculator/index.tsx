@@ -1,7 +1,7 @@
 // components/quote-calculator/index.tsx
 "use client"
 
-import { useState, useEffect, useMemo, useRef } from "react"
+import { useState, useEffect, useMemo, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Calculator, X, WhatsappLogo, CaretDown, SealPercent, ArrowCounterClockwise, FloppyDisk, FilePdf, BookmarkSimple, Trash, ArrowsOutSimple, ArrowsInSimple } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
@@ -48,7 +48,10 @@ export function QuoteCalculatorWidget() {
 
   const [expandView, setExpandView] = useState(false)
   useEffect(() => {
-    try { const s = localStorage.getItem(VIEW_KEY); if (s === "expanded") setExpandView(true) } catch {}
+    const frame = requestAnimationFrame(() => {
+      try { if (localStorage.getItem(VIEW_KEY) === "expanded") setExpandView(true) } catch {}
+    })
+    return () => cancelAnimationFrame(frame)
   }, [])
   useEffect(() => {
     try { localStorage.setItem(VIEW_KEY, expandView ? "expanded" : "compact") } catch {}
@@ -57,8 +60,11 @@ export function QuoteCalculatorWidget() {
   const pressState = useRef<Record<string, { timeout?: ReturnType<typeof setTimeout>; interval?: ReturnType<typeof setInterval>; longPressed?: boolean }>>({})
 
   useEffect(() => {
-    try { const s = localStorage.getItem(STORAGE_KEY); if (s) setCart(JSON.parse(s)) } catch {}
-    setHydrated(true)
+    const frame = requestAnimationFrame(() => {
+      try { const s = localStorage.getItem(STORAGE_KEY); if (s) setCart(JSON.parse(s)) } catch {}
+      setHydrated(true)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [])
   useEffect(() => {
     if (!hydrated) return
@@ -66,8 +72,11 @@ export function QuoteCalculatorWidget() {
   }, [cart, hydrated])
 
   useEffect(() => {
-    try { const s = localStorage.getItem(STORAGE_KEY_SAVED); if (s) setSavedQuotes(JSON.parse(s)) } catch {}
-    setSavedHydrated(true)
+    const frame = requestAnimationFrame(() => {
+      try { const s = localStorage.getItem(STORAGE_KEY_SAVED); if (s) setSavedQuotes(JSON.parse(s)) } catch {}
+      setSavedHydrated(true)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [])
   useEffect(() => {
     if (!savedHydrated) return
@@ -101,44 +110,18 @@ export function QuoteCalculatorWidget() {
     const onPop = () => { if (isOpen) setIsOpen(false) }
     window.addEventListener("popstate", onPop)
     return () => window.removeEventListener("popstate", onPop)
-  }, [isOpen])
+  }, [isOpen, setIsOpen])
 
   useEffect(() => {
-    if (isOpen || cart.length === 0) setMiniExpanded(false)
+    if (!(isOpen || cart.length === 0)) return
+    const frame = requestAnimationFrame(() => setMiniExpanded(false))
+    return () => cancelAnimationFrame(frame)
   }, [isOpen, cart.length])
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const { hubId, sectionTitle, name, price } = (e as CustomEvent).detail
-      addItem(hubId, sectionTitle, name, price)
-    }
-    window.addEventListener("abh:add-to-quote", handler)
-    return () => window.removeEventListener("abh:add-to-quote", handler)
-  }, [])
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const { hubId, sectionTitle, name } = (e as CustomEvent).detail
-      const id = `${hubId}-${sectionTitle}-${name}`
-      stepQty(id, -1)
-    }
-    window.addEventListener("abh:remove-from-quote", handler)
-    return () => window.removeEventListener("abh:remove-from-quote", handler)
-  }, [])
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const { id, delta } = (e as CustomEvent).detail
-      stepQty(id, delta)
-    }
-    window.addEventListener("abh:step-quote-qty", handler)
-    return () => window.removeEventListener("abh:step-quote-qty", handler)
-  }, [])
 
   useEffect(() => {
     if (!highlightId) return
     const id = highlightId
-    let raf1: number, raf2: number
+    let raf2: number | undefined
     const tryScroll = () => {
       const el = chipRefs.current[id]
       if (el) {
@@ -147,14 +130,19 @@ export function QuoteCalculatorWidget() {
         raf2 = requestAnimationFrame(tryScroll)
       }
     }
-    raf1 = requestAnimationFrame(tryScroll)
+    const raf1 = requestAnimationFrame(tryScroll)
     const clearT = setTimeout(() => setHighlightId(null), 900)
-    return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); clearTimeout(clearT) }
+    return () => {
+      cancelAnimationFrame(raf1)
+      if (raf2 !== undefined) cancelAnimationFrame(raf2)
+      clearTimeout(clearT)
+    }
   }, [highlightId])
 
   useEffect(() => {
+    const pressStateSnapshot = pressState.current
     return () => {
-      Object.values(pressState.current).forEach(s => {
+      Object.values(pressStateSnapshot).forEach(s => {
         if (s.timeout) clearTimeout(s.timeout)
         if (s.interval) clearInterval(s.interval)
       })
@@ -169,7 +157,7 @@ export function QuoteCalculatorWidget() {
 
   const hubsInCart = useMemo(() => Array.from(new Set(cart.map(i => i.hubId))), [cart])
 
-  const addItem = (hubId: HubId, sectionTitle: string, name: string, price: string) => {
+  const addItem = useCallback((hubId: HubId, sectionTitle: string, name: string, price: string) => {
     const { amount, unit } = parsePrice(price)
     const id = `${hubId}-${sectionTitle}-${name}`
     let nextQty = 1
@@ -180,7 +168,7 @@ export function QuoteCalculatorWidget() {
     })
     setHighlightId(id)
     setAnnounce(`${getDisplayName(sectionTitle, name)} added — now ${nextQty} in your quote`)
-  }
+  }, [])
 
   const removeItem = (id: string) => {
     const index = cart.findIndex(i => i.id === id)
@@ -203,7 +191,7 @@ export function QuoteCalculatorWidget() {
     setUndoStack(null)
   }
 
-  const stepQty = (id: string, delta: number) => {
+  const stepQty = useCallback((id: string, delta: number) => {
     const item = cart.find(i => i.id === id)
     if (!item) return
     const newQty = (item.qty || 1) + delta
@@ -216,7 +204,35 @@ export function QuoteCalculatorWidget() {
       return
     }
     setCart(prev => prev.map(i => i.id === id ? { ...i, qty: newQty } : i))
-  }
+  }, [cart])
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { hubId, sectionTitle, name, price } = (e as CustomEvent).detail
+      addItem(hubId, sectionTitle, name, price)
+    }
+    window.addEventListener("abh:add-to-quote", handler)
+    return () => window.removeEventListener("abh:add-to-quote", handler)
+  }, [addItem])
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { hubId, sectionTitle, name } = (e as CustomEvent).detail
+      const id = `${hubId}-${sectionTitle}-${name}`
+      stepQty(id, -1)
+    }
+    window.addEventListener("abh:remove-from-quote", handler)
+    return () => window.removeEventListener("abh:remove-from-quote", handler)
+  }, [stepQty])
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { id, delta } = (e as CustomEvent).detail
+      stepQty(id, delta)
+    }
+    window.addEventListener("abh:step-quote-qty", handler)
+    return () => window.removeEventListener("abh:step-quote-qty", handler)
+  }, [stepQty])
 
   const HOLD_DELAY = 420
   const REPEAT_MS  = 90

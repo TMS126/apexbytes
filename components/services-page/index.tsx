@@ -15,7 +15,7 @@ import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
 import { HUB_ORDER, HUB_PREVIEWS, NOTICE, trackEvent, getTurnaround, SelectedService } from "./lib"
-import { sectionHasBulk, itemHasBulk } from "../quote-calculator/lib"
+import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 import { MobileHubCard, BulkRibbon, NoticeBadge } from "./mobile-hub-card"
@@ -42,7 +42,7 @@ function HubCta({ label, accent, pointsRight }: { label: string; accent: string;
   return (
     <span
       className="relative inline-flex items-center gap-1 text-[0.94rem] font-black text-muted-foreground transition-colors duration-200 group-hover/hubcard:text-[var(--hub-accent)]"
-      style={{ ["--hub-accent" as any]: accent }}
+      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
     >
       <span className="relative">
         {label}
@@ -63,7 +63,7 @@ function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
   return (
     <div
       className="pointer-events-none absolute -bottom-4 -right-4 w-24 h-24 flex items-center justify-center text-muted-foreground opacity-70 transition-all duration-300 group-hover/hubcard:opacity-100 group-hover/hubcard:text-[var(--hub-accent)] group-hover/hubcard:scale-105"
-      style={{ ["--hub-accent" as any]: accent }}
+      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       aria-hidden="true"
     >
       <HubIcon id={hubId} size={72} color="currentColor" />
@@ -72,11 +72,10 @@ function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
 }
 
 function Pill({
-  icon, label, accent, fill, isActive, onClick, size = "md",
+  icon, label, fill, isActive, onClick, size = "md",
 }: {
   icon?: React.ReactNode
   label: string
-  accent: string
   fill: string
   isActive: boolean
   onClick: () => void
@@ -314,20 +313,23 @@ export function ServicesPage() {
       const section = HUBS[hubParam as HubId].sections.find((s) => s.title === sectionParam)
       const item = section?.items.find((i) => i.name === serviceParam)
       if (section && item) {
-        handleSelectService({
-          name: item.name, price: item.price, hubId: hubParam as HubId,
-          sectionTitle: section.title, requirements: item.requirements,
-          desc: item.description, turnaround: getTurnaround(section.title, item.name),
-          tips: item.tips ? [...item.tips] : undefined,
-          notice: item.notice,
+        const frame = requestAnimationFrame(() => {
+          handleSelectService({
+            name: item.name, price: item.price, hubId: hubParam as HubId,
+            sectionTitle: section.title, requirements: item.requirements,
+            desc: item.description, turnaround: getTurnaround(section.title, item.name),
+            tips: item.tips ? [...item.tips] : undefined,
+            notice: item.notice,
+          })
         })
         router.replace("/services", { scroll: false })
-        return
+        return () => cancelAnimationFrame(frame)
       }
     }
 
-    handleOpenHub(hubParam as HubId, "right")
+    const frame = requestAnimationFrame(() => handleOpenHub(hubParam as HubId, "right"))
     router.replace("/services", { scroll: false })
+    return () => cancelAnimationFrame(frame)
   }, [searchParams, router])
 
   const { closeHub, closeService } = useModalBackStack(activeHub, setActiveHub, selectedService, setSelectedService)
@@ -395,7 +397,6 @@ export function ServicesPage() {
               Icon={Megaphone}
               collapsedLabel="Notice"
               expandedLabel="Notice to Clients"
-              isDark={isDark}
               onDismiss={() => setClientNoticeDismissed(true)}
             >
               {NOTICE.text}
@@ -467,7 +468,7 @@ export function ServicesPage() {
                       tabIndex={0}
                       onKeyDown={(e) => e.key === "Enter" && handleDesktopSelectHub(hubId)}
                       aria-label={`Open ${hub.title}`}
-                      style={{ ["--hub-accent" as any]: accent }}
+                      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
                     >
                       <HubCornerIcon hubId={hubId} accent={accent} />
                       {hubHasBulk && <BulkRibbon fill={colors.primary} />}
@@ -514,7 +515,6 @@ export function ServicesPage() {
                   <Pill
                     key={hubId}
                     label={HUBS[hubId].title}
-                    accent={accent}
                     fill={colors.primary}
                     isActive={isActivePill}
                     onClick={() => handleDesktopSwitchHub(hubId)}
@@ -531,7 +531,6 @@ export function ServicesPage() {
                   <Pill
                     key={sIdx}
                     label={section.title}
-                    accent={desktopHubAccent}
                     fill={desktopHubFill}
                     isActive={sIdx === desktopActiveSection}
                     onClick={() => handleDesktopSwitchSection(sIdx)}

@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, ReactNode } from "react"
 
 export type InstanceKey = "hub-card" | "hub-section" | "faq" | "footer" | "profile" | "terms" | "modal" | null
 

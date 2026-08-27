@@ -6,7 +6,6 @@
 import { MagnifyingGlass, X } from '@phosphor-icons/react'
 import { Check, PlusCircle } from '@phosphor-icons/react'
 import { HubIcon } from '@/components/services-page/shared'
-import { BulkBadge } from './shared'
 import { Result } from './lib'
 
 // ===== SEARCH INPUT — now matches the Services page's InlineSearchBar

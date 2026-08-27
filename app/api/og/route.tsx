@@ -1,4 +1,5 @@
 // app/api/og/route.tsx
+/* eslint-disable @next/next/no-img-element -- ImageResponse requires a plain img element. */
 import { ImageResponse } from 'next/og'
 import { BIZ } from '@/lib/brand'
 
@@ -29,6 +30,7 @@ export async function GET() {
             Height now computed to preserve the actual aspect ratio. */}
         <img
           src={`${SITE_URL}/logo.png`}
+          alt=""
           width={420}
           height={228}
           style={{

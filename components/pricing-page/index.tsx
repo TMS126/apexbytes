@@ -20,7 +20,7 @@ import { NoticePill } from '@/components/notice-pill'
 
 export default function PricingPage() {
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === 'dark'
 
   // Mobile accordion state
@@ -39,7 +39,6 @@ const displayedHub = hoveredHub ?? selectedHub
   const addedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const showBackToTop = useBackToTop()
 
-  useEffect(() => { setMounted(true) }, [])
   useEffect(() => () => { if (addedTimerRef.current) clearTimeout(addedTimerRef.current) }, [])
 
   const accent = isDark ? BRAND.lightBlue : BRAND.blue
@@ -49,7 +48,8 @@ const displayedHub = hoveredHub ?? selectedHub
   const toggleHub = useCallback((id: HubId) => {
     setOpenHubs(prev => {
       const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
       return next
     })
   }, [])
@@ -115,7 +115,7 @@ const displayedHub = hoveredHub ?? selectedHub
 
   const results = useMemo(
     () => (query.trim() ? searchHubs(query, () => accent) : null),
-    [query, isDark]
+    [query, accent]
   )
 
   const noResultsWaLink = waLink(
@@ -184,7 +184,6 @@ const displayedHub = hoveredHub ?? selectedHub
                     Icon={Lightning}
                     collapsedLabel="Rush Fee"
                     expandedLabel="Rush Fee"
-                    isDark={isDark}
                     onDismiss={() => setRushNoticeDismissed(true)}
                   >
                     A{' '}
@@ -203,7 +202,6 @@ const displayedHub = hoveredHub ?? selectedHub
                     Icon={SealPercent}
                     collapsedLabel="Bulk Deals"
                     expandedLabel="Bulk Pricing"
-                    isDark={isDark}
                     onDismiss={() => setBulkNoticeDismissed(true)}
                   >
                     Look for the{' '}
@@ -280,7 +278,7 @@ const displayedHub = hoveredHub ?? selectedHub
                     <p className="abh-body mb-4">
                       No results for{' '}
                       <span className="font-semibold text-zinc-700 dark:text-zinc-300">
-                        "{query}"
+                        &quot;{query}&quot;
                       </span>
                     </p>
                     <a
@@ -290,7 +288,7 @@ const displayedHub = hoveredHub ?? selectedHub
                       className="abh-wa-btn inline-flex px-4 py-2.5 text-xs"
                     >
                       <WhatsappLogo size={14} weight="fill" aria-hidden="true" />
-                      Can't find it? Ask us on WhatsApp
+                      Can&apos;t find it? Ask us on WhatsApp
                     </a>
                   </div>
                 </ScrollBounce>
@@ -320,7 +318,6 @@ const displayedHub = hoveredHub ?? selectedHub
         <ScrollBounce key={hubId} delay={idx * 0.05}>
           <HubCompactCard
             hubId={hubId}
-            accent={accent}
             isDark={isDark}
             isSelected={selectedHub === hubId}
             isActive={displayedHub === hubId}

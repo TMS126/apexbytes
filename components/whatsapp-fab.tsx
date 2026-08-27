@@ -1,7 +1,7 @@
 // components/whatsapp-fab.tsx
 "use client"
 
-import { useState, useEffect, useRef, useMemo } from "react"
+import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import {
@@ -109,6 +109,22 @@ function formatDateLabel(date: Date) {
   return date.toLocaleDateString([], { day: "numeric", month: "long" })
 }
 
+function DateDivider({ dateLabel, isDark, subColor }: { dateLabel: string; isDark: boolean; subColor: string }) {
+  return (
+    <div className="flex justify-center mb-1">
+      <span
+        className={cn(TXT.time, "font-bold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm")}
+        style={{
+          backgroundColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.7)",
+          color: subColor,
+        }}
+      >
+        {dateLabel}
+      </span>
+    </div>
+  )
+}
+
 function randomQuickNoteIdx(exclude?: number) {
   if (QUICK_NOTES.length <= 1) return 0
   let next = exclude
@@ -128,23 +144,16 @@ function TypingLoader({ subColor }: { subColor: string }) {
   }, [])
 
   const spin = useMemo(() => ({
-    duration: (0.9 + Math.random() * 0.5).toFixed(2),
-    direction: Math.random() > 0.5 ? "normal" : "reverse",
-    startRotate: Math.floor(Math.random() * 360),
+    duration: "1.1",
+    direction: "normal" as const,
+    startRotate: 45,
   }), [])
 
-  const dots = useMemo(() => {
-    const base = [
-      { color: BRAND.blue,   size: 9, angle: 0   },
-      { color: BRAND.green,  size: 7, angle: 120 },
-      { color: BRAND.orange, size: 5, angle: 240 },
-    ]
-    for (let i = base.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[base[i], base[j]] = [base[j], base[i]]
-    }
-    return base
-  }, [])
+  const dots = useMemo(() => [
+    { color: BRAND.blue,   size: 9, angle: 0   },
+    { color: BRAND.green,  size: 7, angle: 120 },
+    { color: BRAND.orange, size: 5, angle: 240 },
+  ], [])
 
   return (
     <span className="inline-flex items-center gap-2.5">
@@ -208,26 +217,39 @@ export function WhatsAppFAB() {
   const scrollTimer                  = useRef<ReturnType<typeof setTimeout> | null>(null)
   const greetingTimer                = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const handleClose = useCallback(() => {
+    setIsOpen(false)
+    setTimeout(() => {
+      setStep("form")
+      setHub("")
+      setNote("")
+      setHubPicking(false)
+    }, 400)
+  }, [setIsOpen])
+
   // Remember the person's name across visits — expires after
   // NAME_RETENTION_MS (90 days) to match the site's stated data-retention
   // window rather than persisting indefinitely.
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(NAME_STORAGE_KEY)
-      if (raw) {
-        const parsed = JSON.parse(raw) as { name?: string; savedAt?: number }
-        if (parsed?.name && typeof parsed.savedAt === "number" && Date.now() - parsed.savedAt < NAME_RETENTION_MS) {
-          setName(parsed.name)
-          setNameRemembered(true)
-        } else {
-          localStorage.removeItem(NAME_STORAGE_KEY)
+    const hydrateName = setTimeout(() => {
+      try {
+        const raw = localStorage.getItem(NAME_STORAGE_KEY)
+        if (raw) {
+          const parsed = JSON.parse(raw) as { name?: string; savedAt?: number }
+          if (parsed?.name && typeof parsed.savedAt === "number" && Date.now() - parsed.savedAt < NAME_RETENTION_MS) {
+            setName(parsed.name)
+            setNameRemembered(true)
+          } else {
+            localStorage.removeItem(NAME_STORAGE_KEY)
+          }
         }
+      } catch {
+        // Malformed or legacy (pre-expiry) plain-string value — drop it
+        // silently; the next save below writes a fresh, correctly-shaped one.
+        try { localStorage.removeItem(NAME_STORAGE_KEY) } catch {}
       }
-    } catch {
-      // Malformed or legacy (pre-expiry) plain-string value — drop it
-      // silently; the next save below writes a fresh, correctly-shaped one.
-      try { localStorage.removeItem(NAME_STORAGE_KEY) } catch {}
-    }
+    }, 0)
+    return () => clearTimeout(hydrateName)
   }, [])
 
   useEffect(() => {
@@ -257,7 +279,8 @@ export function WhatsAppFAB() {
   }, [])
 
   useEffect(() => {
-    if (isOpen && step === "form") {
+    if (!(isOpen && step === "form")) return
+    const initializeOpenState = setTimeout(() => {
       const now = new Date()
       setOpenTime(formatTime())
       setOpenDate(now)
@@ -265,9 +288,13 @@ export function WhatsAppFAB() {
       setQuickNoteIdx(randomQuickNoteIdx())
       if (greetingTimer.current) clearTimeout(greetingTimer.current)
       greetingTimer.current = setTimeout(() => setShowGreeting(true), TYPING_DURATION)
-      setTimeout(() => nameRef.current?.focus(), TYPING_DURATION + 150)
+    }, 0)
+    const focusTimer = setTimeout(() => nameRef.current?.focus(), TYPING_DURATION + 150)
+    return () => {
+      clearTimeout(initializeOpenState)
+      clearTimeout(focusTimer)
+      if (greetingTimer.current) clearTimeout(greetingTimer.current)
     }
-    return () => { if (greetingTimer.current) clearTimeout(greetingTimer.current) }
   }, [isOpen, step])
 
   useEffect(() => {
@@ -275,7 +302,7 @@ export function WhatsAppFAB() {
     const fn = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose() }
     document.addEventListener("keydown", fn)
     return () => document.removeEventListener("keydown", fn)
-  }, [isOpen])
+  }, [isOpen, handleClose])
 
   useEffect(() => {
     if (!isOpen) return
@@ -290,15 +317,6 @@ export function WhatsAppFAB() {
     }
   }, [isOpen])
 
-  const handleClose = () => {
-    setIsOpen(false)
-    setTimeout(() => {
-      setStep("form");
-      setHub("");
-      setNote("");
-      setHubPicking(false);
-    }, 400)
-  }
 
   const handleSendAnother = () => {
     setStep("form")
@@ -353,19 +371,6 @@ export function WhatsAppFAB() {
 
   const dateLabel = openDate ? formatDateLabel(openDate) : ""
 
-  const DateDivider = () => (
-    <div className="flex justify-center mb-1">
-      <span
-        className={cn(TXT.time, "font-bold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm")}
-        style={{
-          backgroundColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.7)",
-          color: subColor,
-        }}
-      >
-        {dateLabel}
-      </span>
-    </div>
-  )
 
   return (
     <>
@@ -474,7 +479,7 @@ export function WhatsAppFAB() {
             {step === "form" ? (
               <div className="relative z-10 px-4 py-5 flex flex-col gap-3">
 
-                {openDate && <DateDivider />}
+                {openDate && <DateDivider dateLabel={dateLabel} isDark={isDark} subColor={subColor} />}
 
                 {!showGreeting && (
                   <div
@@ -651,7 +656,7 @@ export function WhatsAppFAB() {
               </div>
             ) : (
               <div className="relative z-10 min-h-full px-4 py-5 flex flex-col justify-end items-end gap-3">
-                {openDate && <DateDivider />}
+                {openDate && <DateDivider dateLabel={dateLabel} isDark={isDark} subColor={subColor} />}
                 <div
                   className="relative max-w-[85%] px-4 py-3 rounded-lg rounded-tr-none shadow-sm animate-in fade-in slide-in-from-right-1 duration-200 ease-out motion-reduce:animate-none"
                   style={{ backgroundColor: bubbleOut }}

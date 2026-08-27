@@ -139,7 +139,10 @@ export function TestimonialsSection({
     setDragX(e.touches[0].clientX - touchStartX.current)
   }
   const onTouchEnd = () => {
-    if (Math.abs(dragX) > 60) (dragX < 0 ? next() : prev())
+    if (Math.abs(dragX) > 60) {
+      if (dragX < 0) next()
+      else prev()
+    }
     setDragX(0)
     touchStartX.current = null
   }
@@ -181,7 +184,7 @@ export function TestimonialsSection({
             <p className="text-[1.05rem] md:text-[1.2rem] font-medium text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto mb-5">{subtitle}</p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-[0.78rem] font-bold text-zinc-500 dark:text-zinc-400">
               <span className="w-2 h-2 rounded-full bg-brand-green shrink-0" aria-hidden="true" />
-              Real customers we've helped, local and remotely.
+              Real customers we&apos;ve helped, local and remotely.
             </div>
           </div>
         </ScrollBounce>
@@ -198,7 +201,7 @@ export function TestimonialsSection({
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
             className="relative w-full max-w-[640px] mx-auto h-[440px] sm:h-[420px] focus:outline-none rounded-[20px] focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-            style={{ ["--tw-ring-color" as any]: colorFor(active) }}
+            style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: colorFor(active) }}
           >
             {reviews.map((r, i) => {
               let offset = i - active
@@ -262,7 +265,7 @@ export function TestimonialsSection({
               onClick={prev}
               aria-label="Previous testimonial"
               className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-40 w-9 h-9 rounded-full items-center justify-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-              style={{ ["--tw-ring-color" as any]: colorFor(active) }}
+              style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: colorFor(active) }}
             >
               <CaretLeft size={16} weight="bold" />
             </button>
@@ -270,7 +273,7 @@ export function TestimonialsSection({
               onClick={next}
               aria-label="Next testimonial"
               className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-40 w-9 h-9 rounded-full items-center justify-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-              style={{ ["--tw-ring-color" as any]: colorFor(active) }}
+              style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: colorFor(active) }}
             >
               <CaretRight size={16} weight="bold" />
             </button>
@@ -289,7 +292,7 @@ export function TestimonialsSection({
                 aria-label={`Show testimonial ${i + 1}`}
                 onClick={() => goTo(i)}
                 className="h-2 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                style={{ width: isActive ? "22px" : "8px", backgroundColor: isActive ? accent : undefined, ["--tw-ring-color" as any]: accent }}
+                style={{ width: isActive ? "22px" : "8px", backgroundColor: isActive ? accent : undefined, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
               >
                 <span className={isActive ? "sr-only" : "block h-2 w-2 rounded-full bg-zinc-300 dark:bg-zinc-700"} aria-hidden="true" />
               </button>

@@ -9,14 +9,13 @@ import { FORM_HUB_KEYS, getFormHubColor } from "@/lib/contact-data"
 
 export function HubSelect({ value, onChange }: { value: string; onChange: (val: string) => void }) {
   const [isOpen,   setIsOpen]   = useState(false)
-  const [mounted,  setMounted]  = useState(false)
+  const [mounted]  = useState(() => typeof window !== "undefined")
   const ref                     = useRef<HTMLDivElement>(null)
   const { resolvedTheme }       = useTheme()
   const isDark                  = mounted && resolvedTheme === "dark"
   const options                 = Object.keys(FORM_HUB_KEYS)
   const activeColor             = value ? getFormHubColor(value, isDark) : undefined
 
-  useEffect(() => { setMounted(true) }, [])
 
   useEffect(() => {
     if (!isOpen) return

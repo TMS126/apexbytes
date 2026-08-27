@@ -1,13 +1,15 @@
 "use client"
+/* eslint-disable @next/next/no-img-element -- gallery URLs may be authenticated or arbitrary runtime assets. */
 
 import { useEffect, useRef, useState } from "react"
 import { X, CaretLeft, CaretRight } from "@phosphor-icons/react"
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  )
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
-    setIsMobile(mq.matches)
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
@@ -44,9 +46,8 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
     const dx = e.changedTouches[0].clientX - touchStartX.current
     const dy = Math.abs(e.changedTouches[0].clientY - touchStartY.current)
     if (Math.abs(dx) < 40 || dy > Math.abs(dx)) return
-    dx < 0
-      ? setIdx(i => (i + 1) % images.length)
-      : setIdx(i => (i - 1 + images.length) % images.length)
+    if (dx < 0) setIdx(i => (i + 1) % images.length)
+    else setIdx(i => (i - 1 + images.length) % images.length)
   }
 
   return (

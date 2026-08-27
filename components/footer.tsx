@@ -1,7 +1,7 @@
 // components/footer.tsx 
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
@@ -16,13 +16,12 @@ import { FaqAccordion } from "@/components/footer/faq-accordion"
 function FooterContent() {
   const pathname = usePathname()
   const { theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [isTermsOpen, setIsTermsOpen] = useState(false)
   const [isFaqAccordionOpen, setIsFaqAccordionOpen] = useState(false)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [phoneCopied, setPhoneCopied] = useState(false)
 
-  useEffect(() => setMounted(true), [])
 
   const handleCopyPhone = async () => {
     if (typeof navigator === "undefined" || !navigator.clipboard) return

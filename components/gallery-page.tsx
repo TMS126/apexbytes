@@ -4,10 +4,10 @@
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
 import { motion } from "framer-motion"
-import { X, Info, MagnifyingGlass, Shuffle, WarningCircle } from "@phosphor-icons/react"
+import { X, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
+import { BRAND, HUB_COLORS, HubKey } from "@/lib/brand"
 import { PROJECTS, ProjectData } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { ROW_ORDER, HubId, hubLabelFor, CLIENT_TYPE_LABEL } from "@/lib/gallery-helpers"
@@ -99,7 +99,7 @@ function HubSectionDivider({ hubId, accent }: { hubId: HubId; accent: string }) 
       <div className="absolute inset-x-0 top-1/2 h-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true" />
       <h2
         className="group/pill relative z-10 bg-background px-4 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 py-2 text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400 transition-colors duration-200 hover:text-[var(--hub-accent)] hover:border-[var(--hub-accent)] focus-within:text-[var(--hub-accent)] focus-within:border-[var(--hub-accent)]"
-        style={{ ["--hub-accent" as any]: accent }}
+        style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       >
         <span className="text-zinc-400 dark:text-zinc-500 transition-colors duration-200 group-hover/pill:text-[var(--hub-accent)]">
           <HubIcon id={hubId} size={14} color="currentColor" />
@@ -236,11 +236,14 @@ function GalleryPageInner() {
   const [photoNoticeDismissed, setPhotoNoticeDismissed] = useState(false)
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(LIKES_STORAGE_KEY)
-      if (raw) setLikedIds(new Set(JSON.parse(raw)))
-    } catch {}
-    likesHydrated.current = true
+    const frame = requestAnimationFrame(() => {
+      try {
+        const raw = localStorage.getItem(LIKES_STORAGE_KEY)
+        if (raw) setLikedIds(new Set(JSON.parse(raw)))
+      } catch {}
+      likesHydrated.current = true
+    })
+    return () => cancelAnimationFrame(frame)
   }, [])
   useEffect(() => {
     if (!likesHydrated.current) return
@@ -262,17 +265,21 @@ function GalleryPageInner() {
     const projectId = searchParams.get("project")
     if (!projectId) return
     const match = PROJECTS.find(p => p.id === projectId)
-    if (match) {
+    if (!match) return
+    const frame = requestAnimationFrame(() => {
       setActiveFilter(match.hub as HubId)
       setSelectedProject(match)
-    }
+    })
+    return () => cancelAnimationFrame(frame)
   }, [searchParams])
 
   useEffect(() => {
     const hubParam = searchParams.get("hub")
     if (!hubParam) return
     const isValidHub = ROW_ORDER.some(r => r.id === hubParam)
-    if (isValidHub) setActiveFilter(hubParam as HubId)
+    if (!isValidHub) return
+    const frame = requestAnimationFrame(() => setActiveFilter(hubParam as HubId))
+    return () => cancelAnimationFrame(frame)
   }, [searchParams])
 
   useEffect(() => {
@@ -307,13 +314,11 @@ function GalleryPageInner() {
   )
 
   const handleSurprise = useCallback(() => {
-if ((PROJECTS.length as number) === 0) return
-  setSurpriseFlash(true)
+    setSurpriseFlash(true)
     setTimeout(() => {
-      let pool = PROJECTS
-      if (selectedProject && PROJECTS.length > 1) {
-let pool: (typeof PROJECTS)[number][] = [...PROJECTS]
-      }
+      const pool = selectedProject && PROJECTS.length > 1
+        ? PROJECTS.filter((project) => project.id !== selectedProject.id)
+        : PROJECTS
       const pick = pool[Math.floor(Math.random() * pool.length)]
       setActiveFilter(pick.hub as HubId)
       setSelectedProject(pick)
@@ -347,7 +352,6 @@ let pool: (typeof PROJECTS)[number][] = [...PROJECTS]
                 Icon={Info}
                 collapsedLabel="Notice"
                 expandedLabel="A Note on Our Photos"
-                isDark={isDark}
                 onDismiss={() => setPhotoNoticeDismissed(true)}
               >
                 We use high-quality sample photos to represent our services — the professional standard shown is exactly what you receive.
@@ -455,19 +459,6 @@ let pool: (typeof PROJECTS)[number][] = [...PROJECTS]
   )
 }
 
-function NoticeBadge() {
-  return (
-    <div className="absolute top-3 right-3 z-20 pointer-events-none">
-      <div
-        className="w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-sm"
-        style={{ backgroundColor: `${TOKEN.warningBg}1a` }}
-        aria-label="Notice for some services in this hub"
-      >
-        <WarningCircle size={17} weight="fill" style={{ color: TOKEN.warningBg }} aria-hidden="true" />
-      </div>
-    </div>
-  )
-}
 
 function GallerySkeleton() {
   return (

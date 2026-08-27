@@ -22,7 +22,6 @@ export function NoticePill({
   Icon,
   collapsedLabel,
   expandedLabel,
-  isDark,
   children,
   onDismiss,
   className,
@@ -31,7 +30,6 @@ export function NoticePill({
   Icon: React.ElementType
   collapsedLabel: string
   expandedLabel: string
-  isDark: boolean
   children: React.ReactNode
   onDismiss?: () => void
   className?: string

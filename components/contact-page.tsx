@@ -38,7 +38,7 @@ const QUICK_LINKS = [
 function ContactPageInner() {
   const searchParams = useSearchParams()
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
   const greyColor = isDark ? CONTACT_GREY.dark : CONTACT_GREY.light
 
@@ -52,19 +52,21 @@ function ContactPageInner() {
   const showBackToTop = useBackToTop()
   const showScrollToBottom = useScrollToBottom()
 
-  useEffect(() => setMounted(true), [])
 
   useEffect(() => {
     const serviceParam = searchParams.get("service")
     const messageParam = searchParams.get("message")
     if (!serviceParam && !messageParam) return
 
-    setFormData((prev) => ({
-      ...prev,
-      service: serviceParam && serviceParam in FORM_HUB_KEYS ? serviceParam : prev.service,
-      message: messageParam ?? prev.message,
-    }))
-    setPrefilled(true)
+    const frame = requestAnimationFrame(() => {
+      setFormData((prev) => ({
+        ...prev,
+        service: serviceParam && serviceParam in FORM_HUB_KEYS ? serviceParam : prev.service,
+        message: messageParam ?? prev.message,
+      }))
+      setPrefilled(true)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [searchParams])
 
   useEffect(() => {
@@ -117,31 +119,12 @@ function ContactPageInner() {
 
   return (
     <div className="min-h-screen bg-background pb-24 md:pb-0">
-      <style>{`
-        @keyframes abh-inquire-glow {
-          0%   { box-shadow: 0 0 0 0 transparent; }
-          15%  { box-shadow: 0 0 0 2px var(--glow-color), 0 0 22px 3px var(--glow-color); }
-          40%  { box-shadow: 0 0 0 0 transparent; }
-          55%  { box-shadow: 0 0 0 2px var(--glow-color), 0 0 22px 3px var(--glow-color); }
-          80%, 100% { box-shadow: 0 0 0 0 transparent; }
-        }
-        .abh-inquire-glow-active {
-          animation: abh-inquire-glow 2.4s ease-in-out 1;
-        }
-      `}</style>
-
-      <style>{`
-        @media (max-width: 767px) {
-          [data-widget="whatsapp-fab"] { display: none !important; }
-        }
-      `}</style>
-
       <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
         <div className="max-w-[980px] mx-auto">
           <ScrollBounce>
             <h1 className="abh-page-title mb-3">Contact Us</h1>
           </ScrollBounce>
-          <p className="abh-tagline max-w-xl mx-auto text-center">We're here and ready to help — reach out any way you prefer.</p>
+          <p className="abh-tagline max-w-xl mx-auto text-center">We&apos;re here and ready to help — reach out any way you prefer.</p>
           <div className="abh-divider" />
         </div>
       </section>
@@ -319,7 +302,7 @@ function ContactPageInner() {
 
                 <div className="flex-1 flex flex-col">
                   <label htmlFor="contact-message" className="abh-label block mb-1.5">Your Message</label>
-                  <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as any]: glowColor }}>
+                  <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: glowColor }}>
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}

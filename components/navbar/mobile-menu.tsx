@@ -2,6 +2,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import Image from "next/image"
 import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
@@ -124,9 +125,11 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
         )}
         aria-hidden="true"
       >
-        <img
+        <Image
           src="/logo.png"
           alt=""
+          width={32}
+          height={32}
           className="relative w-8 h-8 shrink-0 object-contain transition-[filter] duration-300"
           style={{ filter: "brightness(0) invert(1) contrast(0.6)" }}
         />

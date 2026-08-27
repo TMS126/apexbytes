@@ -1,4 +1,5 @@
 // components/services-page/service-detail-modal/UploadControl.tsx
+/* eslint-disable @next/next/no-img-element -- previewUrl may be a blob or authenticated runtime asset. */
 "use client"
 
 import { useState } from "react"

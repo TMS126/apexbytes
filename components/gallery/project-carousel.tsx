@@ -20,7 +20,7 @@ function ProjectCard({
   liked: boolean; onToggleLike: (e: React.MouseEvent) => void; position?: string
 }) {
   const pathname = usePathname()
-  const hasBA = BA_HUBS.includes(project.hub as HubId) && !!(project as any).beforeImage && !!(project as any).afterImage
+  const hasBA = BA_HUBS.includes(project.hub as HubId) && !!project.beforeImage && !!project.afterImage
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${project.id}` : `${pathname}?project=${project.id}`
 
   // The header/footer bars are ALWAYS dark (bg-zinc-950/90) in both themes,
@@ -126,7 +126,10 @@ function SwipeCarousel({
     setDragX(dx)
   }
   const onTouchEnd = () => {
-    if (Math.abs(dragX) > 60) (dragX < 0 ? next() : prev())
+    if (Math.abs(dragX) > 60) {
+      if (dragX < 0) next()
+      else prev()
+    }
     setDragX(0)
     touchStartX.current = null
   }

@@ -16,10 +16,11 @@ import { ZoomOverlay } from "./zoom-overlay"
 import { LikeButton, ShareButton } from "./like-share-buttons"
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  )
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)")
-    setIsMobile(mq.matches)
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
     mq.addEventListener("change", handler)
     return () => mq.removeEventListener("change", handler)
@@ -110,7 +111,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           onClick={onClose}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 text-[0.92rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
-          style={{ color: accent, ["--tw-ring-color" as any]: accent }}
+          style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
           Order
@@ -120,7 +121,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
           className="flex-1 flex items-center justify-center gap-2 py-3.5 text-[0.92rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
-          style={{ color: accent, ["--tw-ring-color" as any]: accent }}
+          style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
           Ask
@@ -147,7 +148,7 @@ function FloatingOtherProjectsWidget({ siblings, currentId, accent, onSelect }: 
             onClick={() => onSelect(p)}
             aria-label={`View ${p.title}`}
             className="shrink-0 flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60 bg-white/60 dark:bg-zinc-900/60 transition-colors hover:border-current focus-visible:outline-none focus-visible:ring-2"
-            style={{ color: accent, ["--tw-ring-color" as any]: accent }}
+            style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
           >
             <span className="relative w-7 h-7 rounded-full overflow-hidden shrink-0">
               <SafeImage src={p.image} alt={p.title} accent={accent} fill sizes="28px" className="object-cover" />
@@ -261,7 +262,13 @@ function DesktopImageStack({
             onClick={() => (isActive ? onOpenZoom(idx) : setActiveIdx(idx))}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); isActive ? onOpenZoom(idx) : setActiveIdx(idx) } }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                if (isActive) onOpenZoom(idx)
+                else setActiveIdx(idx)
+              }
+            }}
             aria-label={isActive ? `Open image ${idx + 1} of ${images.length}` : `Focus image ${idx + 1} of ${images.length}`}
             className="group/stackimg relative w-full rounded-[14px] overflow-hidden cursor-pointer bg-zinc-100 dark:bg-zinc-900 transition-all duration-300"
             style={{
@@ -311,7 +318,7 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
         onClick={onClose}
         aria-label="Close project"
         className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        style={{ ["--tw-ring-color" as any]: accent }}
+        style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
       >
         <X size={16} weight="bold" />
       </button>
@@ -409,8 +416,11 @@ export function ProjectViewerModal({
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setActiveImg(0)
-    setComparing(false)
+    const frame = requestAnimationFrame(() => {
+      setActiveImg(0)
+      setComparing(false)
+    })
+    return () => cancelAnimationFrame(frame)
   }, [project?.id])
 
   const currentIdx = project ? siblings.findIndex((p) => p.id === project.id) : -1
@@ -447,9 +457,9 @@ export function ProjectViewerModal({
 
   const accent = isDark ? HUB_COLORS[project.hub as HubKey].accentDark : HUB_COLORS[project.hub as HubKey].accentLight
 const allImages = project.images?.length > 0 ? [...project.images] : [project.image]
-  const hasBA = BA_HUBS.includes(project.hub as HubId) && !!(project as any).beforeImage && !!(project as any).afterImage
-  const beforeImg = (project as any).beforeImage as string | undefined
-  const afterImg = (project as any).afterImage as string | undefined
+  const hasBA = BA_HUBS.includes(project.hub as HubId) && !!project.beforeImage && !!project.afterImage
+  const beforeImg = project.beforeImage
+  const afterImg = project.afterImage
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${project.id}` : `${pathname}?project=${project.id}`
 
   const handleOpenZoom = (idx: number) => setZoomIndex(idx)

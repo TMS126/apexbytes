@@ -8,16 +8,18 @@ import { MAINTENANCE_BANNER } from "@/lib/brand"
 const DISMISS_KEY = `abh-maintenance-dismissed-v${MAINTENANCE_BANNER.version}`
 
 export function MaintenanceBanner() {
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
-    try {
-      setDismissed(localStorage.getItem(DISMISS_KEY) === "1")
-    } catch {
-      // localStorage unavailable (private browsing, etc.) — default to showing the banner
-    }
+    const frame = requestAnimationFrame(() => {
+      try {
+        setDismissed(localStorage.getItem(DISMISS_KEY) === "1")
+      } catch {
+        // localStorage unavailable (private browsing, etc.) — default to showing the banner
+      }
+    })
+    return () => cancelAnimationFrame(frame)
   }, [])
 
   const visible = MAINTENANCE_BANNER.active && mounted && !dismissed
