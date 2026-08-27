@@ -1,7 +1,7 @@
 // app/tools/jpg-to-pdf/page.tsx
 "use client"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft } from "@phosphor-icons/react"
 import { BRAND, THEME_BG } from "@/lib/brand"

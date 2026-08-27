@@ -1,7 +1,7 @@
 // components/strip-section.tsx — full file, paste over the current one
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useTheme } from "next-themes"
 import { Rocket, CurrencyDollar, HandHeart, MapPin, WhatsappLogo } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
