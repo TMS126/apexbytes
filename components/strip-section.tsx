@@ -37,9 +37,8 @@ export function StripSection() {
 
 function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [hovered, setHovered] = useState(false)
-  useEffect(() => setMounted(true), [])
   const isDark = mounted && resolvedTheme === "dark"
 
   const color = isDark ? BRAND.lightBlue : BRAND.blue
@@ -103,8 +102,7 @@ export function CtaBar({
   badgeText?: string
 }) {
   const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
 
   const ctaBlue = isDark ? BRAND.lightBlue : BRAND.blue
