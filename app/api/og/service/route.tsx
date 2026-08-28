@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 let title: string = BIZ.name
 let subtitle: string = BIZ.tagline
 let price: string = ''
-let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)'
+let bg: string = '#2D314B'
   if (hubParam && HUB_ORDER.includes(hubParam as HubId) && sectionParam && serviceParam) {
     const hub = HUBS[hubParam as HubId]
     const section = hub.sections.find((s) => s.title === sectionParam)
@@ -28,7 +28,7 @@ let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)
       title = item.name
       subtitle = `${hub.title} — ${BIZ.name}`
       price = item.price
-      bg = hub.tagStyleDark ? `linear-gradient(135deg, ${hub.tagStyle.color} 0%, ${hub.tagStyleDark.color === '#ffffff' ? '#1a1a1a' : hub.tagStyleDark.color} 100%)` : bg
+      bg = '#FA5215'
     }
   }
 
@@ -44,8 +44,7 @@ let bg: string = 'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)
           alignItems: 'flex-start',
           justifyContent: 'center',
           padding: '80px',
-          backgroundColor: '#0F3F66',
-          backgroundImage: bg,
+          backgroundColor: bg,
         }}
       >
         {/* NEW — logo watermark, ported over from the generic /api/og

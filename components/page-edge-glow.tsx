@@ -17,7 +17,7 @@ const PAGE_GLOW_COLORS: Record<string, GlowColorPair> = {
   "/services": { light: BRAND.green,   dark: BRAND.lightGreen  },
   "/gallery":  { light: BRAND.orange,  dark: BRAND.lightOrange },
   "/about":    { light: BRAND.orange, dark: BRAND.lightOrange },
-  "/contact":  { light: BRAND.dark100, dark: "#B8CCE0"         }, // Tech Hub grey identity
+  "/contact":  { light: BRAND.dark100, dark: BRAND.techGreyDark }, // Tech Hub grey identity
 }
 
 export function PageEdgeGlow() {

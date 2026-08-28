@@ -17,9 +17,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   /* ApexBytesHub Brand Identity System v2.0 */
   --brand-foundation: #25283E;
   --brand-surface: #2D314B;
-  --brand-support: #1E6FA8;
-  --brand-highlight: #00DBF2;
-  --brand-support-dark: #0E405F;
+  --brand-support: #FA5215;
+  --brand-highlight: #FA5215;
+  --brand-support-dark: #25283E;
   --brand-cta: #FA5215;
   --brand-cta-hover: #D23701;
   --brand-light-field: #F1F1EC;
@@ -28,8 +28,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   /* Compatibility names resolve to the canonical roles above. */
   --brand-green: var(--brand-support);
   --brand-orange: var(--brand-cta);
-  --brand-light-blue: var(--brand-highlight);
-  --brand-light-green: #9DE8E5;
+  --brand-light-blue: var(--brand-cta);
+  --brand-light-green: #FFB199;
   --brand-light-orange: #FF9A76;
 
   --brand-blue: var(--brand-support);
@@ -47,7 +47,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
   --brand-dark-100: var(--brand-foundation);
   --brand-dark-200: #41465F;
-  --brand-tech-grey-dark: #B9BED0;
+  --brand-tech-grey-dark: #9CA3AF;
   --brand-green-deep: var(--brand-support-dark);
   --brand-orange-brown: var(--brand-cta-hover);
   --brand-white: var(--brand-light-surface);
@@ -64,7 +64,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-error-bg: var(--destructive);
   --brand-error-text: #B42318;
 
-  --brand-support-text: #0E405F;
+  --brand-support-text: #25283E;
   --brand-cta-text: #954911;
   --brand-navbar-orange-text: #954911;
   --brand-blue-text: var(--brand-support-text);
@@ -105,12 +105,12 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --secondary-foreground: var(--brand-foundation);
   --muted: #E7E8E1;
   --muted-foreground: #596174;
-  --accent: var(--brand-support);
+  --accent: var(--brand-cta);
   --accent-foreground: #FFFFFF;
   --destructive: #C62828;
   --destructive-foreground: #FFFFFF;
   --border: transparent;
-  --input: #E2E3DC;
+  --input: #E8E9E2;
   --ring: var(--brand-highlight);
 }
 

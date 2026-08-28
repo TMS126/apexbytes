@@ -95,9 +95,8 @@ export const HUBS_DATA = [
       <Desktop size={28} weight={active ? "fill" : "regular"} aria-hidden="true" />
     ),
     Icon: Desktop,
-    // FIX: colorDark was a hardcoded "#B8CCE0" string — now references
-    // the token (HUB_COLORS.tech.accentDark === BRAND.techGreyDark),
-    // same value but no longer silently divergeable.
+    // FIX: uses the shared Tech Hub identity token so visual roles remain
+    // centralized and cannot silently diverge.
     colorLight: HUB_COLORS.tech.accentLight,
     colorDark:  HUB_COLORS.tech.accentDark,
     services: [

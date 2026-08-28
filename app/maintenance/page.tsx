@@ -46,19 +46,19 @@ export default function MaintenancePage() {
           width: 600px;
           height: 600px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(30,111,168,0.14) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(250,82,21,0.10) 0%, transparent 70%);
           pointer-events: none;
           z-index: 0;
         }
 
-        .glow-green {
+        .glow-accent {
           position: fixed;
           bottom: -100px;
           right: -100px;
           width: 400px;
           height: 400px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(111,191,26,0.07) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(250,82,21,0.07) 0%, transparent 70%);
           pointer-events: none;
           z-index: 0;
         }
@@ -78,15 +78,15 @@ export default function MaintenancePage() {
           letter-spacing: -0.02em;
           margin-bottom: 36px;
         }
-        .logo-blue  { color: #1E6FA8; }
-        .logo-green { color: #6FBF1A; }
+        .logo-blue  { color: #FA5215; }
+        .logo-green { color: #FA5215; }
 
         .badge {
           display: inline-flex;
           align-items: center;
           gap: 7px;
-          background: rgba(30,111,168,0.12);
-          border: 1px solid rgba(30,111,168,0.25);
+          background: rgba(250,82,21,0.12);
+          border: 0;
           border-radius: 999px;
           padding: 6px 14px;
           margin-bottom: 28px;
@@ -95,11 +95,11 @@ export default function MaintenancePage() {
           width: 7px;
           height: 7px;
           border-radius: 50%;
-          background: #6FBF1A;
+          background: #FA5215;
           animation: pulse-dot 2s ease-in-out infinite;
         }
         .badge-text {
-          color: #A9D6F2;
+          color: #FFB199;
           font-size: 0.72rem;
           font-weight: 700;
           letter-spacing: 0.12em;
@@ -122,14 +122,14 @@ export default function MaintenancePage() {
         }
 
         .sub {
-          color: #8AABBF;
+          color: #9CA3AF;
           font-size: 0.93rem;
           font-weight: 400;
           line-height: 1.65;
           margin-bottom: 6px;
         }
         .location {
-          color: #4A6785;
+          color: #9CA3AF;
           font-size: 0.78rem;
           font-weight: 600;
           margin-bottom: 32px;
@@ -139,7 +139,7 @@ export default function MaintenancePage() {
         .divider {
           width: 80px;
           height: 1px;
-          background: linear-gradient(to right, transparent, #1E6FA8, transparent);
+          background: #FA5215;
           margin: 0 auto 32px;
         }
 
@@ -163,7 +163,7 @@ export default function MaintenancePage() {
           margin-bottom: 6px;
         }
         .card-label {
-          color: #4A6785;
+          color: #9CA3AF;
           font-size: 0.6rem;
           font-weight: 700;
           text-transform: uppercase;
@@ -171,13 +171,13 @@ export default function MaintenancePage() {
           margin-bottom: 3px;
         }
         .card-value {
-          color: #A9D6F2;
+          color: #FFB199;
           font-size: 0.75rem;
           font-weight: 700;
         }
 
         .wa-prompt {
-          color: #4A6785;
+          color: #9CA3AF;
           font-size: 0.78rem;
           font-weight: 400;
           margin-bottom: 14px;
@@ -223,7 +223,7 @@ export default function MaintenancePage() {
         .progress-bar {
           height: 100%;
           border-radius: 999px;
-          background: linear-gradient(to right, #1E6FA8, #6FBF1A);
+          background: linear-gradient(to right, #FA5215, #FA5215);
           animation: progress-flow 3s ease-in-out infinite alternate;
         }
         @keyframes progress-flow {
@@ -242,7 +242,7 @@ export default function MaintenancePage() {
       <div className="page">
         <div className="noise" />
         <div className="glow" />
-        <div className="glow-green" />
+        <div className="glow-accent" />
 
         <div className="content">
 

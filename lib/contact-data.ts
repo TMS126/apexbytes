@@ -22,9 +22,8 @@ export function getFormHubColor(opt: string, isDark: boolean): string {
   return isDark ? c.accentDark : c.accentLight
 }
 
-// FIX: was a hardcoded `dark: "#B8CCE0"` — that's the exact value already
-// defined as BRAND.techGreyDark. Referencing the token instead of
-// re-typing the hex means it only ever needs to change in one place.
+// FIX: references the shared Tech Hub identity token so palette changes
+// remain synchronized across contact and service surfaces.
 export const CONTACT_GREY = { light: BRAND.dark100, dark: BRAND.techGreyDark }
 
 export function downloadBusinessVCard() {
