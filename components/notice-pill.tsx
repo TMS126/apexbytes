@@ -1,125 +1,143 @@
-// components/notice-pill.tsx — full file, paste over the current one
+// components/services-page/mobile-hub-card.tsx — full file, paste over the current one
 "use client"
 
-import { useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
-import { X } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
+import Image from "next/image"
+import { WarningCircle } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
+import { HUBS, HubId } from "@/lib/data"
 
-export type NoticeVariant = "success" | "info" | "warning" | "error"
-
-// ── Only the icon + header carry severity color. Body stays neutral. ──
-const VARIANT_TEXT: Record<NoticeVariant, string> = {
-  success: TOKEN.greenText,
-  info: TOKEN.blueText,
-  warning: TOKEN.orangeText,
-  error: TOKEN.errorText,
+export const HUB_ICON_SRC: Record<HubId, string> = {
+  print: "/phub.png",
+  doc: "/dochub.png",
+  design: "/dhub.png",
+  eservice: "/ehub.png",
+  tech: "/thub.png",
 }
 
-export function NoticePill({
-  variant,
-  Icon,
-  collapsedLabel,
-  expandedLabel,
-  children,
-  onDismiss,
-  className,
-}: {
-  variant: NoticeVariant
-  Icon: React.ElementType
-  collapsedLabel: string
-  expandedLabel: string
-  children: React.ReactNode
-  onDismiss?: () => void
-  className?: string
-}) {
-  const [expanded, setExpanded] = useState(false)
+export const HUB_STAT_TAG: Record<HubId, string> = {
+  print: "Active",
+  doc: "Popular",
+  design: "Custom-built",
+  eservice: "Handled for you",
+  tech: "On-site support",
+}
 
-  const iconColor = VARIANT_TEXT[variant]
-  const headerColor = VARIANT_TEXT[variant]
+// Bulk ribbon — neutral surface, hub color lives only in the text now.
+// Used by the desktop 5-card landing grid.
+export function BulkRibbon({ accent }: { accent: string }) {
+  return (
+    <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
+      <span
+        className="abh-shadow-badge block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider"
+        style={{ backgroundColor: "var(--muted)", color: accent }}
+      >
+        Bulk
+      </span>
+    </div>
+  )
+}
+
+// Mobile ribbon — moved to the right END of the card (not the icon
+// corner anymore), as a straight neutral tag rather than a diagonal
+// corner ribbon, since it now sits against the card's own edge.
+export function MobileBulkRibbon({ accent }: { accent: string }) {
+  return (
+    <span
+      className="abh-shadow-badge absolute top-1/2 right-3 -translate-y-1/2 z-20 pointer-events-none px-2.5 py-1 rounded-full text-[0.6rem] font-black uppercase tracking-wider whitespace-nowrap"
+      style={{ backgroundColor: "var(--muted)", color: accent }}
+    >
+      Bulk
+    </span>
+  )
+}
+
+export function NoticeBadge() {
+  return (
+    <div className="absolute top-3 right-3 z-20 pointer-events-none">
+      <div
+        className="abh-shadow-badge w-7 h-7 rounded-full flex items-center justify-center"
+        style={{ backgroundColor: "var(--card)", color: TOKEN.warningBg }}
+        aria-label="Notice for some services in this hub"
+      >
+        <WarningCircle size={16} weight="bold" aria-hidden="true" />
+      </div>
+    </div>
+  )
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// MOBILE HUB CARD
+// - Removed the life-like elevated shadow — card now stands on its
+//   border alone; abh-shadow-badge is reserved for the chip-scale
+//   elements (ribbon, notice badge) only.
+// - Removed the trailing ">" chevron button entirely.
+// - Bulk ribbon moved out of the icon box to the card's own right edge.
+// - Stat tag text is neutral now — mobile has no hover state to reveal
+//   hub color on, so it stays plain rather than being permanently tinted.
+// ══════════════════════════════════════════════════════════════════════
+export function MobileHubCard({
+  hubId, hub, accent, primary, hubHasBulk, hubHasNotice, onClick,
+}: {
+  hubId: HubId
+  hub: (typeof HUBS)[HubId]
+  accent: string
+  primary: string
+  hubHasBulk: boolean
+  hubHasNotice: boolean
+  onClick: () => void
+}) {
+  const itemCount = hub.sections.reduce((sum, s) => sum + s.items.length, 0)
 
   return (
-    <motion.div layout className={cn("w-full flex justify-center", className)} transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
-      <AnimatePresence mode="wait" initial={false}>
-        {!expanded ? (
-          <motion.div
-            key="collapsed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
-          >
-            <button
-              type="button"
-              onClick={() => setExpanded(true)}
-              aria-expanded={false}
-              aria-label={`Expand: ${collapsedLabel}`}
-              className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
-            >
-              <Icon size={16} weight="bold" style={{ color: iconColor }} aria-hidden="true" />
-              <span className="text-[0.92rem] font-bold whitespace-nowrap" style={{ color: headerColor }}>
-                {collapsedLabel}
-              </span>
-            </button>
-
-            {onDismiss && (
-              <button
-                type="button"
-                onClick={onDismiss}
-                aria-label={`Dismiss: ${collapsedLabel}`}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
-              >
-                <X size={13} weight="bold" aria-hidden="true" />
-              </button>
-            )}
-          </motion.div>
-        ) : (
-          <motion.div
-            key="expanded"
-            role="status"
-            aria-live="polite"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="relative w-full max-w-[440px] rounded-[14px] bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
-          >
-            <button
-              type="button"
-              onClick={() => setExpanded(false)}
-              aria-expanded={true}
-              aria-label={`Collapse: ${expandedLabel}`}
-              className={cn(
-                "flex items-start gap-3 text-left w-full pl-4 py-4 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-400",
-                onDismiss ? "pr-10" : "pr-4"
-              )}
-            >
-              <Icon size={20} weight="bold" style={{ color: iconColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
-              <span className="flex flex-col gap-1">
-                <span className="text-[0.75rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
-                  {expandedLabel}
-                </span>
-                <span className="text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
-                  {children}
-                </span>
-              </span>
-            </button>
-
-            {onDismiss && (
-              <button
-                type="button"
-                onClick={onDismiss}
-                aria-label={`Dismiss: ${expandedLabel}`}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-400 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
-              >
-                <X size={14} weight="bold" aria-hidden="true" />
-              </button>
-            )}
-          </motion.div>
+    <button
+      onClick={onClick}
+      aria-label={`Open ${hub.title}`}
+      className="relative w-full min-h-[132px] text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-all duration-200 active:scale-[0.98] transform-gpu p-4 flex items-center gap-4"
+    >
+      <div
+        className="relative rounded-[14px] flex items-center justify-center overflow-hidden shrink-0 w-[104px] h-[104px] bg-muted"
+        style={{
+          background: `radial-gradient(circle at 50% 42%, ${accent}26 0%, ${accent}0d 55%, transparent 78%)`,
+        }}
+      >
+        <Image
+          src={HUB_ICON_SRC[hubId]}
+          alt=""
+          width={76}
+          height={76}
+          className="object-contain"
+          style={{ filter: "grayscale(1) contrast(0.92) brightness(1.08)" }}
+          aria-hidden="true"
+        />
+        {hubHasNotice && (
+          <WarningCircle
+            size={16}
+            weight="bold"
+            aria-label="Notice for some services"
+            className="absolute top-2 left-2 z-20"
+            style={{ color: TOKEN.orangeText }}
+          />
         )}
-      </AnimatePresence>
-    </motion.div>
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="mb-1.5">
+          <h3 className="font-sans font-black text-[1.08rem] leading-tight text-foreground break-words pr-6">
+            {hub.title}
+          </h3>
+        </div>
+
+        <p className="text-[0.8rem] text-muted-foreground leading-snug mb-2 line-clamp-2">
+          {hub.desc}
+        </p>
+
+        <p className="text-[0.78rem] font-bold text-foreground">
+          {itemCount} services <span className="opacity-40 mx-0.5">•</span>
+          <span className="text-muted-foreground"> {HUB_STAT_TAG[hubId]}</span>
+        </p>
+      </div>
+
+      {hubHasBulk && <MobileBulkRibbon accent={accent} />}
+    </button>
   )
-                } 
+} 
