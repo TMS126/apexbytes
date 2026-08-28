@@ -11,11 +11,8 @@ import { getReadableTextColor } from "@/lib/color-utils"
 export function StatsBar() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
-  // FIX: 4th stat used BRAND.teal, which brand.ts reserves specifically
-  // for the E-Service hub so it doesn't collide with Print's blue. This
-  // is a generic stats component, not hub-specific — swapped to
-  // blueMid so it stays inside the blue family instead of introducing
-  // a 5th color here.
+  // The fourth stat stays inside the blue family so generic metrics do not
+  // introduce an unrelated accent color.
   const stats = [
     { icon: PlusCircle,    color: BRAND.blue,     value: BIZ.hubCount,        label: "Hubs" },
     { icon: Gear,          color: BRAND.green,    value: BIZ.serviceCount,    label: "Services" },

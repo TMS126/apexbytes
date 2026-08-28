@@ -20,9 +20,7 @@ export async function GET() {
           alignItems: 'flex-start',
           justifyContent: 'center',
           padding: '80px',
-          backgroundColor: '#0F3F66',
-          backgroundImage:
-            'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)',
+          backgroundColor: '#2D314B',
         }}
       >
         {/* FIX: was width=420 height=420 forcing the real 1240×674 logo

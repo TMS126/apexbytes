@@ -1,10 +1,9 @@
 // lib/hero-data.ts
 // Hub metadata for the hero-section photo collage. Color values are now
 // derived from HUB_COLORS (lib/brand.ts) instead of a separate hardcoded
-// mapping — the old version had drifted: E-Service used blue-family hex
-// values here despite HUB_COLORS deliberately using teal for E-Service to
-// avoid colliding with Print's blue, and Tech hardcoded "#B8CCE0" as a raw
-// string instead of referencing BRAND.techGreyDark. Single source now.
+// mapping — the hero follows the centralized service-role palette, with
+// E-Service using the Sky Blue highlight and Tech using the Deep Blue family.
+// All accents are sourced from HUB_COLORS so visual roles remain consistent.
 import {
   Printer,
   FileText,
@@ -96,9 +95,8 @@ export const HUBS_DATA = [
       <Desktop size={28} weight={active ? "fill" : "regular"} aria-hidden="true" />
     ),
     Icon: Desktop,
-    // FIX: colorDark was a hardcoded "#B8CCE0" string — now references
-    // the token (HUB_COLORS.tech.accentDark === BRAND.techGreyDark),
-    // same value but no longer silently divergeable.
+    // FIX: uses the shared Tech Hub identity token so visual roles remain
+    // centralized and cannot silently diverge.
     colorLight: HUB_COLORS.tech.accentLight,
     colorDark:  HUB_COLORS.tech.accentDark,
     services: [
