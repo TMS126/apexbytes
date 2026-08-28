@@ -20,7 +20,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-support: #0F8F8B;
   --brand-highlight: #00DBF2;
   --brand-support-dark: #0E405F;
-  --brand-cta: #B06225;
+  --brand-cta: #FA5215;
   --brand-cta-hover: #D23701;
   --brand-light-field: #F1F1EC;
   --brand-light-surface: #FFFFFF;
@@ -68,7 +68,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-error-text: #B42318;
 
   --brand-support-text: #0E405F;
-  --brand-cta-text: #B06225;
+  --brand-cta-text: #954911;
   --brand-navbar-orange-text: #954911;
   --brand-blue-text: var(--brand-support-text);
   --brand-orange-text: var(--brand-cta-text);

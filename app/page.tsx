@@ -1,6 +1,6 @@
 // app/page.tsx
 import { Navbar } from "@/components/navbar"
-import { HeroSection } from "@/components/hero-section"
+import { PrototypeHomepage } from "@/components/prototype-homepage"
 import { StatsBar } from "@/components/stats-bar"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { StripSection, CtaBar } from "@/components/strip-section"
@@ -13,7 +13,7 @@ export default function HomeRoute() {
       <Navbar />
       <div>
         <div className="animate-fade-up">
-          <HeroSection />
+          <PrototypeHomepage />
           <StatsBar />
           <TestimonialsSection />
           <StripSection />

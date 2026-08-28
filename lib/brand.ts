@@ -12,7 +12,7 @@ export const BRAND_HEX = {
   support: "#0F8F8B",
   highlight: "#00DBF2",
   supportDark: "#0E405F",
-  cta: "#B06225",
+  cta: "#FA5215",
   ctaHover: "#D23701",
   navbarOrange: "#B06225",
   navbarBlue: "#1E6FA8",
