@@ -408,7 +408,7 @@ export function HeroSection() {
               <span className="transition-colors duration-200 hover:text-brand-blue active:text-brand-blue">Printing</span>,{" "}
               <span className="transition-colors duration-200 hover:text-brand-orange active:text-brand-orange">Design</span>,{" "}
               <span className="transition-colors duration-200 hover:text-brand-green active:text-brand-green">Documents</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-brand-teal active:text-brand-teal">E-Services</span>{" "}&amp;{" "}
+              <span className="transition-colors duration-200 hover:text-brand-orange active:text-brand-orange">E-Services</span>{" "}&amp;{" "}
               <span className="transition-colors duration-200 hover:text-brand-blue-dark dark:hover:text-brand-light-blue active:text-brand-blue-dark dark:active:text-brand-light-blue">Tech</span>
               <span className="text-zinc-900 dark:text-zinc-50"> — All in One Place</span>
             </h1>

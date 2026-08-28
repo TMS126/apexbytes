@@ -17,7 +17,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   /* ApexBytesHub Brand Identity System v2.0 */
   --brand-foundation: #25283E;
   --brand-surface: #2D314B;
-  --brand-support: #0F8F8B;
+  --brand-support: #1E6FA8;
   --brand-highlight: #00DBF2;
   --brand-support-dark: #0E405F;
   --brand-cta: #FA5215;
@@ -38,9 +38,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-green-dark: var(--brand-support-dark);
   --brand-orange-dark: var(--brand-cta-hover);
 
-  --brand-teal: var(--brand-highlight);
-  --brand-teal-dark: var(--brand-support-dark);
-  --brand-teal-light: var(--brand-highlight);
 
   --brand-neutral-100: #E8E9E2;
   --brand-neutral-200: var(--brand-light-field);
@@ -82,7 +79,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-brand-blue: var(--on-brand-support);
   --on-brand-green: var(--on-brand-support);
   --on-brand-orange: var(--on-brand-cta);
-  --on-brand-teal: var(--on-brand-highlight);
   --on-whatsapp: var(--brand-whatsapp-text);
   --on-whatsapp-accessible: #FFFFFF;
   --on-pastel: var(--brand-dark-100);
@@ -207,9 +203,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-brand-error-bg: var(--brand-error-bg);
   --color-brand-error-text: var(--brand-error-text);
 
-  --color-brand-teal: var(--brand-teal);
-  --color-brand-teal-dark: var(--brand-teal-dark);
-  --color-brand-teal-light: var(--brand-teal-light);
 
   --color-brand-neutral-100: var(--brand-neutral-100);
   --color-brand-neutral-200: var(--brand-neutral-200);
@@ -238,7 +231,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-on-brand-blue: var(--on-brand-blue);
   --color-on-brand-green: var(--on-brand-green);
   --color-on-brand-orange: var(--on-brand-orange);
-  --color-on-brand-teal: var(--on-brand-teal);
   --color-on-whatsapp: var(--on-whatsapp);
   --color-on-whatsapp-accessible: var(--on-whatsapp-accessible);
   --color-on-pastel: var(--on-pastel);
@@ -519,7 +511,7 @@ button, a, [role="button"] {
   .abh-on-blue      { color: var(--on-brand-blue); }
   .abh-on-green     { color: var(--on-brand-green); }
   .abh-on-orange    { color: var(--on-brand-orange); }
-  .abh-on-teal      { color: var(--on-brand-teal); }
+  .abh-on-highlight { color: var(--on-brand-highlight); }
   .abh-on-whatsapp  { color: var(--on-whatsapp); }
   .abh-on-pastel    { color: var(--on-pastel); }
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }

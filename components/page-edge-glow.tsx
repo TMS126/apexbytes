@@ -16,7 +16,7 @@ type GlowColorPair = { light: string; dark: string }
 const PAGE_GLOW_COLORS: Record<string, GlowColorPair> = {
   "/services": { light: BRAND.green,   dark: BRAND.lightGreen  },
   "/gallery":  { light: BRAND.orange,  dark: BRAND.lightOrange },
-  "/about":    { light: "#0F766E",     dark: "#99F6E4"         }, // teal — matches Navbar's About color
+  "/about":    { light: BRAND.orange, dark: BRAND.lightOrange },
   "/contact":  { light: BRAND.dark100, dark: "#B8CCE0"         }, // Tech Hub grey identity
 }
 
