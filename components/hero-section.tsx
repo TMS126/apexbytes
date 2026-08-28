@@ -4,11 +4,13 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import Image from "next/image"
-import { ArrowRight, Play, Pause, Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake } from "@phosphor-icons/react"
+import {
+  ArrowRight, Play, Pause,
+  Printer, FileText, PaintBrush, Globe, Wrench,
+  Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
+} from "@phosphor-icons/react"
 import { BRAND, BIZ, MARQUEE_ITEMS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { HUBS_DATA } from "@/lib/hero-data"
 import { ClassicTagline } from "@/components/classic-tagline"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
@@ -36,10 +38,8 @@ function getArrowIconColor(bgHex: string) {
 }
 
 // ─── REDUCED MOTION ───────────────────────────────────────────────────────────
-// Site-wide pattern elsewhere (whatsapp-fab, contact page) uses
-// motion-reduce: Tailwind variants on CSS-driven animations. This section's
-// animations are all inline-style/JS-driven (wander loop, fly-in, hover
-// bounce, shake) so they need an explicit media query check instead.
+// Only the marquee is animated now that the icon collage is gone, but the
+// marquee's play/pause still needs to respect this preference.
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(() =>
     typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
@@ -54,63 +54,7 @@ function usePrefersReducedMotion() {
   return reduced
 }
 
-// ─── HUB ICON IMAGES — already-transparent PNGs. ─────────────────────────────
-const HUB_IMAGES: Record<string, string> = {
-  print: "/phub.png",
-  doc: "/dochub.png",
-  design: "/dhub.png",
-  eservice: "/ehub.png",
-  tech: "/thub.png",
-}
-
-function pillLabel(hubName: string) {
-  return hubName.replace(/\s*Hub$/i, "").toUpperCase()
-}
-
-function shuffleArray<T>(arr: T[]): T[] {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
-}
-
-function randBetween(min: number, max: number) {
-  return min + Math.random() * (max - min)
-}
-
-// ─── SYMMETRIC LAYOUT — regular pentagon, centered ───────────────────────────
-const PENTAGON_ANGLES_DEG = [-90, -18, 54, 126, 198]
-const ELLIPSE_RX_PCT = 30
-const ELLIPSE_RY_PCT = 24
-
-type IconEntry = {
-  hub: (typeof HUBS_DATA)[number]
-  topPct: number
-  leftPct: number
-  z: number
-  entryX: number
-  entryY: number
-}
-
-function buildArrangement(): IconEntry[] {
-  const shuffledHubs = shuffleArray(HUBS_DATA)
-  return shuffledHubs.map((hub, i) => {
-    const angleRad = (PENTAGON_ANGLES_DEG[i] * Math.PI) / 180
-    const entryAngle = Math.random() * Math.PI * 2
-    const entryDist = randBetween(70, 130)
-    return {
-      hub,
-      leftPct: 50 + ELLIPSE_RX_PCT * Math.cos(angleRad),
-      topPct: 50 + ELLIPSE_RY_PCT * Math.sin(angleRad),
-      z: 10 + i * 10,
-      entryX: Math.cos(entryAngle) * entryDist,
-      entryY: Math.sin(entryAngle) * entryDist,
-    }
-  })
-}
-
+// ─── WEATHER ICON MAP (drives the holiday-banner icon) ──────────────────────
 const WEATHER_ICON_MAP: Record<WeatherCategory, { Icon: React.ElementType; color: string }> = {
   "clear-day": { Icon: Sun, color: "#F59E0B" },
   "clear-night": { Icon: Moon, color: "#818CF8" },
@@ -127,167 +71,77 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
   return greeting === "morning" || greeting === "afternoon" ? "clear-day" : "clear-night"
 }
 
-// ─── HUB ICON FIELD — symmetric layout + gentle wander, no collision math ───
-const WANDER_AMP_PX = 10
-const LABEL_AUTO_HIDE_MS = 8000
+// ─── HUB SHOWCASE CARD — flat icons, replaces the old 3D icon collage ───────
+// Reference layout has 4 corner icon-circles + 1 center mark, but
+// ApexbytesHub has 5 hubs — per your call, Tech Hub takes the center slot
+// where the reference's logo mark sat. Card is intentionally dark in BOTH
+// site themes (matches the reference screenshot's own behavior) so it's
+// built straight from BRAND's dark-tier tokens rather than switching on
+// `isDark`. No new hex added — every color here is an existing BRAND token.
+const CARD_ICONS: { icon: React.ElementType; position: string; size?: "lg" }[] = [
+  { icon: Printer, position: "top-0 left-0" },
+  { icon: Globe, position: "top-[6%] right-0" },
+  { icon: FileText, position: "bottom-0 left-[8%]" },
+  { icon: PaintBrush, position: "bottom-[2%] right-[2%]" },
+  { icon: Wrench, position: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", size: "lg" },
+]
 
-function HubIconField({
-  arrangement,
-  isDark,
-  canHover,
-  prefersReducedMotion,
-}: {
-  arrangement: IconEntry[]
-  isDark: boolean
-  canHover: boolean
-  prefersReducedMotion: boolean
-}) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const iconRefs = useRef<(HTMLDivElement | null)[]>([])
-  const [hoveredId, setHoveredId] = useState<string | null>(null)
-  const [shakingId, setShakingId] = useState<string | null>(null)
-  const shakeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
-  const [labelsAutoVisible, setLabelsAutoVisible] = useState(true)
-
-  useEffect(() => {
-    const t = setTimeout(() => setLabelsAutoVisible(false), LABEL_AUTO_HIDE_MS)
-    return () => clearTimeout(t)
-  }, [])
-
-  const triggerShake = (hubId: string) => {
-    if (prefersReducedMotion) return
-    setShakingId(hubId)
-    if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current)
-    shakeTimeoutRef.current = setTimeout(() => setShakingId((cur) => (cur === hubId ? null : cur)), 550)
-  }
-
-  useEffect(() => {
-    // Wander drift is purely decorative motion — skip the RAF loop
-    // entirely under reduced motion, leaving icons static at their
-    // pentagon anchor points.
-    if (prefersReducedMotion) return
-    const container = containerRef.current
-    if (!container) return
-
-    const phys = arrangement.map(() => ({
-      freqX: randBetween(0.06, 0.09),
-      freqY: randBetween(0.05, 0.08),
-      phaseX: randBetween(0, Math.PI * 2),
-      phaseY: randBetween(0, Math.PI * 2),
-      x: 0, y: 0,
-    }))
-
-    let raf = 0
-
-    const tick = (time: number) => {
-      const t = time / 1000
-      for (let i = 0; i < phys.length; i++) {
-        const p = phys[i]
-        p.x = Math.sin(t * p.freqX + p.phaseX) * WANDER_AMP_PX
-        p.y = Math.sin(t * p.freqY + p.phaseY) * WANDER_AMP_PX * 0.6
-
-        const el = iconRefs.current[i]
-        if (el) el.style.transform = `translate(${p.x}px, ${p.y}px)`
-      }
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
-
-    return () => cancelAnimationFrame(raf)
-  }, [arrangement, prefersReducedMotion])
-
+function CardIcon({ icon: Icon, position, size }: { icon: React.ElementType; position: string; size?: "lg" }) {
+  const dims = size === "lg" ? "w-16 h-16 md:w-20 md:h-20" : "w-12 h-12 md:w-14 md:h-14"
+  const iconSize = size === "lg" ? 26 : 20
   return (
     <div
-      ref={containerRef}
-      className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-none h-[440px] sm:h-[500px] md:h-[560px]"
+      className={`absolute ${position} ${dims} rounded-full flex items-center justify-center border`}
+      style={{ backgroundColor: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.16)" }}
     >
-      {arrangement.map((entry, i) => {
-        const { hub, topPct, leftPct, z, entryX, entryY } = entry
-        const hubAccent = isDark ? hub.colorDark : hub.colorLight
-        const isHovered = canHover && !prefersReducedMotion && hoveredId === hub.id
-        const isShaking = !prefersReducedMotion && shakingId === hub.id
-        const labelVisible = labelsAutoVisible || isHovered || isShaking
+      <Icon size={iconSize} weight="regular" color={BRAND.white} />
+    </div>
+  )
+}
 
-        return (
-          <div
-            key={hub.id}
-            className="absolute"
-            style={{
-              top: `${topPct}%`,
-              left: `${leftPct}%`,
-              transform: "translate(-50%, -50%)",
-              zIndex: z,
-            }}
-          >
-            {/* Entry animation — skipped entirely under reduced motion,
-                icons simply appear in place instead of flying in. */}
-            <div
-              className="flex flex-col items-center"
-              style={prefersReducedMotion ? undefined : ({
-                "--ex": `${entryX}px`,
-                "--ey": `${entryY}px`,
-                animationName: "abh-icon-enter",
-                animationDuration: "650ms",
-                animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
-                animationDelay: `${z * 20}ms`,
-                animationFillMode: "both",
-              } as React.CSSProperties)}
-            >
-              <div ref={(el) => { iconRefs.current[i] = el }} className="flex flex-col items-center">
-                <div
-                  role="button"
-                  tabIndex={0}
-                  aria-label={hub.name}
-                  onMouseEnter={() => canHover && setHoveredId(hub.id)}
-                  onMouseLeave={() => canHover && setHoveredId((cur) => (cur === hub.id ? null : cur))}
-                  onFocus={() => setHoveredId(hub.id)}
-                  onBlur={() => setHoveredId((cur) => (cur === hub.id ? null : cur))}
-                  onClick={() => triggerShake(hub.id)}
-                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); triggerShake(hub.id) } }}
-                  className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 cursor-pointer outline-none"
-                  style={{
-                    animationName: isShaking ? "abh-icon-shake" : isHovered ? "abh-icon-bounce" : undefined,
-                    animationDuration: isShaking ? "0.55s" : isHovered ? "1.8s" : undefined,
-                    animationTimingFunction: "ease-in-out",
-                    animationIterationCount: isShaking ? 1 : isHovered ? "infinite" : undefined,
-                  }}
-                >
-                  <Image
-                    src={HUB_IMAGES[hub.id]}
-                    alt={`${hub.name} example`}
-                    fill
-                    sizes="(max-width: 640px) 144px, (max-width: 768px) 176px, 208px"
-                    className="object-contain"
-                  />
+function HubShowcaseCard() {
+  return (
+    <div
+      className="relative w-full aspect-square sm:aspect-auto sm:h-[420px] md:h-[480px] rounded-3xl overflow-hidden p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.25)]"
+      style={{ backgroundColor: BRAND.blueDark }}
+    >
+      <span
+        className="absolute top-5 left-6 md:top-7 md:left-8 text-[0.65rem] font-bold uppercase tracking-widest"
+        style={{ color: BRAND.techGreyDark }}
+      >
+        {BIZ.name} / Bothaville
+      </span>
 
-                  <span
-                    className="absolute left-1/2 top-full -translate-x-1/2 -translate-y-[40%] px-2.5 py-1 rounded-full text-[0.65rem] sm:text-xs font-black uppercase tracking-wide bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm shadow-sm whitespace-nowrap transition-opacity duration-500"
-                    style={{
-                      color: hubAccent,
-                      opacity: labelVisible ? 1 : 0,
-                      pointerEvents: labelVisible ? "auto" : "none",
-                    }}
-                  >
-                    {pillLabel(hub.name)}
-                  </span>
-                </div>
+      <div className="absolute top-5 right-6 md:top-7 md:right-8 text-right">
+        <span className="block font-black text-4xl md:text-5xl leading-none" style={{ color: BRAND.orange }}>
+          {String(BIZ.hubCount).padStart(2, "0")}
+        </span>
+        <span className="block text-[0.65rem] font-bold uppercase tracking-widest mt-1" style={{ color: BRAND.techGreyDark }}>
+          Hubs
+        </span>
+      </div>
 
-                <div
-                  aria-hidden="true"
-                  className="w-20 sm:w-24 md:w-28 h-3.5 sm:h-4 rounded-full bg-black blur-[7px] -mt-2"
-                  style={{
-                    opacity: 0.32,
-                    animationName: isShaking ? "abh-shadow-shake" : isHovered ? "abh-shadow-bounce" : undefined,
-                    animationDuration: isShaking ? "0.55s" : isHovered ? "1.8s" : undefined,
-                    animationTimingFunction: "ease-in-out",
-                    animationIterationCount: isShaking ? 1 : isHovered ? "infinite" : undefined,
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        )
-      })}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="relative w-[68%] h-[68%] max-w-[260px] max-h-[260px]">
+          {CARD_ICONS.map(({ icon, position, size }, i) => (
+            <CardIcon key={i} icon={icon} position={position} size={size} />
+          ))}
+        </div>
+      </div>
+
+      <span
+        className="absolute bottom-5 left-6 md:bottom-7 md:left-8 text-[0.65rem] font-bold uppercase tracking-widest"
+        style={{ color: BRAND.techGreyDark }}
+      >
+        Your Local Partner
+      </span>
+
+      <span
+        className="absolute bottom-5 right-6 md:bottom-7 md:right-8 text-[0.65rem] font-bold uppercase tracking-widest text-right"
+        style={{ color: BRAND.white }}
+      >
+        Print / Design / Tech
+      </span>
     </div>
   )
 }
@@ -296,31 +150,25 @@ function HubIconField({
 export function HeroSection() {
   const router = useRouter()
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  // FIX: was a lazy `useState(() => typeof window !== "undefined")` — that
+  // evaluates true on the client's very first render (hydration also runs
+  // in the browser, where `window` already exists), while the server
+  // rendered `false`. That's a real hydration mismatch. Back to the safe
+  // pattern: start false everywhere, flip true only after mount.
+  const [mounted, setMounted] = useState(false)
   const [marqueePaused, setMarqueePaused] = useState(false)
-  const [status, setStatus] = useState<BusinessStatus | null>(() => getBusinessStatus())
+  const [status, setStatus] = useState<BusinessStatus | null>(null)
   const [weatherCategory, setWeatherCategory] = useState<WeatherCategory | null>(null)
-  const [canHover, setCanHover] = useState(() =>
-    typeof window !== "undefined" && !!window.matchMedia?.("(hover: hover) and (pointer: fine)").matches
-  )
   const showBackToTop = useBackToTop()
   const prefersReducedMotion = usePrefersReducedMotion()
 
-  const [arrangement] = useState<IconEntry[]>(() => buildArrangement())
-
   const ctaBtnRef = useRef<HTMLButtonElement>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setMounted(true)
+    setStatus(getBusinessStatus())
     const id = setInterval(() => setStatus(getBusinessStatus()), 60_000)
     return () => clearInterval(id)
-  }, [])
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)")
-    const handler = (e: MediaQueryListEvent) => setCanHover(e.matches)
-    mq.addEventListener("change", handler)
-    return () => mq.removeEventListener("change", handler)
   }, [])
 
   useEffect(() => {
@@ -344,7 +192,8 @@ export function HeroSection() {
   const { Icon: WeatherIcon, color: weatherIconColor } = WEATHER_ICON_MAP[displayCategory]
 
   const handleNavigate = (path: string) => router.push(path)
-  const handleCtaClick = () => handleNavigate("/services")
+  const handleCtaClick = () => handleNavigate("/quote")
+  const handleServicesClick = () => handleNavigate("/services")
 
   return (
     <section
@@ -360,41 +209,11 @@ export function HeroSection() {
         />
       </div>
 
-      <style>{`
-        @keyframes abh-icon-enter {
-          0%   { opacity: 0; transform: translate(var(--ex), var(--ey)) scale(0.6); }
-          100% { opacity: 1; transform: translate(0, 0) scale(1); }
-        }
-        @keyframes abh-icon-bounce {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50%      { transform: translateY(-26px) scale(1.05); }
-        }
-        @keyframes abh-icon-shake {
-          0%, 100%   { transform: translateX(0) rotate(0deg); }
-          15%        { transform: translateX(-7px) rotate(-7deg); }
-          30%        { transform: translateX(6px) rotate(6deg); }
-          45%        { transform: translateX(-5px) rotate(-5deg); }
-          60%        { transform: translateX(4px) rotate(4deg); }
-          75%        { transform: translateX(-2px) rotate(-2deg); }
-        }
-        @keyframes abh-shadow-bounce {
-          0%, 100% { transform: scaleX(1); opacity: 0.32; }
-          50%      { transform: scaleX(0.5); opacity: 0.14; }
-        }
-        @keyframes abh-shadow-shake {
-          0%, 100%   { transform: scaleX(1) translateX(0); opacity: 0.32; }
-          15%        { transform: scaleX(0.92) translateX(-3px); opacity: 0.26; }
-          30%        { transform: scaleX(0.92) translateX(3px); opacity: 0.26; }
-          45%        { transform: scaleX(0.95) translateX(-2px); opacity: 0.28; }
-          60%        { transform: scaleX(0.95) translateX(2px); opacity: 0.28; }
-          75%        { transform: scaleX(0.98) translateX(-1px); opacity: 0.3; }
-        }
-      `}</style>
-
       <div className="max-w-[1240px] mx-auto flex flex-col items-center relative z-10 w-full mb-6">
 
         <div className="w-full max-w-[1100px] mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center mb-10 md:mb-14">
 
+          {/* Left column — text + CTA */}
           <div className="text-center md:text-left">
 
             {showHolidayBanner && status && (
@@ -404,13 +223,11 @@ export function HeroSection() {
               </p>
             )}
 
-            <h1 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.1] mb-4 text-balance transition-colors duration-300 text-zinc-900 dark:text-zinc-50">
-              <span className="transition-colors duration-200 hover:text-[#1E6FA8] active:text-[#1E6FA8]">Printing</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-[#B06225] active:text-[#B06225]">Design</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-[#4A8011] active:text-[#4A8011]">Documents</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-[#0F766E] active:text-[#0F766E]">E-Services</span>{" "}&amp;{" "}
-              <span className="transition-colors duration-200 hover:text-[#333333] dark:hover:text-[#B8CCE0] active:text-[#333333] dark:active:text-[#B8CCE0]">Tech</span>
-              <span className="text-zinc-900 dark:text-zinc-50"> — All in One Place</span>
+            {/* Proposed new headline copy — swap the three words below if you want different wording */}
+            <h1 className="font-sans font-black text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4 transition-colors duration-300">
+              <span className="block text-zinc-900 dark:text-zinc-50">Print.</span>
+              <span className="block text-zinc-400 dark:text-zinc-600">Design.</span>
+              <span className="block text-zinc-900 dark:text-zinc-50">Sorted.</span>
             </h1>
 
             <p className="text-lg md:text-xl font-medium text-zinc-600 dark:text-zinc-400 max-w-[480px] md:max-w-none mx-auto md:mx-0 leading-relaxed mb-6">
@@ -421,49 +238,61 @@ export function HeroSection() {
               <ClassicTagline />
             </div>
 
-            <ScrollBounce>
-              <button
-                ref={ctaBtnRef}
-                onClick={handleCtaClick}
-                style={{ borderColor: STROKE_COLOR }}
-                className="group relative z-30 flex items-center w-[300px] sm:w-[320px] mx-auto md:mx-0 px-5 sm:px-7 py-5 rounded-full font-sans font-black overflow-hidden border-2 transition-all duration-150 active:duration-75 touch-manipulation hover:-translate-y-1 active:translate-y-0 active:scale-[0.94] shadow-[0_4px_14px_rgba(0,0,0,0.12)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.18)] dark:hover:shadow-[0_12px_36px_rgba(0,0,0,0.7)] active:shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:active:shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
-              >
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 origin-bottom scale-y-0 transition-transform duration-150 ease-out group-hover:scale-y-100 group-active:scale-y-100"
-                  style={{ backgroundColor: CTA_FILL_COLOR }}
-                />
-                <span className="relative z-10 w-8 h-8 shrink-0" aria-hidden="true" />
-                <span className="relative z-10 flex-1 flex items-center justify-center whitespace-nowrap transition-colors duration-150" style={{ color: REST_COLOR }}>
-                  <span className="group-hover:text-white group-active:text-white transition-colors duration-150 text-xl sm:text-2xl">
-                    See Our Services
-                  </span>
-                </span>
-                <span className="relative z-10 w-8 h-8 shrink-0 rounded-full shadow-sm overflow-hidden" aria-hidden="true">
+            <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 sm:gap-6">
+              <ScrollBounce>
+                <button
+                  ref={ctaBtnRef}
+                  onClick={handleCtaClick}
+                  style={{ borderColor: STROKE_COLOR }}
+                  className="group relative z-30 flex items-center w-[300px] sm:w-[320px] px-5 sm:px-7 py-5 rounded-full font-sans font-black overflow-hidden border-2 transition-all duration-150 active:duration-75 touch-manipulation hover:-translate-y-1 active:translate-y-0 active:scale-[0.94] shadow-[0_4px_14px_rgba(0,0,0,0.12)] dark:shadow-[0_6px_24px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.18)] dark:hover:shadow-[0_12px_36px_rgba(0,0,0,0.7)] active:shadow-[0_2px_8px_rgba(0,0,0,0.1)] dark:active:shadow-[0_2px_10px_rgba(0,0,0,0.5)]"
+                >
                   <span
-                    className="absolute inset-0 rounded-full inline-flex items-center justify-center transition-opacity duration-150 group-active:opacity-0"
-                    style={{ backgroundColor: activeCircleColor }}
+                    aria-hidden="true"
+                    className="absolute inset-0 origin-bottom scale-y-0 transition-transform duration-150 ease-out group-hover:scale-y-100 group-active:scale-y-100"
+                    style={{ backgroundColor: CTA_FILL_COLOR }}
+                  />
+                  <span className="relative z-10 w-8 h-8 shrink-0" aria-hidden="true" />
+                  <span
+                    className="relative z-10 flex-1 flex items-center justify-center whitespace-nowrap transition-colors duration-150"
+                    style={{ color: REST_COLOR }}
                   >
-                    <ArrowRight weight="bold" style={{ color: activeArrowIconColor }} className="w-4 h-4 transition-all duration-300 group-hover:translate-x-0.5" />
+                    <span className="group-hover:text-white group-active:text-white transition-colors duration-150 text-xl sm:text-2xl">
+                      Start with a Quote
+                    </span>
                   </span>
-                  <span className="absolute inset-0 rounded-full inline-flex items-center justify-center bg-white opacity-0 transition-opacity duration-150 group-active:opacity-100">
-                    <ArrowRight weight="bold" style={{ color: BRAND.orange }} className="w-4 h-4 group-active:translate-x-0.5" />
+                  <span className="relative z-10 w-8 h-8 shrink-0 rounded-full shadow-sm overflow-hidden" aria-hidden="true">
+                    <span
+                      className="absolute inset-0 rounded-full inline-flex items-center justify-center transition-opacity duration-150 group-active:opacity-0"
+                      style={{ backgroundColor: activeCircleColor }}
+                    >
+                      <ArrowRight weight="bold" style={{ color: activeArrowIconColor }} className="w-4 h-4 transition-all duration-300 group-hover:translate-x-0.5" />
+                    </span>
+                    <span className="absolute inset-0 rounded-full inline-flex items-center justify-center bg-white opacity-0 transition-opacity duration-150 group-active:opacity-100">
+                      <ArrowRight weight="bold" style={{ color: BRAND.orange }} className="w-4 h-4 group-active:translate-x-0.5" />
+                    </span>
                   </span>
-                </span>
+                </button>
+              </ScrollBounce>
+
+              {/* Plain text link, desktop only — no pill */}
+              <button
+                onClick={handleServicesClick}
+                className="hidden md:inline-flex items-center gap-1.5 font-bold text-base hover:underline underline-offset-4 transition-colors duration-150"
+                style={{ color: STROKE_COLOR }}
+              >
+                See Our Services
+                <ArrowRight size={16} weight="bold" aria-hidden="true" />
               </button>
-            </ScrollBounce>
+            </div>
           </div>
 
+          {/* Right column — flat-icon hub showcase card */}
           <ScrollBounce delay={0.1} className="w-full">
-            <HubIconField
-              arrangement={arrangement}
-              isDark={isDark}
-              canHover={canHover}
-              prefersReducedMotion={prefersReducedMotion}
-            />
+            <HubShowcaseCard />
           </ScrollBounce>
         </div>
 
+        {/* Marquee */}
         <div
           role="group"
           aria-label="Our services"
@@ -503,4 +332,4 @@ export function HeroSection() {
       <BackToTopButton visible={showBackToTop} />
     </section>
   )
-            } 
+    } 
