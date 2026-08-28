@@ -14,13 +14,13 @@ declare global {
 }
 
 function getRateLimit() {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
-    return null
-  }
+  const url = process.env.UPSTASH_REDIS_REST_URL?.trim()
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+  if (!url || !token) return null
 
   if (!globalThis.apexbytesUploadRateLimit) {
     globalThis.apexbytesUploadRateLimit = new Ratelimit({
-      redis: Redis.fromEnv(),
+      redis: new Redis({ url, token }),
       limiter: Ratelimit.slidingWindow(MAX_UPLOADS_PER_WINDOW, WINDOW),
       analytics: true,
       prefix: RATE_LIMIT_PREFIX,

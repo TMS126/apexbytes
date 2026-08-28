@@ -42,12 +42,13 @@ function configureCloudinary() {
 }
 
 function safeEqual(value: string | null, expected: string | undefined) {
-  if (!value || !expected) return false
+  const normalizedExpected = expected?.trim()
+  if (!value || !normalizedExpected) return false
 
   // Compare fixed-length digests so the comparison itself does not branch on
   // secret length before timingSafeEqual is called.
   const actualDigest = createHash("sha256").update(value).digest()
-  const expectedDigest = createHash("sha256").update(expected).digest()
+  const expectedDigest = createHash("sha256").update(normalizedExpected).digest()
   return timingSafeEqual(actualDigest, expectedDigest)
 }
 
@@ -62,10 +63,12 @@ export function hasCronAccess(request: Request) {
 }
 
 function getAuditRedis() {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+  const url = process.env.UPSTASH_REDIS_REST_URL?.trim()
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+  if (!url || !token) {
     throw new Error("Upstash Redis configuration is incomplete.")
   }
-  return Redis.fromEnv()
+  return new Redis({ url, token })
 }
 
 async function appendAuditEvent(event: UploadAuditEvent) {

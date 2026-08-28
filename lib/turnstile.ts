@@ -20,8 +20,8 @@ export async function verifyTurnstileToken({
   token: string | null
   remoteIp: string | null
 }): Promise<TurnstileResult> {
-  const secret = process.env.TURNSTILE_SECRET_KEY
-  const expectedHostname = process.env.TURNSTILE_EXPECTED_HOSTNAME
+  const secret = process.env.TURNSTILE_SECRET_KEY?.trim()
+  const expectedHostname = process.env.TURNSTILE_EXPECTED_HOSTNAME?.trim()
 
   if (!secret || !expectedHostname) return { valid: false, reason: "not-configured" }
   if (!token || token.length > 2048) return { valid: false, reason: "missing-token" }

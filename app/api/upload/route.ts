@@ -83,19 +83,24 @@ function isSameOriginRequest(request: NextRequest) {
   }
 }
 
+function getCloudinaryConfiguration() {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim()
+  const apiKey = process.env.CLOUDINARY_API_KEY?.trim()
+  const apiSecret = process.env.CLOUDINARY_API_SECRET?.trim()
+  return cloudName && apiKey && apiSecret ? { cloudName, apiKey, apiSecret } : null
+}
+
 function hasCloudinaryConfiguration() {
-  return Boolean(
-    process.env.CLOUDINARY_CLOUD_NAME &&
-      process.env.CLOUDINARY_API_KEY &&
-      process.env.CLOUDINARY_API_SECRET
-  )
+  return getCloudinaryConfiguration() !== null
 }
 
 function configureCloudinary() {
+  const configuration = getCloudinaryConfiguration()
+  if (!configuration) throw new Error("Cloudinary upload configuration is incomplete.")
   cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: configuration.cloudName,
+    api_key: configuration.apiKey,
+    api_secret: configuration.apiSecret,
   })
 }
 
