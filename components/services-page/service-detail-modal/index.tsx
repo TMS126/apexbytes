@@ -1,11 +1,11 @@
-/* components/services-page/service-detail-modal/index.tsx — PART 1 OF 2 — paste this, then Part 2, back-to-back into one file */
+/* components/services-page/service-detail-modal/index.tsx — full file, paste over the current one */
 "use client"
 
 import { useState, useEffect, useRef, type ChangeEvent, type TouchEvent } from "react"
-import { X, ShareNetwork, Clock, Lightbulb, WarningCircle } from "@phosphor-icons/react"
+import { X, ShareNetwork, Clock, Lightbulb, WarningCircle, CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { HUB_COLORS, HubKey, BIZ, BRAND } from "@/lib/brand"
+import { HUB_COLORS, HubKey, BIZ, TOKEN } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
 import { useFocusTrap, HubIcon } from "../shared"
 import {
@@ -22,7 +22,6 @@ import { TurnstileWidget } from "./TurnstileWidget"
 import { getServiceTips } from "./fallback-tips"
 
 // ── Layout constants ──
-const BULK_RIBBON_BLUE = BRAND.blue
 const HEADER_GRID = "grid grid-cols-[36px_1fr_36px] gap-2"
 const SWIPE_MIN_DX = 48
 const SWIPE_DOMINANCE = 1.4
@@ -30,15 +29,18 @@ const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 const ICON_BTN_FOCUS = "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-500"
 
-// NEW — the footer notice below only concerns "NSFAS Application" (the
-// item about submitting a NEW application). Deliberately NOT matched
-// against other NSFAS items in the same section (Status Check, Banking
-// Update, Appeal) since those stay relevant/actionable regardless of
-// whether the application window is currently open. Kept as a
-// component-level check rather than a lib/data field, per instruction
-// not to touch that file. Verified via search before writing: the most
-// recent NSFAS intake (TVET Trimester 3) ran 14–23 Aug 2026 and has
-// just closed as of today.
+// The footer notice below only concerns "NSFAS Application" (the item
+// about submitting a NEW application). Not matched against other NSFAS
+// items in the same section (Status Check, Banking Update, Appeal) since
+// those stay relevant/actionable regardless of whether the application
+// window is currently open. Verified via search: the most recent NSFAS
+// intake (TVET Trimester 3) ran 14–23 Aug 2026 and has just closed.
+//
+// This notice no longer lives in the footer as a standalone block — it's
+// surfaced via a small "i" badge on the existing notice icon (top-right
+// stack), opened as a compact popover next to that icon. Once this item
+// stops being the closed-application one, the notice icon just behaves
+// like it does for every other service — no special case, no badge.
 const NSFAS_CLOSED_NOTICE_ITEM = "NSFAS Application"
 const NSFAS_CLOSED_NOTICE_TEXT =
   "NSFAS applications are currently closed — the most recent window (TVET Trimester 3) closed 23 August 2026. We can still help you prepare your documents ahead of the next opening, or assist with other NSFAS services like status checks and appeals."
@@ -52,6 +54,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const [tab, setTab] = useState<Tab>("bring")
   const [tipsOpen, setTipsOpen] = useState(false)
   const [noticeOpen, setNoticeOpen] = useState(false)
+  const [nsfasInfoOpen, setNsfasInfoOpen] = useState(false)
 
   const [file, setFile] = useState<File | null>(null)
   const [uploadPhase, setUploadPhase] = useState<"idle" | "uploading" | "done" | "error">("idle")
@@ -66,6 +69,12 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const [tipsCopied, setTipsCopied] = useState(false)
   const [quoteQty, setQuoteQty] = useState(0)
 
+  // Footer is collapsed into a pill by default — expands automatically
+  // once there's something to show (a file attached, an active upload,
+  // or an item already in the quote), but the person can also toggle it
+  // by hand either way.
+  const [footerManualState, setFooterManualState] = useState<boolean | null>(null)
+
   const fileRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
@@ -75,6 +84,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       setTab("bring")
       setTipsOpen(false)
       setNoticeOpen(false)
+      setNsfasInfoOpen(false)
       setFile(null)
       setUploadReference(null)
       setTurnstileToken(null)
@@ -82,6 +92,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       setUploadPhase("idle")
       setUploadErr(null)
       setUploadProgress(0)
+      setFooterManualState(null)
       setPreviewUrl((prev) => {
         if (prev) URL.revokeObjectURL(prev)
         return null
@@ -104,12 +115,12 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     if (!svc) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return
-      if (tipsOpen || noticeOpen) return
+      if (tipsOpen || noticeOpen || nsfasInfoOpen) return
       onClose()
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [svc, tipsOpen, noticeOpen, onClose])
+  }, [svc, tipsOpen, noticeOpen, nsfasInfoOpen, onClose])
 
   const doUpload = (f: File, verificationToken: string) => {
     setUploadPhase("uploading")
@@ -281,7 +292,16 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const neutralIconColor = isDark ? "#e4e4e7" : "#3f3f46"
   const showNsfasClosedNotice = svc.name === NSFAS_CLOSED_NOTICE_ITEM
 
-/* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
+  // Footer pill: expands on its own once there's something to show, but
+  // a manual toggle always wins once the person has touched it.
+  const footerAutoExpanded = inQuote || uploadPhase !== "idle" || !!file
+  const footerExpanded = footerManualState ?? footerAutoExpanded
+  const footerPillLabel = inQuote
+    ? `${quoteQty} in your quote`
+    : file
+    ? "File attached"
+    : "Upload a file or add to quote"
+
   return (
     <div className="fixed inset-0 z-[10200] flex items-center justify-center p-3 md:p-4">
       <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-200" onClick={onClose} />
@@ -295,14 +315,15 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         className="relative w-full max-w-lg bg-white dark:bg-zinc-950 shadow-2xl border border-zinc-100 dark:border-zinc-800 max-h-[88vh] flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         style={{ boxShadow: "0 45px 100px -20px rgba(0,0,0,0.55), 0 20px 48px -14px rgba(0,0,0,0.4)" }}
       >
+        {/* Bulk ribbon — neutral surface now, hub color lives in the text
+            only (no solid colored fill, no white-on-color). */}
         {hasBulk && (
           <div className="absolute top-0 right-0 w-[104px] h-[104px] overflow-hidden pointer-events-none z-10" aria-hidden="true">
             <span
-              className="absolute block text-center text-[0.66rem] font-black uppercase text-white"
+              className="abh-shadow-badge absolute block text-center text-[0.66rem] font-black uppercase"
               style={{
                 top: "28px", right: "-34px", width: "150px", transform: "rotate(45deg)",
-                backgroundColor: BULK_RIBBON_BLUE, padding: "6px 0",
-                boxShadow: "0 4px 10px -2px rgba(30,111,168,0.55), 0 2px 4px -1px rgba(0,0,0,0.25)",
+                backgroundColor: "var(--muted)", color: accent, padding: "6px 0",
               }}
             >
               Bulk
@@ -310,26 +331,63 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
           </div>
         )}
 
-        {/* ══════════════════ TOP-RIGHT ICON STACK ══════════════════ */}
+        {/* ══════════════════ TOP-RIGHT ICON STACK ══════════════════
+            Rule: no chip on any icon here except Close — Close gets a
+            chip specifically so it reads as visually distinct from the
+            rest (notice / tips / share), which stay plain and neutral,
+            turning to the hub's accent color on hover. */}
         <div
           className={cn(
             "absolute right-5 z-20 flex flex-col items-center gap-1.5",
             hasBulk ? "top-28" : "top-5"
           )}
+          style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           {svc.notice && (
-            <button
-              type="button"
-              onClick={() => setNoticeOpen(true)}
-              aria-label="View service notice"
-              className={cn(
-                "w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-105 active:scale-95",
-                ICON_BTN_FOCUS
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => (showNsfasClosedNotice ? setNsfasInfoOpen((v) => !v) : setNoticeOpen(true))}
+                aria-label={showNsfasClosedNotice ? "View application window notice" : "View service notice"}
+                className={cn(
+                  "w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-150 active:scale-95",
+                  ICON_BTN_FOCUS
+                )}
+                style={{ color: TOKEN.orangeText }}
+              >
+                <WarningCircle size={18} weight="bold" aria-hidden="true" />
+              </button>
+
+              {/* Small "i" badge — only shows while this specific item's
+                  application window is closed. Once it isn't, this button
+                  is just the ordinary notice icon, same as any other card. */}
+              {showNsfasClosedNotice && (
+                <span
+                  aria-hidden="true"
+                  className="absolute -top-1 -left-1 w-4 h-4 rounded-full flex items-center justify-center text-[0.6rem] font-black bg-background border border-border"
+                  style={{ color: TOKEN.orangeText }}
+                >
+                  i
+                </span>
               )}
-              style={{ backgroundColor: `${BRAND.orange}15`, color: BRAND.orange }}
-            >
-              <WarningCircle size={18} weight="fill" aria-hidden="true" />
-            </button>
+
+              {nsfasInfoOpen && showNsfasClosedNotice && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="absolute left-0 top-11 z-30 w-64 rounded-[14px] bg-background border border-border p-3.5 abh-shadow-popover animate-in fade-in zoom-in-95 duration-150"
+                >
+                  <p className="text-[0.8rem] leading-relaxed abh-body">{NSFAS_CLOSED_NOTICE_TEXT}</p>
+                  <button
+                    type="button"
+                    onClick={() => setNsfasInfoOpen(false)}
+                    className="mt-2 text-[0.72rem] font-black uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </div>
           )}
 
           <button
@@ -337,11 +395,11 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
             onClick={() => setTipsOpen(true)}
             aria-label="View helpful tips"
             className={cn(
-              "w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 active:scale-95",
+              "w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-[var(--hub-accent)] transition-colors duration-150 active:scale-95",
               ICON_BTN_FOCUS
             )}
           >
-            <Lightbulb size={18} weight="fill" aria-hidden="true" />
+            <Lightbulb size={18} weight="bold" aria-hidden="true" />
           </button>
 
           <div className="relative">
@@ -350,7 +408,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               onClick={handleShare}
               aria-label="Share this service"
               className={cn(
-                "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
+                "w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-[var(--hub-accent)] transition-colors duration-150 active:scale-95",
                 ICON_BTN_FOCUS
               )}
             >
@@ -367,12 +425,13 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
             )}
           </div>
 
+          {/* Close — the one icon here that gets a chip, on purpose. */}
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
             className={cn(
-              "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
+              "w-9 h-9 rounded-full flex items-center justify-center bg-muted text-foreground hover:bg-border transition-colors duration-150 active:scale-95",
               ICON_BTN_FOCUS
             )}
           >
@@ -397,9 +456,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
             <div aria-hidden="true" />
           </div>
 
-          <div className="h-px bg-zinc-100 dark:bg-zinc-800 mb-4" />
-
-          <div className={cn(HEADER_GRID, "items-start")}>
+          <div className={cn(HEADER_GRID, "items-start pt-2")}>
             <div aria-hidden="true" />
             <div className="flex flex-col items-center gap-1.5">
               <span className="text-5xl font-black tracking-tighter" style={{ color: accent }}>{svc.price}</span>
@@ -417,11 +474,13 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
           </div>
         </div>
 
-        {/* ══════════════════ TABS ("Needs" / "Description") ══════════════════ */}
+        {/* ══════════════════ TABS ("Needs" / "Description") ══════════════════
+            No static divider under the tab row anymore — the only line
+            here is the active tab's own underline. */}
         <div className="px-6 pt-1">
           <div className={cn(HEADER_GRID, "items-center")}>
             <div aria-hidden="true" />
-            <div role="tablist" aria-label="Service info sections" className="flex items-center justify-center gap-6 border-b border-zinc-100 dark:border-zinc-800">
+            <div role="tablist" aria-label="Service info sections" className="flex items-center justify-center gap-6">
               {tabs.map((t) => {
                 const isActive = tab === t
                 const label = t === "bring" ? "Needs" : "Description"
@@ -491,93 +550,97 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
           )}
         </div>
 
-        {/* ══════════════════ FOOTER ══════════════════ */}
-        <div className="px-6 pb-8 pt-4 flex-shrink-0 border-t border-zinc-100 dark:border-zinc-800 space-y-3">
+        {/* ══════════════════ FOOTER ══════════════════
+            No static divider above this anymore either. The
+            upload/quote block is now tucked behind a neutral pill
+            instead of always sitting open and eating vertical space —
+            it still auto-opens once there's a file, an upload, or a
+            quote item to show. */}
+        <div className="px-6 pb-8 pt-4 flex-shrink-0 space-y-3">
           <input ref={fileRef} type="file" accept={HUB_ACCEPT[svc.hubId]} onChange={handleFilePick} className="hidden" />
 
-          {TURNSTILE_SITE_KEY ? (
-            <TurnstileWidget
-              siteKey={TURNSTILE_SITE_KEY}
-              theme={isDark ? "dark" : "light"}
-              resetKey={turnstileResetKey}
-              onToken={setTurnstileToken}
+          <button
+            type="button"
+            onClick={() => setFooterManualState(!footerExpanded)}
+            aria-expanded={footerExpanded}
+            className="w-full flex items-center justify-between gap-2 px-4 py-3 rounded-full bg-muted text-foreground font-bold text-[0.86rem] transition-colors duration-150 active:scale-[0.98] hover:bg-border"
+          >
+            <span>{footerPillLabel}</span>
+            <CaretDown
+              size={13}
+              weight="bold"
+              aria-hidden="true"
+              className={cn("transition-transform duration-200", footerExpanded && "rotate-180")}
             />
-          ) : (
-            <p className="abh-muted text-xs text-center">Document upload is temporarily unavailable.</p>
-          )}
+          </button>
 
-          <div className="grid grid-cols-[1fr_auto_1fr] gap-3">
-            <UploadButton
-              phase={uploadPhase}
-              accent={accent}
-              onClick={() => {
-                if (!TURNSTILE_SITE_KEY) {
-                  setUploadErr("Document upload is temporarily unavailable.")
-                  setUploadPhase("error")
-                  return
-                }
-                if (!turnstileToken) {
-                  setUploadErr("Complete the upload verification first.")
-                  setUploadPhase("error")
-                  return
-                }
-                fileRef.current?.click()
-              }}
-            />
-            <div className="w-px bg-zinc-200 dark:bg-zinc-700/60" aria-hidden="true" />
-            <QuoteControl
-              inQuote={inQuote}
-              quoteQty={quoteQty}
-              accent={accent}
-              neutralIconColor={neutralIconColor}
-              onAdd={handleAddToQuote}
-              onStep={handleStepQty}
-            />
-          </div>
+          {footerExpanded && (
+            <div className="space-y-3 animate-in fade-in duration-200">
+              {TURNSTILE_SITE_KEY ? (
+                <TurnstileWidget
+                  siteKey={TURNSTILE_SITE_KEY}
+                  theme={isDark ? "dark" : "light"}
+                  resetKey={turnstileResetKey}
+                  onToken={setTurnstileToken}
+                />
+              ) : (
+                <p className="abh-muted text-xs text-center">Document upload is temporarily unavailable.</p>
+              )}
 
-          {bulkHint && (
-            <BulkHint
-              hint={bulkHint}
-              accent={accent}
-              isDiscount={isBulkDiscount}
-              baseUnitPrice={baseUnitPrice}
-              effRate={effRate}
-              priceUnit={priceUnit}
-            />
-          )}
+              <div className="grid grid-cols-[1fr_auto_1fr] gap-3">
+                <UploadButton
+                  phase={uploadPhase}
+                  accent={accent}
+                  onClick={() => {
+                    if (!TURNSTILE_SITE_KEY) {
+                      setUploadErr("Document upload is temporarily unavailable.")
+                      setUploadPhase("error")
+                      return
+                    }
+                    if (!turnstileToken) {
+                      setUploadErr("Complete the upload verification first.")
+                      setUploadPhase("error")
+                      return
+                    }
+                    fileRef.current?.click()
+                  }}
+                />
+                <div className="w-px bg-zinc-200 dark:bg-zinc-700/60" aria-hidden="true" />
+                <QuoteControl
+                  inQuote={inQuote}
+                  quoteQty={quoteQty}
+                  accent={accent}
+                  neutralIconColor={neutralIconColor}
+                  onAdd={handleAddToQuote}
+                  onStep={handleStepQty}
+                />
+              </div>
 
-          <UploadStatus
-            phase={uploadPhase}
-            file={file}
-            uploadErr={uploadErr}
-            uploadProgress={uploadProgress}
-            previewUrl={previewUrl}
-            accent={accent}
-            acceptHint={acceptHint}
-            onClear={clearFile}
-            onRetry={() => { setUploadPhase("idle"); setUploadErr(null); fileRef.current?.click() }}
-          />
+              {bulkHint && (
+                <BulkHint
+                  hint={bulkHint}
+                  accent={accent}
+                  isDiscount={isBulkDiscount}
+                  baseUnitPrice={baseUnitPrice}
+                  effRate={effRate}
+                  priceUnit={priceUnit}
+                />
+              )}
 
-          {/* NEW — NSFAS application-window closure notice. Only renders
-              for the "NSFAS Application" item specifically — see
-              showNsfasClosedNotice / NSFAS_CLOSED_NOTICE_ITEM in Part 1.
-              Styled to match the existing warning-notice visual language
-              (BRAND.orange + WarningCircle) already used by NoticeModal
-              elsewhere in this file, for visual consistency. */}
-          {showNsfasClosedNotice && (
-            <div
-              className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
-              style={{ backgroundColor: `${BRAND.orange}12` }}
-            >
-              <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
-              <p className="text-[0.82rem] leading-relaxed" style={{ color: BRAND.orange }}>{NSFAS_CLOSED_NOTICE_TEXT}</p>
+              <UploadStatus
+                phase={uploadPhase}
+                file={file}
+                uploadErr={uploadErr}
+                uploadProgress={uploadProgress}
+                previewUrl={previewUrl}
+                accent={accent}
+                acceptHint={acceptHint}
+                onClear={clearFile}
+                onRetry={() => { setUploadPhase("idle"); setUploadErr(null); fileRef.current?.click() }}
+              />
             </div>
           )}
 
-          <div className="h-px bg-zinc-100 dark:bg-zinc-800" />
-
-          {/* CTA — was text-white on the #25D366 fill; switched to dark
-              text (zinc-900) per request. Fill unchanged. */}
           <a
             href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(waMessage)}`}
             target="_blank"
@@ -587,7 +650,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               "flex items-center justify-center gap-2 w-full px-4 py-4 rounded-[14px] font-black text-base text-zinc-900 text-center transition-all active:scale-95",
               ICON_BTN_FOCUS
             )}
-            style={{ backgroundColor: "#25D366" }}
+            style={{ backgroundColor: "var(--brand-whatsapp)" }}
           >
             Request {naturalLabel}
           </a>
@@ -615,4 +678,4 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       )}
     </div>
   )
-    }
+} 
