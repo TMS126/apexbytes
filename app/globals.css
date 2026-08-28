@@ -1,4 +1,4 @@
-/* app/globals.css — PART 1 OF 2 — paste this, then Part 2, back-to-back into one file */
+/* app/globals.css — full file, paste over the current one */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -130,7 +130,14 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --footer-bg: #1B1D2C;
   --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
   --card-border: #363A50;
-  --brand-warning-bg: #7A3B0E;
+  /* FIX: was a hardcoded darker brown (#7A3B0E) — actually darker than
+     the light-mode value, which is backwards for a dark background and
+     was the exact bug flagged (orange notice dots going murky/low-
+     contrast in dark mode). Now points at the existing --brand-light-
+     orange token instead of a new hex value, so dark mode gets a
+     genuinely lighter orange and there's still only one hex literal
+     defining "light orange" anywhere in the file. */
+  --brand-warning-bg: var(--brand-light-orange);
 
   --brand-blue-text: #6693db;
   --brand-orange-text: #e3731f;
@@ -285,7 +292,6 @@ button, a, [role="button"] {
   .abh-cta-pulse { animation: none; }
   }
 
-  /* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file, unchanged from your version */
 @layer components{
   .abh-card {
     @apply rounded-[14px] transition-all duration-300;
@@ -491,4 +497,4 @@ button, a, [role="button"] {
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
-    }
+                                   } 
