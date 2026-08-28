@@ -169,9 +169,9 @@ export const WA = {
 } as const
 
 export const MAINTENANCE_BANNER = {
-  active: true,
-  version: "1",
-  message: "We're upgrading our website behind the scenes. Some features may briefly change.",
+  active: false,
+  version: "2",
+  message: "Need help with a service? Message us on WhatsApp.",
   linkText: "Message us on WhatsApp",
   linkHref: WA.general,
 } as const

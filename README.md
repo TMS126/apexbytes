@@ -1,35 +1,64 @@
-# v0-apexbytes-hub-website
+# ApexbytesHub
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+ApexbytesHub is a local technology, printing, design, document, and e-service business based in Kgotsong, Bothaville. The website presents five service hubs, a portfolio, pricing information, customer FAQs, contact paths, and browser-based document tools.
 
-## Built with v0
+## Technology
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+The site is built with Next.js 16, React 19, TypeScript, Tailwind CSS, and pnpm. It uses server-rendered pages where appropriate, client components for interactive UI, and Vercel-compatible deployment configuration.
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_V2QG9x8zah44AQoWCCSrdIDVh4yZ)
+## Requirements
 
-## Getting Started
-
-First, run the development server:
+Use Node.js 22.13.0 or a compatible Node 22 release and pnpm 11.21.0. Install dependencies with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install --frozen-lockfile
+```
+
+## Local development
+
+Start the development server with:
+
+```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quality checks
 
-## Learn More
+The repository includes the following checks:
 
-To learn more, take a look at the following resources:
+```bash
+pnpm lint       # ESLint
+pnpm typecheck  # TypeScript, without emitting files
+pnpm test       # Vitest unit tests
+pnpm build      # Production Next.js build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+These checks run automatically for pushes to `main` and pull requests targeting `main` through the GitHub Actions quality gate.
 
-<!-- deployed: 2026-06-15T10:23:46Z -->
+## Environment configuration
+
+Copy `.env.example` to `.env.local` and fill in only the values required for the features you are enabling. Server-only credentials must remain in the hosting provider’s encrypted environment settings and must never be exposed through `NEXT_PUBLIC_*` variables or committed to Git.
+
+Uploads are intentionally disabled by default. Enable them only after Cloudinary authenticated delivery, durable retention, Redis rate limiting, Turnstile verification, and the administrative controls are configured.
+
+## Project layout
+
+- `app/` contains routes, layouts, metadata, API routes, and browser tools.
+- `components/` contains reusable interface sections and interactive widgets.
+- `lib/` contains business data, brand tokens, validation, security helpers, and shared utilities.
+- `public/` contains optimized site imagery, icons, and customer-facing documents.
+- `.github/workflows/` contains the automated quality and brand-governance checks.
+
+## Deployment
+
+The project is configured for deployment on Vercel. Set the production environment variables in the Vercel project before enabling server-side integrations. Confirm that `NEXT_PUBLIC_SITE_URL` matches the canonical public domain so metadata, sitemap, and Open Graph URLs are correct.
+
+## Content and contact
+
+Business information and service content are maintained in the shared data and brand modules under `lib/`. Customer enquiries are routed to WhatsApp and the published business email address. Update those values in the relevant source modules when business details change.
+
+## License and ownership
+
+This repository contains the ApexbytesHub website and its original business content. It is private application code and is not intended as a general-purpose starter template.
