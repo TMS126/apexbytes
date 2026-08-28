@@ -9,7 +9,6 @@ import { TOKEN } from "@/lib/brand"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
-// ── Only the icon + header carry severity color. Body stays neutral. ──
 const VARIANT_TEXT: Record<NoticeVariant, string> = {
   success: TOKEN.greenText,
   info: TOKEN.blueText,
@@ -49,7 +48,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
+            className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full bg-background"
           >
             <button
               type="button"
@@ -84,7 +83,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="relative w-full max-w-[440px] rounded-[14px] bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
+            className="abh-shadow-badge relative w-full max-w-[440px] rounded-[14px] bg-background"
           >
             <button
               type="button"
@@ -122,4 +121,4 @@ export function NoticePill({
       </AnimatePresence>
     </motion.div>
   )
-                } 
+}
