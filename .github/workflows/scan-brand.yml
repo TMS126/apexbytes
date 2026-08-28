@@ -1,12 +1,20 @@
 name: Scan BRAND
-on: workflow_dispatch
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Run your greps
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
+
+      - name: Scan for hard-coded brand usage
         run: |
           echo "=== 1) BRAND.(orangeAccessible|blueText|orangeText|greenText|whatsappText) ==="
           grep -rnE "BRAND\.(orangeAccessible|blueText|orangeText|greenText|whatsappText)" --include="*.tsx" --include="*.ts" . || echo "No matches for pattern 1"
