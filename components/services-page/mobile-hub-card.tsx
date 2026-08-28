@@ -1,9 +1,9 @@
-// components/services-page/mobile-hub-card.tsx
+// components/services-page/mobile-hub-card.tsx — full file, paste over the current one
 "use client"
 
 import Image from "next/image"
-import { CaretRight, WarningCircle } from "@phosphor-icons/react"
-import { BRAND, TOKEN } from "@/lib/brand"
+import { WarningCircle } from "@phosphor-icons/react"
+import { TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 
 export const HUB_ICON_SRC: Record<HubId, string> = {
@@ -22,15 +22,14 @@ export const HUB_STAT_TAG: Record<HubId, string> = {
   tech: "On-site support",
 }
 
-// Bulk ribbon — now takes a `fill` prop (hub color) instead of a fixed
-// blue, matching what MobileBulkRibbon already did correctly. Used by
-// both the desktop 5-card landing grid and anywhere else that needs it.
-export function BulkRibbon({ fill }: { fill: string }) {
+// Bulk ribbon — neutral surface, hub color lives only in the text now.
+// Used by the desktop 5-card landing grid.
+export function BulkRibbon({ accent }: { accent: string }) {
   return (
     <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
       <span
-        className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-white"
-        style={{ backgroundColor: fill, boxShadow: `0 4px 10px -2px ${fill}8c, 0 2px 4px -1px rgba(0,0,0,0.25)` }}
+        className="abh-shadow-badge block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider"
+        style={{ backgroundColor: "var(--muted)", color: accent }}
       >
         Bulk
       </span>
@@ -38,16 +37,17 @@ export function BulkRibbon({ fill }: { fill: string }) {
   )
 }
 
-export function MobileBulkRibbon({ fill }: { fill: string }) {
+// Mobile ribbon — moved to the right END of the card (not the icon
+// corner anymore), as a straight neutral tag rather than a diagonal
+// corner ribbon, since it now sits against the card's own edge.
+export function MobileBulkRibbon({ accent }: { accent: string }) {
   return (
-    <div className="absolute -top-1 -right-1 z-20 pointer-events-none w-16 h-16 overflow-hidden">
-      <span
-        className="absolute top-[11px] right-[-21px] rotate-45 block w-20 text-center py-0.5 text-[0.56rem] font-black uppercase tracking-wider text-white"
-        style={{ backgroundColor: fill, boxShadow: "0 3px 8px -2px rgba(0,0,0,0.35)" }}
-      >
-        Bulk
-      </span>
-    </div>
+    <span
+      className="abh-shadow-badge absolute top-1/2 right-3 -translate-y-1/2 z-20 pointer-events-none px-2.5 py-1 rounded-full text-[0.6rem] font-black uppercase tracking-wider whitespace-nowrap"
+      style={{ backgroundColor: "var(--muted)", color: accent }}
+    >
+      Bulk
+    </span>
   )
 }
 
@@ -55,8 +55,8 @@ export function NoticeBadge() {
   return (
     <div className="absolute top-3 right-3 z-20 pointer-events-none">
       <div
-        className="w-7 h-7 rounded-full flex items-center justify-center"
-        style={{ backgroundColor: "#ffffff", color: TOKEN.warningBg, boxShadow: "0 2px 6px -1px rgba(0,0,0,0.2)" }}
+        className="abh-shadow-badge w-7 h-7 rounded-full flex items-center justify-center"
+        style={{ backgroundColor: "var(--card)", color: TOKEN.warningBg }}
         aria-label="Notice for some services in this hub"
       >
         <WarningCircle size={16} weight="bold" aria-hidden="true" />
@@ -66,14 +66,14 @@ export function NoticeBadge() {
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// MOBILE HUB CARD — landscape only now (was portrait/landscape toggle).
-// Every card uses this same shape, matching what used to be the Tech
-// Hub card's unique layout. Icon stays as the source PNG but is
-// desaturated to a neutral tone via CSS filter, so the ONLY colored
-// element on the card is the small accent ring behind it and the bulk
-// ribbon/notice badge — matching "icons neutral, one accent element
-// holds the hub color" across both light and dark mode. Fixed min-height
-// keeps every card the same size regardless of description length.
+// MOBILE HUB CARD
+// - Removed the life-like elevated shadow — card now stands on its
+//   border alone; abh-shadow-badge is reserved for the chip-scale
+//   elements (ribbon, notice badge) only.
+// - Removed the trailing ">" chevron button entirely.
+// - Bulk ribbon moved out of the icon box to the card's own right edge.
+// - Stat tag text is neutral now — mobile has no hover state to reveal
+//   hub color on, so it stays plain rather than being permanently tinted.
 // ══════════════════════════════════════════════════════════════════════
 export function MobileHubCard({
   hubId, hub, accent, primary, hubHasBulk, hubHasNotice, onClick,
@@ -92,7 +92,7 @@ export function MobileHubCard({
     <button
       onClick={onClick}
       aria-label={`Open ${hub.title}`}
-      className="w-full min-h-[132px] text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 active:scale-[0.98] transform-gpu p-4 flex items-center gap-4"
+      className="relative w-full min-h-[132px] text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-all duration-200 active:scale-[0.98] transform-gpu p-4 flex items-center gap-4"
     >
       <div
         className="relative rounded-[14px] flex items-center justify-center overflow-hidden shrink-0 w-[104px] h-[104px] bg-muted"
@@ -112,27 +112,19 @@ export function MobileHubCard({
         {hubHasNotice && (
           <WarningCircle
             size={16}
-            weight="fill"
+            weight="bold"
             aria-label="Notice for some services"
             className="absolute top-2 left-2 z-20"
-            style={{ color: BRAND.orange }}
+            style={{ color: TOKEN.orangeText }}
           />
         )}
-        {hubHasBulk && <MobileBulkRibbon fill={primary} />}
       </div>
 
       <div className="min-w-0 flex-1">
-        <div className="flex items-start justify-between gap-2 mb-1.5">
-          <h3 className="font-sans font-black text-[1.08rem] leading-tight text-foreground break-words">
+        <div className="mb-1.5">
+          <h3 className="font-sans font-black text-[1.08rem] leading-tight text-foreground break-words pr-6">
             {hub.title}
           </h3>
-          <span
-            className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: "var(--muted)", color: accent }}
-            aria-hidden="true"
-          >
-            <CaretRight size={13} weight="bold" />
-          </span>
         </div>
 
         <p className="text-[0.8rem] text-muted-foreground leading-snug mb-2 line-clamp-2">
@@ -141,9 +133,11 @@ export function MobileHubCard({
 
         <p className="text-[0.78rem] font-bold text-foreground">
           {itemCount} services <span className="opacity-40 mx-0.5">•</span>
-          <span style={{ color: accent }}> {HUB_STAT_TAG[hubId]}</span>
+          <span className="text-muted-foreground"> {HUB_STAT_TAG[hubId]}</span>
         </p>
       </div>
+
+      {hubHasBulk && <MobileBulkRibbon accent={accent} />}
     </button>
   )
 }
