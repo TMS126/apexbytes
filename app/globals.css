@@ -258,6 +258,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
     font-size: 20px;
     line-height: 1.65;
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-manrope), 'Manrope Fallback', sans-serif;
+  }
 }
 
 .skip-to-content {
