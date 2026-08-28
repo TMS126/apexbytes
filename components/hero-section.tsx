@@ -332,9 +332,9 @@ export function HeroSection() {
 
   const isDark = mounted && resolvedTheme === "dark"
 
-  const STROKE_COLOR = BRAND.blue
-  const CTA_FILL_COLOR = BRAND.blue
-  const REST_COLOR = isDark ? BRAND.lightBlue : BRAND.blue
+  const STROKE_COLOR = BRAND.orange
+  const CTA_FILL_COLOR = BRAND.orange
+  const REST_COLOR = BRAND.orange
 
   const activeCircleColor = CTA_FILL_COLOR
   const activeArrowIconColor = getArrowIconColor(activeCircleColor)
@@ -405,11 +405,11 @@ export function HeroSection() {
             )}
 
             <h1 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl tracking-tight leading-[1.1] mb-4 text-balance transition-colors duration-300 text-zinc-900 dark:text-zinc-50">
-              <span className="transition-colors duration-200 hover:text-[#1E6FA8] active:text-[#1E6FA8]">Printing</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-[#B06225] active:text-[#B06225]">Design</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-[#4A8011] active:text-[#4A8011]">Documents</span>,{" "}
-              <span className="transition-colors duration-200 hover:text-[#0F766E] active:text-[#0F766E]">E-Services</span>{" "}&amp;{" "}
-              <span className="transition-colors duration-200 hover:text-[#333333] dark:hover:text-[#B8CCE0] active:text-[#333333] dark:active:text-[#B8CCE0]">Tech</span>
+              <span className="transition-colors duration-200 hover:text-brand-blue active:text-brand-blue">Printing</span>,{" "}
+              <span className="transition-colors duration-200 hover:text-brand-orange active:text-brand-orange">Design</span>,{" "}
+              <span className="transition-colors duration-200 hover:text-brand-green active:text-brand-green">Documents</span>,{" "}
+              <span className="transition-colors duration-200 hover:text-brand-teal active:text-brand-teal">E-Services</span>{" "}&amp;{" "}
+              <span className="transition-colors duration-200 hover:text-brand-blue-dark dark:hover:text-brand-light-blue active:text-brand-blue-dark dark:active:text-brand-light-blue">Tech</span>
               <span className="text-zinc-900 dark:text-zinc-50"> — All in One Place</span>
             </h1>
 

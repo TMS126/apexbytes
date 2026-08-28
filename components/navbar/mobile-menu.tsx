@@ -6,14 +6,9 @@ import Image from "next/image"
 import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
-// FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
-// "keep in sync" comment. That hex is the OLD, WCAG-failing --brand-orange
-// value (documented in globals.css as "was #F4A261 at 2.06:1") — still
-// failing here as both text color AND border color (border also needs
-// ≥3:1 for non-text UI components, which 2.06:1 fails too). Now imports
-// the same verified TOKEN.orangeText used in navbar.tsx directly, so
-// there's a real single source of truth instead of a manually-synced copy.
-const HOVER_TEXT = TOKEN.orangeText
+// Navigation keeps a dedicated, stable orange token so global CTA palette
+// changes cannot accidentally alter desktop or mobile menu states.
+const HOVER_TEXT = TOKEN.navbarOrangeText
 
 interface MobileMenuProps {
   menuOpen: boolean
@@ -80,7 +75,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                   tabIndex={menuOpen ? 0 : -1}
                   style={{
                     transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    backgroundColor: BRAND.blue,
+                    backgroundColor: BRAND.navbarBlue,
                     color: "#ffffff",
                   }}
                   className={cn(
