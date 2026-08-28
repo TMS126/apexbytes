@@ -471,7 +471,7 @@ export function ServicesPage() {
                       style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
                     >
                       <HubCornerIcon hubId={hubId} accent={accent} />
-                      {hubHasBulk && <BulkRibbon fill={colors.primary} />}
+                      {hubHasBulk && <BulkRibbon accent={colors.primary} />}
                       {hubHasNotice && <NoticeBadge />}
 
                       <h3 className="relative z-10 font-sans font-black text-[1.45rem] leading-tight mb-2 text-foreground group-hover/hubcard:text-[var(--hub-accent)] transition-colors duration-200">
