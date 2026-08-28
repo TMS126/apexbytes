@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 import {
-  ArrowRight, Play, Pause, CheckCircle,
+  ArrowUpRight, Play, Pause, CheckCircle,
   Printer, FileText, PaintBrush, Globe, Desktop,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
@@ -64,9 +64,6 @@ const ELLIPSE_RX_PCT = 30
 const ELLIPSE_RY_PCT = 24
 const HUB_ICON_MAP: Record<string, React.ElementType> = {
   print: Printer, doc: FileText, design: PaintBrush, eservice: Globe, tech: Desktop,
-}
-function pillLabel(hubName: string) {
-  return hubName.replace(/\s*Hub$/i, "").toUpperCase()
 }
 function shuffleArray<T>(arr: T[]): T[] {
   const a = [...arr]
@@ -159,13 +156,6 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
                 animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
               }}
             />
-
-            <span
-              className="mt-2 px-2.5 py-1 rounded-full text-[0.6rem] sm:text-[0.65rem] font-black uppercase tracking-wide bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm shadow-sm whitespace-nowrap"
-              style={{ color: hubAccent }}
-            >
-              {pillLabel(hub.name)}
-            </span>
           </div>
         )
       })}
@@ -270,25 +260,34 @@ export function HeroSection() {
               {HERO_SUBHEAD}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center md:items-center gap-4 sm:gap-6 mb-4">
+            <div className="flex flex-col sm:flex-row items-center md:items-center gap-4 sm:gap-6 mb-8 md:mb-9">
               <ScrollBounce>
                 <button
                   onClick={handleCtaClick}
-                  className="flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-base sm:text-lg text-white transition-all duration-150 active:scale-[0.96] hover:-translate-y-0.5 shadow-[0_10px_24px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.5)]"
+                  className="flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl text-white transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 abh-shadow-badge"
                   style={{ backgroundColor: BRAND.orange }}
                 >
                   Start with a Quote
-                  <ArrowRight weight="bold" className="w-4 h-4" aria-hidden="true" />
+                  <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
                 </button>
               </ScrollBounce>
 
+              {/* "See Our Services" — was a plain underline link, now a
+                  standalone pill: fills with the page background so it
+                  reads as a distinct morphed shape rather than flat text,
+                  border + chip shadow token give it edges, and the accent
+                  only appears on hover/press (matches the sitewide
+                  "neutral until interacted with" rule). */}
               <button
                 onClick={handleServicesClick}
-                className="flex items-center gap-1.5 font-bold text-base hover:underline underline-offset-4 transition-colors duration-150"
-                style={{ color: BRAND.blue }}
+                className="group/services-cta flex items-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-background border border-[var(--border)] text-foreground abh-shadow-badge transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange)]"
               >
                 See Our Services
-                <ArrowRight weight="bold" className="w-4 h-4" aria-hidden="true" />
+                <ArrowUpRight
+                  weight="bold"
+                  className="w-4 h-4 transition-transform duration-200 group-hover/services-cta:translate-x-0.5 group-hover/services-cta:-translate-y-0.5"
+                  aria-hidden="true"
+                />
               </button>
             </div>
 
@@ -348,4 +347,4 @@ export function HeroSection() {
       <BackToTopButton visible={showBackToTop} />
     </section>
   )
-          } 
+              } 
