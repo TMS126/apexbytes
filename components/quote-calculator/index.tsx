@@ -234,6 +234,14 @@ export function QuoteCalculatorWidget() {
     return () => window.removeEventListener("abh:step-quote-qty", handler)
   }, [stepQty])
 
+  // ADDED — lets the Hero's "Start with a Quote" button open this widget
+  // without a route change. Dispatched from components/hero-section.tsx.
+  useEffect(() => {
+    const handler = () => setIsOpen(true)
+    window.addEventListener("abh:open-quote-calculator", handler)
+    return () => window.removeEventListener("abh:open-quote-calculator", handler)
+  }, [setIsOpen])
+
   const HOLD_DELAY = 420
   const REPEAT_MS  = 90
   const clearPress = (id: string) => {
@@ -308,10 +316,17 @@ export function QuoteCalculatorWidget() {
   }
   const deleteSavedQuote = (id: string) => setSavedQuotes(prev => prev.filter(q => q.id !== id))
 
-  const fabVisible = !isOpen && !(scrolled && !isOpen) && !isOtherOpen
+  // AUDIT FIX: was `!isOpen && !(scrolled && !isOpen) && !isOtherOpen`.
+  // Since the first `!isOpen` already guarantees isOpen is false, the
+  // nested `!isOpen` inside the second clause is always true — the whole
+  // expression reduces to `!isOpen && !scrolled && !isOtherOpen`. Dead
+  // logic, not a bug, but worth cleaning up.
+  const fabVisible = !isOpen && !scrolled && !isOtherOpen
   const showMiniBar = cart.length > 0 && !isOpen && fabVisible
 
-  return (
+  // ── continued in Part 2 (return statement / JSX) ──
+
+return (
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
@@ -522,12 +537,6 @@ export function QuoteCalculatorWidget() {
                     </div>
                   )}
 
-                  {/* Horizontal-scroll cart strip — now wrapped in
-                      AnimatePresence/motion so items pop in and shrink
-                      out on add/remove instead of appearing/disappearing
-                      instantly, matching the same feel as the JPG-to-PDF
-                      grid's animations. Scrolling behavior itself was
-                      already in place via overflow-x-auto/snap-x. */}
                   <div
                     role="list"
                     aria-label="Items in your quote"
@@ -659,4 +668,4 @@ export function QuoteCalculatorWidget() {
       )}
     </>
   )
-                               }
+                        }
