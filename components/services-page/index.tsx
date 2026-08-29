@@ -460,9 +460,10 @@ export function ServicesPage() {
                     index === 4 && "md:col-start-4"
                   )}
                 >
+                  // components/services-page/index.tsx — snippet: desktop 5-card hub grid, card shadow removed
                   <ScrollBounce delay={index * 0.06}>
                     <div
-                      className="group/hubcard relative flex flex-col items-center text-center h-full rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-300 hover:-translate-y-1 transform-gpu px-6 py-8 cursor-pointer"
+                      className="group/hubcard relative flex flex-col items-center text-center h-full rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-all duration-300 hover:-translate-y-1 transform-gpu px-6 py-8 cursor-pointer"
                       onClick={() => handleDesktopSelectHub(hubId)}
                       role="button"
                       tabIndex={0}

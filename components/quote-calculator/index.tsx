@@ -325,6 +325,7 @@ export function QuoteCalculatorWidget() {
   const showMiniBar = cart.length > 0 && !isOpen && fabVisible
 
   // ── continued in Part 2 (return statement / JSX) ──
+
 return (
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
@@ -668,3 +669,4 @@ return (
     </>
   )
                 }
+                        }
