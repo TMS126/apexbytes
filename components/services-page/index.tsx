@@ -417,7 +417,7 @@ export function ServicesPage() {
             landscape. Every card now uses the same landscape MobileHubCard
             shape, stacked in one column, matching the "simple stacked
             card" reference and giving true visual uniformity. */}
-        <div className="grid md:hidden grid-cols-1 gap-3 pb-2 w-full">
+        <div className="grid md:hidden grid-cols-1 gap-4 pb-2 w-full">
           {HUB_ORDER.map((hubId, index) => {
             const hub    = HUBS[hubId]
             const colors = HUB_COLORS[hubId as HubKey]
@@ -434,6 +434,7 @@ export function ServicesPage() {
                   primary={colors.primary}
                   hubHasBulk={hubHasBulk}
                   hubHasNotice={hubHasNotice}
+                  orderIndex={index}
                   onClick={() => handleOpenHub(hubId, "right")}
                 />
               </ScrollBounce>
@@ -460,7 +461,6 @@ export function ServicesPage() {
                     index === 4 && "md:col-start-4"
                   )}
                 >
-                  // components/services-page/index.tsx — snippet: desktop 5-card hub grid, card shadow removed
                   <ScrollBounce delay={index * 0.06}>
                     <div
                       className="group/hubcard relative flex flex-col items-center text-center h-full rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-all duration-300 hover:-translate-y-1 transform-gpu px-6 py-8 cursor-pointer"
@@ -612,4 +612,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-            } 
+    } 
