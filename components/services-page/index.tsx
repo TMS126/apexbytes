@@ -13,7 +13,7 @@ import { useModalBackStack, HubIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
-import { HUB_ORDER, HUB_PREVIEWS, NOTICE, trackEvent, getTurnaround, SelectedService } from "./lib"
+import { HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService } from "./lib"
 import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
@@ -37,35 +37,7 @@ function ClosingTagline() {
   )
 }
 
-function HubCta({ label, accent, pointsRight }: { label: string; accent: string; pointsRight: boolean }) {
-  return (
-    <span
-      className="relative inline-flex items-center gap-1 text-[0.94rem] font-black text-muted-foreground transition-colors duration-200 group-hover/hubcard:text-[var(--hub-accent)]"
-      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
-    >
-      <span className="relative">
-        {label}
-        <span
-          aria-hidden="true"
-          className="absolute left-0 bottom-[-2px] h-[2px] w-0 bg-current transition-[width] duration-300 ease-linear group-hover/hubcard:w-full"
-        />
-      </span>
-      <ArrowRight size={12} weight="bold" aria-hidden="true" className={cn(!pointsRight && "rotate-180")} />
-    </span>
-  )
-}
 
-function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
-  return (
-    <div
-      className="pointer-events-none absolute -bottom-4 -right-4 w-24 h-24 flex items-center justify-center text-muted-foreground opacity-70 transition-all duration-300 group-hover/hubcard:opacity-100 group-hover/hubcard:text-[var(--hub-accent)] group-hover/hubcard:scale-105"
-      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
-      aria-hidden="true"
-    >
-      <HubIcon id={hubId} size={72} color="currentColor" />
-    </div>
-  )
-}
 
 function Pill({
   icon, label, fill, isActive, onClick, size = "md",
@@ -429,7 +401,9 @@ export function ServicesPage() {
           })}
         </div>
 
-        {/* DESKTOP — Level 0: original 5-card landing */}
+        {/* ══════════════════ DESKTOP — Level 0: same minimal card style as
+            mobile, "Explore" pill bottom-center instead of a preview-hints
+            list + arrow. ══════════════════ */}
         {!desktopActiveHub && (
           <div className="hidden md:grid md:grid-cols-6 gap-6 pb-2 w-full">
             {HUB_ORDER.map((hubId, index) => {
@@ -449,30 +423,23 @@ export function ServicesPage() {
                   )}
                 >
                   <ScrollBounce delay={index * 0.06}>
-                    <div
-                      className="group/hubcard relative flex flex-col items-center text-center h-full rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-all duration-300 hover:-translate-y-1 transform-gpu px-6 py-8 cursor-pointer"
+                    <MobileHubCard
+                      variant="desktop"
+                      hubId={hubId}
+                      hub={hub}
+                      accent={accent}
+                      primary={colors.primary}
+                      hubHasBulk={hubHasBulk}
+                      hubHasNotice={hubHasNotice}
+                      orderIndex={index}
                       onClick={() => handleDesktopSelectHub(hubId)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => e.key === "Enter" && handleDesktopSelectHub(hubId)}
-                      aria-label={`Open ${hub.title}`}
-                      style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
-                    >
-                      <HubCornerIcon hubId={hubId} accent={accent} />
-                      {hubHasBulk && <BulkRibbon fill={colors.primary} />}
-                      {hubHasNotice && <NoticeBadge />}
-
-                      <h3 className="relative z-10 font-sans font-black text-[1.45rem] leading-tight mb-2 text-foreground group-hover/hubcard:text-[var(--hub-accent)] transition-colors duration-200">
-                        {hub.title}
-                      </h3>
-
-                      <div className="relative z-10 flex flex-wrap justify-center gap-x-1.5 gap-y-0.5 mb-2.5">
-                        {HUB_PREVIEWS[hubId].map((hint, i) => (
-                          <span key={i} className="text-[0.76rem] font-medium text-muted-foreground">
-                            {hint}
-                          </span>
-                        ))}
-                      </div>
+                    />
+                  </ScrollBounce>
+                </div>
+              )
+            })}
+          </div>
+        )}
 
                       <p className="relative z-10 abh-body text-[0.88rem] leading-snug mb-6 max-w-[190px]">
                         {hub.desc}
