@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef, type TouchEvent } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Info, ArrowSquareOut, WarningCircle } from "@phosphor-icons/react"
 import { X as XIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
@@ -28,6 +28,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
   const [openSectionIdx, setOpenSectionIdx] = useState<number | null>(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const [revealedPrices, setRevealedPrices] = useState<Set<string>>(new Set())
+  const [noticeOpen, setNoticeOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
@@ -37,6 +38,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
       setOpenSectionIdx(0)
       setIsScrolled(false)
       setRevealedPrices(new Set())
+      setNoticeOpen(false)
     })
     if (bodyRef.current) bodyRef.current.scrollTop = 0
     return () => cancelAnimationFrame(frame)
@@ -280,10 +282,63 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           )}
         </div>
 
+        {/* Turnaround disclaimer — was a static footer eating vertical
+            space on every hub, all the time. Now it's a small neutral
+            "ℹ️" pill by default; tapping it expands the note in place
+            (same footer slot, so nothing shifts elsewhere in the modal).
+            The toggle button shares a layoutId across both states, so
+            Framer Motion morphs the ℹ️ circle into the ✕ close button
+            at the panel's top-right when opening, and smoothly reforms
+            it back into the ℹ️ pill on close. */}
         {hubDisclaimer && (
-          <div className="shrink-0 border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-6 md:px-8 py-4 flex items-start gap-2">
-            <Info size={13} weight="bold" aria-hidden="true" className="text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
-            <p className="text-[0.86rem] font-medium text-zinc-400 dark:text-zinc-500 leading-relaxed">{hubDisclaimer}</p>
+          <div className="relative shrink-0 border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+            <AnimatePresence initial={false} mode="popLayout">
+              {!noticeOpen ? (
+                <motion.div
+                  key="notice-collapsed"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex justify-center py-2.5"
+                >
+                  <motion.button
+                    layoutId="hub-notice-toggle"
+                    onClick={() => setNoticeOpen(true)}
+                    aria-label="Show turnaround notice"
+                    aria-expanded={false}
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:text-foreground transition-colors duration-150"
+                  >
+                    <Info size={15} weight="bold" aria-hidden="true" />
+                  </motion.button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="notice-expanded"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="relative px-6 md:px-8 py-5"
+                >
+                  <motion.button
+                    layoutId="hub-notice-toggle"
+                    onClick={() => setNoticeOpen(false)}
+                    aria-label="Hide turnaround notice"
+                    aria-expanded={true}
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:text-foreground transition-colors duration-150"
+                  >
+                    <XIcon size={15} weight="bold" aria-hidden="true" />
+                  </motion.button>
+                  <p className="text-[0.86rem] font-black text-zinc-500 dark:text-zinc-400 mb-1 pr-8">
+                    Please Note
+                  </p>
+                  <p className="text-[0.86rem] font-medium text-zinc-400 dark:text-zinc-500 leading-relaxed pr-8">
+                    {hubDisclaimer}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </motion.div>
@@ -321,4 +376,4 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
       )}
     </div>
   )
-          } 
+                      }
