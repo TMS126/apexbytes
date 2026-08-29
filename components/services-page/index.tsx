@@ -394,6 +394,7 @@ export function ServicesPage() {
                   accent={accent}
                   primary={colors.primary}
                   hubHasBulk={hubHasBulk}
+                  orderIndex={index}
                   hubHasNotice={hubHasNotice}
                   onClick={() => handleOpenHub(hubId, "right")}
                 />
