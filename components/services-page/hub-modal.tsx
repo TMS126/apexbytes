@@ -1,4 +1,4 @@
-/* components/services-page/hub-modal.tsx */
+/* components/services-page/hub-modal.tsx — full file, paste over the current one */
 "use client"
 
 import { useState, useEffect, useRef, type TouchEvent } from "react"
@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 import { Info, ArrowSquareOut, WarningCircle } from "@phosphor-icons/react"
 import { X as XIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
-import { HUB_COLORS, HubKey, BRAND } from "@/lib/brand"
+import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
 import { HUBS, HubId, HUB_DISCLAIMERS } from "@/lib/data"
 import { HubIcon, useFocusTrap } from "./shared"
 import { getTurnaround, HUB_ORDER, SelectedService } from "./lib"
@@ -173,14 +173,13 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     >
                       {section.title}
 
-                      {/* Raw icon, no chip — theme-adaptive brand orange */}
                       {hasNotice && (
                         <WarningCircle
                           size={12}
-                          weight="fill"
+                          weight="bold"
                           aria-label="Notice for some services in this section"
                           className="absolute -top-1.5 -right-4"
-                          style={{ color: BRAND.orange }}
+                          style={{ color: TOKEN.orangeText }}
                         />
                       )}
 
@@ -245,7 +244,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                         <span
                           aria-label="Notice"
                           className="shrink-0 font-black text-[0.95rem] leading-none"
-                          style={{ color: BRAND.orange }}
+                          style={{ color: TOKEN.orangeText }}
                         >
                           !
                         </span>
@@ -300,10 +299,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           <p className="text-[0.72rem] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2.5">
             More Hubs
           </p>
-          <div
-            className="flex flex-wrap justify-center gap-2 p-3 rounded-[16px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm"
-            style={{ boxShadow: "0 16px 36px -14px rgba(0,0,0,0.28), 0 6px 16px -6px rgba(0,0,0,0.14)" }}
-          >
+          <div className="abh-shadow-popover flex flex-wrap justify-center gap-2 p-3 rounded-[16px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm">
             {otherHubs.map((id) => {
               const otherColors = HUB_COLORS[id as HubKey]
               const otherAccent = isDark ? otherColors.accentDark : otherColors.accentLight
@@ -325,4 +321,4 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
       )}
     </div>
   )
-              } 
+          } 
