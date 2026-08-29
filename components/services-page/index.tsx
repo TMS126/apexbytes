@@ -1,4 +1,3 @@
-/* components/services-page/index.tsx */
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -56,9 +55,6 @@ function HubCta({ label, accent, pointsRight }: { label: string; accent: string;
   )
 }
 
-// Corner icon on the desktop 5-card grid is now also neutral by default,
-// only tinting to the hub color on hover — matching "icons neutral, one
-// accent element holds hub color" for the desktop landing view too.
 function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
   return (
     <div
@@ -363,10 +359,6 @@ export function ServicesPage() {
     desktopHub && desktopActiveSection !== null ? desktopHub.sections[desktopActiveSection] : null
 
   return (
-    // FIX: was `bg-white dark:bg-[#081428]` — a hardcoded navy that
-    // bypassed the site's real background token. Now uses `bg-background`
-    // like every other page, so it always matches the true source of
-    // truth in globals.css instead of drifting out of sync.
     <section className="min-h-screen bg-background transition-colors duration-300 pb-24 overflow-x-hidden">
 
       <motion.div
@@ -412,11 +404,7 @@ export function ServicesPage() {
           </div>
         </ScrollBounce>
 
-        {/* ══════════════════ MOBILE — all cards landscape, single column ══════════════════ */}
-        {/* FIX: was a 2-col portrait grid with only the last (Tech) card
-            landscape. Every card now uses the same landscape MobileHubCard
-            shape, stacked in one column, matching the "simple stacked
-            card" reference and giving true visual uniformity. */}
+        {/* MOBILE — all cards landscape, single column */}
         <div className="grid md:hidden grid-cols-1 gap-4 pb-2 w-full">
           {HUB_ORDER.map((hubId, index) => {
             const hub    = HUBS[hubId]
@@ -434,7 +422,6 @@ export function ServicesPage() {
                   primary={colors.primary}
                   hubHasBulk={hubHasBulk}
                   hubHasNotice={hubHasNotice}
-                  orderIndex={index}
                   onClick={() => handleOpenHub(hubId, "right")}
                 />
               </ScrollBounce>
@@ -442,7 +429,7 @@ export function ServicesPage() {
           })}
         </div>
 
-        {/* ══════════════════ DESKTOP — Level 0: original 5-card landing ══════════════════ */}
+        {/* DESKTOP — Level 0: original 5-card landing */}
         {!desktopActiveHub && (
           <div className="hidden md:grid md:grid-cols-6 gap-6 pb-2 w-full">
             {HUB_ORDER.map((hubId, index) => {
@@ -502,7 +489,7 @@ export function ServicesPage() {
           </div>
         )}
 
-        {/* ══════════════════ DESKTOP — Level 1 & 2: pills + card grids ══════════════════ */}
+        {/* DESKTOP — Level 1 & 2: pills + card grids */}
         {desktopActiveHub && desktopHub && (
           <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
 
@@ -612,4 +599,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-    } 
+      }
