@@ -1,3 +1,4 @@
+// components/services-page/index.tsx
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -441,21 +442,6 @@ export function ServicesPage() {
           </div>
         )}
 
-                      <p className="relative z-10 abh-body text-[0.88rem] leading-snug mb-6 max-w-[190px]">
-                        {hub.desc}
-                      </p>
-
-                      <div className="relative z-10 mt-auto">
-                        <HubCta label="View more" accent={accent} pointsRight={true} />
-                      </div>
-                    </div>
-                  </ScrollBounce>
-                </div>
-              )
-            })}
-          </div>
-        )}
-
         {/* DESKTOP — Level 1 & 2: pills + card grids */}
         {desktopActiveHub && desktopHub && (
           <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
@@ -566,4 +552,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-      }
+} 
