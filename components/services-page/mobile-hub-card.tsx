@@ -1,4 +1,4 @@
-// components/services-page/mobile-hub-card.tsx
+// components/services-page/mobile-hub-card.tsx — full file
 "use client"
 
 import Image from "next/image"
@@ -29,8 +29,8 @@ export function BulkRibbon({ fill }: { fill: string }) {
   return (
     <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
       <span
-        className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-white"
-        style={{ backgroundColor: fill, boxShadow: `0 4px 10px -2px ${fill}8c, 0 2px 4px -1px rgba(0,0,0,0.25)` }}
+        className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-white abh-shadow-badge"
+        style={{ backgroundColor: fill }}
       >
         Bulk
       </span>
@@ -42,8 +42,8 @@ export function MobileBulkRibbon({ fill }: { fill: string }) {
   return (
     <div className="absolute -top-1 -right-1 z-20 pointer-events-none w-16 h-16 overflow-hidden">
       <span
-        className="absolute top-[11px] right-[-21px] rotate-45 block w-20 text-center py-0.5 text-[0.56rem] font-black uppercase tracking-wider text-white"
-        style={{ backgroundColor: fill, boxShadow: "0 3px 8px -2px rgba(0,0,0,0.35)" }}
+        className="absolute top-[11px] right-[-21px] rotate-45 block w-20 text-center py-0.5 text-[0.56rem] font-black uppercase tracking-wider text-white abh-shadow-badge"
+        style={{ backgroundColor: fill }}
       >
         Bulk
       </span>
@@ -55,8 +55,8 @@ export function NoticeBadge() {
   return (
     <div className="absolute top-3 right-3 z-20 pointer-events-none">
       <div
-        className="w-7 h-7 rounded-full flex items-center justify-center"
-        style={{ backgroundColor: "#ffffff", color: TOKEN.warningBg, boxShadow: "0 2px 6px -1px rgba(0,0,0,0.2)" }}
+        className="w-7 h-7 rounded-full flex items-center justify-center abh-shadow-badge"
+        style={{ backgroundColor: "#ffffff", color: TOKEN.warningBg }}
         aria-label="Notice for some services in this hub"
       >
         <WarningCircle size={16} weight="bold" aria-hidden="true" />
@@ -92,7 +92,7 @@ export function MobileHubCard({
     <button
       onClick={onClick}
       aria-label={`Open ${hub.title}`}
-      className="w-full min-h-[132px] text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 active:scale-[0.98] transform-gpu p-4 flex items-center gap-4"
+      className="w-full min-h-[132px] text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-all duration-200 active:scale-[0.98] transform-gpu p-4 flex items-center gap-4"
     >
       <div
         className="relative rounded-[14px] flex items-center justify-center overflow-hidden shrink-0 w-[104px] h-[104px] bg-muted"
@@ -146,4 +146,4 @@ export function MobileHubCard({
       </div>
     </button>
   )
-}
+} 
