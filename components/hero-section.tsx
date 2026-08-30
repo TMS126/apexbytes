@@ -9,7 +9,7 @@ import {
   Printer, FileText, PaintBrush, Globe, Desktop,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BIZ, MARQUEE_ITEMS, TOKEN} from "@/lib/brand"
+import { BIZ, MARQUEE_ITEMS, TOKEN, BRAND} from "@/lib/brand"
 import { HUBS_DATA } from "@/lib/hero-data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
