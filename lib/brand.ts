@@ -35,16 +35,25 @@ export const HEX = {
     orange: "#B9590D", orangeDark: "#B06225", orangeBrown: "#A86530",
     teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
     warningBg: "#9A4B12",
-    lightBlue: "#88A8F0", lightGreen: "#B8E880", lightOrange: "#F09060",
+    // FIX: restored to the original pastel values — these were
+    // overwritten with the bright dark-mode hex by an earlier fix
+    // attempt. This is the pastel-tint role used for hub badges
+    // (HUB_COLORS.*.light), a different job from a dark-mode primary.
+    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
     dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
   },
   dark: {
-    blue: "#88A8F0", blueMid: "#15537D", blueDark: "#0F3F66",
-    green: "#B8E880", greenDeep: "#3E6B0E",
-    orange: "#F09060", orangeDark: "#B06225", orangeBrown: "#A86530",
-    teal: "#99F6E4", tealDark: "#115E59", tealLight: "#99F6E4",
+    // REVERTED: blue/green/teal dark overrides were never requested —
+    // back to equaling their light value (no separate dark shade).
+    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
+    green: "#4A8011", greenDeep: "#3E6B0E",
+    // FIX — the actual request: dark-mode orange now equals the
+    // restored lightOrange pastel, the exact same value Design Hub's
+    // accentDark already resolves to. True parity, no new hex invented.
+    orange: "#F9D1B0", orangeDark: "#B06225", orangeBrown: "#A86530",
+    teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
     warningBg: "#7A3B0E",
-    lightBlue: "#88A8F0", lightGreen: "#B8E880", lightOrange: "#F09060",
+    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
     dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
   },
   neutral100: "#EDEDED", neutral200: "#F4F4F4", neutral300: "#D6D6D6",
@@ -64,8 +73,7 @@ export const BRAND = {
   // NOTE: BRAND.orange (and every other flat BRAND.* color) is a static,
   // light-mode-only value — it has no way to react to dark mode. Using it
   // in an inline `style={{ color: BRAND.orange }}` bakes in the light
-  // shade forever, which is exactly what made notice icons/CTAs look dull
-  // in dark mode. For any color that renders on screen, use the
+  // shade forever. For any color that renders on screen, use the
   // TOKEN.* equivalents instead (e.g. TOKEN.brandOrange = var(--brand-orange)) —
   // those resolve through CSS custom properties and pick up the correct
   // light/dark value automatically. BRAND.* is only safe for contexts with
@@ -296,4 +304,4 @@ export const FOOTER_NAV = [
   { label: "About", path: "/about" },
   { label: "Tools", path: "/tools" },
   { label: "Contact", path: "/contact" },
-] as const 
+] as const
