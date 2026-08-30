@@ -16,9 +16,14 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 :root {
   --brand-green: #4A8011;
   --brand-orange: #B9590D;
-  --brand-light-blue: #88A8F0;
-  --brand-light-green: #B8E880;
-  --brand-light-orange: #F09060;
+  /* FIX: these three were overwritten with the bright/saturated
+     dark-mode hex values by an earlier fix attempt. That's the wrong
+     role — these are the soft PASTEL tints used for hub badge
+     backgrounds (HUB_COLORS.*.light), not a dark-mode primary color.
+     Restored to their original, correct pastel values. */
+  --brand-light-blue: #A9D6F2;
+  --brand-light-green: #CDEB9F;
+  --brand-light-orange: #F9D1B0;
 
   --brand-blue: #1E6FA8;
   --brand-blue-mid: #15537D;
@@ -131,15 +136,25 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
   --card-border: #363A50;
   --brand-warning-bg: #7A3B0E;
-  --brand-orange: #F09060;
-  --brand-blue: #88A8F0;
-  --brand-green: #B8E880;
-  --brand-teal: #99F6E4;
 
+  /* FIX — the actual request: brand-orange now resolves to the SAME
+     pastel-but-bright orange Design Hub's card already uses for its dark
+     accent (HUB_COLORS.design.accentDark = BRAND.lightOrange). Referencing
+     the existing, now-restored --brand-light-orange var directly means
+     true visual parity with Design Hub, with no new hardcoded hex.
+     REVERTED: the earlier attempt also added dark-mode overrides for
+     --brand-blue, --brand-green, and --brand-teal — none of that was
+     asked for, so those three are removed here and fall back to their
+     :root value unchanged, same as before any of this started. */
+  --brand-orange: var(--brand-light-orange);
+
+  /* FIX: was overwritten to the same wrong bright hex as the light-*
+     corruption above. This is a TEXT-on-dark-background role with its
+     own previously-verified contrast ratio (5.58:1 vs dark bg, 4.57:1
+     vs dark card) — restored to that exact value. */
+  --brand-orange-text: #e3731f;
   --brand-blue-text: #6693db;
-  --brand-orange-text: #F09060;
   --brand-green-text: #70a144;
-  --brand-error-text: #F87171;
 }
 
 @theme inline {
@@ -287,212 +302,4 @@ button, a, [role="button"] {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   .abh-cta-pulse { animation: none; }
-}
-
-/* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file, unchanged from your version */
-@layer components{
-  .abh-card {
-    @apply rounded-[14px] transition-all duration-300;
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
-  }
-  .dark .abh-card {
-    box-shadow: var(--shadow);
-  }
-  .abh-page-title {
-    @apply font-heading font-black text-4xl md:text-5xl tracking-tight leading-tight text-center;
-    color: var(--brand-blue-dark);
-  }
-  .dark .abh-page-title { color: var(--brand-light-blue); }
-
-  .abh-section-heading {
-    @apply font-heading font-black text-2xl md:text-3xl tracking-tight leading-snug;
-    color: var(--foreground);
-  }
-
-  .abh-card-heading {
-    @apply font-heading font-black text-base tracking-tight leading-snug;
-    color: var(--card-foreground);
-  }
-
-  .abh-eyebrow {
-    @apply font-heading font-black text-xs uppercase tracking-widest;
-    color: var(--brand-blue-text);
-  }
-  .dark .abh-eyebrow { color: var(--brand-light-blue); }
-
-  .abh-btn-label {
-    @apply font-heading font-black text-base tracking-wide;
-  }
-
-  .abh-body {
-    @apply font-sans font-medium text-base md:text-lg leading-relaxed;
-    color: var(--muted-foreground);
-  }
-
-  .abh-muted {
-    @apply font-sans font-medium text-sm md:text-base leading-relaxed;
-    color: var(--muted-foreground);
-  }
-
-  .abh-tagline {
-    @apply font-sans font-medium text-base md:text-lg;
-    color: var(--muted-foreground);
-  }
-
-  .abh-price {
-    @apply font-heading font-black text-[1.35rem] md:text-[1.5rem] leading-none;
-  }
-
-  .abh-page-header {
-    @apply px-4 md:px-8 py-8 md:py-12 text-center;
-  }
-
-  .abh-shadow-card {
-    box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
-  }
-  .dark .abh-shadow-card {
-    box-shadow: var(--shadow);
-  }
-  .abh-shadow-card:hover {
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.13), 0 3px 8px -2px rgba(0, 0, 0, 0.07);
-  }
-  .dark .abh-shadow-card:hover {
-    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
-  }
-
-  .abh-shadow-nested-group {
-    box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.06);
-  }
-  .dark .abh-shadow-nested-group {
-    box-shadow: var(--shadow);
-  }
-
-  .abh-shadow-nested-item {
-    box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.06);
-  }
-  .dark .abh-shadow-nested-item {
-    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.3);
-  }
-
-  .abh-shadow-modal {
-    box-shadow:
-      0 45px 100px -20px rgba(0, 0, 0, 0.55),
-      0 20px 48px -14px rgba(0, 0, 0, 0.4);
-  }
-
-  .abh-shadow-popover {
-    box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.22);
-  }
-  .dark .abh-shadow-popover {
-    box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
-  }
-
-  .abh-shadow-project-card {
-    box-shadow: 0 16px 30px -14px rgba(0, 0, 0, 0.45), 0 6px 14px -8px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-  }
-  .abh-shadow-project-card:hover {
-    box-shadow: 0 20px 36px -14px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.35);
-  }
-
-  .abh-shadow-zoom-image {
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.05);
-  }
-
-  .abh-shadow-badge {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-  }
-  .abh-shadow-icon-inset {
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-  }
-  .abh-shadow-handle {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  }
-
-  .abh-shadow-contact-card {
-    box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
-  }
-  .dark .abh-shadow-contact-card {
-    box-shadow: var(--shadow);
-  }
-  .abh-shadow-contact-card:hover {
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.13), 0 3px 8px -2px rgba(0, 0, 0, 0.07);
-  }
-  .dark .abh-shadow-contact-card:hover {
-    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
-  }
-  .abh-shadow-elevated {
-    box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
-  }
-  .dark .abh-shadow-elevated {
-    box-shadow: var(--shadow);
-  }
-
-  .abh-shadow-tile {
-    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.12);
-  }
-  .dark .abh-shadow-tile {
-    box-shadow: var(--shadow);
-  }
-  .abh-shadow-tile:hover {
-    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.18);
-  }
-  .dark .abh-shadow-tile:hover {
-    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
-  }
-
-  .abh-divider {
-    @apply mt-6 h-[2px] w-[160px] max-w-full mx-auto rounded-full;
-    background: var(--brand-blue);
-    box-shadow: 0 0 8px rgba(30, 111, 168, 0.5);
-  }
-  .dark .abh-divider {
-    background: var(--brand-light-blue);
-    box-shadow: 0 0 8px rgba(169, 214, 242, 0.5);
-  }
-
-  .abh-wa-btn {
-    @apply font-heading flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
-    background: var(--brand-whatsapp);
-    color: var(--on-whatsapp);
-  }
-  .abh-wa-btn:hover { background: var(--brand-whatsapp-dark); }
-
-  .abh-btn-primary {
-    @apply font-heading inline-flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
-    background: var(--brand-blue);
-    color: var(--on-brand-blue);
-  }
-
-  .abh-btn-cta {
-    @apply font-heading inline-flex items-center justify-center gap-3 font-black text-base rounded-[14px] px-6 py-4 transition-all duration-300 active:scale-95;
-    background: var(--brand-orange);
-    color: var(--on-brand-orange);
-  }
-  .abh-btn-cta:hover { background: var(--brand-orange-dark); }
-}
-
-.dark .dark\:bg-zinc-900,
-.dark .dark\:bg-zinc-950,
-.dark .dark\:bg-zinc-900\/95,
-.dark .dark\:bg-zinc-900\/60,
-.dark .dark\:bg-zinc-950\/95,
-.dark .dark\:bg-zinc-950\/60,
-.dark .dark\:bg-zinc-900\/40,
-.dark .dark\:bg-zinc-900\/50 {
-  background-color: var(--card) !important;
-}
-
-@layer utilities {
-  .abh-on-blue      { color: var(--on-brand-blue); }
-  .abh-on-green     { color: var(--on-brand-green); }
-  .abh-on-orange    { color: var(--on-brand-orange); }
-  .abh-on-teal      { color: var(--on-brand-teal); }
-  .abh-on-whatsapp  { color: var(--on-whatsapp); }
-  .abh-on-pastel    { color: var(--on-pastel); }
-  .abh-on-neutral-dark { color: var(--on-neutral-dark); }
-  .abh-on-destructive { color: var(--on-destructive); }
-  .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
-    } 
+} 
