@@ -9,7 +9,7 @@ import {
   Printer, FileText, PaintBrush, Globe, Desktop,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BRAND, BIZ, MARQUEE_ITEMS } from "@/lib/brand"
+import { BIZ, MARQUEE_ITEMS, TOKEN} from "@/lib/brand"
 import { HUBS_DATA } from "@/lib/hero-data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
@@ -278,7 +278,7 @@ export function HeroSection() {
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
                 <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-                  <CheckCircle size={15} weight="fill" style={{ color: BRAND.blue }} aria-hidden="true" />
+                  <CheckCircle size={15} weight="fill" style={{ color: TOKEN.brandblue }} aria-hidden="true" />
                   {hint}
                 </span>
               ))}
