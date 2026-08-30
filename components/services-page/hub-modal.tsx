@@ -139,7 +139,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 shrink-0"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-muted text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 shrink-0"
               >
                 <XIcon size={18} weight="bold" aria-hidden="true" />
               </button>
@@ -200,7 +200,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           {activeSectionDesc && (
             <div key={openSectionIdx} className="px-5 md:px-8 py-4 border-b border-zinc-100 dark:border-zinc-800 animate-in fade-in duration-200">
               <p className="text-[0.9rem] leading-relaxed text-zinc-600 dark:text-zinc-300">
-                {activeSectionDesc}
+                {activeSectionDesc} — {activeSection.title}
               </p>
             </div>
           )}
@@ -304,6 +304,8 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 >
                   <motion.button
                     layoutId="hub-notice-toggle"
+                    layout
+                    transition={{ layout: { type: "tween", duration: 0.32, ease: [0.32, 0.72, 0, 1] } }}
                     onClick={() => setNoticeOpen(true)}
                     aria-label="Show turnaround notice"
                     aria-expanded={false}
@@ -323,6 +325,8 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 >
                   <motion.button
                     layoutId="hub-notice-toggle"
+                    layout
+                    transition={{ layout: { type: "tween", duration: 0.32, ease: [0.32, 0.72, 0, 1] } }}
                     onClick={() => setNoticeOpen(false)}
                     aria-label="Hide turnaround notice"
                     aria-expanded={true}
@@ -362,12 +366,12 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 <button
                   key={id}
                   onClick={() => onSwitchHub(id)}
-                  className="shrink-0 flex items-center gap-2 px-3.5 py-2.5 rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 hover:-translate-y-0.5 transition-all duration-150 active:scale-95"
+                  aria-label={`Switch to ${HUBS[id].title}`}
+                  title={HUBS[id].title}
+                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-zinc-400 dark:text-zinc-500 hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
+                  style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: otherAccent }}
                 >
-                  <HubIcon id={id} size={16} color={otherAccent} />
-                  <span className="text-[0.78rem] font-bold text-zinc-600 dark:text-zinc-300 whitespace-nowrap">
-                    {HUBS[id].title}
-                  </span>
+                  <HubIcon id={id} size={18} color="currentColor" />
                 </button>
               )
             })}
@@ -376,4 +380,4 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
       )}
     </div>
   )
-                      }
+      } 
