@@ -278,7 +278,7 @@ export function HeroSection() {
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
                 <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-                  <CheckCircle size={15} weight="fill" style={{ color: TOKEN.brandblue }} aria-hidden="true" />
+                  <CheckCircle size={15} weight="fill" style={{ color: TOKEN.brandBlue }} aria-hidden="true" />
                   {hint}
                 </span>
               ))}
