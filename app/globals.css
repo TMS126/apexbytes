@@ -131,9 +131,13 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
   --card-border: #363A50;
   --brand-warning-bg: #7A3B0E;
+  --brand-orange: #F09060;
+  --brand-blue: #88A8F0;
+  --brand-green: #B8E880;
+  --brand-teal: #99F6E4;
 
   --brand-blue-text: #6693db;
-  --brand-orange-text: #e3731f;
+  --brand-orange-text: #F09060;
   --brand-green-text: #70a144;
   --brand-error-text: #F87171;
 }
@@ -283,9 +287,9 @@ button, a, [role="button"] {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   .abh-cta-pulse { animation: none; }
-  }
+}
 
-  /* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file, unchanged from your version */
+/* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file, unchanged from your version */
 @layer components{
   .abh-card {
     @apply rounded-[14px] transition-all duration-300;
@@ -491,4 +495,4 @@ button, a, [role="button"] {
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
-    }
+    } 
