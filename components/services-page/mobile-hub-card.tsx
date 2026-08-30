@@ -7,7 +7,7 @@ import {
   Printer, FileText, PaintBrush, Globe, Desktop,
 } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { BRAND } from "@/lib/brand"
+import { TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 
 // Same icon set as the hero's HubIconField — used here instead of the
@@ -33,17 +33,12 @@ export function BulkRibbon({ accent }: { accent: string }) {
   )
 }
 
-// AUDIT FIX: was TOKEN.warningBg — a darker shade meant for warning
-// *backgrounds*, not this glyph's foreground, and it didn't match the
-// notice icons used everywhere else (SectionCard/ServiceCard in
-// index.tsx both use BRAND.orange). Every notice glyph is BRAND.orange
-// now, consistently.
 export function NoticeBadge() {
   return (
     <div className="absolute top-3 right-3 z-20 pointer-events-none">
       <div
         className="w-7 h-7 rounded-full flex items-center justify-center abh-shadow-badge"
-        style={{ backgroundColor: "var(--card)", color: BRAND.orange }}
+        style={{ backgroundColor: "var(--card)", color: TOKEN.warningBg }}
         aria-label="Notice for some services in this hub"
       >
         <WarningCircle size={16} weight="bold" aria-hidden="true" />
@@ -67,13 +62,13 @@ function BulkEdgePill({ accent }: { accent: string }) {
 
 // ══════════════════════════════════════════════════════════════════════
 // HUB CARD — one component, two variants. Mobile: icon + index number,
-// title, description, arrow bottom-right. Desktop: same minimal shell,
-// centered text, and an "Explore" pill bottom-center instead of the
-// arrow — orange by default, tinting to the hub's own accent color on
-// hover only (desktop-only, since hover has no meaning on touch). Icons
-// stay neutral by default in both variants; desktop additionally tints
-// its icon to the hub accent on hover via the --hub-accent CSS var set
-// on the card itself.
+// title, description, arrow bottom-right (unchanged from before).
+// Desktop: same minimal shell, centered text, and an "Explore" pill
+// bottom-center instead of the arrow — orange by default, tinting to the
+// hub's own accent color on hover only (desktop-only, since hover has no
+// meaning on touch). Icons stay neutral by default in both variants;
+// desktop additionally tints its icon to the hub accent on hover via the
+// --hub-accent CSS var set on the card itself.
 // ══════════════════════════════════════════════════════════════════════
 export function MobileHubCard({
   hubId, hub, accent, primary, hubHasBulk, hubHasNotice, orderIndex, onClick, variant = "mobile",
@@ -125,11 +120,11 @@ export function MobileHubCard({
               size={14}
               weight="fill"
               aria-label="Notice for some services in this hub"
-              style={{ color: BRAND.orange }}
+              style={{ color: TOKEN.warningBg }}
             />
           )}
         </div>
-        <span className="text-[0.78rem] font-black" style={{ color: BRAND.orange }} aria-hidden="true">
+        <span className="text-[0.78rem] font-black" style={{ color: TOKEN.orangeText }} aria-hidden="true">
           {number}
         </span>
       </div>
@@ -156,7 +151,7 @@ export function MobileHubCard({
         <div className="flex justify-center mt-4 w-full">
           <span
             className="inline-flex items-center gap-1 px-4 py-1.5 rounded-[14px] border text-[0.8rem] font-black transition-colors duration-200 group-hover:border-[var(--hub-accent)] group-hover:text-[var(--hub-accent)]"
-            style={{ borderColor: BRAND.orange, color: BRAND.orange }}
+            style={{ borderColor: TOKEN.orangeText, color: TOKEN.orangeText }}
           >
             Explore
           </span>
@@ -167,7 +162,7 @@ export function MobileHubCard({
             size={16}
             weight="bold"
             className="transition-colors duration-150"
-            style={{ color: pressed ? accent : BRAND.orange }}
+            style={{ color: pressed ? accent : TOKEN.orangeText }}
             aria-hidden="true"
           />
         </div>
@@ -176,4 +171,4 @@ export function MobileHubCard({
       {hubHasBulk && (isDesktop ? <BulkRibbon accent={accent} /> : <BulkEdgePill accent={accent} />)}
     </button>
   )
-    } 
+} 
