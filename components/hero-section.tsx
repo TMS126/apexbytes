@@ -9,7 +9,7 @@ import {
   Printer, FileText, PaintBrush, Globe, Desktop,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BIZ, MARQUEE_ITEMS, TOKEN} from "@/lib/brand"
+import { BRAND, BIZ, MARQUEE_ITEMS, TOKEN } from "@/lib/brand"
 import { HUBS_DATA } from "@/lib/hero-data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
@@ -110,7 +110,8 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
   }
 
   return (
-    <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-none h-[380px] sm:h-[440px] md:h-[480px]">
+    <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-none min-h-[380px] sm:min-h-[440px] md:min-h-[480px] rounded-[14px] bg-[#2D314B] overflow-hidden px-3 sm:px-6">
+      <div className="relative w-full h-[380px] sm:h-[440px] md:h-[480px]">
       {arrangement.map(({ hub, topPct, leftPct, z }, i) => {
         const hubAccent = isDark ? hub.colorDark : hub.colorLight
         const Icon = HUB_ICON_MAP[hub.id]
@@ -134,19 +135,19 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
               onMouseEnter={() => canHover && triggerSpin(hub.id)}
               onClick={() => triggerSpin(hub.id)}
               onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); triggerSpin(hub.id) } }}
-              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center cursor-pointer outline-none bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 abh-shadow-tile"
+              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 flex items-center justify-center cursor-pointer outline-none"
               style={{
-                perspective: "600px",
-                animationName: isSpinning ? "abh-coin-spin" : undefined,
+                animationName: isSpinning ? "abh-icon-float" : undefined,
                 animationDuration: `${SPIN_MS}ms`,
                 animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
               }}
             >
-              <Icon size={44} weight="duotone" color={hubAccent} />
+              <Icon size={48} weight="regular" color={hubAccent} aria-hidden="true" />
             </div>
           </div>
         )
       })}
+      </div>
     </div>
   )
 }
@@ -207,9 +208,9 @@ export function HeroSection() {
       </div>
 
       <style>{`
-        @keyframes abh-coin-spin {
-          0%   { transform: rotateY(0deg); }
-          100% { transform: rotateY(1080deg); }
+        @keyframes abh-icon-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-6px); }
         }
       `}</style>
 
