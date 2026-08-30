@@ -39,10 +39,10 @@ export const HEX = {
     dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
   },
   dark: {
-    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
-    green: "#4A8011", greenDeep: "#3E6B0E",
-    orange: "#B9590D", orangeDark: "#B06225", orangeBrown: "#A86530",
-    teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
+    blue: "#88A8F0", blueMid: "#15537D", blueDark: "#0F3F66",
+    green: "#B8E880", greenDeep: "#3E6B0E",
+    orange: "#F09060", orangeDark: "#B06225", orangeBrown: "#A86530",
+    teal: "#99F6E4", tealDark: "#115E59", tealLight: "#99F6E4",
     warningBg: "#7A3B0E",
     lightBlue: "#88A8F0", lightGreen: "#B8E880", lightOrange: "#F09060",
     dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
@@ -61,6 +61,15 @@ export function pickHex<K extends keyof typeof HEX.light>(role: K, isDark: boole
 
 export const BRAND = {
   green: HEX.light.green,
+  // NOTE: BRAND.orange (and every other flat BRAND.* color) is a static,
+  // light-mode-only value — it has no way to react to dark mode. Using it
+  // in an inline `style={{ color: BRAND.orange }}` bakes in the light
+  // shade forever, which is exactly what made notice icons/CTAs look dull
+  // in dark mode. For any color that renders on screen, use the
+  // TOKEN.* equivalents instead (e.g. TOKEN.brandOrange = var(--brand-orange)) —
+  // those resolve through CSS custom properties and pick up the correct
+  // light/dark value automatically. BRAND.* is only safe for contexts with
+  // no theme access (e.g. a fixed default before hydration).
   orange: HEX.light.orange,
   lightBlue: HEX.light.lightBlue,
   lightGreen: HEX.light.lightGreen,
