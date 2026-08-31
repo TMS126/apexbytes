@@ -1,4 +1,4 @@
-/* app/globals.css — PART 1 OF 2 — paste this, then Part 2, back-to-back into one file */
+/* app/globals.css — full file, paste over the current one */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
@@ -16,11 +16,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 :root {
   --brand-green: #4A8011;
   --brand-orange: #B9590D;
-  /* FIX: these three were overwritten with the bright/saturated
-     dark-mode hex values by an earlier fix attempt. That's the wrong
-     role — these are the soft PASTEL tints used for hub badge
-     backgrounds (HUB_COLORS.*.light), not a dark-mode primary color.
-     Restored to their original, correct pastel values. */
+  /* Pastel tints used for hub badge backgrounds (HUB_COLORS.*.light) — not dark-mode primaries. */
   --brand-light-blue: #A9D6F2;
   --brand-light-green: #CDEB9F;
   --brand-light-orange: #F9D1B0;
@@ -137,21 +133,10 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --card-border: #363A50;
   --brand-warning-bg: #7A3B0E;
 
-  /* FIX — the actual request: brand-orange now resolves to the SAME
-     pastel-but-bright orange Design Hub's card already uses for its dark
-     accent (HUB_COLORS.design.accentDark = BRAND.lightOrange). Referencing
-     the existing, now-restored --brand-light-orange var directly means
-     true visual parity with Design Hub, with no new hardcoded hex.
-     REVERTED: the earlier attempt also added dark-mode overrides for
-     --brand-blue, --brand-green, and --brand-teal — none of that was
-     asked for, so those three are removed here and fall back to their
-     :root value unchanged, same as before any of this started. */
+  /* Orange resolves to the same pastel-but-bright value Design Hub's accentDark already uses. */
   --brand-orange: var(--brand-light-orange);
 
-  /* FIX: was overwritten to the same wrong bright hex as the light-*
-     corruption above. This is a TEXT-on-dark-background role with its
-     own previously-verified contrast ratio (5.58:1 vs dark bg, 4.57:1
-     vs dark card) — restored to that exact value. */
+  /* Text-on-dark role, own verified contrast ratio (5.58:1 vs dark bg, 4.57:1 vs dark card). */
   --brand-orange-text: #e3731f;
   --brand-blue-text: #6693db;
   --brand-green-text: #70a144;
@@ -302,9 +287,9 @@ button, a, [role="button"] {
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   .abh-cta-pulse { animation: none; }
-                 }
-/* app/globals.css — PART 2 OF 2 — continues directly from Part 1, same file, unchanged from your version */
-@layer components{
+}
+
+@layer components {
   .abh-card {
     @apply rounded-[14px] transition-all duration-300;
     background: var(--card);
@@ -314,9 +299,8 @@ button, a, [role="button"] {
   .dark .abh-card {
     box-shadow: var(--shadow);
   }
-  /* app/globals.css — only these selectors changed within @layer components */
 
-@layer components {
+  /* Typography hierarchy — 500 weight ceiling everywhere, no exceptions. */
   .abh-page-title {
     @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
     color: var(--brand-blue-dark);
@@ -343,20 +327,15 @@ button, a, [role="button"] {
     @apply font-heading font-medium text-base tracking-wide;
   }
 
-  
-
-  /* ...every other rule in this @layer block (.abh-body, .abh-muted, .abh-tagline,
-     .abh-page-header, .abh-shadow-*, .abh-divider, .abh-wa-btn, .abh-btn-primary,
-     .abh-btn-cta) is unchanged from what you sent... */
-    
-
+  /* CHANGED: 500 → 400, and color moved off muted so it reads as the baseline, not secondary text. */
   .abh-body {
-    @apply font-sans font-medium text-base md:text-lg leading-relaxed;
-    color: var(--muted-foreground);
+    @apply font-sans font-normal text-base md:text-lg leading-relaxed;
+    color: var(--foreground);
   }
 
+  /* CHANGED: 500 → 400 to match the "regular weight, color-only contrast" rule. Size/color unchanged. */
   .abh-muted {
-    @apply font-sans font-medium text-sm md:text-base leading-relaxed;
+    @apply font-sans font-normal text-sm md:text-base leading-relaxed;
     color: var(--muted-foreground);
   }
 
@@ -365,6 +344,7 @@ button, a, [role="button"] {
     color: var(--muted-foreground);
   }
 
+  /* NOT YET RESIZED — spec calls for text-2xl+ and an accent color; flagged, ask before changing. */
   .abh-price {
     @apply font-heading font-medium text-[1.35rem] md:text-[1.5rem] leading-none;
   }
@@ -478,20 +458,23 @@ button, a, [role="button"] {
   }
 
   .abh-wa-btn {
-    @apply font-heading flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
+    /* CHANGED: font-black → font-medium — buttons weren't exempt from the 500 ceiling. */
+    @apply font-heading flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-whatsapp);
     color: var(--on-whatsapp);
   }
   .abh-wa-btn:hover { background: var(--brand-whatsapp-dark); }
 
   .abh-btn-primary {
-    @apply font-heading inline-flex items-center justify-center gap-2 font-black text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
+    /* CHANGED: font-black → font-medium, same reason. */
+    @apply font-heading inline-flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-blue);
     color: var(--on-brand-blue);
   }
 
   .abh-btn-cta {
-    @apply font-heading inline-flex items-center justify-center gap-3 font-black text-base rounded-[14px] px-6 py-4 transition-all duration-300 active:scale-95;
+    /* CHANGED: font-black → font-medium, same reason. */
+    @apply font-heading inline-flex items-center justify-center gap-3 font-medium text-base rounded-[14px] px-6 py-4 transition-all duration-300 active:scale-95;
     background: var(--brand-orange);
     color: var(--on-brand-orange);
   }
@@ -519,4 +502,4 @@ button, a, [role="button"] {
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
-    } 
+  } 
