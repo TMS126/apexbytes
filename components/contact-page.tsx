@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
-import { BRAND, BIZ, CONTACT_LINKS, HOURS } from "@/lib/brand"
+import { BRAND, TOKEN, BIZ, CONTACT_LINKS, HOURS } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -51,7 +51,6 @@ function ContactPageInner() {
   const formCardRef = useRef<HTMLDivElement>(null)
   const showBackToTop = useBackToTop()
   const showScrollToBottom = useScrollToBottom()
-
 
   useEffect(() => {
     const serviceParam = searchParams.get("service")
@@ -110,7 +109,10 @@ function ContactPageInner() {
       await navigator.clipboard.writeText(value)
       setCopiedTitle(title)
       setTimeout(() => setCopiedTitle(null), 1800)
-    } catch {}
+    } catch {
+      // Clipboard API can be denied (permissions/insecure context) — the
+      // "copied" state just won't show; nothing else to do here.
+    }
   }
 
   const scrollToSection = (id: string) => {
@@ -136,7 +138,7 @@ function ContactPageInner() {
               <button
                 key={q.id}
                 onClick={() => scrollToSection(q.id)}
-                className="px-4 py-1.5 rounded-full text-sm font-bold text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-brand-blue hover:text-brand-blue dark:hover:text-brand-light-blue dark:hover:border-brand-light-blue transition-colors duration-150 active:scale-95"
+                className="px-4 py-1.5 rounded-full text-sm font-medium text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-brand-blue hover:text-brand-blue dark:hover:text-brand-light-blue dark:hover:border-brand-light-blue transition-colors duration-150 active:scale-95"
               >
                 {q.label}
               </button>
@@ -149,7 +151,8 @@ function ContactPageInner() {
         <div className="max-w-[980px] mx-auto grid md:grid-cols-2 gap-10 items-stretch">
           <div className="flex flex-col gap-6">
 
-            {/* ── Card 1: Get In Touch — every way to reach us, grouped as one action set ── */}
+            {/* Card minimization: kept — one of the page's three
+                structural panels forming the layout, not a lone singleton. */}
             <ScrollBounce>
               <div className="abh-card p-6">
                 <div className="text-center mb-5">
@@ -177,7 +180,7 @@ function ContactPageInner() {
                             onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
                           >
                             <Icon size={34} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
-                            <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
+                            <p className="text-sm font-normal text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
                           </a>
                           {isCopyable && (
                             <button
@@ -185,7 +188,7 @@ function ContactPageInner() {
                               aria-label={justCopied ? `${c.title} copied` : `Copy ${c.title.toLowerCase()}`}
                               className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-all active:scale-90"
                             >
-                              {justCopied ? <Check size={12} weight="bold" className="text-green-500" /> : <Copy size={12} weight="bold" />}
+                              {justCopied ? <Check size={12} weight="bold" style={{ color: BRAND.green }} /> : <Copy size={12} weight="bold" />}
                             </button>
                           )}
                         </div>
@@ -194,25 +197,20 @@ function ContactPageInner() {
                   })}
                 </div>
 
-                <p className="flex items-center justify-center gap-1.5 text-sm font-medium text-zinc-400 dark:text-zinc-500 mt-3">
+                <p className="abh-muted flex items-center justify-center gap-1.5 mt-3">
                   <Clock size={13} weight="bold" aria-hidden="true" />
                   We usually reply within 15–30 minutes during business hours
                 </p>
 
-                {/* Save contact — folded in here since it's still a "reach us" action */}
                 <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 min-w-0">
                     <AddressBook size={20} weight="fill" aria-hidden="true" style={{ color: greyColor }} />
                     <div className="min-w-0">
-                      <p className="text-base font-medium text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
-                      <p className="abh-muted">Add {BIZ.name} to your phone</p>
+                      <p className="text-base font-normal text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
+                      <p className="abh-muted truncate">Add {BIZ.name} to your phone</p>
                     </div>
                   </div>
-                  <button
-                    onClick={handleVCard}
-                    aria-label={vcardDone ? "Contact saved" : "Download contact card"}
-                    className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium"
-                  >
+                  <button onClick={handleVCard} aria-label={vcardDone ? "Contact saved" : "Download contact card"} className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium">
                     <DownloadSimple size={16} weight="bold" aria-hidden="true" />
                     {vcardDone ? "Saved!" : "Download"}
                   </button>
@@ -220,36 +218,34 @@ function ContactPageInner() {
               </div>
             </ScrollBounce>
 
-            {/* ── Card 2: Visit Us — map, hours, and live status, all "coming here" info ── */}
             <ScrollBounce delay={0.1}>
               <div className="abh-card overflow-hidden flex-1" id="contact-map" style={SCROLL_MARGIN}>
                 <LocationMap />
-
                 <div className="p-6" id="contact-hours" style={SCROLL_MARGIN}>
-                  <span className="text-[0.78rem] font-black uppercase tracking-widest flex items-center gap-1.5 mb-3" style={{ color: greyColor }}>
+                  <span className="abh-eyebrow flex items-center gap-1.5 mb-3" style={{ color: greyColor }}>
                     <Clock weight="fill" size={14} aria-hidden="true" /> Business Hours
                   </span>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 mb-1">{HOURS.printAndDoc.label}</p>
-                      <p className="text-base font-medium text-zinc-700 dark:text-zinc-300">{HOURS.printAndDoc.hours}</p>
-                      <p className="flex items-center gap-1.5 text-sm font-medium mt-1" style={{ color: BRAND.blue }}>
+                      <p className="abh-eyebrow text-zinc-500 mb-1">{HOURS.printAndDoc.label}</p>
+                      <p className="text-base font-normal text-zinc-700 dark:text-zinc-300">{HOURS.printAndDoc.hours}</p>
+                      <p className="flex items-center gap-1.5 text-sm font-normal mt-1" style={{ color: BRAND.blue }}>
                         <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: BRAND.blue }} aria-hidden="true" />
                         Open on public holidays
                       </p>
                     </div>
                     <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                      <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 mb-1">{HOURS.techDesignEservice.label}</p>
+                      <p className="abh-eyebrow text-zinc-500 mb-1">{HOURS.techDesignEservice.label}</p>
                       {HOURS.techDesignEservice.lines.map((l) => (
-                        <p key={l} className="text-base font-medium text-zinc-700 dark:text-zinc-300">{l}</p>
+                        <p key={l} className="text-base font-normal text-zinc-700 dark:text-zinc-300">{l}</p>
                       ))}
-                      <p className="flex items-center gap-1.5 text-sm font-medium mt-1 text-zinc-500 dark:text-zinc-400">
+                      <p className="flex items-center gap-1.5 text-sm font-normal mt-1 text-zinc-500 dark:text-zinc-400">
                         <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-zinc-400 dark:bg-zinc-500" aria-hidden="true" />
                         Sunday &amp; Public Holidays · Closed
                       </p>
                     </div>
                     <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                      <p className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-400 mb-2">Current Status</p>
+                      <p className="abh-eyebrow text-zinc-400 mb-2">Current Status</p>
                       <BusinessStatusFull />
                     </div>
                   </div>
@@ -262,7 +258,7 @@ function ContactPageInner() {
             <div id="contact-form" ref={formCardRef} className="abh-card p-8 flex flex-col h-full rounded-[14px]" style={SCROLL_MARGIN}>
               <h2 className="abh-section-heading mb-2">Send a Message</h2>
               {prefilled && (
-                <p className="flex items-center gap-1.5 text-[0.84rem] font-bold mb-4" style={{ color: greyColor }}>
+                <p className="flex items-center gap-1.5 text-[0.84rem] font-medium mb-4" style={{ color: greyColor }}>
                   <Sparkle size={14} weight="fill" aria-hidden="true" />
                   Prefilled from the gallery — feel free to edit before sending
                 </p>
@@ -283,10 +279,9 @@ function ContactPageInner() {
                         type={f.type}
                         value={rawValue}
                         aria-invalid={err}
-                        className={cn(
-                          "w-full px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none",
-                          err ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
-                        )}
+                        maxLength={f.key === "name" ? 80 : 20}
+                        className="w-full px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-normal text-zinc-800 dark:text-zinc-200 transition-all outline-none"
+                        style={{ borderColor: err ? TOKEN.errorBg : undefined }}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />
@@ -306,10 +301,9 @@ function ContactPageInner() {
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
-                      className={cn(
-                        "w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-medium text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none",
-                        touched.message && !isMessageValid(formData.message) ? "border-red-500" : "border-zinc-200 dark:border-zinc-600 focus:border-brand-blue"
-                      )}
+                      maxLength={1000}
+                      className="w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-normal text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none"
+                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : undefined }}
                       rows={4}
                       value={formData.message}
                       onBlur={() => setTouched({ ...touched, message: true })}
@@ -321,11 +315,7 @@ function ContactPageInner() {
                   )}
                 </div>
 
-                <button
-                  onClick={handleSubmit}
-                  disabled={!isFormValid}
-                  className="abh-wa-btn mt-auto w-full py-4 disabled:opacity-50 shadow-lg"
-                >
+                <button onClick={handleSubmit} disabled={!isFormValid} className="abh-wa-btn mt-auto w-full py-4 disabled:opacity-50 shadow-lg">
                   <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
                   Send via WhatsApp
                 </button>
@@ -340,12 +330,7 @@ function ContactPageInner() {
       </div>
 
       <div className="md:hidden fixed bottom-0 inset-x-0 z-[9985] px-4 pb-4 pt-2 bg-gradient-to-t from-background via-background to-transparent">
-        <a
-          href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="abh-wa-btn w-full py-3.5 shadow-lg"
-        >
+        <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`} target="_blank" rel="noopener noreferrer" className="abh-wa-btn w-full py-3.5 shadow-lg">
           <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
           Chat on WhatsApp
         </a>
@@ -376,4 +361,4 @@ export function ContactPage() {
       <ContactPageInner />
     </Suspense>
   )
-							  } 
+													  } 
