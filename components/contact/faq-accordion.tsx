@@ -1,3 +1,4 @@
+// components/contact/faq-accordion.tsx
 "use client"
 
 import { useState } from "react"
@@ -6,6 +7,9 @@ import { FAQS } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
+// Card minimization: each FAQ was its own bordered/tinted box. The
+// expand/collapse interaction already signals "this is interactive" — a
+// per-item card added nothing. Now one divided list.
 export function FAQAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
@@ -21,48 +25,36 @@ export function FAQAccordion() {
             <div className="abh-divider" />
           </div>
         </ScrollBounce>
-        <div className="space-y-2">
+
+        <div className="divide-y divide-zinc-100 dark:divide-zinc-800 border-t border-b border-zinc-100 dark:border-zinc-800">
           {FAQS.map((faq, index) => {
             const isOpen = openIndex === index
             return (
               <ScrollBounce key={index} delay={index * 0.05}>
-                <div
-                  className={cn(
-                    "rounded-[14px] border transition-all duration-200",
-                    isOpen
-                      ? "border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60"
-                      : "border-transparent bg-white dark:bg-zinc-900/20 hover:border-zinc-100 dark:hover:border-zinc-800"
-                  )}
-                >
+                <div>
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={`contact-faq-${index}`}
-                    className="w-full px-5 py-4 text-left flex items-center justify-between gap-4 transition-colors"
+                    className="w-full py-4 text-left flex items-center justify-between gap-4 transition-colors"
                   >
-                    <h4 className="text-[1.2rem] font-black text-zinc-800 dark:text-zinc-100 leading-snug">
+                    <h4 className="abh-card-heading text-[1.2rem] text-zinc-800 dark:text-zinc-100 leading-snug">
                       {faq.question}
                     </h4>
                     <CaretDown
                       weight="bold"
                       aria-hidden="true"
-                      className={cn(
-                        "w-3.5 h-3.5 shrink-0 text-zinc-400 transition-transform duration-300",
-                        isOpen ? "rotate-180" : "rotate-0"
-                      )}
+                      className={cn("w-3.5 h-3.5 shrink-0 text-zinc-400 transition-transform duration-300", isOpen ? "rotate-180" : "rotate-0")}
                     />
                   </button>
                   <div
                     id={`contact-faq-${index}`}
                     role="region"
                     aria-label={faq.question}
-                    className={cn(
-                      "grid transition-all duration-300 ease-in-out",
-                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                    )}
+                    className={cn("grid transition-all duration-300 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
                   >
                     <div className="overflow-hidden">
-                      <div className="px-5 pb-5 pt-1 text-[1.1rem] text-zinc-500 dark:text-zinc-400 leading-relaxed whitespace-pre-wrap">
+                      <div className="pb-5 text-[1.1rem] text-zinc-500 dark:text-zinc-400 leading-relaxed whitespace-pre-wrap">
                         {faq.answer}
                       </div>
                     </div>
@@ -75,4 +67,4 @@ export function FAQAccordion() {
       </div>
     </section>
   )
-}
+} 
