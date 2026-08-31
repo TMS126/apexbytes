@@ -69,7 +69,7 @@ export function TheNakedTradersZAReveal({
         aria-haspopup="dialog"
         aria-expanded={modalOpen}
         aria-label="The Naked Traders ZA — view the original logo"
-        className="underline decoration-dotted decoration-1 underline-offset-2 font-semibold outline-none rounded-sm focus-visible:ring-2"
+        className="underline decoration-dotted decoration-1 underline-offset-2 font-medium outline-none rounded-sm focus-visible:ring-2"
         style={{ color: accentColor, textDecorationColor: `${accentColor}80` }}
       >
         The Naked Traders ZA
@@ -83,7 +83,6 @@ export function TheNakedTradersZAReveal({
             onClick={() => closeModal()}
             aria-hidden="true"
           />
-
           <div
             className="relative w-full max-w-xs rounded-[20px] bg-card shadow-2xl p-5 transition-all duration-300"
             style={{
@@ -105,26 +104,14 @@ export function TheNakedTradersZAReveal({
 
             <div className="flex items-center gap-2 mb-1">
               <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
-              <span className="text-[0.68rem] font-black uppercase tracking-widest" style={{ color: accentOrange }}>
-                1st Ever Logo
-              </span>
+              <span className="abh-eyebrow" style={{ color: accentOrange }}>1st Ever Logo</span>
             </div>
 
-            <h3 id="nt-modal-title" className="font-sans font-black text-lg text-zinc-900 dark:text-zinc-50 mb-1">
-              The Naked Traders ZA
-            </h3>
-            <p className="text-[0.82rem] font-medium text-zinc-500 dark:text-zinc-400 mb-4">
-              Market trading group — forex &amp; CFD trading (e.g. EUR/USD)
-            </p>
+            <h3 id="nt-modal-title" className="abh-card-heading text-lg mb-1">The Naked Traders ZA</h3>
+            <p className="abh-muted mb-4">Market trading group — forex &amp; CFD trading (e.g. EUR/USD)</p>
 
             <div className="relative w-full aspect-square rounded-[14px] overflow-hidden shadow-md bg-zinc-50 dark:bg-zinc-900/50">
-              <Image
-                src="/nto.webp"
-                alt="The Naked Traders ZA logo"
-                fill
-                sizes="288px"
-                className="object-contain"
-              />
+              <Image src="/nto.webp" alt="The Naked Traders ZA logo" fill sizes="288px" className="object-contain" />
             </div>
           </div>
         </div>
