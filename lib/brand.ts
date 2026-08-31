@@ -26,6 +26,8 @@ export const TOKEN = {
   orangeText: "var(--brand-orange-text)",
   greenText: "var(--brand-green-text)",
   white: "var(--brand-white)",
+  neutral400: "var(--brand-neutral-400)",
+  neutral500: "var(--brand-neutral-500)",
 } as const
 
 export const HEX = {
