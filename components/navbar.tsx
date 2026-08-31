@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
-import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
+import { NAV_ITEMS, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useNavVisibility, useMobileMenu, useLogoAnimation, useNavContrast } from "@/hooks/use-navbar"
 import { MobileMenu } from "@/components/navbar/mobile-menu"
@@ -22,16 +22,16 @@ import { MobileMenu } from "@/components/navbar/mobile-menu"
 // BRAND.orangeDark for solid-fill-behind-white-text roles (4.55:1,
 // the same pairing already verified for HUB_COLORS.design).
 const HOVER_TEXT = TOKEN.orangeText
-const HOVER_FILL = BRAND.orangeDark
+const HOVER_FILL = TOKEN.brandOrange
 
 // Shared by both the logo icon's neutral color and the nav-controls'
 // neutral color — previously duplicated as two near-identical ternary
 // chains; same inputs, same logic, now one function.
 function resolveNeutralColor(mounted: boolean, theme: string | undefined, darkBehind: boolean): string {
-  if (!mounted) return "#3f3f46"
-  if (darkBehind) return "#f4f4f5"
-  if (theme === "dark") return "#e4e4e7"
-  return "#3f3f46"
+  if (!mounted) return "#62625F"
+  if (darkBehind) return "#F1F1EC"
+  if (theme === "dark") return "#F1F1EC"
+  return "#62625F"
 }
 
 export function Navbar() {
@@ -114,7 +114,7 @@ export function Navbar() {
 
   const handleThemeToggle = () => setTheme(theme === "dark" ? "light" : "dark")
 
-  const glassPillClass = "backdrop-blur-md py-2 rounded-[14px] pointer-events-auto"
+  const glassPillClass = "backdrop-blur-sm py-2 pointer-events-auto"
 
   const neutralColor = useMemo(
     () => resolveNeutralColor(mounted, theme, isDarkBehind),
@@ -123,11 +123,7 @@ export function Navbar() {
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
 
-  const hubColor = useMemo(() => {
-    if (!mounted) return BRAND.green
-    if (isLogoDarkBehind) return BRAND.lightGreen
-    return theme === "dark" ? BRAND.lightGreen : BRAND.green
-  }, [mounted, theme, isLogoDarkBehind])
+  const hubColor = useMemo(() => TOKEN.brandOrange, [])
 
   const handleNavFocus = () => setDesktopNavOpen(true)
   const handleNavBlur = (e: React.FocusEvent<HTMLDivElement>) => {
@@ -181,10 +177,10 @@ export function Navbar() {
                 style={{ filter: useLightLogoIcon ? "brightness(0) invert(1)" : "brightness(0)" }}
               />
               <div
-                className="font-sans font-black text-[1.32rem] leading-none tracking-tight transition-all duration-500 overflow-hidden flex items-center"
+                className="font-heading font-bold text-[1.32rem] leading-none tracking-[-0.04em] transition-all duration-500 overflow-hidden flex items-center"
                 style={{ maxWidth: isTextExpanded ? "180px" : "0px" }}
               >
-                <span className="whitespace-nowrap transition-colors duration-300" style={{ color: BRAND.blue }}>
+                <span className="whitespace-nowrap transition-colors duration-300" style={{ color: "var(--foreground)" }}>
                   Apexbytes
                 </span>
                 <span className="whitespace-nowrap transition-colors duration-300" style={{ color: hubColor }}>
@@ -260,12 +256,12 @@ export function Navbar() {
                           aria-current={isActive ? "page" : undefined}
                           style={{
                             transitionDelay: desktopNavOpen ? `${idx * 30}ms` : "0ms",
-                            backgroundColor: contactHovered ? HOVER_FILL : BRAND.blue,
-                            borderColor: contactHovered ? HOVER_FILL : BRAND.blue,
+                            backgroundColor: contactHovered ? "var(--brand-orange-dark)" : HOVER_FILL,
+                            borderColor: contactHovered ? "var(--brand-orange-dark)" : HOVER_FILL,
                             color: "#ffffff",
                           }}
                           className={cn(
-                            "px-4 py-2 rounded-[10px] text-base whitespace-nowrap border-2 font-black transition-all duration-200",
+                            "px-4 py-2 rounded-[10px] text-base whitespace-nowrap border font-sans font-bold transition-all duration-200",
                             desktopNavOpen ? "opacity-100 scale-100" : "opacity-0 scale-75",
                             ctaPulse && "abh-cta-pulse"
                           )}
@@ -288,7 +284,7 @@ export function Navbar() {
                         className={cn(
                           "px-3.5 py-2 text-base whitespace-nowrap bg-transparent border-2 border-transparent transition-all duration-200",
                           desktopNavOpen ? "opacity-100 scale-100" : "opacity-0 scale-75",
-                          isActive ? "font-black" : "font-medium"
+                          isActive ? "font-bold" : "font-medium"
                         )}
                         onMouseEnter={(e) => {
                           if (!isActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT

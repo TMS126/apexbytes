@@ -32,34 +32,25 @@ export const TOKEN = {
 
 export const HEX = {
   light: {
-    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
-    green: "#4A8011", greenDeep: "#3E6B0E",
-    orange: "#B9590D", orangeDark: "#B06225", orangeBrown: "#A86530",
-    teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
-    warningBg: "#9A4B12",
-    // FIX: restored to the original pastel values — these were
-    // overwritten with the bright dark-mode hex by an earlier fix
-    // attempt. This is the pastel-tint role used for hub badges
-    // (HUB_COLORS.*.light), a different job from a dark-mode primary.
-    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
-    dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
+    blue: "#435075", blueMid: "#343B60", blueDark: "#25283E",
+    green: "#5D7F4B", greenDeep: "#3E6231",
+    orange: "#FA5215", orangeDark: "#CF3E0A", orangeBrown: "#A83D1A",
+    teal: "#3E7473", tealDark: "#2C5E60", tealLight: "#D3E9E5",
+    warningBg: "#A84516",
+    lightBlue: "#D9E0EE", lightGreen: "#DCE8D4", lightOrange: "#F8DDD1",
+    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#C4C7D2",
   },
   dark: {
-    // REVERTED: blue/green/teal dark overrides were never requested —
-    // back to equaling their light value (no separate dark shade).
-    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
-    green: "#4A8011", greenDeep: "#3E6B0E",
-    // FIX — the actual request: dark-mode orange now equals the
-    // restored lightOrange pastel, the exact same value Design Hub's
-    // accentDark already resolves to. True parity, no new hex invented.
-    orange: "#F9D1B0", orangeDark: "#B06225", orangeBrown: "#A86530",
-    teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
-    warningBg: "#7A3B0E",
-    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
-    dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
+    blue: "#435075", blueMid: "#343B60", blueDark: "#25283E",
+    green: "#5D7F4B", greenDeep: "#3E6231",
+    orange: "#FA5215", orangeDark: "#CF3E0A", orangeBrown: "#A83D1A",
+    teal: "#3E7473", tealDark: "#2C5E60", tealLight: "#D3E9E5",
+    warningBg: "#E08A64",
+    lightBlue: "#D9E0EE", lightGreen: "#DCE8D4", lightOrange: "#F8DDD1",
+    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#C4C7D2",
   },
-  neutral100: "#EDEDED", neutral200: "#F4F4F4", neutral300: "#D6D6D6",
-  neutral400: "#9A9A9A", neutral500: "#747474",
+  neutral100: "#E8E8E2", neutral200: "#ECECE7", neutral300: "#D5D5CE",
+  neutral400: "#858581", neutral500: "#62625F",
   white: "#FFFFFF",
   whatsapp: "#25D366", whatsappDark: "#1ebe5a",
   whatsappAccessible: "#178540", whatsappAccessibleDark: "#125F2F",
@@ -90,7 +81,7 @@ export const BRAND = {
   teal: HEX.light.teal,
   tealDark: HEX.light.tealDark,
   tealLight: HEX.light.tealLight,
-  greenDark: "#4C8212",
+  greenDark: "#48653A",
   greenDeep: HEX.light.greenDeep,
   orangeDark: HEX.light.orangeDark,
   orangeBrown: HEX.light.orangeBrown,
@@ -112,38 +103,38 @@ export const BRAND = {
 } as const
 
 export const THEME_BG = {
-  light: { page: "#FFFFFF", card: "#FFFFFF" },
-  dark: { page: "#0D1B2A", card: "#1A2C3E" },
+  light: { page: "#F1F1EC", card: "#E8E8E2" },
+  dark: { page: "#25283E", card: "#2D314B" },
 } as const
 
 export const HUB_COLORS = {
   print: {
     primary: BRAND.blue, light: BRAND.lightBlue,
-    gradient: `linear-gradient(135deg, ${BRAND.blue} 0%, ${BRAND.blueMid} 100%)`,
+    gradient: BRAND.blue,
     tagBg: 'transparent', tagText: '#374151', tagBgDark: '#1e40af', tagTextDark: '#ffffff',
     accentLight: BRAND.blue, accentDark: BRAND.lightBlue,
   },
   doc: {
     primary: BRAND.green, light: BRAND.lightGreen,
-    gradient: `linear-gradient(135deg, ${BRAND.greenDeep} 0%, ${BRAND.green} 100%)`,
+    gradient: BRAND.green,
     tagBg: 'transparent', tagText: '#374151', tagBgDark: '#166534', tagTextDark: '#ffffff',
     accentLight: BRAND.green, accentDark: BRAND.lightGreen,
   },
   design: {
     primary: BRAND.orangeDark, light: BRAND.lightOrange,
-    gradient: `linear-gradient(135deg, ${BRAND.orangeBrown} 0%, ${BRAND.orange} 100%)`,
+    gradient: BRAND.orange,
     tagBg: 'transparent', tagText: '#374151', tagBgDark: '#9a3412', tagTextDark: '#ffffff',
     accentLight: BRAND.orangeDark, accentDark: BRAND.lightOrange,
   },
   eservice: {
     primary: BRAND.teal, light: BRAND.tealLight,
-    gradient: `linear-gradient(135deg, ${BRAND.teal} 0%, ${BRAND.tealDark} 100%)`,
+    gradient: BRAND.teal,
     tagBg: 'transparent', tagText: '#374151', tagBgDark: BRAND.tealDark, tagTextDark: '#ffffff',
     accentLight: BRAND.teal, accentDark: BRAND.tealLight,
   },
   tech: {
     primary: BRAND.dark100, light: BRAND.techGreyDark,
-    gradient: `linear-gradient(135deg, ${BRAND.dark100} 0%, ${BRAND.dark200} 100%)`,
+    gradient: BRAND.dark100,
     tagBg: 'transparent', tagText: '#374151', tagBgDark: '#1f2937', tagTextDark: '#ffffff',
     accentLight: BRAND.dark100, accentDark: BRAND.techGreyDark,
   },

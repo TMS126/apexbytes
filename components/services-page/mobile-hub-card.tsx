@@ -24,8 +24,8 @@ export function BulkRibbon({ accent }: { accent: string }) {
   return (
     <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
       <span
-        className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider abh-shadow-badge border"
-        style={{ backgroundColor: "var(--muted)", color: accent, borderColor: "var(--border)" }}
+        className="block w-28 text-center py-0.5 font-sans text-[0.62rem] font-bold uppercase tracking-wider"
+        style={{ color: accent }}
       >
         Bulk
       </span>
@@ -37,8 +37,8 @@ export function NoticeBadge() {
   return (
     <div className="absolute top-3 right-3 z-20 pointer-events-none">
       <div
-        className="w-7 h-7 rounded-full flex items-center justify-center abh-shadow-badge"
-        style={{ backgroundColor: "var(--card)", color: TOKEN.warningBg }}
+        className="w-7 h-7 flex items-center justify-center"
+        style={{ color: TOKEN.warningBg }}
         aria-label="Notice for some services in this hub"
       >
         <WarningCircle size={16} weight="bold" aria-hidden="true" />
@@ -52,8 +52,8 @@ export function NoticeBadge() {
 function BulkEdgePill({ accent }: { accent: string }) {
   return (
     <span
-      className="absolute left-1/2 -bottom-2.5 -translate-x-1/2 z-20 px-3 py-0.5 rounded-full text-[0.68rem] font-medium whitespace-nowrap abh-shadow-badge border"
-      style={{ backgroundColor: "var(--card)", color: accent, borderColor: "var(--border)" }}
+      className="absolute left-1/2 -bottom-2.5 -translate-x-1/2 z-20 py-0.5 font-sans text-[0.68rem] font-bold whitespace-nowrap"
+      style={{ color: accent }}
     >
       Bulk pricing
     </span>
@@ -71,12 +71,11 @@ function BulkEdgePill({ accent }: { accent: string }) {
 // --hub-accent CSS var set on the card itself.
 // ══════════════════════════════════════════════════════════════════════
 export function MobileHubCard({
-  hubId, hub, accent, primary, hubHasBulk, hubHasNotice, orderIndex, onClick, variant = "mobile",
+  hubId, hub, accent, hubHasBulk, hubHasNotice, orderIndex, onClick, variant = "mobile",
 }: {
   hubId: HubId
   hub: (typeof HUBS)[HubId]
   accent: string
-  primary: string
   hubHasBulk: boolean
   hubHasNotice: boolean
   orderIndex: number
@@ -99,7 +98,7 @@ export function MobileHubCard({
       aria-label={`Open ${hub.title}`}
       style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       className={cn(
-        "group relative w-full text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col",
+        "group relative w-full text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-visible transition-colors duration-200 hover:bg-[var(--secondary)] active:scale-[0.98] transform-gpu flex flex-col",
         isDesktop ? "min-h-[220px] p-5 items-center text-center h-full" : "min-h-[152px] p-4"
       )}
     >
@@ -124,14 +123,14 @@ export function MobileHubCard({
             />
           )}
         </div>
-        <span className="text-[0.78rem] font-black" style={{ color: TOKEN.orangeText }} aria-hidden="true">
+        <span className="font-sans text-[0.78rem] font-bold" style={{ color: TOKEN.brandOrange }} aria-hidden="true">
           {number}
         </span>
       </div>
 
       <h3
         className={cn(
-          "font-sans font-black text-foreground mb-1.5 break-words",
+          "font-heading font-bold text-foreground tracking-[-0.02em] mb-1.5 break-words",
           isDesktop ? "text-[1.15rem]" : "text-[1.05rem]"
         )}
       >
@@ -150,8 +149,8 @@ export function MobileHubCard({
       {isDesktop ? (
         <div className="flex justify-center mt-4 w-full">
           <span
-            className="inline-flex items-center gap-1 px-4 py-1.5 rounded-[14px] border text-[0.8rem] font-black transition-colors duration-200 group-hover:border-[var(--hub-accent)] group-hover:text-[var(--hub-accent)]"
-            style={{ borderColor: TOKEN.orangeText, color: TOKEN.orangeText }}
+            className="inline-flex items-center gap-1 py-1.5 font-sans text-[0.8rem] font-bold underline underline-offset-4 decoration-[var(--brand-orange)] transition-colors duration-200 group-hover:text-[var(--hub-accent)]"
+            style={{ color: TOKEN.brandOrange }}
           >
             Explore
           </span>

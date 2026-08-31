@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { Megaphone, ArrowRight, CaretRight, CaretLeft, WarningCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
+import { TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { useModalBackStack, HubIcon } from "./shared"
@@ -18,7 +18,7 @@ import { HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService } from ".
 import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
-import { MobileHubCard, BulkRibbon, NoticeBadge } from "./mobile-hub-card"
+import { MobileHubCard } from "./mobile-hub-card"
 
 const PILL_NEUTRAL = {
   border: "var(--border)",
@@ -30,7 +30,7 @@ function ClosingTagline() {
   return (
     <div className="mt-2 mb-4 text-center px-6 py-6">
       <p className="abh-eyebrow text-muted-foreground mb-3">Why ApexbytesHub</p>
-      <p className="font-sans font-black text-2xl md:text-3xl text-foreground leading-snug max-w-2xl mx-auto">
+      <p className="font-heading font-bold text-2xl md:text-3xl text-foreground tracking-[-0.03em] leading-snug max-w-2xl mx-auto">
         From your first CV to your next big idea — one hub does it all, right here in Bothaville.
       </p>
       <div className="abh-divider" />
@@ -55,7 +55,7 @@ function Pill({
       onClick={onClick}
       aria-pressed={isActive}
       className={cn(
-        "inline-flex items-center gap-2 rounded-full font-black transition-all duration-200 active:scale-95 border",
+        "inline-flex items-center gap-2 rounded-full font-sans font-bold transition-all duration-200 active:scale-95 border",
         size === "md" ? "pl-2 pr-4 py-2 text-[0.9rem]" : "pl-2 pr-3.5 py-1.5 text-[0.82rem]"
       )}
       style={
@@ -90,7 +90,7 @@ function BackPill({ onClick, label }: { onClick: () => void; label: string }) {
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center gap-1.5 pl-2.5 pr-3.5 py-1.5 rounded-full font-black text-[0.82rem] border transition-all duration-200 active:scale-95 hover:bg-[var(--muted)]"
+      className="inline-flex items-center gap-1.5 pl-2.5 pr-3.5 py-1.5 rounded-full font-sans font-bold text-[0.82rem] border transition-all duration-200 active:scale-95 hover:bg-[var(--muted)]"
       style={{ borderColor: PILL_NEUTRAL.border, color: PILL_NEUTRAL.text }}
     >
       <CaretLeft size={12} weight="bold" />
@@ -111,10 +111,10 @@ function SectionCard({
   return (
     <button
       onClick={onClick}
-      className="group/sectioncard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-5"
+      className="group/sectioncard text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-colors duration-200 hover:bg-[var(--secondary)] active:scale-[0.98] p-5"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h4 className="font-black text-[1.02rem] text-foreground leading-tight break-words">
+        <h4 className="font-heading font-bold text-[1.02rem] text-foreground tracking-[-0.02em] leading-tight break-words">
           {section.title}
         </h4>
         {hasNotice && (
@@ -123,7 +123,7 @@ function SectionCard({
             weight="fill"
             aria-label="Notice for some services in this section"
             className="shrink-0 mt-0.5"
-            style={{ color: BRAND.orange }}
+            style={{ color: TOKEN.brandOrange }}
           />
         )}
       </div>
@@ -135,7 +135,7 @@ function SectionCard({
       )}
 
       <div className="flex items-center justify-between">
-        <span className="text-[0.78rem] font-bold" style={{ color: accent }}>
+        <span className="font-sans text-[0.78rem] font-bold" style={{ color: accent }}>
           {section.items.length} service{section.items.length === 1 ? "" : "s"}
         </span>
         <span
@@ -159,17 +159,17 @@ function ServiceCard({
   return (
     <button
       onClick={onClick}
-      className="group/svccard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-4 flex flex-col"
+      className="group/svccard text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-hidden transition-colors duration-200 hover:bg-[var(--secondary)] active:scale-[0.98] p-4 flex flex-col"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="font-black text-[0.95rem] text-foreground leading-snug flex items-start gap-1.5 min-w-0">
+        <span className="font-heading font-bold text-[0.95rem] text-foreground tracking-[-0.02em] leading-snug flex items-start gap-1.5 min-w-0">
           {item.notice && (
             <WarningCircle
               size={13}
               weight="fill"
               aria-label="Notice"
               className="shrink-0 mt-0.5"
-              style={{ color: BRAND.orange }}
+              style={{ color: TOKEN.brandOrange }}
             />
           )}
           <span className="break-words">{item.name}</span>
@@ -181,7 +181,7 @@ function ServiceCard({
       </p>
 
       <span
-        className="inline-flex items-center gap-1 text-[0.78rem] font-black transition-colors duration-200"
+        className="inline-flex items-center gap-1 font-sans text-[0.78rem] font-bold transition-colors duration-200"
         style={{ color: accent }}
       >
         View details
@@ -365,7 +365,7 @@ export function ServicesPage() {
               onDismiss={() => setClientNoticeDismissed(true)}
             >
               {NOTICE.text}
-              <span className="font-black" style={{ color: TOKEN.blueText }}>{NOTICE.date}</span>
+              <span className="font-bold" style={{ color: TOKEN.blueText }}>{NOTICE.date}</span>
               {NOTICE.textAfter}
             </NoticePill>
           </ScrollBounce>
@@ -392,7 +392,6 @@ export function ServicesPage() {
                   hubId={hubId}
                   hub={hub}
                   accent={accent}
-                  primary={colors.primary}
                   hubHasBulk={hubHasBulk}
                   orderIndex={index}
                   hubHasNotice={hubHasNotice}
@@ -430,8 +429,7 @@ export function ServicesPage() {
                       hubId={hubId}
                       hub={hub}
                       accent={accent}
-                      primary={colors.primary}
-                      hubHasBulk={hubHasBulk}
+                          hubHasBulk={hubHasBulk}
                       hubHasNotice={hubHasNotice}
                       orderIndex={index}
                       onClick={() => handleDesktopSelectHub(hubId)}

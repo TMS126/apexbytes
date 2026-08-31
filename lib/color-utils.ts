@@ -41,3 +41,25 @@ export function getReadableTextColor(
   const contrastWithDark = (luminance + 0.05) / 0.05
   return contrastWithWhite >= contrastWithDark ? "#FFFFFF" : darkText
 } 
+
+
+function contrastRatio(foreground: string, background: string): number {
+  const fg = relativeLuminance(foreground)
+  const bg = relativeLuminance(background)
+  return (Math.max(fg, bg) + 0.05) / (Math.min(fg, bg) + 0.05)
+}
+
+/** Returns the higher-contrast text colour for a known hex background. */
+export function getContrastText(background: string): string {
+  return getReadableTextColor(background, "#25283E")
+}
+
+/**
+ * Preserves a supplied foreground when it meets the requested contrast ratio;
+ * otherwise falls back to the most legible neutral for the same background.
+ */
+export function ensureAccessible(foreground: string, background: string, minimumRatio: number = 4.5): string {
+  return contrastRatio(foreground, background) >= minimumRatio
+    ? foreground
+    : getContrastText(background)
+}

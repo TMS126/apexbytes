@@ -1,13 +1,12 @@
 // app/layout.tsx
 import type { Metadata, Viewport } from 'next'
-import { Poppins, Instrument_Sans, DM_Sans, JetBrains_Mono } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Manrope, DM_Sans, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { InstanceGuardProvider } from '@/hooks/use-instance-guard'
-import { BIZ, BRAND } from '@/lib/brand'
+import { BIZ } from '@/lib/brand'
 import { LocalBusinessJsonLd } from '@/components/ui/json-ld'
 import { FloatingSearchWidget } from '@/components/floating-search-widget'
 import { QuoteCalculatorWidget } from "@/components/quote-calculator"
@@ -23,26 +22,10 @@ export const dynamic = 'force-dynamic'
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
 
-const poppinsHeading = Poppins({
+const manropeHeading = Manrope({
   subsets: ['latin'],
   weight: ['600', '700', '800'],
-  variable: '--font-poppins',
-  display: 'swap',
-})
-
-const soraFallback = localFont({
-  src: [
-    { path: '../public/fonts/Sora-SemiBold.woff2', weight: '600', style: 'normal' },
-    { path: '../public/fonts/Sora-Bold.woff2', weight: '700', style: 'normal' },
-  ],
-  variable: '--font-sora',
-  display: 'swap',
-})
-
-const instrumentFallback = Instrument_Sans({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-  variable: '--font-instrument',
+  variable: '--font-manrope',
   display: 'swap',
 })
 
@@ -90,8 +73,8 @@ twitter: { card: 'summary_large_image', title: `${BIZ.name} — ${BIZ.tagline}`,
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: BRAND.blue },
-    { media: '(prefers-color-scheme: dark)', color: '#09090b' },
+    { media: '(prefers-color-scheme: light)', color: '#F1F1EC' },
+    { media: '(prefers-color-scheme: dark)', color: '#25283E' },
   ],
   width: 'device-width', initialScale: 1,
 }
@@ -104,9 +87,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppinsHeading.variable} ${soraFallback.variable} ${instrumentFallback.variable} ${dmSansBody.variable} ${monoFont.variable}`}
+      className={`${manropeHeading.variable} ${dmSansBody.variable} ${monoFont.variable}`}
     >
-      <body className="font-sans antialiased min-h-screen bg-white dark:bg-background text-zinc-900 dark:text-zinc-100 transition-colors duration-300 text-[17.5px] leading-relaxed">
+      <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-[17px] leading-relaxed">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[99999] focus:px-4 focus:py-2 focus:bg-white focus:text-brand-blue focus:font-bold focus:rounded-lg focus:shadow-lg focus:outline-none">
           Skip to main content
         </a>

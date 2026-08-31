@@ -9,7 +9,7 @@ import {
   Printer, FileText, PaintBrush, Globe, Desktop,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BIZ, MARQUEE_ITEMS, TOKEN, BRAND} from "@/lib/brand"
+import { BIZ, MARQUEE_ITEMS, TOKEN } from "@/lib/brand"
 import { HUBS_DATA } from "@/lib/hero-data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
@@ -98,6 +98,7 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
   useEffect(() => { const t = setTimeout(() => setRevealed(true), 50); return () => clearTimeout(t) }, [])
 
   const [spinningId, setSpinningId] = useState<string | null>(null)
+  const [highlightedId, setHighlightedId] = useState<string | null>(null)
   const spinTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const triggerSpin = (hubId: string) => {
     if (prefersReducedMotion) return
@@ -110,11 +111,13 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
   }
 
   return (
-    <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-none h-[380px] sm:h-[440px] md:h-[480px]">
+    <div className="relative mx-auto w-full max-w-[360px] sm:max-w-[440px] md:max-w-none h-[380px] sm:h-[440px] md:h-[480px] rounded-[14px] bg-[var(--brand-blue-dark)] dark:bg-card overflow-hidden">
+      <div className="absolute inset-0 opacity-20" aria-hidden="true" style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.22), transparent 55%)" }} />
       {arrangement.map(({ hub, topPct, leftPct, z }, i) => {
         const hubAccent = isDark ? hub.colorDark : hub.colorLight
         const Icon = HUB_ICON_MAP[hub.id]
         const isSpinning = spinningId === hub.id
+        const isHighlighted = highlightedId === hub.id
 
         return (
           <div
@@ -131,10 +134,13 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
               role="button"
               tabIndex={0}
               aria-label={hub.name}
-              onMouseEnter={() => canHover && triggerSpin(hub.id)}
+              onMouseEnter={() => { if (canHover) { setHighlightedId(hub.id); triggerSpin(hub.id) } }}
+              onMouseLeave={() => setHighlightedId(null)}
+              onFocus={() => setHighlightedId(hub.id)}
+              onBlur={() => setHighlightedId(null)}
               onClick={() => triggerSpin(hub.id)}
               onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); triggerSpin(hub.id) } }}
-              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex items-center justify-center cursor-pointer outline-none bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 abh-shadow-tile"
+              className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-[14px] flex items-center justify-center cursor-pointer outline-none transition-colors duration-200 focus-visible:bg-white/10"
               style={{
                 perspective: "600px",
                 animationName: isSpinning ? "abh-coin-spin" : undefined,
@@ -142,7 +148,7 @@ function HubIconField({ isDark, canHover, prefersReducedMotion }: { isDark: bool
                 animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
               }}
             >
-              <Icon size={44} weight="duotone" color={hubAccent} />
+              <Icon size={44} weight="regular" color={isHighlighted ? hubAccent : "var(--brand-tech-grey-dark)"} />
             </div>
           </div>
         )
@@ -230,17 +236,17 @@ export function HeroSection() {
               </p>
             )}
 
-            <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: BRAND.orange }}>
+            <p className="inline-flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-[0.16em] mb-3" style={{ color: TOKEN.brandOrange }}>
               <span aria-hidden="true">•</span> {BIZ.tagline.replace(/\.$/, "")}
             </p>
 
-            <h1 className="font-sans font-black text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4">
-              <span className="block text-zinc-900 dark:text-zinc-50">Design.</span>
-              <span className="block text-zinc-400 dark:text-zinc-600">Print.</span>
-              <span className="block text-zinc-900 dark:text-zinc-50">Upgrade.</span>
+            <h1 className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl tracking-[-0.05em] leading-[0.95] mb-4">
+              <span className="block text-foreground">Design.</span>
+              <span className="block text-muted-foreground">Print.</span>
+              <span className="block text-foreground">Upgrade.</span>
             </h1>
 
-            <p className="text-lg md:text-xl font-medium text-zinc-600 dark:text-zinc-400 max-w-[480px] md:max-w-none mx-auto md:mx-0 leading-relaxed mb-8">
+            <p className="font-sans text-lg md:text-xl font-normal text-muted-foreground max-w-[480px] md:max-w-none mx-auto md:mx-0 leading-relaxed mb-8">
               {HERO_SUBHEAD}
             </p>
 
@@ -248,23 +254,17 @@ export function HeroSection() {
               <ScrollBounce>
                 <button
                   onClick={handleCtaClick}
-                  className="flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl text-white transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 abh-shadow-badge"
-                  style={{ backgroundColor: BRAND.orange }}
+                  className="abh-btn-cta text-lg sm:text-xl px-7 active:scale-[0.94] hover:-translate-y-0.5"
+                  style={{ backgroundColor: TOKEN.brandOrange }}
                 >
                   Start with a Quote
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
                 </button>
               </ScrollBounce>
 
-              {/* "See Our Services" — was a plain underline link, now a
-                  standalone pill: fills with the page background so it
-                  reads as a distinct morphed shape rather than flat text,
-                  border + chip shadow token give it edges, and the accent
-                  only appears on hover/press (matches the sitewide
-                  "neutral until interacted with" rule). */}
               <button
                 onClick={handleServicesClick}
-                className="group/services-cta flex items-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-background border border-[var(--border)] text-foreground abh-shadow-badge transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange)]"
+                className="group/services-cta inline-flex items-center gap-2 py-2 font-sans font-bold text-lg text-foreground underline underline-offset-8 decoration-[var(--brand-orange)] decoration-2 transition-colors duration-150 hover:text-[var(--brand-orange)] focus-visible:rounded-[4px]"
               >
                 See Our Services
                 <ArrowUpRight
@@ -277,8 +277,8 @@ export function HeroSection() {
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
-                <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-                  <CheckCircle size={15} weight="fill" style={{ color: TOKEN.brandBlue }} aria-hidden="true" />
+                <span key={hint} className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-muted-foreground">
+                  <CheckCircle size={15} weight="regular" className="text-muted-foreground" aria-hidden="true" />
                   {hint}
                 </span>
               ))}
@@ -298,13 +298,13 @@ export function HeroSection() {
           onMouseEnter={() => setMarqueePaused(true)}
           onMouseLeave={() => setMarqueePaused(false)}
           onTouchStart={(e) => { e.stopPropagation(); setMarqueePaused((p) => !p) }}
-          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee rounded-[14px] bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-100 dark:border-zinc-800 [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
+          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee border-y border-[var(--border)] [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
         >
           <button
             onClick={() => setMarqueePaused((p) => !p)}
             aria-pressed={marqueePaused}
             aria-label={marqueePaused ? "Play scrolling services list" : "Pause scrolling services list"}
-            className="absolute top-1/2 right-2 -translate-y-1/2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 bg-zinc-50 dark:bg-zinc-900/80 transition-colors"
+            className="absolute top-1/2 right-2 -translate-y-1/2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground bg-background/90 transition-colors"
           >
             {marqueePaused ? <Play size={11} weight="fill" aria-hidden="true" /> : <Pause size={11} weight="fill" aria-hidden="true" />}
           </button>
@@ -316,10 +316,10 @@ export function HeroSection() {
               <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1 ? "true" : undefined}>
                 {MARQUEE_ITEMS.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    <span className="inline-flex items-center px-5 font-semibold text-base text-zinc-600 dark:text-zinc-400 transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
+                    <span className="inline-flex items-center px-5 font-sans font-medium text-base text-muted-foreground transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
                       {item}
                     </span>
-                    <span className="font-black text-lg leading-none shrink-0 text-zinc-300 dark:text-zinc-600" aria-hidden="true">•</span>
+                    <span className="font-bold text-lg leading-none shrink-0 text-[var(--brand-orange)]" aria-hidden="true">•</span>
                   </React.Fragment>
                 ))}
               </div>
