@@ -32,20 +32,9 @@ export function AboutHeader({ blueColor, blueOnPage }: { blueColor: string; blue
               { value: BIZ.serviceCount, label: "Services" },
               { value: "Since 2023", label: "Est. Kgotsong" },
             ].map((s, i) => (
-              <div
-                key={i}
-                className="flex flex-col items-center justify-center py-5 px-3 transition-colors duration-300 cursor-default"
-                style={{ backgroundColor: statsHovered ? `${blueColor}12` : "transparent" }}
-              >
-                <p className="font-sans font-black text-2xl leading-none transition-colors duration-300" style={{ color: blueOnPage }}>
-                  {s.value}
-                </p>
-                <p
-                  className="text-[0.74rem] font-medium uppercase tracking-widest mt-1.5 text-center transition-colors duration-300"
-                  style={{ color: `${blueOnPage}cc` }}
-                >
-                  {s.label}
-                </p>
+              <div key={i} className="flex flex-col items-center justify-center py-5 px-3 transition-colors duration-300 cursor-default" style={{ backgroundColor: statsHovered ? `${blueColor}12` : "transparent" }}>
+                <p className="abh-stat-value transition-colors duration-300" style={{ color: blueOnPage }}>{s.value}</p>
+                <p className="abh-eyebrow mt-1.5 text-center transition-colors duration-300" style={{ color: `${blueOnPage}cc` }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -53,4 +42,4 @@ export function AboutHeader({ blueColor, blueOnPage }: { blueColor: string; blue
       </div>
     </section>
   )
-}
+} 
