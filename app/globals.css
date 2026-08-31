@@ -314,31 +314,41 @@ button, a, [role="button"] {
   .dark .abh-card {
     box-shadow: var(--shadow);
   }
+  /* app/globals.css — only these selectors changed within @layer components */
+
+@layer components {
   .abh-page-title {
-    @apply font-heading font-black text-4xl md:text-5xl tracking-tight leading-tight text-center;
+    @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
     color: var(--brand-blue-dark);
   }
   .dark .abh-page-title { color: var(--brand-light-blue); }
 
   .abh-section-heading {
-    @apply font-heading font-black text-2xl md:text-3xl tracking-tight leading-snug;
+    @apply font-heading font-medium text-2xl md:text-3xl tracking-tight leading-snug;
     color: var(--foreground);
   }
 
   .abh-card-heading {
-    @apply font-heading font-black text-base tracking-tight leading-snug;
+    @apply font-heading font-medium text-base tracking-tight leading-snug;
     color: var(--card-foreground);
   }
 
   .abh-eyebrow {
-    @apply font-heading font-black text-xs uppercase tracking-widest;
+    @apply font-heading font-medium text-xs uppercase tracking-[0.2em];
     color: var(--brand-blue-text);
   }
   .dark .abh-eyebrow { color: var(--brand-light-blue); }
 
   .abh-btn-label {
-    @apply font-heading font-black text-base tracking-wide;
+    @apply font-heading font-medium text-base tracking-wide;
   }
+
+  
+
+  /* ...every other rule in this @layer block (.abh-body, .abh-muted, .abh-tagline,
+     .abh-page-header, .abh-shadow-*, .abh-divider, .abh-wa-btn, .abh-btn-primary,
+     .abh-btn-cta) is unchanged from what you sent... */
+    
 
   .abh-body {
     @apply font-sans font-medium text-base md:text-lg leading-relaxed;
@@ -356,7 +366,7 @@ button, a, [role="button"] {
   }
 
   .abh-price {
-    @apply font-heading font-black text-[1.35rem] md:text-[1.5rem] leading-none;
+    @apply font-heading font-medium text-[1.35rem] md:text-[1.5rem] leading-none;
   }
 
   .abh-page-header {
