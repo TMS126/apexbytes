@@ -24,7 +24,7 @@ export function AboutStory({
       <div className="max-w-[980px] mx-auto">
         <ScrollBounce delay={0.15}>
           <div className="mb-10 text-center max-w-[720px] mx-auto">
-            <p className="font-sans font-semibold text-xl md:text-2xl leading-snug text-zinc-700 dark:text-zinc-300">
+            <p className="font-sans font-medium text-xl md:text-2xl leading-snug text-zinc-700 dark:text-zinc-300">
               &quot;Not everyone is tech-savvy — and that&apos;s exactly why we&apos;re here.&quot;
             </p>
             <p className="abh-body mt-4 text-base max-w-lg mx-auto text-center">
@@ -39,6 +39,8 @@ export function AboutStory({
           </div>
         </ScrollBounce>
 
+        {/* Card minimization: kept — a media unit (photo + caption) that
+            needs a solid surface against the image, not a plain info box. */}
         <ScrollBounce delay={0.18}>
           <div className="max-w-[720px] mx-auto mb-14 rounded-[16px] overflow-hidden abh-shadow-elevated">
             <div className="relative aspect-[16/9]">
@@ -51,14 +53,12 @@ export function AboutStory({
               />
               <div
                 className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
-                style={{
-                  background: `linear-gradient(to top, ${cardBg} 0%, ${cardBg}99 45%, transparent 100%)`,
-                }}
+                style={{ background: `linear-gradient(to top, ${cardBg} 0%, ${cardBg}99 45%, transparent 100%)` }}
                 aria-hidden="true"
               />
             </div>
             <div className="bg-card px-6 py-3 sm:px-7 sm:py-8 md:p-8 -mt-px">
-              <h3 className="font-sans font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">How It Started</h3>
+              <h3 className="abh-card-heading text-xl mb-3">How It Started</h3>
               <p className="abh-body text-base leading-relaxed">
                 There was no ApexbytesHub yet — just a phone, WhatsApp, and a status update. A friend spotted a
                 simple edited image Theji had posted and asked if he could design a logo. That request was for
@@ -81,48 +81,50 @@ export function AboutStory({
         </ScrollBounce>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          {/* Card minimization: kept — repeated value siblings. */}
           <ul className="flex flex-col gap-4 h-full" aria-label="Our values">
             {ABOUT_VALUES.map((item, index) => (
-              <li
-                key={index}
-                className="abh-card abh-shadow-elevated rounded-[14px] p-5 flex flex-row items-center text-left gap-4 flex-1"
-              >
+              <li key={index} className="abh-card abh-shadow-elevated rounded-[14px] p-5 flex flex-row items-center text-left gap-4 flex-1 min-w-0">
                 <div className="shrink-0 flex items-center justify-center" style={{ color: blueColor }} aria-hidden="true">
                   {renderIcon(item.iconName, "w-7 h-7")}
                 </div>
-                <div>
-                  <h3 className="font-sans font-semibold text-base text-zinc-800 dark:text-zinc-200 mb-1">{item.title}</h3>
+                <div className="min-w-0">
+                  <h3 className="abh-card-heading text-base mb-1">{item.title}</h3>
                   <p className="abh-body text-base">{item.desc}</p>
                 </div>
               </li>
             ))}
           </ul>
 
+          {/* Card minimization: DROPPED. Was a singleton panel in
+              abh-shadow-elevated + bg-card. Now plain spacing + a
+              divider. The 2-item stat grid inside is a stats bar — now
+              one divided row instead of two separate boxes. */}
           <ScrollBounce delay={0.2}>
-            <div className="abh-shadow-elevated rounded-[14px] bg-card p-7 flex flex-col h-full" aria-label="Business overview">
-              <div className="flex flex-col items-center text-center gap-2 mb-7 pb-6 border-b border-zinc-100/60 dark:border-zinc-800/40">
+            <div className="flex flex-col h-full" aria-label="Business overview">
+              <div className="flex flex-col items-center text-center gap-2 mb-7 pb-6 border-b border-zinc-100 dark:border-zinc-800">
                 <div className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0" style={{ backgroundColor: `${blueColor}15`, color: blueColor }}>
                   <UsersThree size={20} weight="fill" />
                 </div>
                 <div>
-                  <p className="font-sans font-semibold text-base text-zinc-800 dark:text-zinc-200 leading-none">{BIZ.name}</p>
-                  <p className="text-[0.74rem] font-medium uppercase tracking-widest text-zinc-400 mt-1.5">Serving Kgotsong &amp; surrounds</p>
+                  <p className="abh-card-heading text-base leading-none">{BIZ.name}</p>
+                  <p className="abh-eyebrow mt-1.5">Serving Kgotsong &amp; surrounds</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 flex-1">
+              <div className="grid grid-cols-2 divide-x divide-zinc-100 dark:divide-zinc-800 flex-1 rounded-[12px] bg-zinc-50 dark:bg-zinc-900/50">
                 {[
                   { value: <WhatsappLogo weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "WhatsApp Ready" },
                   { value: <ShieldCheck weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "Community Trusted" },
                 ].map((stat, index) => (
-                  <div key={index} className="rounded-[12px] p-5 flex flex-col justify-center items-center bg-zinc-50 dark:bg-zinc-900/50 shadow-[0_1px_4px_rgba(0,0,0,0.06)] dark:shadow-[0_1px_4px_rgba(0,0,0,0.20)]">
-                    <div className="font-black text-2xl mb-1 flex items-center justify-center text-zinc-700 dark:text-zinc-300">{stat.value}</div>
-                    <p className="text-[0.72rem] font-medium uppercase tracking-widest text-zinc-400 text-center">{stat.label}</p>
+                  <div key={index} className="p-5 flex flex-col justify-center items-center">
+                    <div className="mb-1 flex items-center justify-center text-zinc-700 dark:text-zinc-300">{stat.value}</div>
+                    <p className="abh-eyebrow text-center">{stat.label}</p>
                   </div>
                 ))}
               </div>
 
-              <p className="text-[0.86rem] font-medium text-zinc-400 dark:text-zinc-500 mt-6 leading-relaxed text-center">
+              <p className="abh-muted mt-6 text-center">
                 Walk-ins welcome · WhatsApp orders accepted · Same-day service on most requests
               </p>
             </div>
@@ -131,4 +133,4 @@ export function AboutStory({
       </div>
     </section>
   )
-}
+                } 
