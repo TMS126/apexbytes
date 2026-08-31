@@ -188,8 +188,8 @@ export const WA = {
 export const MAINTENANCE_BANNER = {
   active: true,
   version: "2",
-  message: "Need help with a service? Message us on WhatsApp.",
-  linkText: "Message us on WhatsApp",
+  message: "Upgrades rolling out — everything still works.", 
+linkText: "We're live on WhatsApp", 
   linkHref: WA.general,
 } as const
 
