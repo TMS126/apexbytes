@@ -5,8 +5,7 @@ import { useState } from "react"
 import { useTheme } from "next-themes"
 import { BRAND, THEME_BG } from "@/lib/brand"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
-//import { ScrollToBottomButton, useScrollToBottom } from "@/components/scroll-to-bottom-button"
-import { ensureAccessible, getContrastText } from "@/lib/color"
+import { ensureAccessible, getContrastText } from "@/lib/color-utils"
 import { AboutHeader } from "@/components/about/about-header"
 import { AboutStory } from "@/components/about/about-story"
 import { AboutTeam } from "@/components/about/about-team"
@@ -18,7 +17,7 @@ const ABOUT_NEUTRAL = { light: BRAND.dark100, dark: BRAND.techGreyDark }
 
 export function AboutPage() {
   const showBackToTop = useBackToTop()
-  
+
   const { resolvedTheme } = useTheme()
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
@@ -47,4 +46,4 @@ export function AboutPage() {
       <BackToTopButton visible={showBackToTop} />
     </div>
   )
-      } 
+} 
