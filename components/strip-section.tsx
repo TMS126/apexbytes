@@ -42,7 +42,7 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
   const isDark = mounted && resolvedTheme === "dark"
 
   const color = isDark ? BRAND.lightBlue : BRAND.blue
-  const neutralColor = "var(--muted-foreground)"
+  const neutralColor = "var(--foreground)"
   const hoverTextColor = getReadableTextColor(color)
   const hoverDescColor = hoverTextColor === "#ffffff" ? "rgba(255,255,255,0.9)" : "rgba(24,24,27,0.78)"
 
@@ -73,11 +73,11 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
           {item.iconName === "MapPin" && <MapPin weight="regular" className="w-6 h-6" aria-hidden="true" />}
         </div>
         <div>
-          <h3 className="font-sans font-semibold text-base mb-1 transition-colors duration-300" style={{ color: hovered ? hoverTextColor : undefined }}>
-            <span className={hovered ? "" : "text-zinc-800 dark:text-zinc-200"}>{item.title}</span>
+          <h3 className="font-sans font-semibold text-base mb-1 transition-colors duration-300" style={{ color: hovered ? hoverTextColor : "var(--foreground)" }}>
+            {item.title}
           </h3>
-          <p className="text-base leading-relaxed transition-colors duration-300" style={{ color: hovered ? hoverDescColor : undefined }}>
-            <span className={hovered ? "" : "abh-body"}>{item.desc}</span>
+          <p className="text-base leading-relaxed transition-colors duration-300" style={{ color: hovered ? hoverDescColor : "var(--muted-foreground)" }}>
+            {item.desc}
           </p>
         </div>
       </div>
