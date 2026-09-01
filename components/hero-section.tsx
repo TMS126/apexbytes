@@ -113,12 +113,13 @@ export function HeroSection() {
   return (
     <section
       aria-label="Hero"
-      className="relative min-h-[calc(100vh-var(--nav-h))] w-full flex flex-col items-center justify-center px-4 md:px-8 pt-[calc(var(--nav-h)+56px)] md:pt-[104px] pb-10 md:pb-16 overflow-hidden cursor-default bg-background transition-colors duration-300">
+      className="relative min-h-[calc(100vh-var(--nav-h))] w-full flex flex-col items-center justify-center px-4 md:px-8 pt-[calc(var(--nav-h)+56px)] md:pt-[104px] pb-10 md:pb-16 overflow-hidden"
+    >
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
           className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23000' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
             backgroundSize: "128px 128px",
           }}
         />
@@ -136,7 +137,7 @@ export function HeroSection() {
 
             {showHolidayBanner && status && (
               <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400 mb-3">
-                <WeatherIcon size={16} weight="fill" style={{ color: weatherIconColor }} aria-hidden="true" />
+                <WeatherIcon size={16} weight="regular" style={{ color: weatherIconColor }} aria-hidden="true" />
                 Tech, Design &amp; E-Service are closed today for {status.holidayName} — Print &amp; Docu is open as usual
               </p>
             )}
@@ -151,7 +152,7 @@ export function HeroSection() {
               <span className="block text-foreground">Upgrade.</span>
             </h1>
 
-            <p className="text-lg md:text-xl font-medium text-zinc-600 dark:text-zinc-400 max-w-[480px] md:max-w-none mx-auto md:mx-0 leading-relaxed mb-8">
+            <p className="text-lg md:text-xl font-medium text-muted-foreground max-w-[480px] md:max-w-none mx-auto md:mx-0 leading-relaxed mb-8">
               {HERO_SUBHEAD}
             </p>
 
@@ -189,7 +190,7 @@ export function HeroSection() {
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
                 <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-                  <CheckCircle size={15} weight="fill" style={{ color: TOKEN.brandBlue }} aria-hidden="true" />
+                  <CheckCircle size={15} weight="regular" style={{ color: TOKEN.brandBlue }} aria-hidden="true" />
                   {hint}
                 </span>
               ))}
@@ -242,4 +243,4 @@ export function HeroSection() {
       <BackToTopButton visible={showBackToTop} />
     </section>
   )
-  }
+}
