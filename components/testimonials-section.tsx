@@ -154,9 +154,9 @@ export function TestimonialsSection({
 
   const colorFor = (i: number) => {
     const c = HUB_COLORS[reviews[i].hubId as HubKey]
-    return isDark ? c.tagTextDark : c.tagText
+    return isDark ? c.accentDark : c.accentLight
   }
-  const solidFor = (i: number) => HUB_COLORS[reviews[i].hubId as HubKey].tagText
+  const solidFor = (i: number) => HUB_COLORS[reviews[i].hubId as HubKey].primary
 
   const slotStyle = (offset: number): React.CSSProperties => {
     const abs = Math.abs(offset)
@@ -182,7 +182,7 @@ export function TestimonialsSection({
             </p>
             <h2 className="font-sans font-black text-[1.8rem] md:text-[2.25rem] text-zinc-900 dark:text-zinc-50 mb-3">{title}</h2>
             <p className="text-[1.05rem] md:text-[1.2rem] font-medium text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto mb-5">{subtitle}</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60 text-[0.78rem] font-bold text-zinc-500 dark:text-zinc-400">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card text-[0.78rem] font-medium text-muted-foreground">
               <span className="w-2 h-2 rounded-full bg-brand-green shrink-0" aria-hidden="true" />
               Real customers we&apos;ve helped, local and remotely.
             </div>
@@ -222,12 +222,12 @@ export function TestimonialsSection({
                 >
                   <div
                     onClick={() => !isActive && goTo(i)}
-                    className="h-full rounded-[20px] bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-800 flex flex-col items-center justify-center text-center px-8 sm:px-12 py-6 overflow-hidden"
+                    className="h-full rounded-[20px] bg-card border border-border flex flex-col items-center justify-center text-center px-8 sm:px-12 py-6 overflow-hidden"
                     style={{
                       cursor: isActive ? "default" : "pointer",
                       boxShadow: isActive
-                        ? `0 30px 60px -20px rgba(0,0,0,0.22), 0 10px 24px -8px rgba(0,0,0,0.12), 0 0 0 1px ${accent}10`
-                        : "0 10px 30px -12px rgba(0,0,0,0.15)",
+                        ? `0 14px 30px -20px rgba(0,0,0,0.22), 0 0 0 1px ${accent}24`
+                        : "0 4px 12px -10px rgba(0,0,0,0.14)",
                     }}
                   >
                     <Quotes size={22} weight="fill" style={{ color: accent }} className="mb-3 opacity-40 shrink-0" />
@@ -264,7 +264,7 @@ export function TestimonialsSection({
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-40 w-9 h-9 rounded-full items-center justify-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-40 w-9 h-9 rounded-full items-center justify-center bg-card border border-border abh-shadow-badge text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: colorFor(active) }}
             >
               <CaretLeft size={16} weight="bold" />
@@ -272,7 +272,7 @@ export function TestimonialsSection({
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-40 w-9 h-9 rounded-full items-center justify-center bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-md text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-40 w-9 h-9 rounded-full items-center justify-center bg-card border border-border abh-shadow-badge text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: colorFor(active) }}
             >
               <CaretRight size={16} weight="bold" />
@@ -306,7 +306,7 @@ export function TestimonialsSection({
               href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexbytesHub! I'd like to share my experience with you.")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900/60 text-[0.88rem] font-bold text-zinc-600 dark:text-zinc-300 hover:border-brand-whatsapp hover:text-brand-whatsapp hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 shadow-sm"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-border bg-card text-[0.88rem] font-medium text-muted-foreground hover:border-brand-whatsapp hover:text-brand-whatsapp hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 abh-shadow-badge"
             >
               <WhatsappLogo size={16} weight="fill" className="text-brand-whatsapp" aria-hidden="true" />
               Share your experience on WhatsApp

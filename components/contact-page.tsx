@@ -179,7 +179,7 @@ function ContactPageInner() {
                             onMouseEnter={(e) => (e.currentTarget.style.borderColor = dotColor)}
                             onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
                           >
-                            <Icon size={34} weight="fill" aria-hidden="true" style={{ color: dotColor }} />
+                            <Icon size={34} weight="regular" aria-hidden="true" style={{ color: dotColor }} />
                             <p className="text-sm font-normal text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
                           </a>
                           {isCopyable && (
@@ -204,7 +204,7 @@ function ContactPageInner() {
 
                 <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 min-w-0">
-                    <AddressBook size={20} weight="fill" aria-hidden="true" style={{ color: greyColor }} />
+                    <AddressBook size={20} weight="regular" aria-hidden="true" style={{ color: greyColor }} />
                     <div className="min-w-0">
                       <p className="text-base font-normal text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
                       <p className="abh-muted truncate">Add {BIZ.name} to your phone</p>
@@ -223,7 +223,7 @@ function ContactPageInner() {
                 <LocationMap />
                 <div className="p-6" id="contact-hours" style={SCROLL_MARGIN}>
                   <span className="abh-eyebrow flex items-center gap-1.5 mb-3" style={{ color: greyColor }}>
-                    <Clock weight="fill" size={14} aria-hidden="true" /> Business Hours
+                    <Clock weight="regular" size={14} aria-hidden="true" /> Business Hours
                   </span>
                   <div className="space-y-3">
                     <div>
@@ -259,7 +259,7 @@ function ContactPageInner() {
               <h2 className="abh-section-heading mb-2">Send a Message</h2>
               {prefilled && (
                 <p className="flex items-center gap-1.5 text-[0.84rem] font-medium mb-4" style={{ color: greyColor }}>
-                  <Sparkle size={14} weight="fill" aria-hidden="true" />
+                  <Sparkle size={14} weight="regular" aria-hidden="true" />
                   Prefilled from the gallery — feel free to edit before sending
                 </p>
               )}
