@@ -32,15 +32,24 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
     previouslyFocused.current = document.activeElement as HTMLElement
     containerRef.current?.focus()
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") { setMenuOpen(false); return }
+      if (e.key === "Escape") {
+        setMenuOpen(false)
+        return
+      }
       if (e.key !== "Tab" || !containerRef.current) return
       const focusable = containerRef.current.querySelectorAll<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       )
       if (focusable.length === 0) return
-      const first = focusable[0]; const last = focusable[focusable.length - 1]
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
     document.addEventListener("keydown", handleKeyDown)
     return () => {
@@ -57,16 +66,30 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
       aria-label="Main menu"
       aria-hidden={!menuOpen}
       tabIndex={-1}
-      className={cn("fixed inset-0 z-[9998] md:hidden transition-opacity duration-300 outline-none", menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")}
+      className={cn(
+        "fixed inset-0 z-[9998] md:hidden transition-opacity duration-300 outline-none",
+        menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      )}
     >
       <div
-        className={cn("absolute -inset-[50%] transition-opacity duration-700", menuOpen ? "opacity-100 animate-[spin_16s_linear_infinite]" : "opacity-0")}
-        style={{ background: "conic-gradient(from 0deg, rgba(30,111,168,0.18), rgba(111,191,26,0.16), rgba(244,162,97,0.16), rgba(30,111,168,0.18))" }}
+        className={cn(
+          "absolute -inset-[50%] transition-opacity duration-700",
+          menuOpen ? "opacity-100 animate-[spin_16s_linear_infinite]" : "opacity-0"
+        )}
+        style={{
+          background:
+            "conic-gradient(from 0deg, rgba(30,111,168,0.18), rgba(111,191,26,0.16), rgba(244,162,97,0.16), rgba(30,111,168,0.18))",
+        }}
+        aria-hidden="true"
       />
-      <div className="absolute inset-0 bg-white/70 dark:bg-zinc-950/80 backdrop-blur-xl" onClick={() => setMenuOpen(false)} />
+      <div
+        className="absolute inset-0 bg-white/70 dark:bg-zinc-950/80 backdrop-blur-xl"
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
-        <nav className="w-full max-w-[320px] flex flex-col items-center gap-2.5">
+        <nav className="w-full max-w-[320px] flex flex-col items-center gap-2.5" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
             const isActive = pathname === item.path
 
@@ -136,4 +159,4 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
       </div>
     </div>
   )
-    }
+}
