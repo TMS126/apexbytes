@@ -100,6 +100,33 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 
 .dark {
+  --brand-blue: #6F7FA8;
+  --brand-blue-mid: #8796BD;
+  --brand-blue-dark: #AAB7D5;
+  --brand-green: #8FB774;
+  --brand-green-deep: #A9CC8F;
+  --brand-orange: #FF9B73;
+  --brand-orange-dark: #FFB08A;
+  --brand-orange-brown: #E9A17D;
+  --brand-teal: #79B9B5;
+  --brand-teal-dark: #9AD4CE;
+  --brand-teal-light: #284947;
+  --brand-light-blue: #CAD4EA;
+  --brand-light-green: #D8EBC5;
+  --brand-light-orange: #F9D1B0;
+  --brand-dark-100: #EEF1F7;
+  --brand-dark-200: #D8DDE8;
+  --brand-tech-grey-dark: #E0E4EE;
+  --brand-neutral-100: #303548;
+  --brand-neutral-200: #383D52;
+  --brand-neutral-300: #51586F;
+  --brand-neutral-400: #AEB6C9;
+  --brand-neutral-500: #CBD1DE;
+  --brand-whatsapp: #46E47D;
+  --brand-whatsapp-dark: #6BE995;
+  --brand-whatsapp-accessible: #55DB82;
+  --brand-whatsapp-accessible-dark: #7CEBA1;
+  --brand-whatsapp-text: #0A1110;
   --brand-error-text: #F3A39D;
   --background: #25283E;
   --foreground: #F1F1EC;
@@ -238,11 +265,11 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
 :focus { outline: none; }
 :focus-visible {
-  outline: 2px solid var(--brand-orange);
+  outline: 2px solid var(--brand-blue);
   outline-offset: 3px;
   border-radius: var(--radius);
 }
-  .dark :focus-visible { outline-color: var(--brand-orange); }
+  .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;

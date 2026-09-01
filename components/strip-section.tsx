@@ -42,34 +42,29 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
   const isDark = mounted && resolvedTheme === "dark"
 
   const color = isDark ? BRAND.lightBlue : BRAND.blue
-  const neutralColor = isDark ? "#a1a1aa" : "#71717a"
+  const neutralColor = "var(--muted-foreground)"
   const hoverTextColor = getReadableTextColor(color)
-  const hoverDescColor = hoverTextColor === "#ffffff" ? "rgba(255,255,255,0.9)" : "rgba(24,24,27,0.75)"
+  const hoverDescColor = hoverTextColor === "#ffffff" ? "rgba(255,255,255,0.9)" : "rgba(24,24,27,0.78)"
 
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        "relative rounded-[14px] p-6 transition-all duration-300 group overflow-hidden h-full",
+        "relative rounded-[14px] border p-6 transition-all duration-300 group overflow-hidden h-full",
         "abh-shadow-card hover:-translate-y-1"
       )}
-      style={{ backgroundColor: hovered ? color : undefined }}
+      style={{
+        backgroundColor: hovered ? color : "var(--card)",
+        borderColor: hovered ? color : "var(--border)",
+      }}
     >
-      <div
-        className={cn(
-          "absolute inset-0 bg-white dark:bg-zinc-900 transition-opacity duration-300 pointer-events-none",
-          hovered ? "opacity-0" : "opacity-100"
-        )}
-        aria-hidden="true"
-      />
-
       <div className="relative z-10">
         <div className="mb-5 transition-colors duration-300" style={{ color: hovered ? hoverTextColor : neutralColor }}>
-          {item.iconName === "Rocket" && <Rocket weight="fill" className="w-6 h-6" aria-hidden="true" />}
-          {item.iconName === "CurrencyDollar" && <CurrencyDollar weight="fill" className="w-6 h-6" aria-hidden="true" />}
-          {item.iconName === "HandHeart" && <HandHeart weight="fill" className="w-6 h-6" aria-hidden="true" />}
-          {item.iconName === "MapPin" && <MapPin weight="fill" className="w-6 h-6" aria-hidden="true" />}
+          {item.iconName === "Rocket" && <Rocket weight="regular" className="w-6 h-6" aria-hidden="true" />}
+          {item.iconName === "CurrencyDollar" && <CurrencyDollar weight="regular" className="w-6 h-6" aria-hidden="true" />}
+          {item.iconName === "HandHeart" && <HandHeart weight="regular" className="w-6 h-6" aria-hidden="true" />}
+          {item.iconName === "MapPin" && <MapPin weight="regular" className="w-6 h-6" aria-hidden="true" />}
         </div>
         <div>
           <h3 className="font-sans font-semibold text-base mb-1 transition-colors duration-300" style={{ color: hovered ? hoverTextColor : undefined }}>

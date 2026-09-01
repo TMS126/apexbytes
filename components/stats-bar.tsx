@@ -2,14 +2,18 @@
 "use client"
 
 import { useState } from "react"
+import { useTheme } from "next-themes"
 import { PlusCircle, Gear, Wrench, CalendarCheck } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { BRAND, BIZ } from "@/lib/brand"
+import { BIZ, pickHex } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getReadableTextColor } from "@/lib/color-utils"
 
 export function StatsBar() {
+  const { resolvedTheme } = useTheme()
+  const [mounted] = useState(() => typeof window !== "undefined")
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const isDark = mounted && resolvedTheme === "dark"
 
   // FIX: 4th stat used BRAND.teal, which brand.ts reserves specifically
   // for the E-Service hub so it doesn't collide with Print's blue. This
@@ -17,10 +21,10 @@ export function StatsBar() {
   // blueMid so it stays inside the blue family instead of introducing
   // a 5th color here.
   const stats = [
-    { icon: PlusCircle,    color: BRAND.blue,     value: BIZ.hubCount,        label: "Hubs" },
-    { icon: Gear,          color: BRAND.green,    value: BIZ.serviceCount,    label: "Services" },
-    { icon: Wrench,        color: BRAND.orange,   value: "Fast",              label: "Turnaround" },
-    { icon: CalendarCheck, color: BRAND.blueMid,  value: `${new Date().getFullYear() - parseInt(BIZ.yearFounded)}+ yrs`, label: "Experience" },
+    { icon: PlusCircle,    color: pickHex("blue", isDark),     value: BIZ.hubCount,        label: "Hubs" },
+    { icon: Gear,          color: pickHex("green", isDark),    value: BIZ.serviceCount,    label: "Services" },
+    { icon: Wrench,        color: pickHex("orange", isDark),   value: "Fast",              label: "Turnaround" },
+    { icon: CalendarCheck, color: pickHex("blueMid", isDark),  value: `${new Date().getFullYear() - parseInt(BIZ.yearFounded)}+ yrs`, label: "Experience" },
   ]
 
   return (
@@ -46,7 +50,7 @@ export function StatsBar() {
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => setHoveredCard(isHov ? null : i)}
                 aria-label={`${stat.value} ${stat.label}`}
-                className="abh-card flex flex-col items-center justify-center gap-2 py-6 px-3 text-center transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer"
+                className="abh-card flex flex-col items-center justify-center gap-2 py-6 px-3 text-center transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer border"
                 style={{ borderColor: isHov ? stat.color : undefined, backgroundColor: isHov ? stat.color : undefined }}
               >
                 {/* FIX: icon was hardcoded to stat.color at all times —
@@ -56,7 +60,7 @@ export function StatsBar() {
                     matches that same pattern. */}
                 <Icon
                   size={24}
-                  weight="fill"
+                  weight="regular"
                   aria-hidden="true"
                   style={{ color: isHov ? textOnColor : undefined }}
                   className={cn("mb-0.5 transition-colors duration-300", !isHov && "text-zinc-400 dark:text-zinc-500")}
