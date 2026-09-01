@@ -14,7 +14,7 @@ import { PricingSearchInput, PricingSearchResults } from './search-bar'
 import { HubAccordionCard, HubCompactCard, HubExpandedPanel } from './hub-card'
 import { PdfPillButton } from './shared'
 import { HUB_ORDER, dispatchAddToQuote, dispatchRemoveFromQuote, searchHubs } from './lib'
-import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
+
 import { CtaBar } from '@/components/strip-section'
 import { NoticePill } from '@/components/notice-pill'
 
@@ -37,7 +37,6 @@ const displayedHub = hoveredHub ?? selectedHub
 
   const hubRefs = useRef<Partial<Record<HubId, HTMLDivElement | null>>>({})
   const addedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const showBackToTop = useBackToTop()
 
   useEffect(() => () => { if (addedTimerRef.current) clearTimeout(addedTimerRef.current) }, [])
 
@@ -380,7 +379,6 @@ const displayedHub = hoveredHub ?? selectedHub
 
         </main>
 
-        <BackToTopButton visible={showBackToTop} className="no-print" />
         <Footer />
       </div>
     </>

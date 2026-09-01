@@ -18,7 +18,7 @@ import { LikeButton, ShareButton } from "@/components/gallery/like-share-buttons
 import { HubIcon } from "@/components/services-page/shared"
 import { GalleryClosingTagline } from "@/components/gallery/empty-and-tagline"
 import { NoticePill } from "@/components/notice-pill"
-import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
+
 
 const LIKES_STORAGE_KEY = "apexbytes-gallery-likes"
 
@@ -231,7 +231,6 @@ function GalleryPageInner() {
   const [searchQuery,     setSearchQuery]     = useState("")
   const [surpriseFlash,   setSurpriseFlash]   = useState(false)
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
-  const showBackToTop = useBackToTop()
   const likesHydrated = useRef(false)
   const [photoNoticeDismissed, setPhotoNoticeDismissed] = useState(false)
 
@@ -454,7 +453,6 @@ function GalleryPageInner() {
         onToggleLike={toggleLike}
       />
 
-      <BackToTopButton visible={showBackToTop} />
     </section>
   )
 }

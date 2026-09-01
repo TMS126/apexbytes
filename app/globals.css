@@ -14,57 +14,72 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --brand-green: #4A8011;
-  --brand-orange: #B9590D;
-  /* Pastel tints used for hub badge backgrounds (HUB_COLORS.*.light) — not dark-mode primaries. */
-  --brand-light-blue: #A9D6F2;
-  --brand-light-green: #CDEB9F;
-  --brand-light-orange: #F9D1B0;
+  /* Preview palette carried into the main deployment structure. */
+  --brand-foundation: #25283E;
+  --brand-surface: #2D314B;
+  --brand-support: #FA5215;
+  --brand-highlight: #FA5215;
+  --brand-support-dark: #25283E;
+  --brand-cta: #FA5215;
+  --brand-cta-hover: #D23701;
+  --brand-design: #B06225;
+  --brand-design-light: #FF9A76;
+  --brand-light-field: #F1F1EC;
+  --brand-light-surface: #FFFFFF;
 
-  --brand-blue: #1E6FA8;
-  --brand-blue-mid: #15537D;
-  --brand-blue-dark: #0F3F66;
-  --brand-green-dark: #4C8212;
-  --brand-orange-dark: #B06225;
+  /* Compatibility names resolve to canonical roles above. */
+  --brand-green: var(--brand-support);
+  --brand-orange: var(--brand-cta);
+  --brand-light-blue: var(--brand-highlight);
+  --brand-light-green: #9DE8E5;
+  --brand-light-orange: var(--brand-design-light);
+  --brand-blue: var(--brand-support);
+  --brand-blue-mid: var(--brand-support-dark);
+  --brand-blue-dark: var(--brand-support-dark);
+  --brand-green-dark: var(--brand-support-dark);
+  --brand-orange-dark: var(--brand-cta-hover);
 
+  /* Legacy utility names remain available to the main component structure. */
   --brand-teal: #0F766E;
   --brand-teal-dark: #115E59;
   --brand-teal-light: #99F6E4;
 
-  --brand-neutral-100: #EDEDED;
-  --brand-neutral-200: #F4F4F4;
-  --brand-neutral-300: #D6D6D6;
-  --brand-neutral-400: #9A9A9A;
-  --brand-neutral-500: #747474;
+  --brand-neutral-100: #E8E9E2;
+  --brand-neutral-200: var(--brand-light-field);
+  --brand-neutral-300: #D5D6CE;
+  --brand-neutral-400: #8B90A0;
+  --brand-neutral-500: #62697A;
 
-  --brand-dark-100: #333333;
-  --brand-dark-200: #555555;
-  --brand-tech-grey-dark: #B8CCE0;
-  --brand-green-deep: #3E6B0E;
-  --brand-orange-brown: #A86530;
-  --brand-white: #FFFFFF;
+  --brand-dark-100: var(--brand-foundation);
+  --brand-dark-200: #41465F;
+  --brand-tech-grey-dark: #9CA3AF;
+  --brand-green-deep: var(--brand-support-dark);
+  --brand-orange-brown: var(--brand-design);
+  --brand-white: var(--brand-light-surface);
 
   --brand-whatsapp: #25D366;
-  --brand-whatsapp-dark: #1ebe5a;
-
+  --brand-whatsapp-dark: #1EBE5A;
   --brand-whatsapp-accessible: #178540;
   --brand-whatsapp-accessible-dark: #125F2F;
-
-  --brand-warning-bg: #9A4B12;
-  --brand-warning-bg-dark: #7A3B0E;
-
+  --brand-warning-bg: #9A3D16;
+  --brand-warning-bg-dark: #7F3218;
   --brand-error-bg: var(--destructive);
-  --brand-error-text: #d52222;
+  --brand-error-text: #B42318;
 
-  --brand-blue-text: #16325f;
-  --brand-orange-text: #954911;
-  --brand-green-text: #4d6f2f;
+  --brand-support-text: #25283E;
+  --brand-cta-text: #954911;
+  --brand-navbar-orange-text: #954911;
+  --brand-blue-text: var(--brand-support-text);
+  --brand-orange-text: var(--brand-cta-text);
+  --brand-green-text: var(--brand-support-text);
+  --brand-whatsapp-text: #0F172A;
 
-  --brand-whatsapp-text: #0f172a;
-
-  --on-brand-blue: #FFFFFF;
-  --on-brand-green: #FFFFFF;
-  --on-brand-orange: #FFFFFF;
+  --on-brand-support: #FFFFFF;
+  --on-brand-cta: #FFFFFF;
+  --on-brand-highlight: #25283E;
+  --on-brand-blue: var(--on-brand-support);
+  --on-brand-green: var(--on-brand-support);
+  --on-brand-orange: var(--on-brand-cta);
   --on-brand-teal: #FFFFFF;
   --on-whatsapp: var(--brand-whatsapp-text);
   --on-whatsapp-accessible: #FFFFFF;
@@ -73,32 +88,33 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-destructive: #FFFFFF;
 
   --radius: 14px;
-
   --nav-h: 74px;
   --banner-h: 0px;
-  --nav-bg: rgba(255, 255, 255, 0.97);
-  --footer-bg: #0F3F66;
-  --shadow: 0 4px 28px rgba(30, 111, 168, 0.07);
-  --card-border: #E5E7EB;
+  --nav-bg: rgba(241, 241, 236, 0.97);
+  --footer-bg: var(--brand-support-dark);
+  --shadow: 0 14px 34px rgba(37, 40, 62, 0.12);
+  --card-border: transparent;
+
+  /* Main deployment background retained for light mode. */
   --background: #FFFFFF;
-  --foreground: #333333;
-  --card: #FFFFFF;
-  --card-foreground: #333333;
-  --popover: #FFFFFF;
-  --popover-foreground: #333333;
-  --primary: #1E6FA8;
+  --foreground: var(--brand-foundation);
+  --card: var(--brand-light-surface);
+  --card-foreground: var(--brand-foundation);
+  --popover: var(--brand-light-surface);
+  --popover-foreground: var(--brand-foundation);
+  --primary: var(--brand-cta);
   --primary-foreground: #FFFFFF;
-  --secondary: #F4F4F4;
-  --secondary-foreground: #333333;
-  --muted: #EDEDED;
-  --muted-foreground: #525252;
-  --accent: #4A8011;
+  --secondary: #E7E8E1;
+  --secondary-foreground: var(--brand-foundation);
+  --muted: #E7E8E1;
+  --muted-foreground: #596174;
+  --accent: var(--brand-cta);
   --accent-foreground: #FFFFFF;
-  --destructive: #DC2626;
+  --destructive: #C62828;
   --destructive-foreground: #FFFFFF;
-  --border: #D6D6D6;
-  --input: #EDEDED;
-  --ring: #1E6FA8;
+  --border: transparent;
+  --input: #E8E9E2;
+  --ring: var(--brand-highlight);
 }
 
 .banner-active {
@@ -107,39 +123,39 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 
 .dark {
-  --brand-error-text: #e76c6c;
+  --brand-error-text: #F87171;
+
+  /* Main deployment background retained for dark mode. */
   --background: #24273A;
-  --foreground: #E9EAF2;
-  --card: #2F3348;
-  --card-foreground: #E9EAF2;
-  --popover: #2F3348;
-  --popover-foreground: #E9EAF2;
-  --primary: #A9D6F2;
-  --primary-foreground: #24273A;
-  --secondary: #2F3348;
-  --secondary-foreground: #E9EAF2;
-  --muted: #363A52;
-  --muted-foreground: #A0A4BD;
-  --accent: #CDEB9F;
-  --accent-foreground: #24273A;
-  --destructive: #DC2626;
+  --foreground: #F7F8FC;
+  --card: var(--brand-surface);
+  --card-foreground: #F7F8FC;
+  --popover: var(--brand-surface);
+  --popover-foreground: #F7F8FC;
+  --primary: var(--brand-cta);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--brand-surface);
+  --secondary-foreground: #F7F8FC;
+  --muted: #343951;
+  --muted-foreground: #B9BED0;
+  --accent: var(--brand-highlight);
+  --accent-foreground: var(--brand-foundation);
+  --destructive: #EF6A6A;
   --destructive-foreground: #FFFFFF;
-  --border: #3C4058;
-  --input: #3C4058;
-  --ring: #A9D6F2;
+  --border: transparent;
+  --input: #3B405B;
+  --ring: var(--brand-highlight);
   --nav-bg: rgba(36, 39, 58, 0.97);
-  --footer-bg: #1B1D2C;
-  --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
-  --card-border: #363A50;
-  --brand-warning-bg: #7A3B0E;
-
-  /* Orange resolves to the same pastel-but-bright value Design Hub's accentDark already uses. */
-  --brand-orange: var(--brand-light-orange);
-
-  /* Text-on-dark role, own verified contrast ratio (5.58:1 vs dark bg, 4.57:1 vs dark card). */
-  --brand-orange-text: #e3731f;
-  --brand-blue-text: #6693db;
-  --brand-green-text: #70a144;
+  --footer-bg: #1E2134;
+  --shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+  --card-border: transparent;
+  --brand-warning-bg: #7F3218;
+  --brand-support-text: var(--brand-highlight);
+  --brand-cta-text: #FF9A76;
+  --brand-navbar-orange-text: #E3731F;
+  --brand-blue-text: var(--brand-highlight);
+  --brand-orange-text: var(--brand-cta-text);
+  --brand-green-text: var(--brand-highlight);
 }
 
 @theme inline {
@@ -183,6 +199,16 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-brand-teal: var(--brand-teal);
   --color-brand-teal-dark: var(--brand-teal-dark);
   --color-brand-teal-light: var(--brand-teal-light);
+  --color-brand-foundation: var(--brand-foundation);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-support: var(--brand-support);
+  --color-brand-highlight: var(--brand-highlight);
+  --color-brand-cta: var(--brand-cta);
+  --color-brand-cta-hover: var(--brand-cta-hover);
+  --color-brand-design: var(--brand-design);
+  --color-brand-design-light: var(--brand-design-light);
+  --color-brand-light-field: var(--brand-light-field);
+  --color-brand-light-surface: var(--brand-light-surface);
 
   --color-brand-neutral-100: var(--brand-neutral-100);
   --color-brand-neutral-200: var(--brand-neutral-200);
@@ -291,7 +317,7 @@ button, a, [role="button"] {
 
 @layer components {
   .abh-card {
-    @apply rounded-[14px] transition-all duration-300;
+    @apply rounded-[14px] transition-all duration-300 hover:-translate-y-1;
     background: var(--card);
     border: 1px solid var(--card-border);
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
@@ -303,9 +329,9 @@ button, a, [role="button"] {
   /* Typography hierarchy — 500 weight ceiling everywhere, no exceptions. */
   .abh-page-title {
     @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
-    color: var(--brand-blue-dark);
+    color: var(--foreground);
   }
-  .dark .abh-page-title { color: var(--brand-light-blue); }
+  .dark .abh-page-title { color: var(--foreground); }
 
   .abh-section-heading {
     @apply font-heading font-medium text-2xl md:text-3xl tracking-tight leading-snug;
@@ -449,12 +475,12 @@ button, a, [role="button"] {
 
   .abh-divider {
     @apply mt-6 h-[2px] w-[160px] max-w-full mx-auto rounded-full;
-    background: var(--brand-blue);
-    box-shadow: 0 0 8px rgba(30, 111, 168, 0.5);
+    background: var(--brand-neutral-400);
+    box-shadow: none;
   }
   .dark .abh-divider {
-    background: var(--brand-light-blue);
-    box-shadow: 0 0 8px rgba(169, 214, 242, 0.5);
+    background: var(--brand-tech-grey-dark);
+    box-shadow: none;
   }
 
   .abh-wa-btn {

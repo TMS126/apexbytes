@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
-import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
+import { NAV_ITEMS, BRAND, TOKEN, isNavItemActive } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useNavVisibility, useMobileMenu, useLogoAnimation, useNavContrast } from "@/hooks/use-navbar"
 import { MobileMenu } from "@/components/navbar/mobile-menu"
@@ -21,8 +21,8 @@ import { MobileMenu } from "@/components/navbar/mobile-menu"
 // TOKEN.orangeText for text/border roles (5.78–6.48:1, theme-aware),
 // BRAND.orangeDark for solid-fill-behind-white-text roles (4.55:1,
 // the same pairing already verified for HUB_COLORS.design).
-const HOVER_TEXT = TOKEN.orangeText
-const HOVER_FILL = BRAND.orangeDark
+const HOVER_TEXT = TOKEN.navbarOrangeText
+const HOVER_FILL = BRAND.navbarOrange
 
 // Shared by both the logo icon's neutral color and the nav-controls'
 // neutral color — previously duplicated as two near-identical ternary
@@ -124,9 +124,9 @@ export function Navbar() {
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
 
   const hubColor = useMemo(() => {
-    if (!mounted) return BRAND.green
-    if (isLogoDarkBehind) return BRAND.lightGreen
-    return theme === "dark" ? BRAND.lightGreen : BRAND.green
+    if (!mounted) return BRAND.navbarGreen
+    if (isLogoDarkBehind) return BRAND.navbarLightGreen
+    return theme === "dark" ? BRAND.navbarLightGreen : BRAND.navbarGreen
   }, [mounted, theme, isLogoDarkBehind])
 
   const handleNavFocus = () => setDesktopNavOpen(true)
@@ -184,7 +184,7 @@ export function Navbar() {
                 className="font-sans font-black text-[1.32rem] leading-none tracking-tight transition-all duration-500 overflow-hidden flex items-center"
                 style={{ maxWidth: isTextExpanded ? "180px" : "0px" }}
               >
-                <span className="whitespace-nowrap transition-colors duration-300" style={{ color: BRAND.blue }}>
+                <span className="whitespace-nowrap transition-colors duration-300" style={{ color: BRAND.navbarBlue }}>
                   Apexbytes
                 </span>
                 <span className="whitespace-nowrap transition-colors duration-300" style={{ color: hubColor }}>
@@ -247,7 +247,7 @@ export function Navbar() {
                   )}
                 >
                   {NAV_ITEMS.map((item, idx) => {
-                    const isActive = pathname === item.path
+                    const isActive = isNavItemActive(pathname, item.path)
 
                     if (item.isCta) {
                       return (
@@ -260,8 +260,8 @@ export function Navbar() {
                           aria-current={isActive ? "page" : undefined}
                           style={{
                             transitionDelay: desktopNavOpen ? `${idx * 30}ms` : "0ms",
-                            backgroundColor: contactHovered ? HOVER_FILL : BRAND.blue,
-                            borderColor: contactHovered ? HOVER_FILL : BRAND.blue,
+                            backgroundColor: contactHovered ? HOVER_FILL : BRAND.navbarBlue,
+                            borderColor: contactHovered ? HOVER_FILL : BRAND.navbarBlue,
                             color: "#ffffff",
                           }}
                           className={cn(

@@ -3,7 +3,7 @@
 
 import { useEffect, useRef } from "react"
 import Image from "next/image"
-import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
+import { NAV_ITEMS, BRAND, TOKEN, isNavItemActive } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
 // FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 // ≥3:1 for non-text UI components, which 2.06:1 fails too). Now imports
 // the same verified TOKEN.orangeText used in navbar.tsx directly, so
 // there's a real single source of truth instead of a manually-synced copy.
-const HOVER_TEXT = TOKEN.orangeText
+const HOVER_TEXT = TOKEN.navbarOrangeText
 
 interface MobileMenuProps {
   menuOpen: boolean
@@ -68,7 +68,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
         <nav className="w-full max-w-[320px] flex flex-col items-center gap-2.5">
           {NAV_ITEMS.map((item, idx) => {
-            const isActive = pathname === item.path
+            const isActive = isNavItemActive(pathname, item.path)
 
             if (item.isCta) {
               return (
@@ -80,7 +80,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                   tabIndex={menuOpen ? 0 : -1}
                   style={{
                     transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    backgroundColor: BRAND.blue,
+                    backgroundColor: BRAND.navbarBlue,
                     color: "#ffffff",
                   }}
                   className={cn(

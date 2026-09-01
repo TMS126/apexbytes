@@ -13,6 +13,7 @@ import { FloatingSearchWidget } from '@/components/floating-search-widget'
 import { QuoteCalculatorWidget } from "@/components/quote-calculator"
 import { WhatsAppFAB } from '@/components/whatsapp-fab'
 import { MaintenanceBanner } from '@/components/maintenance-banner'
+import { PageScrollControls } from '@/components/page-scroll-controls'
 import { headers } from 'next/headers'
 import './globals.css'
 
@@ -116,6 +117,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <LocalBusinessJsonLd />
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
+          <PageScrollControls />
           <FloatingSearchWidget />
           <QuoteCalculatorWidget />
           <WhatsAppFAB />

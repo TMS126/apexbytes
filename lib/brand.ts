@@ -1,15 +1,41 @@
-// lib/brand.ts — full file, paste over the current one
 /**
- * ────────────────────────────────────────────────────────────────────────────
- * APEXBYTES HUB — CORE BUSINESS LAYER
- * lib/brand.ts
- * ────────────────────────────────────────────────────────────────────────────
+ * ApexbytesHub brand and business data.
+ * Shared roles use the preview palette; hub accents remain intentionally distinct.
  */
+
+export const BRAND_HEX = {
+  foundation: "#25283E",
+  surface: "#2D314B",
+  support: "#FA5215",
+  highlight: "#FA5215",
+  supportDark: "#25283E",
+  cta: "#FA5215",
+  ctaHover: "#D23701",
+  design: "#B06225",
+  designLight: "#FF9A76",
+  navbarOrange: "#B06225",
+  navbarBlue: "#FA5215",
+  navbarGreen: "#FA5215",
+  navbarLightGreen: "#FFB199",
+  lightField: "#F1F1EC",
+  lightSurface: "#FFFFFF",
+  textLight: "#F7F8FC",
+  textDark: "#25283E",
+  mutedLight: "#9CA3AF",
+  mutedDark: "#6B7280",
+  whatsapp: "#25D366",
+  whatsappDark: "#1EBE5A",
+  whatsappAccessible: "#178540",
+  whatsappAccessibleDark: "#125F2F",
+  whatsappText: "#0F172A",
+  adobePdfRed: "#EC1C24",
+} as const
 
 export const TOKEN = {
   brandBlue: "var(--brand-blue)",
   brandOrange: "var(--brand-orange)",
   brandGreen: "var(--brand-green)",
+  brandHighlight: "var(--brand-highlight)",
   warningBg: "var(--brand-warning-bg)",
   errorBg: "var(--brand-error-bg)",
   errorText: "var(--brand-error-text)",
@@ -17,6 +43,7 @@ export const TOKEN = {
   onBrandOrange: "var(--on-brand-orange)",
   onBrandGreen: "var(--on-brand-green)",
   onBrandTeal: "var(--on-brand-teal)",
+  onBrandHighlight: "var(--on-brand-highlight)",
   onWhatsapp: "var(--on-whatsapp)",
   onWhatsappAccessible: "var(--on-whatsapp-accessible)",
   onPastel: "var(--on-pastel)",
@@ -24,6 +51,7 @@ export const TOKEN = {
   onDestructive: "var(--on-destructive)",
   blueText: "var(--brand-blue-text)",
   orangeText: "var(--brand-orange-text)",
+  navbarOrangeText: "var(--brand-navbar-orange-text)",
   greenText: "var(--brand-green-text)",
   white: "var(--brand-white)",
   neutral400: "var(--brand-neutral-400)",
@@ -32,38 +60,28 @@ export const TOKEN = {
 
 export const HEX = {
   light: {
-    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
-    green: "#4A8011", greenDeep: "#3E6B0E",
-    orange: "#B9590D", orangeDark: "#B06225", orangeBrown: "#A86530",
+    blue: BRAND_HEX.support, blueMid: BRAND_HEX.supportDark, blueDark: BRAND_HEX.supportDark,
+    green: BRAND_HEX.support, greenDeep: BRAND_HEX.supportDark,
+    orange: BRAND_HEX.cta, orangeDark: BRAND_HEX.ctaHover, orangeBrown: BRAND_HEX.design,
     teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
-    warningBg: "#9A4B12",
-    // FIX: restored to the original pastel values — these were
-    // overwritten with the bright dark-mode hex by an earlier fix
-    // attempt. This is the pastel-tint role used for hub badges
-    // (HUB_COLORS.*.light), a different job from a dark-mode primary.
-    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
-    dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
+    warningBg: "#9A3D16",
+    lightBlue: BRAND_HEX.highlight, lightGreen: "#9DE8E5", lightOrange: BRAND_HEX.designLight,
+    dark100: BRAND_HEX.textDark, dark200: "#41465F", techGreyDark: BRAND_HEX.mutedLight,
   },
   dark: {
-    // REVERTED: blue/green/teal dark overrides were never requested —
-    // back to equaling their light value (no separate dark shade).
-    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
-    green: "#4A8011", greenDeep: "#3E6B0E",
-    // FIX — the actual request: dark-mode orange now equals the
-    // restored lightOrange pastel, the exact same value Design Hub's
-    // accentDark already resolves to. True parity, no new hex invented.
-    orange: "#F9D1B0", orangeDark: "#B06225", orangeBrown: "#A86530",
+    blue: BRAND_HEX.support, blueMid: BRAND_HEX.supportDark, blueDark: BRAND_HEX.supportDark,
+    green: BRAND_HEX.support, greenDeep: BRAND_HEX.supportDark,
+    orange: BRAND_HEX.cta, orangeDark: BRAND_HEX.ctaHover, orangeBrown: BRAND_HEX.design,
     teal: "#0F766E", tealDark: "#115E59", tealLight: "#99F6E4",
-    warningBg: "#7A3B0E",
-    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
-    dark100: "#333333", dark200: "#555555", techGreyDark: "#B8CCE0",
+    warningBg: "#7F3218",
+    lightBlue: BRAND_HEX.highlight, lightGreen: "#9DE8E5", lightOrange: BRAND_HEX.designLight,
+    dark100: BRAND_HEX.textLight, dark200: "#DDE1EF", techGreyDark: BRAND_HEX.mutedLight,
   },
-  neutral100: "#EDEDED", neutral200: "#F4F4F4", neutral300: "#D6D6D6",
-  neutral400: "#9A9A9A", neutral500: "#747474",
-  white: "#FFFFFF",
-  whatsapp: "#25D366", whatsappDark: "#1ebe5a",
-  whatsappAccessible: "#178540", whatsappAccessibleDark: "#125F2F",
-  whatsappText: "#0f172a",
+  neutral100: "#E8E9E2", neutral200: BRAND_HEX.lightField, neutral300: "#D5D6CE",
+  neutral400: "#8B90A0", neutral500: "#62697A", white: BRAND_HEX.lightSurface,
+  whatsapp: BRAND_HEX.whatsapp, whatsappDark: BRAND_HEX.whatsappDark,
+  whatsappAccessible: BRAND_HEX.whatsappAccessible, whatsappAccessibleDark: BRAND_HEX.whatsappAccessibleDark,
+  whatsappText: BRAND_HEX.whatsappText,
 } as const
 
 export function pickHex<K extends keyof typeof HEX.light>(role: K, isDark: boolean): string {
@@ -71,81 +89,77 @@ export function pickHex<K extends keyof typeof HEX.light>(role: K, isDark: boole
 }
 
 export const BRAND = {
-  green: HEX.light.green,
-  // NOTE: BRAND.orange (and every other flat BRAND.* color) is a static,
-  // light-mode-only value — it has no way to react to dark mode. Using it
-  // in an inline `style={{ color: BRAND.orange }}` bakes in the light
-  // shade forever. For any color that renders on screen, use the
-  // TOKEN.* equivalents instead (e.g. TOKEN.brandOrange = var(--brand-orange)) —
-  // those resolve through CSS custom properties and pick up the correct
-  // light/dark value automatically. BRAND.* is only safe for contexts with
-  // no theme access (e.g. a fixed default before hydration).
-  orange: HEX.light.orange,
-  lightBlue: HEX.light.lightBlue,
-  lightGreen: HEX.light.lightGreen,
-  lightOrange: HEX.light.lightOrange,
-  blue: HEX.light.blue,
-  blueMid: HEX.light.blueMid,
-  blueDark: HEX.light.blueDark,
-  teal: HEX.light.teal,
-  tealDark: HEX.light.tealDark,
-  tealLight: HEX.light.tealLight,
-  greenDark: "#4C8212",
-  greenDeep: HEX.light.greenDeep,
-  orangeDark: HEX.light.orangeDark,
-  orangeBrown: HEX.light.orangeBrown,
+  green: BRAND_HEX.support,
+  orange: BRAND_HEX.cta,
+  lightBlue: BRAND_HEX.highlight,
+  lightGreen: "#9DE8E5",
+  lightOrange: BRAND_HEX.designLight,
+  blue: BRAND_HEX.support,
+  blueMid: BRAND_HEX.supportDark,
+  blueDark: BRAND_HEX.supportDark,
+  teal: "#0F766E",
+  tealDark: "#115E59",
+  tealLight: "#99F6E4",
+  greenDark: BRAND_HEX.supportDark,
+  greenDeep: BRAND_HEX.supportDark,
+  orangeDark: BRAND_HEX.ctaHover,
+  orangeBrown: BRAND_HEX.design,
+  navbarOrange: BRAND_HEX.navbarOrange,
+  navbarBlue: BRAND_HEX.navbarBlue,
+  navbarGreen: BRAND_HEX.navbarGreen,
+  navbarLightGreen: BRAND_HEX.navbarLightGreen,
   neutral100: HEX.neutral100,
   neutral200: HEX.neutral200,
   neutral300: HEX.neutral300,
   neutral400: HEX.neutral400,
   neutral500: HEX.neutral500,
-  dark100: HEX.light.dark100,
+  dark100: BRAND_HEX.textDark,
   dark200: HEX.light.dark200,
-  techGreyDark: HEX.light.techGreyDark,
-  white: HEX.white,
-  whatsapp: HEX.whatsapp,
-  whatsappDark: HEX.whatsappDark,
-  whatsappAccessible: HEX.whatsappAccessible,
-  whatsappAccessibleDark: HEX.whatsappAccessibleDark,
-  whatsappText: HEX.whatsappText,
-  adobePdfRed: "#EC1C24",
+  techGreyDark: BRAND_HEX.mutedLight,
+  white: BRAND_HEX.lightSurface,
+  whatsapp: BRAND_HEX.whatsapp,
+  whatsappDark: BRAND_HEX.whatsappDark,
+  whatsappAccessible: BRAND_HEX.whatsappAccessible,
+  whatsappAccessibleDark: BRAND_HEX.whatsappAccessibleDark,
+  whatsappText: BRAND_HEX.whatsappText,
+  adobePdfRed: BRAND_HEX.adobePdfRed,
 } as const
 
 export const THEME_BG = {
   light: { page: "#FFFFFF", card: "#FFFFFF" },
-  dark: { page: "#0D1B2A", card: "#1A2C3E" },
+  dark: { page: "#24273A", card: BRAND_HEX.surface },
 } as const
 
 export const HUB_COLORS = {
   print: {
-    primary: BRAND.blue, light: BRAND.lightBlue,
-    gradient: `linear-gradient(135deg, ${BRAND.blue} 0%, ${BRAND.blueMid} 100%)`,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#1e40af', tagTextDark: '#ffffff',
-    accentLight: BRAND.blue, accentDark: BRAND.lightBlue,
+    primary: "#1E6FA8", light: "#A9D6F2",
+    gradient: "linear-gradient(135deg, #1E6FA8 0%, #15537D 100%)",
+    tagBg: "transparent", tagText: "#15537D", tagBgDark: "#15537D", tagTextDark: "#A9D6F2",
+    accentLight: "#1E6FA8", accentDark: "#A9D6F2",
   },
   doc: {
-    primary: BRAND.green, light: BRAND.lightGreen,
-    gradient: `linear-gradient(135deg, ${BRAND.greenDeep} 0%, ${BRAND.green} 100%)`,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#166534', tagTextDark: '#ffffff',
-    accentLight: BRAND.green, accentDark: BRAND.lightGreen,
+    primary: "#4A8011", light: "#CDEB9F",
+    gradient: "linear-gradient(135deg, #3E6B0E 0%, #4A8011 100%)",
+    tagBg: "transparent", tagText: "#3E6B0E", tagBgDark: "#166534", tagTextDark: "#CDEB9F",
+    accentLight: "#4A8011", accentDark: "#CDEB9F",
   },
   design: {
-    primary: BRAND.orangeDark, light: BRAND.lightOrange,
-    gradient: `linear-gradient(135deg, ${BRAND.orangeBrown} 0%, ${BRAND.orange} 100%)`,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#9a3412', tagTextDark: '#ffffff',
-    accentLight: BRAND.orangeDark, accentDark: BRAND.lightOrange,
+    primary: BRAND_HEX.design, light: BRAND_HEX.designLight,
+    gradient: `linear-gradient(135deg, ${BRAND_HEX.design} 0%, ${BRAND_HEX.designLight} 100%)`,
+    tagBg: "transparent", tagText: BRAND_HEX.design, tagBgDark: "#9A3412", tagTextDark: "#FFFFFF",
+    accentLight: BRAND_HEX.design, accentDark: BRAND_HEX.designLight,
   },
   eservice: {
-    primary: BRAND.teal, light: BRAND.tealLight,
-    gradient: `linear-gradient(135deg, ${BRAND.teal} 0%, ${BRAND.tealDark} 100%)`,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: BRAND.tealDark, tagTextDark: '#ffffff',
-    accentLight: BRAND.teal, accentDark: BRAND.tealLight,
+    primary: "#0F766E", light: "#99F6E4",
+    gradient: "linear-gradient(135deg, #0F766E 0%, #115E59 100%)",
+    tagBg: "transparent", tagText: "#115E59", tagBgDark: "#115E59", tagTextDark: "#99F6E4",
+    accentLight: "#0F766E", accentDark: "#99F6E4",
   },
   tech: {
-    primary: BRAND.dark100, light: BRAND.techGreyDark,
-    gradient: `linear-gradient(135deg, ${BRAND.dark100} 0%, ${BRAND.dark200} 100%)`,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#1f2937', tagTextDark: '#ffffff',
-    accentLight: BRAND.dark100, accentDark: BRAND.techGreyDark,
+    primary: "#333333", light: "#B8CCE0",
+    gradient: "linear-gradient(135deg, #333333 0%, #555555 100%)",
+    tagBg: "transparent", tagText: "#333333", tagBgDark: "#1F2937", tagTextDark: "#B8CCE0",
+    accentLight: "#333333", accentDark: "#B8CCE0",
   },
 } as const
 
@@ -237,6 +251,12 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "tools", label: "Tools", path: "/tools" },
   { id: "contact", label: "Contact", path: "/contact", isCta: true },
 ] as const
+
+export function isNavItemActive(pathname: string, itemPath: string): boolean {
+  return itemPath === "/tools"
+    ? pathname === "/tools" || pathname.startsWith("/tools/")
+    : pathname === itemPath
+}
 
 export const MARQUEE_ITEMS = [
   "Print & Copy While You Wait",

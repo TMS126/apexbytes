@@ -17,8 +17,8 @@ import { ServiceDetailModal } from "./service-detail-modal"
 import { HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService } from "./lib"
 import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
-import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
-import { MobileHubCard, BulkRibbon, NoticeBadge } from "./mobile-hub-card"
+
+import { MobileHubCard } from "./mobile-hub-card"
 
 const PILL_NEUTRAL = {
   border: "var(--border)",
@@ -207,7 +207,6 @@ export function ServicesPage() {
   const [hubOriginSide,   setHubOriginSide]   = useState<"left" | "right">("right")
   const [selectedService, setSelectedService] = useState<SelectedService | null>(null)
   const [clientNoticeDismissed, setClientNoticeDismissed] = useState(false)
-  const showBackToTop = useBackToTop()
 
   const [desktopActiveHub, setDesktopActiveHub] = useState<HubId | null>(null)
   const [desktopActiveSection, setDesktopActiveSection] = useState<number | null>(null)
@@ -392,7 +391,6 @@ export function ServicesPage() {
                   hubId={hubId}
                   hub={hub}
                   accent={accent}
-                  primary={colors.primary}
                   hubHasBulk={hubHasBulk}
                   orderIndex={index}
                   hubHasNotice={hubHasNotice}
@@ -430,7 +428,6 @@ export function ServicesPage() {
                       hubId={hubId}
                       hub={hub}
                       accent={accent}
-                      primary={colors.primary}
                       hubHasBulk={hubHasBulk}
                       hubHasNotice={hubHasNotice}
                       orderIndex={index}
@@ -550,7 +547,6 @@ export function ServicesPage() {
         )}
       </AnimatePresence>
 
-      <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
 } 

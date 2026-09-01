@@ -71,12 +71,11 @@ function BulkEdgePill({ accent }: { accent: string }) {
 // --hub-accent CSS var set on the card itself.
 // ══════════════════════════════════════════════════════════════════════
 export function MobileHubCard({
-  hubId, hub, accent, primary, hubHasBulk, hubHasNotice, orderIndex, onClick, variant = "mobile",
+  hubId, hub, accent, hubHasBulk, hubHasNotice, orderIndex, onClick, variant = "mobile",
 }: {
   hubId: HubId
   hub: (typeof HUBS)[HubId]
   accent: string
-  primary: string
   hubHasBulk: boolean
   hubHasNotice: boolean
   orderIndex: number
@@ -124,9 +123,11 @@ export function MobileHubCard({
             />
           )}
         </div>
-        <span className="text-[0.78rem] font-black" style={{ color: TOKEN.orangeText }} aria-hidden="true">
-          {number}
-        </span>
+        {!isDesktop && (
+          <span className="text-[0.78rem] font-black" style={{ color: accent }} aria-hidden="true">
+            {number}
+          </span>
+        )}
       </div>
 
       <h3
@@ -150,8 +151,7 @@ export function MobileHubCard({
       {isDesktop ? (
         <div className="flex justify-center mt-4 w-full">
           <span
-            className="inline-flex items-center gap-1 px-4 py-1.5 rounded-[14px] border text-[0.8rem] font-black transition-colors duration-200 group-hover:border-[var(--hub-accent)] group-hover:text-[var(--hub-accent)]"
-            style={{ borderColor: TOKEN.orangeText, color: TOKEN.orangeText }}
+            className="inline-flex items-center text-[0.8rem] font-black text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-accent)]"
           >
             Explore
           </span>
@@ -162,7 +162,7 @@ export function MobileHubCard({
             size={16}
             weight="bold"
             className="transition-colors duration-150"
-            style={{ color: pressed ? accent : TOKEN.orangeText }}
+            style={{ color: pressed ? accent : "var(--muted-foreground)" }}
             aria-hidden="true"
           />
         </div>
