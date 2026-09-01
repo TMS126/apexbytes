@@ -14,53 +14,47 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --brand-green: #4A8011;
-  --brand-orange: #B9590D;
-  /* Pastel tints used for hub badge backgrounds (HUB_COLORS.*.light) — not dark-mode primaries. */
-  --brand-light-blue: #A9D6F2;
-  --brand-light-green: #CDEB9F;
-  --brand-light-orange: #F9D1B0;
+  /* Core brand roles: quiet surfaces, one unmistakable action colour. */
+  --brand-green: #5D7F4B;
+  --brand-orange: #FA5215;
+  --brand-light-blue: #D9E0EE;
+  --brand-light-green: #DCE8D4;
+  --brand-light-orange: #F8DDD1;
 
-  --brand-blue: #1E6FA8;
-  --brand-blue-mid: #15537D;
-  --brand-blue-dark: #0F3F66;
-  --brand-green-dark: #4C8212;
-  --brand-orange-dark: #B06225;
+  --brand-blue: #435075;
+  --brand-blue-mid: #343B60;
+  --brand-blue-dark: #25283E;
+  --brand-green-dark: #48653A;
+  --brand-orange-dark: #CF3E0A;
+  --brand-teal: #3E7473;
+  --brand-teal-dark: #2C5E60;
+  --brand-teal-light: #D3E9E5;
 
-  --brand-teal: #0F766E;
-  --brand-teal-dark: #115E59;
-  --brand-teal-light: #99F6E4;
+  --brand-neutral-100: #E8E8E2;
+  --brand-neutral-200: #ECECE7;
+  --brand-neutral-300: #D5D5CE;
+  --brand-neutral-400: #858581;
+  --brand-neutral-500: #62625F;
 
-  --brand-neutral-100: #EDEDED;
-  --brand-neutral-200: #F4F4F4;
-  --brand-neutral-300: #D6D6D6;
-  --brand-neutral-400: #9A9A9A;
-  --brand-neutral-500: #747474;
-
-  --brand-dark-100: #333333;
-  --brand-dark-200: #555555;
-  --brand-tech-grey-dark: #B8CCE0;
-  --brand-green-deep: #3E6B0E;
-  --brand-orange-brown: #A86530;
+  --brand-dark-100: #25283E;
+  --brand-dark-200: #43455A;
+  --brand-tech-grey-dark: #C4C7D2;
+  --brand-green-deep: #3E6231;
+  --brand-orange-brown: #A83D1A;
   --brand-white: #FFFFFF;
 
   --brand-whatsapp: #25D366;
-  --brand-whatsapp-dark: #1ebe5a;
-
+  --brand-whatsapp-dark: #1EBE5A;
   --brand-whatsapp-accessible: #178540;
   --brand-whatsapp-accessible-dark: #125F2F;
-
-  --brand-warning-bg: #9A4B12;
-  --brand-warning-bg-dark: #7A3B0E;
-
+  --brand-warning-bg: #A84516;
+  --brand-warning-bg-dark: #D86B42;
   --brand-error-bg: var(--destructive);
-  --brand-error-text: #d52222;
-
-  --brand-blue-text: #16325f;
-  --brand-orange-text: #954911;
-  --brand-green-text: #4d6f2f;
-
-  --brand-whatsapp-text: #0f172a;
+  --brand-error-text: #B42318;
+  --brand-blue-text: #343B60;
+  --brand-orange-text: #BE3C10;
+  --brand-green-text: #46643A;
+  --brand-whatsapp-text: #0F172A;
 
   --on-brand-blue: #FFFFFF;
   --on-brand-green: #FFFFFF;
@@ -73,32 +67,31 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-destructive: #FFFFFF;
 
   --radius: 14px;
-
   --nav-h: 74px;
   --banner-h: 0px;
-  --nav-bg: rgba(255, 255, 255, 0.97);
-  --footer-bg: #0F3F66;
-  --shadow: 0 4px 28px rgba(30, 111, 168, 0.07);
-  --card-border: #E5E7EB;
-  --background: #FFFFFF;
-  --foreground: #333333;
-  --card: #FFFFFF;
-  --card-foreground: #333333;
-  --popover: #FFFFFF;
-  --popover-foreground: #333333;
-  --primary: #1E6FA8;
+  --nav-bg: rgba(241, 241, 236, 0.97);
+  --footer-bg: #25283E;
+  --shadow: none;
+  --card-border: transparent;
+  --background: #F1F1EC;
+  --foreground: #25283E;
+  --card: #E8E8E2;
+  --card-foreground: #25283E;
+  --popover: #E8E8E2;
+  --popover-foreground: #25283E;
+  --primary: #435075;
   --primary-foreground: #FFFFFF;
-  --secondary: #F4F4F4;
-  --secondary-foreground: #333333;
-  --muted: #EDEDED;
-  --muted-foreground: #525252;
-  --accent: #4A8011;
+  --secondary: #E4E4DE;
+  --secondary-foreground: #25283E;
+  --muted: #E4E4DE;
+  --muted-foreground: #62625F;
+  --accent: #435075;
   --accent-foreground: #FFFFFF;
-  --destructive: #DC2626;
+  --destructive: #B42318;
   --destructive-foreground: #FFFFFF;
-  --border: #D6D6D6;
-  --input: #EDEDED;
-  --ring: #1E6FA8;
+  --border: #D5D5CE;
+  --input: #E4E4DE;
+  --ring: #435075;
 }
 
 .banner-active {
@@ -107,44 +100,66 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 
 .dark {
-  --brand-error-text: #e76c6c;
-  --background: #24273A;
-  --foreground: #E9EAF2;
-  --card: #2F3348;
-  --card-foreground: #E9EAF2;
-  --popover: #2F3348;
-  --popover-foreground: #E9EAF2;
-  --primary: #A9D6F2;
-  --primary-foreground: #24273A;
-  --secondary: #2F3348;
-  --secondary-foreground: #E9EAF2;
-  --muted: #363A52;
-  --muted-foreground: #A0A4BD;
-  --accent: #CDEB9F;
-  --accent-foreground: #24273A;
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
-  --border: #3C4058;
-  --input: #3C4058;
-  --ring: #A9D6F2;
-  --nav-bg: rgba(36, 39, 58, 0.97);
-  --footer-bg: #1B1D2C;
-  --shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.35);
-  --card-border: #363A50;
-  --brand-warning-bg: #7A3B0E;
-
-  /* Orange resolves to the same pastel-but-bright value Design Hub's accentDark already uses. */
-  --brand-orange: var(--brand-light-orange);
-
-  /* Text-on-dark role, own verified contrast ratio (5.58:1 vs dark bg, 4.57:1 vs dark card). */
-  --brand-orange-text: #e3731f;
-  --brand-blue-text: #6693db;
-  --brand-green-text: #70a144;
+  --brand-blue: #6F7FA8;
+  --brand-blue-mid: #8796BD;
+  --brand-blue-dark: #AAB7D5;
+  --brand-green: #8FB774;
+  --brand-green-deep: #A9CC8F;
+  --brand-orange: #FF9B73;
+  --brand-orange-dark: #FFB08A;
+  --brand-orange-brown: #E9A17D;
+  --brand-teal: #79B9B5;
+  --brand-teal-dark: #9AD4CE;
+  --brand-teal-light: #284947;
+  --brand-light-blue: #CAD4EA;
+  --brand-light-green: #D8EBC5;
+  --brand-light-orange: #F9D1B0;
+  --brand-dark-100: #EEF1F7;
+  --brand-dark-200: #D8DDE8;
+  --brand-tech-grey-dark: #E0E4EE;
+  --brand-neutral-100: #303548;
+  --brand-neutral-200: #383D52;
+  --brand-neutral-300: #51586F;
+  --brand-neutral-400: #AEB6C9;
+  --brand-neutral-500: #CBD1DE;
+  --brand-whatsapp: #46E47D;
+  --brand-whatsapp-dark: #6BE995;
+  --brand-whatsapp-accessible: #55DB82;
+  --brand-whatsapp-accessible-dark: #7CEBA1;
+  --brand-whatsapp-text: #0A1110;
+  --brand-error-text: #F3A39D;
+  --background: #25283E;
+  --foreground: #F1F1EC;
+  --card: #2D314B;
+  --card-foreground: #F1F1EC;
+  --popover: #2D314B;
+  --popover-foreground: #F1F1EC;
+  --primary: #435075;
+  --primary-foreground: #FFFFFF;
+  --secondary: #343852;
+  --secondary-foreground: #F1F1EC;
+  --muted: #343852;
+  --muted-foreground: #BFC2CE;
+  --accent: #435075;
+  --accent-foreground: #FFFFFF;
+  --destructive: #E66C61;
+  --destructive-foreground: #25283E;
+  --border: #484D68;
+  --input: #343852;
+  --ring: #435075;
+  --nav-bg: rgba(37, 40, 62, 0.97);
+  --footer-bg: #1D2033;
+  --shadow: none;
+  --card-border: transparent;
+  --brand-warning-bg: #E08A64;
+  --brand-orange-text: #FF9C73;
+  --brand-blue-text: #BCC9E9;
+  --brand-green-text: #BBD5A9;
 }
 
 @theme inline {
-  --font-sans: var(--font-body), 'Inter Fallback', sans-serif;
-  --font-heading: var(--font-poppins), 'Jost Fallback', sans-serif;
+  --font-sans: var(--font-body), 'DM Sans Fallback', sans-serif;
+  --font-heading: var(--font-manrope), 'Manrope Fallback', sans-serif;
   --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono Fallback', monospace;
 
   --color-background: var(--background);
@@ -228,8 +243,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   * { @apply border-border outline-ring/50; }
   body {
     @apply bg-background text-foreground;
-    font-size: 20px;
-    line-height: 1.65;
+    font-size: 17px;
+    line-height: 1.6;
   }
 }
 
@@ -254,7 +269,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   outline-offset: 3px;
   border-radius: var(--radius);
 }
-.dark :focus-visible { outline-color: var(--brand-light-blue); }
+  .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
@@ -265,8 +280,8 @@ button, a, [role="button"] {
 @keyframes page-in { from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)} }
 @keyframes marquee-track { 0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-50%,0,0)} }
 @keyframes abh-cta-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(30,111,168,0.45); }
-  50% { box-shadow: 0 0 0 8px rgba(30,111,168,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(250,82,21,0.42); }
+  50% { box-shadow: 0 0 0 8px rgba(250,82,21,0); }
 }
 @keyframes abh-inquire-glow {
   0%   { box-shadow: 0 0 0 0 transparent; }
@@ -291,93 +306,73 @@ button, a, [role="button"] {
 
 @layer components {
   .abh-card {
-    @apply rounded-[14px] transition-all duration-300;
+    @apply rounded-[14px] transition-colors duration-200;
     background: var(--card);
-    border: 1px solid var(--card-border);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
-  }
-  .dark .abh-card {
-    box-shadow: var(--shadow);
+    border: 0;
+    box-shadow: none;
   }
 
-  /* Typography hierarchy — 500 weight ceiling everywhere, no exceptions. */
+  /* Typography hierarchy: Manrope anchors structure; DM Sans carries utility and explanation. */
   .abh-page-title {
-    @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
-    color: var(--brand-blue-dark);
+    @apply font-heading font-bold text-4xl md:text-5xl tracking-[-0.04em] leading-tight text-center;
+    color: var(--foreground);
   }
-  .dark .abh-page-title { color: var(--brand-light-blue); }
 
   .abh-section-heading {
-    @apply font-heading font-medium text-2xl md:text-3xl tracking-tight leading-snug;
+    @apply font-heading font-bold text-2xl md:text-3xl tracking-[-0.03em] leading-snug;
     color: var(--foreground);
   }
 
   .abh-card-heading {
-    @apply font-heading font-medium text-base tracking-tight leading-snug;
+    @apply font-heading font-bold text-base tracking-[-0.02em] leading-snug;
     color: var(--card-foreground);
   }
 
   .abh-eyebrow {
-    @apply font-heading font-medium text-xs uppercase tracking-[0.2em];
-    color: var(--brand-blue-text);
+    @apply font-sans font-bold text-xs uppercase tracking-[0.16em];
+    color: var(--brand-orange-text);
   }
-  .dark .abh-eyebrow { color: var(--brand-light-blue); }
+  .dark .abh-eyebrow { color: var(--brand-orange-text); }
 
   .abh-btn-label {
-    @apply font-heading font-medium text-base tracking-wide;
+    @apply font-sans font-bold text-base tracking-wide;
   }
 
-  /* CHANGED: 500 → 400, and color moved off muted so it reads as the baseline, not secondary text. */
   .abh-body {
     @apply font-sans font-normal text-base md:text-lg leading-relaxed;
     color: var(--foreground);
   }
 
-  /* CHANGED: 500 → 400 to match the "regular weight, color-only contrast" rule. Size/color unchanged. */
   .abh-muted {
     @apply font-sans font-normal text-sm md:text-base leading-relaxed;
     color: var(--muted-foreground);
   }
 
   .abh-tagline {
-    @apply font-sans font-medium text-base md:text-lg;
+    @apply font-sans font-normal text-base md:text-lg;
     color: var(--muted-foreground);
   }
 
-  /* NOT YET RESIZED — spec calls for text-2xl+ and an accent color; flagged, ask before changing. */
   .abh-price {
-    @apply font-heading font-medium text-[1.35rem] md:text-[1.5rem] leading-none;
+    @apply font-heading font-bold text-[1.35rem] md:text-[1.5rem] leading-none;
   }
 
   .abh-page-header {
     @apply px-4 md:px-8 py-8 md:py-12 text-center;
   }
 
-  .abh-shadow-card {
-    box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
+  .abh-shadow-card,
+  .abh-shadow-nested-group,
+  .abh-shadow-nested-item,
+  .abh-shadow-tile,
+  .abh-shadow-contact-card,
+  .abh-shadow-elevated {
+    box-shadow: none;
   }
-  .dark .abh-shadow-card {
-    box-shadow: var(--shadow);
-  }
-  .abh-shadow-card:hover {
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.13), 0 3px 8px -2px rgba(0, 0, 0, 0.07);
-  }
-  .dark .abh-shadow-card:hover {
-    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
-  }
-
-  .abh-shadow-nested-group {
-    box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.06);
-  }
-  .dark .abh-shadow-nested-group {
-    box-shadow: var(--shadow);
-  }
-
-  .abh-shadow-nested-item {
-    box-shadow: 0 1px 6px -1px rgba(0, 0, 0, 0.06);
-  }
-  .dark .abh-shadow-nested-item {
-    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.3);
+  .abh-shadow-card:hover,
+  .abh-shadow-contact-card:hover,
+  .abh-shadow-tile:hover {
+    box-shadow: none;
   }
 
   .abh-shadow-modal {
@@ -394,12 +389,10 @@ button, a, [role="button"] {
   }
 
   .abh-shadow-project-card {
-    box-shadow: 0 16px 30px -14px rgba(0, 0, 0, 0.45), 0 6px 14px -8px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
+    box-shadow: none;
+    transition: background-color 0.2s ease;
   }
-  .abh-shadow-project-card:hover {
-    box-shadow: 0 20px 36px -14px rgba(0, 0, 0, 0.55), 0 8px 16px -8px rgba(0, 0, 0, 0.35);
-  }
+  .abh-shadow-project-card:hover { box-shadow: none; }
 
   .abh-shadow-zoom-image {
     box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.05);
@@ -415,70 +408,28 @@ button, a, [role="button"] {
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   }
 
-  .abh-shadow-contact-card {
-    box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
-  }
-  .dark .abh-shadow-contact-card {
-    box-shadow: var(--shadow);
-  }
-  .abh-shadow-contact-card:hover {
-    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.13), 0 3px 8px -2px rgba(0, 0, 0, 0.07);
-  }
-  .dark .abh-shadow-contact-card:hover {
-    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
-  }
-  .abh-shadow-elevated {
-    box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.09), 0 1px 4px -1px rgba(0, 0, 0, 0.05);
-  }
-  .dark .abh-shadow-elevated {
-    box-shadow: var(--shadow);
-  }
-
-  .abh-shadow-tile {
-    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.12);
-  }
-  .dark .abh-shadow-tile {
-    box-shadow: var(--shadow);
-  }
-  .abh-shadow-tile:hover {
-    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.18);
-  }
-  .dark .abh-shadow-tile:hover {
-    box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.45);
-  }
-
   .abh-divider {
-    @apply mt-6 h-[2px] w-[160px] max-w-full mx-auto rounded-full;
-    background: var(--brand-blue);
-    box-shadow: 0 0 8px rgba(30, 111, 168, 0.5);
-  }
-  .dark .abh-divider {
-    background: var(--brand-light-blue);
-    box-shadow: 0 0 8px rgba(169, 214, 242, 0.5);
+    @apply mt-6 h-px w-20 max-w-full mx-auto;
+    background: var(--brand-orange);
+    box-shadow: none;
   }
 
   .abh-wa-btn {
-    /* CHANGED: font-black → font-medium — buttons weren't exempt from the 500 ceiling. */
-    @apply font-heading flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
+    @apply font-sans flex items-center justify-center gap-2 font-bold text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-whatsapp);
     color: var(--on-whatsapp);
   }
   .abh-wa-btn:hover { background: var(--brand-whatsapp-dark); }
 
-  .abh-btn-primary {
-    /* CHANGED: font-black → font-medium, same reason. */
-    @apply font-heading inline-flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
+  .abh-btn-primary,
+  .abh-btn-cta {
+    @apply font-sans inline-flex items-center justify-center gap-2 font-bold text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-blue);
     color: var(--on-brand-blue);
   }
-
-  .abh-btn-cta {
-    /* CHANGED: font-black → font-medium, same reason. */
-    @apply font-heading inline-flex items-center justify-center gap-3 font-medium text-base rounded-[14px] px-6 py-4 transition-all duration-300 active:scale-95;
-    background: var(--brand-orange);
-    color: var(--on-brand-orange);
-  }
-  .abh-btn-cta:hover { background: var(--brand-orange-dark); }
+  .abh-btn-cta { @apply gap-3 py-4 duration-300; }
+  .abh-btn-primary:hover,
+  .abh-btn-cta:hover { background: var(--brand-blue-dark); }
 }
 
 .dark .dark\:bg-zinc-900,
