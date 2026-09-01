@@ -1,4 +1,4 @@
-// components/strip-section.tsx — full file, paste over the current one
+// components/strip-section.tsx
 "use client"
 
 import { useState } from "react"
@@ -18,7 +18,7 @@ export function StripSection() {
             <p className="text-[0.78rem] font-black uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 mb-2">
               Why ApexbytesHub
             </p>
-            <h2 className="font-sans font-black text-2xl md:text-3xl text-zinc-900 dark:text-zinc-50">
+            <h2 className="font-sans font-black text-2xl md:text-3xl text-foreground">
               Fast, Friendly &amp; Local
             </h2>
           </div>
@@ -141,4 +141,4 @@ export function CtaBar({
       </ScrollBounce>
     </section>
   )
-                                                                                          } 
+}
