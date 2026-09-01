@@ -52,6 +52,7 @@ export function Navbar() {
 
   const desktopNavRef = useRef<HTMLDivElement>(null)
   const desktopNavToggleRef = useRef<HTMLButtonElement>(null)
+  const logoButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setDesktopNavOpen(false))
@@ -140,7 +141,7 @@ export function Navbar() {
     <>
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-[10000] -translate-y-24 focus:translate-y-0 transition-transform duration-200 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-bold text-sm px-4 py-2 rounded-[10px] shadow-lg outline-2 outline-brand-blue"
+        className="fixed left-4 top-4 z-[10000] -translate-y-24 focus:translate-y-0 transition-transform duration-200 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-bold text-sm px-3 py-2 rounded-md whitespace-nowrap"
       >
         Skip to content
       </a>
@@ -151,9 +152,9 @@ export function Navbar() {
         <div className="flex justify-center px-4 md:px-8 pt-5 h-[--nav-h] items-center">
           <div className="relative flex items-center justify-between w-full max-w-[1200px]">
             {/* Logo */}
-            <div
-              role="button"
-              tabIndex={0}
+            <button
+              ref={logoButtonRef}
+              type="button"
               aria-label="ApexbytesHub — go to homepage"
               className={cn(
                 glassPillClass,
@@ -167,9 +168,6 @@ export function Navbar() {
               onMouseEnter={handleLogoMouseEnter}
               onMouseLeave={handleLogoMouseLeave}
               onClick={() => navigate("/")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") { e.preventDefault(); navigate("/") }
-              }}
             >
               <Image
                 src="/logo.png"
@@ -191,7 +189,7 @@ export function Navbar() {
                   Hub
                 </span>
               </div>
-            </div>
+            </button>
 
             {/* Desktop nav */}
             <div
@@ -368,4 +366,4 @@ export function Navbar() {
       <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} pathname={pathname} navigate={navigate} neutralColor={neutralColor} />
     </>
   )
-              }
+}

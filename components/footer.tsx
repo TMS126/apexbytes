@@ -22,7 +22,6 @@ function FooterContent() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [phoneCopied, setPhoneCopied] = useState(false)
 
-
   const handleCopyPhone = async () => {
     if (typeof navigator === "undefined" || !navigator.clipboard) return
     await navigator.clipboard.writeText(BIZ.phone)
@@ -80,7 +79,7 @@ function FooterContent() {
                 const isActive = pathname === page.path
 
                 return (
-                  <li key={page.label}>
+                  <li key={page.path}>
                     <Link
                       href={page.path}
                       aria-current={isActive ? "page" : undefined}
@@ -107,6 +106,7 @@ function FooterContent() {
                     href={WA.general}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`Contact via WhatsApp: ${BIZ.phone}`}
                     className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-whatsapp transition-colors flex-1 min-w-0"
                   >
                     <div
@@ -121,7 +121,7 @@ function FooterContent() {
                     type="button"
                     onClick={handleCopyPhone}
                     aria-label="Copy phone number"
-                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm text-zinc-400 hover:text-brand-blue transition-all active:scale-95 shrink-0"
+                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm text-zinc-400 hover:text-brand-blue transition-colors active:scale-90"
                   >
                     {phoneCopied ? (
                       <Check weight="bold" className="w-3.5 h-3.5 text-brand-green" />
@@ -131,7 +131,7 @@ function FooterContent() {
                   </button>
                 </div>
                 {phoneCopied && (
-                  <span className="absolute -top-7 right-0 whitespace-nowrap text-[0.72rem] font-black uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-full shadow-lg animate-in fade-in zoom-in-95 duration-200">
+                  <span className="absolute -top-7 right-0 whitespace-nowrap text-[0.72rem] font-black uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-sm pointer-events-none animate-pulse">
                     Copied!
                   </span>
                 )}
@@ -139,6 +139,7 @@ function FooterContent() {
               <li className="min-w-0">
                 <a
                   href={`mailto:${BIZ.email}`}
+                  aria-label={`Contact via email: ${BIZ.email}`}
                   className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-blue transition-colors min-w-0"
                 >
                   <div
@@ -167,6 +168,7 @@ function FooterContent() {
 
             <div className="flex items-center justify-center gap-4 relative z-10">
               <button
+                type="button"
                 onClick={() => setIsTermsOpen(true)}
                 style={{ fontSize: "0.78rem", lineHeight: "1.1rem" }}
                 className="font-medium text-zinc-400 hover:text-brand-blue transition-colors py-2 px-1"
@@ -178,7 +180,7 @@ function FooterContent() {
               </span>
               <Link
                 href="/privacy"
-                prefetch={true}
+                prefetch
                 className="text-[0.78rem] font-medium text-zinc-300 dark:text-zinc-500 hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Privacy Policy
@@ -204,4 +206,4 @@ export function Footer() {
       <FooterContent />
     </footer>
   )
-    } 
+}
