@@ -29,7 +29,7 @@ export function BulkHint({
         </span>
         <span
           className="inline-flex items-center px-3 py-1.5 text-[0.8rem] font-bold text-center"
-          style={{ backgroundColor: `${accent}14`, color: accent }}
+          style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
         >
           {hint}
         </span>

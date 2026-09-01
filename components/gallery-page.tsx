@@ -48,7 +48,7 @@ function HubFilterCircles({
           <span
             aria-hidden="true"
             className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
-            style={{ backgroundColor: `${BRAND.blue}30` }}
+            style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 19%, transparent)` }}
           />
           <span className={cn("relative text-[0.8rem] font-black", activeFilter === "all" ? "text-brand-blue" : "text-zinc-500 dark:text-zinc-400")}>All</span>
         </span>
@@ -73,7 +73,7 @@ function HubFilterCircles({
               <span
                 aria-hidden="true"
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
-                style={{ backgroundColor: `${accent}30` }}
+                style={{ backgroundColor: `color-mix(in srgb, ${accent} 19%, transparent)` }}
               />
               <span className="relative">
                 <HubIcon id={row.id} size={26} color={isActive ? accent : neutralIconColor} />

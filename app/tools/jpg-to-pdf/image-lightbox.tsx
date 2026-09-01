@@ -63,7 +63,7 @@ export function ImageLightbox({
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.18 }}
             className="relative w-full h-full max-w-3xl max-h-[85vh]"
-            style={{ transform: rotation ? `rotate(${rotation}deg)` : undefined }}
+            style={{ transform: rotation ? `rotate(color-mix(in srgb, ${rotation} 12%, transparent)g)` : undefined }}
           >
             <Image src={imageUrl} alt={fileName || "Uploaded image"} fill className="object-contain" unoptimized />
           </motion.div>

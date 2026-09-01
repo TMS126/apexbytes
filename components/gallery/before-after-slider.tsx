@@ -66,7 +66,7 @@ export function BeforeAfterSlider({ before, after, accent }: { before: string; a
     >
       <div className="absolute inset-0">
         <SafeImage src={after} alt="After" accent={accent} fill sizes="55vw" className="object-cover" priority />
-        <span className="absolute bottom-3 right-3 text-[0.6rem] font-black uppercase tracking-widest px-2 py-0.5 rounded-full abh-shadow-badge" style={{ backgroundColor: `${accent}cc`, color: accentFg }}>After</span>
+        <span className="absolute bottom-3 right-3 text-[0.6rem] font-black uppercase tracking-widest px-2 py-0.5 rounded-full abh-shadow-badge" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accentFg }}>After</span>
       </div>
 
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>

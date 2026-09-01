@@ -24,7 +24,7 @@ export function QuoteControl({
         aria-label="Add to quote"
         className="flex items-center justify-center py-3.5 rounded-[14px] transition-all duration-150"
         style={{
-          backgroundColor: `${accent}18`,
+          backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`,
           color: accent,
           boxShadow: pressed
             ? "inset 0 2px 6px -1px rgba(0,0,0,0.22), inset 0 1px 3px -1px rgba(0,0,0,0.14)"

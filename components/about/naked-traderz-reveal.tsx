@@ -70,7 +70,7 @@ export function TheNakedTradersZAReveal({
         aria-expanded={modalOpen}
         aria-label="The Naked Traders ZA — view the original logo"
         className="underline decoration-dotted decoration-1 underline-offset-2 font-medium outline-none rounded-sm focus-visible:ring-2"
-        style={{ color: accentColor, textDecorationColor: `${accentColor}80` }}
+        style={{ color: accentColor, textDecorationColor: `color-mix(in srgb, ${accentColor} 12%, transparent)` }}
       >
         The Naked Traders ZA
       </button>

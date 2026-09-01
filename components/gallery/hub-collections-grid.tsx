@@ -155,7 +155,7 @@ function HubCollectionCard({
               UI (e.g. the calculator FAB) that can sit nearby. ---- */}
           <div
             className="w-8 h-8 rounded-full backdrop-blur-sm shadow-lg flex items-center justify-center transition-colors shrink-0 [&_svg]:text-current"
-            style={{ backgroundColor: `${accent}dd`, color: accentFg }}
+            style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accentFg }}
             onClick={(e) => e.stopPropagation()}
           >
             <ShareButton url={shareUrl} title={project.title} />

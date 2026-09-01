@@ -4,7 +4,7 @@
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft } from "@phosphor-icons/react"
-import { BRAND, THEME_BG } from "@/lib/brand"
+import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { Navbar } from "@/components/navbar"
@@ -33,8 +33,8 @@ export default function JpgToPdfPage() {
   const { resolvedTheme } = useTheme()
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
-  const pageBg = isDark ? THEME_BG.dark.page : THEME_BG.light.page
-  const accentColor = ensureAccessible(BRAND.blue, pageBg, 4.5)
+  const pageBg = isDark ? THEME_HEX.dark.page : THEME_HEX.light.page
+  const accentColor = ensureAccessible(isDark ? HEX.dark.blue : HEX.light.blue, pageBg, 4.5)
 
   const t = useJpgToPdf()
 

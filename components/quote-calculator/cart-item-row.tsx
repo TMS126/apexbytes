@@ -100,7 +100,7 @@ export function CartItemRow({
             <span
               key={i}
               className="w-1.5 h-1.5 rounded-full shrink-0"
-              style={{ backgroundColor: i < progress.current ? accent : `${accent}30` }}
+              style={{ backgroundColor: i < progress.current ? accent : `color-mix(in srgb, ${accent} 19%, transparent)` }}
             />
           ))}
           <span className="text-[0.6rem] font-black ml-1" style={{ color: accent }}>

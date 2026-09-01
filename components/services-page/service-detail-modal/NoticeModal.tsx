@@ -57,7 +57,7 @@ export function NoticeModal({
           <div className="flex items-center gap-2 min-w-0">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-              style={{ backgroundColor: `${TOKEN.orangeText}15`, color: TOKEN.orangeText }}
+              style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 8%, transparent)`, color: TOKEN.orangeText }}
             >
               <WarningCircle size={16} weight="fill" aria-hidden="true" />
             </div>
@@ -67,7 +67,7 @@ export function NoticeModal({
             onClick={onClose}
             aria-label="Close notice"
             className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 shrink-0"
-            style={{ backgroundColor: `${TOKEN.orangeText}15`, color: TOKEN.orangeText }}
+            style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 8%, transparent)`, color: TOKEN.orangeText }}
           >
             <X size={16} weight="bold" aria-hidden="true" />
           </button>

@@ -32,22 +32,24 @@ export const TOKEN = {
 
 export const HEX = {
   light: {
-    blue: "#435075", blueMid: "#343B60", blueDark: "#25283E",
-    green: "#5D7F4B", greenDeep: "#3E6231",
-    orange: "#FA5215", orangeDark: "#CF3E0A", orangeBrown: "#A83D1A",
+    page: "#F1F1EC", card: "#E8E8E2",
+    blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
+    green: "#4A8011", greenDeep: "#2F5E0B",
+    orange: "#FA5215", orangeDark: "#B06225", orangeBrown: "#8D4D1F",
     teal: "#3E7473", tealDark: "#2C5E60", tealLight: "#D3E9E5",
     warningBg: "#A84516",
-    lightBlue: "#D9E0EE", lightGreen: "#DCE8D4", lightOrange: "#F8DDD1",
-    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#C4C7D2",
+    lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
+    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#B8CCE0",
   },
   dark: {
-    blue: "#435075", blueMid: "#343B60", blueDark: "#25283E",
-    green: "#5D7F4B", greenDeep: "#3E6231",
-    orange: "#FA5215", orangeDark: "#CF3E0A", orangeBrown: "#A83D1A",
-    teal: "#3E7473", tealDark: "#2C5E60", tealLight: "#D3E9E5",
+    page: "#25283E", card: "#2D314B",
+    blue: "#A9D6F2", blueMid: "#D9EEFA", blueDark: "#EEF8FD",
+    green: "#CDEB9F", greenDeep: "#E5F6C9",
+    orange: "#FF9B73", orangeDark: "#F9D1B0", orangeBrown: "#FFE5D3",
+    teal: "#9AD4CE", tealDark: "#BCE5E0", tealLight: "#284947",
     warningBg: "#E08A64",
-    lightBlue: "#D9E0EE", lightGreen: "#DCE8D4", lightOrange: "#F8DDD1",
-    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#C4C7D2",
+    lightBlue: "#D9EEFA", lightGreen: "#E5F6C9", lightOrange: "#FFE5D3",
+    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#B8CCE0",
   },
   neutral100: "#E8E8E2", neutral200: "#ECECE7", neutral300: "#D5D5CE",
   neutral400: "#858581", neutral500: "#62625F",
@@ -62,87 +64,125 @@ export function pickHex<K extends keyof typeof HEX.light>(role: K, isDark: boole
 }
 
 export const BRAND = {
-  green: HEX.light.green,
-  // NOTE: BRAND.orange (and every other flat BRAND.* color) is a static,
-  // light-mode-only value — it has no way to react to dark mode. Using it
-  // in an inline `style={{ color: BRAND.orange }}` bakes in the light
-  // shade forever. For any color that renders on screen, use the
-  // TOKEN.* equivalents instead (e.g. TOKEN.brandOrange = var(--brand-orange)) —
-  // those resolve through CSS custom properties and pick up the correct
-  // light/dark value automatically. BRAND.* is only safe for contexts with
-  // no theme access (e.g. a fixed default before hydration).
-  orange: HEX.light.orange,
-  lightBlue: HEX.light.lightBlue,
-  lightGreen: HEX.light.lightGreen,
-  lightOrange: HEX.light.lightOrange,
-  blue: HEX.light.blue,
-  blueMid: HEX.light.blueMid,
-  blueDark: HEX.light.blueDark,
-  teal: HEX.light.teal,
-  tealDark: HEX.light.tealDark,
-  tealLight: HEX.light.tealLight,
-  greenDark: "#48653A",
-  greenDeep: HEX.light.greenDeep,
-  orangeDark: HEX.light.orangeDark,
-  orangeBrown: HEX.light.orangeBrown,
-  neutral100: HEX.neutral100,
-  neutral200: HEX.neutral200,
-  neutral300: HEX.neutral300,
-  neutral400: HEX.neutral400,
-  neutral500: HEX.neutral500,
-  dark100: HEX.light.dark100,
-  dark200: HEX.light.dark200,
-  techGreyDark: HEX.light.techGreyDark,
-  white: HEX.white,
-  whatsapp: HEX.whatsapp,
-  whatsappDark: HEX.whatsappDark,
-  whatsappAccessible: HEX.whatsappAccessible,
-  whatsappAccessibleDark: HEX.whatsappAccessibleDark,
-  whatsappText: HEX.whatsappText,
-  adobePdfRed: "#EC1C24",
+  green: "var(--brand-green)",
+  orange: "var(--brand-orange)",
+  lightBlue: "var(--brand-light-blue)",
+  lightGreen: "var(--brand-light-green)",
+  lightOrange: "var(--brand-light-orange)",
+  blue: "var(--brand-blue)",
+  blueMid: "var(--brand-blue-mid)",
+  blueDark: "var(--brand-blue-dark)",
+  teal: "var(--brand-teal)",
+  tealDark: "var(--brand-teal-dark)",
+  tealLight: "var(--brand-teal-light)",
+  greenDark: "var(--brand-green-dark)",
+  greenDeep: "var(--brand-green-deep)",
+  orangeDark: "var(--brand-orange-dark)",
+  orangeBrown: "var(--brand-orange-brown)",
+  neutral100: "var(--brand-neutral-100)",
+  neutral200: "var(--brand-neutral-200)",
+  neutral300: "var(--brand-neutral-300)",
+  neutral400: "var(--brand-neutral-400)",
+  neutral500: "var(--brand-neutral-500)",
+  dark100: "var(--brand-dark-100)",
+  dark200: "var(--brand-dark-200)",
+  techGreyDark: "var(--brand-tech-grey-dark)",
+  white: "var(--brand-white)",
+  whatsapp: "var(--brand-whatsapp)",
+  whatsappDark: "var(--brand-whatsapp-dark)",
+  whatsappAccessible: "var(--brand-whatsapp-accessible)",
+  whatsappAccessibleDark: "var(--brand-whatsapp-accessible-dark)",
+  whatsappText: "var(--brand-whatsapp-text)",
+  adobePdfRed: "var(--brand-adobe-pdf-red)",
 } as const
 
 export const THEME_BG = {
-  light: { page: "#F1F1EC", card: "#E8E8E2" },
-  dark: { page: "#25283E", card: "#2D314B" },
+  light: { page: "var(--background)", card: "var(--card)" },
+  dark: { page: "var(--background)", card: "var(--card)" },
+} as const
+
+export const THEME_HEX = {
+  light: { page: HEX.light.page, card: HEX.light.card },
+  dark: { page: HEX.dark.page, card: HEX.dark.card },
 } as const
 
 export const HUB_COLORS = {
   print: {
-    primary: BRAND.blue, light: BRAND.lightBlue,
-    gradient: BRAND.blue,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#1e40af', tagTextDark: '#ffffff',
-    accentLight: BRAND.blue, accentDark: BRAND.lightBlue,
+    primary: "var(--hub-print-primary)", light: "var(--hub-print-light)",
+    gradient: "linear-gradient(135deg, var(--hub-print-primary) 0%, var(--brand-blue-mid) 100%)",
+    tagBg: "var(--hub-tag-bg-light)", tagText: "var(--hub-tag-text-light)", tagBgDark: "var(--hub-print-tag-bg-dark)", tagTextDark: "var(--hub-tag-text-dark)",
+    accentLight: "var(--hub-print-primary)", accentDark: "var(--hub-print-light)",
   },
   doc: {
-    primary: BRAND.green, light: BRAND.lightGreen,
-    gradient: BRAND.green,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#166534', tagTextDark: '#ffffff',
-    accentLight: BRAND.green, accentDark: BRAND.lightGreen,
+    primary: "var(--hub-doc-primary)", light: "var(--hub-doc-light)",
+    gradient: "linear-gradient(135deg, var(--brand-green-deep) 0%, var(--hub-doc-primary) 100%)",
+    tagBg: "var(--hub-tag-bg-light)", tagText: "var(--hub-tag-text-light)", tagBgDark: "var(--hub-doc-tag-bg-dark)", tagTextDark: "var(--hub-tag-text-dark)",
+    accentLight: "var(--hub-doc-primary)", accentDark: "var(--hub-doc-light)",
   },
   design: {
-    primary: BRAND.orangeDark, light: BRAND.lightOrange,
-    gradient: BRAND.orange,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#9a3412', tagTextDark: '#ffffff',
-    accentLight: BRAND.orangeDark, accentDark: BRAND.lightOrange,
+    primary: "var(--hub-design-primary)", light: "var(--hub-design-light)",
+    gradient: "linear-gradient(135deg, var(--brand-orange-brown) 0%, var(--brand-orange) 100%)",
+    tagBg: "var(--hub-tag-bg-light)", tagText: "var(--hub-tag-text-light)", tagBgDark: "var(--hub-design-tag-bg-dark)", tagTextDark: "var(--hub-tag-text-dark)",
+    accentLight: "var(--hub-design-primary)", accentDark: "var(--hub-design-light)",
   },
   eservice: {
-    primary: BRAND.teal, light: BRAND.tealLight,
-    gradient: BRAND.teal,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: BRAND.tealDark, tagTextDark: '#ffffff',
-    accentLight: BRAND.teal, accentDark: BRAND.tealLight,
+    primary: "var(--hub-eservice-primary)", light: "var(--hub-eservice-light)",
+    gradient: "linear-gradient(135deg, var(--hub-eservice-primary) 0%, var(--brand-teal-dark) 100%)",
+    tagBg: "var(--hub-tag-bg-light)", tagText: "var(--hub-tag-text-light)", tagBgDark: "var(--hub-eservice-tag-bg-dark)", tagTextDark: "var(--hub-tag-text-dark)",
+    accentLight: "var(--hub-eservice-primary)", accentDark: "var(--hub-eservice-light)",
   },
   tech: {
-    primary: BRAND.dark100, light: BRAND.techGreyDark,
-    gradient: BRAND.dark100,
-    tagBg: 'transparent', tagText: '#374151', tagBgDark: '#1f2937', tagTextDark: '#ffffff',
-    accentLight: BRAND.dark100, accentDark: BRAND.techGreyDark,
+    primary: "var(--hub-tech-primary)", light: "var(--hub-tech-light)",
+    gradient: "linear-gradient(135deg, var(--hub-tech-primary) 0%, var(--brand-dark-200) 100%)",
+    tagBg: "var(--hub-tag-bg-light)", tagText: "var(--hub-tag-text-light)", tagBgDark: "var(--hub-tech-tag-bg-dark)", tagTextDark: "var(--hub-tag-text-dark)",
+    accentLight: "var(--hub-tech-primary)", accentDark: "var(--hub-tech-light)",
   },
 } as const
 
+export const HUB_HEX_COLORS = {
+  print: { primary: HEX.light.blue, light: HEX.dark.blue, tagBgDark: "#1E40AF" },
+  doc: { primary: HEX.light.green, light: HEX.dark.green, tagBgDark: "#166534" },
+  design: { primary: HEX.light.orangeDark, light: HEX.dark.orangeDark, tagBgDark: "#9A3412" },
+  eservice: { primary: HEX.light.teal, light: HEX.dark.teal, tagBgDark: HEX.light.tealDark },
+  tech: { primary: HEX.light.dark100, light: HEX.light.techGreyDark, tagBgDark: "#1F2937" },
+} as const
+
+export const OG_COLORS = {
+  background: HEX.light.blueDark,
+  backgroundMid: HEX.light.blueMid,
+  blue: HEX.light.blue,
+  green: HEX.light.green,
+  orange: HEX.light.orangeDark,
+  white: HEX.white,
+  muted: HEX.light.lightBlue,
+} as const
+
+export const WEATHER_THEME = {
+  sun: { light: "#F59E0B", dark: "#FCD34D" },
+  moon: { light: "#818CF8", dark: "#A5B4FC" },
+  cloud: { light: "#9CA3AF", dark: "#CBD5E1" },
+  rain: { light: "#60A5FA", dark: "#93C5FD" },
+  storm: { light: "#A78BFA", dark: "#C4B5FD" },
+  snow: { light: "#7DD3FC", dark: "#BAE6FD" },
+} as const
+
+export const WHATSAPP_THEME = {
+  header: { light: "#075E54", dark: "#1F2C34" },
+  wallpaper: { light: "#E5DDD5", dark: "#0B141A" },
+  bubbleIn: { light: "#FFFFFF", dark: "#202C33" },
+  bubbleOut: { light: "#D9FDD3", dark: "#005C4B" },
+  text: { light: "#111B21", dark: "#E9EDEF" },
+  sub: { light: "#667781", dark: "#8696A0" },
+  composeBar: { light: "#F0F2F5", dark: "#1F2C34" },
+  composeField: { light: "#FFFFFF", dark: "#2A3942" },
+  accent: { light: "#25D366", dark: "#25D366" },
+  tick: { light: "#53BDEB", dark: "#53BDEB" },
+  avatarBg: { light: "#E9EDEF", dark: "#2A3942" },
+} as const
+
 export const NEUTRAL_ICON_COLOR = {
-  light: BRAND.dark100,
-  dark: BRAND.techGreyDark,
+  light: "var(--neutral-icon-light)",
+  dark: "var(--neutral-icon-dark)",
 } as const
 
 export const BIZ = {

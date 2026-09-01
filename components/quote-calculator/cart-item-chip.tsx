@@ -36,7 +36,7 @@ export function CartItemChip({
         borderLeftColor: accent,
         // ── Pop-out shadow: accent-tinted alpha glow so it lifts off the
         // background in both light and dark mode, not just a flat black shadow ──
-        boxShadow: `0 4px 12px -2px ${accent}40, 0 2px 6px -1px rgba(0,0,0,0.18)`,
+        boxShadow: `0 4px 12px -2px color-mix(in srgb, ${accent} 25%, transparent), 0 2px 6px -1px rgba(0,0,0,0.18)`,
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
