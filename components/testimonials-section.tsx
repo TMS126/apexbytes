@@ -165,7 +165,7 @@ export function TestimonialsSection({
     }
     if (abs === 1) {
       return {
-        transform: `translateX(${offset * 78 + dragX * 0.4}%) scale(0.88) rotate(${offset * 2}deg)`,
+        transform: `translateX(${offset * 78 + dragX * 0.4}%) scale(0.88) rotate(color-mix(in srgb, ${offset * 2} 12%, transparent)g)`,
         opacity: 0.55, zIndex: 20, filter: "blur(1.5px)",
       }
     }
@@ -226,7 +226,7 @@ export function TestimonialsSection({
                     style={{
                       cursor: isActive ? "default" : "pointer",
                       boxShadow: isActive
-                        ? `0 14px 30px -20px rgba(0,0,0,0.22), 0 0 0 1px ${accent}24`
+                        ? `0 14px 30px -20px rgba(0,0,0,0.22), 0 0 0 1px color-mix(in srgb, ${accent} 12%, transparent)`
                         : "0 4px 12px -10px rgba(0,0,0,0.14)",
                     }}
                   >

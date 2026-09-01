@@ -27,7 +27,7 @@ export function UploadButton({ phase, accent, onClick }: { phase: UploadPhase; a
       aria-label={isDone ? "File attached" : "Attach file"}
       className="flex items-center justify-center py-3.5 rounded-[14px] transition-all duration-150"
       style={{
-        backgroundColor: isDone ? "#22c55e18" : `${accent}18`,
+        backgroundColor: isDone ? "#22c55e18" : `color-mix(in srgb, ${accent} 10%, transparent)`,
         color: isDone ? "#16a34a" : accent,
         boxShadow: pressed
           ? "inset 0 2px 6px -1px rgba(0,0,0,0.22), inset 0 1px 3px -1px rgba(0,0,0,0.14)"
@@ -80,13 +80,13 @@ export function UploadStatus({
 
   if (phase === "done" && file) {
     return (
-      <div className="flex items-center justify-between gap-2 w-full px-4 py-2.5 rounded-[14px] text-base font-bold" style={{ backgroundColor: `${accent}10`, boxShadow: "0 2px 10px -2px rgba(0,0,0,0.10), 0 1px 4px -1px rgba(0,0,0,0.06)" }}>
+      <div className="flex items-center justify-between gap-2 w-full px-4 py-2.5 rounded-[14px] text-base font-bold" style={{ backgroundColor: `color-mix(in srgb, ${accent} 6%, transparent)`, boxShadow: "0 2px 10px -2px rgba(0,0,0,0.10), 0 1px 4px -1px rgba(0,0,0,0.06)" }}>
         <span className="flex items-center gap-2.5 min-w-0">
           <span className="relative shrink-0">
             {previewUrl ? (
               <img src={previewUrl} alt="" className="w-8 h-8 rounded-[8px] object-cover shrink-0 border border-zinc-200 dark:border-zinc-700" />
             ) : (
-              <div className="w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0" style={{ backgroundColor: `${accent}15`, color: accent }}>
+              <div className="w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}>
                 <Paperclip size={14} weight="bold" aria-hidden="true" />
               </div>
             )}
@@ -114,7 +114,7 @@ export function UploadStatus({
           type="button"
           onClick={onRetry}
           className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-[12px] text-sm font-black transition-all active:scale-[0.98]"
-          style={{ backgroundColor: `${accent}12`, color: accent }}
+          style={{ backgroundColor: `color-mix(in srgb, ${accent} 7%, transparent)`, color: accent }}
         >
           <ArrowClockwise size={14} weight="bold" aria-hidden="true" />
           Try a Different File

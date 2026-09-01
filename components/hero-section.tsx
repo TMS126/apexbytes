@@ -8,7 +8,7 @@ import {
   ArrowUpRight, Play, Pause, CheckCircle,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BIZ, MARQUEE_ITEMS, TOKEN } from "@/lib/brand"
+import { BIZ, MARQUEE_ITEMS, TOKEN, WEATHER_THEME } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
@@ -16,15 +16,15 @@ import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 // ─── WEATHER ICON MAP (drives the holiday-banner icon) ──────────────────────
 const WEATHER_ICON_MAP: Record<WeatherCategory, { Icon: React.ElementType; color: string }> = {
-  "clear-day": { Icon: Sun, color: "#F59E0B" },
-  "clear-night": { Icon: Moon, color: "#818CF8" },
-  "partly-cloudy-day": { Icon: CloudSun, color: "#F0A93A" },
-  "partly-cloudy-night": { Icon: CloudMoon, color: "#8B93D8" },
-  cloudy: { Icon: Cloud, color: "#9CA3AF" },
-  fog: { Icon: CloudFog, color: "#9CA3AF" },
-  rain: { Icon: CloudRain, color: "#60A5FA" },
-  thunderstorm: { Icon: CloudLightning, color: "#A78BFA" },
-  snow: { Icon: Snowflake, color: "#7DD3FC" },
+  "clear-day": { Icon: Sun, color: WEATHER_THEME.sun.light },
+  "clear-night": { Icon: Moon, color: WEATHER_THEME.moon.light },
+  "partly-cloudy-day": { Icon: CloudSun, color: WEATHER_THEME.sun.light },
+  "partly-cloudy-night": { Icon: CloudMoon, color: WEATHER_THEME.moon.dark },
+  cloudy: { Icon: Cloud, color: WEATHER_THEME.cloud.light },
+  fog: { Icon: CloudFog, color: WEATHER_THEME.cloud.light },
+  rain: { Icon: CloudRain, color: WEATHER_THEME.rain.light },
+  thunderstorm: { Icon: CloudLightning, color: WEATHER_THEME.storm.light },
+  snow: { Icon: Snowflake, color: WEATHER_THEME.snow.light },
 }
 function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory {
   return greeting === "morning" || greeting === "afternoon" ? "clear-day" : "clear-night"

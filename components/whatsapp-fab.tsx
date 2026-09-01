@@ -9,7 +9,7 @@ import {
   PaperPlaneTilt, Microphone, Smiley, Paperclip, Camera,
   Check, CaretDown, Lightning, ArrowsClockwise, WhatsappLogo,
 } from "@phosphor-icons/react"
-import { BIZ, BRAND } from "@/lib/brand"
+import { BIZ, BRAND, WHATSAPP_THEME } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
@@ -25,29 +25,28 @@ const NAME_RETENTION_MS = 90 * 24 * 60 * 60 * 1000 // 90 days — matches the si
 const TYPING_DURATION = 2600
 const SHAKE_DURATION  = 420
 
-// ── Flat WhatsApp palette — solid hex only, no rgba/backdrop-blur glass.
-// This widget deliberately mimics a real WhatsApp chat screen. ──
+// WhatsApp-specific UI colors live in the centralized brand registry.
 const WA = {
-  headerLight:   "#075E54",
-  headerDark:    "#1F2C34",
-  wallpaperLight: "#E5DDD5",
-  wallpaperDark:  "#0B141A",
-  bubbleInLight:  "#FFFFFF",
-  bubbleInDark:   "#202C33",
-  bubbleOutLight: "#D9FDD3",
-  bubbleOutDark:  "#005C4B",
-  textLight:      "#111B21",
-  textDark:       "#E9EDEF",
-  subLight:       "#667781",
-  subDark:        "#8696A0",
-  composeBarLight:"#F0F2F5",
-  composeBarDark: "#1F2C34",
-  composeFieldLight: "#FFFFFF",
-  composeFieldDark:  "#2A3942",
-  accent:         "#25D366",
-  tick:           "#53BDEB",
-  avatarBgLight:  "#E9EDEF",
-  avatarBgDark:   "#2A3942",
+  headerLight: WHATSAPP_THEME.header.light,
+  headerDark: WHATSAPP_THEME.header.dark,
+  wallpaperLight: WHATSAPP_THEME.wallpaper.light,
+  wallpaperDark: WHATSAPP_THEME.wallpaper.dark,
+  bubbleInLight: WHATSAPP_THEME.bubbleIn.light,
+  bubbleInDark: WHATSAPP_THEME.bubbleIn.dark,
+  bubbleOutLight: WHATSAPP_THEME.bubbleOut.light,
+  bubbleOutDark: WHATSAPP_THEME.bubbleOut.dark,
+  textLight: WHATSAPP_THEME.text.light,
+  textDark: WHATSAPP_THEME.text.dark,
+  subLight: WHATSAPP_THEME.sub.light,
+  subDark: WHATSAPP_THEME.sub.dark,
+  composeBarLight: WHATSAPP_THEME.composeBar.light,
+  composeBarDark: WHATSAPP_THEME.composeBar.dark,
+  composeFieldLight: WHATSAPP_THEME.composeField.light,
+  composeFieldDark: WHATSAPP_THEME.composeField.dark,
+  accent: WHATSAPP_THEME.accent.light,
+  tick: WHATSAPP_THEME.tick.light,
+  avatarBgLight: WHATSAPP_THEME.avatarBg.light,
+  avatarBgDark: WHATSAPP_THEME.avatarBg.dark,
 } as const
 
 const TXT = {
@@ -166,7 +165,7 @@ function TypingLoader({ subColor }: { subColor: string }) {
           width: 20, height: 20,
           animationDuration: `${spin.duration}s`,
           animationDirection: spin.direction,
-          transform: `rotate(${spin.startRotate}deg)`,
+          transform: `rotate(color-mix(in srgb, ${spin.startRotate} 12%, transparent)g)`,
         }}
       >
         {dots.map((d, i) => (
@@ -177,7 +176,7 @@ function TypingLoader({ subColor }: { subColor: string }) {
               width: d.size, height: d.size,
               backgroundColor: d.color,
               top: "50%", left: "50%",
-              transform: `rotate(${d.angle}deg) translate(8px) translate(-50%, -50%)`,
+              transform: `rotate(color-mix(in srgb, ${d.angle} 12%, transparent)g) translate(8px) translate(-50%, -50%)`,
             }}
           />
         ))}
@@ -577,7 +576,7 @@ export function WhatsAppFAB() {
                   {hubPicking && (
                     <div
                       className="absolute left-0 right-0 top-full mt-2 z-30 rounded-[14px] shadow-xl overflow-hidden border animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none"
-                      style={{ backgroundColor: bubbleIn, borderColor: `${subColor}30` }}
+                      style={{ backgroundColor: bubbleIn, borderColor: `color-mix(in srgb, ${subColor} 19%, transparent)` }}
                     >
                       {HUBS.map((h) => {
                         const isSelected = hub === h.id
@@ -588,7 +587,7 @@ export function WhatsAppFAB() {
                             onClick={() => { setHub(h.id); setHubPicking(false) }}
                             className="w-full text-left px-3.5 py-2.5 transition-colors duration-150"
                             style={{
-                              backgroundColor: isSelected ? `${WA.accent}18` : "transparent",
+                              backgroundColor: isSelected ? `color-mix(in srgb, ${WA.accent} 10%, transparent)` : "transparent",
                             }}
                           >
                             <span className={cn(TXT.body, "font-bold block")} style={{ color: isSelected ? WA.accent : textColor }}>
@@ -632,7 +631,7 @@ export function WhatsAppFAB() {
                       type="button"
                       onClick={() => addQuickNote(QUICK_NOTES[quickNoteIdx])}
                       className={cn(TXT.hint, "flex-1 min-w-0 flex items-center gap-1 px-2 py-1 rounded-full font-bold border transition-all duration-150 ease-out motion-reduce:transition-none active:scale-95 hover:-translate-y-0.5")}
-                      style={{ borderColor: `${subColor}35`, color: textColor, backgroundColor: `${WA.accent}12` }}
+                      style={{ borderColor: `color-mix(in srgb, ${subColor} 12%, transparent)`, color: textColor, backgroundColor: `color-mix(in srgb, ${WA.accent} 7%, transparent)` }}
                     >
                       <Lightning size={9} weight="fill" style={{ color: WA.accent }} className="shrink-0" />
                       <span className="truncate">{QUICK_NOTES[quickNoteIdx]}</span>
@@ -642,7 +641,7 @@ export function WhatsAppFAB() {
                       onClick={shuffleQuickNote}
                       aria-label="Show another quick reply"
                       className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center border transition-transform duration-150 ease-out active:scale-90 active:rotate-180"
-                      style={{ borderColor: `${subColor}35`, color: subColor, backgroundColor: `${WA.accent}0a` }}
+                      style={{ borderColor: `color-mix(in srgb, ${subColor} 12%, transparent)`, color: subColor, backgroundColor: `color-mix(in srgb, ${WA.accent} 4%, transparent)` }}
                     >
                       <ArrowsClockwise size={11} weight="bold" />
                     </button>
@@ -676,7 +675,7 @@ export function WhatsAppFAB() {
                   <button
                     onClick={handleSendAnother}
                     className={cn(TXT.hint, "px-4 py-2.5 rounded-full font-bold shadow-sm transition-transform duration-150 active:scale-95")}
-                    style={{ backgroundColor: `${WA.accent}20`, color: isDark ? WA.textDark : WA.textLight }}
+                    style={{ backgroundColor: `color-mix(in srgb, ${WA.accent} 12%, transparent)`, color: isDark ? WA.textDark : WA.textLight }}
                   >
                     Send another
                   </button>
@@ -769,7 +768,7 @@ export function WhatsAppFAB() {
             <WhatsappLogo
               size={32}
               weight="fill"
-              style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px ${WA.accent}80) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
+              style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${WA.accent} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>
         </div>

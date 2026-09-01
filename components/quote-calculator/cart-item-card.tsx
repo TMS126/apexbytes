@@ -38,7 +38,7 @@ export function CartItemCard({
         isHighlighted && "ring-2 scale-[1.02]"
       )}
       style={{
-        boxShadow: `0 6px 16px -3px ${accent}40, 0 3px 8px -2px rgba(0,0,0,0.18)`,
+        boxShadow: `0 6px 16px -3px color-mix(in srgb, ${accent} 25%, transparent), 0 3px 8px -2px rgba(0,0,0,0.18)`,
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
@@ -92,7 +92,7 @@ export function CartItemCard({
             <span
               key={i}
               className="w-1.5 h-1.5 rounded-full shrink-0"
-              style={{ backgroundColor: i < progress.current ? accent : `${accent}30` }}
+              style={{ backgroundColor: i < progress.current ? accent : `color-mix(in srgb, ${accent} 19%, transparent)` }}
             />
           ))}
           <span className="text-[0.68rem] font-black ml-1" style={{ color: accent }}>

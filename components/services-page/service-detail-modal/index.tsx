@@ -326,7 +326,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
                 "w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-105 active:scale-95",
                 ICON_BTN_FOCUS
               )}
-              style={{ backgroundColor: `${BRAND.orange}15`, color: BRAND.orange }}
+              style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 8%, transparent)`, color: BRAND.orange }}
             >
               <WarningCircle size={18} weight="fill" aria-hidden="true" />
             </button>
@@ -406,7 +406,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               {svc.turnaround && (
                 <span
                   className="flex items-center gap-1 text-[0.82rem] font-bold pb-0.5 border-b"
-                  style={{ color: accent, borderColor: `${accent}50` }}
+                  style={{ color: accent, borderColor: `color-mix(in srgb, ${accent} 31%, transparent)` }}
                 >
                   <Clock size={12} weight="bold" aria-hidden="true" />
                   {svc.turnaround}
@@ -567,7 +567,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
           {showNsfasClosedNotice && (
             <div
               className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
-              style={{ backgroundColor: `${BRAND.orange}12` }}
+              style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 7%, transparent)` }}
             >
               <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
               <p className="text-[0.82rem] leading-relaxed" style={{ color: BRAND.orange }}>{NSFAS_CLOSED_NOTICE_TEXT}</p>

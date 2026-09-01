@@ -83,7 +83,7 @@ function ServiceRow({
         {isBulk && (
           <span
             className="inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 transition-colors duration-200"
-            style={{ backgroundColor: `${accent}15`, color: accent }}
+            style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
           >
             <SealPercent size={9} weight="fill" aria-hidden="true" />
             Bulk
@@ -104,7 +104,7 @@ function ServiceRow({
               : 'opacity-0 group-hover:opacity-100 focus-visible:opacity-100',
           ].join(' ')}
           style={{
-            backgroundColor: added ? accent : `${accent}18`,
+            backgroundColor: added ? accent : `color-mix(in srgb, ${accent} 10%, transparent)`,
             color: added ? 'white' : accent,
           }}
         >

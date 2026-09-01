@@ -59,7 +59,7 @@ export function HubBrowser({
                 {!isHubOpen && hubBulk && (
                   <span
                     className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full shrink-0"
-                    style={{ backgroundColor: `${accent}18`, color: accent }}
+                    style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                     aria-label="Bulk pricing available in this hub"
                   >
                     <Tag size={10} weight="fill" aria-hidden="true" /> Bulk
@@ -69,7 +69,7 @@ export function HubBrowser({
                 {!isHubOpen && hubSub && (
                   <span
                     className="ml-auto shrink-0 flex items-center gap-1 text-[0.66rem] font-black px-2 py-0.5 rounded-full"
-                    style={{ backgroundColor: `${accent}18`, color: accent }}
+                    style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                     aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} in cart from ${hub.title}, total R${hubSub.total}`}
                   >
                     <ShoppingBagOpen size={11} weight="fill" aria-hidden="true" />
@@ -111,7 +111,7 @@ export function HubBrowser({
                         {!isLastSection && (
                           <span
                             className="absolute left-3 top-5 bottom-0 w-0.5 pointer-events-none"
-                            style={{ backgroundColor: `${accent}50` }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 31%, transparent)` }}
                             aria-hidden="true"
                           />
                         )}
@@ -146,7 +146,7 @@ export function HubBrowser({
                               {!isSectionOpen && sectionBulk && (
                                 <span
                                   className="flex items-center gap-0.5 text-[0.58rem] font-black px-1.5 py-0.5 rounded-full"
-                                  style={{ backgroundColor: `${accent}18`, color: accent }}
+                                  style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                                   aria-label="Bulk pricing available in this section"
                                 >
                                   <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -156,7 +156,7 @@ export function HubBrowser({
                               {!isSectionOpen && secSub && (
                                 <span
                                   className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full"
-                                  style={{ backgroundColor: `${accent}18`, color: accent }}
+                                  style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                                   aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
                                 >
                                   <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -174,12 +174,12 @@ export function HubBrowser({
                           {/* Connector segments render after the button so they paint above its hover fill */}
                           <span
                             className="absolute left-3 top-0 h-5 w-0.5 pointer-events-none"
-                            style={{ backgroundColor: `${accent}50` }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 31%, transparent)` }}
                             aria-hidden="true"
                           />
                           <span
                             className="absolute left-3 top-5 -translate-y-1/2 w-2.5 h-0.5 pointer-events-none"
-                            style={{ backgroundColor: `${accent}50` }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 31%, transparent)` }}
                             aria-hidden="true"
                           />
                           <span
@@ -208,18 +208,18 @@ export function HubBrowser({
                                     {!isLastItem && (
                                       <span
                                         className="absolute left-3 top-[22px] bottom-0 w-0.5 pointer-events-none"
-                                        style={{ backgroundColor: `${accent}70` }}
+                                        style={{ backgroundColor: `color-mix(in srgb, ${accent} 44%, transparent)` }}
                                         aria-hidden="true"
                                       />
                                     )}
                                     <span
                                       className="absolute left-3 top-0 h-[22px] w-0.5 pointer-events-none"
-                                      style={{ backgroundColor: `${accent}70` }}
+                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 44%, transparent)` }}
                                       aria-hidden="true"
                                     />
                                     <span
                                       className="absolute left-3 top-[22px] -translate-y-1/2 w-2 h-0.5 pointer-events-none"
-                                      style={{ backgroundColor: `${accent}70` }}
+                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 44%, transparent)` }}
                                       aria-hidden="true"
                                     />
                                     <span
@@ -230,7 +230,7 @@ export function HubBrowser({
 
                                     <div
                                       className={cn("relative overflow-hidden ml-6 flex items-center gap-2 p-2 rounded-[10px] shadow-sm transition-colors duration-150", GLASS.item)}
-                                      style={{ backgroundColor: `${accent}08` }}
+                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 3%, transparent)` }}
                                     >
                                       {hasBulk && (
                                         <span
@@ -252,7 +252,7 @@ export function HubBrowser({
                                         {itemQty > 0 && (
                                           <span
                                             className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full"
-                                            style={{ backgroundColor: `${accent}18`, color: accent }}
+                                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                                             aria-label={`${itemQty} already in your quote`}
                                           >
                                             <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />

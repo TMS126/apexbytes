@@ -38,7 +38,7 @@ export function AboutStandards({ blueColor, neutralColor }: { blueColor: string;
                 >
                   <div
                     className={cn("w-11 h-11 rounded-[12px] flex items-center justify-center mb-5 transition-all duration-300 border shrink-0", isHovered ? "text-white border-transparent scale-110" : "border-transparent")}
-                    style={isHovered ? { backgroundColor: blueColor, color: "#ffffff" } : { backgroundColor: `${neutralColor}15`, color: neutralColor }}
+                    style={isHovered ? { backgroundColor: blueColor, color: "#ffffff" } : { backgroundColor: `color-mix(in srgb, ${neutralColor} 8%, transparent)`, color: neutralColor }}
                     aria-hidden="true"
                   >
                     {renderIcon(item.iconName, "w-5 h-5")}

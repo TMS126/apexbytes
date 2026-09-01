@@ -44,7 +44,7 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
           {TEAM.map((member, index) => {
             const card = (
               <li key={member.initials} className="abh-card p-6 flex items-center text-left gap-4 shadow-md">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center font-medium text-lg shrink-0" style={{ backgroundColor: `${blueColor}15`, color: blueColor }} aria-hidden="true">
+                <div className="w-14 h-14 rounded-full flex items-center justify-center font-medium text-lg shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor }} aria-hidden="true">
                   {member.initials}
                 </div>
                 <div className="min-w-0">

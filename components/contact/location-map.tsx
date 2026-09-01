@@ -7,7 +7,7 @@ import { BRAND, TOKEN, BIZ } from "@/lib/brand"
 export function LocationMap() {
   return (
     <div className="w-full h-[260px] flex flex-col items-center justify-center gap-3 bg-zinc-50 dark:bg-zinc-900 text-center px-6">
-      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ backgroundColor: `${BRAND.blue}15` }}>
+      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 8%, transparent)` }}>
         <MapPin size={28} weight="fill" style={{ color: BRAND.blue }} aria-hidden="true" />
       </div>
 

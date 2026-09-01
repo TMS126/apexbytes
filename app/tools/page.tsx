@@ -49,7 +49,7 @@ export default function ToolsPage() {
                 >
                   <span
                     className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: `${BRAND.blue}14` }}
+                    style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 8%, transparent)` }}
                   >
                     <tool.Icon weight="fill" className="w-5 h-5" style={{ color: BRAND.blue }} />
                   </span>
@@ -66,7 +66,7 @@ export default function ToolsPage() {
             <div className="mt-6 rounded-[14px] border border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 p-5 flex items-start gap-3">
               <span
                 className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
-                style={{ backgroundColor: `${BRAND.orange}14` }}
+                style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 8%, transparent)` }}
               >
                 <Sparkle weight="fill" className="w-5 h-5" style={{ color: BRAND.orange }} />
               </span>

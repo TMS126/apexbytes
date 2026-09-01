@@ -148,7 +148,7 @@ export function FloatingSearchWidget() {
   const pendingFabRect = useRef<DOMRect | null>(null)
 
   const accentColor = isDark ? SEARCH_ORANGE.dark : SEARCH_ORANGE.light
-  const iconGlow = `drop-shadow(0 4px 10px ${accentColor}80) drop-shadow(0 2px 4px rgba(0,0,0,0.3))`
+  const iconGlow = `drop-shadow(0 4px 10px color-mix(in srgb, ${accentColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))`
 
   const onServicesPage = pathname === SERVICES_PATH
   const hasQuery = query.trim().length > 0
@@ -421,7 +421,7 @@ export function FloatingSearchWidget() {
                         >
                           <div
                             className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
-                            style={{ backgroundColor: `${accentColor}1f`, color: accentColor }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accentColor} 12%, transparent)`, color: accentColor }}
                           >
                             <HubIcon id={s.hubId} size={20} />
                           </div>

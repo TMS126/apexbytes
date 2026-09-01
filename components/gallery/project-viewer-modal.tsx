@@ -276,7 +276,7 @@ function DesktopImageStack({
               flexBasis: 0,
               minHeight: 0,
               boxShadow: isActive
-                ? `0 14px 30px -12px ${accent}55`
+                ? `0 14px 30px -12px color-mix(in srgb, ${accent} 12%, transparent)`
                 : isDark ? "none" : "0 4px 12px -6px rgba(0,0,0,0.12)",
             }}
           >

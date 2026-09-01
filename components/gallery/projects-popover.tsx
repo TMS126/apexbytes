@@ -104,7 +104,7 @@ export function ProjectsPopover({
                   {p.image ? (
                     <Image src={p.image} alt={p.title} fill sizes="32px" className="object-cover" />
                   ) : (
-                    <div className="w-full h-full" style={{ backgroundColor: `${accent}20` }} />
+                    <div className="w-full h-full" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)` }} />
                   )}
                 </div>
                 <div className="flex-1 min-w-0">

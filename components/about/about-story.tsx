@@ -53,7 +53,7 @@ export function AboutStory({
               />
               <div
                 className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
-                style={{ background: `linear-gradient(to top, ${cardBg} 0%, ${cardBg}99 45%, transparent 100%)` }}
+                style={{ background: `linear-gradient(to top, ${cardBg} 0%, color-mix(in srgb, ${cardBg} 12%, transparent) 45%, transparent 100%)` }}
                 aria-hidden="true"
               />
             </div>
@@ -103,7 +103,7 @@ export function AboutStory({
           <ScrollBounce delay={0.2}>
             <div className="flex flex-col h-full" aria-label="Business overview">
               <div className="flex flex-col items-center text-center gap-2 mb-7 pb-6 border-b border-zinc-100 dark:border-zinc-800">
-                <div className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0" style={{ backgroundColor: `${blueColor}15`, color: blueColor }}>
+                <div className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor }}>
                   <UsersThree size={20} weight="fill" />
                 </div>
                 <div>

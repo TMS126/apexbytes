@@ -15,17 +15,17 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
 :root {
   /* Core brand roles: quiet surfaces, one unmistakable action colour. */
-  --brand-green: #5D7F4B;
+  --brand-green: #4A8011;
   --brand-orange: #FA5215;
-  --brand-light-blue: #D9E0EE;
-  --brand-light-green: #DCE8D4;
-  --brand-light-orange: #F8DDD1;
+  --brand-light-blue: #A9D6F2;
+  --brand-light-green: #CDEB9F;
+  --brand-light-orange: #F9D1B0;
 
-  --brand-blue: #435075;
-  --brand-blue-mid: #343B60;
-  --brand-blue-dark: #25283E;
-  --brand-green-dark: #48653A;
-  --brand-orange-dark: #CF3E0A;
+  --brand-blue: #1E6FA8;
+  --brand-blue-mid: #15537D;
+  --brand-blue-dark: #0F3F66;
+  --brand-green-dark: #35600D;
+  --brand-orange-dark: #B06225;
   --brand-teal: #3E7473;
   --brand-teal-dark: #2C5E60;
   --brand-teal-light: #D3E9E5;
@@ -38,10 +38,49 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
   --brand-dark-100: #25283E;
   --brand-dark-200: #43455A;
-  --brand-tech-grey-dark: #C4C7D2;
-  --brand-green-deep: #3E6231;
-  --brand-orange-brown: #A83D1A;
+  --brand-tech-grey-dark: #B8CCE0;
+  --brand-green-deep: #2F5E0B;
+  --brand-orange-brown: #8D4D1F;
   --brand-white: #FFFFFF;
+  --brand-adobe-pdf-red: #EC1C24;
+
+  /* Hub semantics: accents are reserved for identity and important actions. */
+  --hub-print-primary: #1E6FA8;
+  --hub-print-light: #A9D6F2;
+  --hub-doc-primary: #4A8011;
+  --hub-doc-light: #CDEB9F;
+  --hub-design-primary: #B06225;
+  --hub-design-light: #F9D1B0;
+  --hub-eservice-primary: #3E7473;
+  --hub-eservice-light: #D3E9E5;
+  --hub-tech-primary: #333333;
+  --hub-tech-light: #B8CCE0;
+  --hub-tag-bg-light: transparent;
+  --hub-tag-text-light: #374151;
+  --hub-tag-text-dark: #FFFFFF;
+  --hub-print-tag-bg-dark: #1E40AF;
+  --hub-doc-tag-bg-dark: #166534;
+  --hub-design-tag-bg-dark: #9A3412;
+  --hub-eservice-tag-bg-dark: #2C5E60;
+  --hub-tech-tag-bg-dark: #1F2937;
+  --neutral-icon-light: #333333;
+  --neutral-icon-dark: #B8CCE0;
+  --color-ink: var(--brand-blue-dark);
+  --color-ink-muted: var(--brand-neutral-500);
+  --color-inverse: var(--brand-white);
+  --color-overlay: rgba(15, 23, 42, 0.62);
+  --color-overlay-soft: rgba(255, 255, 255, 0.72);
+  --color-success: #16A34A;
+  --color-success-strong: #15803D;
+  --color-danger: #DC2626;
+  --color-weather-sun: #F59E0B;
+  --color-weather-moon: #818CF8;
+  --color-weather-cloud: #9CA3AF;
+  --color-weather-rain: #60A5FA;
+  --color-weather-storm: #A78BFA;
+  --color-weather-snow: #7DD3FC;
+  --shadow-soft: 0 2px 8px -2px rgba(15, 23, 42, 0.12), 0 1px 3px -1px rgba(15, 23, 42, 0.08);
+  --shadow-modal: 0 45px 100px -20px rgba(15, 23, 42, 0.55), 0 20px 48px -14px rgba(15, 23, 42, 0.4);
 
   --brand-whatsapp: #25D366;
   --brand-whatsapp-dark: #1EBE5A;
@@ -51,9 +90,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-warning-bg-dark: #D86B42;
   --brand-error-bg: var(--destructive);
   --brand-error-text: #B42318;
-  --brand-blue-text: #343B60;
-  --brand-orange-text: #BE3C10;
-  --brand-green-text: #46643A;
+  --brand-blue-text: var(--brand-blue-mid);
+  --brand-orange-text: var(--brand-orange-dark);
+  --brand-green-text: var(--brand-green-dark);
   --brand-whatsapp-text: #0F172A;
 
   --on-brand-blue: #FFFFFF;
@@ -69,29 +108,29 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --radius: 14px;
   --nav-h: 74px;
   --banner-h: 0px;
-  --nav-bg: rgba(241, 241, 236, 0.97);
-  --footer-bg: #25283E;
+  --nav-bg: color-mix(in srgb, var(--background) 97%, transparent);
+  --footer-bg: var(--brand-blue-dark);
   --shadow: none;
   --card-border: transparent;
   --background: #F1F1EC;
-  --foreground: #25283E;
+  --foreground: var(--brand-blue-dark);
   --card: #E8E8E2;
-  --card-foreground: #25283E;
+  --card-foreground: var(--brand-blue-dark);
   --popover: #E8E8E2;
-  --popover-foreground: #25283E;
-  --primary: #435075;
-  --primary-foreground: #FFFFFF;
+  --popover-foreground: var(--brand-blue-dark);
+  --primary: var(--brand-blue);
+  --primary-foreground: var(--brand-white);
   --secondary: #E4E4DE;
-  --secondary-foreground: #25283E;
+  --secondary-foreground: var(--brand-blue-dark);
   --muted: #E4E4DE;
-  --muted-foreground: #62625F;
-  --accent: #435075;
-  --accent-foreground: #FFFFFF;
+  --muted-foreground: var(--brand-neutral-500);
+  --accent: var(--brand-blue);
+  --accent-foreground: var(--brand-white);
   --destructive: #B42318;
-  --destructive-foreground: #FFFFFF;
-  --border: #D5D5CE;
+  --destructive-foreground: var(--brand-white);
+  --border: var(--brand-neutral-300);
   --input: #E4E4DE;
-  --ring: #435075;
+  --ring: var(--brand-blue);
 }
 
 .banner-active {
@@ -100,28 +139,69 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 
 .dark {
-  --brand-blue: #6F7FA8;
-  --brand-blue-mid: #8796BD;
-  --brand-blue-dark: #AAB7D5;
-  --brand-green: #8FB774;
-  --brand-green-deep: #A9CC8F;
+  --brand-blue: #A9D6F2;
+  --brand-blue-mid: #D9EEFA;
+  --brand-blue-dark: #EEF8FD;
+  --brand-green: #CDEB9F;
+  --brand-green-deep: #E5F6C9;
   --brand-orange: #FF9B73;
-  --brand-orange-dark: #FFB08A;
-  --brand-orange-brown: #E9A17D;
-  --brand-teal: #79B9B5;
-  --brand-teal-dark: #9AD4CE;
+  --brand-orange-dark: #F9D1B0;
+  --brand-orange-brown: #FFE5D3;
+  --brand-green-dark: #B8D993;
+  --brand-teal: #9AD4CE;
+  --brand-teal-dark: #BCE5E0;
   --brand-teal-light: #284947;
-  --brand-light-blue: #CAD4EA;
-  --brand-light-green: #D8EBC5;
-  --brand-light-orange: #F9D1B0;
+  --brand-light-blue: #D9EEFA;
+  --brand-light-green: #E5F6C9;
+  --brand-light-orange: #FFE5D3;
   --brand-dark-100: #EEF1F7;
   --brand-dark-200: #D8DDE8;
-  --brand-tech-grey-dark: #E0E4EE;
+  --brand-tech-grey-dark: #B8CCE0;
   --brand-neutral-100: #303548;
   --brand-neutral-200: #383D52;
   --brand-neutral-300: #51586F;
   --brand-neutral-400: #AEB6C9;
-  --brand-neutral-500: #CBD1DE;
+  --brand-white: #FFFFFF;
+  --brand-adobe-pdf-red: #FF6B6B;
+
+  /* Dark theme pairings preserve the same semantic roles with readable contrast. */
+  --hub-print-primary: #A9D6F2;
+  --hub-print-light: #D9EEFA;
+  --hub-doc-primary: #CDEB9F;
+  --hub-doc-light: #E5F6C9;
+  --hub-design-primary: #F9D1B0;
+  --hub-design-light: #FFE5D3;
+  --hub-eservice-primary: #9AD4CE;
+  --hub-eservice-light: #C5E8E3;
+  --hub-tech-primary: #B8CCE0;
+  --hub-tech-light: #D9E6F0;
+  --hub-tag-bg-light: transparent;
+  --hub-tag-text-light: #374151;
+  --hub-tag-text-dark: #FFFFFF;
+  --hub-print-tag-bg-dark: #1E40AF;
+  --hub-doc-tag-bg-dark: #166534;
+  --hub-design-tag-bg-dark: #9A3412;
+  --hub-eservice-tag-bg-dark: #2C5E60;
+  --hub-tech-tag-bg-dark: #1F2937;
+  --neutral-icon-light: #333333;
+  --neutral-icon-dark: #B8CCE0;
+  --color-ink: var(--foreground);
+  --color-ink-muted: var(--brand-neutral-500);
+  --color-inverse: var(--brand-blue-dark);
+  --color-overlay: rgba(0, 0, 0, 0.62);
+  --color-overlay-soft: rgba(255, 255, 255, 0.1);
+  --color-success: #4ADE80;
+  --color-success-strong: #86EFAC;
+  --color-danger: #F87171;
+  --color-weather-sun: #FCD34D;
+  --color-weather-moon: #A5B4FC;
+  --color-weather-cloud: #CBD5E1;
+  --color-weather-rain: #93C5FD;
+  --color-weather-storm: #C4B5FD;
+  --color-weather-snow: #BAE6FD;
+  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.28), 0 1px 3px -1px rgba(0, 0, 0, 0.22);
+  --shadow-modal: 0 45px 100px -20px rgba(0, 0, 0, 0.55), 0 20px 48px -14px rgba(0, 0, 0, 0.4);
+
   --brand-whatsapp: #46E47D;
   --brand-whatsapp-dark: #6BE995;
   --brand-whatsapp-accessible: #55DB82;
@@ -134,20 +214,20 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --card-foreground: #F1F1EC;
   --popover: #2D314B;
   --popover-foreground: #F1F1EC;
-  --primary: #435075;
-  --primary-foreground: #FFFFFF;
+  --primary: var(--brand-blue);
+  --primary-foreground: var(--brand-blue-dark);
   --secondary: #343852;
   --secondary-foreground: #F1F1EC;
   --muted: #343852;
   --muted-foreground: #BFC2CE;
-  --accent: #435075;
-  --accent-foreground: #FFFFFF;
+  --accent: var(--brand-blue);
+  --accent-foreground: var(--brand-blue-dark);
   --destructive: #E66C61;
-  --destructive-foreground: #25283E;
+  --destructive-foreground: var(--brand-blue-dark);
   --border: #484D68;
   --input: #343852;
-  --ring: #435075;
-  --nav-bg: rgba(37, 40, 62, 0.97);
+  --ring: var(--brand-blue);
+  --nav-bg: color-mix(in srgb, var(--background) 97%, transparent);
   --footer-bg: #1D2033;
   --shadow: none;
   --card-border: transparent;
@@ -212,6 +292,24 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-brand-orange-brown: var(--brand-orange-brown);
   --color-brand-warning-bg: var(--brand-warning-bg);
   --color-brand-white: var(--brand-white);
+  --color-brand-adobe-pdf-red: var(--brand-adobe-pdf-red);
+  --color-hub-print-primary: var(--hub-print-primary);
+  --color-hub-print-light: var(--hub-print-light);
+  --color-hub-doc-primary: var(--hub-doc-primary);
+  --color-hub-doc-light: var(--hub-doc-light);
+  --color-hub-design-primary: var(--hub-design-primary);
+  --color-hub-design-light: var(--hub-design-light);
+  --color-hub-eservice-primary: var(--hub-eservice-primary);
+  --color-hub-eservice-light: var(--hub-eservice-light);
+  --color-hub-tech-primary: var(--hub-tech-primary);
+  --color-hub-tech-light: var(--hub-tech-light);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-inverse: var(--color-inverse);
+  --color-overlay: var(--color-overlay);
+  --color-success: var(--color-success);
+  --color-success-strong: var(--color-success-strong);
+  --color-danger: var(--color-danger);
 
   --color-brand-whatsapp: var(--brand-whatsapp);
   --color-brand-whatsapp-dark: var(--brand-whatsapp-dark);
@@ -375,11 +473,7 @@ button, a, [role="button"] {
     box-shadow: none;
   }
 
-  .abh-shadow-modal {
-    box-shadow:
-      0 45px 100px -20px rgba(0, 0, 0, 0.55),
-      0 20px 48px -14px rgba(0, 0, 0, 0.4);
-  }
+  .abh-shadow-modal { box-shadow: var(--shadow-modal); }
 
   .abh-shadow-popover {
     box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.22);

@@ -64,8 +64,8 @@ export function PdfPillButton({
       }`}
       style={{
         color: hovered ? '#ffffff' : restColor,
-        borderColor: hovered ? hoverSolid : `${restColor}35`,
-        backgroundColor: hovered ? hoverSolid : `${restColor}12`,
+        borderColor: hovered ? hoverSolid : `color-mix(in srgb, ${restColor} 12%, transparent)`,
+        backgroundColor: hovered ? hoverSolid : `color-mix(in srgb, ${restColor} 7%, transparent)`,
         border: '1px solid',
         ['--tw-ring-color' as unknown as keyof import("react").CSSProperties]: restColor,
       }}

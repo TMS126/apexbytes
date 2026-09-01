@@ -411,7 +411,7 @@ return (
             <Calculator
               size={34}
               weight="fill"
-              style={{ color: fabColor, filter: `drop-shadow(0 4px 10px ${fabColor}80) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
+              style={{ color: fabColor, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${fabColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>
 
@@ -472,8 +472,8 @@ return (
                 className="sticky top-0 z-10 border-b border-zinc-100 dark:border-white/10 shadow-[0_4px_10px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_10px_-6px_rgba(0,0,0,0.4)]"
                 style={{
                   background: isDark
-                    ? `linear-gradient(180deg, ${fabColor}14 0%, rgba(24,24,27,0.97) 70%)`
-                    : `linear-gradient(180deg, ${fabColor}0d 0%, rgba(255,255,255,0.97) 70%)`,
+                    ? `linear-gradient(180deg, color-mix(in srgb, ${fabColor} 8%, transparent) 0%, rgba(24,24,27,0.97) 70%)`
+                    : `linear-gradient(180deg, color-mix(in srgb, ${fabColor} 12%, transparent) 0%, rgba(255,255,255,0.97) 70%)`,
                   backdropFilter: "blur(6px)",
                 }}
               >

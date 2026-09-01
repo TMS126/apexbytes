@@ -1,7 +1,7 @@
 // app/api/og/route.tsx
 /* eslint-disable @next/next/no-img-element -- ImageResponse requires a plain img element. */
 import { ImageResponse } from 'next/og'
-import { BIZ } from '@/lib/brand'
+import { BIZ, OG_COLORS } from '@/lib/brand'
 
 export const runtime = 'edge'
 
@@ -20,9 +20,9 @@ export async function GET() {
           alignItems: 'flex-start',
           justifyContent: 'center',
           padding: '80px',
-          backgroundColor: '#0F3F66',
+          backgroundColor: OG_COLORS.background,
           backgroundImage:
-            'linear-gradient(135deg, #0F3F66 0%, #15537D 55%, #1E6FA8 100%)',
+            `linear-gradient(135deg, ${OG_COLORS.background} 0%, ${OG_COLORS.backgroundMid} 55%, ${OG_COLORS.blue} 100%)`,
         }}
       >
         {/* FIX: was width=420 height=420 forcing the real 1240×674 logo
@@ -42,14 +42,14 @@ export async function GET() {
           }}
         />
         <div style={{ display: 'flex', gap: '14px', marginBottom: '36px' }}>
-          <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: '#4A8011' }} />
-          <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: '#B9590D' }} />
-          <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: '#ffffff' }} />
+          <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: OG_COLORS.green }} />
+          <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: OG_COLORS.orange }} />
+          <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: OG_COLORS.white }} />
         </div>
-        <div style={{ display: 'flex', fontSize: '76px', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.02em', lineHeight: 1.05 }}>
+        <div style={{ display: 'flex', fontSize: '76px', fontWeight: 800, color: OG_COLORS.white, letterSpacing: '-0.02em', lineHeight: 1.05 }}>
           {BIZ.name}
         </div>
-        <div style={{ display: 'flex', fontSize: '32px', fontWeight: 500, color: '#D7E6F0', marginTop: '20px' }}>
+        <div style={{ display: 'flex', fontSize: '32px', fontWeight: 500, color: OG_COLORS.muted, marginTop: '20px' }}>
           {BIZ.tagline}
         </div>
       </div>

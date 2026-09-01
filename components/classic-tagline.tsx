@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useTheme } from "next-themes"
-import { BRAND } from "@/lib/brand"
+import { HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 
 const WORDS = [
@@ -17,15 +17,13 @@ export function ClassicTagline() {
   const [hovered, setHovered] = useState(false)
 
   const isDark  = mounted && resolvedTheme === "dark"
-  const pageBg  = isDark ? "#0D1B2A" : "#FFFFFF"
-
+  const pageBg = isDark ? HEX.dark.page : HEX.light.page
   const palette = {
-    orange: ensureAccessible(isDark ? BRAND.lightOrange : BRAND.orange, pageBg, 4.5),
-    blue:   ensureAccessible(isDark ? BRAND.lightBlue   : BRAND.blue,   pageBg, 4.5),
-    green:  ensureAccessible(isDark ? BRAND.lightGreen  : BRAND.green,  pageBg, 4.5),
+    orange: ensureAccessible(isDark ? HEX.dark.lightOrange : HEX.light.orange, pageBg, 4.5),
+    blue: ensureAccessible(isDark ? HEX.dark.lightBlue : HEX.light.blue, pageBg, 4.5),
+    green: ensureAccessible(isDark ? HEX.dark.lightGreen : HEX.light.green, pageBg, 4.5),
   }
-
-  const mutedColor = isDark ? "#71717a" : "#a1a1aa"
+  const mutedColor = isDark ? "var(--brand-neutral-400)" : "var(--brand-neutral-500)"
 
   return (
     <p

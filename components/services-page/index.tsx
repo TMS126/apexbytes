@@ -64,7 +64,7 @@ function Pill({
               backgroundColor: fill,
               borderColor: fill,
               color: "#ffffff",
-              boxShadow: `0 0 0 4px ${fill}22`,
+              boxShadow: `0 0 0 4px color-mix(in srgb, ${fill} 12%, transparent)`,
             }
           : {
               backgroundColor: "transparent",
@@ -140,7 +140,7 @@ function SectionCard({
         </span>
         <span
           className="w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
-          style={{ backgroundColor: `${accent}15`, color: accent }}
+          style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
         >
           <CaretRight size={12} weight="bold" />
         </span>

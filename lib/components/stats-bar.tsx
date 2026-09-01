@@ -39,7 +39,7 @@ export function StatsBar() {
                 <div
                   className="w-8 h-8 rounded-[14px] flex items-center justify-center mb-0.5 transition-all duration-200"
                   style={{
-                    backgroundColor: isHov ? stat.color : `${stat.color}15`,
+                    backgroundColor: isHov ? stat.color : `color-mix(in srgb, ${stat.color} 8%, transparent)`,
                     color: isHov ? "#ffffff" : stat.color,
                   }}
                 >

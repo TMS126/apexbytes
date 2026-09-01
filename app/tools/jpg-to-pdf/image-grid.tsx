@@ -64,7 +64,7 @@ function GridItem({
           fill
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover"
-          style={{ transform: `rotate(${cssRotation}deg)` }}
+          style={{ transform: `rotate(color-mix(in srgb, ${cssRotation} 12%, transparent)g)` }}
           unoptimized
         />
         {img.crop && (

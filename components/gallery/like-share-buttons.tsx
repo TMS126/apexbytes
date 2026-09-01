@@ -41,7 +41,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
       onClick={handleShare}
       aria-label="Share this project"
       className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-colors hover:opacity-80"
-      style={{ backgroundColor: `${blueColor}15`, color: blueColor }}
+      style={{ backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor }}
     >
       {shared ? <Check size={16} weight="bold" className="text-green-500" /> : canNativeShare ? <ShareNetwork size={16} weight="bold" /> : <LinkSimple size={16} weight="bold" />}
     </button>
@@ -65,7 +65,7 @@ export function LikeButton({ liked, onToggle, context = "header" }: {
         "w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all active:scale-90 hover:opacity-80",
         context === "card" && "bg-black/40 hover:bg-black/60 backdrop-blur-sm"
       )}
-      style={context === "header" ? { backgroundColor: `${blueColor}15`, color: blueColor } : undefined}
+      style={context === "header" ? { backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor } : undefined}
     >
       <Heart
         key={liked ? "liked" : "unliked"}

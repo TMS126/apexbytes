@@ -21,7 +21,7 @@ export function AboutMission({
     <section
       className="px-4 md:px-8 py-16 md:py-20 text-center relative overflow-hidden transition-colors duration-300"
       aria-labelledby="mission-title"
-      style={{ backgroundColor: `${BRAND.blue}0a` }}
+      style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 4%, transparent)` }}
     >
       <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-10 -mr-32 -mt-32" aria-hidden="true" />
       <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-[0.06] -ml-28 -mb-28" aria-hidden="true" />
