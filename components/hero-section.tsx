@@ -1,7 +1,7 @@
 // components/hero-section.tsx
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import {
@@ -31,48 +31,39 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
 }
 
 // ─── HERO SERVICES ILLUSTRATION ──────────────────────────────────────────────
-const HERO_SERVICE_LABELS = [
-  { hub: "Print Hub", labels: ["B&W Print", "Colour Print"], color: "var(--brand-blue)" },
-  { hub: "Docu Hub", labels: ["CV from Scratch", "CV Upgrade/Fix"], color: "var(--brand-green)" },
-  { hub: "Design Hub", labels: ["Logo (Basic)", "Business Card"], color: "var(--brand-orange-dark)" },
-  { hub: "E-Service Hub", labels: ["SASSA Status Check", "SASSA SRD Application"], color: "var(--brand-green)" },
-  { hub: "Tech Hub", labels: ["Software Install", "PC Setup"], color: "var(--brand-blue)" },
-]
-
 function HubIconField() {
+  const [active, setActive] = useState(false)
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const activate = () => {
+    if (resetTimer.current) clearTimeout(resetTimer.current)
+    setActive(true)
+  }
+  const release = () => {
+    if (resetTimer.current) clearTimeout(resetTimer.current)
+    resetTimer.current = setTimeout(() => setActive(false), 500)
+  }
+
   return (
-    <div className="relative mx-auto w-full max-w-[560px] aspect-square">
+    <div
+      className="relative mx-auto w-full max-w-[560px] aspect-square"
+      onMouseEnter={activate}
+      onMouseLeave={release}
+      onTouchStart={activate}
+      onTouchEnd={release}
+      onTouchCancel={release}
+      onFocus={activate}
+      onBlur={release}
+    >
       <Image
-        src="/apexbytes-services-isometric.png"
+        src="/apexbytes-services-isometric-v2.png"
         alt="Isometric printer, CV clipboard, design tools, globe with shield, laptop, and PC representing ApexbytesHub services"
         fill
         priority
         sizes="(max-width: 767px) 90vw, 560px"
-        className="object-contain drop-shadow-[0_18px_26px_rgba(37,40,62,0.12)] dark:drop-shadow-[0_20px_30px_rgba(0,0,0,0.35)]"
+        className="object-contain transition-transform duration-500 ease-out drop-shadow-[0_18px_26px_rgba(37,40,62,0.12)] dark:drop-shadow-[0_20px_30px_rgba(0,0,0,0.35)]"
+        style={{ transform: active ? "scale(1.045) rotate(-1deg)" : "scale(1) rotate(0deg)" }}
       />
-      <div className="absolute inset-0 pointer-events-none">
-        {HERO_SERVICE_LABELS.map((group, index) => (
-          <div
-            key={group.hub}
-            className="absolute flex flex-wrap justify-center gap-1.5 max-w-[150px] text-center"
-            style={{
-              left: `${[8, 27, 46, 62, 75][index]}%`,
-              top: `${[76, 61, 45, 29, 12][index]}%`,
-              transform: "translate(-50%, -50%) rotate(-10deg)",
-            }}
-          >
-            {group.labels.map((label) => (
-              <span
-                key={label}
-                className="rounded-full border bg-background/95 px-2 py-1 text-[0.58rem] font-bold leading-none shadow-sm backdrop-blur-sm sm:text-[0.65rem]"
-                style={{ borderColor: group.color, color: group.color }}
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
@@ -218,13 +209,13 @@ export function HeroSection() {
           onMouseEnter={() => setMarqueePaused(true)}
           onMouseLeave={() => setMarqueePaused(false)}
           onTouchStart={(e) => { e.stopPropagation(); setMarqueePaused((p) => !p) }}
-          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee rounded-[14px] bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-100 dark:border-zinc-800 [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
+          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee border-y border-border bg-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
         >
           <button
             onClick={() => setMarqueePaused((p) => !p)}
             aria-pressed={marqueePaused}
             aria-label={marqueePaused ? "Play scrolling services list" : "Pause scrolling services list"}
-            className="absolute top-1/2 right-2 -translate-y-1/2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 bg-zinc-50 dark:bg-zinc-900/80 transition-colors"
+            className="absolute top-1/2 right-2 -translate-y-1/2 z-10 w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground bg-background/90 border border-border transition-colors"
           >
             {marqueePaused ? <Play size={11} weight="fill" aria-hidden="true" /> : <Pause size={11} weight="fill" aria-hidden="true" />}
           </button>

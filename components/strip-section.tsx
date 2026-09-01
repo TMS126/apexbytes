@@ -50,9 +50,15 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setHovered(false)}
+      tabIndex={0}
+      aria-label={item.title}
       className={cn(
         "relative rounded-[14px] border p-6 transition-all duration-300 group overflow-hidden h-full",
-        "abh-shadow-card hover:-translate-y-1"
+        "abh-shadow-card hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
       )}
       style={{
         backgroundColor: hovered ? color : "var(--card)",
