@@ -181,7 +181,7 @@ function FooterContent() {
               <Link
                 href="/privacy"
                 prefetch
-                className="text-[0.78rem] font-medium text-zinc-300 dark:text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
+                className="text-[0.78rem] font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Privacy Policy
               </Link>

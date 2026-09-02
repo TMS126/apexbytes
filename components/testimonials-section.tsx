@@ -156,7 +156,10 @@ export function TestimonialsSection({
     const c = HUB_COLORS[reviews[i].hubId as HubKey]
     return isDark ? c.accentDark : c.accentLight
   }
-  const solidFor = (i: number) => HUB_COLORS[reviews[i].hubId as HubKey].primary
+  const solidFor = (i: number) => {
+    const c = HUB_COLORS[reviews[i].hubId as HubKey]
+    return isDark ? c.tagBgDark : c.primary
+  }
 
   const slotStyle = (offset: number): React.CSSProperties => {
     const abs = Math.abs(offset)

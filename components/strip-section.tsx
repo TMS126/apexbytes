@@ -106,8 +106,8 @@ export function CtaBar({
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
 
-  const ctaBlue = isDark ? BRAND.lightBlue : BRAND.blue
-  const ctaTextOnBlue = getReadableTextColor(ctaBlue)
+  const ctaBlue = "var(--cta-badge-bg)"
+  const ctaTextOnBlue = "var(--cta-badge-text)"
 
   return (
     <section aria-label="Call to action" className="px-4 md:px-8 py-16 transition-colors duration-300 bg-background">

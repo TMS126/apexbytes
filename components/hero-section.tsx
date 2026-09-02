@@ -144,7 +144,7 @@ export function HeroSection() {
               </p>
             )}
 
-            <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mb-3 text-brand-orange">
+            <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mb-3 text-brand-orange-text">
               <span aria-hidden="true">•</span> {BIZ.tagline.replace(/\.$/, "")}
             </p>
 

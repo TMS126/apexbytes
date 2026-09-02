@@ -75,6 +75,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-danger: #DC2626;
   --home-cta-bg: var(--brand-blue);
   --home-cta-text: var(--brand-white);
+  --cta-badge-bg: var(--brand-blue);
+  --cta-badge-text: var(--brand-white);
   --primary-fill: var(--brand-blue);
   --on-primary-fill: var(--brand-white);
   --maintenance-bg-start: var(--brand-blue-dark);
@@ -104,7 +106,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-error-bg: var(--destructive);
   --brand-error-text: #B42318;
   --brand-blue-text: var(--brand-blue-dark);
-  --brand-orange-text: var(--brand-orange-dark);
+  --brand-orange-text: #7B3306;
   --brand-green-text: var(--brand-green-dark);
   --brand-whatsapp-text: #0F172A;
 
@@ -207,7 +209,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-success-strong: #86EFAC;
   --color-danger: #F87171;
   --home-cta-bg: var(--brand-orange);
-  --home-cta-text: var(--brand-blue-dark);
+  --home-cta-text: var(--background);
+  --cta-badge-bg: var(--brand-light-blue);
+  --cta-badge-text: var(--background);
   --logo-primary: var(--foreground);
   --logo-secondary: var(--brand-neutral-400);
   --hub-label-foreground: var(--brand-light-blue);
@@ -218,7 +222,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --maintenance-bg-end: #15537D;
   --maintenance-text: var(--brand-white);
   --title-color: var(--foreground);
-  --on-seal-orange: var(--brand-blue-dark);
+  --on-seal-orange: var(--background);
   --color-weather-sun: #FCD34D;
   --color-weather-moon: #A5B4FC;
   --color-weather-cloud: #CBD5E1;
@@ -260,6 +264,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-warning-bg: #E08A64;
   --brand-orange-text: #FF9C73;
   --brand-blue-text: #D9EEFA;
+  --on-brand-blue: var(--background);
   --brand-green-text: #D5E8C2;
 }
 

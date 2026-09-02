@@ -32,8 +32,8 @@ export function AboutPage() {
   const blueOnCard = ensureAccessible(blueColor, cardBg, 4.5)
   const orangeOnCard = ensureAccessible(orangeColor, cardBg, 4.5)
 
-  const missionBadgeBg = blueColor
-  const missionBadgeText = getContrastText(missionBadgeBg)
+  const missionBadgeBg = "var(--cta-badge-bg)"
+  const missionBadgeText = "var(--cta-badge-text)"
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
