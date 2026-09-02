@@ -7,7 +7,7 @@ import { CtaBar } from "@/components/strip-section"
 export function EmptyHubState({ label, query }: { label: string; query?: string }) {
   return (
     <div className="max-w-md mx-auto text-center py-12 px-6 rounded-[14px] border border-dashed border-zinc-200 dark:border-zinc-800">
-      <p className="text-[1.2rem] font-bold text-zinc-500 dark:text-zinc-400">
+      <p className="text-[1.2rem] font-bold text-muted-foreground dark:text-muted-foreground">
         {query
           ? <>No {label} projects match &ldquo;{query}&rdquo;</>
           : <>No {label} projects yet — check back soon.</>}

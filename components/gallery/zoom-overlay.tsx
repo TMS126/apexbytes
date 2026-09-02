@@ -98,13 +98,13 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
       )}
       {images.length > 1 && (
         isMobile ? (
-          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/40 text-[0.78rem] font-bold uppercase tracking-widest whitespace-nowrap pointer-events-none">
+          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-[0.78rem] font-bold uppercase tracking-widest whitespace-nowrap pointer-events-none">
             Swipe or use arrow keys
           </p>
         ) : (
           <button
             onClick={() => setIdx(i => (i + 1) % images.length)}
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/40 hover:text-white/80 text-[0.78rem] font-bold uppercase tracking-widest whitespace-nowrap transition-colors"
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 hover:text-white/80 text-[0.78rem] font-bold uppercase tracking-widest whitespace-nowrap transition-colors"
           >
             Click to view next image · or use arrow keys
           </button>

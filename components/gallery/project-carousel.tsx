@@ -84,7 +84,7 @@ function ProjectCard({
         <div className="absolute bottom-0 inset-x-0 px-3 py-3 bg-zinc-950/90 z-10">
           <h3 className="text-white font-black text-[1.14rem] leading-snug">{project.title}</h3>
           {project.clientType && (
-            <p className="text-white/70 text-[0.82rem] italic mt-1">
+            <p className="text-white/80 text-[0.82rem] italic mt-1">
               {CLIENT_TYPE_LABEL[project.clientType]}
             </p>
           )}

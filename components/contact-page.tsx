@@ -138,7 +138,7 @@ function ContactPageInner() {
               <button
                 key={q.id}
                 onClick={() => scrollToSection(q.id)}
-                className="px-4 py-1.5 rounded-full text-sm font-medium text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-brand-blue hover:text-brand-blue dark:hover:text-brand-light-blue dark:hover:border-brand-light-blue transition-colors duration-150 active:scale-95"
+                className="px-4 py-1.5 rounded-full text-sm font-medium text-muted-foreground dark:text-muted-foreground border border-zinc-200 dark:border-zinc-800 hover:border-brand-blue hover:text-brand-blue dark:hover:text-brand-light-blue dark:hover:border-brand-light-blue transition-colors duration-150 active:scale-95"
               >
                 {q.label}
               </button>
@@ -186,7 +186,7 @@ function ContactPageInner() {
                             <button
                               onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleCopy(c.title, c.value) }}
                               aria-label={justCopied ? `${c.title} copied` : `Copy ${c.title.toLowerCase()}`}
-                              className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-all active:scale-90"
+                              className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 transition-all active:scale-90"
                             >
                               {justCopied ? <Check size={12} weight="bold" style={{ color: BRAND.green }} /> : <Copy size={12} weight="bold" />}
                             </button>
@@ -227,7 +227,7 @@ function ContactPageInner() {
                   </span>
                   <div className="space-y-3">
                     <div>
-                      <p className="abh-eyebrow text-zinc-500 mb-1">{HOURS.printAndDoc.label}</p>
+                      <p className="abh-eyebrow text-muted-foreground mb-1">{HOURS.printAndDoc.label}</p>
                       <p className="text-base font-normal text-zinc-700 dark:text-zinc-300">{HOURS.printAndDoc.hours}</p>
                       <p className="flex items-center gap-1.5 text-sm font-normal mt-1" style={{ color: BRAND.blue }}>
                         <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: BRAND.blue }} aria-hidden="true" />
@@ -235,17 +235,17 @@ function ContactPageInner() {
                       </p>
                     </div>
                     <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                      <p className="abh-eyebrow text-zinc-500 mb-1">{HOURS.techDesignEservice.label}</p>
+                      <p className="abh-eyebrow text-muted-foreground mb-1">{HOURS.techDesignEservice.label}</p>
                       {HOURS.techDesignEservice.lines.map((l) => (
                         <p key={l} className="text-base font-normal text-zinc-700 dark:text-zinc-300">{l}</p>
                       ))}
-                      <p className="flex items-center gap-1.5 text-sm font-normal mt-1 text-zinc-500 dark:text-zinc-400">
+                      <p className="flex items-center gap-1.5 text-sm font-normal mt-1 text-muted-foreground dark:text-muted-foreground">
                         <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-zinc-400 dark:bg-zinc-500" aria-hidden="true" />
                         Sunday &amp; Public Holidays · Closed
                       </p>
                     </div>
                     <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                      <p className="abh-eyebrow text-zinc-400 mb-2">Current Status</p>
+                      <p className="abh-eyebrow text-muted-foreground mb-2">Current Status</p>
                       <BusinessStatusFull />
                     </div>
                   </div>

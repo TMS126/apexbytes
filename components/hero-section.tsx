@@ -138,7 +138,7 @@ export function HeroSection() {
           <div className="text-center md:text-left">
 
             {showHolidayBanner && status && (
-              <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400 mb-3">
+              <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground dark:text-muted-foreground mb-3">
                 <WeatherIcon size={16} weight="regular" style={{ color: weatherIconColor }} aria-hidden="true" />
                 Tech, Design &amp; E-Service are closed today for {status.holidayName} — Print &amp; Docu is open as usual
               </p>
@@ -191,7 +191,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
-                <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 dark:text-zinc-400">
+                <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground dark:text-muted-foreground">
                   <CheckCircle size={15} weight="regular" style={{ color: TOKEN.brandBlue }} aria-hidden="true" />
                   {hint}
                 </span>
@@ -230,10 +230,10 @@ export function HeroSection() {
               <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1 ? "true" : undefined}>
                 {MARQUEE_ITEMS.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    <span className="inline-flex items-center px-5 font-semibold text-base text-zinc-600 dark:text-zinc-400 transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
+                    <span className="inline-flex items-center px-5 font-semibold text-base text-zinc-600 dark:text-muted-foreground transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
                       {item}
                     </span>
-                    <span className="font-black text-lg leading-none shrink-0 text-zinc-300 dark:text-zinc-600" aria-hidden="true">•</span>
+                    <span className="font-black text-lg leading-none shrink-0 text-zinc-300 dark:text-muted-foreground" aria-hidden="true">•</span>
                   </React.Fragment>
                 ))}
               </div>

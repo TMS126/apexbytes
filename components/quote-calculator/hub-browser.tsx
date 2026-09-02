@@ -27,7 +27,7 @@ export function HubBrowser({
 }: HubBrowserProps) {
   return (
     <div className="p-4 space-y-2">
-      <span className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-400 px-1">Add a Service</span>
+      <span className="text-[0.78rem] font-black uppercase tracking-widest text-muted-foreground px-1">Add a Service</span>
       {HUB_ORDER.map(hubId => {
         const hub = HUBS[hubId]
         const accent = getAccent(hubId)
@@ -130,7 +130,7 @@ export function HubBrowser({
                                 className={cn(
                                   "text-[0.78rem] font-black uppercase tracking-[0.15em] transition-colors duration-200",
                                   isSectionOpen ? "px-2.5 py-1 rounded-full" : "px-0 py-1",
-                                  !isSectionOpen && !anySectionOpen && "text-zinc-500 dark:text-zinc-400"
+                                  !isSectionOpen && !anySectionOpen && "text-muted-foreground dark:text-muted-foreground"
                                 )}
                                 style={
                                   isSectionOpen
@@ -246,7 +246,7 @@ export function HubBrowser({
                                           {getDisplayName(section.title, item.name)}
                                           {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                         </p>
-                                        <p className="text-[0.78rem] font-medium text-zinc-400">{item.price}</p>
+                                        <p className="text-[0.78rem] font-medium text-muted-foreground">{item.price}</p>
                                       </div>
                                       <div className="flex items-center gap-1.5 shrink-0">
                                         {itemQty > 0 && (

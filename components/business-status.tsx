@@ -37,7 +37,7 @@ function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techE
 function StatusLine({ status }: { status: HubStatus }) {
   const dotColor = status.open ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"
   return (
-    <div className="flex flex-col gap-1 text-[0.74rem] font-bold tracking-wide text-zinc-500 dark:text-zinc-400">
+    <div className="flex flex-col gap-1 text-[0.74rem] font-bold tracking-wide text-muted-foreground dark:text-muted-foreground">
       <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
         <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", dotColor)} />
         <span className="font-black">{status.label}</span>
@@ -85,7 +85,7 @@ export function BusinessStatusNavbar() {
     ? "text-green-500 dark:text-green-400"
     : anyOpen
       ? "text-brand-orange"
-      : "text-zinc-400 dark:text-zinc-500"
+      : "text-muted-foreground dark:text-muted-foreground"
 
   return (
     <div ref={wrapperRef} className="hidden md:flex items-center gap-0">
@@ -114,7 +114,7 @@ export function BusinessStatusNavbar() {
             <span>{printDoc.nextEvent}</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-[0.74rem] font-bold whitespace-nowrap text-zinc-500 dark:text-zinc-400">
+          <div className="flex items-center gap-1 text-[0.74rem] font-bold whitespace-nowrap text-muted-foreground dark:text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 invisible" />
             <span className="font-black">{printDoc.label}</span>
             <span className="opacity-70 font-normal">Closed</span>
@@ -131,7 +131,7 @@ export function BusinessStatusNavbar() {
             <span>{techEtc.nextEvent}</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-[0.74rem] font-bold whitespace-nowrap text-zinc-500 dark:text-zinc-400">
+          <div className="flex items-center gap-1 text-[0.74rem] font-bold whitespace-nowrap text-muted-foreground dark:text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 invisible" />
             <span className="font-black">{techEtc.label}</span>
             <span className="opacity-70 font-normal">Closed</span>

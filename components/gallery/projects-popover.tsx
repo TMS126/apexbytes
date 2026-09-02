@@ -111,7 +111,7 @@ export function ProjectsPopover({
                   <p className="text-sm font-black text-zinc-800 dark:text-zinc-200 truncate group-hover/item:underline" style={{ textDecorationColor: accent }}>
                     {p.title}
                   </p>
-                  <p className="text-[0.72rem] font-medium text-zinc-400 truncate">{p.shortDesc}</p>
+                  <p className="text-[0.72rem] font-medium text-muted-foreground truncate">{p.shortDesc}</p>
                 </div>
               </button>
             ))}

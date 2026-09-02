@@ -143,12 +143,12 @@ export function SettingsBar({
 
         <QualitySlider quality={quality} setQuality={setQuality} />
 
-        <div className="flex justify-between text-[0.7rem] text-zinc-400 mt-1">
+        <div className="flex justify-between text-[0.7rem] text-muted-foreground mt-1">
           <span>Smaller file</span>
           <span>High quality</span>
         </div>
         {originalBytes !== null && (
-          <p className="text-xs text-zinc-400 mt-2.5 text-center" aria-live="polite">
+          <p className="text-xs text-muted-foreground mt-2.5 text-center" aria-live="polite">
             Original {formatBytes(originalBytes)} → Estimated {estimatedBytes !== null ? formatBytes(estimatedBytes) : "…"}
           </p>
         )}

@@ -96,7 +96,7 @@ export function TheNakedTradersZAReveal({
               type="button"
               onClick={() => closeModal()}
               aria-label="Close logo preview"
-              className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors outline-none focus-visible:ring-2"
+              className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors outline-none focus-visible:ring-2"
               style={{ ["--tw-ring-color" as string]: accentColor }}
             >
               <X size={16} weight="bold" aria-hidden="true" />

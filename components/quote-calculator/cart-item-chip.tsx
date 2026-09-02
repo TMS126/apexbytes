@@ -74,7 +74,7 @@ export function CartItemChip({
       <button
         onClick={() => onRemove(item.id)}
         aria-label={`Remove ${displayName} from quote`}
-        className="w-6 h-6 flex items-center justify-center text-zinc-400 hover:text-red-500 shrink-0 transition-colors duration-150"
+        className="w-6 h-6 flex items-center justify-center text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150"
       >
         <X size={12} weight="bold" aria-hidden="true" />
       </button>

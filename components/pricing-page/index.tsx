@@ -239,7 +239,7 @@ const displayedHub = hoveredHub ?? selectedHub
                           key={hubId}
                           onClick={() => jumpToHub(hubId)}
                           aria-pressed={isOpen}
-                          className="relative pb-1 text-sm font-bold text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
+                          className="relative pb-1 text-sm font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
                           style={
                             isOpen
                               ? { color: accent, ['--tw-ring-color' as string]: accent }
@@ -261,7 +261,7 @@ const displayedHub = hoveredHub ?? selectedHub
                   <div className="no-print flex justify-center">
                     <button
                       onClick={toggleAll}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-bold border border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-bold border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
                     >
                       {allOpen ? 'Collapse all' : 'Expand all'}
                     </button>
@@ -347,7 +347,7 @@ const displayedHub = hoveredHub ?? selectedHub
 
   {/* Hint when nothing is selected or hovered */}
   {!displayedHub && (
-    <p className="text-center text-sm text-zinc-400 py-4 mt-4">
+    <p className="text-center text-sm text-muted-foreground py-4 mt-4">
       Select a hub above to see its services and pricing.
     </p>
   )}

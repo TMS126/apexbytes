@@ -11,7 +11,7 @@ export function TipsPanel({ tips, isGeneric, accent, copied, onCopy }: {
     <div className="text-left">
       <div className="mb-3 flex items-center justify-between gap-2">
         {isGeneric ? (
-          <span className="text-[0.7rem] font-bold uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
+          <span className="text-[0.7rem] font-bold uppercase tracking-wide text-muted-foreground dark:text-muted-foreground">
             General tips for this hub
           </span>
         ) : <span />}

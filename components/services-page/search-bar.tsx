@@ -43,7 +43,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
           rounded-[14px], solid neutral border, brand-blue focus border,
           white/zinc-900 fill instead of the old zinc-50/underline look ===== */}
       <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
-        <MagnifyingGlass size={16} weight="bold" className="text-zinc-400 pointer-events-none shrink-0" aria-hidden="true" />
+        <MagnifyingGlass size={16} weight="bold" className="text-muted-foreground pointer-events-none shrink-0" aria-hidden="true" />
         <label htmlFor="inline-search-input" className="sr-only">Find a service</label>
         <input
           id="inline-search-input"
@@ -52,11 +52,11 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           placeholder="Find a service…"
-          className="min-w-0 flex-1 py-3 pr-8 bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 outline-none appearance-none [-webkit-appearance:none]"
+          className="min-w-0 flex-1 py-3 pr-8 bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-muted-foreground outline-none appearance-none [-webkit-appearance:none]"
         />
       </div>
       {query && (
-        <button onClick={() => setQuery("")} aria-label="Clear search" className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600">
+        <button onClick={() => setQuery("")} aria-label="Clear search" className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600">
           <X size={12} weight="bold" aria-hidden="true" />
         </button>
       )}
@@ -72,7 +72,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
                     <HubIcon id={s.hubId} size={20} color={accent} />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-black text-zinc-800 dark:text-zinc-200 truncate">{s.name}</p>
-                      <p className="text-[0.78rem] font-bold uppercase tracking-wider text-zinc-400 truncate">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
+                      <p className="text-[0.78rem] font-bold uppercase tracking-wider text-muted-foreground truncate">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
                     </div>
                     <span className="text-sm font-black shrink-0" style={{ color: accent }}>{s.price}</span>
                   </button>
@@ -81,8 +81,8 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
             </div>
           ) : (
             <div className="p-5 text-center">
-              <p className="text-base font-bold text-zinc-500 dark:text-zinc-400">No services found</p>
-              <p className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mt-1">Try a different word, or WhatsApp us directly.</p>
+              <p className="text-base font-bold text-muted-foreground dark:text-muted-foreground">No services found</p>
+              <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mt-1">Try a different word, or WhatsApp us directly.</p>
             </div>
           )}
         </div>

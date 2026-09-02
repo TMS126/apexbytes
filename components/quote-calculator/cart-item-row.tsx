@@ -47,7 +47,7 @@ export function CartItemRow({
           <p className="text-xs font-black text-zinc-800 dark:text-zinc-200 truncate">{displayName}</p>
           <p className="text-[0.62rem] font-bold mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
-        <button onClick={() => onRemove(item.id)} aria-label={`Remove ${displayName} from quote`} className="text-zinc-400 hover:text-red-500 shrink-0 transition-colors duration-150">
+        <button onClick={() => onRemove(item.id)} aria-label={`Remove ${displayName} from quote`} className="text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150">
           <Trash size={14} weight="bold" aria-hidden="true" />
         </button>
       </div>
@@ -111,7 +111,7 @@ export function CartItemRow({
 
       {hint && (
         <p
-          className={cn("text-[0.6rem] font-bold", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-zinc-400")}
+          className={cn("text-[0.6rem] font-bold", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")}
           role="status"
         >
           {hint}

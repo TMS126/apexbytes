@@ -66,14 +66,14 @@ function FooterContent() {
                 ApexbytesHub
               </h2>
             </div>
-            <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400 max-w-xs">
+            <p className="text-base leading-relaxed text-zinc-600 dark:text-muted-foreground max-w-xs">
               Your local tech and print partner in Kgotsong. {BIZ.hubCount} hubs, {BIZ.serviceCount} services — all
               in one friendly place.
             </p>
           </div>
 
           <nav aria-label="Footer navigation">
-            <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-zinc-400">Quick Links</h3>
+            <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
                 const isActive = pathname === page.path
@@ -98,7 +98,7 @@ function FooterContent() {
           </nav>
 
           <div>
-            <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-zinc-400">Connect</h3>
+            <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-muted-foreground">Connect</h3>
             <ul className="flex flex-col gap-5">
               <li className="relative">
                 <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ function FooterContent() {
                     type="button"
                     onClick={handleCopyPhone}
                     aria-label="Copy phone number"
-                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm text-zinc-400 hover:text-brand-blue transition-colors active:scale-90"
+                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm text-muted-foreground hover:text-brand-blue transition-colors active:scale-90"
                   >
                     {phoneCopied ? (
                       <Check weight="bold" className="w-3.5 h-3.5 text-brand-green" />
@@ -162,7 +162,7 @@ function FooterContent() {
       <ScrollBounce>
         <div className="mt-8 bg-zinc-50 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-800">
           <div className="max-w-[1200px] mx-auto pt-8 pb-8 px-6 md:px-8 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
-            <p className="text-[0.78rem] font-medium text-zinc-400 md:text-left text-center">
+            <p className="text-[0.78rem] font-medium text-muted-foreground md:text-left text-center">
               © {new Date().getFullYear()} {BIZ.name}. All rights reserved.
             </p>
 
@@ -171,7 +171,7 @@ function FooterContent() {
                 type="button"
                 onClick={() => setIsTermsOpen(true)}
                 style={{ fontSize: "0.78rem", lineHeight: "1.1rem" }}
-                className="font-medium text-zinc-400 hover:text-brand-blue transition-colors py-2 px-1"
+                className="font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Terms
               </button>
@@ -181,13 +181,13 @@ function FooterContent() {
               <Link
                 href="/privacy"
                 prefetch
-                className="text-[0.78rem] font-medium text-zinc-300 dark:text-zinc-500 hover:text-brand-blue transition-colors py-2 px-1"
+                className="text-[0.78rem] font-medium text-zinc-300 dark:text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Privacy Policy
               </Link>
             </div>
 
-            <p className="text-[0.78rem] font-medium text-zinc-400 flex items-center justify-center md:justify-end gap-1.5">
+            <p className="text-[0.78rem] font-medium text-muted-foreground flex items-center justify-center md:justify-end gap-1.5">
               Built with <Heart weight="fill" className="w-3 h-3 text-brand-orange" aria-hidden="true" /> for the
               Kgotsong community
             </p>

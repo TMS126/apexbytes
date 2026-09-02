@@ -121,7 +121,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 <h2 className="font-sans font-black text-2xl text-zinc-900 dark:text-zinc-50 break-words">
                   {hub.title}
                 </h2>
-                <p className="text-[0.82rem] font-semibold text-zinc-400 dark:text-zinc-500 mt-0.5">
+                <p className="text-[0.82rem] font-semibold text-muted-foreground dark:text-muted-foreground mt-0.5">
                   {hub.sections.reduce((sum, s) => sum + s.items.length, 0)} services available
                 </p>
               </div>
@@ -130,7 +130,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 href={`/gallery?hub=${hubId}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[0.8rem] font-bold text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 whitespace-nowrap"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[0.8rem] font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 whitespace-nowrap"
               >
                 Gallery
                 <ArrowSquareOut size={11} weight="bold" aria-hidden="true" />
@@ -139,7 +139,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-muted text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 shrink-0"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-muted text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 shrink-0"
               >
                 <XIcon size={18} weight="bold" aria-hidden="true" />
               </button>
@@ -238,7 +238,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   >
                     <span className="text-[1.02rem] font-semibold text-zinc-700 dark:text-zinc-200 text-left flex items-center gap-2">
                       {itemHasBulk(hubId, activeSection.title, item.name) && (
-                        <span className="shrink-0 text-[0.58rem] font-black uppercase tracking-wide text-zinc-400">
+                        <span className="shrink-0 text-[0.58rem] font-black uppercase tracking-wide text-muted-foreground">
                           Bulk ·
                         </span>
                       )}
@@ -334,10 +334,10 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   >
                     <XIcon size={15} weight="bold" aria-hidden="true" />
                   </motion.button>
-                  <p className="text-[0.86rem] font-black text-zinc-500 dark:text-zinc-400 mb-1 pr-8">
+                  <p className="text-[0.86rem] font-black text-muted-foreground dark:text-muted-foreground mb-1 pr-8">
                     Please Note
                   </p>
-                  <p className="text-[0.86rem] font-medium text-zinc-400 dark:text-zinc-500 leading-relaxed pr-8">
+                  <p className="text-[0.86rem] font-medium text-muted-foreground dark:text-muted-foreground leading-relaxed pr-8">
                     {hubDisclaimer}
                   </p>
                 </motion.div>
@@ -355,7 +355,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           transition={{ duration: 0.2, delay: 0.1 }}
           className="relative z-10 w-full max-w-2xl mt-5 flex flex-col items-center"
         >
-          <p className="text-[0.72rem] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-2.5">
+          <p className="text-[0.72rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-2.5">
             More Hubs
           </p>
           <div className="abh-shadow-popover flex flex-wrap justify-center gap-2 p-3 rounded-[16px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm">
@@ -368,7 +368,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   onClick={() => onSwitchHub(id)}
                   aria-label={`Switch to ${HUBS[id].title}`}
                   title={HUBS[id].title}
-                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-zinc-400 dark:text-zinc-500 hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
+                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
                   style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: otherAccent }}
                 >
                   <HubIcon id={id} size={18} color="currentColor" />

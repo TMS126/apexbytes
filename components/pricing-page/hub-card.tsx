@@ -187,12 +187,12 @@ export function HubCompactCard({
           {hub.previews.slice(0, 3).map(p => (
             <li key={p} className="flex items-center gap-1.5">
               <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-600 shrink-0" />
-              <span className="text-sm text-zinc-500 dark:text-zinc-400">{p}</span>
+              <span className="text-sm text-muted-foreground dark:text-muted-foreground">{p}</span>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-snug mb-3">
+        <p className="text-sm text-muted-foreground dark:text-muted-foreground leading-snug mb-3">
           {hub.desc}
         </p>
       )}
@@ -206,7 +206,7 @@ export function HubCompactCard({
           {total} services
         </span>
         {hubHasBulk && (
-          <span className="inline-flex items-center gap-0.5 text-[10px] text-zinc-400">
+          <span className="inline-flex items-center gap-0.5 text-[10px] text-muted-foreground">
             <SealPercent size={10} weight="fill" aria-hidden="true" />
             Bulk
           </span>
@@ -338,10 +338,10 @@ export function HubExpandedPanel({
             <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
             <div className="min-w-0">
               <span className="text-xs font-black" style={{ color: hubColor }}>{turnaround.label}</span>
-              <span className="text-xs text-zinc-400 ml-1.5">{turnaround.detail}</span>
+              <span className="text-xs text-muted-foreground ml-1.5">{turnaround.detail}</span>
             </div>
           </div>
-          <p className="text-xs text-zinc-400 shrink-0">No hidden fees.</p>
+          <p className="text-xs text-muted-foreground shrink-0">No hidden fees.</p>
         </div>
       </div>
     </div>
@@ -406,8 +406,8 @@ export function HubAccordionCard({
           </div>
         </div>
         {isOpen
-          ? <CaretUp size={14} className="text-zinc-400 shrink-0 transition-transform duration-200" aria-hidden="true" />
-          : <CaretDown size={14} className="text-zinc-400 shrink-0 transition-transform duration-200" aria-hidden="true" />
+          ? <CaretUp size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
+          : <CaretDown size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
         }
       </button>
 
@@ -445,7 +445,7 @@ export function HubAccordionCard({
             </div>
 
             <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
-              <p className="text-xs text-zinc-400">No hidden fees.</p>
+              <p className="text-xs text-muted-foreground">No hidden fees.</p>
               <PdfPillButton label={hub.title} onClick={onDownload} size="sm" color={hubColor} />
             </div>
           </div>

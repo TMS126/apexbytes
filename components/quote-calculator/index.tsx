@@ -385,7 +385,7 @@ return (
             </span>
           )}
           <span className="text-xs font-black text-zinc-700 dark:text-zinc-200">R{total}</span>
-          <span className="text-[0.6rem] font-bold uppercase tracking-widest text-zinc-400">View quote</span>
+          <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground">View quote</span>
         </button>
 
         <div className="relative flex items-center justify-end gap-2">
@@ -445,7 +445,7 @@ return (
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Close quotation calculator"
-              className={cn("w-8 h-8 rounded-full flex items-center justify-center text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150", GLASS.btn)}
+              className={cn("w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150", GLASS.btn)}
             >
               <X size={16} weight="bold" aria-hidden="true" />
             </button>
@@ -490,7 +490,7 @@ return (
                         aria-pressed={expandView}
                         aria-label={expandView ? "Switch to compact view" : "Switch to expanded view"}
                         title={expandView ? "Compact view" : "Expand view"}
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
                       >
                         {expandView
                           ? <ArrowsInSimple size={14} weight="bold" aria-hidden="true" />
@@ -500,7 +500,7 @@ return (
                         onClick={() => setShowSaveForm(v => !v)}
                         aria-label="Save quote"
                         title="Save quote"
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
                       >
                         <FloppyDisk size={14} weight="bold" aria-hidden="true" />
                       </button>
@@ -508,7 +508,7 @@ return (
                         onClick={clearCart}
                         aria-label="Clear quote"
                         title="Clear quote"
-                        className="w-7 h-7 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-300 hover:text-red-500 hover:bg-white dark:hover:bg-white/10 transition-colors"
+                        className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-red-500 hover:bg-white dark:hover:bg-white/10 transition-colors"
                       >
                         <Trash size={14} weight="bold" aria-hidden="true" />
                       </button>
@@ -590,7 +590,7 @@ return (
                   onClick={() => setShowSavedList(v => !v)}
                   aria-expanded={showSavedList}
                   aria-controls="saved-quotes-panel"
-                  className="w-full flex items-center justify-between gap-2 text-[0.65rem] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-300 px-1 mb-2"
+                  className="w-full flex items-center justify-between gap-2 text-[0.65rem] font-black uppercase tracking-widest text-muted-foreground dark:text-zinc-300 px-1 mb-2"
                 >
                   <span className="flex items-center gap-1.5"><BookmarkSimple size={13} weight="bold" aria-hidden="true" /> Saved Quotes ({savedQuotes.length})</span>
                   <CaretDown size={12} className={cn("transition-transform duration-200", showSavedList ? "rotate-180" : "rotate-0")} aria-hidden="true" />
@@ -604,11 +604,11 @@ return (
                           <div key={q.id} className={cn("flex items-center justify-between gap-2 p-2.5 rounded-[10px]", GLASS.item)}>
                             <div className="min-w-0">
                               <p className="text-xs font-bold text-zinc-700 dark:text-zinc-300 truncate">{q.name}</p>
-                              <p className="text-[0.62rem] font-medium text-zinc-400">{t.count} item{t.count === 1 ? "" : "s"} · R{t.total}</p>
+                              <p className="text-[0.62rem] font-medium text-muted-foreground">{t.count} item{t.count === 1 ? "" : "s"} · R{t.total}</p>
                             </div>
                             <div className="flex items-center gap-1.5 shrink-0">
                               <button onClick={() => loadSavedQuote(q)} className="px-2.5 py-1 rounded-[8px] text-[0.65rem] font-black" style={{ backgroundColor: fabColor, color: fabTextColor }}>Load</button>
-                              <button onClick={() => deleteSavedQuote(q.id)} aria-label={`Delete saved quote ${q.name}`} className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 hover:text-red-500 transition-colors"><Trash size={12} weight="bold" aria-hidden="true" /></button>
+                              <button onClick={() => deleteSavedQuote(q.id)} aria-label={`Delete saved quote ${q.name}`} className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"><Trash size={12} weight="bold" aria-hidden="true" /></button>
                             </div>
                           </div>
                         )
@@ -642,7 +642,7 @@ return (
                 </div>
               )}
               <div className="flex items-center justify-between">
-                <span className="text-sm font-black text-zinc-500">Total</span>
+                <span className="text-sm font-black text-muted-foreground">Total</span>
                 <span className="text-2xl font-black" style={{ color: fabColor }}>R{total}</span>
               </div>
               <div className="flex items-center gap-2">

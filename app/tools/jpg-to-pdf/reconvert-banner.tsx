@@ -31,7 +31,7 @@ export function ReconvertBanner({ prompt, onResolve }: { prompt: ReconvertPrompt
               Only New Ones
             </button>
           )}
-          <button type="button" onClick={() => onResolve("cancel")} className="px-4 py-2 rounded-[10px] text-sm font-black text-zinc-500 hover:text-zinc-700 transition-colors">
+          <button type="button" onClick={() => onResolve("cancel")} className="px-4 py-2 rounded-[10px] text-sm font-black text-muted-foreground hover:text-zinc-700 transition-colors">
             Cancel
           </button>
         </div>

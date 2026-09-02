@@ -36,7 +36,7 @@ export function BulkHint({
       </div>
 
       {isDiscount && (
-        <p className="text-[0.82rem] font-medium text-zinc-400 dark:text-zinc-500">
+        <p className="text-[0.82rem] font-medium text-muted-foreground dark:text-muted-foreground">
           <span className="line-through">R{baseUnitPrice}{priceUnit ? `/${priceUnit}` : ""}</span>
           {" → "}
           <span className="font-black" style={{ color: accent }}>R{effRate}{priceUnit ? `/${priceUnit}` : ""}</span>

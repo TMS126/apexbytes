@@ -129,12 +129,12 @@ function GridItem({
       {/* ─── BOTTOM OVERLAY: NAME, SIZE, ACTIONS ─────────────────────── */}
       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/75 to-transparent px-2 pt-7 pb-1.5">
         <p className="text-[0.68rem] font-semibold text-white truncate mb-1">{img.file.name}</p>
-        <p className="text-[0.6rem] text-white/60 mb-1">
+        <p className="text-[0.6rem] text-white/80 mb-1">
           {formatBytes(img.file.size)}
           {filter !== "none" && <span className="text-white/85"> · {FILTER_LABELS[filter]}</span>}
         </p>
         <div className="flex items-center justify-between">
-          {wasConverted ? <span className="text-[0.62rem] font-bold uppercase tracking-wide text-white/70">Converted</span> : <span />}
+          {wasConverted ? <span className="text-[0.62rem] font-bold uppercase tracking-wide text-white/80">Converted</span> : <span />}
           <div className="flex items-center gap-0.5">
             <button
               type="button"

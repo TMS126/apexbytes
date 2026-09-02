@@ -15,7 +15,7 @@ export function StripSection() {
       <div className="max-w-[1080px] mx-auto">
         <ScrollBounce>
           <div className="text-center mb-10">
-            <p className="text-[0.78rem] font-black uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 mb-2">
+            <p className="text-[0.78rem] font-black uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">
               Why ApexbytesHub
             </p>
             <h2 className="font-sans font-black text-2xl md:text-3xl text-foreground">
