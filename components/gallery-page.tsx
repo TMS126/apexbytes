@@ -50,9 +50,9 @@ function HubFilterCircles({
             className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"
             style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 19%, transparent)` }}
           />
-          <span className={cn("relative text-[0.8rem] font-black", activeFilter === "all" ? "text-brand-blue" : "text-zinc-500 dark:text-zinc-400")}>All</span>
+          <span className={cn("relative text-[0.8rem] font-black", activeFilter === "all" ? "text-brand-blue" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
         </span>
-        <span className="text-[0.72rem] font-bold text-zinc-500 dark:text-zinc-400">All</span>
+        <span className="text-[0.72rem] font-bold text-muted-foreground dark:text-muted-foreground">All</span>
       </button>
 
       {ROW_ORDER.map((row) => {
@@ -79,7 +79,7 @@ function HubFilterCircles({
                 <HubIcon id={row.id} size={26} color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
-            <span className="text-[0.72rem] font-bold text-zinc-500 dark:text-zinc-400 max-w-[64px] truncate">{row.short}</span>
+            <span className="text-[0.72rem] font-bold text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
           </button>
         )
       })}
@@ -98,10 +98,10 @@ function HubSectionDivider({ hubId, accent }: { hubId: HubId; accent: string }) 
     <div className="relative flex items-center justify-center my-10" role="presentation">
       <div className="absolute inset-x-0 top-1/2 h-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true" />
       <h2
-        className="group/pill relative z-10 bg-background px-4 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 py-2 text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400 transition-colors duration-200 hover:text-[var(--hub-accent)] hover:border-[var(--hub-accent)] focus-within:text-[var(--hub-accent)] focus-within:border-[var(--hub-accent)]"
+        className="group/pill relative z-10 bg-background px-4 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 py-2 text-[0.78rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground transition-colors duration-200 hover:text-[var(--hub-accent)] hover:border-[var(--hub-accent)] focus-within:text-[var(--hub-accent)] focus-within:border-[var(--hub-accent)]"
         style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       >
-        <span className="text-zinc-400 dark:text-zinc-500 transition-colors duration-200 group-hover/pill:text-[var(--hub-accent)]">
+        <span className="text-muted-foreground dark:text-muted-foreground transition-colors duration-200 group-hover/pill:text-[var(--hub-accent)]">
           <HubIcon id={hubId} size={14} color="currentColor" />
         </span>
         {hubLabelFor(hubId)}
@@ -149,7 +149,7 @@ function ProjectCard({
           <span className="min-w-0">
             <span className="block text-[0.8rem] font-black text-zinc-800 dark:text-zinc-100 truncate">{p.title}</span>
             {p.clientType && (
-              <span className="block text-[0.68rem] font-medium text-zinc-400 dark:text-zinc-500 truncate">{CLIENT_TYPE_LABEL[p.clientType]}</span>
+              <span className="block text-[0.68rem] font-medium text-muted-foreground dark:text-muted-foreground truncate">{CLIENT_TYPE_LABEL[p.clientType]}</span>
             )}
           </span>
         </button>
@@ -363,20 +363,20 @@ function GalleryPageInner() {
         <ScrollBounce delay={0.1}>
           <div className="max-w-md mx-auto mb-8">
             <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
-              <MagnifyingGlass size={16} weight="bold" className="shrink-0 text-zinc-400" aria-hidden="true" />
+              <MagnifyingGlass size={16} weight="bold" className="shrink-0 text-muted-foreground" aria-hidden="true" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search..."
                 aria-label="Search projects"
-                className="min-w-0 flex-1 py-2.5 bg-transparent text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 outline-none"
+                className="min-w-0 flex-1 py-2.5 bg-transparent text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-muted-foreground outline-none"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
                   aria-label="Clear search"
-                  className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-all active:scale-90"
+                  className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-all active:scale-90"
                 >
                   <X size={11} weight="bold" />
                 </button>
@@ -386,7 +386,7 @@ function GalleryPageInner() {
                 onClick={handleSurprise}
                 aria-label="Surprise me with a random project"
                 className={cn(
-                  "shrink-0 flex items-center gap-1.5 pl-3 pr-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[0.82rem] font-bold text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-200 active:scale-95 group/surprise whitespace-nowrap",
+                  "shrink-0 flex items-center gap-1.5 pl-3 pr-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[0.82rem] font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-200 active:scale-95 group/surprise whitespace-nowrap",
                   surpriseFlash && "scale-90 opacity-60"
                 )}
               >
@@ -405,7 +405,7 @@ function GalleryPageInner() {
 
         {visibleProjects.length === 0 ? (
           <div className="max-w-md mx-auto text-center py-16 px-6">
-            <p className="text-base font-bold text-zinc-500 dark:text-zinc-400">
+            <p className="text-base font-bold text-muted-foreground dark:text-muted-foreground">
               {searchLower ? `No projects match "${searchQuery.trim()}"` : "No projects in this category yet"}
             </p>
             {searchLower && (

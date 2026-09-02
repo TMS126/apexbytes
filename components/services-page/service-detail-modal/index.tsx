@@ -337,7 +337,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
             onClick={() => setTipsOpen(true)}
             aria-label="View helpful tips"
             className={cn(
-              "w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 active:scale-95",
+              "w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 active:scale-95",
               ICON_BTN_FOCUS
             )}
           >
@@ -350,7 +350,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               onClick={handleShare}
               aria-label="Share this service"
               className={cn(
-                "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
+                "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
                 ICON_BTN_FOCUS
               )}
             >
@@ -372,7 +372,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
             onClick={onClose}
             aria-label="Close"
             className={cn(
-              "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
+              "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
               ICON_BTN_FOCUS
             )}
           >
@@ -389,7 +389,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
                 <HubIcon id={svc.hubId} size={11} color={accent} />
                 <span className="text-[0.72rem] font-black uppercase tracking-widest" style={{ color: accent }}>{hubTitle}</span>
               </div>
-              <span className="text-[0.72rem] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wide mb-2.5 inline-block">
+              <span className="text-[0.72rem] font-semibold text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-2.5 inline-block">
                 {cleanText(svc.sectionTitle)}
               </span>
               <h3 className="abh-card-heading text-[1.28rem] leading-tight">{svc.name}</h3>
@@ -437,7 +437,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
                     onClick={() => setTab(t)}
                     className={cn(
                       "py-2.5 text-[0.95rem] font-black uppercase tracking-wider transition-colors duration-200 border-b-2 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950",
-                      isActive ? "border-current" : "border-transparent text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300"
+                      isActive ? "border-current" : "border-transparent text-muted-foreground dark:text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300"
                     )}
                     style={isActive ? { color: accent } : undefined}
                   >
@@ -466,7 +466,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               <ol className="w-full list-none">
                 {requirements.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-3 py-2 text-left">
-                    <span className="shrink-0 font-black text-[0.8rem] text-zinc-400 dark:text-zinc-500 mt-0.5 w-4 text-right" aria-hidden="true">
+                    <span className="shrink-0 font-black text-[0.8rem] text-muted-foreground dark:text-muted-foreground mt-0.5 w-4 text-right" aria-hidden="true">
                       {idx + 1}.
                     </span>
                     <span className="abh-body text-[0.95rem] leading-relaxed">{req}</span>

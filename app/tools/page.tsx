@@ -55,7 +55,7 @@ export default function ToolsPage() {
                   </span>
                   <span className="text-left">
                     <span className="block text-[0.95rem] font-black text-zinc-900 dark:text-white">{tool.name}</span>
-                    <span className="block text-[0.78rem] text-zinc-500 dark:text-zinc-400 max-w-[220px]">{tool.desc}</span>
+                    <span className="block text-[0.78rem] text-muted-foreground dark:text-muted-foreground max-w-[220px]">{tool.desc}</span>
                   </span>
                 </Link>
               </ScrollBounce>
@@ -72,7 +72,7 @@ export default function ToolsPage() {
               </span>
               <div>
                 <p className="text-[0.95rem] font-black text-zinc-800 dark:text-zinc-200 mb-1">More Tools — Coming Soon</p>
-                <p className="text-[0.85rem] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                <p className="text-[0.85rem] text-muted-foreground dark:text-muted-foreground leading-relaxed">
                   We&apos;re building out more free tools for this page. Check back soon, or WhatsApp us if there&apos;s something specific you&apos;d find useful.
                 </p>
               </div>

@@ -69,9 +69,9 @@ export function SimpleDropdown({
         aria-expanded={open}
         className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-[10px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-sm font-semibold text-zinc-700 dark:text-zinc-300"
       >
-        <span className="text-zinc-400 font-medium">{label}:</span>
+        <span className="text-muted-foreground font-medium">{label}:</span>
         {current?.label}
-        <CaretDown weight="bold" className={`w-3.5 h-3.5 text-zinc-400 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
+        <CaretDown weight="bold" className={`w-3.5 h-3.5 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
       </button>
 
       {open && rect && mounted && createPortal(

@@ -21,10 +21,10 @@ export function PrivacyPage() {
           <h1 className="mt-4 font-sans font-black text-4xl md:text-5xl text-zinc-900 dark:text-zinc-50 leading-tight">
             Privacy Policy
           </h1>
-          <p className="mt-3 text-base text-zinc-500 dark:text-zinc-400">
+          <p className="mt-3 text-base text-muted-foreground dark:text-muted-foreground">
             {BIZ.name} &mdash; Last updated {LAST_UPDATED}
           </p>
-          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-zinc-400 p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
+          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
             This Privacy Policy explains how <strong className="text-zinc-800 dark:text-zinc-200">{BIZ.name}</strong>{" "}
             (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, stores, and protects your personal
             information. It is written in compliance with the{" "}
@@ -33,7 +33,7 @@ export function PrivacyPage() {
           </p>
         </div>
 
-        <div className="space-y-10 text-[1.08rem] text-zinc-600 dark:text-zinc-400 leading-relaxed">
+        <div className="space-y-10 text-[1.08rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
           <section>
             <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">1. Who We Are</h2>
             <p>

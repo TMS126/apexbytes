@@ -155,7 +155,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                 <p className="text-xl font-black text-white tracking-tight leading-tight drop-shadow-sm">
                   Theji Meje
                 </p>
-                <p className="text-[0.65rem] font-black text-white/70 uppercase tracking-widest mt-0.5">
+                <p className="text-[0.65rem] font-black text-white/80 uppercase tracking-widest mt-0.5">
                   {FOUNDER_ROLE}
                 </p>
               </div>
@@ -171,11 +171,11 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
             </div>
 
             <div className="px-7 pb-8 pt-6 flex flex-col items-center text-center">
-              <p className="text-[0.65rem] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-5">
+              <p className="text-[0.65rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-5">
                 {BIZ.address.replace(/^5878\s*/, "")}
               </p>
 
-              <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400 leading-relaxed mb-8 text-center">
+              <p className="text-sm font-medium text-zinc-600 dark:text-muted-foreground leading-relaxed mb-8 text-center">
                 {FOUNDER_BIO}
               </p>
 

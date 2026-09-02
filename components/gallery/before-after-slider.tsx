@@ -85,7 +85,7 @@ export function BeforeAfterSlider({ before, after, accent }: { before: string; a
         {!revealed && <div className="absolute inset-0 rounded-full animate-ping opacity-40" style={{ backgroundColor: accent }} />}
       </div>
 
-      <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[0.6rem] font-bold text-white/60 uppercase tracking-widest whitespace-nowrap pointer-events-none">
+      <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[0.6rem] font-bold text-white/80 uppercase tracking-widest whitespace-nowrap pointer-events-none">
         Drag • Double-tap to reset
       </p>
     </div>

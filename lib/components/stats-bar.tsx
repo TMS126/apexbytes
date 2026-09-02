@@ -48,7 +48,7 @@ export function StatsBar() {
                 <div className="text-lg font-bold text-zinc-900 dark:text-zinc-50">
                   {stat.value}
                 </div>
-                <div className="text-[0.6rem] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+                <div className="text-[0.6rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
                   {stat.label}
                 </div>
               </div>

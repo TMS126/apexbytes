@@ -76,11 +76,11 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
   return (
     <div className="space-y-5">
       <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5">
-        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-zinc-400 dark:text-zinc-500">The Goal</h4>
+        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
         <ExpandableText text={project.clientGoal} accent={accent} />
       </div>
       <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5">
-        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-zinc-400 dark:text-zinc-500">What we did</h4>
+        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
         <ul className="space-y-2">
           {project.whatWeDid.map((item, i) => (
             <li key={i} className="flex items-start gap-2.5 text-base text-zinc-700 dark:text-zinc-200 font-medium">
@@ -90,7 +90,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
         </ul>
       </div>
       <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5">
-        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-zinc-400 dark:text-zinc-500">The Result</h4>
+        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
         <ExpandableText text={project.result} accent={accent} />
       </div>
     </div>
@@ -311,13 +311,13 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
         </div>
         <h2 id="project-viewer-title" className="font-black text-lg md:text-xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
         {project.clientType && (
-          <p className="text-[0.78rem] italic text-zinc-400 dark:text-zinc-500 mt-0.5">{CLIENT_TYPE_LABEL[project.clientType]}</p>
+          <p className="text-[0.78rem] italic text-muted-foreground dark:text-muted-foreground mt-0.5">{CLIENT_TYPE_LABEL[project.clientType]}</p>
         )}
       </div>
       <button
         onClick={onClose}
         aria-label="Close project"
-        className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-muted-foreground dark:text-muted-foreground transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
         style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
       >
         <X size={16} weight="bold" />
@@ -349,17 +349,17 @@ function DesktopActionRow({
             <button
               onClick={onPrevProject}
               aria-label="Previous project"
-              className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+              className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             >
               <CaretLeft size={13} weight="bold" />
             </button>
-            <span className="text-[0.78rem] font-bold text-zinc-500 dark:text-zinc-400 whitespace-nowrap" aria-live="polite">
+            <span className="text-[0.78rem] font-bold text-muted-foreground dark:text-muted-foreground whitespace-nowrap" aria-live="polite">
               Project {currentIdx + 1} of {siblingCount}
             </span>
             <button
               onClick={onNextProject}
               aria-label="Next project"
-              className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+              className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             >
               <CaretRight size={13} weight="bold" />
             </button>
@@ -380,13 +380,13 @@ function MobileProjectNavPill({ currentIdx, siblingCount, onPrev, onNext }: {
   return (
     <div className="flex items-center justify-center px-3 pt-2">
       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900">
-        <button onClick={onPrev} aria-label="Previous project" className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 active:scale-90">
+        <button onClick={onPrev} aria-label="Previous project" className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground active:scale-90">
           <CaretLeft size={12} weight="bold" />
         </button>
-        <span className="text-[0.76rem] font-bold text-zinc-500 dark:text-zinc-400 whitespace-nowrap">
+        <span className="text-[0.76rem] font-bold text-muted-foreground dark:text-muted-foreground whitespace-nowrap">
           Project {currentIdx + 1} of {siblingCount}
         </span>
-        <button onClick={onNext} aria-label="Next project" className="w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 dark:text-zinc-500 active:scale-90">
+        <button onClick={onNext} aria-label="Next project" className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground active:scale-90">
           <CaretRight size={12} weight="bold" />
         </button>
       </div>

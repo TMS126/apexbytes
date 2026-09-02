@@ -37,10 +37,10 @@ export function ResultsPanel({
             </span>
           </div>
           {/* Real measured size of the actual output — not an estimate. */}
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-1">
+          <p className="text-xs text-muted-foreground dark:text-muted-foreground mb-1">
             Actual size: {formatBytes(totalActualBytes)}
           </p>
-          <div className="flex items-center justify-center gap-1.5 text-xs text-zinc-400 mb-6">
+          <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mb-6">
             <DownloadSimple size={13} weight="bold" aria-hidden="true" />
             Saved to your device automatically
           </div>
@@ -76,7 +76,7 @@ export function ResultsPanel({
             </button>
           </div>
 
-          {sendNotice && <p className="mt-4 text-sm font-medium text-zinc-500 dark:text-zinc-400" aria-live="polite">{sendNotice}</p>}
+          {sendNotice && <p className="mt-4 text-sm font-medium text-muted-foreground dark:text-muted-foreground" aria-live="polite">{sendNotice}</p>}
         </motion.div>
       )}
     </AnimatePresence>

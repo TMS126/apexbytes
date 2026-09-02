@@ -491,15 +491,15 @@ const onDragRect = useCallback((e: PointerEvent) => {
         </div>
       </div>
 
-      <p className="relative text-center text-xs text-white/50 shrink-0" aria-live="polite">{cropDimsLabel}</p>
+      <p className="relative text-center text-xs text-white/80 shrink-0" aria-live="polite">{cropDimsLabel}</p>
       {mode === "quad" && (
-        <p className="relative text-center text-[0.7rem] text-white/40 px-6 pt-1 shrink-0">
+        <p className="relative text-center text-[0.7rem] text-white/80 px-6 pt-1 shrink-0">
           The area inside the shape will be straightened into a rectangle — useful for photos taken at an angle.
         </p>
       )}
 
       <div className="relative flex items-center justify-center gap-3 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shrink-0">
-        <button type="button" onClick={handleReset} className="flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-sm font-semibold text-white/70 hover:text-white transition-colors">
+        <button type="button" onClick={handleReset} className="flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-sm font-semibold text-white/80 hover:text-white transition-colors">
           <ArrowCounterClockwise size={16} weight="bold" aria-hidden="true" />
           Reset
         </button>

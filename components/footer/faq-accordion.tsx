@@ -40,7 +40,7 @@ export function FaqAccordion({
           <span>Frequently Asked Questions</span>
           <CaretDown
             className={cn(
-              "w-3.5 h-3.5 shrink-0 text-zinc-400 transition-transform duration-200",
+              "w-3.5 h-3.5 shrink-0 text-muted-foreground transition-transform duration-200",
               isOpen && "rotate-180"
             )}
             aria-hidden="true"
@@ -82,7 +82,7 @@ export function FaqAccordion({
                         </h4>
                       </span>
                       <CaretDown
-                        className={cn("w-3.5 h-3.5 text-zinc-400 shrink-0 mt-1", open && "rotate-180")}
+                        className={cn("w-3.5 h-3.5 text-muted-foreground shrink-0 mt-1", open && "rotate-180")}
                         aria-hidden="true"
                       />
                     </button>
@@ -98,8 +98,8 @@ export function FaqAccordion({
                       <div className="overflow-hidden">
                         <div className="pl-5 pr-5 pb-5 pt-1">
                           <div className="flex items-start gap-2.5 border-l-2 border-zinc-200 dark:border-zinc-700 pl-3.5 ml-[3px]">
-                            <span className="text-[0.78rem] font-black text-zinc-400 dark:text-zinc-500 shrink-0 mt-1" aria-hidden="true">A</span>
-                            <p className="text-[1.1rem] text-zinc-500 dark:text-zinc-400 leading-relaxed whitespace-pre-wrap">
+                            <span className="text-[0.78rem] font-black text-muted-foreground dark:text-muted-foreground shrink-0 mt-1" aria-hidden="true">A</span>
+                            <p className="text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">
                               {faq.answer}
                             </p>
                           </div>

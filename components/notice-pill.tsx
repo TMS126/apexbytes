@@ -68,7 +68,7 @@ export function NoticePill({
                 type="button"
                 onClick={onDismiss}
                 aria-label={`Dismiss: ${collapsedLabel}`}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
               >
                 <X size={13} weight="bold" aria-hidden="true" />
               </button>
@@ -111,7 +111,7 @@ export function NoticePill({
                 type="button"
                 onClick={onDismiss}
                 aria-label={`Dismiss: ${expandedLabel}`}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-400 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
               >
                 <X size={14} weight="bold" aria-hidden="true" />
               </button>

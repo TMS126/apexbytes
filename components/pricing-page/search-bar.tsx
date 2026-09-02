@@ -16,7 +16,7 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
   return (
     <div className="relative mx-auto w-full max-w-md">
       <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
-        <MagnifyingGlass size={16} weight="bold" className="text-zinc-400 pointer-events-none shrink-0" aria-hidden="true" />
+        <MagnifyingGlass size={16} weight="bold" className="text-muted-foreground pointer-events-none shrink-0" aria-hidden="true" />
         <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
         <input
           id="pricing-search"
@@ -24,14 +24,14 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
           placeholder="Search any service or price…"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          className="min-w-0 flex-1 py-3 pr-8 bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 outline-none appearance-none [-webkit-appearance:none]"
+          className="min-w-0 flex-1 py-3 pr-8 bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-muted-foreground outline-none appearance-none [-webkit-appearance:none]"
         />
       </div>
       {query && (
         <button
           onClick={() => setQuery("")}
           aria-label="Clear search"
-          className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600"
+          className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600"
         >
           <X size={12} weight="bold" aria-hidden="true" />
         </button>
@@ -50,7 +50,7 @@ export function PricingSearchResults({
 }) {
   return (
     <div className="space-y-3">
-      <p className="text-[0.9rem] text-zinc-400 pb-1">
+      <p className="text-[0.9rem] text-muted-foreground pb-1">
         {results.length} result{results.length !== 1 ? 's' : ''} — lowest first
       </p>
       {results.map((r, i) => {
@@ -62,7 +62,7 @@ export function PricingSearchResults({
               <p className="text-[1.05rem] font-semibold text-zinc-900 dark:text-white truncate flex items-center gap-1.5">
                 <span className="truncate">{r.name}</span>
               </p>
-              <p className="text-[0.9rem] text-zinc-400 mt-0.5">{r.hubTitle} · {r.section}</p>
+              <p className="text-[0.9rem] text-muted-foreground mt-0.5">{r.hubTitle} · {r.section}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <span className="text-[1.05rem] font-black" style={{ color: r.accent }}>{r.price}</span>

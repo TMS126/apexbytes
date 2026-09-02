@@ -44,7 +44,7 @@ export function FAQAccordion() {
                     <CaretDown
                       weight="bold"
                       aria-hidden="true"
-                      className={cn("w-3.5 h-3.5 shrink-0 text-zinc-400 transition-transform duration-300", isOpen ? "rotate-180" : "rotate-0")}
+                      className={cn("w-3.5 h-3.5 shrink-0 text-muted-foreground transition-transform duration-300", isOpen ? "rotate-180" : "rotate-0")}
                     />
                   </button>
                   <div
@@ -54,7 +54,7 @@ export function FAQAccordion() {
                     className={cn("grid transition-all duration-300 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
                   >
                     <div className="overflow-hidden">
-                      <div className="pb-5 text-[1.1rem] text-zinc-500 dark:text-zinc-400 leading-relaxed whitespace-pre-wrap">
+                      <div className="pb-5 text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">
                         {faq.answer}
                       </div>
                     </div>

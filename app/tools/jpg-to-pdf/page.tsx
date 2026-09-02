@@ -64,7 +64,7 @@ export default function JpgToPdfPage() {
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
               <Link href="/tools"
-                className="inline-flex items-center gap-1 text-[0.8rem] font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-4">
+                className="inline-flex items-center gap-1 text-[0.8rem] font-bold text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-4">
                 <CaretLeft size={12} weight="bold" aria-hidden="true" />
                 All Tools
               </Link>
@@ -104,9 +104,9 @@ export default function JpgToPdfPage() {
                   aria-label="Upload images: drag and drop, or press Enter to browse"
                   className={`rounded-[14px] border-2 border-dashed cursor-pointer transition-colors flex flex-col items-center justify-center gap-2.5 py-10 px-6 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue ${isDragging ? "border-brand-blue bg-brand-blue/5" : "border-zinc-200 dark:border-zinc-800 hover:border-brand-blue/50"}`}
                 >
-                  <UploadSimple weight="bold" className="w-7 h-7 text-zinc-400" aria-hidden="true" />
+                  <UploadSimple weight="bold" className="w-7 h-7 text-muted-foreground" aria-hidden="true" />
                   <p className="font-medium text-sm text-zinc-700 dark:text-zinc-300">Drag & drop, or tap to browse</p>
-                  <p className="text-xs text-zinc-400">JPG, PNG or WEBP · up to 20 images</p>
+                  <p className="text-xs text-muted-foreground">JPG, PNG or WEBP · up to 20 images</p>
                   <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={handleFileInput} className="hidden" aria-hidden="true" tabIndex={-1} />
                 </div>
               </ScrollBounce>
@@ -128,8 +128,8 @@ export default function JpgToPdfPage() {
                     <button type="button" onClick={() => t.selectAll(!allSelected)} className="text-sm font-black" style={{ color: accentColor }}>
                       {allSelected ? "Deselect all" : "Select all"}
                     </button>
-                    <span className="text-sm font-semibold text-zinc-400">{t.selectedCount} of {t.images.length} selected</span>
-                    <button type="button" onClick={t.clearAll} className="text-sm font-semibold text-zinc-400 hover:text-red-500 transition-colors">
+                    <span className="text-sm font-semibold text-muted-foreground">{t.selectedCount} of {t.images.length} selected</span>
+                    <button type="button" onClick={t.clearAll} className="text-sm font-semibold text-muted-foreground hover:text-red-500 transition-colors">
                       Clear
                     </button>
                   </div>

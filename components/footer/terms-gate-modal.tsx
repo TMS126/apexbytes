@@ -94,7 +94,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
         <div className="px-6 md:px-10 pt-8 pb-5 border-b border-zinc-100 dark:border-zinc-800 shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative z-10 flex items-start justify-between gap-4">
           <div>
             <h2 className="font-sans font-black text-[1.8rem] text-brand-blue dark:text-brand-light-blue">Terms & Service Policies</h2>
-            <p className="text-[0.78rem] font-medium text-zinc-400 mt-1">
+            <p className="text-[0.78rem] font-medium text-muted-foreground mt-1">
               {BIZ.name} · Updated {BIZ.year}
             </p>
           </div>
@@ -114,7 +114,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
               <h3 className="font-bold flex items-center gap-2 mb-2 text-[0.98rem] text-zinc-900 dark:text-zinc-50">
                 <Info weight="fill" className="w-4 h-4" aria-hidden="true" /> Operational Rule
               </h3>
-              <p className="text-[0.98rem] text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              <p className="text-[0.98rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
                 By tapping &ldquo;I Agree&rdquo; below, you confirm full agreement with all operational rules and terms listed here.
               </p>
             </div>
@@ -130,7 +130,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
                   </h3>
                   <ul className="space-y-2 list-disc list-inside pl-1">
                     {s.points.map((p, j) => (
-                      <li key={j} className="text-[0.98rem] text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                      <li key={j} className="text-[0.98rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
                         <strong className="text-zinc-700 dark:text-zinc-300">{p.label}:</strong> {p.text}
                       </li>
                     ))}

@@ -386,12 +386,12 @@ export function FloatingSearchWidget() {
                 onFocus={() => setInputFocused(true)}
                 onBlur={() => setInputFocused(false)}
                 placeholder="Search a service..."
-                className="flex-1 bg-transparent text-base font-medium text-zinc-700 dark:text-zinc-200 placeholder:text-zinc-400/70 dark:placeholder:text-zinc-500/70 min-w-0 outline-none border-none appearance-none"
+                className="flex-1 bg-transparent text-base font-medium text-zinc-700 dark:text-zinc-200 placeholder:text-muted-foreground/70 dark:placeholder:text-muted-foreground/70 min-w-0 outline-none border-none appearance-none"
               />
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="shrink-0 w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-zinc-500 hover:text-zinc-700 transition-colors duration-150"
+                  className="shrink-0 w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-muted-foreground hover:text-zinc-700 transition-colors duration-150"
                   aria-label="Clear search"
                 >
                   <X size={12} weight="bold" />
@@ -399,7 +399,7 @@ export function FloatingSearchWidget() {
               )}
               <button
                 onClick={handleClose}
-                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors duration-150"
+                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors duration-150"
                 aria-label="Close search"
               >
                 <X size={16} weight="bold" />
@@ -431,13 +431,13 @@ export function FloatingSearchWidget() {
                                 ? <HighlightMatch text={s.name} query={query} color={accentColor} />
                                 : s.name}
                             </p>
-                            <p className="text-[0.72rem] font-bold uppercase tracking-wider text-zinc-400 truncate">
+                            <p className="text-[0.72rem] font-bold uppercase tracking-wider text-muted-foreground truncate">
                               {s.matchField === "section"
                                 ? <HighlightMatch text={s.sectionTitle} query={query} color={accentColor} />
                                 : s.sectionTitle} · {HUBS[s.hubId].title}
                             </p>
                             {s.matchField === "description" && (
-                              <p className="text-[0.72rem] font-medium text-zinc-400 dark:text-zinc-500 truncate mt-0.5 normal-case">
+                              <p className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground truncate mt-0.5 normal-case">
                                 <HighlightMatch text={matchSnippet(s.description, query)} query={query} color={accentColor} />
                               </p>
                             )}
@@ -448,8 +448,8 @@ export function FloatingSearchWidget() {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-base font-bold text-zinc-500 dark:text-zinc-400">No services found</p>
-                      <p className="text-sm font-medium text-zinc-400 dark:text-zinc-500 mt-1">Try a different word.</p>
+                      <p className="text-base font-bold text-muted-foreground dark:text-muted-foreground">No services found</p>
+                      <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mt-1">Try a different word.</p>
                     </div>
                   )}
                 </div>
