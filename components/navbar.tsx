@@ -124,12 +124,6 @@ export function Navbar() {
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
 
-  const hubColor = useMemo(() => {
-    if (!mounted) return BRAND.green
-    if (isLogoDarkBehind) return BRAND.lightGreen
-    return theme === "dark" ? BRAND.lightGreen : BRAND.green
-  }, [mounted, theme, isLogoDarkBehind])
-
   const handleNavFocus = () => setDesktopNavOpen(true)
   const handleNavBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (!desktopNavRef.current?.contains(e.relatedTarget as Node)) {
@@ -182,10 +176,10 @@ export function Navbar() {
                 className="font-sans font-black text-[1.32rem] leading-none tracking-tight transition-all duration-500 overflow-hidden flex items-center"
                 style={{ maxWidth: isTextExpanded ? "180px" : "0px" }}
               >
-                <span className="whitespace-nowrap transition-colors duration-300" style={{ color: BRAND.blue }}>
+                <span className="whitespace-nowrap transition-colors duration-300 abh-logo-primary">
                   Apexbytes
                 </span>
-                <span className="whitespace-nowrap transition-colors duration-300" style={{ color: hubColor }}>
+                <span className="whitespace-nowrap transition-colors duration-300 abh-logo-secondary">
                   Hub
                 </span>
               </div>
