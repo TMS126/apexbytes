@@ -49,8 +49,8 @@ export function MaintenanceBanner() {
       // banner's own background never gets mistaken for page content
       // when deciding nav icon contrast.
       data-maintenance-banner="true"
-      className="fixed inset-x-0 top-0 z-[10000] flex items-center justify-center gap-3 px-4 py-2.5 text-white text-sm md:text-[0.92rem] font-medium shadow-md animate-in fade-in slide-in-from-top-2 duration-500"
-      style={{ background: "linear-gradient(90deg, var(--brand-blue-dark) 0%, var(--brand-blue) 100%)" }}
+      className="fixed inset-x-0 top-0 z-[10000] flex items-center justify-center gap-3 px-4 py-2.5 text-sm md:text-[0.92rem] font-medium shadow-md animate-in fade-in slide-in-from-top-2 duration-500"
+      style={{ color: "var(--maintenance-text)", background: "linear-gradient(90deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 100%)" }}
     >
       <Wrench size={16} weight="fill" className="shrink-0 hidden sm:block opacity-90" aria-hidden="true" />
       <p className="flex-1 min-w-0 text-center leading-snug">
@@ -59,7 +59,8 @@ export function MaintenanceBanner() {
           href={MAINTENANCE_BANNER.linkHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 font-bold whitespace-nowrap hover:text-white/90 transition-colors"
+          className="underline underline-offset-2 font-bold whitespace-nowrap transition-colors"
+          style={{ color: "var(--maintenance-text)" }}
         >
           {MAINTENANCE_BANNER.linkText}
         </a>

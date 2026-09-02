@@ -63,7 +63,7 @@ function Pill({
           ? {
               backgroundColor: fill,
               borderColor: fill,
-              color: "#ffffff",
+              color: "var(--on-primary-fill)",
               boxShadow: `0 0 0 4px color-mix(in srgb, ${fill} 12%, transparent)`,
             }
           : {
