@@ -81,6 +81,10 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --maintenance-bg-end: var(--brand-blue-mid);
   --maintenance-text: var(--brand-white);
   --title-color: var(--foreground);
+  --logo-primary: var(--brand-blue-dark);
+  --logo-secondary: var(--brand-blue-dark);
+  --hub-label-foreground: var(--brand-blue-dark);
+  --link-foreground: var(--brand-blue-dark);
   --on-seal-orange: var(--brand-white);
   --color-weather-sun: #F59E0B;
   --color-weather-moon: #818CF8;
@@ -99,7 +103,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-warning-bg-dark: #D86B42;
   --brand-error-bg: var(--destructive);
   --brand-error-text: #B42318;
-  --brand-blue-text: var(--brand-blue-mid);
+  --brand-blue-text: var(--brand-blue-dark);
   --brand-orange-text: var(--brand-orange-dark);
   --brand-green-text: var(--brand-green-dark);
   --brand-whatsapp-text: #0F172A;
@@ -204,8 +208,12 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-danger: #F87171;
   --home-cta-bg: var(--brand-orange);
   --home-cta-text: var(--brand-blue-dark);
-  --primary-fill: var(--brand-blue-dark);
-  --on-primary-fill: var(--brand-dark-100);
+  --logo-primary: var(--foreground);
+  --logo-secondary: var(--brand-neutral-400);
+  --hub-label-foreground: var(--brand-light-blue);
+  --link-foreground: var(--brand-light-blue);
+  --primary-fill: var(--home-cta-bg);
+  --on-primary-fill: var(--home-cta-text);
   --maintenance-bg-start: #0F3F66;
   --maintenance-bg-end: #15537D;
   --maintenance-text: var(--brand-white);
@@ -251,8 +259,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --card-border: transparent;
   --brand-warning-bg: #E08A64;
   --brand-orange-text: #FF9C73;
-  --brand-blue-text: #BCC9E9;
-  --brand-green-text: #BBD5A9;
+  --brand-blue-text: #D9EEFA;
+  --brand-green-text: #D5E8C2;
 }
 
 @theme inline {
@@ -545,7 +553,30 @@ button, a, [role="button"] {
   .abh-btn-cta { @apply gap-3 py-4 duration-300; }
   .abh-btn-primary:hover,
   .abh-btn-cta:hover { background: var(--brand-blue-mid); }
+
+  /* Contrast-safe semantic text roles used by links, labels, and identity. */
+  .abh-logo-primary { color: var(--logo-primary); }
+  .abh-logo-secondary { color: var(--logo-secondary); }
+  .abh-hub-label { color: var(--hub-label-foreground); }
+  .abh-link { color: var(--link-foreground); }
+  .abh-link:hover { color: var(--foreground); }
+
+  .text-brand-blue { color: var(--brand-blue-text) !important; }
+  .dark .text-brand-blue { color: var(--brand-blue-text) !important; }
+  .text-brand-orange { color: var(--brand-orange-text) !important; }
+  .text-brand-green { color: var(--brand-green-text) !important; }
 }
+
+/* The dark theme's main actions are seal orange with a dark, readable foreground. */
+.dark .abh-btn-primary,
+.dark .abh-btn-cta {
+  background: var(--home-cta-bg);
+  color: var(--home-cta-text);
+}
+
+.dark .abh-btn-primary:hover,
+.dark .abh-btn-cta:hover { background: var(--brand-orange-dark); }
+
 
 .dark .dark\:bg-zinc-900,
 .dark .dark\:bg-zinc-950,
