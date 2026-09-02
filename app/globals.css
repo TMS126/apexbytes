@@ -73,6 +73,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-success: #16A34A;
   --color-success-strong: #15803D;
   --color-danger: #DC2626;
+  --home-cta-bg: var(--brand-blue);
+  --home-cta-text: var(--brand-white);
+  --on-seal-orange: var(--brand-white);
   --color-weather-sun: #F59E0B;
   --color-weather-moon: #818CF8;
   --color-weather-cloud: #9CA3AF;
@@ -193,6 +196,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-success: #4ADE80;
   --color-success-strong: #86EFAC;
   --color-danger: #F87171;
+  --home-cta-bg: var(--brand-orange);
+  --home-cta-text: var(--brand-blue-dark);
+  --on-seal-orange: var(--brand-blue-dark);
   --color-weather-sun: #FCD34D;
   --color-weather-moon: #A5B4FC;
   --color-weather-cloud: #CBD5E1;
@@ -310,6 +316,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-success: var(--color-success);
   --color-success-strong: var(--color-success-strong);
   --color-danger: var(--color-danger);
+  --color-home-cta-bg: var(--home-cta-bg);
+  --color-home-cta-text: var(--home-cta-text);
+  --color-on-seal-orange: var(--on-seal-orange);
 
   --color-brand-whatsapp: var(--brand-whatsapp);
   --color-brand-whatsapp-dark: var(--brand-whatsapp-dark);

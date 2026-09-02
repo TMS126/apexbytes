@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useTheme } from "next-themes"
 import {
   ArrowUpRight, Play, Pause, CheckCircle,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
@@ -31,7 +32,7 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
 }
 
 // ─── HERO SERVICES ILLUSTRATION ──────────────────────────────────────────────
-function HubIconField() {
+function HubIconField({ isDark }: { isDark: boolean }) {
   const [active, setActive] = useState(false)
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -56,7 +57,7 @@ function HubIconField() {
       onBlur={release}
     >
       <Image
-        src="/apexbytes-services-isometric-v2.png"
+        src={isDark ? "/Hpd.webp" : "/Hpl.webp"}
         alt="Isometric printer, CV clipboard, design tools, globe with shield, laptop, and PC representing ApexbytesHub services"
         fill
         priority
@@ -77,6 +78,7 @@ const TRUST_HINTS = ["Local & human", "Clear pricing", "Fast turnaround"]
 // ─── COMPONENT ───────────────────────────────────────────────────────────────
 export function HeroSection() {
   const router = useRouter()
+  const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [marqueePaused, setMarqueePaused] = useState(false)
   const [status, setStatus] = useState<BusinessStatus | null>(null)
@@ -160,8 +162,8 @@ export function HeroSection() {
               <ScrollBounce>
               <button
                 onClick={handleCtaClick}
-                className="group/quote flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl text-white transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 abh-shadow-badge"
-                  style={{ backgroundColor: TOKEN.brandBlue }}
+                className="group/quote flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 abh-shadow-badge"
+                  style={{ backgroundColor: "var(--home-cta-bg)", color: "var(--home-cta-text)" }}
                 >
                   <span className="min-w-[10.5rem] transition-opacity duration-150 group-active/quote:opacity-70">{quoteLabel}</span>
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
@@ -199,7 +201,7 @@ export function HeroSection() {
 
           {/* Right column — flat-icon hub field, card box removed */}
           <ScrollBounce delay={0.1} className="w-full">
-            <HubIconField />
+            <HubIconField isDark={mounted && resolvedTheme === "dark"} />
           </ScrollBounce>
         </div>
 
