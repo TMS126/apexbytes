@@ -57,7 +57,7 @@ function HubIconField({ isDark }: { isDark: boolean }) {
       onBlur={release}
     >
       <Image
-        src={isDark ? "/Hpd.webp" : "/Hpl.webp"}
+        src={isDark ? "/Hpl.webp" : "/Hpd.webp"}
         alt="Isometric printer, CV clipboard, design tools, globe with shield, laptop, and PC representing ApexbytesHub services"
         fill
         priority
