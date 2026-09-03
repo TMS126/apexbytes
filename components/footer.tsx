@@ -1,4 +1,3 @@
-// components/footer.tsx 
 "use client"
 
 import { useState } from "react"
@@ -36,7 +35,7 @@ function FooterContent() {
     <div className="pt-16 pb-12">
       {showFaq && (
         <ScrollBounce>
-          <div className="px-4 md:px-8 mb-14 flex justify-center">
+          <div className="px-6 md:px-10 lg:px-12 xl:px-16 mb-14 flex justify-center">
             <FaqAccordion
               isOpen={isFaqAccordionOpen}
               onToggle={() => setIsFaqAccordionOpen((v) => !v)}
@@ -48,7 +47,7 @@ function FooterContent() {
       )}
 
       <ScrollBounce>
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 px-6 md:px-8">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 px-6 md:px-10 lg:px-12 xl:px-16">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 select-none">
               <div
@@ -161,7 +160,7 @@ function FooterContent() {
 
       <ScrollBounce>
         <div className="mt-8 bg-zinc-50 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-800">
-          <div className="max-w-[1200px] mx-auto pt-8 pb-8 px-6 md:px-8 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
+          <div className="max-w-[1440px] mx-auto pt-8 pb-8 px-6 md:px-10 lg:px-12 xl:px-16 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
             <p className="text-[0.78rem] font-medium text-muted-foreground md:text-left text-center">
               © {new Date().getFullYear()} {BIZ.name}. All rights reserved.
             </p>
