@@ -39,7 +39,9 @@ export function Navbar() {
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
 
-  const [mounted] = useState(() => typeof window !== "undefined")
+  // Keep theme-dependent markup deterministic during SSR and the first client
+  // render. next-themes resolves the stored theme only after hydration.
+  const [mounted, setMounted] = useState(false)
   const [desktopNavOpen, setDesktopNavOpen] = useState(false)
   const [contactHovered, setContactHovered] = useState(false)
   const [ctaPulse, setCtaPulse] = useState(false)
@@ -49,6 +51,10 @@ export function Navbar() {
   const { isTextExpanded, handleLogoMouseEnter, handleLogoMouseLeave } = useLogoAnimation()
   const isDarkBehind = useNavContrast()
   const isLogoDarkBehind = useNavContrast(0.07)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const desktopNavRef = useRef<HTMLDivElement>(null)
   const desktopNavToggleRef = useRef<HTMLButtonElement>(null)

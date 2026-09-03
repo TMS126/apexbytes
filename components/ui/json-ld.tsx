@@ -1,4 +1,5 @@
 // components/ui/json-ld.tsx
+import Script from 'next/script'
 import { BIZ } from '@/lib/brand'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
@@ -117,8 +118,10 @@ export function LocalBusinessJsonLd() {
   }
 
   return (
-    <script
+    <Script
+      id="local-business-jsonld"
       type="application/ld+json"
+      strategy="beforeInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   )
