@@ -1,13 +1,9 @@
 // components/strip-section.tsx
 "use client"
 
-import { useState } from "react"
-import { useTheme } from "next-themes"
 import { Rocket, CurrencyDollar, HandHeart, MapPin, WhatsappLogo } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
-import { BRAND, WA, STRIP_ITEMS } from "@/lib/brand"
+import { WA, STRIP_ITEMS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { getReadableTextColor } from "@/lib/color-utils"
 
 export function StripSection() {
   return (
@@ -36,47 +32,28 @@ export function StripSection() {
 }
 
 function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
-  const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
-  const [hovered, setHovered] = useState(false)
-  const isDark = mounted && resolvedTheme === "dark"
-
-  const color = isDark ? BRAND.lightBlue : BRAND.blue
-  const neutralColor = "var(--foreground)"
-  const hoverTextColor = getReadableTextColor(color)
-  const hoverDescColor = hoverTextColor === "#ffffff" ? "rgba(255,255,255,0.9)" : "rgba(24,24,27,0.78)"
-
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onFocus={() => setHovered(true)}
-      onBlur={() => setHovered(false)}
-      onTouchStart={() => setHovered(true)}
-      onTouchEnd={() => setHovered(false)}
       tabIndex={0}
       aria-label={item.title}
-      className={cn(
-        "relative rounded-[14px] border p-6 transition-all duration-300 group overflow-hidden h-full",
-        "abh-shadow-card hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
-      )}
+      className="relative rounded-[14px] border p-6 transition-transform duration-300 hover:-translate-y-1 group overflow-hidden h-full abh-shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
       style={{
-        backgroundColor: hovered ? color : "var(--card)",
-        borderColor: hovered ? color : "var(--border)",
+        backgroundColor: "var(--card)",
+        borderColor: "var(--border)",
       }}
     >
       <div className="relative z-10">
-        <div className="mb-5 transition-colors duration-300" style={{ color: hovered ? hoverTextColor : neutralColor }}>
+        <div className="mb-5 text-foreground">
           {item.iconName === "Rocket" && <Rocket weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "CurrencyDollar" && <CurrencyDollar weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "HandHeart" && <HandHeart weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "MapPin" && <MapPin weight="regular" className="w-6 h-6" aria-hidden="true" />}
         </div>
         <div>
-          <h3 className="font-sans font-semibold text-base mb-1 transition-colors duration-300" style={{ color: hovered ? hoverTextColor : "var(--foreground)" }}>
+          <h3 className="font-sans font-semibold text-base mb-1 text-foreground">
             {item.title}
           </h3>
-          <p className="text-base leading-relaxed transition-colors duration-300" style={{ color: hovered ? hoverDescColor : "var(--muted-foreground)" }}>
+          <p className="text-base leading-relaxed text-muted-foreground">
             {item.desc}
           </p>
         </div>
@@ -102,10 +79,6 @@ export function CtaBar({
    *  unless a caller (e.g. Gallery) needs different framing. */
   badgeText?: string
 }) {
-  const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
-  const isDark = mounted && resolvedTheme === "dark"
-
   const ctaBlue = "var(--cta-badge-bg)"
   const ctaTextOnBlue = "var(--cta-badge-text)"
 

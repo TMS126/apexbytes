@@ -1,7 +1,7 @@
 // components/hero-section.tsx
 "use client"
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
@@ -33,37 +33,15 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
 
 // ─── HERO SERVICES ILLUSTRATION ──────────────────────────────────────────────
 function HubIconField({ isDark }: { isDark: boolean }) {
-  const [active, setActive] = useState(false)
-  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const activate = () => {
-    if (resetTimer.current) clearTimeout(resetTimer.current)
-    setActive(true)
-  }
-  const release = () => {
-    if (resetTimer.current) clearTimeout(resetTimer.current)
-    resetTimer.current = setTimeout(() => setActive(false), 500)
-  }
-
   return (
-    <div
-      className="relative mx-auto w-full max-w-[560px] aspect-square"
-      onMouseEnter={activate}
-      onMouseLeave={release}
-      onTouchStart={activate}
-      onTouchEnd={release}
-      onTouchCancel={release}
-      onFocus={activate}
-      onBlur={release}
-    >
+    <div className="relative mx-auto w-full max-w-[560px] aspect-square">
       <Image
-        src={isDark ? "/Hpl.webp" : "/Hpd.webp"}
+        src={isDark ? "/Hpl-transparent.png" : "/Hpd-transparent.png"}
         alt="Isometric printer, CV clipboard, design tools, globe with shield, laptop, and PC representing ApexbytesHub services"
         fill
         priority
         sizes="(max-width: 767px) 90vw, 560px"
-        className="object-contain transition-transform duration-500 ease-out drop-shadow-[0_18px_26px_rgba(37,40,62,0.12)] dark:drop-shadow-[0_20px_30px_rgba(0,0,0,0.35)]"
-        style={{ transform: active ? "scale(1.045) rotate(-1deg)" : "scale(1) rotate(0deg)" }}
+        className="object-contain"
       />
     </div>
   )
