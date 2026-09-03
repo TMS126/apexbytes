@@ -1,4 +1,3 @@
-// components/navbar.tsx
 "use client"
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react"
@@ -149,8 +148,8 @@ export function Navbar() {
       <header
         className="fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col pointer-events-none transition-[top] duration-300 ease-out"
       >
-        <div className="flex justify-center px-4 md:px-8 pt-5 h-[--nav-h] items-center">
-          <div className="relative flex items-center justify-between w-full max-w-[1200px]">
+        <div className="flex justify-center px-6 md:px-10 lg:px-12 xl:px-16 pt-5 h-[--nav-h] items-center">
+          <div className="relative flex items-center justify-between w-full max-w-[1440px]">
             {/* Logo */}
             <button
               ref={logoButtonRef}
