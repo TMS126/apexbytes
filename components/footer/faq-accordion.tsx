@@ -1,4 +1,3 @@
-// components/footer/faq-accordion.tsx
 "use client"
 
 import { CaretDown } from "@phosphor-icons/react"
@@ -24,7 +23,7 @@ export function FaqAccordion({
       */}
       <div
         className={cn(
-          "w-full max-w-2xl overflow-hidden border rounded-[18px] transition-[border-color,background-color] duration-200",
+          "w-full max-w-[1440px] overflow-hidden border rounded-[18px] transition-[border-color,background-color] duration-200",
           isOpen
             ? "bg-white dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-700"
             : "bg-transparent border-zinc-200 dark:border-zinc-700"
@@ -76,13 +75,21 @@ export function FaqAccordion({
                       className="flex items-center justify-between w-full text-left gap-4 px-5 py-4"
                     >
                       <span className="flex items-start gap-2.5 min-w-0">
-                        <span className="text-[0.78rem] font-black text-brand-blue dark:text-brand-light-blue shrink-0 mt-1" aria-hidden="true">Q</span>
+                        <span
+                          className="text-[0.78rem] font-black text-brand-blue dark:text-brand-light-blue shrink-0 mt-1"
+                          aria-hidden="true"
+                        >
+                          Q
+                        </span>
                         <h4 className="text-[1.2rem] font-black text-zinc-800 dark:text-zinc-100 leading-snug">
                           {faq.question}
                         </h4>
                       </span>
                       <CaretDown
-                        className={cn("w-3.5 h-3.5 text-muted-foreground shrink-0 mt-1", open && "rotate-180")}
+                        className={cn(
+                          "w-3.5 h-3.5 text-muted-foreground shrink-0 mt-1",
+                          open && "rotate-180"
+                        )}
                         aria-hidden="true"
                       />
                     </button>
@@ -98,7 +105,12 @@ export function FaqAccordion({
                       <div className="overflow-hidden">
                         <div className="pl-5 pr-5 pb-5 pt-1">
                           <div className="flex items-start gap-2.5 border-l-2 border-zinc-200 dark:border-zinc-700 pl-3.5 ml-[3px]">
-                            <span className="text-[0.78rem] font-black text-muted-foreground dark:text-muted-foreground shrink-0 mt-1" aria-hidden="true">A</span>
+                            <span
+                              className="text-[0.78rem] font-black text-muted-foreground dark:text-muted-foreground shrink-0 mt-1"
+                              aria-hidden="true"
+                            >
+                              A
+                            </span>
                             <p className="text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">
                               {faq.answer}
                             </p>
@@ -115,4 +127,4 @@ export function FaqAccordion({
       </div>
     </div>
   )
-                              }
+}
