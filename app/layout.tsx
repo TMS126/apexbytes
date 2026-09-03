@@ -113,8 +113,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         <MaintenanceBanner />
 
+        <LocalBusinessJsonLd />
+
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
-          <LocalBusinessJsonLd />
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
           <FloatingSearchWidget />
           <QuoteCalculatorWidget />
