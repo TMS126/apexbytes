@@ -388,7 +388,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   padding: 0.5rem 1rem;
   background: var(--brand-blue);
   color: var(--on-brand-blue);
-  font-weight: 900;
+  font-weight: 500;
   font-size: 0.875rem;
   border-radius: 0 0 var(--radius) var(--radius);
   transition: top 0.2s;
@@ -444,49 +444,47 @@ button, a, [role="button"] {
     box-shadow: none;
   }
 
-  /* Typography hierarchy: Manrope anchors structure; DM Sans carries utility and explanation. */
+  /* Typography hierarchy: size, color, spacing, and tracking carry emphasis; 500 is the weight ceiling. */
   .abh-page-title {
-    @apply font-heading font-bold text-4xl md:text-5xl tracking-[-0.04em] leading-tight text-center;
+    @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
     color: var(--title-color);
   }
 
   .abh-section-heading {
-    @apply font-heading font-bold text-2xl md:text-3xl tracking-[-0.03em] leading-snug;
+    @apply font-heading font-medium text-2xl md:text-3xl tracking-tight leading-snug;
     color: var(--title-color);
+    margin-top: 4rem;
   }
 
   .abh-card-heading {
-    @apply font-heading font-bold text-base tracking-[-0.02em] leading-snug;
+    @apply font-heading font-medium text-base md:text-lg tracking-tight leading-snug;
     color: var(--card-foreground);
   }
 
   .abh-eyebrow {
-    @apply font-sans font-bold text-xs uppercase tracking-[0.16em];
+    @apply font-sans font-medium text-xs uppercase tracking-[0.2em];
     color: var(--brand-orange-text);
   }
   .dark .abh-eyebrow { color: var(--brand-orange-text); }
 
   .abh-btn-label {
-    @apply font-sans font-bold text-base tracking-wide;
+    @apply font-sans font-medium text-base;
   }
 
   .abh-body {
-    @apply font-sans font-normal text-base md:text-lg leading-relaxed;
+    @apply font-sans font-normal text-base leading-relaxed;
     color: var(--foreground);
   }
 
-  .abh-muted {
+  .abh-muted,
+  .abh-tagline {
     @apply font-sans font-normal text-sm md:text-base leading-relaxed;
     color: var(--muted-foreground);
   }
 
-  .abh-tagline {
-    @apply font-sans font-normal text-base md:text-lg;
-    color: var(--muted-foreground);
-  }
-
   .abh-price {
-    @apply font-heading font-bold text-[1.35rem] md:text-[1.5rem] leading-none;
+    @apply font-heading font-medium text-2xl md:text-3xl leading-none;
+    color: var(--brand-orange-text);
   }
 
   .abh-page-header {
@@ -543,7 +541,7 @@ button, a, [role="button"] {
   }
 
   .abh-wa-btn {
-    @apply font-sans flex items-center justify-center gap-2 font-bold text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
+    @apply font-sans flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--brand-whatsapp);
     color: var(--on-whatsapp);
   }
@@ -551,7 +549,7 @@ button, a, [role="button"] {
 
   .abh-btn-primary,
   .abh-btn-cta {
-    @apply font-sans inline-flex items-center justify-center gap-2 font-bold text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
+    @apply font-sans inline-flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
     background: var(--primary-fill);
     color: var(--on-primary-fill);
   }

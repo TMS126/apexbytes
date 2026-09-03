@@ -8,7 +8,9 @@ import { MAINTENANCE_BANNER } from "@/lib/brand"
 const DISMISS_KEY = `abh-maintenance-dismissed-v${MAINTENANCE_BANNER.version}`
 
 export function MaintenanceBanner() {
-  const [mounted] = useState(() => typeof window !== "undefined")
+  // Keep the first client render identical to the server render. Browser-only
+  // dismissal state is loaded after hydration in the effect below.
+  const [mounted, setMounted] = useState(false)
   const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
@@ -17,6 +19,8 @@ export function MaintenanceBanner() {
         setDismissed(localStorage.getItem(DISMISS_KEY) === "1")
       } catch {
         // localStorage unavailable (private browsing, etc.) — default to showing the banner
+      } finally {
+        setMounted(true)
       }
     })
     return () => cancelAnimationFrame(frame)
