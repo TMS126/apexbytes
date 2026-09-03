@@ -7,7 +7,7 @@ import { PlusCircle, Gear, Wrench, CalendarCheck } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { BIZ, pickHex } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { getReadableTextColor } from "@/lib/color-utils"
+import { getContrastText } from "@/lib/color"
 
 export function StatsBar() {
   const { resolvedTheme } = useTheme()
@@ -32,7 +32,7 @@ export function StatsBar() {
         {stats.map((stat, i) => {
           const isHov = hoveredCard === i
           const Icon = stat.icon
-          const textOnColor = getReadableTextColor(stat.color)
+          const textOnColor = getContrastText(stat.color)
           return (
             <ScrollBounce key={stat.label} delay={i * 0.08} className="h-full">
               <div
