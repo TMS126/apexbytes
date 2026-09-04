@@ -17,8 +17,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ArrowUp } from "@phosphor-icons/react"
+import { ArrowDown, ArrowUp } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
+import { useScrollToBottom } from "@/components/scroll-to-bottom-button"
 
 export function BackToTopButton({
   visible,
@@ -29,21 +30,30 @@ export function BackToTopButton({
   bottomClass?: string
   className?: string
 }) {
+  const showScrollToBottom = useScrollToBottom()
+  const controlClass = cn(
+    "fixed right-3 md:right-5 left-auto z-[9990] size-11 rounded-[14px] bg-secondary/90 text-muted-foreground border border-border shadow-md backdrop-blur-sm flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105 hover:bg-card",
+    bottomClass,
+    className
+  )
+
   return (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Back to top"
-      className={cn(
-        "fixed left-1/2 -translate-x-1/2 z-[9990] w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105",
-        bottomClass,
-        visible
-          ? "opacity-100 translate-y-0 pointer-events-auto"
-          : "opacity-0 translate-y-4 pointer-events-none",
-        className
-      )}
-    >
-      <ArrowUp size={20} weight="bold" className="text-brand-blue dark:text-brand-light-blue" />
-    </button>
+    <>
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Back to top"
+        className={cn(controlClass, visible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none")}
+      >
+        <ArrowUp size={20} weight="regular" aria-hidden="true" />
+      </button>
+      <button
+        onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
+        aria-label="Scroll to bottom"
+        className={cn(controlClass, showScrollToBottom && !visible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none")}
+      >
+        <ArrowDown size={20} weight="regular" aria-hidden="true" />
+      </button>
+    </>
   )
 }
 

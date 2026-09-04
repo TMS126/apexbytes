@@ -16,7 +16,6 @@ import { HubSelect } from "@/components/contact/hub-select"
 import { FieldErrorTooltip } from "@/components/contact/field-error-tooltip"
 import { withStatusPrefix } from "@/lib/sa-time"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
-import { ScrollToBottomButton, useScrollToBottom } from "@/components/scroll-to-bottom-button"
 
 const CONTACT_ICONS: Record<string, React.ElementType> = {
   "WhatsApp Us": WhatsappLogo,
@@ -50,7 +49,6 @@ function ContactPageInner() {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
   const formCardRef = useRef<HTMLDivElement>(null)
   const showBackToTop = useBackToTop()
-  const showScrollToBottom = useScrollToBottom()
 
   useEffect(() => {
     const serviceParam = searchParams.get("service")
@@ -176,7 +174,7 @@ function ContactPageInner() {
                             className="group flex flex-col items-center justify-center text-center gap-2 p-4 h-full min-h-[104px] rounded-[14px] border border-transparent text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97]"
                           >
                             <Icon size={34} weight="regular" aria-hidden="true" className="text-current transition-colors duration-200" />
-                            <p className="text-sm font-normal text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
+                            <span className="sr-only">{c.value}</span>
                           </a>
                           {isCopyable && (
                             <button
@@ -332,7 +330,6 @@ function ContactPageInner() {
         </a>
       </div>
 
-      <ScrollToBottomButton visible={showScrollToBottom && !showBackToTop} bottomClass="bottom-24 md:bottom-6" />
       <BackToTopButton visible={showBackToTop} bottomClass="bottom-24 md:bottom-6" />
     </div>
   )

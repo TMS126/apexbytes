@@ -5,7 +5,7 @@ import { FilePdf, Wrench } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { BRAND, BIZ } from "@/lib/brand"
+import { BIZ } from "@/lib/brand"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -47,29 +47,23 @@ export default function ToolsPage() {
 
       <div className="px-6 md:px-8 pb-24">
         <div className="max-w-[720px] mx-auto">
-          <div className="flex flex-wrap justify-start gap-3">
+          <div className="grid grid-cols-2 items-stretch gap-4">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
                 <Link
                   href={tool.href}
-                  className="group flex items-center gap-3 pl-4 pr-5 py-3 rounded-[4px] border border-border bg-card hover:border-foreground/40 hover:shadow-md transition-shadow duration-150 active:scale-[0.98] abh-shadow-card"
+                  className="group flex min-h-24 w-full items-center justify-center rounded-[14px] border border-border bg-card p-5 text-center shadow-sm transition-[box-shadow,transform] duration-150 hover:shadow-md active:translate-y-px active:shadow-sm abh-shadow-card"
+                  aria-label={tool.name}
                 >
-                  <span
-                    className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 8%, transparent)` }}
-                  >
-                    <tool.Icon weight="fill" className="w-5 h-5" style={{ color: BRAND.blue }} />
-                  </span>
-                  <span className="text-left">
-                    <span className="block text-[0.95rem] font-black text-zinc-900 dark:text-white">{tool.name}</span>
-                    <span className="block text-[0.78rem] text-muted-foreground dark:text-muted-foreground max-w-[220px]">{tool.desc}</span>
+                  <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
                   </span>
                 </Link>
               </ScrollBounce>
             ))}
           </div>
 
-          <p className="mt-8 text-left text-sm font-semibold text-muted-foreground">
+          <p className="mt-8 text-center text-sm font-medium text-muted-foreground">
             More focused utilities are being built for this workspace.
           </p>
         </div>
