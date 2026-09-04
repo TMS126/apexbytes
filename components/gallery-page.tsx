@@ -362,7 +362,7 @@ function GalleryPageInner() {
 
         <ScrollBounce delay={0.1}>
           <div className="max-w-md mx-auto mb-8">
-            <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
+            <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-modal focus-within:border-brand-blue transition-all duration-200">
               <MagnifyingGlass size={16} weight="bold" className="shrink-0 text-muted-foreground" aria-hidden="true" />
               <input
                 type="text"

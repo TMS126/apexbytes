@@ -87,9 +87,9 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
       role="dialog"
       aria-modal="true"
       aria-label="Terms & Service Policies"
-      className="fixed inset-0 z-[99999] flex items-center justify-center md:p-8 bg-white dark:bg-zinc-950 md:bg-black/50 md:dark:bg-black/70 md:backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-[99999] flex items-center justify-center md:p-8 abh-surface-modal md:bg-black/50 md:dark:bg-black/70 md:backdrop-blur-sm animate-in fade-in duration-200"
     >
-      <div className="relative w-full h-full md:h-[85vh] md:max-w-3xl bg-white dark:bg-zinc-950 md:rounded-[20px] md:shadow-2xl overflow-hidden flex flex-col animate-in md:zoom-in-95 duration-300">
+      <div className="relative w-full h-full md:h-[85vh] md:max-w-3xl abh-surface-modal md:rounded-[20px] md:shadow-2xl overflow-hidden flex flex-col animate-in md:zoom-in-95 duration-300">
 
         <div className="px-6 md:px-10 pt-8 pb-5 border-b border-zinc-100 dark:border-zinc-800 shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative z-10 flex items-start justify-between gap-4">
           <div>
@@ -110,7 +110,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
 
         <div className="flex-1 overflow-y-auto overscroll-contain px-6 md:px-10 py-6 md:py-10">
           <div className="max-w-2xl mx-auto space-y-8">
-            <div className="p-5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
+            <div className="p-5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-subtle shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
               <h3 className="font-bold flex items-center gap-2 mb-2 text-[0.98rem] text-zinc-900 dark:text-zinc-50">
                 <Info weight="fill" className="w-4 h-4" aria-hidden="true" /> Operational Rule
               </h3>
@@ -141,10 +141,10 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
           </div>
         </div>
 
-        <div className="px-6 md:px-10 py-6 border-t border-zinc-100 dark:border-zinc-800 shrink-0 bg-white dark:bg-zinc-950 flex justify-center">
+        <div className="px-6 md:px-10 py-6 border-t border-zinc-100 dark:border-zinc-800 shrink-0 abh-surface-modal flex justify-center">
           <button
             onClick={handleClose}
-            className="px-10 py-3 rounded-[14px] bg-brand-blue text-white font-black text-[1.08rem] active:scale-[0.98] transition-transform"
+            className="px-10 py-3 rounded-[14px] bg-primary text-primary-foreground font-black text-[1.08rem] active:scale-[0.98] transition-transform"
           >
             I Agree
           </button>

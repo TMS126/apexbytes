@@ -401,7 +401,7 @@ export function WhatsAppFAB() {
         <div
           className={cn(
             "fixed bottom-24 right-4 left-4 md:left-auto md:right-6 z-[9991] md:w-[400px] max-h-[75vh]",
-            "rounded-[20px] shadow-2xl flex flex-col overflow-hidden bg-white dark:bg-zinc-950",
+            "rounded-[20px] shadow-2xl flex flex-col overflow-hidden abh-surface-modal",
             "animate-in slide-in-from-bottom-4 fade-in duration-200 ease-out motion-reduce:animate-none transform-gpu"
           )}
           style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.25)" }}
@@ -753,7 +753,7 @@ export function WhatsAppFAB() {
           <span className={cn(
             TXT.hint,
             "font-black uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
-            "bg-white dark:bg-zinc-900 text-[#25D366]",
+            "abh-surface-modal text-[#25D366]",
             "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
             "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100"

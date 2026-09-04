@@ -128,7 +128,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
           aria-label={`${BIZ.founder} — founder profile`}
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-t-[20px] shadow-2xl overflow-hidden flex flex-col max-h-[88vh] transition-transform duration-300 ease-out",
+            "relative w-full max-w-md abh-surface-modal rounded-t-[20px] shadow-2xl overflow-hidden flex flex-col max-h-[88vh] transition-transform duration-300 ease-out",
             open ? "translate-y-0 pointer-events-auto" : "translate-y-full pointer-events-none"
           )}
         >

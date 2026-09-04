@@ -437,6 +437,23 @@ button, a, [role="button"] {
 }
 
 @layer components {
+  /* Shared semantic surfaces: use these for panels, dialogs, and quiet utility groups. */
+  .abh-surface-modal {
+    background: var(--popover);
+    color: var(--popover-foreground);
+    border-color: var(--border);
+  }
+
+  .abh-surface-subtle {
+    background: var(--muted);
+    color: var(--muted-foreground);
+  }
+
+  .abh-accent-pill {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
   .abh-card {
     @apply rounded-[14px] transition-colors duration-200;
     background: var(--card);

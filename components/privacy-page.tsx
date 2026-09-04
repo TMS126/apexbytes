@@ -24,7 +24,7 @@ export function PrivacyPage() {
           <p className="mt-3 text-base text-muted-foreground dark:text-muted-foreground">
             {BIZ.name} &mdash; Last updated {LAST_UPDATED}
           </p>
-          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
+          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[12px] abh-surface-subtle border border-zinc-100 dark:border-zinc-800">
             This Privacy Policy explains how <strong className="text-zinc-800 dark:text-zinc-200">{BIZ.name}</strong>{" "}
             (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, stores, and protects your personal
             information. It is written in compliance with the{" "}
@@ -223,7 +223,7 @@ export function PrivacyPage() {
           <section>
             <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">10. Contact Us</h2>
             <p>For any privacy-related questions or requests:</p>
-            <div className="mt-3 p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 space-y-1">
+            <div className="mt-3 p-4 rounded-[12px] abh-surface-subtle border border-zinc-100 dark:border-zinc-800 space-y-1">
               <p><strong className="text-zinc-700 dark:text-zinc-300">{BIZ.name}</strong></p>
               <p>{BIZ.addressFull}</p>
               <p>

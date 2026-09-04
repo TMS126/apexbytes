@@ -110,7 +110,7 @@ function FooterContent() {
                     className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-whatsapp transition-colors flex-1 min-w-0"
                   >
                     <div
-                      className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm shrink-0"
+                      className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center abh-surface-modal shadow-sm shrink-0"
                       aria-hidden="true"
                     >
                       <WhatsappLogo weight="fill" className="w-5 h-5" />
@@ -121,7 +121,7 @@ function FooterContent() {
                     type="button"
                     onClick={handleCopyPhone}
                     aria-label="Copy phone number"
-                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm text-muted-foreground hover:text-brand-blue transition-colors active:scale-90"
+                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 abh-surface-modal shadow-sm text-muted-foreground hover:text-brand-blue transition-colors active:scale-90"
                   >
                     {phoneCopied ? (
                       <Check weight="bold" className="w-3.5 h-3.5 text-brand-green" />
@@ -143,7 +143,7 @@ function FooterContent() {
                   className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-blue transition-colors min-w-0"
                 >
                   <div
-                    className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm shrink-0"
+                    className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center abh-surface-modal shadow-sm shrink-0"
                     aria-hidden="true"
                   >
                     <EnvelopeSimple weight="fill" className="w-5 h-5" />
@@ -160,7 +160,7 @@ function FooterContent() {
       </ScrollBounce>
 
       <ScrollBounce>
-        <div className="mt-8 bg-zinc-50 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="mt-8 abh-surface-subtle/40 border-t border-zinc-100 dark:border-zinc-800">
           <div className="max-w-[1200px] mx-auto pt-8 pb-8 px-6 md:px-8 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
             <p className="text-[0.78rem] font-medium text-muted-foreground md:text-left text-center">
               © {new Date().getFullYear()} {BIZ.name}. All rights reserved.
@@ -202,7 +202,7 @@ function FooterContent() {
 
 export function Footer() {
   return (
-    <footer className="bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <footer className="abh-surface-modal border-t border-zinc-100 dark:border-zinc-900">
       <FooterContent />
     </footer>
   )

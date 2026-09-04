@@ -28,7 +28,7 @@ export function ScrollToBottomButton({
       }
       aria-label="Scroll to bottom"
       className={cn(
-        "fixed left-1/2 -translate-x-1/2 z-[9990] w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105",
+        "fixed left-1/2 -translate-x-1/2 z-[9990] w-12 h-12 rounded-full abh-surface-modal border border-zinc-100 dark:border-zinc-800 shadow-lg flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105",
         bottomClass,
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"

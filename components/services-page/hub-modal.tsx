@@ -107,11 +107,11 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.96, opacity: 0 }}
         transition={{ type: "tween", duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-        className="relative z-10 w-full max-w-2xl bg-white dark:bg-zinc-950 shadow-2xl border border-zinc-100 dark:border-zinc-800 max-h-[76vh] flex flex-col outline-none rounded-[14px] overflow-hidden"
+        className="relative z-10 w-full max-w-2xl abh-surface-modal shadow-2xl border border-zinc-100 dark:border-zinc-800 max-h-[76vh] flex flex-col outline-none rounded-[14px] overflow-hidden"
         style={{ boxShadow: "0 45px 100px -20px rgba(0,0,0,0.55), 0 20px 48px -14px rgba(0,0,0,0.4)" }}
       >
         <div
-          className="relative z-10 shrink-0 bg-white dark:bg-zinc-950 transition-shadow duration-200"
+          className="relative z-10 shrink-0 abh-surface-modal transition-shadow duration-200"
           style={{ boxShadow: isScrolled ? "0 10px 20px -14px rgba(0,0,0,0.35)" : "none" }}
         >
           <div className="px-6 md:px-8 pt-6 pb-5 flex justify-between items-center gap-3">
@@ -214,7 +214,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           className="flex-1 overflow-y-auto overscroll-contain p-5 md:p-8"
         >
           {activeSection && (
-            <div key={`items-${openSectionIdx}`} className="abh-shadow-nested-group rounded-[14px] bg-zinc-50 dark:bg-zinc-900/50 p-3 md:p-4 grid grid-cols-1 gap-2 animate-in fade-in duration-200">
+            <div key={`items-${openSectionIdx}`} className="abh-shadow-nested-group rounded-[14px] abh-surface-subtle/50 p-3 md:p-4 grid grid-cols-1 gap-2 animate-in fade-in duration-200">
               {activeSection.items.map((item, iIdx) => {
                 const priceKey = `${activeSection.title}|${item.name}`
                 const isRevealed = revealedPrices.has(priceKey)
@@ -234,7 +234,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                         notice: item.notice,
                       })
                     }
-                    className="flex items-center justify-between px-4 py-3.5 rounded-[10px] bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/70 transition-colors duration-150 active:scale-[0.99] w-full"
+                    className="flex items-center justify-between px-4 py-3.5 rounded-[10px] abh-surface-modal hover:bg-zinc-50 dark:hover:bg-zinc-800/70 transition-colors duration-150 active:scale-[0.99] w-full"
                   >
                     <span className="text-[1.02rem] font-semibold text-zinc-700 dark:text-zinc-200 text-left flex items-center gap-2">
                       {itemHasBulk(hubId, activeSection.title, item.name) && (
@@ -291,7 +291,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             at the panel's top-right when opening, and smoothly reforms
             it back into the ℹ️ pill on close. */}
         {hubDisclaimer && (
-          <div className="relative shrink-0 border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+          <div className="relative shrink-0 border-t border-zinc-100 dark:border-zinc-800 abh-surface-modal">
             <AnimatePresence initial={false} mode="popLayout">
               {!noticeOpen ? (
                 <motion.div
@@ -368,7 +368,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   onClick={() => onSwitchHub(id)}
                   aria-label={`Switch to ${HUBS[id].title}`}
                   title={HUBS[id].title}
-                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
+                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] abh-surface-modal border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
                   style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: otherAccent }}
                 >
                   <HubIcon id={id} size={18} color="currentColor" />

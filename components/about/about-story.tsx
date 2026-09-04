@@ -112,7 +112,7 @@ export function AboutStory({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 divide-x divide-zinc-100 dark:divide-zinc-800 flex-1 rounded-[12px] bg-zinc-50 dark:bg-zinc-900/50">
+              <div className="grid grid-cols-2 divide-x divide-zinc-100 dark:divide-zinc-800 flex-1 rounded-[12px] abh-surface-subtle/50">
                 {[
                   { value: <WhatsappLogo weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "WhatsApp Ready" },
                   { value: <ShieldCheck weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "Community Trusted" },

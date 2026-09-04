@@ -15,7 +15,7 @@ import { Result } from './lib'
 export function PricingSearchInput({ query, setQuery }: { query: string; setQuery: (v: string) => void }) {
   return (
     <div className="relative mx-auto w-full max-w-md">
-      <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
+      <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-modal focus-within:border-brand-blue transition-all duration-200">
         <MagnifyingGlass size={16} weight="bold" className="text-muted-foreground pointer-events-none shrink-0" aria-hidden="true" />
         <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
         <input

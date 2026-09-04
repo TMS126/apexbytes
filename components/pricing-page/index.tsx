@@ -261,7 +261,7 @@ const displayedHub = hoveredHub ?? selectedHub
                   <div className="no-print flex justify-center">
                     <button
                       onClick={toggleAll}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-bold border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-bold border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground abh-surface-modal shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
                     >
                       {allOpen ? 'Collapse all' : 'Expand all'}
                     </button>

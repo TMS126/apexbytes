@@ -32,7 +32,7 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
               href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I'd like to get in touch.`)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900/60 text-[0.88rem] font-medium text-zinc-600 dark:text-zinc-300 hover:border-brand-whatsapp hover:text-brand-whatsapp hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 shadow-sm"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-zinc-200 dark:border-zinc-700 abh-surface-modal/60 text-[0.88rem] font-medium text-zinc-600 dark:text-zinc-300 hover:border-brand-whatsapp hover:text-brand-whatsapp hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200 shadow-sm"
             >
               <WhatsappLogo size={16} weight="fill" className="text-brand-whatsapp" aria-hidden="true" />
               Chat with the team on WhatsApp

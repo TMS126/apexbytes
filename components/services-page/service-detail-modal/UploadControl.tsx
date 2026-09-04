@@ -60,7 +60,7 @@ export function UploadStatus({
 
   if (phase === "uploading") {
     return (
-      <div className="flex flex-col gap-2 w-full px-4 py-3 rounded-[14px] bg-zinc-50 dark:bg-zinc-900">
+      <div className="flex flex-col gap-2 w-full px-4 py-3 rounded-[14px] abh-surface-subtle">
         <div className="flex items-center justify-between text-base font-bold text-muted-foreground dark:text-muted-foreground">
           <span className="truncate">Uploading {file?.name}…</span>
           <span className="font-black tabular-nums shrink-0 ml-2 text-zinc-700 dark:text-zinc-200">{uploadProgress}%</span>

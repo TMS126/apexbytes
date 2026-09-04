@@ -366,7 +366,7 @@ return (
         <button
           onClick={() => setIsOpen(true)}
           className={cn(
-            "-mr-3 flex items-center gap-2 pl-3 pr-3.5 py-2 rounded-full shadow-lg bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 active:scale-95 transition-all duration-250 ease-out origin-right motion-reduce:transition-none transform-gpu overflow-hidden whitespace-nowrap",
+            "-mr-3 flex items-center gap-2 pl-3 pr-3.5 py-2 rounded-full shadow-lg abh-surface-modal border border-zinc-100 dark:border-zinc-800 active:scale-95 transition-all duration-250 ease-out origin-right motion-reduce:transition-none transform-gpu overflow-hidden whitespace-nowrap",
             showMiniBar && miniExpanded
               ? "opacity-100 max-w-[220px] scale-100"
               : "opacity-0 max-w-0 scale-95 pl-0 pr-0 pointer-events-none"
@@ -392,7 +392,7 @@ return (
           <span
             className={cn(
               "text-[0.65rem] font-black uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
-              "bg-white dark:bg-zinc-900",
+              "abh-surface-modal",
               "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
               "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
               "max-w-0 opacity-0 scale-x-0 group-hover/calc:max-w-[100px] group-hover/calc:opacity-100 group-hover/calc:scale-x-100"
@@ -525,7 +525,7 @@ return (
                         onChange={e => setSaveNameDraft(e.target.value)}
                         onKeyDown={e => { if (e.key === "Enter") confirmSaveQuote() }}
                         placeholder="Name this quote (optional)"
-                        className="flex-1 min-w-0 px-2.5 py-1.5 rounded-[8px] bg-white dark:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 outline-none border border-zinc-100 dark:border-zinc-800"
+                        className="flex-1 min-w-0 px-2.5 py-1.5 rounded-[8px] abh-surface-modal text-xs font-medium text-zinc-800 dark:text-zinc-200 outline-none border border-zinc-100 dark:border-zinc-800"
                       />
                       <button
                         onClick={confirmSaveQuote}

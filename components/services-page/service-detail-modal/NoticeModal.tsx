@@ -49,7 +49,7 @@ export function NoticeModal({
         role="dialog"
         aria-modal="true"
         aria-label={`Notice for ${hubTitle}`}
-        className="relative w-full max-w-sm bg-white dark:bg-zinc-950 shadow-2xl border border-zinc-100 dark:border-zinc-800 rounded-[14px] max-h-[80vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-sm abh-surface-modal shadow-2xl border border-zinc-100 dark:border-zinc-800 rounded-[14px] max-h-[80vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         style={{ boxShadow: "0 30px 70px -18px rgba(0,0,0,0.5), 0 10px 24px -8px rgba(0,0,0,0.3)" }}
       >
         {/* ── Header: warning icon + "Notice" title + close button ── */}

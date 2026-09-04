@@ -372,7 +372,7 @@ export function FloatingSearchWidget() {
                 focus:border-brand-blue treatment instead of the old
                 static-border pill shape. */}
             <div
-              className="flex items-center gap-2 rounded-[14px] bg-white dark:bg-zinc-900 border shadow-xl px-4 h-14 transition-colors duration-150 ease-out motion-reduce:transition-none"
+              className="flex items-center gap-2 rounded-[14px] abh-surface-modal border shadow-xl px-4 h-14 transition-colors duration-150 ease-out motion-reduce:transition-none"
               style={{ borderColor: inputFocused ? accentColor : undefined }}
             >
               <MagnifyingGlass size={20} weight="bold" aria-hidden="true" style={{ color: accentColor }} />
@@ -409,7 +409,7 @@ export function FloatingSearchWidget() {
             {/* Results card — bumped-up type for legibility, also on the
                 14px radius language now. */}
             {hasQuery && (
-              <div className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
+              <div className="mt-3 rounded-[14px] abh-surface-modal border border-zinc-200 dark:border-white/10 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
                 <div className="max-h-[55vh] overflow-y-auto p-2">
                   {results.length > 0 ? (
                     <div className="divide-y divide-zinc-100 dark:divide-white/10">

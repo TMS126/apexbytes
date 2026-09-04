@@ -154,7 +154,7 @@ export function HubCompactCard({
         onClick={onSelect}
         onMouseEnter={onHover}
         aria-pressed
-        className="h-full w-full rounded-[14px] bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
+        className="h-full w-full rounded-[14px] abh-surface-modal shadow-sm transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
         style={{ border: `1.5px solid ${hubColor}` }}
       >
         <HubIcon id={hubId} size={40} color={hubColor} />
@@ -258,7 +258,7 @@ export function HubExpandedPanel({
 
   return (
     <div
-      className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 overflow-hidden shadow-sm"
+      className="mt-3 rounded-[14px] abh-surface-modal overflow-hidden shadow-sm"
       style={{ border: `1.5px solid ${hubColor}` }}
     >
       <div
@@ -385,7 +385,7 @@ export function HubAccordionCard({
   return (
     <div
       ref={cardRef}
-      className="rounded-[14px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-shadow duration-200"
+      className="rounded-[14px] border border-zinc-200 dark:border-zinc-800 abh-surface-modal overflow-hidden transition-shadow duration-200"
       style={isOpen ? { borderColor: hubColor } : undefined}
     >
       <button

@@ -67,7 +67,7 @@ export function SimpleDropdown({
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-[10px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-sm font-semibold text-zinc-700 dark:text-zinc-300"
+        className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-[10px] border border-zinc-200 dark:border-zinc-800 abh-surface-modal text-sm font-semibold text-zinc-700 dark:text-zinc-300"
       >
         <span className="text-muted-foreground font-medium">{label}:</span>
         {current?.label}
@@ -80,7 +80,7 @@ export function SimpleDropdown({
           <ul
             role="listbox"
             style={{ position: "fixed", top: rect.top, left: rect.left, minWidth: rect.width }}
-            className="z-[9999] w-max max-w-[220px] rounded-[12px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl p-1.5"
+            className="z-[9999] w-max max-w-[220px] rounded-[12px] border border-zinc-100 dark:border-zinc-800 abh-surface-modal shadow-xl p-1.5"
           >
             {options.map((opt) => (
               <li key={opt.value}>

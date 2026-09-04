@@ -75,11 +75,11 @@ function ExpandableText({ text, accent }: { text: string; accent: string }) {
 function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent: string }) {
   return (
     <div className="space-y-5">
-      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5">
+      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-subtle/60 p-5">
         <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
         <ExpandableText text={project.clientGoal} accent={accent} />
       </div>
-      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5">
+      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-subtle/60 p-5">
         <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
         <ul className="space-y-2">
           {project.whatWeDid.map((item, i) => (
@@ -89,7 +89,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
           ))}
         </ul>
       </div>
-      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-5">
+      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-subtle/60 p-5">
         <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
         <ExpandableText text={project.result} accent={accent} />
       </div>
@@ -480,7 +480,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
     <div
       ref={containerRef}
       tabIndex={-1}
-      className="fixed inset-0 z-[10200] bg-white dark:bg-zinc-950 flex flex-col md:flex-row animate-in fade-in duration-200"
+      className="fixed inset-0 z-[10200] abh-surface-modal flex flex-col md:flex-row animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-viewer-title"

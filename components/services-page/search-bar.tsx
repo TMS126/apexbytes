@@ -42,7 +42,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
       {/* ===== INPUT — matches the Contact page's field styling:
           rounded-[14px], solid neutral border, brand-blue focus border,
           white/zinc-900 fill instead of the old zinc-50/underline look ===== */}
-      <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
+      <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 abh-surface-modal focus-within:border-brand-blue transition-all duration-200">
         <MagnifyingGlass size={16} weight="bold" className="text-muted-foreground pointer-events-none shrink-0" aria-hidden="true" />
         <label htmlFor="inline-search-input" className="sr-only">Find a service</label>
         <input
@@ -61,7 +61,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
         </button>
       )}
       {focused && query.trim().length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-zinc-950 rounded-[14px] border border-zinc-100 dark:border-zinc-800 shadow-xl overflow-hidden z-30 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute left-0 right-0 top-full mt-2 abh-surface-modal rounded-[14px] border border-zinc-100 dark:border-zinc-800 shadow-xl overflow-hidden z-30 animate-in fade-in zoom-in-95 duration-150">
           {results.length > 0 ? (
             <div className="max-h-[320px] overflow-y-auto p-2">
               {results.map((s, idx) => {

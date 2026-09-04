@@ -26,7 +26,7 @@ export function FaqAccordion({
         className={cn(
           "w-full max-w-2xl overflow-hidden border rounded-[18px] transition-[border-color,background-color] duration-200",
           isOpen
-            ? "bg-white dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-700"
+            ? "abh-surface-modal/80 border-zinc-200 dark:border-zinc-700"
             : "bg-transparent border-zinc-200 dark:border-zinc-700"
         )}
       >
@@ -65,8 +65,8 @@ export function FaqAccordion({
                     className={cn(
                       "rounded-[14px] border transition-all duration-200",
                       open
-                        ? "border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/60"
-                        : "border-transparent bg-white dark:bg-zinc-900/20 hover:border-zinc-100 dark:hover:border-zinc-800"
+                        ? "border-zinc-200 dark:border-zinc-700 abh-surface-subtle/60"
+                        : "border-transparent abh-surface-modal/20 hover:border-zinc-100 dark:hover:border-zinc-800"
                     )}
                   >
                     <button

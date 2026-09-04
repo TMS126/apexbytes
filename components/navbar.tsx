@@ -135,7 +135,7 @@ export function Navbar() {
     <>
       <a
         href="#main-content"
-        className="fixed left-4 top-4 z-[10000] -translate-y-24 focus:translate-y-0 transition-transform duration-200 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-bold text-sm px-3 py-2 rounded-md whitespace-nowrap"
+        className="fixed left-4 top-4 z-[10000] -translate-y-24 focus:translate-y-0 transition-transform duration-200 abh-surface-modal text-zinc-900 dark:text-zinc-100 font-bold text-sm px-3 py-2 rounded-md whitespace-nowrap"
       >
         Skip to content
       </a>

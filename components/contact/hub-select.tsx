@@ -57,7 +57,7 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
         />
       </button>
       {isOpen && (
-        <div role="listbox" className="absolute z-50 mt-1.5 w-full bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-800 rounded-[14px] shadow-xl overflow-hidden">
+        <div role="listbox" className="absolute z-50 mt-1.5 w-full abh-surface-modal border border-zinc-100 dark:border-zinc-800 rounded-[14px] shadow-xl overflow-hidden">
           {options.map((opt) => {
             const color = getFormHubColor(opt, isDark)
             const isHovered = hoveredOption === opt
