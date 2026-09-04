@@ -509,7 +509,6 @@ export function ServicesPage() {
                       key={iIdx}
   item={item}
   accent={desktopHubAccent}
-  hubId={desktopActiveHub!}
   onClick={() =>
                         handleSelectService({
                           name: item.name,
