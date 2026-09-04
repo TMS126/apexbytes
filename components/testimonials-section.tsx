@@ -158,8 +158,9 @@ export function TestimonialsSection({
   }
   const solidFor = (i: number) => {
     const c = HUB_COLORS[reviews[i].hubId as HubKey]
-    return isDark ? c.tagBgDark : c.primary
+    return isDark ? c.accentDark : c.primary
   }
+  const solidTextFor = () => isDark ? "var(--background)" : "var(--on-neutral-dark)"
 
   const slotStyle = (offset: number): React.CSSProperties => {
     const abs = Math.abs(offset)
@@ -240,8 +241,8 @@ export function TestimonialsSection({
                     </p>
 
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-[0.9rem] font-black text-white mb-1.5 shrink-0"
-                      style={{ backgroundColor: solid }}
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-[0.9rem] font-black mb-1.5 shrink-0"
+                      style={{ backgroundColor: solid, color: solidTextFor() }}
                     >
                       {r.initials}
                     </div>
@@ -250,8 +251,8 @@ export function TestimonialsSection({
 
                     {/* Solid colored pill, white text, hub name only — matches the reference image, same treatment in every state */}
                     <span
-                      className="text-[0.76rem] font-bold px-3.5 py-1.5 rounded-full mt-2 text-white"
-                      style={{ backgroundColor: solid }}
+                      className="text-[0.76rem] font-bold px-3.5 py-1.5 rounded-full mt-2"
+                      style={{ backgroundColor: solid, color: solidTextFor() }}
                     >
                       {HUB_NAMES[r.hubId as HubKey]}
                     </span>
