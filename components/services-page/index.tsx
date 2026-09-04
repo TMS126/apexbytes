@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { useModalBackStack, HubIcon } from "./shared"
+import { useModalBackStack, HubIcon, ServiceIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
@@ -150,11 +150,10 @@ function SectionCard({
 }
 
 function ServiceCard({
-  item, accent, hubId, onClick,
+  item, accent, onClick,
 }: {
   item: { name: string; price: string; notice?: string; description?: string }
   accent: string
-  hubId: HubId
   onClick: () => void
 }) {
   return (
@@ -164,7 +163,7 @@ function ServiceCard({
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
-          <HubIcon id={hubId} size={19} color={accent} />
+          <ServiceIcon name={item.name} size={19} color={accent} />
           {item.notice && (
             <WarningCircle
               size={13}

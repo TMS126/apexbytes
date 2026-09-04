@@ -5,7 +5,8 @@
 import { useCallback, useEffect, useRef } from "react"
 import type { PanInfo } from "framer-motion"
 import {
-  Printer, FileText, PaintBrush, Globe, Desktop,
+  Printer, FileText, PaintBrush, Globe, Desktop, Copy, Scissors, Image as ImageIcon,
+  FilePdf, IdentificationCard, Laptop, UserCircle, Gear,
 } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
 import { SelectedService } from "./lib"
@@ -19,6 +20,21 @@ export function HubIcon({ id, size = 28, color }: { id: HubId; size?: number; co
     case "eservice": return <Globe      {...p} />
     case "tech":     return <Desktop    {...p} />
   }
+}
+
+/** Choose a familiar service-level glyph instead of repeating the hub glyph. */
+export function ServiceIcon({ name, size = 19, color }: { name: string; size?: number; color?: string }) {
+  const p = { size, weight: "regular" as const, color: color ?? "currentColor", "aria-hidden": true }
+  const value = name.toLowerCase()
+  if (/(copy|duplicate)/.test(value)) return <Copy {...p} />
+  if (/(cut|trim|laminat)/.test(value)) return <Scissors {...p} />
+  if (/(photo|image|picture|flyer|poster|logo|design|social)/.test(value)) return <ImageIcon {...p} />
+  if (/(pdf|document|print|type|letter|form)/.test(value)) return <FilePdf {...p} />
+  if (/(cv|resume|id|passport)/.test(value)) return <IdentificationCard {...p} />
+  if (/(laptop|computer|windows|virus|repair|install|tech)/.test(value)) return <Laptop {...p} />
+  if (/(setting|setup|configure)/.test(value)) return <Gear {...p} />
+  if (/(user|account|profile|sassa|sars|uif)/.test(value)) return <UserCircle {...p} />
+  return <FileText {...p} />
 }
 
 export function AbhLoader({ size = 28, color }: { size?: number; color?: string }) {

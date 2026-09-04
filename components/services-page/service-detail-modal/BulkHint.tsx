@@ -28,8 +28,8 @@ export function BulkHint({
           {label}
         </span>
         <span
-          className="inline-flex items-center px-3 py-1.5 text-[0.8rem] font-bold text-center"
-          style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
+          className="inline-flex items-center px-3 py-1.5 text-[0.8rem] font-medium text-center"
+          style={{ backgroundColor: "var(--surface-accent-soft)", color: "var(--text-on-bright)" }}
         >
           {hint}
         </span>
@@ -45,4 +45,4 @@ export function BulkHint({
       )}
     </div>
   )
-} 
+}

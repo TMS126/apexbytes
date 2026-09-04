@@ -102,6 +102,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --surface-modal-bright-text: var(--foreground);
   --surface-modal-accent-text: var(--brand-blue-dark);
   --surface-modal-on-accent: var(--brand-dark-100);
+  --surface-accent-soft: color-mix(in srgb, var(--brand-blue-dark) 12%, var(--card));
+  --text-on-bright: var(--brand-blue-dark);
 
   --brand-whatsapp: #25D366;
   --brand-whatsapp-dark: #1EBE5A;
@@ -243,6 +245,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --surface-modal-bright-text: var(--brand-dark-100);
   --surface-modal-accent-text: var(--brand-blue-dark);
   --surface-modal-on-accent: var(--brand-dark-100);
+  --surface-accent-soft: color-mix(in srgb, var(--brand-blue-dark) 18%, var(--card));
+  --text-on-bright: #25283E;
 
   --brand-whatsapp: #46E47D;
   --brand-whatsapp-dark: #6BE995;
