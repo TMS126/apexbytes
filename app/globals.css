@@ -96,6 +96,12 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-weather-snow: #7DD3FC;
   --shadow-soft: 0 2px 8px -2px rgba(15, 23, 42, 0.12), 0 1px 3px -1px rgba(15, 23, 42, 0.08);
   --shadow-modal: 0 45px 100px -20px rgba(15, 23, 42, 0.55), 0 20px 48px -14px rgba(15, 23, 42, 0.4);
+  --surface-modal: var(--card);
+  --surface-modal-raised: var(--background);
+  --surface-modal-control: var(--secondary);
+  --surface-modal-bright-text: var(--foreground);
+  --surface-modal-accent-text: var(--brand-blue-dark);
+  --surface-modal-on-accent: var(--brand-dark-100);
 
   --brand-whatsapp: #25D366;
   --brand-whatsapp-dark: #1EBE5A;
@@ -231,6 +237,12 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-weather-snow: #BAE6FD;
   --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.28), 0 1px 3px -1px rgba(0, 0, 0, 0.22);
   --shadow-modal: 0 45px 100px -20px rgba(0, 0, 0, 0.55), 0 20px 48px -14px rgba(0, 0, 0, 0.4);
+  --surface-modal: var(--card);
+  --surface-modal-raised: var(--background);
+  --surface-modal-control: var(--secondary);
+  --surface-modal-bright-text: var(--brand-dark-100);
+  --surface-modal-accent-text: var(--brand-blue-dark);
+  --surface-modal-on-accent: var(--brand-dark-100);
 
   --brand-whatsapp: #46E47D;
   --brand-whatsapp-dark: #6BE995;
@@ -267,6 +279,11 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-brand-blue: var(--background);
   --brand-green-text: #D5E8C2;
 }
+
+.abh-modal-surface { background: var(--surface-modal); color: var(--foreground); box-shadow: var(--shadow-modal); }
+.abh-modal-control { background: var(--surface-modal-control); color: var(--foreground); }
+.abh-modal-bright { background: var(--surface-modal-raised); color: var(--surface-modal-bright-text); }
+.abh-accent-fill { color: var(--surface-modal-on-accent); }
 
 @theme inline {
   --font-sans: var(--font-body), 'DM Sans Fallback', sans-serif;

@@ -85,7 +85,6 @@ export function MobileHubCard({
 }) {
   const [pressed, setPressed] = useState(false)
   const Icon = HUB_ICON[hubId]
-  const number = String(orderIndex + 1).padStart(2, "0")
   const release = () => setPressed(false)
   const isDesktop = variant === "desktop"
 
@@ -104,29 +103,24 @@ export function MobileHubCard({
       )}
     >
       <div className={cn("flex items-start justify-between mb-3", isDesktop && "w-full")}>
-        <div className="flex items-center gap-2">
-          <Icon
-            size={isDesktop ? 32 : 30}
-            weight={!isDesktop && pressed ? "fill" : "regular"}
-            className={cn(
-              "transition-colors duration-150",
-              isDesktop && "text-muted-foreground group-hover:text-[var(--hub-accent)]"
-            )}
-            style={!isDesktop ? { color: pressed ? accent : "var(--muted-foreground)" } : undefined}
-            aria-hidden="true"
-          />
-          {hubHasNotice && (
-            <WarningCircle
-              size={14}
-              weight="fill"
-              aria-label="Notice for some services in this hub"
-              style={{ color: TOKEN.warningBg }}
-            />
+        <Icon
+          size={isDesktop ? 32 : 30}
+          weight={!isDesktop && pressed ? "fill" : "regular"}
+          className={cn(
+            "transition-colors duration-150",
+            isDesktop && "text-muted-foreground group-hover:text-[var(--hub-accent)]"
           )}
-        </div>
-        <span className="text-[0.78rem] font-black" style={{ color: TOKEN.orangeText }} aria-hidden="true">
-          {number}
-        </span>
+          style={!isDesktop ? { color: pressed ? accent : "var(--muted-foreground)" } : undefined}
+          aria-hidden="true"
+        />
+        {hubHasNotice && (
+          <WarningCircle
+            size={isDesktop ? 22 : 18}
+            weight="fill"
+            aria-label="Notice for some services in this hub"
+            style={{ color: TOKEN.warningBg }}
+          />
+        )}
       </div>
 
       <h3

@@ -107,11 +107,11 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.96, opacity: 0 }}
         transition={{ type: "tween", duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-        className="relative z-10 w-full max-w-2xl bg-white dark:bg-zinc-950 shadow-2xl border border-zinc-100 dark:border-zinc-800 max-h-[76vh] flex flex-col outline-none rounded-[14px] overflow-hidden"
+        className="relative z-10 w-full max-w-2xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[76vh] flex flex-col outline-none rounded-[14px] overflow-hidden"
         style={{ boxShadow: "0 45px 100px -20px rgba(0,0,0,0.55), 0 20px 48px -14px rgba(0,0,0,0.4)" }}
       >
         <div
-          className="relative z-10 shrink-0 bg-white dark:bg-zinc-950 transition-shadow duration-200"
+          className="relative z-10 shrink-0 bg-[var(--surface-modal)] transition-shadow duration-200"
           style={{ boxShadow: isScrolled ? "0 10px 20px -14px rgba(0,0,0,0.35)" : "none" }}
         >
           <div className="px-6 md:px-8 pt-6 pb-5 flex justify-between items-center gap-3">
@@ -291,7 +291,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             at the panel's top-right when opening, and smoothly reforms
             it back into the ℹ️ pill on close. */}
         {hubDisclaimer && (
-          <div className="relative shrink-0 border-t border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+          <div className="relative shrink-0 border-t border-zinc-100 dark:border-zinc-800 bg-[var(--surface-modal)]">
             <AnimatePresence initial={false} mode="popLayout">
               {!noticeOpen ? (
                 <motion.div

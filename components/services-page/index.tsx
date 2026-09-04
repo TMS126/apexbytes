@@ -150,10 +150,11 @@ function SectionCard({
 }
 
 function ServiceCard({
-  item, accent, onClick,
+  item, accent, hubId, onClick,
 }: {
   item: { name: string; price: string; notice?: string; description?: string }
   accent: string
+  hubId: HubId
   onClick: () => void
 }) {
   return (
@@ -162,7 +163,8 @@ function ServiceCard({
       className="group/svccard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-4 flex flex-col"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="font-black text-[0.95rem] text-foreground leading-snug flex items-start gap-1.5 min-w-0">
+        <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
+          <HubIcon id={hubId} size={19} color={accent} />
           {item.notice && (
             <WarningCircle
               size={13}
@@ -506,9 +508,10 @@ export function ServicesPage() {
                   {desktopActiveSectionData.items.map((item, iIdx) => (
                     <ServiceCard
                       key={iIdx}
-                      item={item}
-                      accent={desktopHubAccent}
-                      onClick={() =>
+  item={item}
+  accent={desktopHubAccent}
+  hubId={desktopActiveHub!}
+  onClick={() =>
                         handleSelectService({
                           name: item.name,
                           price: item.price,
