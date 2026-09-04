@@ -741,7 +741,7 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed z-[9992] right-4 md:right-6 bottom-6 group/wa",
+          "fixed z-[9992] left-3 md:left-6 bottom-6 group/wa",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           !visible && "opacity-0 pointer-events-none",
           isOpen || (scrolled && !isOpen) || isOtherOpen

@@ -22,7 +22,6 @@ import { TurnstileWidget } from "./TurnstileWidget"
 import { getServiceTips } from "./fallback-tips"
 
 // ── Layout constants ──
-const BULK_RIBBON_BLUE = BRAND.blue
 const HEADER_GRID = "grid grid-cols-[36px_1fr_36px] gap-2"
 const SWIPE_MIN_DX = 48
 const SWIPE_DOMINANCE = 1.4
@@ -296,13 +295,13 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         style={{ boxShadow: "var(--shadow-modal)" }}
       >
         {hasBulk && (
-          <div className="absolute top-0 right-0 w-[104px] h-[104px] overflow-hidden pointer-events-none z-10" aria-hidden="true">
+          <div className="absolute top-0 left-0 w-[104px] h-[104px] overflow-hidden pointer-events-none z-10" aria-hidden="true">
             <span
               className="absolute block text-center text-[0.66rem] font-medium uppercase"
               style={{
-                top: "28px", right: "-34px", width: "150px", transform: "rotate(45deg)",
-                backgroundColor: BULK_RIBBON_BLUE, padding: "6px 0",
-                boxShadow: "0 4px 10px -2px rgba(30,111,168,0.55), 0 2px 4px -1px rgba(0,0,0,0.25)",
+top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
+                    backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", padding: "6px 0",
+                    boxShadow: "var(--shadow-soft)",
               }}
             >
               Bulk

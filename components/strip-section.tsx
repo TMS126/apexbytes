@@ -36,11 +36,8 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
     <div
       tabIndex={0}
       aria-label={item.title}
-      className="relative rounded-[14px] border p-6 transition-transform duration-300 hover:-translate-y-1 group overflow-hidden h-full abh-shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
-      style={{
-        backgroundColor: "var(--card)",
-        borderColor: "var(--border)",
-      }}
+      className="relative rounded-[14px] p-6 transition-transform duration-300 group overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
+      style={{ backgroundColor: "var(--card)" }}
     >
       <div className="relative z-10">
         <div className="mb-5 text-foreground">

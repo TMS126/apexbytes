@@ -98,7 +98,7 @@ export function MobileHubCard({
       aria-label={`Open ${hub.title}`}
       style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       className={cn(
-        "group relative w-full text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col",
+        "group relative w-full text-left rounded-[14px] bg-card overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col hover:shadow-[var(--shadow-card-lift)]",
         isDesktop ? "min-h-[220px] p-5 items-center text-center h-full" : "min-h-[152px] p-4"
       )}
     >

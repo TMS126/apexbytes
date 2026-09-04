@@ -190,7 +190,7 @@ export function HeroSection() {
           onMouseEnter={() => setMarqueePaused(true)}
           onMouseLeave={() => setMarqueePaused(false)}
           onTouchStart={(e) => { e.stopPropagation(); setMarqueePaused((p) => !p) }}
-          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee border-y border-border bg-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
+          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee bg-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
         >
           <button
             onClick={() => setMarqueePaused((p) => !p)}

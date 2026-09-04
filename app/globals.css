@@ -489,7 +489,7 @@ button, a, [role="button"] {
   .abh-card {
     @apply rounded-[14px] transition-colors duration-200;
     background: var(--card);
-    border: 0;
+    border: 0 !important;
     box-shadow: none;
   }
 
@@ -547,6 +547,14 @@ button, a, [role="button"] {
   .abh-shadow-contact-card,
   .abh-shadow-elevated {
     box-shadow: none;
+  }
+  .abh-shadow-card,
+  .abh-shadow-nested-group,
+  .abh-shadow-nested-item,
+  .abh-shadow-tile,
+  .abh-shadow-contact-card,
+  .abh-shadow-elevated {
+    border: 0 !important;
   }
   .abh-shadow-card:hover,
   .abh-shadow-contact-card:hover,

@@ -114,8 +114,9 @@ function SectionCard({
       className="group/sectioncard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-5"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h4 className="font-black text-[1.02rem] text-foreground leading-tight break-words">
-          {section.title}
+        <h4 className="flex items-center gap-2 font-black text-[1.02rem] text-foreground leading-tight break-words">
+          <ServiceIcon name={section.items[0]?.name ?? section.title} size={20} color={accent} />
+          <span>{section.title}</span>
         </h4>
         {hasNotice && (
           <WarningCircle
