@@ -251,7 +251,7 @@ export function TestimonialsSection({
                     {/* Solid colored pill, white text, hub name only — matches the reference image, same treatment in every state */}
                     <span
                       className="text-[0.76rem] font-medium px-3.5 py-1.5 rounded-full mt-2"
-                      style={{ backgroundColor: solid, color: "var(--on-primary-fill)" }}
+                      style={{ backgroundColor: solid, color: "var(--text-on-hub-tag)" }}
                     >
                       {HUB_NAMES[r.hubId as HubKey]}
                     </span>

@@ -45,7 +45,7 @@ export default function ToolsPage() {
               <ScrollBounce key={tool.id}>
                 <Link
                   href={tool.href}
-                  className="group flex items-center gap-3 pl-4 pr-5 py-3 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-brand-blue/50 transition-all duration-150 active:scale-[0.98] shadow-sm hover:shadow-md"
+                  className="group flex items-center gap-3 pl-4 pr-5 py-3 rounded-[14px] border border-border bg-card hover:shadow-md transition-shadow duration-150 active:scale-[0.98] abh-shadow-card"
                 >
                   <span
                     className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
