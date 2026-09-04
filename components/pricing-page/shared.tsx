@@ -23,21 +23,13 @@ export function BulkBadge() {
 // hub's own color scheme. Now accepts an optional `color` — pricing-page
 // call sites pass their own hub/brand accent instead. If no color is
 // passed, falls back to the original Adobe red so nothing elsewhere breaks.
-const ADOBE_RED_LIGHT = '#EC1C24'
-const ADOBE_RED_DARK = '#F0857D'
-const ADOBE_RED_HOVER_LIGHT = '#A9121A'
-const ADOBE_RED_HOVER_DARK = '#C23A33'
-
-function darken(hex: string, amount = 0.22): string {
-  const n = hex.replace('#', '')
-  const r = Math.max(0, Math.round(parseInt(n.slice(0, 2), 16) * (1 - amount)))
-  const g = Math.max(0, Math.round(parseInt(n.slice(2, 4), 16) * (1 - amount)))
-  const b = Math.max(0, Math.round(parseInt(n.slice(4, 6), 16) * (1 - amount)))
-  return `#${[r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')}`
-}
+const ADOBE_RED_LIGHT = 'var(--pdf-rest)'
+const ADOBE_RED_DARK = 'var(--pdf-rest)'
+const ADOBE_RED_HOVER_LIGHT = 'var(--pdf-hover)'
+const ADOBE_RED_HOVER_DARK = 'var(--pdf-hover)'
 
 export function PdfPillButton({
-  label, onClick, size = 'sm', color,
+  label, onClick, size = 'sm',
 }: {
   label: string
   onClick: () => void
@@ -49,8 +41,8 @@ export function PdfPillButton({
   const isDark = resolvedTheme === 'dark'
   const isLg = size === 'lg'
 
-  const restColor = color ?? (isDark ? ADOBE_RED_DARK : ADOBE_RED_LIGHT)
-  const hoverSolid = color ? darken(color) : (isDark ? ADOBE_RED_HOVER_DARK : ADOBE_RED_HOVER_LIGHT)
+  const restColor = isDark ? ADOBE_RED_DARK : ADOBE_RED_LIGHT
+  const hoverSolid = isDark ? ADOBE_RED_HOVER_DARK : ADOBE_RED_HOVER_LIGHT
 
   return (
     <button

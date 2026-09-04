@@ -170,15 +170,10 @@ export function HubCompactCard({
       aria-pressed={false}
       className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98] bg-white/60 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-zinc-900 hover:shadow-sm flex flex-col"
     >
-      {/* Icon + name row — icon only picks up hub color on hover */}
+      {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
-        <HubIcon id={hubId} size={16} color={isActive ? hubColor : '#a1a1aa'} />
-        <p
-          className="text-sm font-bold truncate transition-colors duration-200"
-          style={{ color: isActive ? hubColor : undefined }}
-        >
-          {hub.title}
-        </p>
+        <HubIcon id={hubId} size={22} color={isActive ? hubColor : '#a1a1aa'} />
+        <span className="sr-only">{hub.title}</span>
       </div>
 
       {/* Hovered: preview bullets. Idle: full description, never truncated. */}

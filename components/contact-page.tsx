@@ -163,7 +163,6 @@ function ContactPageInner() {
                 <div className="grid grid-cols-3 gap-3 items-stretch">
                   {GRID_CONTACT_LINKS.map((c, index) => {
                     const Icon = CONTACT_ICONS[c.title] ?? Phone
-                    const dotColor = ("dotLight" in c && "dotDark" in c ? (isDark ? c.dotDark : c.dotLight) : c.dot) as string
                     const isCopyable = COPYABLE_TITLES.has(c.title)
                     const justCopied = copiedTitle === c.title
                     return (
@@ -174,12 +173,9 @@ function ContactPageInner() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={c.title}
-                            className="group flex flex-col items-center justify-center text-center gap-2 p-4 h-full min-h-[104px] rounded-[14px] border transition-all duration-200 active:scale-[0.97]"
-                            style={{ borderColor: "transparent" }}
-                            onMouseEnter={(e) => (e.currentTarget.style.borderColor = dotColor)}
-                            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
+                            className="group flex flex-col items-center justify-center text-center gap-2 p-4 h-full min-h-[104px] rounded-[14px] border border-transparent text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97]"
                           >
-                            <Icon size={34} weight="regular" aria-hidden="true" style={{ color: dotColor }} />
+                            <Icon size={34} weight="regular" aria-hidden="true" className="text-current transition-colors duration-200" />
                             <p className="text-sm font-normal text-zinc-700 dark:text-zinc-300 truncate w-full text-center">{c.value}</p>
                           </a>
                           {isCopyable && (

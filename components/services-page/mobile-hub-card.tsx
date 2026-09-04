@@ -25,7 +25,7 @@ export function BulkRibbon({ accent }: { accent: string }) {
     <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
       <span
         className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider abh-shadow-badge border"
-        style={{ backgroundColor: "var(--muted)", color: accent, borderColor: "var(--border)" }}
+        style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
       >
         Bulk
       </span>
@@ -53,7 +53,7 @@ function BulkEdgePill({ accent }: { accent: string }) {
   return (
     <span
       className="absolute left-1/2 -bottom-2.5 -translate-x-1/2 z-20 px-3 py-0.5 rounded-full text-[0.68rem] font-medium whitespace-nowrap abh-shadow-badge border"
-      style={{ backgroundColor: "var(--card)", color: accent, borderColor: "var(--border)" }}
+      style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
     >
       Bulk pricing
     </span>

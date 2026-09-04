@@ -205,10 +205,9 @@ function GroupedProjectGrid({
 
   return (
     <div>
-      {groups.map((group, i) => (
+      {groups.map((group) => (
         <div key={group.hubId}>
-          {i > 0 && <HubSectionDivider hubId={group.hubId} accent={getAccent(group.hubId)} />}
-          {i === 0 && <span className="sr-only">{hubLabelFor(group.hubId)}</span>}
+          <HubSectionDivider hubId={group.hubId} accent={getAccent(group.hubId)} />
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
             {group.items.map((p) => (
               <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />

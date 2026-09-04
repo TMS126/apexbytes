@@ -14,7 +14,11 @@ export function BulkHint({
   baseUnitPrice: number; effRate: number; priceUnit: string | null
   label?: string
 }) {
-  const labelTextColor = "var(--text-on-accent)"
+  // Keep both halves on explicit token pairings: the previous soft tint could
+  // resolve to a dark surface while retaining a dark foreground in dark mode.
+  const labelTextColor = "var(--on-brand-blue)"
+  const hintBackground = "var(--bulk-hint-bg)"
+  const hintTextColor = "var(--bulk-hint-text)"
 
   return (
     <div className="animate-in fade-in duration-200 flex flex-col items-center gap-2 px-1">
@@ -28,7 +32,7 @@ export function BulkHint({
         </span>
         <span
           className="inline-flex items-center px-3 py-1.5 text-[0.8rem] font-medium text-center"
-          style={{ backgroundColor: "var(--surface-accent-soft)", color: "var(--text-on-bright)" }}
+          style={{ backgroundColor: hintBackground, color: hintTextColor }}
         >
           {hint}
         </span>
