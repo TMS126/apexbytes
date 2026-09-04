@@ -111,7 +111,7 @@ function SectionCard({
   return (
     <button
       onClick={onClick}
-      className="group/sectioncard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-5"
+      className="group/sectioncard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-5"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
         <h4 className="font-black text-[1.02rem] text-foreground leading-tight break-words">
@@ -159,7 +159,7 @@ function ServiceCard({
   return (
     <button
       onClick={onClick}
-      className="group/svccard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-4 flex flex-col"
+      className="group/svccard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-4 flex flex-col"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">

@@ -267,10 +267,10 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --surface-service: var(--card);
   --surface-service-strong: var(--secondary);
   --shadow-card-lift: var(--shadow-soft);
-  --bulk-hint-bg: #3A5368;
-  --bulk-hint-text: #F4FAFF;
-  --bulk-ribbon-bg: #3A5368;
-  --bulk-ribbon-text: #F4FAFF;
+  --bulk-hint-bg: #D9EEFA;
+  --bulk-hint-text: #25283E;
+  --bulk-ribbon-bg: #D9EEFA;
+  --bulk-ribbon-text: #25283E;
   --notice-surface: #343852;
   --notice-text: #F1F1EC;
   --pdf-rest: #BFC2CE;

@@ -69,7 +69,9 @@ export function CtaBar({
   buttonHref,
   onButtonClick,
   badgeText = "Get In Touch",
+  variant = "default",
 }: {
+  variant?: "default" | "flat"
   title: string
   description: string
   buttonText: string
@@ -85,9 +87,11 @@ export function CtaBar({
   return (
     <section aria-label="Call to action" className="px-4 md:px-8 py-16 transition-colors duration-300 bg-background">
       <ScrollBounce className="max-w-[750px] mx-auto">
-        <div className="abh-card px-10 py-14 text-center bg-brand-blue/10 border-brand-blue/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-20 -mr-32 -mt-32" aria-hidden="true" />
-          <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-10 -ml-28 -mb-28" aria-hidden="true" />
+        <div className={variant === "flat" ? "px-4 py-8 text-center" : "abh-card px-10 py-14 text-center bg-brand-blue/10 border-brand-blue/30 relative overflow-hidden"}>
+          {variant !== "flat" && <>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-20 -mr-32 -mt-32" aria-hidden="true" />
+            <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-10 -ml-28 -mb-28" aria-hidden="true" />
+          </>}
 
           <span
             className="text-[0.84rem] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 inline-block relative z-10"

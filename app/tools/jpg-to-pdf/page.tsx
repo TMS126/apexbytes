@@ -191,6 +191,7 @@ export default function JpgToPdfPage() {
   title="While You're Here"
   description={tip}
   buttonText={waPhrase}
+  variant="flat"
 />
       </>
       <Footer />

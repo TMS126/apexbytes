@@ -156,7 +156,7 @@ export function HeroSection() {
                   "neutral until interacted with" rule). */}
               <button
                 onClick={handleServicesClick}
-                className="group/services-cta flex items-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-background border border-[var(--border)] text-foreground abh-shadow-badge transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:border-[var(--brand-blue)] hover:text-[var(--brand-blue)] dark:hover:border-[var(--brand-light-blue)] dark:hover:text-[var(--brand-light-blue)]"
+                className="group/services-cta flex items-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-background text-foreground transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--brand-blue)] dark:hover:text-[var(--brand-light-blue)]"
               >
                 See Our Services
                 <ArrowUpRight

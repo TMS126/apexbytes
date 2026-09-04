@@ -6,6 +6,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { BIZ } from "@/lib/brand"
+import { ComingSoonTool } from "@/components/coming-soon-tool"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -50,15 +51,22 @@ export default function ToolsPage() {
           <div className="grid grid-cols-2 items-stretch gap-4">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
-                <Link
-                  href={tool.href}
-                  className="group flex min-h-24 w-full items-center justify-center rounded-[14px] border border-border bg-card p-5 text-center shadow-sm transition-[box-shadow,transform] duration-150 hover:shadow-md active:translate-y-px active:shadow-sm abh-shadow-card"
-                  aria-label={tool.name}
-                >
-                  <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                    <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
-                  </span>
-                </Link>
+                {tool.id === "coming-soon" ? (
+                  <ComingSoonTool />
+                ) : (
+                  <Link
+                    href={tool.href}
+                    className="group flex min-h-24 w-full items-center justify-center rounded-[14px] p-5 text-center transition-transform duration-150 active:translate-y-px"
+                    aria-label={tool.name}
+                  >
+                    <span className="flex flex-col items-center gap-2 text-center">
+                      <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                        <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
+                      </span>
+                      <span className="text-sm font-bold text-foreground">{tool.name}</span>
+                    </span>
+                  </Link>
+                )}
               </ScrollBounce>
             ))}
           </div>
