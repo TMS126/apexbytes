@@ -190,7 +190,7 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
-  const [visible, setVisible]        = useState(false)
+  const [visible, setVisible]        = useState(true)
   const [scrolled, setScrolled]      = useState(false)
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
@@ -258,11 +258,6 @@ export function WhatsAppFAB() {
       }
     } catch {}
   }, [name])
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 1000)
-    return () => clearTimeout(t)
-  }, [])
 
   useEffect(() => {
     const onScroll = () => {
@@ -741,15 +736,16 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed z-[9992] left-3 md:left-6 bottom-6 group/wa",
+          "fixed bottom-6 group/wa",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           !visible && "opacity-0 pointer-events-none",
-          isOpen || (scrolled && !isOpen) || isOtherOpen
+          isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto"
-        )}
-      >
-        <div className="flex items-center justify-end gap-2">
+          )}
+          style={{ left: 0, right: "auto" }}
+        >
+          <div className="flex items-center justify-end gap-2">
           <span className={cn(
             TXT.hint,
             "font-black uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
