@@ -85,11 +85,10 @@ export function CtaBar({
   const ctaTextOnBlue = "var(--cta-badge-text)"
 
   return (
-    <section aria-label="Call to action" className={cn("w-full overflow-hidden bg-background py-12 transition-colors duration-300 md:py-16", fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]")}>
-      <ScrollBounce className="w-full">
-        <div className="relative w-full px-4 py-10 text-center md:px-10 md:py-14" style={{ backgroundColor: "var(--cta-surface)" }}>
-          <div className="absolute inset-y-0 right-0 w-1/2 bg-brand-blue opacity-[0.06] blur-[100px]" aria-hidden="true" />
-          <div className="absolute inset-y-0 left-0 w-1/2 bg-brand-blue opacity-[0.04] blur-[100px]" aria-hidden="true" />
+    <section aria-label="Call to action" className={cn("relative overflow-hidden px-4 py-16 text-center transition-colors duration-300 md:px-8 md:py-20", fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]")} style={{ backgroundColor: "color-mix(in srgb, var(--brand-blue) 4%, transparent)" }}>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-10 -mr-32 -mt-32" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-[0.06] -ml-28 -mb-28" aria-hidden="true" />
+      <ScrollBounce className="relative z-10 max-w-[750px] mx-auto">
 
           <span
             className="text-[0.84rem] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 inline-block relative z-10"
@@ -112,7 +111,6 @@ export function CtaBar({
               {buttonText}
             </a>
           </div>
-        </div>
       </ScrollBounce>
     </section>
   )

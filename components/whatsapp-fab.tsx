@@ -2,7 +2,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import {
   ArrowLeft, Phone, DotsThreeVertical, ImageSquare,
@@ -187,6 +187,7 @@ function TypingLoader({ subColor }: { subColor: string }) {
 
 export function WhatsAppFAB() {
   const router = useRouter()
+  const pathname = usePathname()
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
@@ -203,6 +204,7 @@ export function WhatsAppFAB() {
   const [showGreeting, setShowGreeting] = useState(false)
   const [nameRemembered, setNameRemembered] = useState(false)
   const [quickNoteIdx, setQuickNoteIdx] = useState(() => randomQuickNoteIdx())
+
 
   const [shakeKey, setShakeKey] = useState<string | null>(null)
   const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -736,9 +738,9 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed right-3 md:right-5 bottom-[9.5rem] group/wa",
+          "fixed group/wa",
+          (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          !visible && "opacity-0 pointer-events-none",
           isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto"
