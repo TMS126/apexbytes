@@ -98,15 +98,7 @@ function DripReveal({ children }: { children: React.ReactNode }) {
         {children}
       </div>
 
-      <style>{`
-        @keyframes abh-drip-pill {
-          0%   { transform: translateY(-110px) scaleX(0.12) scaleY(0.5); opacity: 1; }
-          55%  { transform: translateY(6px)    scaleX(0.12) scaleY(1.25); opacity: 1; }
-          72%  { transform: translateY(-2px)   scaleX(0.55) scaleY(0.82); opacity: 1; }
-          88%  { transform: translateY(1px)    scaleX(1.04) scaleY(1.04); opacity: 1; }
-          100% { transform: translateY(0)      scaleX(1)    scaleY(1);   opacity: 1; }
-        }
-      `}</style>
+      
     </div>
   )
 }
