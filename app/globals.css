@@ -659,3 +659,61 @@ button, a, [role="button"] {
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
   } 
+
+/* Moved out of inline <style> JSX tags (whatsapp-fab.tsx, quote-calculator/index.tsx,
+   testimonials-section.tsx, page-edge-glow.tsx) — those tags had no CSP nonce and were
+   blocked by style-src, so these static, prop-independent keyframes/utility classes now
+   live here and load as a real stylesheet instead. */
+@keyframes wa-spin-container { to { transform: rotate(360deg); } }
+.wa-spin-container {
+  animation-name: wa-spin-container;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes wa-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.wa-shake { animation: wa-shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+@keyframes abh-calc-grow {
+  0% { opacity: 0; transform: scale(0.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.abh-calc-grow {
+  animation: abh-calc-grow 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: calc(100% - 26px) 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .abh-calc-grow { animation: none; }
+}
+.abh-chip-strip { scrollbar-width: none; -ms-overflow-style: none; }
+.abh-chip-strip::-webkit-scrollbar { display: none; }
+
+@keyframes abh-drip-pill {
+  0%   { transform: translateY(-110px) scaleX(0.12) scaleY(0.5); opacity: 1; }
+  55%  { transform: translateY(6px)    scaleX(0.12) scaleY(1.25); opacity: 1; }
+  72%  { transform: translateY(-2px)   scaleX(0.55) scaleY(0.82); opacity: 1; }
+  88%  { transform: translateY(1px)    scaleX(1.04) scaleY(1.04); opacity: 1; }
+  100% { transform: translateY(0)      scaleX(1)    scaleY(1);   opacity: 1; }
+}
+
+@keyframes abh-edge-glow-kf {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  32%  { opacity: 0; }
+  48%  { opacity: 1; }
+  74%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.abh-edge-glow {
+  animation: abh-edge-glow-kf 2.4s ease-in-out forwards;
+}
+
+/* From pricing-page/index.tsx — print-only rule, no page collision for .no-print */
+@media print {
+  .no-print { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
