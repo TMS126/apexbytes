@@ -4,6 +4,7 @@
 import { Rocket, CurrencyDollar, HandHeart, MapPin, WhatsappLogo } from "@phosphor-icons/react"
 import { WA, STRIP_ITEMS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
+import { cn } from "@/lib/utils"
 
 export function StripSection() {
   return (
