@@ -478,9 +478,6 @@ button, a, [role="button"] {
 .abh-cta-pulse { animation: abh-cta-pulse 1.8s ease-out 2; }
 .abh-inquire-glow-active { animation: abh-inquire-glow 2.4s ease-in-out 1; }
 
-@media (max-width: 767px) {
-  [data-widget="whatsapp-fab"] { display: none !important; }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
