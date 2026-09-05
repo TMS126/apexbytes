@@ -346,12 +346,12 @@ return (
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-[10.5rem] z-[9992] flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[10.5rem] z-[9993] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 pointer-events-none scale-90",
-          fabVisible && (peeking ? "translate-x-0" : "translate-x-[58%]")
+          fabVisible && (peeking ? "translate-x-0" : "translate-x-[48%]")
         )}
       >
         <button

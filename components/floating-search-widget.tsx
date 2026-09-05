@@ -338,9 +338,9 @@ export function FloatingSearchWidget() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-24 transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          "fixed right-3 md:right-5 bottom-24 z-[9993] transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none",
-          fabVisible && (peeking ? "translate-x-0" : "translate-x-[58%]")
+          fabVisible && (peeking ? "translate-x-0" : "translate-x-[48%]")
         )}
       >
         <button

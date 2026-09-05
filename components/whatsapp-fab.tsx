@@ -728,13 +728,13 @@ export function WhatsAppFAB() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-6 group/wa",
+          "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto",
-          !(isOpen || isOtherOpen) && (peeking ? "translate-x-0" : "translate-x-[58%]")
+          !(isOpen || isOtherOpen) && (peeking ? "translate-x-0" : "translate-x-[48%]")
           )}
         >
           <div className="flex items-center justify-end gap-2">
