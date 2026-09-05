@@ -64,7 +64,7 @@ export default function JpgToPdfPage() {
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
               <Link href="/tools"
-                className="inline-flex items-center gap-1 text-[0.8rem] font-bold text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-4">
+								className="inline-flex items-center gap-1.5 text-[0.72rem] font-bold uppercase tracking-wide text-muted-foreground bg-muted hover:bg-muted/70 hover:text-foreground border border-border rounded-full pl-2.5 pr-3.5 py-1.5 transition-colors mb-5">
                 <CaretLeft size={12} weight="bold" aria-hidden="true" />
                 All Tools
               </Link>
