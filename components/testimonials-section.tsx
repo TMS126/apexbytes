@@ -8,6 +8,10 @@ import { HUB_COLORS, HUB_NAMES, HubKey, BIZ } from "@/lib/brand"
 import { HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
+// ---------------------------------------------------------------------------
+// Types & sample data
+// ---------------------------------------------------------------------------
+
 interface Review {
   name: string
   initials: string
@@ -44,6 +48,10 @@ export const SAMPLE_REVIEWS: Review[] = [
   },
 ]
 
+// ---------------------------------------------------------------------------
+// Star rating
+// ---------------------------------------------------------------------------
+
 function Stars({ rating, color }: { rating: number; color: string }) {
   return (
     <div className="flex items-center justify-center gap-0.5">
@@ -60,10 +68,12 @@ function Stars({ rating, color }: { rating: number; color: string }) {
   )
 }
 
-// Plays once when scrolled into view: the pill itself falls as a
-// squeezed droplet, splats down, then grows sideways from its center
-// out to its full width — one continuous liquid motion, no separate
-// droplet element.
+// ---------------------------------------------------------------------------
+// DripReveal — plays once when scrolled into view: the pill itself falls as a
+// squeezed droplet, splats down, then grows sideways from its center out to
+// its full width — one continuous liquid motion, no separate droplet element.
+// ---------------------------------------------------------------------------
+
 function DripReveal({ children }: { children: React.ReactNode }) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const [dripped, setDripped] = useState(false)
@@ -97,11 +107,13 @@ function DripReveal({ children }: { children: React.ReactNode }) {
       >
         {children}
       </div>
-
-      
     </div>
   )
 }
+
+// ---------------------------------------------------------------------------
+// TestimonialsSection
+// ---------------------------------------------------------------------------
 
 export function TestimonialsSection({
   reviews = SAMPLE_REVIEWS,
@@ -125,6 +137,7 @@ export function TestimonialsSection({
   const prev = useCallback(() => goTo(active - 1), [active, goTo])
   const next = useCallback(() => goTo(active + 1), [active, goTo])
 
+  // -- Touch / swipe handling --------------------------------------------
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX }
   const onTouchMove = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return
@@ -139,11 +152,13 @@ export function TestimonialsSection({
     touchStartX.current = null
   }
 
+  // -- Keyboard handling ----------------------------------------------------
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") { e.preventDefault(); prev() }
     if (e.key === "ArrowRight") { e.preventDefault(); next() }
   }
 
+  // -- Color helpers ---------------------------------------------------------
   const colorFor = (i: number) => {
     const c = HUB_COLORS[reviews[i].hubId as HubKey]
     return isDark ? c.accentDark : c.accentLight
@@ -153,6 +168,7 @@ export function TestimonialsSection({
     return isDark ? c.tagBgDark : c.primary
   }
 
+  // -- Slot positioning (active / adjacent / hidden cards) --------------------
   const slotStyle = (offset: number): React.CSSProperties => {
     const abs = Math.abs(offset)
     if (abs === 0) {
@@ -160,12 +176,18 @@ export function TestimonialsSection({
     }
     if (abs === 1) {
       return {
-        transform: `translateX(${offset * 78 + dragX * 0.4}%) scale(0.88) rotate(color-mix(in srgb, ${offset * 2} 12%, transparent)g)`,
+        // Fixed: this previously produced an invalid `rotate(color-mix(...)g)`
+        // value (likely from a find/replace meant for color tokens catching
+        // this unrelated numeric transform), which caused browsers to drop
+        // the entire transform declaration on adjacent cards.
+        transform: `translateX(${offset * 78 + dragX * 0.4}%) scale(0.88) rotate(${offset * 2}deg)`,
         opacity: 0.55, zIndex: 20, filter: "blur(1.5px)",
       }
     }
     return { transform: `translateX(${offset * 130}%) scale(0.78)`, opacity: 0, zIndex: 10, filter: "blur(2px)", pointerEvents: "none" }
   }
+
+  const activeReview = reviews[active]
 
   return (
     <section className="py-16 px-4 md:px-8">
@@ -198,6 +220,11 @@ export function TestimonialsSection({
             className="relative w-full max-w-[640px] mx-auto h-[440px] sm:h-[420px] focus:outline-none rounded-[20px] focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-background"
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: colorFor(active) }}
           >
+            {/* Screen-reader announcement of active slide changes (new: carousel had no live region before) */}
+            <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              {`Showing testimonial from ${activeReview.name}, ${HUB_NAMES[activeReview.hubId as HubKey]}`}
+            </span>
+
             {reviews.map((r, i) => {
               let offset = i - active
               if (offset > n / 2) offset -= n
@@ -311,4 +338,4 @@ export function TestimonialsSection({
       </div>
     </section>
   )
-        } 
+                      } 
