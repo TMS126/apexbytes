@@ -738,7 +738,7 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed group/wa",
+          "fixed bottom-6 right-4 md:right-6 z-[9990] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen || isOtherOpen
