@@ -332,21 +332,7 @@ return (
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
-      <style>{`
-        @keyframes abh-calc-grow {
-          0% { opacity: 0; transform: scale(0.08); }
-          100% { opacity: 1; transform: scale(1); }
-        }
-        .abh-calc-grow {
-          animation: abh-calc-grow 280ms cubic-bezier(0.16, 1, 0.3, 1);
-          transform-origin: calc(100% - 26px) 100%;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .abh-calc-grow { animation: none; }
-        }
-        .abh-chip-strip { scrollbar-width: none; -ms-overflow-style: none; }
-        .abh-chip-strip::-webkit-scrollbar { display: none; }
-      `}</style>
+      
 
       {isOpen && (
         <div
