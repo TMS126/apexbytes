@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useEdgePeek } from "@/hooks/use-edge-peek"
 
 // Must match the route of your Services main page exactly — this widget
 // is hidden everywhere else, including on Services with query params like
@@ -274,6 +275,8 @@ export function FloatingSearchWidget() {
     setIsOpen(true)
   }, [isOpen, setIsOpen])
 
+  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(handleOpen)
+
   useEffect(() => {
     if (!isOpen) return
     const fn = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose() }
@@ -332,14 +335,18 @@ export function FloatingSearchWidget() {
       {/* Closed-state FAB trigger, bottom-right, same spot as before —
           fabRef is measured on open to seed the fly-in animation. */}
       <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-[13rem] transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none"
-  )}
-  >
-  <button
+          "fixed right-3 md:right-5 bottom-24 transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none",
+          fabVisible && (peeking ? "translate-x-0" : "translate-x-[58%]")
+        )}
+      >
+        <button
           ref={fabRef}
-          onClick={handleOpen}
+          onClick={handleClick}
+          onPointerDown={handlePointerDown}
           aria-label="Search services"
           className="relative w-14 h-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none"
           style={{ width: CLOSED_SIZE, height: CLOSED_SIZE }}
@@ -348,6 +355,7 @@ export function FloatingSearchWidget() {
             size={22}
             weight="bold"
             aria-hidden="true"
+            className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
             style={{ color: accentColor, filter: iconGlow }}
           />
         </button>
@@ -460,4 +468,4 @@ export function FloatingSearchWidget() {
       )}
     </>
   )
-                  } 
+  } 
