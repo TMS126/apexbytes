@@ -372,21 +372,7 @@ export function WhatsAppFAB() {
 
   return (
     <>
-      <style>{`
-        @keyframes wa-spin-container { to { transform: rotate(360deg); } }
-        .wa-spin-container {
-          animation-name: wa-spin-container;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-        @keyframes wa-shake {
-          10%, 90% { transform: translateX(-1px); }
-          20%, 80% { transform: translateX(2px); }
-          30%, 50%, 70% { transform: translateX(-4px); }
-          40%, 60% { transform: translateX(4px); }
-        }
-        .wa-shake { animation: wa-shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
-      `}</style>
+      
 
       {isOpen && (
         <div
