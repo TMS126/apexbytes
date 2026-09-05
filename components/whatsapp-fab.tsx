@@ -736,14 +736,13 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed bottom-6 group/wa",
+          "fixed right-3 md:right-5 bottom-[9.5rem] group/wa",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           !visible && "opacity-0 pointer-events-none",
           isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto"
           )}
-          style={{ left: 0, right: "auto" }}
         >
           <div className="flex items-center justify-end gap-2">
           <span className={cn(
