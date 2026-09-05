@@ -1,11 +1,13 @@
 // app/tools/page.tsx
 import type { Metadata } from "next"
 import Link from "next/link"
-import { FilePdf, Sparkle } from "@phosphor-icons/react/dist/ssr"
+import { FilePdf, Wrench } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { BRAND, BIZ } from "@/lib/brand"
+import { BIZ, WA } from "@/lib/brand"
+import { ComingSoonTool } from "@/components/coming-soon-tool"
+import { CtaBar } from "@/components/strip-section"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -19,6 +21,13 @@ const TOOLS = [
     desc: "Convert images into a PDF right in your browser — nothing is uploaded.",
     href: "/tools/jpg-to-pdf",
     Icon: FilePdf,
+  },
+  {
+    id: "coming-soon",
+    name: "Coming soon",
+    desc: "Another focused utility is on the way.",
+    href: "#coming-soon",
+    Icon: Wrench,
   },
 ]
 
@@ -40,46 +49,41 @@ export default function ToolsPage() {
 
       <div className="px-6 md:px-8 pb-24">
         <div className="max-w-[720px] mx-auto">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="grid grid-cols-2 items-stretch gap-4">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
-                <Link
-                  href={tool.href}
-                  className="group flex items-center gap-3 pl-4 pr-5 py-3 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-brand-blue/50 transition-all duration-150 active:scale-[0.98] shadow-sm hover:shadow-md"
-                >
-                  <span
-                    className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 8%, transparent)` }}
+                {tool.id === "coming-soon" ? (
+                  <ComingSoonTool />
+                ) : (
+                  <Link
+                    href={tool.href}
+                    className="group flex min-h-24 w-full items-center justify-center rounded-[14px] p-5 text-center transition-transform duration-150 active:translate-y-px"
+                    aria-label={tool.name}
                   >
-                    <tool.Icon weight="fill" className="w-5 h-5" style={{ color: BRAND.blue }} />
-                  </span>
-                  <span className="text-left">
-                    <span className="block text-[0.95rem] font-black text-zinc-900 dark:text-white">{tool.name}</span>
-                    <span className="block text-[0.78rem] text-muted-foreground dark:text-muted-foreground max-w-[220px]">{tool.desc}</span>
-                  </span>
-                </Link>
+                    <span className="flex flex-col items-center gap-2 text-center">
+                      <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                        <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
+                      </span>
+                      <span className="text-sm font-bold text-foreground">{tool.name}</span>
+                    </span>
+                  </Link>
+                )}
               </ScrollBounce>
             ))}
           </div>
 
-          <ScrollBounce delay={0.1}>
-            <div className="mt-6 rounded-[14px] border border-dashed border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 p-5 flex items-start gap-3">
-              <span
-                className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
-                style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 8%, transparent)` }}
-              >
-                <Sparkle weight="fill" className="w-5 h-5" style={{ color: BRAND.orange }} />
-              </span>
-              <div>
-                <p className="text-[0.95rem] font-black text-zinc-800 dark:text-zinc-200 mb-1">More Tools — Coming Soon</p>
-                <p className="text-[0.85rem] text-muted-foreground dark:text-muted-foreground leading-relaxed">
-                  We&apos;re building out more free tools for this page. Check back soon, or WhatsApp us if there&apos;s something specific you&apos;d find useful.
-                </p>
-              </div>
-            </div>
-          </ScrollBounce>
+          <p className="mt-8 text-center text-sm font-medium text-muted-foreground">
+            More focused utilities are being built for this workspace.
+          </p>
         </div>
       </div>
+      <CtaBar
+        badgeText="Need a hand?"
+        title="Simple tools, helpful people."
+        description={`Use a tool yourself or reach out to ${BIZ.name} when you would rather have us handle it.`}
+        buttonText="Get in Touch"
+        buttonHref={WA.general}
+      />
       <Footer />
     </div>
   )

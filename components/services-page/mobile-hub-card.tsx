@@ -25,7 +25,7 @@ export function BulkRibbon({ accent }: { accent: string }) {
     <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
       <span
         className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider abh-shadow-badge border"
-        style={{ backgroundColor: "var(--muted)", color: accent, borderColor: "var(--border)" }}
+        style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
       >
         Bulk
       </span>
@@ -53,7 +53,7 @@ function BulkEdgePill({ accent }: { accent: string }) {
   return (
     <span
       className="absolute left-1/2 -bottom-2.5 -translate-x-1/2 z-20 px-3 py-0.5 rounded-full text-[0.68rem] font-medium whitespace-nowrap abh-shadow-badge border"
-      style={{ backgroundColor: "var(--card)", color: accent, borderColor: "var(--border)" }}
+      style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
     >
       Bulk pricing
     </span>
@@ -85,7 +85,6 @@ export function MobileHubCard({
 }) {
   const [pressed, setPressed] = useState(false)
   const Icon = HUB_ICON[hubId]
-  const number = String(orderIndex + 1).padStart(2, "0")
   const release = () => setPressed(false)
   const isDesktop = variant === "desktop"
 
@@ -99,34 +98,29 @@ export function MobileHubCard({
       aria-label={`Open ${hub.title}`}
       style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       className={cn(
-        "group relative w-full text-left rounded-[14px] bg-card border border-[var(--card-border)] overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col",
+        "group relative w-full text-left rounded-[14px] bg-card overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col hover:shadow-[var(--shadow-card-lift)]",
         isDesktop ? "min-h-[220px] p-5 items-center text-center h-full" : "min-h-[152px] p-4"
       )}
     >
       <div className={cn("flex items-start justify-between mb-3", isDesktop && "w-full")}>
-        <div className="flex items-center gap-2">
-          <Icon
-            size={isDesktop ? 32 : 30}
-            weight={!isDesktop && pressed ? "fill" : "regular"}
-            className={cn(
-              "transition-colors duration-150",
-              isDesktop && "text-muted-foreground group-hover:text-[var(--hub-accent)]"
-            )}
-            style={!isDesktop ? { color: pressed ? accent : "var(--muted-foreground)" } : undefined}
-            aria-hidden="true"
-          />
-          {hubHasNotice && (
-            <WarningCircle
-              size={14}
-              weight="fill"
-              aria-label="Notice for some services in this hub"
-              style={{ color: TOKEN.warningBg }}
-            />
+        <Icon
+          size={isDesktop ? 32 : 30}
+          weight={!isDesktop && pressed ? "fill" : "regular"}
+          className={cn(
+            "transition-colors duration-150",
+            isDesktop && "text-muted-foreground group-hover:text-[var(--hub-accent)]"
           )}
-        </div>
-        <span className="text-[0.78rem] font-black" style={{ color: TOKEN.orangeText }} aria-hidden="true">
-          {number}
-        </span>
+          style={!isDesktop ? { color: pressed ? accent : "var(--muted-foreground)" } : undefined}
+          aria-hidden="true"
+        />
+        {hubHasNotice && (
+          <WarningCircle
+            size={isDesktop ? 22 : 18}
+            weight="fill"
+            aria-label="Notice for some services in this hub"
+            style={{ color: TOKEN.warningBg }}
+          />
+        )}
       </div>
 
       <h3

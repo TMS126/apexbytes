@@ -36,6 +36,8 @@ export function NoticePill({
   const [expanded, setExpanded] = useState(false)
 
   const iconColor = VARIANT_TEXT[variant]
+  // Variant accents remain identity cues, while the surface/text pair is
+  // always readable in both themes.
   const headerColor = VARIANT_TEXT[variant]
 
   return (
@@ -48,7 +50,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full bg-background"
+            className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full border border-border bg-[var(--notice-surface)]"
           >
             <button
               type="button"
@@ -83,7 +85,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="abh-shadow-badge relative w-full max-w-[440px] rounded-[14px] bg-background"
+            className="abh-shadow-badge relative w-full max-w-[440px] rounded-[14px] border border-border bg-[var(--notice-surface)]"
           >
             <button
               type="button"

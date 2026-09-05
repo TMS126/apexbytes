@@ -333,11 +333,11 @@ export function FloatingSearchWidget() {
           fabRef is measured on open to seed the fly-in animation. */}
       <div
         className={cn(
-          "fixed z-[9993] right-4 md:right-6 bottom-[9.5rem] transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          "fixed right-3 md:right-5 bottom-[13rem] transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none"
-        )}
-      >
-        <button
+  )}
+  >
+  <button
           ref={fabRef}
           onClick={handleOpen}
           aria-label="Search services"

@@ -356,7 +356,7 @@ return (
 
       <div
         className={cn(
-          "fixed z-[9992] right-4 md:right-6 bottom-[5.5rem] flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[16.5rem] z-[9992] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
@@ -433,7 +433,7 @@ return (
           aria-modal="true"
           aria-label="Quotation Calculator"
           className={cn(
-            "fixed bottom-24 right-4 left-4 md:left-auto md:right-6 z-[9991] md:w-[400px] max-h-[75vh] rounded-[20px] shadow-2xl flex flex-col overflow-hidden transform-gpu abh-calc-grow",
+            "fixed bottom-24 right-3 md:right-5 left-auto z-[9991] w-[min(400px,calc(100vw-1.5rem))] max-h-[75vh] rounded-[14px] shadow-2xl flex flex-col overflow-hidden transform-gpu abh-calc-grow",
             GLASS.panel
           )}
           style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}

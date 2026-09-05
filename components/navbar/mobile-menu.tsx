@@ -103,8 +103,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                   tabIndex={menuOpen ? 0 : -1}
                   style={{
                     transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    backgroundColor: BRAND.blue,
-                    color: "#ffffff",
+                    backgroundColor: "var(--surface-accent)",
+                    color: "var(--text-on-accent)",
                   }}
                   className={cn(
                     "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] font-semibold transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",

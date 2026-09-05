@@ -2,7 +2,6 @@
 "use client"
 
 import { Tag } from "@phosphor-icons/react"
-import { getContrastText } from "@/lib/color"
 
 // Single unit: the pill (solid-accent label half + soft-accent-tint hint
 // half) plus its strikethrough price line underneath when a discount is
@@ -15,7 +14,11 @@ export function BulkHint({
   baseUnitPrice: number; effRate: number; priceUnit: string | null
   label?: string
 }) {
-  const labelTextColor = getContrastText(accent)
+  // Keep both halves on explicit token pairings: the previous soft tint could
+  // resolve to a dark surface while retaining a dark foreground in dark mode.
+  const labelTextColor = "var(--on-brand-blue)"
+  const hintBackground = "var(--bulk-hint-bg)"
+  const hintTextColor = "var(--bulk-hint-text)"
 
   return (
     <div className="animate-in fade-in duration-200 flex flex-col items-center gap-2 px-1">
@@ -28,8 +31,8 @@ export function BulkHint({
           {label}
         </span>
         <span
-          className="inline-flex items-center px-3 py-1.5 text-[0.8rem] font-bold text-center"
-          style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
+          className="inline-flex items-center px-3 py-1.5 text-[0.8rem] font-medium text-center"
+          style={{ backgroundColor: hintBackground, color: hintTextColor }}
         >
           {hint}
         </span>
@@ -45,4 +48,4 @@ export function BulkHint({
       )}
     </div>
   )
-} 
+}

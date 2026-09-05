@@ -4,6 +4,7 @@
 import { Rocket, CurrencyDollar, HandHeart, MapPin, WhatsappLogo } from "@phosphor-icons/react"
 import { WA, STRIP_ITEMS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
+import { cn } from "@/lib/utils"
 
 export function StripSection() {
   return (
@@ -36,11 +37,8 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
     <div
       tabIndex={0}
       aria-label={item.title}
-      className="relative rounded-[14px] border p-6 transition-transform duration-300 hover:-translate-y-1 group overflow-hidden h-full abh-shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
-      style={{
-        backgroundColor: "var(--card)",
-        borderColor: "var(--border)",
-      }}
+      className="relative rounded-[14px] p-6 transition-transform duration-300 group overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
+      style={{ backgroundColor: "var(--card)" }}
     >
       <div className="relative z-10">
         <div className="mb-5 text-foreground">
@@ -69,7 +67,11 @@ export function CtaBar({
   buttonHref,
   onButtonClick,
   badgeText = "Get In Touch",
+  variant = "default",
+  fullBleed = false,
 }: {
+  variant?: "default" | "flat"
+  fullBleed?: boolean
   title: string
   description: string
   buttonText: string
@@ -83,11 +85,10 @@ export function CtaBar({
   const ctaTextOnBlue = "var(--cta-badge-text)"
 
   return (
-    <section aria-label="Call to action" className="px-4 md:px-8 py-16 transition-colors duration-300 bg-background">
-      <ScrollBounce className="max-w-[750px] mx-auto">
-        <div className="abh-card px-10 py-14 text-center bg-brand-blue/10 border-brand-blue/30 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-20 -mr-32 -mt-32" aria-hidden="true" />
-          <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-10 -ml-28 -mb-28" aria-hidden="true" />
+    <section aria-label="Call to action" className={cn("relative overflow-hidden px-4 py-16 text-center transition-colors duration-300 md:px-8 md:py-20", fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]")} style={{ backgroundColor: "color-mix(in srgb, var(--brand-blue) 4%, transparent)" }}>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-10 -mr-32 -mt-32" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-[0.06] -ml-28 -mb-28" aria-hidden="true" />
+      <ScrollBounce className="relative z-10 max-w-[750px] mx-auto">
 
           <span
             className="text-[0.84rem] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 inline-block relative z-10"
@@ -110,7 +111,6 @@ export function CtaBar({
               {buttonText}
             </a>
           </div>
-        </div>
       </ScrollBounce>
     </section>
   )

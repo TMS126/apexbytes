@@ -77,6 +77,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --home-cta-text: var(--brand-white);
   --cta-badge-bg: var(--brand-blue);
   --cta-badge-text: var(--brand-white);
+  --cta-surface: #DCEBF5;
   --primary-fill: var(--brand-blue);
   --on-primary-fill: var(--brand-white);
   --maintenance-bg-start: var(--brand-blue-dark);
@@ -96,6 +97,28 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-weather-snow: #7DD3FC;
   --shadow-soft: 0 2px 8px -2px rgba(15, 23, 42, 0.12), 0 1px 3px -1px rgba(15, 23, 42, 0.08);
   --shadow-modal: 0 45px 100px -20px rgba(15, 23, 42, 0.55), 0 20px 48px -14px rgba(15, 23, 42, 0.4);
+  --surface-modal: var(--card);
+  --surface-modal-raised: var(--background);
+  --surface-modal-control: var(--secondary);
+  --surface-modal-bright-text: var(--foreground);
+  --surface-modal-accent-text: var(--brand-blue-dark);
+  --surface-modal-on-accent: var(--brand-dark-100);
+  --surface-accent-soft: color-mix(in srgb, var(--brand-blue-dark) 12%, var(--card));
+  --text-on-bright: var(--brand-blue-dark);
+  --text-on-accent: #FFFFFF;
+  --text-on-hub-tag: #FFFFFF;
+  --surface-accent: var(--brand-blue);
+  --surface-service: var(--card);
+  --surface-service-strong: var(--secondary);
+  --shadow-card-lift: var(--shadow-soft);
+  --bulk-hint-bg: #DCEBF5;
+  --bulk-hint-text: #0F3F66;
+  --bulk-ribbon-bg: #DCEBF5;
+  --bulk-ribbon-text: #0F3F66;
+  --notice-surface: var(--card);
+  --notice-text: var(--foreground);
+  --pdf-rest: var(--muted-foreground);
+  --pdf-hover: #B42318;
 
   --brand-whatsapp: #25D366;
   --brand-whatsapp-dark: #1EBE5A;
@@ -212,6 +235,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --home-cta-text: var(--background);
   --cta-badge-bg: var(--brand-light-blue);
   --cta-badge-text: var(--background);
+  --cta-surface: #2D314B;
   --logo-primary: var(--foreground);
   --logo-secondary: var(--brand-neutral-400);
   --hub-label-foreground: var(--brand-light-blue);
@@ -231,6 +255,28 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-weather-snow: #BAE6FD;
   --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.28), 0 1px 3px -1px rgba(0, 0, 0, 0.22);
   --shadow-modal: 0 45px 100px -20px rgba(0, 0, 0, 0.55), 0 20px 48px -14px rgba(0, 0, 0, 0.4);
+  --surface-modal: var(--card);
+  --surface-modal-raised: var(--background);
+  --surface-modal-control: var(--secondary);
+  --surface-modal-bright-text: var(--brand-dark-100);
+  --surface-modal-accent-text: var(--brand-blue-dark);
+  --surface-modal-on-accent: var(--brand-dark-100);
+  --surface-accent-soft: color-mix(in srgb, var(--brand-blue-dark) 18%, var(--card));
+  --text-on-bright: #25283E;
+  --text-on-accent: #162032;
+  --text-on-hub-tag: #FFFFFF;
+  --surface-accent: var(--brand-light-blue);
+  --surface-service: var(--card);
+  --surface-service-strong: var(--secondary);
+  --shadow-card-lift: var(--shadow-soft);
+  --bulk-hint-bg: #D9EEFA;
+  --bulk-hint-text: #25283E;
+  --bulk-ribbon-bg: #D9EEFA;
+  --bulk-ribbon-text: #25283E;
+  --notice-surface: #343852;
+  --notice-text: #F1F1EC;
+  --pdf-rest: #BFC2CE;
+  --pdf-hover: #FF8A80;
 
   --brand-whatsapp: #46E47D;
   --brand-whatsapp-dark: #6BE995;
@@ -267,6 +313,11 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-brand-blue: var(--background);
   --brand-green-text: #D5E8C2;
 }
+
+.abh-modal-surface { background: var(--surface-modal); color: var(--foreground); box-shadow: var(--shadow-modal); }
+.abh-modal-control { background: var(--surface-modal-control); color: var(--foreground); }
+.abh-modal-bright { background: var(--surface-modal-raised); color: var(--surface-modal-bright-text); }
+.abh-accent-fill { color: var(--surface-modal-on-accent); }
 
 @theme inline {
   --font-sans: var(--font-body), 'DM Sans Fallback', sans-serif;
@@ -440,7 +491,7 @@ button, a, [role="button"] {
   .abh-card {
     @apply rounded-[14px] transition-colors duration-200;
     background: var(--card);
-    border: 0;
+    border: 0 !important;
     box-shadow: none;
   }
 
@@ -498,6 +549,14 @@ button, a, [role="button"] {
   .abh-shadow-contact-card,
   .abh-shadow-elevated {
     box-shadow: none;
+  }
+  .abh-shadow-card,
+  .abh-shadow-nested-group,
+  .abh-shadow-nested-item,
+  .abh-shadow-tile,
+  .abh-shadow-contact-card,
+  .abh-shadow-elevated {
+    border: 0 !important;
   }
   .abh-shadow-card:hover,
   .abh-shadow-contact-card:hover,

@@ -22,13 +22,12 @@ import { TurnstileWidget } from "./TurnstileWidget"
 import { getServiceTips } from "./fallback-tips"
 
 // ── Layout constants ──
-const BULK_RIBBON_BLUE = BRAND.blue
 const HEADER_GRID = "grid grid-cols-[36px_1fr_36px] gap-2"
 const SWIPE_MIN_DX = 48
 const SWIPE_DOMINANCE = 1.4
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
-const ICON_BTN_FOCUS = "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950 focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-500"
+const ICON_BTN_FOCUS = "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-modal)] focus-visible:ring-zinc-400 dark:focus-visible:ring-zinc-500"
 
 // NEW — the footer notice below only concerns "NSFAS Application" (the
 // item about submitting a NEW application). Deliberately NOT matched
@@ -292,17 +291,17 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         role="dialog"
         aria-modal="true"
         aria-label={svc.name}
-        className="relative w-full max-w-lg bg-white dark:bg-zinc-950 shadow-2xl border border-zinc-100 dark:border-zinc-800 max-h-[88vh] flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-        style={{ boxShadow: "0 45px 100px -20px rgba(0,0,0,0.55), 0 20px 48px -14px rgba(0,0,0,0.4)" }}
+        className="relative w-full max-w-lg bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[88vh] flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in duration-150"
+        style={{ boxShadow: "var(--shadow-modal)" }}
       >
         {hasBulk && (
-          <div className="absolute top-0 right-0 w-[104px] h-[104px] overflow-hidden pointer-events-none z-10" aria-hidden="true">
+          <div className="absolute top-0 left-0 w-[104px] h-[104px] overflow-hidden pointer-events-none z-10" aria-hidden="true">
             <span
-              className="absolute block text-center text-[0.66rem] font-black uppercase text-white"
+              className="absolute block text-center text-[0.66rem] font-medium uppercase"
               style={{
-                top: "28px", right: "-34px", width: "150px", transform: "rotate(45deg)",
-                backgroundColor: BULK_RIBBON_BLUE, padding: "6px 0",
-                boxShadow: "0 4px 10px -2px rgba(30,111,168,0.55), 0 2px 4px -1px rgba(0,0,0,0.25)",
+top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
+                    backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", padding: "6px 0",
+                    boxShadow: "var(--shadow-soft)",
               }}
             >
               Bulk
@@ -436,7 +435,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
                     tabIndex={isActive ? 0 : -1}
                     onClick={() => setTab(t)}
                     className={cn(
-                      "py-2.5 text-[0.95rem] font-black uppercase tracking-wider transition-colors duration-200 border-b-2 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950",
+                      "py-2.5 text-[0.95rem] font-black uppercase tracking-wider transition-colors duration-200 border-b-2 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-modal)]",
                       isActive ? "border-current" : "border-transparent text-muted-foreground dark:text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300"
                     )}
                     style={isActive ? { color: accent } : undefined}
@@ -466,8 +465,8 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               <ol className="w-full list-none">
                 {requirements.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-3 py-2 text-left">
-                    <span className="shrink-0 font-black text-[0.8rem] text-muted-foreground dark:text-muted-foreground mt-0.5 w-4 text-right" aria-hidden="true">
-                      {idx + 1}.
+                    <span className="shrink-0 mt-1 text-muted-foreground" aria-hidden="true">
+                      <WarningCircle size={13} weight="fill" />
                     </span>
                     <span className="abh-body text-[0.95rem] leading-relaxed">{req}</span>
                   </li>
@@ -587,7 +586,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               "flex items-center justify-center gap-2 w-full px-4 py-4 rounded-[14px] font-black text-base text-zinc-900 text-center transition-all active:scale-95",
               ICON_BTN_FOCUS
             )}
-            style={{ backgroundColor: "#25D366" }}
+            style={{ backgroundColor: "var(--brand-whatsapp)", color: "var(--on-whatsapp)" }}
           >
             Request {naturalLabel}
           </a>

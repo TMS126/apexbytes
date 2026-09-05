@@ -2,7 +2,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import {
   ArrowLeft, Phone, DotsThreeVertical, ImageSquare,
@@ -187,10 +187,11 @@ function TypingLoader({ subColor }: { subColor: string }) {
 
 export function WhatsAppFAB() {
   const router = useRouter()
+  const pathname = usePathname()
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
-  const [visible, setVisible]        = useState(false)
+  const [visible, setVisible]        = useState(true)
   const [scrolled, setScrolled]      = useState(false)
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
@@ -203,6 +204,7 @@ export function WhatsAppFAB() {
   const [showGreeting, setShowGreeting] = useState(false)
   const [nameRemembered, setNameRemembered] = useState(false)
   const [quickNoteIdx, setQuickNoteIdx] = useState(() => randomQuickNoteIdx())
+
 
   const [shakeKey, setShakeKey] = useState<string | null>(null)
   const shakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -258,11 +260,6 @@ export function WhatsAppFAB() {
       }
     } catch {}
   }, [name])
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 1000)
-    return () => clearTimeout(t)
-  }, [])
 
   useEffect(() => {
     const onScroll = () => {
@@ -741,15 +738,15 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed z-[9992] right-4 md:right-6 bottom-6 group/wa",
+          "fixed group/wa",
+          (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          !visible && "opacity-0 pointer-events-none",
-          isOpen || (scrolled && !isOpen) || isOtherOpen
+          isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto"
-        )}
-      >
-        <div className="flex items-center justify-end gap-2">
+          )}
+        >
+          <div className="flex items-center justify-end gap-2">
           <span className={cn(
             TXT.hint,
             "font-black uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",

@@ -135,7 +135,7 @@ export function SettingsBar({
       </div>
 
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
-      <div className="rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 p-4">
+      <div className="rounded-[14px] bg-secondary/60 p-4">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
           <span className="text-sm font-bold" style={{ color: accentColor }}>{qualityLabel(quality)}</span>

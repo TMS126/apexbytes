@@ -28,7 +28,7 @@ export function StatsBar() {
         <p className="text-center text-[0.78rem] font-black uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">By the Numbers</p>
         <h2 className="text-center font-sans font-black text-2xl md:text-3xl text-foreground mb-8">What We Bring to the Table</h2>
       </ScrollBounce>
-      <div className="grid grid-cols-2 sm:grid-cols-4 w-full max-w-[900px] mx-auto border-y border-border" role="list" aria-label="Key stats">
+      <div className="grid grid-cols-2 sm:grid-cols-4 w-full max-w-[900px] mx-auto" role="list" aria-label="Key stats">
         {stats.map((stat, i) => {
           const isHov = hoveredCard === i
           const Icon = stat.icon
@@ -43,9 +43,8 @@ export function StatsBar() {
                 aria-label={`${stat.value} ${stat.label}`}
                 className={cn(
                   "flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center transition-colors duration-300",
-                  i % 2 !== 0 && "border-l border-border",
-                  i >= 2 && "border-t border-border sm:border-t-0",
-                  i > 0 && "sm:border-l sm:border-border"
+                  "rounded-[14px]",
+                  i > 0 && "sm:border-l-0"
                 )}
                 style={{ color: isHov ? textOnColor : undefined, backgroundColor: isHov ? stat.color : "transparent" }}
               >

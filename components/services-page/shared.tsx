@@ -8,6 +8,7 @@ import {
   Printer, FileText, PaintBrush, Globe, Desktop,
 } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
+import { ServiceGlyph } from "@/lib/service-icons"
 import { SelectedService } from "./lib"
 
 export function HubIcon({ id, size = 28, color }: { id: HubId; size?: number; color?: string }) {
@@ -19,6 +20,10 @@ export function HubIcon({ id, size = 28, color }: { id: HubId; size?: number; co
     case "eservice": return <Globe      {...p} />
     case "tech":     return <Desktop    {...p} />
   }
+}
+
+export function ServiceIcon({ name, size = 19, color }: { name: string; size?: number; color?: string }) {
+  return <ServiceGlyph label={name} size={size} color={color} />
 }
 
 export function AbhLoader({ size = 28, color }: { size?: number; color?: string }) {

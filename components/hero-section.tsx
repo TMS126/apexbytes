@@ -156,7 +156,7 @@ export function HeroSection() {
                   "neutral until interacted with" rule). */}
               <button
                 onClick={handleServicesClick}
-                className="group/services-cta flex items-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-background border border-[var(--border)] text-foreground abh-shadow-badge transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:border-[var(--brand-blue)] hover:text-[var(--brand-blue)] dark:hover:border-[var(--brand-light-blue)] dark:hover:text-[var(--brand-light-blue)]"
+                className="group/services-cta flex items-center justify-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-transparent text-foreground border-2 border-[var(--link-foreground)] transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--brand-blue)] dark:hover:text-[var(--brand-light-blue)]"
               >
                 See Our Services
                 <ArrowUpRight
@@ -190,7 +190,7 @@ export function HeroSection() {
           onMouseEnter={() => setMarqueePaused(true)}
           onMouseLeave={() => setMarqueePaused(false)}
           onTouchStart={(e) => { e.stopPropagation(); setMarqueePaused((p) => !p) }}
-          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee border-y border-border bg-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
+          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee bg-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
         >
           <button
             onClick={() => setMarqueePaused((p) => !p)}

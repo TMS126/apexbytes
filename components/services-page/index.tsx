@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { useModalBackStack, HubIcon } from "./shared"
+import { useModalBackStack, HubIcon, ServiceIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
@@ -111,11 +111,12 @@ function SectionCard({
   return (
     <button
       onClick={onClick}
-      className="group/sectioncard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-5"
+      className="group/sectioncard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-5"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h4 className="font-black text-[1.02rem] text-foreground leading-tight break-words">
-          {section.title}
+        <h4 className="flex items-center gap-2 font-black text-[1.02rem] text-foreground leading-tight break-words">
+          <ServiceIcon name={section.items[0]?.name ?? section.title} size={20} color={accent} />
+          <span>{section.title}</span>
         </h4>
         {hasNotice && (
           <WarningCircle
@@ -159,10 +160,11 @@ function ServiceCard({
   return (
     <button
       onClick={onClick}
-      className="group/svccard text-left rounded-[14px] bg-card border border-[var(--card-border)] abh-shadow-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] p-4 flex flex-col"
+      className="group/svccard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-4 flex flex-col"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="font-black text-[0.95rem] text-foreground leading-snug flex items-start gap-1.5 min-w-0">
+        <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
+          <ServiceIcon name={item.name} size={19} color={accent} />
           {item.notice && (
             <WarningCircle
               size={13}
@@ -506,9 +508,9 @@ export function ServicesPage() {
                   {desktopActiveSectionData.items.map((item, iIdx) => (
                     <ServiceCard
                       key={iIdx}
-                      item={item}
-                      accent={desktopHubAccent}
-                      onClick={() =>
+  item={item}
+  accent={desktopHubAccent}
+  onClick={() =>
                         handleSelectService({
                           name: item.name,
                           price: item.price,
