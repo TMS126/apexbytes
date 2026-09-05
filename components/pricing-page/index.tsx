@@ -153,7 +153,8 @@ const displayedHub = hoveredHub ?? selectedHub
           .no-print { display: none !important; }
           * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
-      `}<style nonce={nonce}>{`[data-widget="whatsapp-fab"] { display: none !important; }`}</style>
+      `}</style>
+          <style nonce={nonce}>{`[data-widget="whatsapp-fab"] { display: none !important; }`}</style>
 
       <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
