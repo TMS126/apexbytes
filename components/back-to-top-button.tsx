@@ -32,7 +32,7 @@ export function BackToTopButton({
 }) {
   const showScrollToBottom = useScrollToBottom()
   const controlClass = cn(
-    "fixed right-3 md:right-5 left-auto z-[9990] size-11 rounded-[14px] bg-secondary/90 text-muted-foreground border border-border shadow-md backdrop-blur-sm flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105 hover:bg-card",
+    "fixed left-1/2 -translate-x-1/2 z-[9990] size-11 rounded-[14px] bg-secondary/90 text-muted-foreground border border-border shadow-md backdrop-blur-sm flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105 hover:bg-card",
     bottomClass,
     className
   )
