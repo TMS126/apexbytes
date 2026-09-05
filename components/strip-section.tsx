@@ -105,8 +105,8 @@ export function CtaBar({
               target="_blank"
               rel="noopener noreferrer"
               onClick={onButtonClick}
-              className="abh-wa-btn text-lg px-8 py-4 shadow-xl hover:scale-[1.04] hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
-            >
+              className="abh-wa-btn w-full sm:w-64 text-lg px-8 py-4 shadow-xl hover:scale-[1.04] hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
+              >
               <WhatsappLogo weight="fill" className="w-6 h-6 shrink-0" aria-hidden="true" />
               {buttonText}
             </a>
