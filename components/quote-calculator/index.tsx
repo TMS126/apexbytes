@@ -356,7 +356,7 @@ return (
 
       <div
         className={cn(
-          "fixed right-3 md:right-5 bottom-[16.5rem] z-[9992] flex items-center justify-end group/calc",
+          "fixed right-4 md:right-6 bottom-24 z-[9992] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
