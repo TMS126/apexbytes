@@ -77,6 +77,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --home-cta-text: var(--brand-white);
   --cta-badge-bg: var(--brand-blue);
   --cta-badge-text: var(--brand-white);
+  --cta-surface: #DCEBF5;
   --primary-fill: var(--brand-blue);
   --on-primary-fill: var(--brand-white);
   --maintenance-bg-start: var(--brand-blue-dark);
@@ -234,6 +235,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --home-cta-text: var(--background);
   --cta-badge-bg: var(--brand-light-blue);
   --cta-badge-text: var(--background);
+  --cta-surface: #2D314B;
   --logo-primary: var(--foreground);
   --logo-secondary: var(--brand-neutral-400);
   --hub-label-foreground: var(--brand-light-blue);

@@ -82,11 +82,11 @@ export function CtaBar({
   const ctaTextOnBlue = "var(--cta-badge-text)"
 
   return (
-    <section aria-label="Call to action" className="px-4 md:px-8 py-12 md:py-16 transition-colors duration-300 bg-background">
-      <ScrollBounce className="max-w-[750px] mx-auto">
-        <div className="relative overflow-hidden rounded-[14px] px-4 py-10 text-center md:px-10 md:py-14" style={{ backgroundColor: "color-mix(in srgb, var(--brand-blue) 7%, transparent)" }}>
-          <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-brand-blue opacity-10 blur-[100px] -mr-32 -mt-32" aria-hidden="true" />
-          <div className="absolute bottom-0 left-0 h-56 w-56 rounded-full bg-brand-blue opacity-[0.06] blur-[100px] -ml-28 -mb-28" aria-hidden="true" />
+    <section aria-label="Call to action" className="w-full overflow-hidden bg-background py-12 transition-colors duration-300 md:py-16">
+      <ScrollBounce className="w-full">
+        <div className="relative w-full px-4 py-10 text-center md:px-10 md:py-14" style={{ backgroundColor: "var(--cta-surface)" }}>
+          <div className="absolute inset-y-0 right-0 w-1/2 bg-brand-blue opacity-[0.06] blur-[100px]" aria-hidden="true" />
+          <div className="absolute inset-y-0 left-0 w-1/2 bg-brand-blue opacity-[0.04] blur-[100px]" aria-hidden="true" />
 
           <span
             className="text-[0.84rem] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 inline-block relative z-10"
