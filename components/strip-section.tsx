@@ -67,8 +67,10 @@ export function CtaBar({
   onButtonClick,
   badgeText = "Get In Touch",
   variant = "default",
+  fullBleed = false,
 }: {
   variant?: "default" | "flat"
+  fullBleed?: boolean
   title: string
   description: string
   buttonText: string
@@ -82,7 +84,7 @@ export function CtaBar({
   const ctaTextOnBlue = "var(--cta-badge-text)"
 
   return (
-    <section aria-label="Call to action" className="w-full overflow-hidden bg-background py-12 transition-colors duration-300 md:py-16">
+    <section aria-label="Call to action" className={cn("w-full overflow-hidden bg-background py-12 transition-colors duration-300 md:py-16", fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]")}>
       <ScrollBounce className="w-full">
         <div className="relative w-full px-4 py-10 text-center md:px-10 md:py-14" style={{ backgroundColor: "var(--cta-surface)" }}>
           <div className="absolute inset-y-0 right-0 w-1/2 bg-brand-blue opacity-[0.06] blur-[100px]" aria-hidden="true" />

@@ -29,6 +29,7 @@ export function GalleryClosingTagline() {
       description={`Let's bring it to life at ${BIZ.name}.`}
       buttonText="Start Your Project"
       buttonHref={WA.gallery}
+      fullBleed
     />
   )
 } 
