@@ -18,7 +18,7 @@ import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
 import { NoticePill } from '@/components/notice-pill'
 
-export default function PricingPage() {
+export default function PricingPage({ nonce }: { nonce?: string }) {
   const { resolvedTheme } = useTheme()
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === 'dark'
@@ -153,8 +153,7 @@ const displayedHub = hoveredHub ?? selectedHub
           .no-print { display: none !important; }
           * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
-      `}</style>
-      <style>{`[data-widget="whatsapp-fab"] { display: none !important; }`}</style>
+      `}<style nonce={nonce}>{`[data-widget="whatsapp-fab"] { display: none !important; }`}</style>
 
       <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
