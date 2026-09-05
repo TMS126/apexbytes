@@ -5,8 +5,9 @@ import { FilePdf, Wrench } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { BIZ } from "@/lib/brand"
+import { BIZ, WA } from "@/lib/brand"
 import { ComingSoonTool } from "@/components/coming-soon-tool"
+import { CtaBar } from "@/components/strip-section"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -76,6 +77,13 @@ export default function ToolsPage() {
           </p>
         </div>
       </div>
+      <CtaBar
+        badgeText="Need a hand?"
+        title="Simple tools, helpful people."
+        description={`Use a tool yourself or reach out to ${BIZ.name} when you would rather have us handle it.`}
+        buttonText="Get in Touch"
+        buttonHref={WA.general}
+      />
       <Footer />
     </div>
   )
