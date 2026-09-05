@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useEdgePeek } from "@/hooks/use-edge-peek"
 import { GLASS, HOME_BLUE, getReadableTextColor } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED,
@@ -323,6 +324,7 @@ export function QuoteCalculatorWidget() {
   // logic, not a bug, but worth cleaning up.
   const fabVisible = !isOpen && !scrolled && !isOtherOpen
   const showMiniBar = cart.length > 0 && !isOpen && fabVisible
+  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
 
   // ── continued in Part 2 (return statement / JSX) ──
 
@@ -355,12 +357,15 @@ return (
       )}
 
       <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-4 md:right-6 bottom-24 z-[9992] flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[10.5rem] z-[9992] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none scale-90"
+            : "opacity-0 pointer-events-none scale-90",
+          fabVisible && (peeking ? "translate-x-0" : "translate-x-[58%]")
         )}
       >
         <button
@@ -403,7 +408,8 @@ return (
           </span>
 
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={handleClick}
+            onPointerDown={handlePointerDown}
             aria-label="Open quotation calculator"
             aria-haspopup="dialog"
             className="relative w-14 h-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
@@ -411,6 +417,7 @@ return (
             <Calculator
               size={34}
               weight="fill"
+              className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
               style={{ color: fabColor, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${fabColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>
@@ -668,4 +675,4 @@ return (
       )}
     </>
   )
-                        }
+  }
