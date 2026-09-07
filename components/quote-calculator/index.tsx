@@ -46,6 +46,18 @@ export function QuoteCalculatorWidget() {
 
   const [miniExpanded, setMiniExpanded] = useState(false)
 
+  // Small live clock in the header — device time only, no location.
+  const [now, setNow] = useState<Date | null>(null)
+  useEffect(() => {
+    const tick = () => setNow(new Date())
+    tick()
+    const id = setInterval(tick, 30_000)
+    return () => clearInterval(id)
+  }, [])
+  const clockLabel = now
+    ? now.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" })
+    : ""
+
   const [expandView, setExpandView] = useState(false)
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -224,8 +236,6 @@ export function QuoteCalculatorWidget() {
     return () => window.removeEventListener("abh:step-quote-qty", handler)
   }, [stepQty])
 
-  // ADDED — lets the Hero's "Start with a Quote" button open this widget
-  // without a route change. Dispatched from components/hero-section.tsx.
   useEffect(() => {
     const handler = () => setIsOpen(true)
     window.addEventListener("abh:open-quote-calculator", handler)
@@ -306,17 +316,13 @@ export function QuoteCalculatorWidget() {
   }
   const deleteSavedQuote = (id: string) => setSavedQuotes(prev => prev.filter(q => q.id !== id))
 
-  // AUDIT FIX: was `!isOpen && !(scrolled && !isOpen) && !isOtherOpen`.
-  // Since the first `!isOpen` already guarantees isOpen is false, the
-  // nested `!isOpen` inside the second clause is always true — the whole
-  // expression reduces to `!isOpen && !scrolled && !isOtherOpen`. Dead
-  // logic, not a bug, but worth cleaning up.
-  const fabVisible = !isOpen
+  // The FAB now also hides whenever another exclusive widget (e.g. the
+  // WhatsApp panel) is open, and vice versa in whatsapp-fab.tsx — no more
+  // floating buttons stacking up behind an open sheet.
+  const fabVisible = !isOpen && !isOtherOpen
   const showMiniBar = cart.length > 0 && fabVisible
 
-  // ── continued in Part 2 (return statement / JSX) ──
-
-return (
+  return (
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
@@ -329,10 +335,6 @@ return (
           0% { opacity: 0; transform: translateY(28px); }
           100% { opacity: 1; transform: translateY(0); }
         }
-        /* Mobile: full-screen sheet slides up from the bottom, native-app
-           feel. Desktop (md+): reverts to the original grow-from-FAB
-           animation, since the panel is a floating card there, not a
-           full-screen sheet. */
         .abh-calc-anim {
           animation: abh-calc-slide-up 260ms cubic-bezier(0.16, 1, 0.3, 1);
           transform-origin: bottom center;
@@ -441,8 +443,6 @@ return (
           aria-modal="true"
           aria-label="Quotation Calculator"
           className={cn(
-            // Mobile: true full-screen app sheet. Desktop (md+): floating
-            // card, bottom-right, wider than before and no backdrop blur.
             "fixed inset-0 md:inset-auto md:bottom-24 md:right-5 left-auto z-[9991]",
             "w-full h-full md:h-auto md:w-[500px] md:max-w-[calc(100vw-1.5rem)] md:max-h-[75vh]",
             "rounded-none md:rounded-[14px] shadow-2xl flex flex-col overflow-hidden",
@@ -454,18 +454,33 @@ return (
         >
           <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-zinc-200 dark:via-white/20 to-transparent pointer-events-none" />
 
+          {/* Header: ApexbytesHub wordmark + small live clock. No close
+              button here anymore — it lives at the bottom, per the sketch. */}
           <div
-            className="flex items-center justify-between px-5 py-4 shrink-0 border-b border-zinc-100 dark:border-white/10"
+            className="flex items-center justify-between px-5 pb-2 shrink-0"
             style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
           >
-            <h3 className="font-sans font-black text-lg" style={{ color: titleAccent }}>Quotation Calculator</h3>
-            <button
-              onClick={() => setIsOpen(false)}
-              aria-label="Close quotation calculator"
-              className={cn("w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150", GLASS.btn)}
-            >
-              <X size={16} weight="bold" aria-hidden="true" />
-            </button>
+            <span className="font-sans font-black text-sm tracking-tight" style={{ color: fabColor }}>
+              {BIZ.name}
+            </span>
+            {clockLabel && (
+              <span className="text-[0.62rem] font-bold uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
+                {clockLabel}
+              </span>
+            )}
+          </div>
+
+          {/* Friendly title + subtitle, inviting a choice rather than
+              instructing one. Copy shifts once there's something in the cart. */}
+          <div className="px-5 pb-3 text-center shrink-0 border-b border-zinc-100 dark:border-white/10">
+            <h3 className="font-sans font-black text-xl leading-snug" style={{ color: titleAccent }}>
+              {cart.length > 0 ? "Looking good so far" : "What can we help you with today?"}
+            </h3>
+            <p className="text-[0.78rem] font-medium text-muted-foreground mt-1">
+              {cart.length > 0
+                ? "Add more, or send it through whenever you're ready 🙂"
+                : "Tap a hub below and let's put your quote together ✨"}
+            </p>
           </div>
 
           <div
@@ -655,10 +670,7 @@ return (
           </div>
 
           {cart.length > 0 && (
-            <div
-              className="px-4 pt-3 shrink-0 border-t border-zinc-100 dark:border-white/10 space-y-3 shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.5)]"
-              style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
-            >
+            <div className="px-4 pt-3 shrink-0 border-t border-zinc-100 dark:border-white/10 space-y-3 shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.5)]">
               {totalSavings > 0 && (
                 <div className="flex items-center gap-1.5 text-[0.7rem] font-bold text-emerald-600 dark:text-emerald-400">
                   <SealPercent size={14} weight="fill" aria-hidden="true" />
@@ -688,8 +700,26 @@ return (
               </div>
             </div>
           )}
+
+          {/* Close button, moved down here per the sketch — a single
+              shadowed circular X, always reachable at the bottom. */}
+          <div
+            className="shrink-0 flex justify-center py-3 border-t border-zinc-100 dark:border-white/10"
+            style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+          >
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close quotation calculator"
+              className={cn(
+                "w-11 h-11 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-150 active:scale-90 shadow-md",
+                GLASS.btn
+              )}
+            >
+              <X size={18} weight="bold" aria-hidden="true" />
+            </button>
+          </div>
         </div>
       )}
     </>
   )
-            } 
+                                                   } 
