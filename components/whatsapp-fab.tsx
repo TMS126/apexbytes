@@ -191,8 +191,6 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
-  const [visible, setVisible]        = useState(true)
-  const [scrolled, setScrolled]      = useState(false)
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
   const [note,    setNote]           = useState("")
@@ -738,7 +736,7 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed group/wa",
+          "fixed right-3 md:right-5 bottom-[9.5rem] z-[9992] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen || isOtherOpen

@@ -28,8 +28,6 @@ export function QuoteCalculatorWidget() {
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
   const [cart, setCart]         = useState<CartItem[]>([])
   const [hydrated, setHydrated] = useState(false)
-  const scrollTimer             = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const [scrolled, setScrolled] = useState(false)
 
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const chipRefs = useRef<Record<string, HTMLDivElement | null>>({})
@@ -82,16 +80,6 @@ export function QuoteCalculatorWidget() {
     if (!savedHydrated) return
     try { localStorage.setItem(STORAGE_KEY_SAVED, JSON.stringify(savedQuotes)) } catch {}
   }, [savedQuotes, savedHydrated])
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(true)
-      if (scrollTimer.current) clearTimeout(scrollTimer.current)
-      scrollTimer.current = setTimeout(() => setScrolled(false), 200)
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => { window.removeEventListener("scroll", onScroll); if (scrollTimer.current) clearTimeout(scrollTimer.current) }
-  }, [])
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : ""
@@ -321,8 +309,8 @@ export function QuoteCalculatorWidget() {
   // nested `!isOpen` inside the second clause is always true — the whole
   // expression reduces to `!isOpen && !scrolled && !isOtherOpen`. Dead
   // logic, not a bug, but worth cleaning up.
-  const fabVisible = !isOpen && !scrolled && !isOtherOpen
-  const showMiniBar = cart.length > 0 && !isOpen && fabVisible
+  const fabVisible = !isOpen && !isOtherOpen
+  const showMiniBar = cart.length > 0 && fabVisible
 
   // ── continued in Part 2 (return statement / JSX) ──
 
