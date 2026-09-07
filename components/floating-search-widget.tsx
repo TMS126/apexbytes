@@ -2,7 +2,6 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef, useCallback, useLayoutEffect } from "react"
-import { usePathname } from "next/navigation"
 import { MagnifyingGlass, X, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -10,11 +9,6 @@ import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useEdgePeek } from "@/hooks/use-edge-peek"
-
-// Must match the route of your Services main page exactly — this widget
-// is hidden everywhere else, including on Services with query params like
-// ?hub=print (adjust the check below if you want it to persist through those).
-const SERVICES_PATH = "/services"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 
@@ -119,7 +113,6 @@ function dispatchSelectService(svc: SelectedService) {
 }
 
 export function FloatingSearchWidget() {
-  const pathname = usePathname()
   const { resolvedTheme } = useTheme()
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
@@ -127,7 +120,6 @@ export function FloatingSearchWidget() {
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const [query, setQuery]         = useState("")
-  const [pastTrigger, setPastTrigger] = useState(false)
   const [inputFocused, setInputFocused] = useState(false)
 
   const inputRef     = useRef<HTMLInputElement>(null)
@@ -151,41 +143,7 @@ export function FloatingSearchWidget() {
   const accentColor = isDark ? SEARCH_ORANGE.dark : SEARCH_ORANGE.light
   const iconGlow = `drop-shadow(0 4px 10px color-mix(in srgb, ${accentColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))`
 
-  const onServicesPage = pathname === SERVICES_PATH
   const hasQuery = query.trim().length > 0
-
-  // Base visibility mirrors the inline search bar's scroll position on the
-  // Services page — that bar carries id="abh-inline-search". This widget
-  // stays visible continuously once past the trigger point, and only
-  // hides again if the inline search bar scrolls back into view (or
-  // another widget opens, via useExclusiveWidget).
-  useEffect(() => {
-    const check = () => {
-      const el = document.getElementById("abh-inline-search")
-      if (!el) { setPastTrigger(false); return }
-      setPastTrigger(el.getBoundingClientRect().bottom < 0)
-    }
-    const frame = requestAnimationFrame(() => {
-      if (!onServicesPage) setPastTrigger(false)
-      else check()
-    })
-    window.addEventListener("scroll", check, { passive: true })
-    window.addEventListener("resize", check)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("scroll", check)
-      window.removeEventListener("resize", check)
-    }
-  }, [onServicesPage])
-
-  // Force-close if the route changes away from Services (no back-nav side effect)
-  useEffect(() => {
-    if (!onServicesPage && isOpen) {
-      pushedRef.current = false
-      setIsOpen(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onServicesPage])
 
   // Runs the fly-in the moment the modal actually mounts (isOpen just
   // became true). useLayoutEffect fires before the browser paints, so
@@ -317,9 +275,7 @@ export function FloatingSearchWidget() {
     pushedRef.current = false
   }
 
-  if (!onServicesPage) return null
-
-  const fabVisible = pastTrigger && !isOtherOpen && !isOpen
+  const fabVisible = !isOtherOpen && !isOpen
 
   return (
     <>
@@ -338,9 +294,8 @@ export function FloatingSearchWidget() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-24 z-[9993] transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          "fixed right-3 md:right-5 bottom-24 z-[9993] size-14 transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none",
-          fabVisible && (peeking ? "translate-x-0" : "translate-x-[48%]")
         )}
       >
         <button
@@ -348,8 +303,7 @@ export function FloatingSearchWidget() {
           onClick={handleClick}
           onPointerDown={handlePointerDown}
           aria-label="Search services"
-          className="relative w-14 h-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none"
-          style={{ width: CLOSED_SIZE, height: CLOSED_SIZE }}
+          className="relative size-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none"
         >
           <MagnifyingGlass
             size={22}
