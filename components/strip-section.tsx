@@ -81,36 +81,41 @@ export function CtaBar({
    *  unless a caller (e.g. Gallery) needs different framing. */
   badgeText?: string
 }) {
-  const ctaBlue = "var(--cta-badge-bg)"
-  const ctaTextOnBlue = "var(--cta-badge-text)"
-
   return (
-    <section aria-label="Call to action" className={cn("relative overflow-hidden px-4 py-16 text-center transition-colors duration-300 md:px-8 md:py-20", fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]")} style={{ backgroundColor: "color-mix(in srgb, var(--brand-blue) 4%, transparent)" }}>
+    <section
+      aria-label="Call to action"
+      className={cn(
+        "relative overflow-hidden px-4 py-16 text-center transition-colors duration-300 md:px-8 md:py-20",
+        fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]",
+      )}
+      style={{ backgroundColor: "color-mix(in srgb, var(--brand-blue) 4%, transparent)" }}
+    >
       <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue rounded-full blur-[100px] opacity-10 -mr-32 -mt-32" aria-hidden="true" />
       <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-[0.06] -ml-28 -mb-28" aria-hidden="true" />
-      <ScrollBounce className="relative z-10 max-w-[750px] mx-auto">
 
-          <span
-            className="text-[0.84rem] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 inline-block relative z-10"
-            style={{ backgroundColor: ctaBlue, color: ctaTextOnBlue }}
+      <ScrollBounce className="max-w-[750px] mx-auto relative z-10">
+        <span
+          className="abh-eyebrow px-4 py-1.5 rounded-full mb-6 inline-block"
+          style={{ backgroundColor: "var(--cta-badge-bg)", color: "var(--cta-badge-text)" }}
+        >
+          {badgeText}
+        </span>
+
+        <h2 className="abh-section-heading text-3xl mb-4">{title}</h2>
+        <p className="abh-body text-xl max-w-[500px] mx-auto mb-10">{description}</p>
+
+        <div className="flex justify-center">
+          <a
+            href={buttonHref || WA.general}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onButtonClick}
+            className="abh-wa-btn text-lg px-8 py-4 shadow-xl hover:scale-[1.04] hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
           >
-            {badgeText}
-          </span>
-
-          <h2 className="abh-section-heading text-3xl mb-4 relative z-10">{title}</h2>
-          <p className="abh-body text-xl max-w-[500px] mx-auto mb-10 relative z-10">{description}</p>
-          <div className="flex justify-center relative z-10">
-            <a
-              href={buttonHref || WA.general}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={onButtonClick}
-              className="abh-wa-btn text-lg px-8 py-4 shadow-xl hover:scale-[1.04] hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
-            >
-              <WhatsappLogo weight="fill" className="w-6 h-6 shrink-0" aria-hidden="true" />
-              {buttonText}
-            </a>
-          </div>
+            <WhatsappLogo weight="fill" className="w-6 h-6 shrink-0" aria-hidden="true" />
+            {buttonText}
+          </a>
+        </div>
       </ScrollBounce>
     </section>
   )
