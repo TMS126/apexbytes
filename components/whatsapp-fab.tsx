@@ -193,8 +193,6 @@ export function WhatsAppFAB() {
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
   const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
-  const [visible, setVisible]        = useState(true)
-  const [scrolled, setScrolled]      = useState(false)
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
   const [note,    setNote]           = useState("")
@@ -217,7 +215,6 @@ export function WhatsAppFAB() {
   }
 
   const nameRef                      = useRef<HTMLInputElement>(null)
-  const scrollTimer                  = useRef<ReturnType<typeof setTimeout> | null>(null)
   const greetingTimer                = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleClose = useCallback(() => {
@@ -262,19 +259,6 @@ export function WhatsAppFAB() {
       }
     } catch {}
   }, [name])
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(true)
-      if (scrollTimer.current) clearTimeout(scrollTimer.current)
-      scrollTimer.current = setTimeout(() => setScrolled(false), 300)
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      if (scrollTimer.current) clearTimeout(scrollTimer.current)
-    }
-  }, [])
 
   useEffect(() => {
     if (!(isOpen && step === "form")) return
