@@ -715,10 +715,9 @@ export function WhatsAppFAB() {
           "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          isOpen || isOtherOpen
+          isOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto",
-          !(isOpen || isOtherOpen) && (peeking ? "translate-x-0" : "translate-x-[48%]")
           )}
         >
           <div className="flex items-center justify-end gap-2">
@@ -736,7 +735,7 @@ export function WhatsAppFAB() {
             onClick={handleClick}
             onPointerDown={handlePointerDown}
             aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
-            className="relative w-14 h-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+            className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
           >
             <WhatsappLogo
               size={32}

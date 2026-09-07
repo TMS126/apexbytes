@@ -275,7 +275,7 @@ export function FloatingSearchWidget() {
     pushedRef.current = false
   }
 
-  const fabVisible = !isOtherOpen && !isOpen
+  const fabVisible = !isOpen
 
   return (
     <>
@@ -303,7 +303,7 @@ export function FloatingSearchWidget() {
           onClick={handleClick}
           onPointerDown={handlePointerDown}
           aria-label="Search services"
-          className="relative size-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none"
+          className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none"
         >
           <MagnifyingGlass
             size={22}

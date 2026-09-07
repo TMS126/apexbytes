@@ -309,7 +309,7 @@ export function QuoteCalculatorWidget() {
   // nested `!isOpen` inside the second clause is always true — the whole
   // expression reduces to `!isOpen && !scrolled && !isOtherOpen`. Dead
   // logic, not a bug, but worth cleaning up.
-  const fabVisible = !isOpen && !isOtherOpen
+  const fabVisible = !isOpen
   const showMiniBar = cart.length > 0 && fabVisible
 
   // ── continued in Part 2 (return statement / JSX) ──
@@ -344,7 +344,7 @@ return (
 
       <div
         className={cn(
-          "fixed right-3 md:right-5 bottom-[16.5rem] z-[9992] size-14 flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[12rem] z-[9993] size-14 flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
@@ -394,7 +394,7 @@ return (
             onClick={() => setIsOpen(true)}
             aria-label="Open quotation calculator"
             aria-haspopup="dialog"
-            className="relative w-14 h-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+            className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
           >
             <Calculator
               size={34}
