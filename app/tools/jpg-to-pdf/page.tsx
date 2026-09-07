@@ -63,11 +63,15 @@ export default function JpgToPdfPage() {
         <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
-              <Link href="/tools"
-                className="inline-flex items-center gap-1 text-[0.8rem] font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors mb-4">
-                <CaretLeft size={12} weight="bold" aria-hidden="true" />
-                All Tools
-              </Link>
+              <div className="w-full flex justify-start mb-5">
+                <Link
+                  href="/tools"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground shadow-sm transition-colors"
+                >
+                  <CaretLeft size={13} weight="bold" aria-hidden="true" />
+                  <span className="text-[0.8rem] font-medium">All Tools</span>
+                </Link>
+              </div>
               <FilePdf weight="fill" className="w-10 h-10 mx-auto mb-4" style={{ color: accentColor }} aria-hidden="true" />
               <h1 className="abh-page-title mb-3">JPG to PDF</h1>
             </ScrollBounce>
@@ -161,7 +165,7 @@ export default function JpgToPdfPage() {
                       onClick={t.requestConvert}
                       disabled={t.isConverting || t.selectedCount === 0}
                       aria-busy={t.isConverting}
-                      className="rounded-[14px] font-black py-3 px-8 text-white transition-transform active:scale-[0.98] disabled:opacity-60"
+                      className="w-full sm:w-64 rounded-[14px] font-black py-3 px-8 text-white transition-transform active:scale-[0.98] disabled:opacity-60"
                       style={{ backgroundColor: accentColor }}
                     >
                       {t.isConverting ? `Converting… ${t.progress}%` : "Convert to PDF"}

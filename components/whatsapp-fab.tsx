@@ -191,8 +191,6 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
-  const [visible, setVisible]        = useState(false)
-  const [scrolled, setScrolled]      = useState(false)
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
   const [note,    setNote]           = useState("")
@@ -214,7 +212,6 @@ export function WhatsAppFAB() {
   }
 
   const nameRef                      = useRef<HTMLInputElement>(null)
-  const scrollTimer                  = useRef<ReturnType<typeof setTimeout> | null>(null)
   const greetingTimer                = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const handleClose = useCallback(() => {
@@ -259,24 +256,6 @@ export function WhatsAppFAB() {
       }
     } catch {}
   }, [name])
-
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 1000)
-    return () => clearTimeout(t)
-  }, [])
-
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(true)
-      if (scrollTimer.current) clearTimeout(scrollTimer.current)
-      scrollTimer.current = setTimeout(() => setScrolled(false), 300)
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      if (scrollTimer.current) clearTimeout(scrollTimer.current)
-    }
-  }, [])
 
   useEffect(() => {
     if (!(isOpen && step === "form")) return
@@ -744,8 +723,7 @@ export function WhatsAppFAB() {
         className={cn(
           "fixed z-[9992] right-4 md:right-6 bottom-6 group/wa",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          !visible && "opacity-0 pointer-events-none",
-          isOpen || (scrolled && !isOpen) || isOtherOpen
+          isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto"
         )}
