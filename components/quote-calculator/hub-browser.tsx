@@ -3,7 +3,7 @@
 import { CaretDown, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId } from "@/lib/data"
-import { GLASS, HubIcon } from "./shared"
+import { GLASS, HubIcon, getReadableTextColor } from "./shared"
 import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
 
 interface Subtotal { total: number; savings: number; count: number }
@@ -33,64 +33,105 @@ export function HubBrowser({
         Choose a Hub
       </span>
 
-      {/* Big pressable hub tiles — replaces the old accordion-row headers.
-          HubIcon was defined in shared.tsx but never actually rendered
-          anywhere, which is why the icons weren't showing before. */}
-      <div className="flex flex-wrap justify-center gap-3">
-        {HUB_ORDER.map(hubId => {
-          const hub = HUBS[hubId]
-          const accent = getAccent(hubId)
-          const solidAccent = getSolid(hubId)
-          const isSelected = openHub === hubId
-          const hubSub = hubSubtotal(hubId)
-          const hubBulk = hubHasBulk(hubId)
+      {openHub ? (
+        // Compact icon row: once a hub is picked, every tile collapses to a
+        // small icon-only pill so the opened hub's content gets the room.
+        // Reverts to the full tile grid the moment openHub clears.
+        <div className="flex items-center justify-center flex-wrap gap-2" role="tablist" aria-label="Hubs">
+          {HUB_ORDER.map(hubId => {
+            const hub = HUBS[hubId]
+            const accent = getAccent(hubId)
+            const solidAccent = getSolid(hubId)
+            const isSelected = openHub === hubId
+            const hubSub = hubSubtotal(hubId)
 
-          return (
-            <button
-              key={hubId}
-              onClick={() => setOpenHub(isSelected ? null : hubId)}
-              aria-pressed={isSelected}
-              aria-expanded={isSelected}
-              aria-controls={`hub-panel-${hubId}`}
-              className={cn(
-                "relative flex flex-col items-center justify-center gap-1.5 rounded-[18px] p-3 w-[30%] min-w-[92px] aspect-square",
-                "transition-all duration-150 ease-out active:scale-90 transform-gpu shadow-sm hover:shadow-md",
-                GLASS.item
-              )}
-              style={{
-                boxShadow: isSelected ? `0 0 0 2px ${accent}` : undefined,
-                backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
-              }}
-            >
-              {hubSub && (
-                <span
-                  className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full text-[0.6rem] font-black flex items-center justify-center text-white shadow-md"
-                  style={{ backgroundColor: solidAccent }}
-                  aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
-                >
-                  {hubSub.count}
-                </span>
-              )}
-              {hubBulk && (
-                <span
-                  className="absolute top-1 left-1 flex items-center justify-center w-4 h-4 rounded-full"
-                  style={{ backgroundColor: `color-mix(in srgb, ${accent} 15%, transparent)` }}
-                  aria-hidden="true"
-                >
-                  <Tag size={9} weight="fill" style={{ color: accent }} />
-                </span>
-              )}
-              <HubIcon id={hubId} size={30} color={isSelected ? solidAccent : accent} />
-              <span
-                className="text-[0.68rem] font-black text-center leading-tight"
-                style={{ color: isSelected ? solidAccent : undefined }}
+            return (
+              <button
+                key={hubId}
+                onClick={() => setOpenHub(isSelected ? null : hubId)}
+                aria-pressed={isSelected}
+                aria-label={hub.title}
+                className={cn(
+                  "relative flex items-center justify-center rounded-full w-11 h-11 shrink-0",
+                  "transition-all duration-150 ease-out active:scale-90 transform-gpu shadow-sm hover:shadow-md",
+                  GLASS.item
+                )}
+                style={{
+                  boxShadow: isSelected ? `0 0 0 2px ${accent}` : undefined,
+                  backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
+                }}
               >
-                {hub.title.replace(" Hub", "")}
-              </span>
-            </button>
-          )
-        })}
-      </div>
+                {hubSub && (
+                  <span
+                    className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full text-[0.55rem] font-black flex items-center justify-center shadow-md"
+                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                    aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
+                  >
+                    {hubSub.count}
+                  </span>
+                )}
+                <HubIcon id={hubId} size={20} color={isSelected ? solidAccent : accent} />
+              </button>
+            )
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-wrap justify-center gap-3">
+          {HUB_ORDER.map(hubId => {
+            const hub = HUBS[hubId]
+            const accent = getAccent(hubId)
+            const solidAccent = getSolid(hubId)
+            const isSelected = openHub === hubId
+            const hubSub = hubSubtotal(hubId)
+            const hubBulk = hubHasBulk(hubId)
+
+            return (
+              <button
+                key={hubId}
+                onClick={() => setOpenHub(isSelected ? null : hubId)}
+                aria-pressed={isSelected}
+                aria-expanded={isSelected}
+                aria-controls={`hub-panel-${hubId}`}
+                className={cn(
+                  "relative flex flex-col items-center justify-center gap-1.5 rounded-[18px] p-3 w-[30%] min-w-[92px] aspect-square",
+                  "transition-all duration-150 ease-out active:scale-90 transform-gpu shadow-sm hover:shadow-md",
+                  GLASS.item
+                )}
+                style={{
+                  boxShadow: isSelected ? `0 0 0 2px ${accent}` : undefined,
+                  backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
+                }}
+              >
+                {hubSub && (
+                  <span
+                    className="absolute -top-1.5 -right-1.5 min-w-[20px] h-5 px-1 rounded-full text-[0.6rem] font-black flex items-center justify-center shadow-md"
+                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                    aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
+                  >
+                    {hubSub.count}
+                  </span>
+                )}
+                {hubBulk && (
+                  <span
+                    className="absolute top-1 left-1 flex items-center justify-center w-4 h-4 rounded-full"
+                    style={{ backgroundColor: `color-mix(in srgb, ${accent} 15%, transparent)` }}
+                    aria-hidden="true"
+                  >
+                    <Tag size={9} weight="fill" style={{ color: accent }} />
+                  </span>
+                )}
+                <HubIcon id={hubId} size={30} color={isSelected ? solidAccent : accent} />
+                <span
+                  className="text-[0.68rem] font-black text-center leading-tight"
+                  style={{ color: isSelected ? solidAccent : undefined }}
+                >
+                  {hub.title.replace(" Hub", "")}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      )}
 
       {/* Expanded content for whichever hub is selected */}
       {activeHub && openHub && (
@@ -152,7 +193,7 @@ export function HubBrowser({
                           )}
                           style={
                             isSectionOpen
-                              ? { backgroundColor: solidAccent, color: "#fff" }
+                              ? { backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }
                               : anySectionOpen
                                 ? { color: accent }
                                 : undefined
@@ -164,7 +205,7 @@ export function HubBrowser({
                         {!isSectionOpen && sectionBulk && (
                           <span
                             className="flex items-center gap-0.5 text-[0.58rem] font-black px-1.5 py-0.5 rounded-full"
-                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: "var(--pill-text)" }}
                             aria-label="Bulk pricing available in this section"
                           >
                             <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -174,7 +215,7 @@ export function HubBrowser({
                         {!isSectionOpen && secSub && (
                           <span
                             className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full"
-                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: "var(--pill-text)" }}
                             aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
                           >
                             <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -251,8 +292,8 @@ export function HubBrowser({
                               >
                                 {hasBulk && (
                                   <span
-                                    className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-black uppercase tracking-wider px-7 py-0.5 text-white"
-                                    style={{ backgroundColor: solidAccent }}
+                                    className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-black uppercase tracking-wider px-7 py-0.5"
+                                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
                                     aria-hidden="true"
                                   >
                                     Bulk
@@ -269,7 +310,7 @@ export function HubBrowser({
                                   {itemQty > 0 && (
                                     <span
                                       className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full"
-                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
+                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: "var(--pill-text)" }}
                                       aria-label={`${itemQty} already in your quote`}
                                     >
                                       <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -278,8 +319,8 @@ export function HubBrowser({
                                   )}
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
-                                    className="w-7 h-7 rounded-full flex items-center justify-center text-white shadow-sm active:scale-90 transition-transform duration-150 transform-gpu"
-                                    style={{ backgroundColor: solidAccent }}
+                                    className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm active:scale-90 transition-transform duration-150 transform-gpu"
+                                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
                                     aria-label={`Add ${item.name}`}
                                   >
                                     <Plus size={13} weight="bold" aria-hidden="true" />
@@ -300,4 +341,5 @@ export function HubBrowser({
       )}
     </div>
   )
-    }
+}
+ 
