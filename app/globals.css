@@ -100,6 +100,11 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --surface-modal: var(--card);
   --surface-modal-raised: var(--background);
   --surface-modal-control: var(--secondary);
+  --surface-modal-overlay: var(--color-overlay);
+  --surface-modal-control-hover: color-mix(in srgb, var(--foreground) 8%, var(--surface-modal-control));
+  --shadow-action-brand: 0 4px 14px color-mix(in srgb, var(--brand-blue) 30%, transparent);
+  --shadow-action-green: 0 4px 14px color-mix(in srgb, var(--brand-green) 30%, transparent);
+  --shadow-action-whatsapp: 0 4px 14px color-mix(in srgb, var(--brand-whatsapp) 30%, transparent);
   --surface-modal-bright-text: var(--foreground);
   --surface-modal-accent-text: var(--brand-blue-dark);
   --surface-modal-on-accent: var(--brand-dark-100);
@@ -258,6 +263,11 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --surface-modal: var(--card);
   --surface-modal-raised: var(--background);
   --surface-modal-control: var(--secondary);
+  --surface-modal-overlay: var(--color-overlay);
+  --surface-modal-control-hover: color-mix(in srgb, var(--foreground) 8%, var(--surface-modal-control));
+  --shadow-action-brand: 0 4px 14px color-mix(in srgb, var(--brand-blue) 30%, transparent);
+  --shadow-action-green: 0 4px 14px color-mix(in srgb, var(--brand-green) 30%, transparent);
+  --shadow-action-whatsapp: 0 4px 14px color-mix(in srgb, var(--brand-whatsapp) 30%, transparent);
   --surface-modal-bright-text: var(--brand-dark-100);
   --surface-modal-accent-text: var(--brand-blue-dark);
   --surface-modal-on-accent: var(--brand-dark-100);
