@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { X, WhatsappLogo, DownloadSimple, AddressBook } from "@phosphor-icons/react"
-import { BIZ, BRAND } from "@/lib/brand"
+import { BIZ, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
 const FOUNDER_ROLE = "Founder & Lead Designer"
@@ -128,7 +128,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
           aria-label={`${BIZ.founder} — founder profile`}
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-t-[20px] shadow-2xl overflow-hidden flex flex-col max-h-[88vh] transition-transform duration-300 ease-out",
+            "relative w-full max-w-md bg-[var(--surface-modal)] rounded-t-[20px] shadow-2xl overflow-hidden flex flex-col max-h-[88vh] transition-transform duration-300 ease-out",
             open ? "translate-y-0 pointer-events-auto" : "translate-y-full pointer-events-none"
           )}
         >
@@ -140,7 +140,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: `radial-gradient(ellipse at 20% 40%, rgba(255,255,255,0.08) 0%, transparent 60%)`,
+                  background: "radial-gradient(ellipse at 20% 40%, color-mix(in srgb, var(--brand-white) 8%, transparent) 0%, transparent 60%)",
                 }}
               />
               <div
@@ -184,10 +184,11 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   href={FOUNDER_WA_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm text-white transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
                   style={{
                     backgroundColor: BRAND.whatsappAccessible,
-                    boxShadow: `0 4px 14px rgba(37,211,102,0.3)`,
+                    color: TOKEN.onWhatsappAccessible,
+                    boxShadow: "var(--shadow-action-whatsapp)",
                   }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = BRAND.whatsappAccessibleDark }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = BRAND.whatsappAccessible }}
@@ -198,12 +199,11 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
 
                 <button
                   onClick={handleVCard}
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm text-white transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
                   style={{
                     backgroundColor: vcardDone ? BRAND.green : BRAND.blue,
-                    boxShadow: vcardDone
-                      ? `0 4px 14px rgba(111,191,26,0.3)`
-                      : `0 4px 14px rgba(30,111,168,0.3)`,
+                    color: vcardDone ? TOKEN.onBrandGreen : TOKEN.onBrandBlue,
+                    boxShadow: vcardDone ? "var(--shadow-action-green)" : "var(--shadow-action-brand)",
                   }}
                 >
                   {vcardDone ? (

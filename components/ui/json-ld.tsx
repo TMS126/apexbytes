@@ -14,7 +14,6 @@ export function LocalBusinessJsonLd() {
     '@id': SITE_URL,
     url: SITE_URL,
     telephone: BIZ.phoneE164,
-    priceRange: 'R',
     address: {
       '@type': 'PostalAddress',
       streetAddress: BIZ.address,
@@ -69,6 +68,8 @@ export function LocalBusinessJsonLd() {
     ],
     sameAs: [
       `https://wa.me/${BIZ.phoneE164.replace('+', '')}`,
+      'https://www.facebook.com/16558343683795756839',
+      BIZ.mapsUrl,
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
@@ -125,4 +126,4 @@ export function LocalBusinessJsonLd() {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   )
-            } 
+}

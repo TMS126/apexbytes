@@ -1,13 +1,22 @@
-export default function MaintenancePage() {
+import { headers } from 'next/headers'
+import { Nunito } from 'next/font/google'
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '900'],
+  display: 'swap',
+})
+
+export default async function MaintenancePage() {
+  const nonce = (await headers()).get('x-nonce') ?? undefined
+
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap');
-
+      <style nonce={nonce}>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-          font-family: 'Nunito', sans-serif;
+          font-family: ${nunito.style.fontFamily}, sans-serif;
           background: #07111F;
           min-height: 100dvh;
           display: flex;
@@ -72,7 +81,6 @@ export default function MaintenancePage() {
         }
 
         .logo {
-          font-family: 'Nunito', sans-serif;
           font-weight: 900;
           font-size: 1.35rem;
           letter-spacing: -0.02em;
@@ -112,7 +120,6 @@ export default function MaintenancePage() {
         }
 
         h1 {
-          font-family: 'Nunito', sans-serif;
           font-weight: 900;
           font-size: clamp(2rem, 6vw, 2.8rem);
           color: #FFFFFF;
@@ -189,7 +196,6 @@ export default function MaintenancePage() {
           gap: 10px;
           background: #25D366;
           color: #FFFFFF;
-          font-family: 'Nunito', sans-serif;
           font-weight: 800;
           font-size: 0.9rem;
           padding: 13px 28px;
@@ -304,4 +310,4 @@ export default function MaintenancePage() {
       </div>
     </>
   )
-}
+      }

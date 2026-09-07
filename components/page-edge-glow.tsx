@@ -41,20 +41,6 @@ export function PageEdgeGlow() {
       className="fixed inset-x-0 top-0 z-[9999] pointer-events-none h-[320px] overflow-hidden abh-edge-glow"
       style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: color }}
     >
-      <style>{`
-        @keyframes abh-edge-glow-kf {
-          0%   { opacity: 0; }
-          8%   { opacity: 1; }
-          32%  { opacity: 0; }
-          48%  { opacity: 1; }
-          74%  { opacity: 0; }
-          100% { opacity: 0; }
-        }
-        .abh-edge-glow {
-          animation: abh-edge-glow-kf 2.4s ease-in-out forwards;
-        }
-      `}</style>
-
       {/* Thin bright line along the very top edge */}
       <div
         className="absolute inset-x-0 top-0 h-[3px]"
@@ -102,4 +88,4 @@ export function PageEdgeGlow() {
       />
     </div>
   )
-      } 
+      }

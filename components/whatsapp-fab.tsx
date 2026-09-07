@@ -13,6 +13,7 @@ import { BIZ, BRAND, WHATSAPP_THEME } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useEdgePeek } from "@/hooks/use-edge-peek"
 
 const WA_NUMBER  = "27753338260"
 const GREETING   = "Hi there 👋 Tell us what you need and we'll get back to you right away!"
@@ -191,6 +192,9 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
+  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
+  const [visible, setVisible]        = useState(true)
+  const [scrolled, setScrolled]      = useState(false)
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
   const [note,    setNote]           = useState("")
@@ -368,21 +372,7 @@ export function WhatsAppFAB() {
 
   return (
     <>
-      <style>{`
-        @keyframes wa-spin-container { to { transform: rotate(360deg); } }
-        .wa-spin-container {
-          animation-name: wa-spin-container;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-        @keyframes wa-shake {
-          10%, 90% { transform: translateX(-1px); }
-          20%, 80% { transform: translateX(2px); }
-          30%, 50%, 70% { transform: translateX(-4px); }
-          40%, 60% { transform: translateX(4px); }
-        }
-        .wa-shake { animation: wa-shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
-      `}</style>
+      
 
       {isOpen && (
         <div
@@ -735,13 +725,16 @@ export function WhatsAppFAB() {
 
       <div
         data-widget="whatsapp-fab"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-[9.5rem] z-[9992] group/wa",
+          "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen || isOtherOpen
             ? "opacity-0 pointer-events-none scale-90"
-            : "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-100 scale-100 pointer-events-auto",
+          !(isOpen || isOtherOpen) && (peeking ? "translate-x-0" : "translate-x-[48%]")
           )}
         >
           <div className="flex items-center justify-end gap-2">
@@ -756,13 +749,15 @@ export function WhatsAppFAB() {
             Chat
           </span>
           <button
-            onClick={() => setIsOpen(o => !o)}
+            onClick={handleClick}
+            onPointerDown={handlePointerDown}
             aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
             className="relative w-14 h-14 flex items-center justify-center active:scale-90 hover:scale-110 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
           >
             <WhatsappLogo
               size={32}
               weight="fill"
+              className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
               style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${WA.accent} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>
@@ -770,4 +765,4 @@ export function WhatsAppFAB() {
       </div>
     </>
   )
-      } 
+        }

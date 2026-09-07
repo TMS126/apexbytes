@@ -28,6 +28,7 @@ const poppinsHeading = Poppins({
   weight: ['600', '700', '800'],
   variable: '--font-poppins',
   display: 'swap',
+  adjustFontFallback: false,
 })
 
 const soraFallback = localFont({
@@ -37,6 +38,7 @@ const soraFallback = localFont({
   ],
   variable: '--font-sora',
   display: 'swap',
+  adjustFontFallback: false,
 })
 
 const instrumentFallback = Instrument_Sans({
@@ -51,6 +53,7 @@ const dmSansBody = DM_Sans({
   weight: ['400', '500', '700'],
   variable: '--font-body',
   display: 'swap',
+  adjustFontFallback: false,
 })
 
 const monoFont = JetBrains_Mono({

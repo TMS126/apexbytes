@@ -28,6 +28,14 @@ export const TOKEN = {
   white: "var(--brand-white)",
   neutral400: "var(--brand-neutral-400)",
   neutral500: "var(--brand-neutral-500)",
+  surfaceModal: "var(--surface-modal)",
+  surfaceModalRaised: "var(--surface-modal-raised)",
+  surfaceModalControl: "var(--surface-modal-control)",
+  surfaceModalControlHover: "var(--surface-modal-control-hover)",
+  surfaceModalOverlay: "var(--surface-modal-overlay)",
+  shadowActionBrand: "var(--shadow-action-brand)",
+  shadowActionGreen: "var(--shadow-action-green)",
+  shadowActionWhatsapp: "var(--shadow-action-whatsapp)",
 } as const
 
 export const HEX = {
