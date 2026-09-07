@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useEdgePeek } from "@/hooks/use-edge-peek"
 import { GLASS, HOME_BLUE, getReadableTextColor } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED,
@@ -24,6 +25,7 @@ const VIEW_KEY = "apexbytes-quote-view"
 export function QuoteCalculatorWidget() {
   const { resolvedTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
+  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
   const [openHub, setOpenHub]   = useState<HubId | null>(null)
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
   const [cart, setCart]         = useState<CartItem[]>([])
@@ -323,12 +325,26 @@ return (
           0% { opacity: 0; transform: scale(0.08); }
           100% { opacity: 1; transform: scale(1); }
         }
-        .abh-calc-grow {
-          animation: abh-calc-grow 280ms cubic-bezier(0.16, 1, 0.3, 1);
-          transform-origin: calc(100% - 26px) 100%;
+        @keyframes abh-calc-slide-up {
+          0% { opacity: 0; transform: translateY(28px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        /* Mobile: full-screen sheet slides up from the bottom, native-app
+           feel. Desktop (md+): reverts to the original grow-from-FAB
+           animation, since the panel is a floating card there, not a
+           full-screen sheet. */
+        .abh-calc-anim {
+          animation: abh-calc-slide-up 260ms cubic-bezier(0.16, 1, 0.3, 1);
+          transform-origin: bottom center;
+        }
+        @media (min-width: 768px) {
+          .abh-calc-anim {
+            animation: abh-calc-grow 280ms cubic-bezier(0.16, 1, 0.3, 1);
+            transform-origin: calc(100% - 26px) 100%;
+          }
         }
         @media (prefers-reduced-motion: reduce) {
-          .abh-calc-grow { animation: none; }
+          .abh-calc-anim { animation: none; }
         }
         .abh-chip-strip { scrollbar-width: none; -ms-overflow-style: none; }
         .abh-chip-strip::-webkit-scrollbar { display: none; }
@@ -336,13 +352,15 @@ return (
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none"
+          className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none md:backdrop-blur-none"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
       )}
 
       <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         className={cn(
           "fixed right-3 md:right-5 bottom-[12rem] z-[9993] size-14 flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
@@ -391,7 +409,8 @@ return (
           </span>
 
           <button
-            onClick={() => setIsOpen(true)}
+            onClick={handleClick}
+            onPointerDown={handlePointerDown}
             aria-label="Open quotation calculator"
             aria-haspopup="dialog"
             className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
@@ -399,6 +418,7 @@ return (
             <Calculator
               size={34}
               weight="fill"
+              className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
               style={{ color: fabColor, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${fabColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>
@@ -421,14 +441,23 @@ return (
           aria-modal="true"
           aria-label="Quotation Calculator"
           className={cn(
-            "fixed bottom-24 right-3 md:right-5 left-auto z-[9991] w-[min(400px,calc(100vw-1.5rem))] max-h-[75vh] rounded-[14px] shadow-2xl flex flex-col overflow-hidden transform-gpu abh-calc-grow",
-            GLASS.panel
+            // Mobile: true full-screen app sheet. Desktop (md+): floating
+            // card, bottom-right, wider than before and no backdrop blur.
+            "fixed inset-0 md:inset-auto md:bottom-24 md:right-5 left-auto z-[9991]",
+            "w-full h-full md:h-auto md:w-[500px] md:max-w-[calc(100vw-1.5rem)] md:max-h-[75vh]",
+            "rounded-none md:rounded-[14px] shadow-2xl flex flex-col overflow-hidden",
+            "transform-gpu will-change-transform abh-calc-anim",
+            GLASS.panel,
+            "md:backdrop-blur-none"
           )}
           style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}
         >
           <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-zinc-200 dark:via-white/20 to-transparent pointer-events-none" />
 
-          <div className="flex items-center justify-between px-5 py-4 shrink-0 border-b border-zinc-100 dark:border-white/10">
+          <div
+            className="flex items-center justify-between px-5 py-4 shrink-0 border-b border-zinc-100 dark:border-white/10"
+            style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}
+          >
             <h3 className="font-sans font-black text-lg" style={{ color: titleAccent }}>Quotation Calculator</h3>
             <button
               onClick={() => setIsOpen(false)}
@@ -439,7 +468,10 @@ return (
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto min-h-0">
+          <div
+            className="flex-1 overflow-y-auto overscroll-contain min-h-0"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
 
             {undoStack && (
               <div className="sticky top-0 z-20 p-3 border-b border-zinc-100 dark:border-white/10 bg-white/95 dark:bg-zinc-900/95 backdrop-blur">
@@ -528,7 +560,8 @@ return (
                   <div
                     role="list"
                     aria-label="Items in your quote"
-                    className="abh-chip-strip flex gap-2.5 overflow-x-auto snap-x snap-mandatory pb-1"
+                    className="abh-chip-strip flex gap-2.5 overflow-x-auto overscroll-x-contain snap-x snap-mandatory pb-1"
+                    style={{ WebkitOverflowScrolling: "touch" }}
                   >
                     <AnimatePresence initial={false} mode="popLayout">
                       {cart.map(item => (
@@ -539,7 +572,7 @@ return (
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.85 }}
                           transition={{ duration: 0.18 }}
-                          className="shrink-0"
+                          className="shrink-0 snap-start"
                         >
                           {expandView ? (
                             <CartItemCard
@@ -622,7 +655,10 @@ return (
           </div>
 
           {cart.length > 0 && (
-            <div className="px-4 pb-4 pt-3 shrink-0 border-t border-zinc-100 dark:border-white/10 space-y-3 shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.5)]">
+            <div
+              className="px-4 pt-3 shrink-0 border-t border-zinc-100 dark:border-white/10 space-y-3 shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.5)]"
+              style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+            >
               {totalSavings > 0 && (
                 <div className="flex items-center gap-1.5 text-[0.7rem] font-bold text-emerald-600 dark:text-emerald-400">
                   <SealPercent size={14} weight="fill" aria-hidden="true" />
@@ -656,4 +692,4 @@ return (
       )}
     </>
   )
-                        }
+            } 
