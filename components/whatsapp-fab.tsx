@@ -756,7 +756,7 @@ export function WhatsAppFAB() {
             "abh-surface-modal text-[#25D366]",
             "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
-            "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100"
+            "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100 group-focus-within/wa:max-w-[100px] group-focus-within/wa:opacity-100 group-focus-within/wa:scale-x-100"
           )}>
             Chat
           </span>
