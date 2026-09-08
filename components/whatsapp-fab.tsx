@@ -191,7 +191,7 @@ export function WhatsAppFAB() {
   const pathname = usePathname()
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
-  const [isOpen,  setIsOpen, isOtherOpen] = useExclusiveWidget("whatsapp")
+  const [isOpen, setIsOpen] = useExclusiveWidget("whatsapp")
   const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
@@ -715,9 +715,10 @@ export function WhatsAppFAB() {
           "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          isOpen || isOtherOpen
+          isOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto",
+          !peeking && !isOpen && "translate-x-[50%]",
           )}
         >
           <div className="flex items-center justify-end gap-2">

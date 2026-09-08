@@ -4,6 +4,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback, useLayoutEffect } from "react"
 import { MagnifyingGlass, X, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
+import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
@@ -114,11 +115,12 @@ function dispatchSelectService(svc: SelectedService) {
 
 export function FloatingSearchWidget() {
   const { resolvedTheme } = useTheme()
+  const pathname = usePathname()
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
 
 
-  const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
+  const [isOpen, setIsOpen] = useExclusiveWidget("search")
   const [query, setQuery]         = useState("")
   const [inputFocused, setInputFocused] = useState(false)
 
@@ -144,6 +146,14 @@ export function FloatingSearchWidget() {
   const iconGlow = `drop-shadow(0 4px 10px color-mix(in srgb, ${accentColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))`
 
   const hasQuery = query.trim().length > 0
+  const isServicesPage = pathname === "/services"
+
+  useEffect(() => {
+    if (!isServicesPage && isOpen) {
+      setIsOpen(false)
+      setQuery("")
+    }
+  }, [isServicesPage, isOpen, setIsOpen])
 
   // Runs the fly-in the moment the modal actually mounts (isOpen just
   // became true). useLayoutEffect fires before the browser paints, so
@@ -275,7 +285,9 @@ export function FloatingSearchWidget() {
     pushedRef.current = false
   }
 
-  const fabVisible = !isOpen
+  const fabVisible = isServicesPage && !isOpen
+
+  if (!isServicesPage) return null
 
   return (
     <>
@@ -294,8 +306,9 @@ export function FloatingSearchWidget() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-24 z-[9993] size-14 transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          "fixed right-3 md:right-5 bottom-40 z-[9993] size-14 transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none",
+          !peeking && fabVisible && "translate-x-[50%]",
         )}
       >
         <button

@@ -24,7 +24,8 @@ const VIEW_KEY = "apexbytes-quote-view"
 
 export function QuoteCalculatorWidget() {
   const { resolvedTheme } = useTheme(); const isDark = resolvedTheme === "dark"
-  const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
+  const [isOpen, setIsOpen] = useExclusiveWidget("calculator")
+  const fabVisible = !isOpen
   const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
   const [openHub, setOpenHub]   = useState<HubId | null>(null)
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
@@ -319,7 +320,6 @@ export function QuoteCalculatorWidget() {
   // The FAB now also hides whenever another exclusive widget (e.g. the
   // WhatsApp panel) is open, and vice versa in whatsapp-fab.tsx — no more
   // floating buttons stacking up behind an open sheet.
-  const fabVisible = !isOpen && !isOtherOpen
   const showMiniBar = cart.length > 0 && fabVisible
 
   return (
@@ -364,11 +364,12 @@ export function QuoteCalculatorWidget() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-[12rem] z-[9993] size-14 flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[13.5rem] z-[9993] size-14 flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none scale-90"
+            : "opacity-0 pointer-events-none scale-90",
+          fabVisible && !peeking && "translate-x-[50%]"
         )}
       >
         <button
