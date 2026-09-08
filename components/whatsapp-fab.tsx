@@ -13,7 +13,6 @@ import { BIZ, BRAND, WHATSAPP_THEME } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
-import { useEdgePeek } from "@/hooks/use-edge-peek"
 
 const WA_NUMBER  = "27753338260"
 const GREETING   = "Hi there 👋 Tell us what you need and we'll get back to you right away!"
@@ -192,7 +191,6 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen, setIsOpen] = useExclusiveWidget("whatsapp")
-  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
   const [note,    setNote]           = useState("")
@@ -709,16 +707,13 @@ export function WhatsAppFAB() {
 
       <div
         data-widget="whatsapp-fab"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-6 z-[9993] w-14 h-14 group/wa",
+          "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100 pointer-events-auto",
-          !peeking && !isOpen && "translate-x-[50%]",
           )}
         >
           <div className="flex items-center justify-end gap-2">
@@ -728,20 +723,19 @@ export function WhatsAppFAB() {
             "bg-white dark:bg-zinc-900 text-[#25D366]",
             "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
-            "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100"
+            "max-w-[100px] opacity-100 scale-x-100"
           )}>
             Chat
           </span>
           <button
-            onClick={handleClick}
-            onPointerDown={handlePointerDown}
+            onClick={() => setIsOpen(true)}
             aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
             className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
           >
             <WhatsappLogo
               size={32}
               weight="fill"
-              className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
+              className="transition-all duration-200 ease-out motion-reduce:transition-none"
               style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${WA.accent} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>

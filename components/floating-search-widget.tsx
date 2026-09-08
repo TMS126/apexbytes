@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils"
 import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
-import { useEdgePeek } from "@/hooks/use-edge-peek"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 
@@ -243,8 +242,6 @@ export function FloatingSearchWidget() {
     setIsOpen(true)
   }, [isOpen, setIsOpen])
 
-  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(handleOpen)
-
   useEffect(() => {
     if (!isOpen) return
     const fn = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose() }
@@ -303,18 +300,18 @@ export function FloatingSearchWidget() {
       {/* Closed-state FAB trigger, bottom-right, same spot as before —
           fabRef is measured on open to seed the fly-in animation. */}
       <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-40 z-[9993] w-14 h-14 transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          "fixed right-3 md:right-5 bottom-40 z-[9993] transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none",
-          !peeking && fabVisible && "translate-x-[50%]",
         )}
       >
+        <div className="flex items-center justify-end gap-2">
+          <span className="rounded-full border border-zinc-100 bg-white px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-widest text-muted-foreground shadow-md dark:border-zinc-800 dark:bg-zinc-900">
+            Search
+          </span>
         <button
           ref={fabRef}
-          onClick={handleClick}
-          onPointerDown={handlePointerDown}
+          onClick={handleOpen}
           aria-label="Search services"
           className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none"
         >
@@ -322,10 +319,11 @@ export function FloatingSearchWidget() {
             size={22}
             weight="bold"
             aria-hidden="true"
-            className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
+            className="transition-all duration-200 ease-out motion-reduce:transition-none"
             style={{ color: accentColor, filter: iconGlow }}
           />
         </button>
+        </div>
       </div>
 
       {/* Open state — flies from the FAB's exact position to a centered

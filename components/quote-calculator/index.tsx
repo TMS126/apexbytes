@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
-import { useEdgePeek } from "@/hooks/use-edge-peek"
 import { GLASS, HOME_BLUE, getReadableTextColor } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED,
@@ -26,7 +25,6 @@ export function QuoteCalculatorWidget() {
   const { resolvedTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen] = useExclusiveWidget("calculator")
   const fabVisible = !isOpen
-  const { peeking, handlePointerDown, handleClick, handleMouseEnter, handleMouseLeave } = useEdgePeek(() => setIsOpen(true))
   const [openHub, setOpenHub]   = useState<HubId | null>(null)
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
   const [cart, setCart]         = useState<CartItem[]>([])
@@ -361,15 +359,12 @@ export function QuoteCalculatorWidget() {
       )}
 
       <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-[13.5rem] z-[9993] w-14 h-14 flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[13.5rem] z-[9993] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none scale-90",
-          fabVisible && !peeking && "translate-x-[50%]"
+            : "opacity-0 pointer-events-none scale-90"
         )}
       >
         <button
@@ -404,7 +399,7 @@ export function QuoteCalculatorWidget() {
               "bg-white dark:bg-zinc-900",
               "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
               "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
-              "max-w-0 opacity-0 scale-x-0 group-hover/calc:max-w-[100px] group-hover/calc:opacity-100 group-hover/calc:scale-x-100"
+              "max-w-[100px] opacity-100 scale-x-100"
             )}
             style={{ color: fabColor }}
           >
@@ -412,8 +407,8 @@ export function QuoteCalculatorWidget() {
           </span>
 
           <button
-            onClick={handleClick}
-            onPointerDown={handlePointerDown}
+          onClick={() => setIsOpen(true)}
+
             aria-label="Open quotation calculator"
             aria-haspopup="dialog"
             className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
@@ -421,7 +416,7 @@ export function QuoteCalculatorWidget() {
             <Calculator
               size={34}
               weight="fill"
-              className={cn("transition-all duration-200 ease-out motion-reduce:transition-none", !peeking && "opacity-55 scale-[0.7]")}
+              className="transition-all duration-200 ease-out motion-reduce:transition-none"
               style={{ color: fabColor, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${fabColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
             />
           </button>
