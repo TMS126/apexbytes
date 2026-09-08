@@ -360,7 +360,7 @@ export function QuoteCalculatorWidget() {
 
       <div
         className={cn(
-          "fixed right-3 md:right-5 bottom-[13.5rem] z-[9993] flex items-center justify-end group/calc",
+          "fixed z-[9992] right-4 md:right-6 bottom-[10rem] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"
@@ -399,7 +399,7 @@ export function QuoteCalculatorWidget() {
               "bg-white dark:bg-zinc-900",
               "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
               "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
-              "max-w-[100px] opacity-100 scale-x-100"
+              "max-w-0 opacity-0 scale-x-0 group-hover/calc:max-w-[100px] group-hover/calc:opacity-100 group-hover/calc:scale-x-100 group-focus-within/calc:max-w-[100px] group-focus-within/calc:opacity-100 group-focus-within/calc:scale-x-100"
             )}
             style={{ color: fabColor }}
           >

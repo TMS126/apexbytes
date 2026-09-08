@@ -708,7 +708,7 @@ export function WhatsAppFAB() {
       <div
         data-widget="whatsapp-fab"
         className={cn(
-          "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
+          "fixed z-[9992] right-4 md:right-6 bottom-6 group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen
@@ -723,7 +723,7 @@ export function WhatsAppFAB() {
             "bg-white dark:bg-zinc-900 text-[#25D366]",
             "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
-            "max-w-[100px] opacity-100 scale-x-100"
+            "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100 group-focus-within/wa:max-w-[100px] group-focus-within/wa:opacity-100 group-focus-within/wa:scale-x-100"
           )}>
             Chat
           </span>
