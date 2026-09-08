@@ -17,6 +17,7 @@ export function useEdgePeek(onOpen: () => void) {
   const [peeking, setPeeking] = useState(false)
   const retractTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const touchHandledRef = useRef(false)
+  const touchGuardTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const clearRetractTimer = useCallback(() => {
     if (retractTimer.current) {
@@ -30,13 +31,18 @@ export function useEdgePeek(onOpen: () => void) {
     retractTimer.current = setTimeout(() => setPeeking(false), RETRACT_MS)
   }, [clearRetractTimer])
 
-  useEffect(() => clearRetractTimer, [clearRetractTimer])
+  useEffect(() => () => {
+    clearRetractTimer()
+    if (touchGuardTimer.current) clearTimeout(touchGuardTimer.current)
+  }, [clearRetractTimer])
 
   // Touch: handles the two-tap sequence directly on pointerdown so the
   // first tap never reaches onClick.
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     if (e.pointerType !== "touch") return
     touchHandledRef.current = true
+    if (touchGuardTimer.current) clearTimeout(touchGuardTimer.current)
+    touchGuardTimer.current = setTimeout(() => { touchHandledRef.current = false }, 700)
     if (!peeking) {
       e.preventDefault()
       setPeeking(true)
@@ -44,6 +50,7 @@ export function useEdgePeek(onOpen: () => void) {
     } else {
       clearRetractTimer()
       setPeeking(false)
+      touchHandledRef.current = false
       onOpen()
     }
   }, [peeking, armRetractTimer, clearRetractTimer, onOpen])

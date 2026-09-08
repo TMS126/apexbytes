@@ -364,7 +364,7 @@ export function QuoteCalculatorWidget() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-[13.5rem] z-[9993] size-14 flex items-center justify-end group/calc",
+          "fixed right-3 md:right-5 bottom-[13.5rem] z-[9993] w-14 h-14 flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? "opacity-100 scale-100 pointer-events-auto"

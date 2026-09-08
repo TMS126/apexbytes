@@ -712,7 +712,7 @@ export function WhatsAppFAB() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         className={cn(
-          "fixed right-3 md:right-5 bottom-6 z-[9993] group/wa",
+          "fixed right-3 md:right-5 bottom-6 z-[9993] w-14 h-14 group/wa",
           (pathname === "/contact" || pathname.startsWith("/contact/")) && "hidden",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen
