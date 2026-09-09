@@ -169,8 +169,8 @@ export function FloatingSearchWidget() {
     }
 
     const observer = new IntersectionObserver(
-      ([entry]) => setInlineSearchVisible(entry.isIntersecting),
-      { threshold: 0.1 }
+      ([entry]) => setInlineSearchVisible(entry.intersectionRatio > 0),
+      { threshold: 0 }
     )
     observer.observe(target)
     return () => observer.disconnect()
