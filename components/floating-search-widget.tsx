@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useScrollHide } from "@/hooks/use-scroll-hide"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 
@@ -119,7 +120,8 @@ export function FloatingSearchWidget() {
   const isDark = mounted && resolvedTheme === "dark"
 
 
-  const [isOpen, setIsOpen] = useExclusiveWidget("search")
+  const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
+  const isScrolling = useScrollHide()
   const [query, setQuery]         = useState("")
   const [inputFocused, setInputFocused] = useState(false)
 
@@ -282,7 +284,7 @@ export function FloatingSearchWidget() {
     pushedRef.current = false
   }
 
-  const fabVisible = isServicesPage && !isOpen
+  const fabVisible = isServicesPage && !isOpen && !isOtherOpen && !isScrolling
 
   if (!isServicesPage) return null
 
@@ -435,4 +437,4 @@ export function FloatingSearchWidget() {
       )}
     </>
   )
-  } 
+    } 
