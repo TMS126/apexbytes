@@ -126,6 +126,7 @@ export function FloatingSearchWidget() {
   const isScrolling = useScrollHide()
   const [query, setQuery]         = useState("")
   const [inputFocused, setInputFocused] = useState(false)
+  const [inlineSearchVisible, setInlineSearchVisible] = useState(true)
 
   const inputRef     = useRef<HTMLInputElement>(null)
   const pushedRef    = useRef(false)
@@ -157,6 +158,23 @@ export function FloatingSearchWidget() {
       setQuery("")
     }
   }, [isServicesPage, isOpen, setIsOpen])
+
+  useEffect(() => {
+    if (!isServicesPage) return
+
+    const target = document.getElementById("inline-search-input")
+    if (!target) {
+      setInlineSearchVisible(false)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInlineSearchVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    )
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [isServicesPage])
 
   // Runs the fly-in the moment the modal actually mounts (isOpen just
   // became true). useLayoutEffect fires before the browser paints, so
@@ -286,7 +304,7 @@ export function FloatingSearchWidget() {
     pushedRef.current = false
   }
 
-  const fabVisible = isServicesPage && !isOpen && !isOtherOpen
+  const fabVisible = isServicesPage && !isOpen && !isOtherOpen && !inlineSearchVisible
 
   if (!isServicesPage || calculatorOpen) return null
 
@@ -305,7 +323,7 @@ export function FloatingSearchWidget() {
           fabRef is measured on open to seed the fly-in animation. */}
       <div
         className={cn(
-          "fixed z-[9993] right-4 md:right-6 bottom-24 relative group/search transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
+          "fixed z-[9993] right-4 md:right-6 bottom-[10.5rem] relative group/search transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? isScrolling
               ? "opacity-30 scale-100 pointer-events-auto"

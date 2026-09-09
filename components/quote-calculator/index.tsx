@@ -375,7 +375,7 @@ export function QuoteCalculatorWidget() {
 
       <div
         className={cn(
-          "fixed z-[9992] right-4 md:right-6 bottom-[10rem] flex items-center justify-end group/calc",
+          "fixed z-[9992] right-4 md:right-6 bottom-24 flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
             ? isScrolling
