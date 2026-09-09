@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { GLASS, HOME_BLUE, getReadableTextColor } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED,
@@ -25,6 +26,7 @@ const VIEW_KEY = "apexbytes-quote-view"
 export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen] = useExclusiveWidget("calculator")
+  const isScrolling = useScrollHide()
   const fabVisible = !isOpen
   const [openHub, setOpenHub]   = useState<HubId | null>(null)
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
@@ -376,7 +378,9 @@ export function QuoteCalculatorWidget() {
           "fixed z-[9992] right-4 md:right-6 bottom-[10rem] flex items-center justify-end group/calc",
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
-            ? "opacity-100 scale-100 pointer-events-auto"
+            ? isScrolling
+              ? "opacity-30 scale-100 pointer-events-auto"
+              : "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 pointer-events-none scale-90"
         )}
       >

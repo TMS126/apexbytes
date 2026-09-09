@@ -286,7 +286,7 @@ export function FloatingSearchWidget() {
     pushedRef.current = false
   }
 
-  const fabVisible = isServicesPage && !isOpen && !isOtherOpen && !isScrolling
+  const fabVisible = isServicesPage && !isOpen && !isOtherOpen
 
   if (!isServicesPage || calculatorOpen) return null
 
@@ -306,7 +306,11 @@ export function FloatingSearchWidget() {
       <div
         className={cn(
           "fixed z-[9993] right-4 md:right-6 bottom-24 relative group/search transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          fabVisible ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-90 pointer-events-none"
+          fabVisible
+            ? isScrolling
+              ? "opacity-30 scale-100 pointer-events-auto"
+              : "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 scale-90 pointer-events-none"
         )}
       >
         <div className="flex items-center justify-end gap-2">

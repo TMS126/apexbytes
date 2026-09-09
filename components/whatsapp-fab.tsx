@@ -13,6 +13,7 @@ import { BIZ, BRAND, WHATSAPP_THEME } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 
 const WA_NUMBER  = "27753338260"
@@ -192,6 +193,7 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen, setIsOpen] = useExclusiveWidget("whatsapp")
+  const isScrolling = useScrollHide()
   const calculatorOpen = useCalculatorOpen()
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
@@ -717,7 +719,9 @@ export function WhatsAppFAB() {
           "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           isOpen
             ? "opacity-0 pointer-events-none scale-90"
-            : "opacity-100 scale-100 pointer-events-auto",
+            : isScrolling
+              ? "opacity-30 scale-100 pointer-events-auto"
+              : "opacity-100 scale-100 pointer-events-auto",
           )}
         >
           <div className="flex items-center justify-end gap-2">
