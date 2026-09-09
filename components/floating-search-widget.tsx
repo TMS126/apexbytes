@@ -123,7 +123,6 @@ export function FloatingSearchWidget() {
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const calculatorOpen = useCalculatorOpen()
-  const isScrolling = useScrollHide()
   const [query, setQuery]         = useState("")
   const [inputFocused, setInputFocused] = useState(false)
   const [inlineSearchVisible, setInlineSearchVisible] = useState(true)
@@ -325,9 +324,7 @@ export function FloatingSearchWidget() {
         className={cn(
           "fixed z-[9993] right-4 md:right-6 bottom-[10.5rem] relative group/search transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
           fabVisible
-            ? isScrolling
-              ? "opacity-30 scale-100 pointer-events-auto"
-              : "opacity-100 scale-100 pointer-events-auto"
+            ? "opacity-100 scale-100 pointer-events-auto"
             : "opacity-0 scale-90 pointer-events-none"
         )}
       >
