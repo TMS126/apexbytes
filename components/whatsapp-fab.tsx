@@ -13,6 +13,7 @@ import { BIZ, BRAND, WHATSAPP_THEME } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 
 const WA_NUMBER  = "27753338260"
 const GREETING   = "Hi there 👋 Tell us what you need and we'll get back to you right away!"
@@ -191,6 +192,7 @@ export function WhatsAppFAB() {
   const { resolvedTheme }           = useTheme()
   const isDark                       = resolvedTheme === "dark"
   const [isOpen, setIsOpen] = useExclusiveWidget("whatsapp")
+  const calculatorOpen = useCalculatorOpen()
   const [name,    setName]           = useState("")
   const [hub,     setHub]            = useState("")
   const [note,    setNote]           = useState("")
@@ -314,6 +316,8 @@ export function WhatsAppFAB() {
     handleClose()
     router.push("/gallery")
   }
+
+  if (calculatorOpen) return null
 
   const isValid     = name.trim().length > 1 && hub !== ""
   const selectedHub = HUBS.find(h => h.id === hub)

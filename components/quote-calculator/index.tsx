@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Calculator, X, WhatsappLogo, CaretDown, SealPercent, ArrowCounterClockwise, FloppyDisk, FilePdf, BookmarkSimple, Trash, ArrowsOutSimple, ArrowsInSimple } from "@phosphor-icons/react"
+import { Calculator, X, WhatsappLogo, CaretDown, SealPercent, ArrowCounterClockwise, FloppyDisk, FilePdf, BookmarkSimple, Trash, ArrowsOutSimple, ArrowsInSimple, Sun, Moon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
@@ -18,11 +18,12 @@ import { CartItemChip } from "./cart-item-chip"
 import { CartItemCard } from "./cart-item-card"
 import { HubBrowser } from "./hub-browser"
 import { exportQuotePdf } from "./pdf-export"
+import { announceCalculatorState } from "@/hooks/use-calculator-open"
 
 const VIEW_KEY = "apexbytes-quote-view"
 
 export function QuoteCalculatorWidget() {
-  const { resolvedTheme } = useTheme(); const isDark = resolvedTheme === "dark"
+  const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen] = useExclusiveWidget("calculator")
   const fabVisible = !isOpen
   const [openHub, setOpenHub]   = useState<HubId | null>(null)
@@ -96,8 +97,20 @@ export function QuoteCalculatorWidget() {
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : ""
-    return () => { document.body.style.overflow = "" }
+    announceCalculatorState(isOpen)
+    return () => {
+      document.body.style.overflow = ""
+      announceCalculatorState(false)
+    }
   }, [isOpen])
+
+  const toggleCalculatorTheme = () => {
+    const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
+    document.documentElement.classList.add("abh-theme-switching")
+    window.setTimeout(() => document.documentElement.classList.remove("abh-theme-switching"), 350)
+    // next-themes exposes setTheme through the provider; use the same hook state setter below.
+    setTheme(nextTheme)
+  }
 
   const wasOpenRef = useRef(false)
   useEffect(() => {
@@ -459,11 +472,21 @@ export function QuoteCalculatorWidget() {
             <span className="font-sans font-black text-sm tracking-tight" style={{ color: fabColor }}>
               {BIZ.name}
             </span>
-            {clockLabel && (
-              <span className="text-[0.62rem] font-bold uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
-                {clockLabel}
-              </span>
-            )}
+            <div className="flex items-center gap-2">
+              {clockLabel && (
+                <span className="text-[0.62rem] font-bold uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
+                  {clockLabel}
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={toggleCalculatorTheme}
+                aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-[var(--surface-modal-control)] text-foreground hover:bg-[var(--surface-modal-control-hover)] transition-colors"
+              >
+                {isDark ? <Sun size={16} weight="bold" aria-hidden="true" /> : <Moon size={16} weight="bold" aria-hidden="true" />}
+              </button>
+            </div>
           </div>
 
           {/* Friendly title + subtitle, inviting a choice rather than

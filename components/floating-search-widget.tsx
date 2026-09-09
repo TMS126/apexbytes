@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
+import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useScrollHide } from "@/hooks/use-scroll-hide"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
@@ -121,6 +122,7 @@ export function FloatingSearchWidget() {
 
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
+  const calculatorOpen = useCalculatorOpen()
   const isScrolling = useScrollHide()
   const [query, setQuery]         = useState("")
   const [inputFocused, setInputFocused] = useState(false)
@@ -286,7 +288,7 @@ export function FloatingSearchWidget() {
 
   const fabVisible = isServicesPage && !isOpen && !isOtherOpen && !isScrolling
 
-  if (!isServicesPage) return null
+  if (!isServicesPage || calculatorOpen) return null
 
   return (
     <>

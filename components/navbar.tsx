@@ -7,6 +7,7 @@ import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
 import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
+import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useLogoAnimation, useNavContrast } from "@/hooks/use-navbar"
 import { MobileMenu } from "@/components/navbar/mobile-menu"
 
@@ -37,6 +38,7 @@ export function Navbar() {
   const router = useRouter()
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
+  const calculatorOpen = useCalculatorOpen()
 
   // Keep theme-dependent markup deterministic during SSR and the first client
   // render. next-themes resolves the stored theme only after hydration.
@@ -135,6 +137,8 @@ export function Navbar() {
       setDesktopNavOpen(false)
     }
   }
+
+  if (calculatorOpen) return null
 
   return (
     <>
