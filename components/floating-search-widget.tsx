@@ -330,13 +330,11 @@ export function FloatingSearchWidget() {
           fabRef is measured on open to seed the fly-in animation. */}
       <div
         className={cn(
-          "fixed z-[9993] right-4 md:right-6 bottom-[10.5rem] relative group/search transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-          fabVisible
-            ? "opacity-100 scale-100 pointer-events-auto"
-            : "opacity-0 scale-90 pointer-events-none"
+          "fixed z-[9993] right-4 md:right-6 bottom-[10.5rem] group/search",
+          fabVisible ? "opacity-100 pointer-events-auto" : "hidden"
         )}
       >
-        <div className="flex items-center justify-end gap-2">
+        <div className="relative flex items-center justify-end gap-2">
           <span
             className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full border border-zinc-100 bg-white px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-widest text-brand-blue opacity-0 shadow-md transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100 dark:border-zinc-800 dark:bg-zinc-900"
           >
