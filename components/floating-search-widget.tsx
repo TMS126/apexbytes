@@ -158,22 +158,30 @@ export function FloatingSearchWidget() {
     }
   }, [isServicesPage, isOpen, setIsOpen])
 
-  useEffect(() => {
+    useEffect(() => {
     if (!isServicesPage) return
 
-    const target = document.getElementById("inline-search-input")
-    if (!target) {
-      setInlineSearchVisible(false)
-      return
+    const updateInlineSearchVisibility = () => {
+      const target = document.getElementById("abh-inline-search")
+      if (!target) {
+        setInlineSearchVisible(false)
+        return
+      }
+
+      const rect = target.getBoundingClientRect()
+      const visible = rect.bottom > 0 && rect.top < window.innerHeight
+      setInlineSearchVisible(visible)
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setInlineSearchVisible(entry.intersectionRatio > 0),
-      { threshold: 0 }
-    )
-    observer.observe(target)
-    return () => observer.disconnect()
+    updateInlineSearchVisibility()
+    window.addEventListener("scroll", updateInlineSearchVisibility, { passive: true })
+    window.addEventListener("resize", updateInlineSearchVisibility)
+    return () => {
+      window.removeEventListener("scroll", updateInlineSearchVisibility)
+      window.removeEventListener("resize", updateInlineSearchVisibility)
+    }
   }, [isServicesPage])
+
 
   // Runs the fly-in the moment the modal actually mounts (isOpen just
   // became true). useLayoutEffect fires before the browser paints, so
