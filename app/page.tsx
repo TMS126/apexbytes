@@ -1,4 +1,6 @@
 // app/page.tsx
+"use client" 
+
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { CoreHubGrid } from "@/components/core-hub-grid"
