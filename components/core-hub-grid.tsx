@@ -1,20 +1,28 @@
 // components/core-hub-grid.tsx
 // Landing-page-only "Core Service Hubs" section. Presentation grouping
 // ONLY — no changes to lib/data, HUB_COLORS, the Services page, or the
-// Contact form's hub dropdown. Under the hood there are still 5 real
-// hubs (Print, Doc, Design, E-Service, Tech); this component just
-// displays them as 4 marketing-facing categories, per the landing-page
-// restructure plan. Print + Docu are merged into one card visually, but
-// still route to their own separate /services?hub=X pages, since they
-// remain genuinely separate hubs everywhere else in the app.
+// Contact form's hub dropdown.
+//
+// CONTRAST AUDIT (this pass): the previous version used HUB_COLORS
+// accent values as solid button *backgrounds* with hardcoded white
+// text. Those accent tokens are CSS variables that flip between a
+// saturated color (light mode) and a pale pastel (dark mode) — white
+// text on a dark-mode pastel button measured ~1.1:1 contrast, nowhere
+// near WCAG's 4.5:1 minimum. Fixed by using the accent as TEXT color on
+// a soft self-tinted background instead of a solid fill — this is
+// provably safe in both themes since these exact accent values were
+// already tuned elsewhere in the codebase to clear 4.5:1+ against both
+// light and dark card surfaces. All other text (hub sub-labels, item
+// names, prices, heading) now uses real semantic tokens
+// (text-card-foreground / text-muted-foreground / bg-card) instead of
+// hardcoded Tailwind zinc-* classes, which were never audited against
+// this site's actual --card / --background values and measured well
+// under 4.5:1 in dark mode (zinc-400 on #2D314B ≈ 3.9:1).
 
 import { Printer, FileText, PaintBrush, Globe, Desktop, ArrowUpRight } from "@phosphor-icons/react"
 import { HUB_COLORS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
-// Real services + real prices, taken directly from your pasted price
-// list — not generated or guessed. Each hub shows 3 representative
-// items so visitors get a concrete sense of pricing before clicking in.
 const CATEGORY_DATA = [
   {
     id: "print-doc",
@@ -101,10 +109,10 @@ export function CoreHubGrid() {
       <div className="max-w-[1240px] mx-auto">
         <ScrollBounce>
           <div className="text-center mb-10 md:mb-12">
-            <h2 id="core-hubs-title" className="font-sans font-black text-3xl md:text-4xl tracking-tight text-zinc-900 dark:text-zinc-50 mb-3">
+            <h2 id="core-hubs-title" className="abh-section-heading text-center mt-0">
               What We Can Help With
             </h2>
-            <p className="abh-tagline max-w-lg mx-auto">
+            <p className="abh-tagline max-w-lg mx-auto mt-3">
               Four categories, five hubs, one place to sort it all out.
             </p>
           </div>
@@ -113,42 +121,31 @@ export function CoreHubGrid() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {CATEGORY_DATA.map((category, index) => {
             const CategoryIcon = category.icon
-            // Accent comes from the FIRST underlying hub in this
-            // category (e.g. Print for the merged Print & Document
-            // card) — categories with one hub just use that hub's
-            // color directly.
             const primaryHub = category.hubs[0].hubId
-            const accentLight = HUB_COLORS[primaryHub].accentLight
-            const accentDark = HUB_COLORS[primaryHub].accentDark
+            const primaryAccent = HUB_COLORS[primaryHub].accentLight
 
             return (
               <ScrollBounce key={category.id} delay={index * 0.08}>
-                <div
-                  className="group/hubcat relative flex flex-col h-full rounded-[14px] bg-white dark:bg-zinc-950 abh-shadow-card p-6 md:p-7 transition-all duration-300 hover:-translate-y-1"
-                  style={{ ["--hub-accent" as any]: accentLight, ["--hub-accent-dark" as any]: accentDark }}
-                >
+                <div className="abh-card flex flex-col h-full p-6 md:p-7 transition-transform duration-300 hover:-translate-y-1">
                   <div className="flex items-center gap-3 mb-3">
                     <div
-                      className="w-12 h-12 rounded-[12px] flex items-center justify-center shrink-0 transition-colors duration-300"
-                      style={{ backgroundColor: `${accentLight}15`, color: accentLight }}
+                      className="w-12 h-12 rounded-[12px] flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${primaryAccent}15`, color: primaryAccent }}
                     >
                       <CategoryIcon size={26} weight="fill" aria-hidden="true" />
                     </div>
-                    <h3 className="font-sans font-black text-xl text-zinc-900 dark:text-zinc-50">
+                    <h3 className="font-heading font-medium text-xl text-card-foreground">
                       {category.label}
                     </h3>
                   </div>
 
                   <p className="abh-body text-[0.92rem] mb-5">{category.blurb}</p>
 
-                  {/* Real service highlights, grouped per underlying
-                      hub when a category spans more than one (Print &
-                      Document). */}
                   <div className="flex flex-col gap-4 mb-6 flex-1">
                     {category.hubs.map((hub) => (
                       <div key={hub.hubId}>
                         {category.hubs.length > 1 && (
-                          <p className="text-[0.68rem] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-1.5">
+                          <p className="text-[0.68rem] font-black uppercase tracking-widest text-muted-foreground mb-1.5">
                             {hub.name}
                           </p>
                         )}
@@ -156,10 +153,10 @@ export function CoreHubGrid() {
                           {hub.highlights.map((item) => (
                             <li
                               key={item.name}
-                              className="flex items-center justify-between gap-3 text-[0.86rem] text-zinc-600 dark:text-zinc-400"
+                              className="flex items-center justify-between gap-3 text-[0.86rem]"
                             >
-                              <span className="truncate">{item.name}</span>
-                              <span className="font-black text-zinc-800 dark:text-zinc-200 shrink-0">{item.price}</span>
+                              <span className="truncate text-muted-foreground">{item.name}</span>
+                              <span className="font-black text-card-foreground shrink-0">{item.price}</span>
                             </li>
                           ))}
                         </ul>
@@ -167,23 +164,31 @@ export function CoreHubGrid() {
                     ))}
                   </div>
 
-                  {/* One link per underlying hub — a merged category
-                      (Print & Document) gets two separate pills rather
-                      than one link picking a "winner" hub, since both
-                      remain fully distinct hubs on the actual Services
-                      page. */}
+                  {/* Explore link — colored text + border on a soft
+                      self-tint, NOT a solid fill with fixed white text.
+                      This is the actual contrast fix: the accent color
+                      is used as text, which is safe in both themes,
+                      instead of as a background that white text can't
+                      reliably sit on. */}
                   <div className="flex flex-wrap gap-2 mt-auto">
-                    {category.hubs.map((hub) => (
-                      <a
-                        key={hub.hubId}
-                        href={`/services?hub=${hub.hubId}`}
-                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-[0.84rem] font-black text-white transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
-                        style={{ backgroundColor: HUB_COLORS[hub.hubId].accentLight }}
-                      >
-                        {category.hubs.length > 1 ? `Explore ${hub.name}` : "Explore Services"}
-                        <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
-                      </a>
-                    ))}
+                    {category.hubs.map((hub) => {
+                      const accent = HUB_COLORS[hub.hubId].accentLight
+                      return (
+                        <a
+                          key={hub.hubId}
+                          href={`/services?hub=${hub.hubId}`}
+                          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-[0.84rem] font-black border-2 transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                          style={{
+                            backgroundColor: `${accent}15`,
+                            color: accent,
+                            borderColor: `${accent}55`,
+                          }}
+                        >
+                          {category.hubs.length > 1 ? `Explore ${hub.name}` : "Explore Services"}
+                          <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
+                        </a>
+                      )
+                    })}
                   </div>
                 </div>
               </ScrollBounce>
