@@ -1,5 +1,18 @@
 "use client"
 
+/* ============================================================
+   AUDIT: getReadableTextColor(hex) only works on a literal hex
+   string. HUB_COLORS.accentLight/accentDark and HOME_BLUE.light/dark
+   are all CSS var() references (e.g. "var(--hub-tech-primary)") —
+   passing those in silently produced garbage, which is the root
+   cause of the invisible hub icons / pills / badges. For hub colors,
+   use HUB_ON_COLOR from lib/brand.ts instead (a real per-theme
+   token). This function is kept only for cases where you truly have
+   a resolved hex string at runtime (e.g. a user-picked color from a
+   future settings screen) — don't reach for it for anything already
+   backed by a design token.
+   ============================================================ */
+
 import { Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
 import { HubId } from "@/lib/data"
@@ -35,4 +48,4 @@ export function HubIcon({ id, size = 16, color }: { id: HubId; size?: number; co
     case "eservice": return <Globe      {...p} />
     case "tech":     return <Desktop    {...p} />
   }
-}
+} 
