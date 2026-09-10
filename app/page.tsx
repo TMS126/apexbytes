@@ -1,9 +1,8 @@
 // app/page.tsx
-"use client" 
-
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { CoreHubGrid } from "@/components/core-hub-grid"
+import { HowItWorks } from "@/components/how-it-works"
 import { StatsBar } from "@/components/stats-bar"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { StripSection, CtaBar } from "@/components/strip-section"
@@ -18,6 +17,7 @@ export default function HomeRoute() {
         <div className="animate-fade-up">
           <HeroSection />
           <CoreHubGrid />
+          <HowItWorks />
           <StatsBar />
           <TestimonialsSection />
           <StripSection />
