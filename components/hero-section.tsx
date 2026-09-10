@@ -15,7 +15,6 @@ import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
-// ─── WEATHER ICON MAP (drives the holiday-banner icon) ──────────────────────
 const WEATHER_ICON_MAP: Record<WeatherCategory, { Icon: React.ElementType; color: string }> = {
   "clear-day": { Icon: Sun, color: WEATHER_THEME.sun.light },
   "clear-night": { Icon: Moon, color: WEATHER_THEME.moon.light },
@@ -31,7 +30,6 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
   return greeting === "morning" || greeting === "afternoon" ? "clear-day" : "clear-night"
 }
 
-// ─── HERO SERVICES ILLUSTRATION ──────────────────────────────────────────────
 function HubIconField({ isDark }: { isDark: boolean }) {
   return (
     <div className="relative mx-auto w-full max-w-[560px] aspect-square">
@@ -47,13 +45,9 @@ function HubIconField({ isDark }: { isDark: boolean }) {
   )
 }
 
-// ─── TRUST HINTS — content mirrors the marked-up screenshot exactly ─────────
-// New copy not yet in lib/brand.ts — worth moving there later so it lives
-// alongside BIZ/MARQUEE_ITEMS as the single source of truth for site copy.
 const HERO_SUBHEAD = "Everyday digital and print work, handled with clarity, care and a little more confidence."
 const TRUST_HINTS = ["Local & human", "Clear pricing", "Fast turnaround"]
 
-// ─── COMPONENT ───────────────────────────────────────────────────────────────
 export function HeroSection() {
   const router = useRouter()
   const { resolvedTheme } = useTheme()
@@ -79,9 +73,6 @@ export function HeroSection() {
   const displayCategory = weatherCategory ?? (status ? fallbackCategory(status.greeting) : "clear-day")
   const { Icon: WeatherIcon, color: weatherIconColor } = WEATHER_ICON_MAP[displayCategory]
 
-  // "Start with a Quote" now opens the on-page quote calculator widget
-  // (see components/quote-calculator/index.tsx) instead of navigating to
-  // a /quote route, via a window event the widget listens for.
   const [quoteLabel, setQuoteLabel] = useState("Start with a Quote")
   const handleCtaClick = () => {
     setQuoteLabel("Opening quote…")
@@ -105,14 +96,10 @@ export function HeroSection() {
         />
       </div>
 
-      {/* NOTE: max-widths bumped here (1240→1400 / 1100→1280) to take more
-          width as asked. A true whole-site width increase needs the shared
-          page container/layout component, which wasn't part of this file. */}
       <div className="max-w-[1400px] mx-auto flex flex-col items-center relative z-10 w-full mb-6">
 
         <div className="w-full max-w-[1280px] mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center mb-10 md:mb-14">
 
-          {/* Left column — everything marked in the screenshot, verbatim */}
           <div className="text-center md:text-left">
 
             {showHolidayBanner && status && (
@@ -148,12 +135,6 @@ export function HeroSection() {
                 </button>
               </ScrollBounce>
 
-              {/* "See Our Services" — was a plain underline link, now a
-                  standalone pill: fills with the page background so it
-                  reads as a distinct morphed shape rather than flat text,
-                  border + chip shadow token give it edges, and the accent
-                  only appears on hover/press (matches the sitewide
-                  "neutral until interacted with" rule). */}
               <button
                 onClick={handleServicesClick}
                 className="group/services-cta flex items-center justify-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-transparent text-foreground border-2 border-[var(--link-foreground)] transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--brand-blue)] dark:hover:text-[var(--brand-light-blue)]"
@@ -167,23 +148,25 @@ export function HeroSection() {
               </button>
             </div>
 
+            {/* Trust-hint checkmarks: switched from TOKEN.brandBlue to
+                TOKEN.orangeText — keeps orange as the one minimal accent
+                color threaded through the hero, instead of introducing
+                a second accent (blue) with no real distinct meaning here. */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
                 <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground dark:text-muted-foreground">
-                  <CheckCircle size={15} weight="regular" style={{ color: TOKEN.brandBlue }} aria-hidden="true" />
+                  <CheckCircle size={15} weight="regular" style={{ color: TOKEN.orangeText }} aria-hidden="true" />
                   {hint}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* Right column — flat-icon hub field, card box removed */}
           <ScrollBounce delay={0.1} className="w-full">
             <HubIconField isDark={mounted && resolvedTheme === "dark"} />
           </ScrollBounce>
         </div>
 
-        {/* Marquee */}
         <div
           role="group"
           aria-label="Our services"
@@ -223,4 +206,4 @@ export function HeroSection() {
       <BackToTopButton visible={showBackToTop} />
     </section>
   )
-}
+} 
