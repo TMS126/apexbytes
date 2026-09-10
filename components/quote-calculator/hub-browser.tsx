@@ -1,31 +1,11 @@
-
 // components/quote-calculator/hub-browser.tsx
 "use client"
-
-/* ============================================================
-   AUDIT PASS (this edit):
-   - Notice/count badges on hub tiles switched to the shared
-     .abh-badge-circle utility (aspect-ratio + zero padding) so
-     they stay a true circle instead of the old min-width+px-1
-     combo, which could stretch into a pill once a subtotal hit
-     two digits.
-   - Hub icon glyphs enlarged in both the full-tile grid (36→42)
-     and the collapsed icon-only row (24→30) per request. Cart
-     item chips are a separate component and were left untouched.
-   - Unselected full-tile hub icons now sit inside a circular
-     background chip (rounded-full) so the icon itself reads as
-     round before any hub is tapped; selected state is unchanged
-     (still shown via the tile's own highlight box-shadow/bg).
-   - Every interactive icon button already had abh-press; the
-     collapse (▲) button and the per-item Add (+) button now also
-     get the shared press feedback so every tappable icon in this
-     file responds the same way.
-   ============================================================ */
 
 import { CaretDown, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId } from "@/lib/data"
-import { GLASS, HubIcon, getReadableTextColor } from "./shared"
+import { HUB_ON_COLOR } from "@/lib/brand"
+import { GLASS, HubIcon } from "./shared"
 import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
 
 interface Subtotal { total: number; savings: number; count: number }
@@ -56,13 +36,12 @@ export function HubBrowser({
       </span>
 
       {openHub ? (
-        // Compact icon row: once a hub is picked, every tile collapses to a
-        // small icon-only pill so the opened hub's content gets the room.
         <div className="flex items-center justify-center flex-wrap gap-2" role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
             const solidAccent = getSolid(hubId)
+            const onSolid = HUB_ON_COLOR[hubId]
             const isSelected = openHub === hubId
             const hubSub = hubSubtotal(hubId)
 
@@ -86,7 +65,7 @@ export function HubBrowser({
                 {hubSub && (
                   <span
                     className="abh-badge-circle absolute -top-1 -right-1 min-w-[18px] text-[0.56rem] font-black shadow-md"
-                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                    style={{ backgroundColor: solidAccent, color: onSolid }}
                     aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   >
                     {hubSub.count}
@@ -99,7 +78,6 @@ export function HubBrowser({
                   )}
                   style={isSelected ? { color: solidAccent } : undefined}
                 >
-                  {/* AUDIT: 24 -> 30, "icons should be bigger" */}
                   <HubIcon id={hubId} size={30} color="currentColor" />
                 </span>
               </button>
@@ -112,6 +90,7 @@ export function HubBrowser({
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
             const solidAccent = getSolid(hubId)
+            const onSolid = HUB_ON_COLOR[hubId]
             const isSelected = openHub === hubId
             const hubSub = hubSubtotal(hubId)
             const hubBulk = hubHasBulk(hubId)
@@ -137,7 +116,7 @@ export function HubBrowser({
                 {hubSub && (
                   <span
                     className="abh-badge-circle absolute -top-1.5 -right-1.5 min-w-[22px] text-[0.6rem] font-black shadow-md"
-                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                    style={{ backgroundColor: solidAccent, color: onSolid }}
                     aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   >
                     {hubSub.count}
@@ -153,11 +132,6 @@ export function HubBrowser({
                   </span>
                 )}
 
-                {/* AUDIT: unselected icon now sits in its own circular
-                    chip — centered in the tile — so it visibly reads as
-                    "round" before the hub is tapped. Selected state keeps
-                    the plain glyph since the whole tile is already
-                    highlighted via box-shadow/background above. */}
                 <span
                   className={cn(
                     "flex items-center justify-center rounded-full transition-all duration-150",
@@ -171,7 +145,6 @@ export function HubBrowser({
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    {/* AUDIT: 36 -> 42, "icons should be bigger" */}
                     <HubIcon id={hubId} size={42} color="currentColor" />
                   </span>
                 </span>
@@ -191,7 +164,6 @@ export function HubBrowser({
         </div>
       )}
 
-      {/* Expanded content for whichever hub is selected */}
       {activeHub && openHub && (
         <div
           id={`hub-panel-${openHub}`}
@@ -218,6 +190,7 @@ export function HubBrowser({
               const hubId = openHub
               const accent = getAccent(hubId)
               const solidAccent = getSolid(hubId)
+              const onSolid = HUB_ON_COLOR[hubId]
               const isSectionOpen = openSections[hubId] === sIdx
               const anySectionOpen = openSections[hubId] != null
               const secSub = sectionSubtotal(hubId, section.title)
@@ -251,7 +224,7 @@ export function HubBrowser({
                           )}
                           style={
                             isSectionOpen
-                              ? { backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }
+                              ? { backgroundColor: solidAccent, color: onSolid }
                               : anySectionOpen
                                 ? { color: accent }
                                 : undefined
@@ -263,7 +236,7 @@ export function HubBrowser({
                         {!isSectionOpen && sectionBulk && (
                           <span
                             className="flex items-center gap-0.5 text-[0.58rem] font-black px-1.5 py-0.5 rounded-full"
-                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: "var(--pill-text)" }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                             aria-label="Bulk pricing available in this section"
                           >
                             <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -273,7 +246,7 @@ export function HubBrowser({
                         {!isSectionOpen && secSub && (
                           <span
                             className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full"
-                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: "var(--pill-text)" }}
+                            style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                             aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
                           >
                             <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -351,7 +324,7 @@ export function HubBrowser({
                                 {hasBulk && (
                                   <span
                                     className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-black uppercase tracking-wider px-7 py-0.5"
-                                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                                    style={{ backgroundColor: solidAccent, color: onSolid }}
                                     aria-hidden="true"
                                   >
                                     Bulk
@@ -368,7 +341,7 @@ export function HubBrowser({
                                   {itemQty > 0 && (
                                     <span
                                       className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full"
-                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: "var(--pill-text)" }}
+                                      style={{ backgroundColor: `color-mix(in srgb, ${accent} 10%, transparent)`, color: accent }}
                                       aria-label={`${itemQty} already in your quote`}
                                     >
                                       <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -378,7 +351,7 @@ export function HubBrowser({
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
                                     className="abh-press w-7 h-7 rounded-full flex items-center justify-center shadow-sm"
-                                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                                    style={{ backgroundColor: solidAccent, color: onSolid }}
                                     aria-label={`Add ${item.name}`}
                                   >
                                     <Plus size={13} weight="bold" aria-hidden="true" />
@@ -399,4 +372,4 @@ export function HubBrowser({
       )}
     </div>
   )
-                      } 
+                   } 
