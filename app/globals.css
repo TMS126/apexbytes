@@ -14,7 +14,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Core brand roles: quiet surfaces, one unmistakable action colour. */
   --brand-green: #4A8011;
   --brand-orange: #FA5215;
   --brand-light-blue: #A9D6F2;
@@ -44,7 +43,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-white: #FFFFFF;
   --brand-adobe-pdf-red: #EC1C24;
 
-  /* Hub semantics: accents are reserved for identity and important actions. */
   --hub-print-primary: #1E6FA8;
   --hub-print-light: #A9D6F2;
   --hub-doc-primary: #4A8011;
@@ -175,11 +173,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --input: #E4E4DE;
   --ring: var(--brand-blue);
 
-  /* === WhatsApp widget tokens (light) ===
-     AUDIT: previously hardcoded hex duplicated in lib/brand.ts
-     (WHATSAPP_THEME) AND re-branched by isDark in whatsapp-fab.tsx.
-     Now a single source of truth that switches automatically via
-     the .dark class below — no JS branching needed at call sites. */
   --wa-header: #075E54;
   --wa-wallpaper: #E5DDD5;
   --wa-bubble-in: #FFFFFF;
@@ -191,6 +184,24 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --wa-accent: #25D366;
   --wa-tick: #53BDEB;
   --wa-avatar-bg: #E9EDEF;
+
+  /* ============================================================
+     ON-COLOR TOKENS — "what text/icon color sits on top of a given
+     solid-fill surface, per theme". These exist because a color
+     stored as a CSS var (e.g. --hub-tech-primary) can't be measured
+     for contrast at runtime in JS — you can't parse "var(--x)" as a
+     hex string. So every solid-fill surface gets an explicit,
+     hand-picked "--on-*" partner token instead of a computed one.
+     CONVENTION FOR ANYTHING NEW: if you add a new solid-fill surface
+     (a new hub, a new status pill, a new badge color), add its
+     "--on-<name>" pair right here, in both this block and .dark
+     below — never compute it from the fill color in JS.
+     ============================================================ */
+  --on-hub-print: #FFFFFF;
+  --on-hub-doc: #FFFFFF;
+  --on-hub-design: #FFFFFF;
+  --on-hub-eservice: #FFFFFF;
+  --on-hub-tech: #FFFFFF;
 }
 
 .banner-active {
@@ -339,7 +350,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-brand-blue: var(--background);
   --brand-green-text: #D5E8C2;
 
-  /* === WhatsApp widget tokens (dark) === */
   --wa-header: #1F2C34;
   --wa-wallpaper: #0B141A;
   --wa-bubble-in: #202C33;
@@ -351,6 +361,18 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --wa-accent: #25D366;
   --wa-tick: #53BDEB;
   --wa-avatar-bg: #2A3942;
+
+  /* ON-COLOR TOKENS (dark theme). Each hub's solid-fill bg becomes a
+     light pastel in dark mode (see --hub-*-primary overrides above),
+     so the "on" partner flips to a dark, near-black text/icon color
+     — never a runtime contrast calculation on a var() string. Each
+     picked for AA-plus contrast against its own hub's dark-mode
+     accentLight value. */
+  --on-hub-print: #0B2C47;
+  --on-hub-doc: #1F3A08;
+  --on-hub-design: #5C2C0C;
+  --on-hub-eservice: #123231;
+  --on-hub-tech: #1B2130;
 }
 
 .abh-modal-surface { background: var(--surface-modal); color: var(--foreground); box-shadow: var(--shadow-modal); }
@@ -455,6 +477,12 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-on-neutral-dark: var(--on-neutral-dark);
   --color-on-destructive: var(--on-destructive);
 
+  --color-on-hub-print: var(--on-hub-print);
+  --color-on-hub-doc: var(--on-hub-doc);
+  --color-on-hub-design: var(--on-hub-design);
+  --color-on-hub-eservice: var(--on-hub-eservice);
+  --color-on-hub-tech: var(--on-hub-tech);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -493,17 +521,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
-/* AUDIT FIX — the :focus-visible rule above draws its outline around an
-   input's own (thin, rectangular) box, offset 3px outward. Inside a
-   rounded pill container (search bar, WhatsApp name field, etc.) that
-   ring visibly escapes the pill's shape instead of hugging it — the
-   "ring that goes out of the search box completely" bug. These widgets
-   already show focus via their container's own border-color transition,
-   so every text input/textarea/select defers to that and never draws
-   its own outline or shadow ring. Higher specificity than the rule
-   above (element + pseudo-class beats a bare pseudo-class), reinforced
-   with !important so no per-component Tailwind ring/outline utility can
-   reintroduce it by accident. */
 input:focus, input:focus-visible,
 textarea:focus, textarea:focus-visible,
 select:focus, select:focus-visible {
@@ -711,6 +728,11 @@ button, a, [role="button"] {
   .abh-on-neutral-dark { color: var(--on-neutral-dark); }
   .abh-on-destructive { color: var(--on-destructive); }
   .abh-on-whatsapp-accessible { color: var(--on-whatsapp-accessible); }
+  .abh-on-hub-print    { color: var(--on-hub-print); }
+  .abh-on-hub-doc      { color: var(--on-hub-doc); }
+  .abh-on-hub-design   { color: var(--on-hub-design); }
+  .abh-on-hub-eservice { color: var(--on-hub-eservice); }
+  .abh-on-hub-tech     { color: var(--on-hub-tech); }
 }
 
 @keyframes wa-spin-container { to { transform: rotate(360deg); } }
@@ -766,14 +788,6 @@ button, a, [role="button"] {
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
-/* ============================================================
-   NEW — added for the FAB widgets overhaul
-   ============================================================ */
-
-/* Perfectly circular notice/count badges regardless of digit count —
-   aspect-ratio locks width to height instead of relying on
-   min-width + horizontal padding, which produced a pill shape once a
-   count hit two digits. */
 .abh-badge-circle {
   aspect-ratio: 1 / 1;
   display: inline-flex;
@@ -783,8 +797,6 @@ button, a, [role="button"] {
   padding: 0;
 }
 
-/* Haptic-style press feedback for FAB / icon buttons — a quick scale +
-   opacity dip, matching how native phone icons respond to touch. */
 .abh-press {
   transition: transform 120ms ease-out, opacity 120ms ease-out;
 }
@@ -793,8 +805,6 @@ button, a, [role="button"] {
   opacity: 0.85;
 }
 
-/* Elegant, subtle "typing…" dots — replaces the old 3-colour spinning
-   orbit loader with a calmer, professional pulse. */
 @keyframes wa-typing-dot {
   0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
   30% { opacity: 1; transform: translateY(-2px); }
@@ -806,8 +816,6 @@ button, a, [role="button"] {
   .wa-typing-dot { animation: none; opacity: 0.6; }
 }
 
-/* Hub picker pills (WhatsApp) — neutral at rest, a hub's own colour
-   only appears on hover/focus so the resting row stays calm. */
 .abh-hub-pill:hover, .abh-hub-pill:focus-visible {
   color: var(--pill-hover-color) !important;
   border-color: var(--pill-hover-color) !important;
