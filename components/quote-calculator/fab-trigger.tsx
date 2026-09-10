@@ -1,13 +1,6 @@
 // components/quote-calculator/fab-trigger.tsx
 "use client"
 
-/* ============================================================
-   CALCULATOR — closed-state FAB + inline "view quote" mini-bar
-   Hidden completely (not just faded) whenever another exclusive
-   widget is open — this is the fix for the calculator icon
-   sitting on top of the WhatsApp compose bar's send button.
-   ============================================================ */
-
 import { Calculator } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HubId } from "@/lib/data"
@@ -86,7 +79,7 @@ export function FabTrigger({
           <button
             onClick={(e) => { e.stopPropagation(); onToggleMini() }}
             aria-label={miniExpanded ? "Hide quote total" : "Show quote total"}
-            className="abh-press abh-badge-circle absolute -top-0.5 -right-0.5 min-w-[22px] h-[22px] bg-brand-orange text-white text-[0.65rem] font-black border-2 border-white dark:border-zinc-950 shadow-md"
+            className="abh-press abh-badge-circle abh-on-orange absolute -top-0.5 -right-0.5 min-w-[22px] h-[22px] bg-brand-orange text-[0.65rem] font-black border-2 border-white dark:border-zinc-950 shadow-md"
           >
             {itemCount}
           </button>
@@ -94,4 +87,4 @@ export function FabTrigger({
       </div>
     </div>
   )
-}
+             } 
