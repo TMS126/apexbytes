@@ -28,7 +28,7 @@ const STEPS = [
     desc: "Share your files, documents, or brief directly in chat. No accounts, no uploads to a separate site.",
   },
   {
-    icon: PackageCheck,
+    icon: Package,
     title: "Collect or Receive It",
     desc: "Pick up in-store, or get it sent straight to you — printed, designed, submitted, or fixed.",
   },
