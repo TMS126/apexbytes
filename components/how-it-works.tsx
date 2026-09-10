@@ -1,19 +1,13 @@
 // components/how-it-works.tsx
-// Landing-page "How It Works" section (Section 4 of the restructure
-// plan). Copy is grounded in your real flow — WhatsApp-based intake, no
-// upload portal, no "deploy" step — rather than the plan's generic
-// web-dev-agency phrasing, which doesn't match anything you actually
-// offer.
+// Landing-page "How It Works" section.
 //
-// CONTRAST: step numbers and icons use BRAND.blue as TEXT/icon color on
-// a soft self-tint background (${accent}15), the same audited pattern
-// used in CoreHubGrid — never a solid accent fill with fixed white
-// text, which is what broke in dark mode last time. All copy uses real
-// semantic tokens (text-card-foreground, text-muted-foreground,
-// abh-body, abh-tagline) rather than hardcoded Tailwind zinc-* classes.
+// ACCENT PASS: icon tiles are now neutral (no hub/brand color at all —
+// this section has no hub identity to hover-reveal). The step-number
+// badge is the one minimal seal-orange accent, replacing the previous
+// always-on BRAND.blue treatment on both the icon tile and the number.
 "use client"
-import { ChatCircleText, ClipboardText, Package, Check } from "@phosphor-icons/react"
-import { BRAND } from "@/lib/brand"
+import { ChatCircleText, ClipboardText, Package } from "@phosphor-icons/react"
+import { TOKEN } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
 const STEPS = [
@@ -56,15 +50,12 @@ export function HowItWorks() {
               <ScrollBounce key={step.title} delay={index * 0.1}>
                 <div className="abh-card h-full p-6 md:p-7 flex flex-col items-center text-center">
                   <div className="relative mb-4">
-                    <div
-                      className="w-14 h-14 rounded-[14px] flex items-center justify-center"
-                      style={{ backgroundColor: `${BRAND.blue}15`, color: BRAND.blue }}
-                    >
-                      <StepIcon size={28} weight="fill" aria-hidden="true" />
+                    <div className="w-14 h-14 rounded-[14px] flex items-center justify-center bg-secondary text-muted-foreground">
+                      <StepIcon size={28} weight="regular" aria-hidden="true" />
                     </div>
                     <span
                       className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-[0.72rem] font-black border-2 border-background"
-                      style={{ backgroundColor: `${BRAND.blue}15`, color: BRAND.blue }}
+                      style={{ backgroundColor: `${TOKEN.orangeText}18`, color: TOKEN.orangeText }}
                       aria-hidden="true"
                     >
                       {index + 1}
@@ -83,4 +74,4 @@ export function HowItWorks() {
       </div>
     </section>
   )
-}
+} 
