@@ -3,24 +3,17 @@
 // ONLY — no changes to lib/data, HUB_COLORS, the Services page, or the
 // Contact form's hub dropdown.
 //
-// CONTRAST AUDIT (this pass): the previous version used HUB_COLORS
-// accent values as solid button *backgrounds* with hardcoded white
-// text. Those accent tokens are CSS variables that flip between a
-// saturated color (light mode) and a pale pastel (dark mode) — white
-// text on a dark-mode pastel button measured ~1.1:1 contrast, nowhere
-// near WCAG's 4.5:1 minimum. Fixed by using the accent as TEXT color on
-// a soft self-tinted background instead of a solid fill — this is
-// provably safe in both themes since these exact accent values were
-// already tuned elsewhere in the codebase to clear 4.5:1+ against both
-// light and dark card surfaces. All other text (hub sub-labels, item
-// names, prices, heading) now uses real semantic tokens
-// (text-card-foreground / text-muted-foreground / bg-card) instead of
-// hardcoded Tailwind zinc-* classes, which were never audited against
-// this site's actual --card / --background values and measured well
-// under 4.5:1 in dark mode (zinc-400 on #2D314B ≈ 3.9:1).
+// ACCENT PASS: icon tiles and the "Explore" link are neutral at rest —
+// hub color only appears once the card is hovered/focused, using the
+// same --hub-accent CSS-variable + group-hover pattern already used in
+// services-page/index.tsx, so this stays consistent with the rest of
+// the site rather than inventing a new convention. The small arrow icon
+// is the one minimal "seal orange" accent, always visible, matching the
+// reference screenshot.
 
 import { Printer, FileText, PaintBrush, Globe, Desktop, ArrowUpRight } from "@phosphor-icons/react"
-import { HUB_COLORS } from "@/lib/brand"
+import { cn } from "@/lib/utils"
+import { HUB_COLORS, TOKEN } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
 const CATEGORY_DATA = [
@@ -126,13 +119,15 @@ export function CoreHubGrid() {
 
             return (
               <ScrollBounce key={category.id} delay={index * 0.08}>
-                <div className="abh-card flex flex-col h-full p-6 md:p-7 transition-transform duration-300 hover:-translate-y-1">
+                <div
+                  className="group/hubcat abh-card flex flex-col h-full p-6 md:p-7 transition-transform duration-300 hover:-translate-y-1"
+                  style={{ ["--hub-accent" as any]: primaryAccent }}
+                >
                   <div className="flex items-center gap-3 mb-3">
-                    <div
-                      className="w-12 h-12 rounded-[12px] flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${primaryAccent}15`, color: primaryAccent }}
-                    >
-                      <CategoryIcon size={26} weight="fill" aria-hidden="true" />
+                    {/* Neutral at rest, hub-colored on hover — matches the
+                        reference: plain outline icon until interacted with. */}
+                    <div className="w-12 h-12 rounded-[12px] flex items-center justify-center shrink-0 bg-secondary text-muted-foreground transition-colors duration-200 group-hover/hubcat:text-[var(--hub-accent)]">
+                      <CategoryIcon size={26} weight="regular" aria-hidden="true" />
                     </div>
                     <h3 className="font-heading font-medium text-xl text-card-foreground">
                       {category.label}
@@ -164,31 +159,26 @@ export function CoreHubGrid() {
                     ))}
                   </div>
 
-                  {/* Explore link — colored text + border on a soft
-                      self-tint, NOT a solid fill with fixed white text.
-                      This is the actual contrast fix: the accent color
-                      is used as text, which is safe in both themes,
-                      instead of as a background that white text can't
-                      reliably sit on. */}
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {category.hubs.map((hub) => {
-                      const accent = HUB_COLORS[hub.hubId].accentLight
-                      return (
-                        <a
-                          key={hub.hubId}
-                          href={`/services?hub=${hub.hubId}`}
-                          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-[0.84rem] font-black border-2 transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
-                          style={{
-                            backgroundColor: `${accent}15`,
-                            color: accent,
-                            borderColor: `${accent}55`,
-                          }}
-                        >
-                          {category.hubs.length > 1 ? `Explore ${hub.name}` : "Explore Services"}
-                          <ArrowUpRight size={14} weight="bold" aria-hidden="true" />
-                        </a>
-                      )
-                    })}
+                  {/* Minimal "Explore" treatment: plain neutral text, no
+                      border/tinted-fill pill. Hub color only on hover of
+                      the card (via --hub-accent), same as the icon tile
+                      above. The arrow alone stays a fixed, minimal seal-
+                      orange accent — always visible, matching the
+                      reference screenshot's small orange arrow. */}
+                  <div className="flex flex-wrap gap-4 mt-auto">
+                    {category.hubs.map((hub) => (
+                      <a
+                        key={hub.hubId}
+                        href={`/services?hub=${hub.hubId}`}
+                        className={cn(
+                          "inline-flex items-center gap-1.5 text-[0.84rem] font-black text-muted-foreground transition-colors duration-200",
+                          "group-hover/hubcat:text-[var(--hub-accent)]"
+                        )}
+                      >
+                        {category.hubs.length > 1 ? `Explore ${hub.name}` : "Explore Services"}
+                        <ArrowUpRight size={14} weight="bold" style={{ color: TOKEN.orangeText }} aria-hidden="true" />
+                      </a>
+                    ))}
                   </div>
                 </div>
               </ScrollBounce>
@@ -198,4 +188,4 @@ export function CoreHubGrid() {
       </div>
     </section>
   )
-}
+                  } 
