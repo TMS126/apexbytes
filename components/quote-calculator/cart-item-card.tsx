@@ -1,4 +1,10 @@
+// components/quote-calculator/cart-item-card.tsx
 "use client"
+
+/* AUDIT: added abh-press to the remove/decrease/increase icon buttons
+   so they give the same haptic-style press feedback as the rest of the
+   calculator's icons — nothing else in this file changed, expand-view
+   card sizing is unaffected. */
 
 import { Trash, Minus, Plus } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
@@ -47,7 +53,11 @@ export function CartItemCard({
           <p className="text-sm font-black text-zinc-800 dark:text-zinc-200 leading-tight">{displayName}</p>
           <p className="text-[0.68rem] font-bold mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
-        <button onClick={() => onRemove(item.id)} aria-label={`Remove ${displayName} from quote`} className="text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150">
+        <button
+          onClick={() => onRemove(item.id)}
+          aria-label={`Remove ${displayName} from quote`}
+          className="abh-press text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150"
+        >
           <Trash size={14} weight="bold" aria-hidden="true" />
         </button>
       </div>
@@ -66,7 +76,7 @@ export function CartItemCard({
             onPointerLeave={() => onPressEnd(item.id)}
             onPointerCancel={() => onPressEnd(item.id)}
             aria-label={`Decrease quantity for ${displayName}`}
-            className="w-9 h-9 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
+            className="abh-press w-9 h-9 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
           >
             <Minus size={13} weight="bold" aria-hidden="true" />
           </button>
@@ -78,7 +88,7 @@ export function CartItemCard({
             onPointerLeave={() => onPressEnd(item.id)}
             onPointerCancel={() => onPressEnd(item.id)}
             aria-label={`Increase quantity for ${displayName}`}
-            className="w-9 h-9 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
+            className="abh-press w-9 h-9 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
           >
             <Plus size={13} weight="bold" aria-hidden="true" />
           </button>
