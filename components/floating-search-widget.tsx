@@ -14,11 +14,9 @@ import { useScrollHide } from "@/hooks/use-scroll-hide"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 
-// Single theme-adaptive accent for the icon and result highlights.
 const SEARCH_ORANGE = { light: BRAND.orange, dark: BRAND.lightOrange }
 
-// ── Sizing ───────────────────────────────────────────────────────────
-const CLOSED_SIZE = 56  // bare icon hit-area for the closed FAB trigger
+const CLOSED_SIZE = 56
 const FLY_DURATION = 340
 const FADE_DURATION = 200
 
@@ -27,11 +25,6 @@ interface SearchableService {
   price: string; description: string; requirements: string[]
 }
 
-// matchField records WHICH field actually satisfied the search query, so
-// the UI can highlight that exact field instead of always assuming the
-// match was in the item's name (it often isn't — e.g. a query matching
-// only the section title or description previously left every result
-// looking un-highlighted, even though a match clearly existed).
 interface SearchResult extends SearchableService {
   matchField: "name" | "section" | "description"
 }
@@ -41,12 +34,6 @@ interface SelectedService {
   sectionTitle: string; requirements: string[]; desc?: string
 }
 
-// AUDIT FIX: item.description is typed `description?: string` in
-// lib/data.ts (ServiceItem). Every item happens to have one today, but
-// without this fallback, an item added later without a description would
-// make s.description undefined — and s.description.toLowerCase() /
-// matchSnippet(s.description, ...) below would throw at runtime the first
-// time someone searched with that item in the index.
 function buildSearchIndex(): SearchableService[] {
   const all: SearchableService[] = []
   HUB_ORDER.forEach((hubId) => {
@@ -75,9 +62,6 @@ function HubIcon({ id, size = 16, color }: { id: HubId; size?: number; color?: s
   }
 }
 
-// Highlights the matched substring of `text` in the widget's single
-// accent color and bold weight, so as the person types they can see
-// exactly which part of a result is matching.
 function HighlightMatch({ text, query, color }: { text: string; query: string; color: string }) {
   const q = query.trim()
   if (!q) return <>{text}</>
@@ -92,9 +76,6 @@ function HighlightMatch({ text, query, color }: { text: string; query: string; c
   )
 }
 
-// Short highlighted snippet of context around a match inside a longer
-// field (used for description matches, where showing the whole
-// description would be too long for the result row).
 function matchSnippet(text: string, query: string, radius = 28): string {
   const q = query.trim().toLowerCase()
   const idx = text.toLowerCase().indexOf(q)
@@ -104,12 +85,6 @@ function matchSnippet(text: string, query: string, radius = 28): string {
   return `${start > 0 ? "…" : ""}${text.slice(start, end)}${end < text.length ? "…" : ""}`
 }
 
-/**
- * Sends the chosen service to the Services page. The page listens for this
- * on `window` and opens its existing ServiceDetailModal — this keeps the
- * widget fully decoupled from page state now that it lives in the root
- * layout rather than inside the page tree.
- */
 function dispatchSelectService(svc: SelectedService) {
   window.dispatchEvent(new CustomEvent<SelectedService>("abh:selectService", { detail: svc }))
 }
@@ -119,7 +94,6 @@ export function FloatingSearchWidget() {
   const pathname = usePathname()
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
-
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const calculatorOpen = useCalculatorOpen()
@@ -131,16 +105,6 @@ export function FloatingSearchWidget() {
   const pushedRef    = useRef(false)
   const index        = useMemo(() => buildSearchIndex(), [])
 
-  // ── Fly-from-icon animation refs ────────────────────────────────────
-  // fabRef measures the closed-state trigger's on-screen position at the
-  // exact moment it's tapped; modalRef is the card that needs to visually
-  // originate from that spot. We capture the FAB's rect synchronously on
-  // click (before it disappears), then in a layout effect (after the
-  // modal has mounted but before paint) compute the delta between the
-  // FAB's center and the modal's resting center, snap the modal to that
-  // offset with no transition, force a reflow, then animate it back to
-  // identity — a manual FLIP, so it genuinely flies from the icon rather
-  // than just fading in at a fixed spot.
   const fabRef = useRef<HTMLButtonElement>(null)
   const modalRef = useRef<HTMLDivElement>(null)
   const pendingFabRect = useRef<DOMRect | null>(null)
@@ -158,7 +122,7 @@ export function FloatingSearchWidget() {
     }
   }, [isServicesPage, isOpen, setIsOpen])
 
-    useEffect(() => {
+  useEffect(() => {
     if (!isServicesPage) return
 
     const updateInlineSearchVisibility = () => {
@@ -167,7 +131,6 @@ export function FloatingSearchWidget() {
         setInlineSearchVisible(false)
         return
       }
-
       const rect = target.getBoundingClientRect()
       const visible = rect.bottom > 0 && rect.top < window.innerHeight
       setInlineSearchVisible(visible)
@@ -182,10 +145,6 @@ export function FloatingSearchWidget() {
     }
   }, [isServicesPage])
 
-
-  // Runs the fly-in the moment the modal actually mounts (isOpen just
-  // became true). useLayoutEffect fires before the browser paints, so
-  // the snap-to-origin never flashes on screen.
   useLayoutEffect(() => {
     if (!isOpen) return
     const modalEl = modalRef.current
@@ -218,8 +177,6 @@ export function FloatingSearchWidget() {
     modalEl.style.transformOrigin = "center center"
     modalEl.style.transform = `translate(${dx}px, ${dy}px) scale(0.2)`
     modalEl.style.opacity = "0"
-    // Force a reflow so the browser commits the snapped starting position
-    // before we switch on the transition for the next frame.
     void modalEl.offsetHeight
     requestAnimationFrame(() => {
       modalEl.style.transition = `transform ${FLY_DURATION}ms cubic-bezier(0.16, 1, 0.3, 1), opacity ${FADE_DURATION}ms ease-out`
@@ -230,13 +187,6 @@ export function FloatingSearchWidget() {
     pendingFabRect.current = null
   }, [isOpen])
 
-  // Back-button handling, scoped only to this widget's own open state —
-  // pushes one history entry on open, and any close path (backdrop click,
-  // Escape, picking a result) collapses it again.
-  //
-  // NOTE: no auto-focus here, kept from the original — mobile browsers
-  // pop the keyboard the instant an input focuses, and that clashes with
-  // the modal's own open animation. Tapping the input focuses it.
   useEffect(() => {
     if (isOpen && !pushedRef.current) {
       window.history.pushState({ abhSearch: true }, "")
@@ -265,8 +215,6 @@ export function FloatingSearchWidget() {
 
   const handleOpen = useCallback(() => {
     if (isOpen) return
-    // Capture the FAB's exact on-screen position BEFORE it disappears —
-    // this is what the fly-in animation originates from.
     pendingFabRect.current = fabRef.current?.getBoundingClientRect() ?? null
     setIsOpen(true)
   }, [isOpen, setIsOpen])
@@ -278,8 +226,6 @@ export function FloatingSearchWidget() {
     return () => document.removeEventListener("keydown", fn)
   }, [isOpen, handleClose])
 
-  // Determines WHICH field matched, per result, so the render can
-  // highlight that exact field instead of assuming it was always the name.
   const results = useMemo((): SearchResult[] => {
     const q = query.trim().toLowerCase()
     if (!q) return []
@@ -295,12 +241,6 @@ export function FloatingSearchWidget() {
     return matches
   }, [query, index])
 
-  // Picking a result opens ServiceDetailModal on the page, which pushes
-  // its own history entry on top of ours. We deliberately do NOT call
-  // history.back() here — that would pop the modal's entry instead of
-  // ours. We just drop our claim on the entry; the next real back-button
-  // press absorbs it harmlessly (our popstate listener checks pushedRef
-  // first and no-ops once it's already false).
   const pick = (s: SearchableService) => {
     dispatchSelectService({
       name: s.name, price: s.price, hubId: s.hubId,
@@ -317,7 +257,6 @@ export function FloatingSearchWidget() {
 
   return (
     <>
-      {/* Dimmed backdrop — this is now a real modal, not a light popover */}
       {isOpen && (
         <div
           className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none"
@@ -326,8 +265,6 @@ export function FloatingSearchWidget() {
         />
       )}
 
-      {/* Closed-state FAB trigger, bottom-right, same spot as before —
-          fabRef is measured on open to seed the fly-in animation. */}
       <div
         className={cn(
           "fixed z-[9993] right-4 md:right-6 bottom-[10.5rem] group/search",
@@ -344,7 +281,7 @@ export function FloatingSearchWidget() {
             ref={fabRef}
             onClick={handleOpen}
             aria-label="Search services"
-            className="relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center active:scale-90 hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none"
+            className="abh-press relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none"
           >
             <MagnifyingGlass
               size={22}
@@ -357,9 +294,6 @@ export function FloatingSearchWidget() {
         </div>
       </div>
 
-      {/* Open state — flies from the FAB's exact position to a centered
-          modal near the top of the screen (see the useLayoutEffect above
-          for how modalRef's transform/opacity are driven). */}
       {isOpen && (
         <div className="fixed inset-x-0 top-[12vh] z-[9994] flex justify-center px-4 pointer-events-none">
           <div
@@ -369,12 +303,6 @@ export function FloatingSearchWidget() {
             aria-label="Search services"
             className="w-full max-w-[480px] pointer-events-auto"
           >
-            {/* Input field — rounded-[14px] to match the Contact page's
-                field radius, with a border that wraps the WHOLE control
-                (icon + input + buttons) and changes to the widget's
-                accent color on focus, mirroring Contact's
-                focus:border-brand-blue treatment instead of the old
-                static-border pill shape. */}
             <div
               className="flex items-center gap-2 rounded-[14px] bg-white dark:bg-zinc-900 border shadow-xl px-4 h-14 transition-colors duration-150 ease-out motion-reduce:transition-none"
               style={{ borderColor: inputFocused ? accentColor : undefined }}
@@ -390,12 +318,19 @@ export function FloatingSearchWidget() {
                 onFocus={() => setInputFocused(true)}
                 onBlur={() => setInputFocused(false)}
                 placeholder="Search a service..."
-                className="flex-1 bg-transparent text-base font-medium text-zinc-700 dark:text-zinc-200 placeholder:text-muted-foreground/70 dark:placeholder:text-muted-foreground/70 min-w-0 outline-none border-none appearance-none"
+                /* AUDIT FIX: the border-color swap on the pill container above
+                   is meant to be the ONLY focus indicator here — added
+                   defensive focus:ring-0/focus-visible:ring-0/outline-none
+                   utility classes so no Tailwind ring utility elsewhere in
+                   the app can reintroduce the escaping ring on top of it
+                   (the global input:focus override in globals.css also
+                   covers this, this is belt-and-braces on the element itself). */
+                className="flex-1 bg-transparent text-base font-medium text-zinc-700 dark:text-zinc-200 placeholder:text-muted-foreground/70 dark:placeholder:text-muted-foreground/70 min-w-0 outline-none border-none appearance-none focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:outline-none"
               />
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="shrink-0 w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-muted-foreground hover:text-zinc-700 transition-colors duration-150"
+                  className="abh-press shrink-0 w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-muted-foreground hover:text-zinc-700 transition-colors duration-150"
                   aria-label="Clear search"
                 >
                   <X size={12} weight="bold" />
@@ -403,15 +338,13 @@ export function FloatingSearchWidget() {
               )}
               <button
                 onClick={handleClose}
-                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors duration-150"
+                className="abh-press shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors duration-150"
                 aria-label="Close search"
               >
                 <X size={16} weight="bold" />
               </button>
             </div>
 
-            {/* Results card — bumped-up type for legibility, also on the
-                14px radius language now. */}
             {hasQuery && (
               <div className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
                 <div className="max-h-[55vh] overflow-y-auto p-2">
@@ -464,4 +397,4 @@ export function FloatingSearchWidget() {
       )}
     </>
   )
-    } 
+      }
