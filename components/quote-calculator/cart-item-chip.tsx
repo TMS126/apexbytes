@@ -1,6 +1,11 @@
 // components/quote-calculator/cart-item-chip.tsx
 "use client"
 
+/* AUDIT: added abh-press to the qty +/- and remove buttons for the same
+   haptic press feedback as everywhere else. Chip dimensions, padding,
+   and font sizes are untouched — you asked for icons bigger but chips
+   to stay the same size. */
+
 import { X, Minus, Plus } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { CartItem, getDisplayName, getEffectiveRate } from "./lib"
@@ -34,8 +39,6 @@ export function CartItemChip({
       )}
       style={{
         borderLeftColor: accent,
-        // ── Pop-out shadow: accent-tinted alpha glow so it lifts off the
-        // background in both light and dark mode, not just a flat black shadow ──
         boxShadow: `0 4px 12px -2px color-mix(in srgb, ${accent} 25%, transparent), 0 2px 6px -1px rgba(0,0,0,0.18)`,
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
@@ -53,7 +56,7 @@ export function CartItemChip({
           onPointerLeave={() => onPressEnd(item.id)}
           onPointerCancel={() => onPressEnd(item.id)}
           aria-label={`Decrease quantity for ${displayName}`}
-          className="w-7 h-7 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
+          className="abh-press w-7 h-7 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
         >
           <Minus size={11} weight="bold" aria-hidden="true" />
         </button>
@@ -65,7 +68,7 @@ export function CartItemChip({
           onPointerLeave={() => onPressEnd(item.id)}
           onPointerCancel={() => onPressEnd(item.id)}
           aria-label={`Increase quantity for ${displayName}`}
-          className="w-7 h-7 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
+          className="abh-press w-7 h-7 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
         >
           <Plus size={11} weight="bold" aria-hidden="true" />
         </button>
@@ -74,10 +77,10 @@ export function CartItemChip({
       <button
         onClick={() => onRemove(item.id)}
         aria-label={`Remove ${displayName} from quote`}
-        className="w-6 h-6 flex items-center justify-center text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150"
+        className="abh-press w-6 h-6 flex items-center justify-center text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150"
       >
         <X size={12} weight="bold" aria-hidden="true" />
       </button>
     </div>
   )
-} 
+        }
