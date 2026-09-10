@@ -1,13 +1,6 @@
 // components/quote-calculator/index.tsx
 "use client"
 
-/* ============================================================
-   QUOTE CALCULATOR — WIDGET ROOT
-   State, storage, cart handlers, and composition of trigger /
-   panel-header / cart-summary-bar / saved-quotes-panel /
-   HubBrowser / footer-actions.
-   ============================================================ */
-
 import { useState, useEffect, useMemo, useRef, useCallback } from "react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -15,7 +8,7 @@ import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useScrollHide } from "@/hooks/use-scroll-hide"
-import { GLASS, HOME_BLUE, getReadableTextColor } from "./shared"
+import { GLASS, HOME_BLUE } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED,
   getDisplayName, getEffectiveRate, parsePrice, quoteTotals,
@@ -35,11 +28,6 @@ export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
   const isScrolling = useScrollHide()
-  // AUDIT FIX: previously ignored the 3rd tuple value, so the trigger
-  // stayed visible (only isOpen mattered) even while WhatsApp was open —
-  // the exact bug behind the calculator icon overlapping the WhatsApp
-  // send button. fabVisible now hides completely when another widget
-  // (WhatsApp, Search) is open.
   const fabVisible = !isOpen && !isOtherOpen
 
   const [openHub, setOpenHub] = useState<HubId | null>(null)
@@ -164,7 +152,13 @@ export function QuoteCalculatorWidget() {
   const getSolid  = (id: HubId) => HUB_COLORS[id as HubKey].accentLight
   const titleAccent = isDark ? HUB_COLORS.design.accentDark : HUB_COLORS.design.accentLight
   const fabColor     = isDark ? HOME_BLUE.dark : HOME_BLUE.light
-  const fabTextColor = useMemo(() => getReadableTextColor(fabColor), [fabColor])
+  // AUDIT FIX: was `useMemo(() => getReadableTextColor(fabColor), [fabColor])`
+  // — fabColor is "var(--brand-blue)" / "var(--brand-light-blue)", a CSS
+  // var() string, not a hex value, so the contrast calc was meaningless.
+  // --home-cta-text already exists as the correct, theme-reactive on-color
+  // for this exact fill (--home-cta-bg / --primary-fill lineage), so just
+  // use it directly — no runtime computation needed.
+  const fabTextColor = "var(--home-cta-text)"
 
   const hubsInCart = useMemo(() => Array.from(new Set(cart.map(i => i.hubId))), [cart])
 
@@ -414,4 +408,4 @@ export function QuoteCalculatorWidget() {
       )}
     </>
   )
-}
+            } 
