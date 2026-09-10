@@ -11,8 +11,8 @@
 // text, which is what broke in dark mode last time. All copy uses real
 // semantic tokens (text-card-foreground, text-muted-foreground,
 // abh-body, abh-tagline) rather than hardcoded Tailwind zinc-* classes.
-
-import { ChatCircleText, ClipboardText, PackageCheck } from "@phosphor-icons/react"
+"use client"
+import { ChatCircleText, ClipboardText, Package, Check } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
