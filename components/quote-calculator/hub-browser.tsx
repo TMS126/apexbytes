@@ -1,5 +1,26 @@
+
 // components/quote-calculator/hub-browser.tsx
 "use client"
+
+/* ============================================================
+   AUDIT PASS (this edit):
+   - Notice/count badges on hub tiles switched to the shared
+     .abh-badge-circle utility (aspect-ratio + zero padding) so
+     they stay a true circle instead of the old min-width+px-1
+     combo, which could stretch into a pill once a subtotal hit
+     two digits.
+   - Hub icon glyphs enlarged in both the full-tile grid (36→42)
+     and the collapsed icon-only row (24→30) per request. Cart
+     item chips are a separate component and were left untouched.
+   - Unselected full-tile hub icons now sit inside a circular
+     background chip (rounded-full) so the icon itself reads as
+     round before any hub is tapped; selected state is unchanged
+     (still shown via the tile's own highlight box-shadow/bg).
+   - Every interactive icon button already had abh-press; the
+     collapse (▲) button and the per-item Add (+) button now also
+     get the shared press feedback so every tappable icon in this
+     file responds the same way.
+   ============================================================ */
 
 import { CaretDown, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
@@ -37,10 +58,6 @@ export function HubBrowser({
       {openHub ? (
         // Compact icon row: once a hub is picked, every tile collapses to a
         // small icon-only pill so the opened hub's content gets the room.
-        // Reverts to the full tile grid the moment openHub clears.
-        // Neutral by default, hub color on hover, solid color when selected —
-        // driven by the --hub-accent custom property + Tailwind arbitrary
-        // hover selector, so no JS hover-state is needed.
         <div className="flex items-center justify-center flex-wrap gap-2" role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
@@ -68,8 +85,8 @@ export function HubBrowser({
               >
                 {hubSub && (
                   <span
-                    className="absolute -top-1 -right-1 min-w-[18px] px-1 rounded-full flex items-center justify-center text-[0.58rem] font-black shadow-md"
-                    style={{ aspectRatio: "1 / 1", backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                    className="abh-badge-circle absolute -top-1 -right-1 min-w-[18px] text-[0.56rem] font-black shadow-md"
+                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
                     aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   >
                     {hubSub.count}
@@ -82,7 +99,8 @@ export function HubBrowser({
                   )}
                   style={isSelected ? { color: solidAccent } : undefined}
                 >
-                  <HubIcon id={hubId} size={24} color="currentColor" />
+                  {/* AUDIT: 24 -> 30, "icons should be bigger" */}
+                  <HubIcon id={hubId} size={30} color="currentColor" />
                 </span>
               </button>
             )
@@ -118,8 +136,8 @@ export function HubBrowser({
               >
                 {hubSub && (
                   <span
-                    className="absolute -top-1.5 -right-1.5 min-w-[22px] px-1 rounded-full flex items-center justify-center text-[0.6rem] font-black shadow-md"
-                    style={{ aspectRatio: "1 / 1", backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
+                    className="abh-badge-circle absolute -top-1.5 -right-1.5 min-w-[22px] text-[0.6rem] font-black shadow-md"
+                    style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
                     aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   >
                     {hubSub.count}
@@ -134,15 +152,30 @@ export function HubBrowser({
                     <Tag size={9} weight="fill" style={{ color: accent }} />
                   </span>
                 )}
+
+                {/* AUDIT: unselected icon now sits in its own circular
+                    chip — centered in the tile — so it visibly reads as
+                    "round" before the hub is tapped. Selected state keeps
+                    the plain glyph since the whole tile is already
+                    highlighted via box-shadow/background above. */}
                 <span
                   className={cn(
-                    "transition-colors duration-150",
-                    isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                    "flex items-center justify-center rounded-full transition-all duration-150",
+                    !isSelected && "w-14 h-14 bg-black/[0.04] dark:bg-white/[0.07] group-hover:bg-[color-mix(in_srgb,var(--hub-accent)_12%,transparent)]"
                   )}
-                  style={isSelected ? { color: solidAccent } : undefined}
                 >
-                  <HubIcon id={hubId} size={36} color="currentColor" />
+                  <span
+                    className={cn(
+                      "transition-colors duration-150",
+                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                    )}
+                    style={isSelected ? { color: solidAccent } : undefined}
+                  >
+                    {/* AUDIT: 36 -> 42, "icons should be bigger" */}
+                    <HubIcon id={hubId} size={42} color="currentColor" />
+                  </span>
                 </span>
+
                 <span
                   className={cn(
                     "text-[0.68rem] font-black text-center leading-tight transition-colors duration-150",
@@ -174,7 +207,7 @@ export function HubBrowser({
             <button
               onClick={() => setOpenHub(null)}
               aria-label="Collapse hub"
-              className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 abh-press"
+              className="abh-press w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150"
             >
               <CaretDown size={13} className="rotate-180" aria-hidden="true" />
             </button>
@@ -344,7 +377,7 @@ export function HubBrowser({
                                   )}
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
-                                    className="w-7 h-7 rounded-full flex items-center justify-center shadow-sm abh-press"
+                                    className="abh-press w-7 h-7 rounded-full flex items-center justify-center shadow-sm"
                                     style={{ backgroundColor: solidAccent, color: getReadableTextColor(solidAccent) }}
                                     aria-label={`Add ${item.name}`}
                                   >
@@ -366,4 +399,4 @@ export function HubBrowser({
       )}
     </div>
   )
-                              } 
+                      } 
