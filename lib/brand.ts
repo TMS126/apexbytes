@@ -147,6 +147,23 @@ export const HUB_COLORS = {
   },
 } as const
 
+// lib/brand.ts — insert directly below the existing HUB_COLORS export
+
+// Companion "on-color" for each hub's solid-fill state (selected tab,
+// count badge, filled Add button, selected section pill). These map to
+// the --on-hub-* tokens in globals.css, which are explicit per-theme
+// hex values — never computed from HUB_COLORS.accentLight/Dark at
+// runtime, since those are CSS var() strings that can't be parsed as
+// hex. Add a new hub? Add its --on-hub-<id> pair in globals.css (light
+// + dark) and its entry here.
+export const HUB_ON_COLOR: Record<HubKey, string> = {
+  print: "var(--on-hub-print)",
+  doc: "var(--on-hub-doc)",
+  design: "var(--on-hub-design)",
+  eservice: "var(--on-hub-eservice)",
+  tech: "var(--on-hub-tech)",
+} as const
+
 export const HUB_HEX_COLORS = {
   print: { primary: HEX.light.blue, light: HEX.dark.blue, tagBgDark: "#1E40AF" },
   doc: { primary: HEX.light.green, light: HEX.dark.green, tagBgDark: "#166534" },
