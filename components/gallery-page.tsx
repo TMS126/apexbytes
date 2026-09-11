@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
 import { PROJECTS, ProjectData } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { ROW_ORDER, HubId, hubLabelFor, CLIENT_TYPE_LABEL } from "@/lib/gallery-helpers"
+import { ROW_ORDER, HubId, hubLabelFor } from "@/lib/gallery-helpers"
 import { useGalleryBackStack } from "@/hooks/use-gallery-back-stack"
 import { ProjectViewerModal } from "@/components/gallery/project-viewer-modal"
 import { SafeImage } from "@/components/gallery/safe-image"
@@ -86,7 +86,7 @@ function HubFilterCircles({
                   that file's updated, pass weight={isActive ? "fill" : "regular"}
                   here. */}
               <span className="relative">
-                <HubIcon id={row.id} size={26} color={isActive ? accent : neutralIconColor} />
+                <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
             <span className="text-[0.72rem] font-bold text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
@@ -111,7 +111,7 @@ function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: strin
           className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
           style={{ backgroundColor: `${accent}15`, color: accent }}
         >
-          <HubIcon id={hubId} size={15} color="currentColor" />
+          <HubIcon id={hubId} size={15} weight="regular" color="currentColor" />
         </span>
         <h2 className="text-[0.82rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
           {hubLabelFor(hubId)}
@@ -143,7 +143,7 @@ function ProjectCard({
       <button
         onClick={() => onSelect(p)}
         aria-label={`View ${p.title}`}
-        className="group relative aspect-square rounded-[10px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 active:scale-[0.97] transition-transform duration-150"
+        className="group relative aspect-square rounded-[10px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:translate-y-0"
       >
         <SafeImage
           src={p.image}
@@ -151,22 +151,21 @@ function ProjectCard({
           accent={TOKEN.orangeText}
           fill
           sizes="(max-width: 640px) 33vw, 25vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
         />
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+          <div onClick={(e) => e.stopPropagation()}>
+            <ShareButton url={shareUrl} title={p.title} />
+          </div>
+          <div onClick={(e) => e.stopPropagation()}>
+            <LikeButton liked={liked} onToggle={(e) => { e.stopPropagation(); onToggleLike(p.id) }} context="card" />
+          </div>
+        </div>
       </button>
 
-      <div className="flex items-start justify-between gap-1.5 mt-1.5 px-0.5">
-        <button onClick={() => onSelect(p)} className="min-w-0 text-left flex-1">
-          <span className="block text-[0.72rem] font-black text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
-          {p.clientType && (
-            <span className="block text-[0.6rem] font-medium text-muted-foreground dark:text-muted-foreground truncate">{CLIENT_TYPE_LABEL[p.clientType]}</span>
-          )}
-        </button>
-        <div className="flex items-center gap-1 shrink-0">
-          <ShareButton url={shareUrl} title={p.title} />
-          <LikeButton liked={liked} onToggle={(e) => { e.stopPropagation(); onToggleLike(p.id) }} context="card" />
-        </div>
-      </div>
+      <button onClick={() => onSelect(p)} className="mt-1.5 min-w-0 text-left px-0.5 active:scale-[0.98] transition-transform duration-150">
+        <span className="block text-[0.72rem] font-black text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
+      </button>
     </div>
   )
 }
