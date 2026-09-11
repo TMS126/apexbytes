@@ -21,7 +21,6 @@ export default function HomeRoute() {
           <CoreHubGrid />
           <HowItWorks />
           <StatsBar />
-          <LogoMarquee />
           <TestimonialsSection />
           <StripSection />
           <CtaBar
