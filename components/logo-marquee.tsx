@@ -3,7 +3,8 @@
 
 import React, { useState } from "react"
 import Image from "next/image"
-import { Play, Pause, ImageSquare } from "@phosphor-icons/react"
+import { Play, Pause } from "@phosphor-icons/react"
+import { BRAND } from "@/lib/brand"
 
 // ─── PLACEHOLDER SLOTS ────────────────────────────────────────────────────
 // 6 placeholder entries — swap `src: null` for a real image path/Cloudinary
@@ -21,14 +22,76 @@ const PARTNER_LOGOS: PartnerLogo[] = [
   { id: "p6", name: "Client 6", src: null },
 ]
 
+// ─── PLACEHOLDER LOGOMARKS ────────────────────────────────────────────────
+// 6 distinct abstract marks (not photos) so an unfilled slot still reads as
+// "a logo" rather than "a missing image". All draw with currentColor, so a
+// single CSS var swap (--mark-accent, set per-item below) handles the
+// grey → brand-color hover transition — same technique already used for
+// the hero collage tiles and project carousel (--hub-accent).
+function MarkOrbit() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="20" cy="20" r="14" strokeOpacity="0.4" />
+      <circle cx="20" cy="20" r="8" />
+      <circle cx="20" cy="20" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+function MarkTriangleCircle() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M20 8 L32 30 L8 30 Z" strokeLinejoin="round" />
+      <circle cx="20" cy="24" r="7" strokeOpacity="0.5" />
+    </svg>
+  )
+}
+function MarkDiamondDot() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M20 6 L34 20 L20 34 L6 20 Z" strokeLinejoin="round" />
+      <circle cx="20" cy="20" r="3" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+function MarkAscendingBars() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-7 h-7" fill="currentColor">
+      <rect x="6" y="22" width="6" height="12" rx="1.5" />
+      <rect x="17" y="14" width="6" height="20" rx="1.5" opacity="0.75" />
+      <rect x="28" y="6" width="6" height="28" rx="1.5" opacity="0.5" />
+    </svg>
+  )
+}
+function MarkInterlockingRings() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2.5">
+      <circle cx="16" cy="20" r="10" />
+      <circle cx="26" cy="20" r="10" strokeOpacity="0.55" />
+    </svg>
+  )
+}
+function MarkPeak() {
+  return (
+    <svg viewBox="0 0 40 40" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round">
+      <path d="M5 30 L15 14 L22 24 L28 16 L35 30 Z" />
+      <circle cx="30" cy="10" r="2.5" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+const PLACEHOLDER_MARKS = [MarkOrbit, MarkTriangleCircle, MarkDiamondDot, MarkAscendingBars, MarkInterlockingRings, MarkPeak]
+
+// Cycled per placeholder so the hover-color reveal feels like an actual
+// varied brand roster rather than one repeated tint.
+const PLACEHOLDER_ACCENTS = [BRAND.blue, BRAND.green, BRAND.orange, BRAND.teal, BRAND.blueMid, BRAND.orangeDark]
+
 // ─── COMPONENT ────────────────────────────────────────────────────────────
-// Sits directly below the existing "Our services" marquee in hero-section.tsx.
-// Same horizontal-scroll mechanic (reuses the sitewide `.animate-marquee`
-// keyframe already declared in globals.css) but visually quieter: smaller,
-// greyscale by default, so it doesn't compete with the services marquee
-// above it. Logos gently regain color on hover/focus as a small reward —
-// remove the `grayscale-0` hover class below if you'd rather they stay
-// fully greyscale always.
+// Sits below the existing "Our services" marquee, as its own section further
+// down the homepage. Same horizontal-scroll mechanic (reuses the sitewide
+// `.animate-marquee` keyframe already declared in globals.css) but visually
+// quieter: smaller, greyscale by default. Real photo logos desaturate via
+// the `grayscale` filter class; placeholder logomarks (no filter needed,
+// they're already single-color) transition color via the --mark-accent var.
 export function LogoMarquee() {
   const [paused, setPaused] = useState(false)
 
@@ -60,40 +123,36 @@ export function LogoMarquee() {
       >
         {[0, 1].map((copy) => (
           <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1 ? "true" : undefined}>
-            {PARTNER_LOGOS.map((logo) => (
-              <div
-                key={`${copy}-${logo.id}`}
-                className="flex items-center justify-center mx-6 sm:mx-8 h-10 w-28 sm:h-12 sm:w-32 shrink-0 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 focus-visible:grayscale-0 focus-visible:opacity-100 transition-all duration-300"
-              >
-                {logo.src ? (
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={logo.src}
-                      alt={logo.name}
-                      fill
-                      sizes="128px"
-                      className="object-contain"
-                    />
-                  </div>
-                ) : (
-                  // Placeholder slot — dashed outline + icon + name, so it
-                  // visibly reads as "logo goes here" rather than a blank
-                  // gap or a broken image.
-                  <div
-                    className="flex flex-col items-center justify-center gap-1 w-full h-full rounded-[10px] border border-dashed border-border"
-                    title={`${logo.name} — placeholder, swap src in PARTNER_LOGOS`}
-                  >
-                    <ImageSquare size={16} weight="regular" aria-hidden="true" />
-                    <span className="text-[0.55rem] font-bold uppercase tracking-wide leading-none">
-                      {logo.name}
-                    </span>
-                  </div>
-                )}
-              </div>
-            ))}
+            {PARTNER_LOGOS.map((logo, i) => {
+              const Mark = PLACEHOLDER_MARKS[i % PLACEHOLDER_MARKS.length]
+              const accent = PLACEHOLDER_ACCENTS[i % PLACEHOLDER_ACCENTS.length]
+              return (
+                <div
+                  key={`${copy}-${logo.id}`}
+                  className="group flex items-center justify-center mx-6 sm:mx-8 h-10 w-28 sm:h-12 sm:w-32 shrink-0"
+                  style={{ ["--mark-accent" as any]: accent }}
+                >
+                  {logo.src ? (
+                    <div className="relative w-full h-full grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-focus-visible:grayscale-0 group-focus-visible:opacity-100 transition-all duration-300">
+                      <Image src={logo.src} alt={logo.name} fill sizes="128px" className="object-contain" />
+                    </div>
+                  ) : (
+                    <div
+                      className="flex flex-col items-center justify-center gap-1 text-zinc-400 dark:text-zinc-600 group-hover:text-[var(--mark-accent)] group-focus-visible:text-[var(--mark-accent)] transition-colors duration-300"
+                      title={`${logo.name} — placeholder, swap src in PARTNER_LOGOS`}
+                    >
+                      <Mark />
+                      <span className="text-[0.55rem] font-bold uppercase tracking-wide leading-none opacity-70">
+                        {logo.name}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         ))}
       </div>
     </div>
   )
-}
+        } 
