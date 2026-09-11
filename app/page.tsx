@@ -1,10 +1,11 @@
 // app/page.tsx
-"use client" 
+"use client"
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { CoreHubGrid } from "@/components/core-hub-grid"
 import { HowItWorks } from "@/components/how-it-works"
 import { StatsBar } from "@/components/stats-bar"
+import { LogoMarquee } from "@/components/logo-marquee"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { StripSection, CtaBar } from "@/components/strip-section"
 import { Footer } from "@/components/footer"
@@ -20,6 +21,7 @@ export default function HomeRoute() {
           <CoreHubGrid />
           <HowItWorks />
           <StatsBar />
+          <LogoMarquee />
           <TestimonialsSection />
           <StripSection />
           <CtaBar
