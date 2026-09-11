@@ -4,10 +4,10 @@
 import { useState, useEffect, useRef } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { Megaphone, ArrowRight, CaretRight, CaretLeft, WarningCircle } from "@phosphor-icons/react"
+import { Megaphone, ArrowRight, CaretRight, CaretLeft } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
+import { TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { useModalBackStack, HubIcon, ServiceIcon } from "./shared"
@@ -106,8 +106,6 @@ function SectionCard({
   accent: string
   onClick: () => void
 }) {
-  const hasNotice = section.items.some((i) => !!i.notice)
-
   return (
     <button
       onClick={onClick}
@@ -118,15 +116,6 @@ function SectionCard({
           <ServiceIcon name={section.items[0]?.name ?? section.title} size={20} color={accent} />
           <span>{section.title}</span>
         </h4>
-        {hasNotice && (
-          <WarningCircle
-            size={14}
-            weight="fill"
-            aria-label="Notice for some services in this section"
-            className="shrink-0 mt-0.5"
-            style={{ color: BRAND.orange }}
-          />
-        )}
       </div>
 
       {section.desc && (
@@ -153,7 +142,7 @@ function SectionCard({
 function ServiceCard({
   item, accent, onClick,
 }: {
-  item: { name: string; price: string; notice?: string; description?: string }
+  item: { name: string; price: string; description?: string }
   accent: string
   onClick: () => void
 }) {
@@ -165,15 +154,6 @@ function ServiceCard({
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
           <ServiceIcon name={item.name} size={19} color={accent} />
-          {item.notice && (
-            <WarningCircle
-              size={13}
-              weight="fill"
-              aria-label="Notice"
-              className="shrink-0 mt-0.5"
-              style={{ color: BRAND.orange }}
-            />
-          )}
           <span className="break-words">{item.name}</span>
         </span>
       </div>
@@ -290,8 +270,7 @@ export function ServicesPage() {
             sectionTitle: section.title, requirements: item.requirements,
             desc: item.description, turnaround: getTurnaround(section.title, item.name),
             tips: item.tips ? [...item.tips] : undefined,
-            notice: item.notice,
-          })
+                    })
         })
         router.replace("/services", { scroll: false })
         return () => cancelAnimationFrame(frame)
@@ -520,8 +499,7 @@ export function ServicesPage() {
                           desc: item.description,
                           turnaround: getTurnaround(desktopActiveSectionData.title, item.name),
                           tips: item.tips ? [...item.tips] : undefined,
-                          notice: item.notice,
-                        })
+                                                })
                       }
                     />
                   ))}

@@ -4,20 +4,6 @@
  * E-SERVICE HUB DATA — every government/online service ApexbytesHub
  * offers, grouped into sections (SASSA, SARS, Online Applications, etc.)
  *
- * NOTICE FIELD USAGE IN THIS FILE:
- * Four NSFAS items below have a `notice` set. NSFAS is under a third
- * period of government administration as of 2026, with a Public
- * Protector report (18 Aug 2026) finding systemic governance and
- * administration failures, and NSFAS unable to resolve ~80% of contact
- * centre queries without escalation. Separately, over 4,000 students
- * remain in unresolved GAP funding investigations, with wait times
- * reported up to 5 months. The notice warns customers up front so they
- * aren't surprised by slower-than-usual processing.
- *
- * TO REMOVE A NOTICE LATER (once the backlog clears): just delete the
- * `notice: "..."` line from that item — nothing else needs to change,
- * the orange "!" badges everywhere on the site will disappear
- * automatically since they're all computed from this field.
  * ════════════════════════════════════════════════════════════════════════
  */
 
@@ -65,9 +51,6 @@ export const eserviceHub: Hub = {
     */
 
     // ══════════════════ ONLINE APPLICATIONS SECTION ══════════════════
-    // NOTE: 4 of the NSFAS items below carry a `notice` — see file header
-    // comment for why. Non-NSFAS items in this same section (Learnership,
-    // Job/DPSA, Bursary, University) are untouched and show no badge.
     { title: 'Online Applications', desc: `NSFAS, learnerships, bursaries, and job applications completed accurately online.`, items: [
       {
         name: 'NSFAS Status Check',
