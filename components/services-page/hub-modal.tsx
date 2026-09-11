@@ -4,10 +4,10 @@
 import { useState, useEffect, useRef, type TouchEvent } from "react"
 import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
-import { Info, ArrowSquareOut, WarningCircle } from "@phosphor-icons/react"
+import { Info, ArrowSquareOut } from "@phosphor-icons/react"
 import { X as XIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
-import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
+import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId, HUB_DISCLAIMERS } from "@/lib/data"
 import { HubIcon, useFocusTrap } from "./shared"
 import { getTurnaround, HUB_ORDER, SelectedService } from "./lib"
@@ -155,7 +155,6 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             {hub.sections.map((section, sIdx) => {
               const isOpen = openSectionIdx === sIdx
               const hasBulk = sectionHasBulk(hubId, section.title, section.items)
-              const hasNotice = section.items.some((i) => !!i.notice)
 
               return (
                 <div key={sIdx} className="flex items-center gap-3">
@@ -174,16 +173,6 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                       style={{ borderColor: isOpen ? accent : "transparent", color: isOpen ? accent : (isDark ? "#a1a1aa" : "#71717a") }}
                     >
                       {section.title}
-
-                      {hasNotice && (
-                        <WarningCircle
-                          size={12}
-                          weight="bold"
-                          aria-label="Notice for some services in this section"
-                          className="absolute -top-1.5 -right-4"
-                          style={{ color: TOKEN.orangeText }}
-                        />
-                      )}
 
                       {hasBulk && (
                         <span aria-label="Bulk pricing available" className="ml-1.5 text-[0.6rem] font-black uppercase tracking-wide opacity-60">
@@ -231,7 +220,6 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                         desc: item.description,
                         turnaround: getTurnaround(activeSection.title, item.name),
                         tips: item.tips ? [...item.tips] : undefined,
-                        notice: item.notice,
                       })
                     }
                     className="flex items-center justify-between px-4 py-3.5 rounded-[10px] bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/70 transition-colors duration-150 active:scale-[0.99] w-full"
@@ -240,15 +228,6 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                       {itemHasBulk(hubId, activeSection.title, item.name) && (
                         <span className="shrink-0 text-[0.58rem] font-black uppercase tracking-wide text-muted-foreground">
                           Bulk ·
-                        </span>
-                      )}
-                      {item.notice && (
-                        <span
-                          aria-label="Notice"
-                          className="shrink-0 font-black text-[0.95rem] leading-none"
-                          style={{ color: TOKEN.orangeText }}
-                        >
-                          !
                         </span>
                       )}
                       {item.name}

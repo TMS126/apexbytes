@@ -17,7 +17,6 @@ import { UploadButton, UploadStatus } from "./UploadControl"
 import { QuoteControl } from "./QuoteControl"
 import { BulkHint } from "./BulkHint"
 import { TipsModal } from "./TipsModal"
-import { NoticeModal } from "./NoticeModal"
 import { TurnstileWidget } from "./TurnstileWidget"
 import { getServiceTips } from "./fallback-tips"
 
@@ -50,7 +49,6 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
 
   const [tab, setTab] = useState<Tab>("bring")
   const [tipsOpen, setTipsOpen] = useState(false)
-  const [noticeOpen, setNoticeOpen] = useState(false)
 
   const [file, setFile] = useState<File | null>(null)
   const [uploadPhase, setUploadPhase] = useState<"idle" | "uploading" | "done" | "error">("idle")
@@ -73,7 +71,6 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     const frame = requestAnimationFrame(() => {
       setTab("bring")
       setTipsOpen(false)
-      setNoticeOpen(false)
       setFile(null)
       setUploadReference(null)
       setTurnstileToken(null)
@@ -103,12 +100,12 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     if (!svc) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return
-      if (tipsOpen || noticeOpen) return
+      if (tipsOpen) return
       onClose()
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [svc, tipsOpen, noticeOpen, onClose])
+  }, [svc, tipsOpen, onClose])
 
   const doUpload = (f: File, verificationToken: string) => {
     setUploadPhase("uploading")
@@ -316,21 +313,6 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             hasBulk ? "top-28" : "top-5"
           )}
         >
-          {svc.notice && (
-            <button
-              type="button"
-              onClick={() => setNoticeOpen(true)}
-              aria-label="View service notice"
-              className={cn(
-                "w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-105 active:scale-95",
-                ICON_BTN_FOCUS
-              )}
-              style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 8%, transparent)`, color: BRAND.orange }}
-            >
-              <WarningCircle size={18} weight="fill" aria-hidden="true" />
-            </button>
-          )}
-
           <button
             type="button"
             onClick={() => setTipsOpen(true)}
@@ -604,14 +586,6 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
         hubTitle={hubTitle}
       />
 
-      {svc.notice && (
-        <NoticeModal
-          open={noticeOpen}
-          onClose={() => setNoticeOpen(false)}
-          notice={svc.notice}
-          hubTitle={hubTitle}
-        />
-      )}
     </div>
   )
     }
