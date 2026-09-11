@@ -3,33 +3,35 @@
 
 /* ============================================================
    AUDIT PASS (this edit):
-   - Hub-specific accent color (one of the 5 per-hub hues) was
-     showing permanently in several spots that had no hover or
-     selected-state logic backing them: the CaretDown icon, the
-     section title once ANY sibling section was open, the
-     section-level bulk/count pills, and the connecting tree
-     lines. None of those are "hover" or "selected" states — they
-     were just always tinted. All switched to a neutral default;
-     hub color now only appears via :hover / group-hover, or in
-     the two states that legitimately mean "this is the active
-     one" (an open hub tile, an open section pill) — matching the
-     hub-tile row, which already had this right.
-   - Purely decorative, cross-hub accents (the small "bulk
-     available" tag icon on a hub tile, the per-item "Bulk"
-     ribbon) switched from hub-accent to seal orange
-     (var(--brand-orange) / var(--on-brand-orange)) — these
-     aren't tied to any one hub's identity, so they now use the
-     site's one shared accent color instead, applied minimally
-     (small icon + small ribbon only), same way the rest of the
-     site uses it.
-   - Connecting tree lines (the thin hub→section→item guide
-     lines) were tinted with the hub accent at all times — purely
-     decorative, not a hover/selected state — so they're now a
-     flat neutral border tone instead.
-   - Add "+" button: was solidAccent (hub color) at all times.
-     Now neutral at rest, hub accent only on hover/focus — done
-     via CSS custom properties + Tailwind arbitrary hover
-     selectors so no extra JS state is needed.
+   - Hub tiles previously had TWO stacked chip layers: an outer
+     rounded-square button PLUS an inner circle background behind
+     the icon. Collapsed to ONE squircle chip per hub — the button
+     itself is the only visual container now, icon sits directly
+     inside it at a much larger size (relative to the chip) so it
+     reads as "icon-as-button" rather than "icon inside a badge
+     inside a button."
+   - Compact row (hub already selected) got the same treatment —
+     was a plain circle; now the same squircle shape as the full
+     grid, just smaller, so both states share one visual language.
+   - Count badges: were a generic "abh-badge-circle" utility of
+     unknown exact shape/size. Replaced with an explicit, guaranteed
+     circle (rounded-full + fixed flex centering), bigger footprint,
+     bigger text, and a white/zinc ring so it separates cleanly from
+     whatever color sits behind it in both themes.
+   - Full hub grid (before any hub is picked) now sits inside a
+     min-height flex-center wrapper so it reads as vertically
+     centered in the available panel space instead of pinned under
+     "Choose a Hub." NOTE: this container lives inside the same
+     scrollable area as the cart summary bar above it, so "centered"
+     here means centered within the remaining scroll space below
+     that bar — not literally the physical center of the phone
+     screen. True screen-centering would need pulling this out of
+     the scroll flow entirely; flag if that's what you actually want
+     and I'll restructure index.tsx instead.
+   - All hover/selected accent logic from the previous audit is
+     unchanged — neutral at rest, hub color only on hover or when
+     selected; bulk tags/ribbons still seal-orange (shared, not
+     hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
 import { CaretDown, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
@@ -54,6 +56,23 @@ interface HubBrowserProps {
   onAddItem: (hubId: HubId, sectionTitle: string, name: string, price: string) => void
 }
 
+function CountBadge({
+  count, solidAccent, onSolid, label, big,
+}: { count: number; solidAccent: string; onSolid: string; label: string; big?: boolean }) {
+  return (
+    <span
+      className={cn(
+        "absolute flex items-center justify-center rounded-full font-black shadow-md border-2 border-white dark:border-zinc-900 leading-none",
+        big ? "-top-2 -right-2 min-w-[26px] h-[26px] px-1.5 text-[0.72rem]" : "-top-1.5 -right-1.5 min-w-[22px] h-[22px] px-1 text-[0.66rem]"
+      )}
+      style={{ backgroundColor: solidAccent, color: onSolid }}
+      aria-label={label}
+    >
+      {count}
+    </span>
+  )
+}
+
 export function HubBrowser({
   openHub, setOpenHub, openSections, toggleSection,
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem,
@@ -67,8 +86,7 @@ export function HubBrowser({
       </span>
 
       {openHub ? (
-        // Compact icon row — already correct: neutral by default, hub
-        // color only on hover (group-hover), solid only while selected.
+        // Compact row — same squircle language as the full grid, smaller.
         <div className="flex items-center justify-center flex-wrap gap-2" role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
@@ -85,7 +103,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-full w-12 h-12 shrink-0 abh-press",
+                  "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0 abh-press",
                   "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
                   GLASS.item
                 )}
@@ -96,13 +114,12 @@ export function HubBrowser({
                 }}
               >
                 {hubSub && (
-                  <span
-                    className="abh-badge-circle absolute -top-1 -right-1 min-w-[18px] text-[0.56rem] font-black shadow-md"
-                    style={{ backgroundColor: solidAccent, color: onSolid }}
-                    aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
-                  >
-                    {hubSub.count}
-                  </span>
+                  <CountBadge
+                    count={hubSub.count}
+                    solidAccent={solidAccent}
+                    onSolid={onSolid}
+                    label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
+                  />
                 )}
                 <span
                   className={cn(
@@ -111,69 +128,65 @@ export function HubBrowser({
                   )}
                   style={isSelected ? { color: solidAccent } : undefined}
                 >
-                  <HubIcon id={hubId} size={30} color="currentColor" />
+                  <HubIcon id={hubId} size={36} color="currentColor" />
                 </span>
               </button>
             )
           })}
         </div>
       ) : (
-        <div className="flex flex-wrap justify-center gap-3">
-          {HUB_ORDER.map(hubId => {
-            const hub = HUBS[hubId]
-            const accent = getAccent(hubId)
-            const solidAccent = getSolid(hubId)
-            const onSolid = HUB_ON_COLOR[hubId]
-            const isSelected = openHub === hubId
-            const hubSub = hubSubtotal(hubId)
-            const hubBulk = hubHasBulk(hubId)
+        // Full grid, pre-selection — vertically centered in the remaining
+        // scroll space (see note above on what "centered" means here).
+        <div className="flex items-center justify-center min-h-[42vh]">
+          <div className="flex flex-wrap justify-center gap-3 max-w-[360px]">
+            {HUB_ORDER.map(hubId => {
+              const hub = HUBS[hubId]
+              const accent = getAccent(hubId)
+              const solidAccent = getSolid(hubId)
+              const onSolid = HUB_ON_COLOR[hubId]
+              const isSelected = openHub === hubId
+              const hubSub = hubSubtotal(hubId)
+              const hubBulk = hubHasBulk(hubId)
 
-            return (
-              <button
-                key={hubId}
-                onClick={() => setOpenHub(isSelected ? null : hubId)}
-                aria-pressed={isSelected}
-                aria-expanded={isSelected}
-                aria-controls={`hub-panel-${hubId}`}
-                className={cn(
-                  "group relative flex flex-col items-center justify-center gap-1.5 rounded-[18px] p-3 w-[30%] min-w-[92px] aspect-square abh-press",
-                  "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
-                  GLASS.item
-                )}
-                style={{
-                  ["--hub-accent" as unknown as string]: accent,
-                  boxShadow: isSelected ? `0 0 0 2px ${accent}` : undefined,
-                  backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
-                }}
-              >
-                {hubSub && (
-                  <span
-                    className="abh-badge-circle absolute -top-1.5 -right-1.5 min-w-[22px] text-[0.6rem] font-black shadow-md"
-                    style={{ backgroundColor: solidAccent, color: onSolid }}
-                    aria-label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
-                  >
-                    {hubSub.count}
-                  </span>
-                )}
-                {hubBulk && (
-                  // AUDIT: was hub-accent-tinted; switched to seal orange —
-                  // "bulk available" is a cross-hub feature flag, not part
-                  // of any one hub's own identity color.
-                  <span
-                    className="absolute top-1 left-1 flex items-center justify-center w-4 h-4 rounded-full"
-                    style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 15%, transparent)" }}
-                    aria-hidden="true"
-                  >
-                    <Tag size={9} weight="fill" style={{ color: "var(--brand-orange)" }} />
-                  </span>
-                )}
-
-                <span
+              return (
+                <button
+                  key={hubId}
+                  onClick={() => setOpenHub(isSelected ? null : hubId)}
+                  aria-pressed={isSelected}
+                  aria-expanded={isSelected}
+                  aria-controls={`hub-panel-${hubId}`}
                   className={cn(
-                    "flex items-center justify-center rounded-full transition-all duration-150",
-                    !isSelected && "w-14 h-14 bg-black/[0.04] dark:bg-white/[0.07] group-hover:bg-[color-mix(in_srgb,var(--hub-accent)_12%,transparent)]"
+                    "group relative flex flex-col items-center justify-center gap-1.5 rounded-[26px] p-2 w-[30%] min-w-[96px] aspect-square abh-press",
+                    "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                    GLASS.item
                   )}
+                  style={{
+                    ["--hub-accent" as unknown as string]: accent,
+                    boxShadow: isSelected ? `0 0 0 2px ${accent}` : undefined,
+                    backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
+                  }}
                 >
+                  {hubSub && (
+                    <CountBadge
+                      count={hubSub.count}
+                      solidAccent={solidAccent}
+                      onSolid={onSolid}
+                      label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
+                      big
+                    />
+                  )}
+                  {hubBulk && (
+                    <span
+                      className="absolute top-1.5 left-1.5 flex items-center justify-center w-5 h-5 rounded-full"
+                      style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 15%, transparent)" }}
+                      aria-hidden="true"
+                    >
+                      <Tag size={10} weight="fill" style={{ color: "var(--brand-orange)" }} />
+                    </span>
+                  )}
+
+                  {/* Single squircle chip — icon sits directly in the button,
+                      no inner background circle, sized to nearly fill it. */}
                   <span
                     className={cn(
                       "transition-colors duration-150",
@@ -181,22 +194,22 @@ export function HubBrowser({
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubIcon id={hubId} size={42} color="currentColor" />
+                    <HubIcon id={hubId} size={48} color="currentColor" />
                   </span>
-                </span>
 
-                <span
-                  className={cn(
-                    "text-[0.68rem] font-black text-center leading-tight transition-colors duration-150",
-                    isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                  )}
-                  style={isSelected ? { color: solidAccent } : undefined}
-                >
-                  {hub.title.replace(" Hub", "")}
-                </span>
-              </button>
-            )
-          })}
+                  <span
+                    className={cn(
+                      "text-[0.7rem] font-black text-center leading-tight transition-colors duration-150",
+                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                    )}
+                    style={isSelected ? { color: solidAccent } : undefined}
+                  >
+                    {hub.title.replace(" Hub", "")}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
       )}
 
@@ -209,12 +222,6 @@ export function HubBrowser({
             GLASS.section
           )}
         >
-          {/* Panel header: the open hub's name is a legitimate "this is the
-              active one" state (not decoration), so it keeps its hub
-              color — same logic as the selected hub tile above. A small
-              seal-orange tick sits next to it, mirroring the thin orange
-              dividers used elsewhere on the site, so the shared accent
-              still shows up here in a minimal way. */}
           <div className="flex items-center justify-between px-3 py-2.5 border-b border-zinc-100 dark:border-white/10">
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: "var(--brand-orange)" }} aria-hidden="true" />
@@ -246,9 +253,6 @@ export function HubBrowser({
               return (
                 <div key={sIdx} className="relative">
                   {!isLastSection && (
-                    // AUDIT: was color-mix(accent) — a permanent hub tint
-                    // on a purely decorative guide line. Neutral border
-                    // tone now; nothing here is a hover or selected state.
                     <span
                       className="absolute left-3 top-5 bottom-0 w-0.5 pointer-events-none"
                       style={{ backgroundColor: "var(--border)" }}
@@ -278,8 +282,6 @@ export function HubBrowser({
                         </span>
 
                         {!isSectionOpen && sectionBulk && (
-                          // AUDIT: was hub-accent-tinted; seal orange now —
-                          // same reasoning as the hub-tile bulk tag above.
                           <span
                             className="flex items-center gap-0.5 text-[0.58rem] font-black px-1.5 py-0.5 rounded-full"
                             style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 12%, transparent)", color: "var(--brand-orange-text)" }}
@@ -290,9 +292,6 @@ export function HubBrowser({
                         )}
 
                         {!isSectionOpen && secSub && (
-                          // AUDIT: was hub-accent-tinted at all times.
-                          // Neutral by default; hub color only while
-                          // hovering this row (group-hover).
                           <span
                             className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                             aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
@@ -376,9 +375,6 @@ export function HubBrowser({
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
                                 {hasBulk && (
-                                  // AUDIT: was hub-accent-tinted; seal
-                                  // orange ribbon now — a generic "bulk"
-                                  // flag, same as the tag icon/pill above.
                                   <span
                                     className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-black uppercase tracking-wider px-7 py-0.5"
                                     style={{ backgroundColor: "var(--brand-orange)", color: "var(--on-brand-orange)" }}
@@ -396,9 +392,6 @@ export function HubBrowser({
                                 </div>
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
-                                    // AUDIT: was hub-accent-tinted at all
-                                    // times. Neutral by default; hub color
-                                    // only while hovering this item row.
                                     <span
                                       className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                                       aria-label={`${itemQty} already in your quote`}
@@ -407,9 +400,6 @@ export function HubBrowser({
                                       {itemQty}
                                     </span>
                                   )}
-                                  {/* AUDIT: was solidAccent at all times —
-                                      hub color now only shows on
-                                      hover/focus; neutral otherwise. */}
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
                                     style={{
@@ -437,4 +427,4 @@ export function HubBrowser({
       )}
     </div>
   )
-                    } 
+                 }
