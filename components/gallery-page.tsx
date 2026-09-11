@@ -3,11 +3,10 @@
 
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { motion } from "framer-motion"
 import { X, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { BRAND, HUB_COLORS, HubKey } from "@/lib/brand"
+import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
 import { PROJECTS, ProjectData } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { ROW_ORDER, HubId, hubLabelFor, CLIENT_TYPE_LABEL } from "@/lib/gallery-helpers"
@@ -23,6 +22,12 @@ import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 const LIKES_STORAGE_KEY = "apexbytes-gallery-likes"
 
 // ── Hub-filter circles ──
+// "All" now uses the seal-orange minimal accent (it isn't hub-specific,
+// so it gets the site's one neutral accent rather than borrowing blue).
+// Each hub circle still reveals its OWN color on hover/select — that
+// part was already correct logic, untouched. Added active:scale press
+// feedback to every circle (was hover-only before, no tactile response
+// on tap).
 function HubFilterCircles({
   activeFilter, onSelect, getAccent, isDark,
 }: {
@@ -39,18 +44,18 @@ function HubFilterCircles({
         onClick={() => onSelect("all")}
         aria-pressed={activeFilter === "all"}
         aria-label="All projects"
-        className="group shrink-0 flex flex-col items-center gap-1.5"
+        className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150"
       >
         <span
           className="relative w-16 h-16 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 border-2 transition-colors overflow-hidden"
-          style={{ borderColor: activeFilter === "all" ? BRAND.blue : "transparent" }}
+          style={{ borderColor: activeFilter === "all" ? TOKEN.orangeText : "transparent" }}
         >
           <span
             aria-hidden="true"
-            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
-            style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 19%, transparent)` }}
+            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 19%, transparent)` }}
           />
-          <span className={cn("relative text-[0.8rem] font-black", activeFilter === "all" ? "text-brand-blue" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
+          <span className={cn("relative text-[0.8rem] font-black", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
         </span>
         <span className="text-[0.72rem] font-bold text-muted-foreground dark:text-muted-foreground">All</span>
       </button>
@@ -64,7 +69,7 @@ function HubFilterCircles({
             onClick={() => onSelect(row.id)}
             aria-pressed={isActive}
             aria-label={row.label}
-            className="group shrink-0 flex flex-col items-center gap-1.5"
+            className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150"
           >
             <span
               className="relative w-16 h-16 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 border-2 transition-colors overflow-hidden"
@@ -72,9 +77,14 @@ function HubFilterCircles({
             >
               <span
                 aria-hidden="true"
-                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100"
+                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 style={{ backgroundColor: `color-mix(in srgb, ${accent} 19%, transparent)` }}
               />
+              {/* NOTE: HubIcon is hardcoded to weight="fill" in
+                  services-page/shared.tsx right now — "regular unless
+                  selected" needs a `weight` prop added there first. Once
+                  that file's updated, pass weight={isActive ? "fill" : "regular"}
+                  here. */}
               <span className="relative">
                 <HubIcon id={row.id} size={26} color={isActive ? accent : neutralIconColor} />
               </span>
@@ -87,29 +97,37 @@ function HubFilterCircles({
   )
 }
 
-// ── Hub section divider — subtle line + pill label, colored only on hover ──
-// FIX/NEW: groups the "All" view by hub instead of one flat mixed grid.
-// Neutral gray at rest (border + icon + text), the hub's accent color
-// only appears on hover/focus — matches "color only on hover" exactly.
-// The pill IS the section heading (h2), not a decorative label, so screen
-// readers get real document structure instead of a visual-only grouping.
-function HubSectionDivider({ hubId, accent }: { hubId: HubId; accent: string }) {
+// ── Hub group card ──
+// Replaces the old flat "divider + grid" pattern entirely. Each hub's
+// projects now sit inside a real abh-card container — same containment
+// language as the Services page's hub cards — with a neutral header
+// (icon + label) and a clean internal border as the divider between
+// header and grid, instead of a floating pill over a horizontal rule.
+function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: string; children: React.ReactNode }) {
   return (
-    <div className="relative flex items-center justify-center my-10" role="presentation">
-      <div className="absolute inset-x-0 top-1/2 h-px bg-zinc-200 dark:bg-zinc-800" aria-hidden="true" />
-      <h2
-        className="group/pill relative z-10 bg-background px-4 inline-flex items-center gap-2 rounded-full border border-zinc-200 dark:border-zinc-800 py-2 text-[0.78rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground transition-colors duration-200 hover:text-[var(--hub-accent)] hover:border-[var(--hub-accent)] focus-within:text-[var(--hub-accent)] focus-within:border-[var(--hub-accent)]"
-        style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
-      >
-        <span className="text-muted-foreground dark:text-muted-foreground transition-colors duration-200 group-hover/pill:text-[var(--hub-accent)]">
-          <HubIcon id={hubId} size={14} color="currentColor" />
+    <div className="abh-card p-4 md:p-6 mb-6">
+      <div className="flex items-center gap-2.5 mb-4 pb-3.5 border-b border-zinc-100 dark:border-zinc-800">
+        <span
+          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+          style={{ backgroundColor: `${accent}15`, color: accent }}
+        >
+          <HubIcon id={hubId} size={15} color="currentColor" />
         </span>
-        {hubLabelFor(hubId)}
-      </h2>
+        <h2 className="text-[0.82rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
+          {hubLabelFor(hubId)}
+        </h2>
+      </div>
+      {children}
     </div>
   )
 }
 
+// Smaller thumbnails, denser grid — 3 columns on mobile, 4 from sm up,
+// with a tighter (but not cramped) gap so more fit per row while still
+// reading as "breathing," not crowded. Per-card hub icon dropped — now
+// redundant since each card sits inside a labeled HubGroupCard (or,
+// for a single active hub filter, the filter circle above already
+// says which hub you're looking at).
 function ProjectCard({
   p, liked, onToggleLike, onSelect, pathname,
 }: {
@@ -125,35 +143,26 @@ function ProjectCard({
       <button
         onClick={() => onSelect(p)}
         aria-label={`View ${p.title}`}
-        className="group relative aspect-square rounded-[10px] overflow-hidden bg-zinc-100 dark:bg-zinc-900"
+        className="group relative aspect-square rounded-[10px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 active:scale-[0.97] transition-transform duration-150"
       >
         <SafeImage
           src={p.image}
           alt={p.title}
-          accent={BRAND.blue}
+          accent={TOKEN.orangeText}
           fill
-          sizes="(max-width: 640px) 50vw, 33vw"
+          sizes="(max-width: 640px) 33vw, 25vw"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <span
-          className="absolute top-2 left-1/2 -translate-x-1/2 px-2.5 py-1 rounded-full text-[0.68rem] font-black text-white backdrop-blur-md whitespace-nowrap"
-          style={{ backgroundColor: "rgba(0,0,0,0.4)" }}
-        >
-          {hubLabelFor(p.hub)}
-        </span>
       </button>
 
-      <div className="flex items-start justify-between gap-2 mt-2 px-0.5">
-        <button onClick={() => onSelect(p)} className="flex items-center gap-1.5 min-w-0 text-left">
-          <HubIcon id={p.hub as HubId} size={14} color={BRAND.blue} />
-          <span className="min-w-0">
-            <span className="block text-[0.8rem] font-black text-zinc-800 dark:text-zinc-100 truncate">{p.title}</span>
-            {p.clientType && (
-              <span className="block text-[0.68rem] font-medium text-muted-foreground dark:text-muted-foreground truncate">{CLIENT_TYPE_LABEL[p.clientType]}</span>
-            )}
-          </span>
+      <div className="flex items-start justify-between gap-1.5 mt-1.5 px-0.5">
+        <button onClick={() => onSelect(p)} className="min-w-0 text-left flex-1">
+          <span className="block text-[0.72rem] font-black text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
+          {p.clientType && (
+            <span className="block text-[0.6rem] font-medium text-muted-foreground dark:text-muted-foreground truncate">{CLIENT_TYPE_LABEL[p.clientType]}</span>
+          )}
         </button>
-        <div className="flex items-center gap-1.5 shrink-0 pt-0.5">
+        <div className="flex items-center gap-1 shrink-0">
           <ShareButton url={shareUrl} title={p.title} />
           <LikeButton liked={liked} onToggle={(e) => { e.stopPropagation(); onToggleLike(p.id) }} context="card" />
         </div>
@@ -172,7 +181,7 @@ function ProjectGrid({
   pathname: string
 }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
+    <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 md:gap-5">
       {projects.map((p) => (
         <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
       ))}
@@ -180,11 +189,11 @@ function ProjectGrid({
   )
 }
 
-// Grouped-by-hub view for the "All" filter — preserves ROW_ORDER so
-// sections always appear in the same sequence, skips any hub with zero
-// matching projects (e.g. mid-search), and only groups when there's
-// actually more than one hub represented — a single-hub result (from a
-// search) just renders flat, no point showing one lonely divider.
+// Grouped-by-hub view for the "All" filter — each hub's projects now
+// render inside HubGroupCard instead of a flat divider. Still preserves
+// ROW_ORDER, still skips empty hubs, still falls back to a flat grid
+// when only one hub matches (e.g. mid-search) so a single lonely card
+// wrapper doesn't appear for no reason.
 function GroupedProjectGrid({
   projects, likedIds, onToggleLike, onSelect, pathname, getAccent,
 }: {
@@ -206,14 +215,9 @@ function GroupedProjectGrid({
   return (
     <div>
       {groups.map((group) => (
-        <div key={group.hubId}>
-          <HubSectionDivider hubId={group.hubId} accent={getAccent(group.hubId)} />
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-6">
-            {group.items.map((p) => (
-              <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
-            ))}
-          </div>
-        </div>
+        <HubGroupCard key={group.hubId} hubId={group.hubId} accent={getAccent(group.hubId)}>
+          <ProjectGrid projects={group.items} likedIds={likedIds} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
+        </HubGroupCard>
       ))}
     </div>
   )
@@ -328,12 +332,14 @@ function GalleryPageInner() {
   const modalSiblings = selectedProject ? PROJECTS.filter(p => p.hub === selectedProject.hub) : []
 
   return (
+    // FIX: was a framer-motion `motion.div` with `layout` — the exact
+    // cause of the "warp" when switching hub filters, since layout
+    // animation was re-measuring and tweening the ENTIRE content block's
+    // height on every filter click, not just the notice pill it was
+    // originally added for. Reverted to a plain div — switching hubs is
+    // now an instant re-render with no shared-layout tween to fight.
     <section className="min-h-screen bg-background pt-[calc(var(--nav-h)+2rem)] pb-24 overflow-x-hidden">
-      {/* FIX: was a plain <div> — now tracks its own height via
-          framer-motion's `layout` prop, so everything below the notice
-          pill shifts smoothly instead of snapping when it expands or
-          collapses. Same mechanism as services-page/index.tsx. */}
-      <motion.div layout transition={{ layout: { duration: 0.3, ease: "easeInOut" } }} className="max-w-[1400px] mx-auto px-4 md:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8">
 
         <ScrollBounce>
           <div className="text-center mb-12">
@@ -361,7 +367,7 @@ function GalleryPageInner() {
 
         <ScrollBounce delay={0.1}>
           <div className="max-w-md mx-auto mb-8">
-            <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
+            <div className="flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-orange transition-all duration-200">
               <MagnifyingGlass size={16} weight="bold" className="shrink-0 text-muted-foreground" aria-hidden="true" />
               <input
                 type="text"
@@ -410,7 +416,7 @@ function GalleryPageInner() {
             {searchLower && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="mt-3 text-sm font-black underline text-brand-blue"
+                className="mt-3 text-sm font-black underline text-brand-orange"
               >
                 Clear search
               </button>
@@ -438,7 +444,7 @@ function GalleryPageInner() {
         <ScrollBounce>
           <GalleryClosingTagline />
         </ScrollBounce>
-      </motion.div>
+      </div>
 
       <ProjectViewerModal
         project={selectedProject}
@@ -458,7 +464,6 @@ function GalleryPageInner() {
   )
 }
 
-
 function GallerySkeleton() {
   return (
     <section className="min-h-screen bg-background pt-[calc(var(--nav-h)+2rem)] pb-24">
@@ -476,4 +481,4 @@ export function GalleryPage() {
       <GalleryPageInner />
     </Suspense>
   )
-              }
+        }
