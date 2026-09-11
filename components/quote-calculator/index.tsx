@@ -10,7 +10,7 @@ import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { GLASS, HOME_BLUE } from "./shared"
 import {
-  CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED,
+  CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED, HUB_ORDER,
   getDisplayName, getEffectiveRate, parsePrice, quoteTotals,
 } from "./lib"
 import { HubBrowser } from "./hub-browser"
@@ -23,6 +23,11 @@ import { SavedQuotesPanel } from "./saved-quotes-panel"
 import { FooterActions } from "./footer-actions"
 
 const VIEW_KEY = "apexbytes-quote-view"
+
+// ── Swipe tuning: how far (px) and how "horizontal" a touch gesture must
+// be before it counts as a swipe rather than a vertical scroll. ──
+const SWIPE_MIN_DISTANCE = 50
+const SWIPE_DOMINANCE = 1.5 // horizontal movement must exceed vertical by this factor
 
 export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
@@ -49,6 +54,29 @@ export function QuoteCalculatorWidget() {
   const [showSavedList, setShowSavedList] = useState(false)
 
   const [miniExpanded, setMiniExpanded] = useState(false)
+
+  // ── Swipe-to-toggle-hub: tracks the touch start point on the panel body.
+  // Only acts when a hub is currently open (per your instruction). ──
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
+  const handleBodyTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const t = e.touches[0]
+    touchStartRef.current = { x: t.clientX, y: t.clientY }
+  }
+  const handleBodyTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const start = touchStartRef.current
+    touchStartRef.current = null
+    if (!openHub || !start) return
+    const t = e.changedTouches[0]
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+    if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dx) < Math.abs(dy) * SWIPE_DOMINANCE) return
+    const idx = HUB_ORDER.indexOf(openHub)
+    if (idx === -1) return
+    const nextIdx = dx < 0
+      ? (idx + 1) % HUB_ORDER.length
+      : (idx - 1 + HUB_ORDER.length) % HUB_ORDER.length
+    setOpenHub(HUB_ORDER[nextIdx])
+  }
 
   const [now, setNow] = useState<Date | null>(null)
   useEffect(() => {
@@ -152,12 +180,6 @@ export function QuoteCalculatorWidget() {
   const getSolid  = (id: HubId) => HUB_COLORS[id as HubKey].accentLight
   const titleAccent = isDark ? HUB_COLORS.design.accentDark : HUB_COLORS.design.accentLight
   const fabColor     = isDark ? HOME_BLUE.dark : HOME_BLUE.light
-  // AUDIT FIX: was `useMemo(() => getReadableTextColor(fabColor), [fabColor])`
-  // — fabColor is "var(--brand-blue)" / "var(--brand-light-blue)", a CSS
-  // var() string, not a hex value, so the contrast calc was meaningless.
-  // --home-cta-text already exists as the correct, theme-reactive on-color
-  // for this exact fill (--home-cta-bg / --primary-fill lineage), so just
-  // use it directly — no runtime computation needed.
   const fabTextColor = "var(--home-cta-text)"
 
   const hubsInCart = useMemo(() => Array.from(new Set(cart.map(i => i.hubId))), [cart])
@@ -344,7 +366,12 @@ export function QuoteCalculatorWidget() {
 
           <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
 
-          <div className="flex-1 overflow-y-auto overscroll-contain min-h-0" style={{ WebkitOverflowScrolling: "touch" }}>
+          <div
+            className="flex-1 overflow-y-auto overscroll-contain min-h-0"
+            style={{ WebkitOverflowScrolling: "touch" }}
+            onTouchStart={handleBodyTouchStart}
+            onTouchEnd={handleBodyTouchEnd}
+          >
             <CartSummaryBar
               isDark={isDark}
               fabColor={fabColor}
@@ -408,4 +435,4 @@ export function QuoteCalculatorWidget() {
       )}
     </>
   )
-            } 
+      }
