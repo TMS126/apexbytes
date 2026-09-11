@@ -74,16 +74,12 @@ export const eserviceHub: Hub = {
         price: 'R20',
         description: `We check your NSFAS application or funding status on myNSFAS — whether you're approved, awaiting verification, or declined. Know your status before registration so you can plan accordingly.`,
         requirements: ['Bring your ID document', 'Bring your NSFAS reference number or login details if you have them'],
-        // NOTICE — shows the orange "!" badge on this item everywhere
-        // it appears (hub card, section tab, item row, service modal)
-        notice: "NSFAS is under government administration with major reported backlogs — status checks can be slow, and their own contact centre is currently unable to resolve most queries without escalation. We'll check what's officially visible, but an unclear status may need direct follow-up with NSFAS.",
       },
       {
         name: 'NSFAS Banking Update',
         price: 'R40',
         description: `NSFAS requires accurate banking details to pay your allowances. If your bank details have changed or were entered incorrectly, we update them on myNSFAS so your money reaches you without delays.`,
         requirements: ['Bring your ID document', 'Bring your bank account details or confirmation letter', 'Bring your NSFAS reference number'],
-        notice: "NSFAS is currently reporting widespread allowance payment delays under its ongoing administration, so please allow significantly more time than usual for an updated bank detail to reflect in a payment.",
       },
       { name: 'Learnership Application', price: 'R40', description: `Learnerships are government-backed training programmes that pay you while you learn a skill. We find the right opportunity and complete the online application on your behalf with your CV and supporting documents.`, requirements: ['Bring your ID document', 'Bring your highest qualification/certificate', 'Bring your CV if available'] },
       { name: 'Job / DPSA Application', price: 'R40', description: `Applying for a government or public service position? We complete your online job application on the DPSA or relevant portal — accurately filling in the Z83 form and attaching your CV and qualifications correctly.`, requirements: ['Bring your ID document', 'Bring your CV and certified qualifications', 'Have details of the specific position/post number ready'] },
@@ -93,19 +89,17 @@ export const eserviceHub: Hub = {
         price: 'R50',
         description: `If NSFAS declined your application and you believe it was unfair, you have the right to appeal. We submit your appeal through myNSFAS with a clear motivation and supporting documents to give you the best chance of a reversal.`,
         requirements: ['Bring your ID document', 'Bring the NSFAS rejection/decline notification', 'Bring supporting documents (e.g. proof of income, motivation letter)'],
-        notice: "Reported NSFAS appeal delays are currently significant — some funding investigations are taking up to 5 months to resolve. Keep your reference number safe and be prepared to follow up directly with NSFAS if you don't hear back.",
       },
       {
         name: 'NSFAS Application',
         price: 'R80',
         description: `Applying for NSFAS funding for the first time? We complete your full application on myNSFAS — personal details, household income, institution choice, and all supporting documents — submitted correctly to avoid rejections.`,
         requirements: ['Bring your ID document', 'Bring proof of household income or relevant supporting documents', 'Bring your academic results', 'Have your active cellphone number and email ready'],
-        notice: "NSFAS remains under government administration following a Public Protector finding of systemic governance and processing failures, so expect funding decisions to take considerably longer than the scheme's usual timelines.",
       },
       { name: 'University Application', price: 'R100', description: `Applying to university through the CAO, institutional portals, or directly? We complete the full online application — programme selection, personal information, academic records, and required uploads — giving your application the best possible presentation.`, requirements: ['Bring your ID document', 'Bring certified academic results/matric certificate', 'Have application fee details ready if applicable', 'Have your active cellphone number and email ready'] },
     ]},
 
-    // ══════════════════ EMAIL SERVICES SECTION ══════════════════
+    // ═══════════════���══ EMAIL SERVICES SECTION ══════════════════
     { title: 'Email Services', desc: `A working email address, set up and ready — plus help sending or receiving what you need.`, items: [
       { name: 'Setup / Send / Receive', price: 'R15', description: `Don't have an email address yet, or need help accessing one? We create a new Gmail or similar account for you, or help you log in and send/receive specific emails. Many government applications require an email — we've got you covered.`, requirements: ['Bring your ID document', 'Have an active cellphone number ready for verification', 'If sending/receiving, bring the document or details to be emailed'] },
     ]},
