@@ -14,6 +14,8 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
+import { HomeNoticeStack } from "@/components/home-notice-stack"
+import { HOME_NOTICES } from "@/lib/home-notices"
 
 const WEATHER_ICON_MAP: Record<WeatherCategory, { Icon: React.ElementType; color: string }> = {
   "clear-day": { Icon: Sun, color: WEATHER_THEME.sun.light },
@@ -98,6 +100,12 @@ export function HeroSection() {
 
       <div className="max-w-[1400px] mx-auto flex flex-col items-center relative z-10 w-full mb-6">
 
+        {/* Homepage-only update notices — single notice expands inline,
+            more than one opens a modal with one card per notice. */}
+        <div className="w-full flex justify-center mb-6">
+          <HomeNoticeStack notices={HOME_NOTICES} />
+        </div>
+
         <div className="w-full max-w-[1280px] mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center mb-10 md:mb-14">
 
           <div className="text-center md:text-left">
@@ -148,10 +156,6 @@ export function HeroSection() {
               </button>
             </div>
 
-            {/* Trust-hint checkmarks: switched from TOKEN.brandBlue to
-                TOKEN.orangeText — keeps orange as the one minimal accent
-                color threaded through the hero, instead of introducing
-                a second accent (blue) with no real distinct meaning here. */}
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
               {TRUST_HINTS.map((hint) => (
                 <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground dark:text-muted-foreground">
@@ -206,4 +210,4 @@ export function HeroSection() {
       <BackToTopButton visible={showBackToTop} />
     </section>
   )
-} 
+}
