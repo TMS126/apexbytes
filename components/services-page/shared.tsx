@@ -11,8 +11,8 @@ import { HubId } from "@/lib/data"
 import { ServiceGlyph } from "@/lib/service-icons"
 import { SelectedService } from "./lib"
 
-export function HubIcon({ id, size = 28, color }: { id: HubId; size?: number; color?: string }) {
-  const p = { size, weight: "regular" as const, color: color ?? "currentColor", "aria-hidden": true }
+export function HubIcon({ id, size = 28, color, weight = "regular" }: { id: HubId; size?: number; color?: string; weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone" }) {
+  const p = { size, weight, color: color ?? "currentColor", "aria-hidden": true }
   switch (id) {
     case "print":    return <Printer    {...p} />
     case "doc":      return <FileText   {...p} />
