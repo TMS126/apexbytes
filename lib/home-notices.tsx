@@ -10,6 +10,8 @@ export const HOME_NOTICES: HomeNotice[] = [
     variant: "info",
     Icon: Info,
     header: "SARS 2026 Filing Deadlines",
-    body: "Non-provisional taxpayers have until 23 October 2026 to submit via SARS eFiling or the MobiApp. Provisional taxpayers and trusts have until 22 January 2027. Source: sars.gov.za — last checked 12 September 2026.",
+    body: "Non-provisional taxpayers have until 23 October 2026 to submit via SARS eFiling or the MobiApp. Provisional taxpayers and trusts have until 22 January 2027.",
+    sourceLabel: "Official SARS Filing Season 2026 page",
+    sourceUrl: "https://www.sars.gov.za/types-of-tax/personal-income-tax/filing-season/",
   },
 ]
