@@ -14,6 +14,8 @@ export interface HomeNotice {
   Icon: React.ElementType
   header: string
   body: string
+  sourceLabel?: string
+  sourceUrl?: string
   date?: string
 }
 
@@ -42,6 +44,16 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
           <p className="text-[0.9rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
             {notice.body}
           </p>
+          {notice.sourceUrl && notice.sourceLabel && (
+            <a
+              href={notice.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 w-fit text-[0.72rem] italic font-medium text-zinc-500 underline decoration-dotted underline-offset-2 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Source: {notice.sourceLabel}
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -157,6 +169,17 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                   <span className="text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
                     {first.body}
                   </span>
+                  {first.sourceUrl && first.sourceLabel && (
+                    <a
+                      href={first.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(event) => event.stopPropagation()}
+                      className="mt-1 w-fit text-[0.72rem] italic font-medium text-zinc-500 underline decoration-dotted underline-offset-2 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      Source: {first.sourceLabel}
+                    </a>
+                  )}
                 </span>
               </button>
 
