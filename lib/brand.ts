@@ -6,6 +6,10 @@
  * ────────────────────────────────────────────────────────────────────────────
  */
 
+// ============================================================
+// CSS VAR TOKENS — semantic references used directly in inline
+// styles / JS where a var(--x) string is needed
+// ============================================================
 export const TOKEN = {
   brandBlue: "var(--brand-blue)",
   brandOrange: "var(--brand-orange)",
@@ -38,6 +42,13 @@ export const TOKEN = {
   shadowActionWhatsapp: "var(--shadow-action-whatsapp)",
 } as const
 
+// ============================================================
+// RAW HEX PALETTE — for contexts that can't consume CSS vars
+// (canvas/SVG generation, OG images, HUB_HEX_COLORS below).
+// Every value here must be kept in lockstep with the matching
+// var in globals.css :root / .dark — this is duplicated data,
+// not derived, so it drifts silently if not hand-verified.
+// ============================================================
 export const HEX = {
   light: {
     page: "#F1F1EC", card: "#E8E8E2",
@@ -57,7 +68,11 @@ export const HEX = {
     teal: "#9AD4CE", tealDark: "#BCE5E0", tealLight: "#284947",
     warningBg: "#E08A64",
     lightBlue: "#D9EEFA", lightGreen: "#E5F6C9", lightOrange: "#FFE5D3",
-    dark100: "#25283E", dark200: "#43455A", techGreyDark: "#B8CCE0",
+    // FIX: these two were still holding the *light*-theme values.
+    // globals.css .dark overrides --brand-dark-100 to #EEF1F7 and
+    // --brand-dark-200 to #D8DDE8 — anything calling pickHex('dark100'/
+    // 'dark200', true) was silently getting the wrong-theme color.
+    dark100: "#EEF1F7", dark200: "#D8DDE8", techGreyDark: "#B8CCE0",
   },
   neutral100: "#E8E8E2", neutral200: "#ECECE7", neutral300: "#D5D5CE",
   neutral400: "#858581", neutral500: "#62625F",
@@ -67,10 +82,16 @@ export const HEX = {
   whatsappText: "#0f172a",
 } as const
 
+// ============================================================
+// HEX HELPERS
+// ============================================================
 export function pickHex<K extends keyof typeof HEX.light>(role: K, isDark: boolean): string {
   return isDark ? HEX.dark[role] : HEX.light[role]
 }
 
+// ============================================================
+// BRAND — semantic CSS var references (theme-aware via globals.css)
+// ============================================================
 export const BRAND = {
   green: "var(--brand-green)",
   orange: "var(--brand-orange)",
@@ -104,6 +125,9 @@ export const BRAND = {
   adobePdfRed: "var(--brand-adobe-pdf-red)",
 } as const
 
+// ============================================================
+// THEME BACKGROUNDS
+// ============================================================
 export const THEME_BG = {
   light: { page: "var(--background)", card: "var(--card)" },
   dark: { page: "var(--background)", card: "var(--card)" },
@@ -114,6 +138,10 @@ export const THEME_HEX = {
   dark: { page: HEX.dark.page, card: HEX.dark.card },
 } as const
 
+// ============================================================
+// HUB COLORS — CSS var based (theme-aware, always correct since
+// they resolve live through globals.css rather than duplicating hex)
+// ============================================================
 export const HUB_COLORS = {
   print: {
     primary: "var(--hub-print-primary)", light: "var(--hub-print-light)",
@@ -147,15 +175,14 @@ export const HUB_COLORS = {
   },
 } as const
 
-// lib/brand.ts — insert directly below the existing HUB_COLORS export
-
-// Companion "on-color" for each hub's solid-fill state (selected tab,
-// count badge, filled Add button, selected section pill). These map to
-// the --on-hub-* tokens in globals.css, which are explicit per-theme
-// hex values — never computed from HUB_COLORS.accentLight/Dark at
-// runtime, since those are CSS var() strings that can't be parsed as
-// hex. Add a new hub? Add its --on-hub-<id> pair in globals.css (light
-// + dark) and its entry here.
+// ============================================================
+// HUB ON-COLORS — companion text/icon color for each hub's
+// solid-fill state. These map to --on-hub-* in globals.css, which
+// are explicit per-theme hex values — never computed at runtime
+// from HUB_COLORS.accentLight/Dark, since those are var() strings
+// that can't be parsed as hex. New hub? Add --on-hub-<id> (light +
+// dark) in globals.css and its entry here.
+// ============================================================
 export const HUB_ON_COLOR: Record<HubKey, string> = {
   print: "var(--on-hub-print)",
   doc: "var(--on-hub-doc)",
@@ -164,14 +191,28 @@ export const HUB_ON_COLOR: Record<HubKey, string> = {
   tech: "var(--on-hub-tech)",
 } as const
 
+// ============================================================
+// HUB HEX COLORS — raw hex mirror of HUB_COLORS for non-CSS
+// contexts (canvas-rendered portfolio covers, generated images).
+// Must match the live --hub-*-primary / --hub-*-light values.
+// ============================================================
 export const HUB_HEX_COLORS = {
   print: { primary: HEX.light.blue, light: HEX.dark.blue, tagBgDark: "#1E40AF" },
   doc: { primary: HEX.light.green, light: HEX.dark.green, tagBgDark: "#166534" },
   design: { primary: HEX.light.orangeDark, light: HEX.dark.orangeDark, tagBgDark: "#9A3412" },
   eservice: { primary: HEX.light.teal, light: HEX.dark.teal, tagBgDark: HEX.light.tealDark },
-  tech: { primary: HEX.light.dark100, light: HEX.light.techGreyDark, tagBgDark: "#1F2937" },
+  // FIX: primary was HEX.light.dark100 ("#25283E") — that's brand-dark-100,
+  // not the tech hub's color. --hub-tech-primary in globals.css is its own
+  // literal, #333333, unrelated to the dark100/dark200 palette entries.
+  // `light` was already correct (techGreyDark matches the dark-mode
+  // --hub-tech-primary override, and is identical in both HEX.light/dark).
+  tech: { primary: "#333333", light: HEX.light.techGreyDark, tagBgDark: "#1F2937" },
 } as const
 
+// ============================================================
+// OG IMAGE COLORS — fixed light-theme palette for generated
+// Open Graph images (rendered once, not theme-aware)
+// ============================================================
 export const OG_COLORS = {
   background: HEX.light.blueDark,
   backgroundMid: HEX.light.blueMid,
@@ -182,6 +223,9 @@ export const OG_COLORS = {
   muted: HEX.light.lightBlue,
 } as const
 
+// ============================================================
+// WEATHER THEME
+// ============================================================
 export const WEATHER_THEME = {
   sun: { light: "#F59E0B", dark: "#FCD34D" },
   moon: { light: "#818CF8", dark: "#A5B4FC" },
@@ -191,6 +235,9 @@ export const WEATHER_THEME = {
   snow: { light: "#7DD3FC", dark: "#BAE6FD" },
 } as const
 
+// ============================================================
+// WHATSAPP THEME
+// ============================================================
 export const WHATSAPP_THEME = {
   header: { light: "#075E54", dark: "#1F2C34" },
   wallpaper: { light: "#E5DDD5", dark: "#0B141A" },
@@ -205,11 +252,17 @@ export const WHATSAPP_THEME = {
   avatarBg: { light: "#E9EDEF", dark: "#2A3942" },
 } as const
 
+// ============================================================
+// NEUTRAL ICON COLOR
+// ============================================================
 export const NEUTRAL_ICON_COLOR = {
   light: "var(--neutral-icon-light)",
   dark: "var(--neutral-icon-dark)",
 } as const
 
+// ============================================================
+// BUSINESS INFO
+// ============================================================
 export const BIZ = {
   name: "ApexbytesHub",
   tagline: "Your local tech & print partner.",
@@ -223,12 +276,17 @@ export const BIZ = {
   lng: 26.6599691,
   mapsUrl: "https://maps.app.goo.gl/v25Le9SfmCBfTh616?g_st=ac",
   founder: "Theji Meje",
-  year: "2026",
+  // FIX: was a hardcoded "2026" (copyright year) — would go stale every
+  // January and need a manual edit. Now self-updates at build time.
+  year: String(new Date().getFullYear()),
   yearFounded: "2023",
   hubCount: 5,
   serviceCount: "70+",
 } as const
 
+// ============================================================
+// WHATSAPP LINKS
+// ============================================================
 export const waLink = (message: string) =>
   `https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`
 
@@ -243,14 +301,24 @@ export const WA = {
   contact: waLink(`Hi ${BIZ.name}! I'd like to get in touch.`),
 } as const
 
+// ============================================================
+// MAINTENANCE BANNER
+// ============================================================
 export const MAINTENANCE_BANNER = {
   active: true,
   version: "2",
-  message: "Upgrades rolling out — everything still works.", 
-linkText: "We're live on WhatsApp", 
+  message: "Upgrades rolling out — everything still works.",
+  linkText: "We're live on WhatsApp",
   linkHref: WA.general,
 } as const
 
+// ============================================================
+// HOURS
+// NOTE (not fixed — needs your call): `open` on both entries below
+// is a static boolean, not derived from the current day/time. If
+// nothing elsewhere computes live open/closed state, these can show
+// the wrong status outside whenever they were last hand-set.
+// ============================================================
 export const HOURS = {
   printAndDoc: {
     label: "Print Hub · Document Hub",
@@ -267,6 +335,9 @@ export const HOURS = {
   responseTime: "We typically reply within 15 minutes during business hours.",
 } as const
 
+// ============================================================
+// HUB KEYS / NAMES
+// ============================================================
 export type HubKey = "print" | "doc" | "design" | "eservice" | "tech"
 
 export const HUB_NAMES: Record<HubKey, string> = {
@@ -277,6 +348,9 @@ export const HUB_NAMES: Record<HubKey, string> = {
   tech: "Tech Hub",
 } as const
 
+// ============================================================
+// NAVIGATION
+// ============================================================
 export type NavItem = {
   id: string
   label: string
@@ -294,6 +368,9 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "contact", label: "Contact", path: "/contact", isCta: true },
 ] as const
 
+// ============================================================
+// MARQUEE / STRIP ITEMS
+// ============================================================
 export const MARQUEE_ITEMS = [
   "Print & Copy While You Wait",
   "CVs That Help You Get Hired",
@@ -315,6 +392,9 @@ export const STRIP_ITEMS = [
   { iconName: "MapPin", title: "Walk-ins Welcome", desc: `${BIZ.location}` },
 ] as const
 
+// ============================================================
+// GALLERY
+// ============================================================
 export const GALLERY_CATEGORIES = [
   { id: "all", label: "All hubs" },
   { id: "print", label: "Print hub" },
@@ -327,6 +407,9 @@ export const GALLERY_CATEGORIES = [
 export const GALLERY_ALERT =
   "We are currently curating our gallery to feature our latest local business success stories. The current imagery demonstrates the visual aesthetic and service style of ApexbytesHub. Check back often for fresh project work!"
 
+// ============================================================
+// FAQS
+// ============================================================
 export const FAQS = [
   { question: "How do I send my files, photos, or CV information to you?", answer: "All services connect via WhatsApp where you can upload documents, notes, or images directly." },
   { question: "Where do I collect my completed documents or prints?", answer: `${BIZ.name} operates from ${BIZ.location}. We notify you when items are ready for collection.` },
@@ -335,6 +418,9 @@ export const FAQS = [
   { question: "Do you use templates for design projects?", answer: "No. All design work is custom-built using professional design tools." },
 ] as const
 
+// ============================================================
+// ABOUT PAGE DATA
+// ============================================================
 export const ABOUT_VALUES = [
   { iconName: "Target", title: "We Keep It Simple", desc: "No confusing jargon. Everything is explained clearly." },
   { iconName: "Heart", title: "Community First", desc: "We serve our neighbourhood with care and respect." },
@@ -347,6 +433,9 @@ export const ABOUT_STANDARDS = [
   { id: 3, iconName: "DeviceMobile", title: "Direct WhatsApp Pipeline", description: "Fast communication and order handling through WhatsApp." },
 ] as const
 
+// ============================================================
+// CONTACT LINKS
+// ============================================================
 export const CONTACT_LINKS = [
   { title: "WhatsApp Us", value: BIZ.phone, href: WA.contact, dot: BRAND.whatsapp },
   { title: "Call Us", value: BIZ.phone, href: `tel:${BIZ.phoneE164}`, dot: BRAND.blue },
@@ -354,12 +443,14 @@ export const CONTACT_LINKS = [
   { title: "Visit Us", value: BIZ.addressFull, href: BIZ.mapsUrl, dotLight: BRAND.blueDark, dotDark: BRAND.lightBlue },
 ] as const
 
+// ============================================================
+// FOOTER NAV
+// ============================================================
 export const FOOTER_NAV = [
   { label: "Home", path: "/" },
   { label: "Services", path: "/services" },
   { label: "Gallery", path: "/gallery" },
-  { label: "Pricing", path: "/pricing" },
   { label: "About", path: "/about" },
   { label: "Tools", path: "/tools" },
   { label: "Contact", path: "/contact" },
-] as const
+] as const 
