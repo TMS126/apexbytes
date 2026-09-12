@@ -363,8 +363,8 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "services", label: "Services", path: "/services" },
   { id: "gallery", label: "Gallery", path: "/gallery" },
   { id: "pricing", label: "Pricing", path: "/pricing" },
-  { id: "about", label: "About", path: "/about" },
   { id: "tools", label: "Tools", path: "/tools" },
+  { id: "about", label: "About", path: "/about" },
   { id: "contact", label: "Contact", path: "/contact", isCta: true },
 ] as const
 
@@ -449,8 +449,9 @@ export const CONTACT_LINKS = [
 export const FOOTER_NAV = [
   { label: "Home", path: "/" },
   { label: "Services", path: "/services" },
-  { label: "Gallery", path: "/gallery" },
-  { label: "About", path: "/about" },
+  { label: "Gallery", path: "/gallery"}, 
+  { label: "Pricing", path: "/pricing" },
   { label: "Tools", path: "/tools" },
+  { label: "About", path: "/about" }, 
   { label: "Contact", path: "/contact" },
 ] as const 
