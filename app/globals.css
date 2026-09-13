@@ -8,6 +8,14 @@ body { overflow-x: hidden; min-height: 100dvh; -webkit-font-smoothing: antialias
 
 html[data-scroll-locked] body { overflow: hidden; }
 
+/* Site-wide text hierarchy: neutral copy stays readable and consistent;
+   brand colors remain reserved for links, actions, and meaningful status. */
+[class~="text-zinc-900"], [class~="text-zinc-800"], [class~="text-slate-900"], [class~="text-slate-800"], [class~="text-gray-900"], [class~="text-gray-800"] { color: var(--foreground) !important; }
+[class~="text-zinc-700"], [class~="text-zinc-600"], [class~="text-slate-700"], [class~="text-slate-600"], [class~="text-gray-700"], [class~="text-gray-600"] { color: var(--muted-foreground) !important; }
+[class~="text-zinc-500"], [class~="text-slate-500"], [class~="text-gray-500"] { color: var(--muted-foreground) !important; }
+[class~="text-blue-900"], [class~="text-blue-800"], [class~="text-blue-700"], [class~="text-blue-600"], [class~="text-blue-500"] { color: var(--link-foreground) !important; }
+[class~="text-orange-900"], [class~="text-orange-800"], [class~="text-orange-700"], [class~="text-orange-600"], [class~="text-orange-500"] { color: var(--brand-orange-text) !important; }
+
 img, video, svg, canvas { max-width: 100%; display: block; }
 input, button, textarea, select { font: inherit; max-width: 100%; }
 
