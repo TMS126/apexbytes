@@ -75,7 +75,7 @@ function FooterContent() {
             <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
-                const isActive = pathname === page.path
+                const isActive = page.path === "/tools" ? pathname.startsWith("/tools") : pathname === page.path
 
                 return (
                   <li key={page.path}>

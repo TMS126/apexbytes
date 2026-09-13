@@ -91,7 +91,10 @@ function ServiceRow({
         )}
       </div>
       <div className="flex items-center gap-2.5 shrink-0">
-        <span className="text-base font-black text-zinc-900 dark:text-white tabular-nums">
+        <span
+          className="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-black tabular-nums"
+          style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accent }}
+        >
           {item.price}
         </span>
         <button
@@ -155,9 +158,8 @@ export function HubCompactCard({
         onMouseEnter={onHover}
         aria-pressed
         className="h-full w-full rounded-[14px] bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
-        style={{ border: `1.5px solid ${hubColor}` }}
       >
-        <HubIcon id={hubId} size={40} color={hubColor} />
+        <HubIcon id={hubId} size={40} weight="fill" color={hubColor} />
         <span className="sr-only">{hub.title} — selected</span>
       </button>
     )
@@ -172,7 +174,7 @@ export function HubCompactCard({
     >
       {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
-        <HubIcon id={hubId} size={22} color={isActive ? hubColor : '#a1a1aa'} />
+        <HubIcon id={hubId} size={22} weight={isActive ? "fill" : "regular"} color={isActive ? hubColor : '#a1a1aa'} />
         <span className="sr-only">{hub.title}</span>
       </div>
 

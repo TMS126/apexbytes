@@ -152,4 +152,4 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
       </div>
     </div>
   )
-} 
+}

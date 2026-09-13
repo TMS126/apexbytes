@@ -239,10 +239,10 @@ const displayedHub = hoveredHub ?? selectedHub
                           key={hubId}
                           onClick={() => jumpToHub(hubId)}
                           aria-pressed={isOpen}
-                          className="relative pb-1 text-sm font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
+                          className="relative rounded-full px-3.5 py-1.5 text-sm font-bold text-muted-foreground dark:text-muted-foreground hover:text-foreground transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2"
                           style={
                             isOpen
-                              ? { color: accent, ['--tw-ring-color' as string]: accent }
+                              ? { color: accent, backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, ['--tw-ring-color' as string]: accent }
                               : { ['--tw-ring-color' as string]: accent }
                           }
                         >
