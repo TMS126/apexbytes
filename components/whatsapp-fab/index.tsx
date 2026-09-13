@@ -222,6 +222,7 @@ export function WhatsAppFAB() {
                 note={note} setNote={setNote}
                 quickNoteIdx={quickNoteIdx} addQuickNote={addQuickNote} shuffleQuickNote={shuffleQuickNote}
                 followTyping={followTyping} revealed={revealed}
+                onSubmit={handleSend}
               />
             ) : (
               <ChatSent dateLabel={dateLabel} sentTime={sentTime} onSendAnother={handleSendAnother} onClose={handleClose} />

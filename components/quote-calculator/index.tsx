@@ -24,11 +24,6 @@ import { FooterActions } from "./footer-actions"
 
 const VIEW_KEY = "apexbytes-quote-view"
 
-// ── Swipe tuning: how far (px) and how "horizontal" a touch gesture must
-// be before it counts as a swipe rather than a vertical scroll. ──
-const SWIPE_MIN_DISTANCE = 50
-const SWIPE_DOMINANCE = 1.5 // horizontal movement must exceed vertical by this factor
-
 export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
@@ -54,29 +49,6 @@ export function QuoteCalculatorWidget() {
   const [showSavedList, setShowSavedList] = useState(false)
 
   const [miniExpanded, setMiniExpanded] = useState(false)
-
-  // ── Swipe-to-toggle-hub: tracks the touch start point on the panel body.
-  // Only acts when a hub is currently open (per your instruction). ──
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
-  const handleBodyTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const t = e.touches[0]
-    touchStartRef.current = { x: t.clientX, y: t.clientY }
-  }
-  const handleBodyTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    const start = touchStartRef.current
-    touchStartRef.current = null
-    if (!openHub || !start) return
-    const t = e.changedTouches[0]
-    const dx = t.clientX - start.x
-    const dy = t.clientY - start.y
-    if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dx) < Math.abs(dy) * SWIPE_DOMINANCE) return
-    const idx = HUB_ORDER.indexOf(openHub)
-    if (idx === -1) return
-    const nextIdx = dx < 0
-      ? (idx + 1) % HUB_ORDER.length
-      : (idx - 1 + HUB_ORDER.length) % HUB_ORDER.length
-    setOpenHub(HUB_ORDER[nextIdx])
-  }
 
   const [now, setNow] = useState<Date | null>(null)
   useEffect(() => {
@@ -368,9 +340,7 @@ export function QuoteCalculatorWidget() {
 
           <div
             className="flex-1 overflow-y-auto overscroll-contain min-h-0"
-            style={{ WebkitOverflowScrolling: "touch" }}
-            onTouchStart={handleBodyTouchStart}
-            onTouchEnd={handleBodyTouchEnd}
+            style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-y" }}
           >
             <CartSummaryBar
               isDark={isDark}

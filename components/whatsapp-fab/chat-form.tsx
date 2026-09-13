@@ -34,6 +34,7 @@ interface ChatFormProps {
   shuffleQuickNote: () => void
   followTyping: Stage
   revealed: Stage
+  onSubmit: () => void
 }
 
 export function ChatForm({
@@ -41,7 +42,7 @@ export function ChatForm({
   name, setName, nameRemembered,
   hub, setHub, hubPicking, setHubPicking,
   note, setNote, quickNoteIdx, addQuickNote, shuffleQuickNote,
-  followTyping, revealed,
+  followTyping, revealed, onSubmit,
 }: ChatFormProps) {
   const selectedHub = HUBS.find(h => h.id === hub)
 
@@ -84,6 +85,12 @@ export function ChatForm({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.nativeEvent.isComposing && e.keyCode !== 229) {
+              e.preventDefault()
+              setHubPicking(true)
+            }
+          }}
           placeholder="e.g. Thembi"
           className={cn(TXT.body, "w-full bg-transparent font-semibold outline-none border-none")}
           style={{ color: WA.text }}
@@ -133,6 +140,12 @@ export function ChatForm({
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
+          onKeyDown={(e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === "Enter" && !e.nativeEvent.isComposing && e.keyCode !== 229) {
+              e.preventDefault()
+              onSubmit()
+            }
+          }}
           placeholder="Anything else? Message here"
           rows={2}
           className={cn(TXT.body, "w-full bg-transparent font-semibold outline-none border-none resize-none")}
