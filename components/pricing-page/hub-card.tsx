@@ -124,8 +124,7 @@ function ServiceRow({
 // ── HubCompactCard — desktop 5-column selector card ───────────────────────────
 //   Idle              → floating pill, muted icon, full (never-truncated) description
 //   Hovered, unselected → floating pill, colored icon, preview bullets — still no border
-//   Selected (clicked)  → icon-only, filling the card, hub-colored border — the ONLY
-//                         card in this row that ever shows a border
+//   Selected (clicked)  → icon-only, filling the card, with no decorative border
 
 interface HubCompactCardProps {
   hubId: HubId
