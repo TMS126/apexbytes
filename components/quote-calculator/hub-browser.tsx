@@ -262,6 +262,7 @@ export function HubBrowser({
 
                   <div className="relative">
                     <button
+                      data-calculator-section-card
                       onClick={() => toggleSection(hubId, sIdx)}
                       aria-expanded={isSectionOpen}
                       aria-controls={sectionPanelId}

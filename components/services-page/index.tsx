@@ -197,6 +197,11 @@ export function ServicesPage() {
   const isModalOpen = !!(activeHub || selectedService)
 
   const handleSelectService = (svc: SelectedService) => {
+    const params = new URLSearchParams(window.location.search)
+    params.set("hub", svc.hubId)
+    params.set("section", svc.sectionTitle)
+    params.set("service", svc.name)
+    window.history.replaceState(window.history.state, "", `/services?${params.toString()}`)
     trackEvent("view_service", {
       hub_id:        svc.hubId,
       service_name:  svc.name,
@@ -206,6 +211,11 @@ export function ServicesPage() {
   }
 
   const handleOpenHub = (hubId: HubId, originSide: "left" | "right") => {
+    const params = new URLSearchParams(window.location.search)
+    params.set("hub", hubId)
+    params.delete("section")
+    params.delete("service")
+    window.history.replaceState(window.history.state, "", `/services?${params.toString()}`)
     trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
     setHubOriginSide(originSide)
     setActiveHub(hubId)
@@ -272,17 +282,26 @@ export function ServicesPage() {
             tips: item.tips ? [...item.tips] : undefined,
                     })
         })
-        router.replace("/services", { scroll: false })
         return () => cancelAnimationFrame(frame)
       }
     }
 
     const frame = requestAnimationFrame(() => handleOpenHub(hubParam as HubId, "right"))
-    router.replace("/services", { scroll: false })
     return () => cancelAnimationFrame(frame)
   }, [searchParams, router])
 
-  const { closeHub, closeService } = useModalBackStack(activeHub, setActiveHub, selectedService, setSelectedService)
+  const clearServiceModalUrl = () => {
+    const params = new URLSearchParams(window.location.search)
+    params.delete("hub")
+    params.delete("section")
+    params.delete("service")
+    const query = params.toString()
+    window.history.replaceState(window.history.state, "", query ? `/services?${query}` : "/services")
+  }
+
+  const { closeHub: dismissHub, closeService: dismissService } = useModalBackStack(activeHub, setActiveHub, selectedService, setSelectedService)
+  const closeHub = () => { clearServiceModalUrl(); dismissHub() }
+  const closeService = () => { clearServiceModalUrl(); dismissService() }
 
   useEffect(() => {
     if (!isModalOpen) return
