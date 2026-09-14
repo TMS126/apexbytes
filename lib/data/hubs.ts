@@ -39,7 +39,7 @@ export const docHub: Hub = {
     ]},
     { title: 'CV Services', desc: `From a first CV built from nothing to a full professional upgrade, plus cover letters that get noticed.`, items: [
       {
-        name: 'CV from Scratch', price: 'R30',
+        name: 'CV from Scratch', price: 'R40',
         description: `Never had a CV before? We build one for you from the ground up — personal details, education, skills, and work experience — all formatted neatly and ready to hand in or email to employers.`,
         requirements: ['Bring your ID document', 'Provide your personal details, education history, and work experience', 'Bring a recent photo if you want one included', 'Share contact details (phone number, email if available)'],
         tips: [
@@ -49,7 +49,7 @@ export const docHub: Hub = {
         ],
       },
       {
-        name: 'CV Upgrade/Fix', price: 'R40',
+        name: 'CV Upgrade/Fix', price: 'R30',
         description: `Already have a CV but it's outdated, poorly formatted, or missing key information? We clean it up, restructure it, and add your latest experience so it looks professional and up to date.`,
         requirements: ['Bring your existing CV (digital file or printed copy)', 'Let us know what changes or updates you need', 'Provide any new information to be added'],
         tips: [
