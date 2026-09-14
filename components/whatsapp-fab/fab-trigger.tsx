@@ -44,7 +44,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
           "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
           "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100 group-focus-within/wa:max-w-[100px] group-focus-within/wa:opacity-100 group-focus-within/wa:scale-x-100"
         )}>
-          Chat
+          {isOpen ? "Close" : "Chat"}
         </span>
         <button
           onClick={isOpen ? onClose : onOpen}

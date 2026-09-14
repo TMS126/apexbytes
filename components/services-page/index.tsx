@@ -275,18 +275,23 @@ export function ServicesPage() {
       const item = section?.items.find((i) => i.name === serviceParam)
       if (section && item) {
         const frame = requestAnimationFrame(() => {
-          handleSelectService({
+          setSelectedService({
             name: item.name, price: item.price, hubId: hubParam as HubId,
             sectionTitle: section.title, requirements: item.requirements,
             desc: item.description, turnaround: getTurnaround(section.title, item.name),
             tips: item.tips ? [...item.tips] : undefined,
-                    })
+          })
+          setActiveHub(null)
         })
         return () => cancelAnimationFrame(frame)
       }
     }
 
-    const frame = requestAnimationFrame(() => handleOpenHub(hubParam as HubId, "right"))
+    const frame = requestAnimationFrame(() => {
+      setHubOriginSide("right")
+      setActiveHub(hubParam as HubId)
+      setSelectedService(null)
+    })
     return () => cancelAnimationFrame(frame)
   }, [searchParams, router])
 
