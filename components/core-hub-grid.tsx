@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 import { HUB_COLORS, TOKEN } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
+
 const CATEGORY_DATA = [
   {
     id: "print-doc",
@@ -169,7 +170,7 @@ export function CoreHubGrid() {
                     {category.hubs.map((hub) => (
                       <a
                         key={hub.hubId}
-                        href={`/services?hub=${hub.hubId}`}
+                        href={`/services/${hub.hubId}`}
                         className={cn(
                           "inline-flex items-center gap-1.5 text-[0.84rem] font-black text-muted-foreground transition-colors duration-200",
                           "group-hover/hubcat:text-[var(--hub-accent)]"
