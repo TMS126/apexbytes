@@ -6,6 +6,18 @@
  * This file has no UI in it — it's constants, small pure functions, and
  * the SelectedService type that gets passed around between HubModal and
  * ServiceDetailModal whenever someone taps a service.
+ *
+ * ROUTING — added for the canonical-routes refactor:
+ * Hub IDs are already URL-safe ("print", "doc", ...) so they need no
+ * slug. Section/service NAMES are arbitrary strings ("Flyers & Posters",
+ * "A4 Black & White (per page)") so they're slugified once at module
+ * load into a lookup table, in both directions:
+ *   - slug lookup:  hubId -> sectionSlug -> { title, items: itemSlug -> item }
+ * This is built ONCE from the real data, so a slug always maps back to
+ * the exact object that produced it — no guessing, no lossy reverse
+ * transform. It also self-checks for collisions at load time (dev-only
+ * warning) instead of silently mis-routing two different services that
+ * happen to slugify to the same string.
  * ────────────────────────────────────────────────────────────────────────
  */
 
@@ -60,7 +72,6 @@ export function trackEvent(name: string, payload: Record<string, unknown> = {}) 
     window.dispatchEvent(new CustomEvent("abh:track", { detail: { name, ...payload } }))
   }
   if (process.env.NODE_ENV !== "production") {
-
     console.debug("[track]", name, payload)
   }
 }
@@ -163,4 +174,72 @@ export interface SelectedService {
   sectionTitle: string; requirements: string[]; desc?: string; turnaround?: string
   tips?: string[]
   notice?: string   // Set only when this specific service has an active warning to show
+}
+
+// ─── Routing: slugs ─────────────────────────────────────────────────────
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+}
+
+interface SlugSection {
+  title: string
+  items: Map<string, (typeof HUBS)[HubId]["sections"][number]["items"][number]>
+}
+type SlugTable = Record<HubId, Map<string, SlugSection>>
+
+// Built once at module load, from the real data — a slug can only ever
+// point at the exact section/item object that produced it.
+const SLUG_TABLE: SlugTable = (() => {
+  const table = {} as SlugTable
+  HUB_ORDER.forEach((hubId) => {
+    const sectionMap = new Map<string, SlugSection>()
+    HUBS[hubId].sections.forEach((section) => {
+      const sectionSlug = slugify(section.title)
+      if (process.env.NODE_ENV !== "production" && sectionMap.has(sectionSlug)) {
+        console.warn(`[services routing] slug collision in hub "${hubId}": section "${section.title}" collides with an earlier section at slug "${sectionSlug}"`)
+      }
+      const itemMap = new Map<string, (typeof section.items)[number]>()
+      section.items.forEach((item) => {
+        const itemSlug = slugify(item.name)
+        if (process.env.NODE_ENV !== "production" && itemMap.has(itemSlug)) {
+          console.warn(`[services routing] slug collision in "${hubId}/${sectionSlug}": item "${item.name}" collides at slug "${itemSlug}"`)
+        }
+        itemMap.set(itemSlug, item)
+      })
+      sectionMap.set(sectionSlug, { title: section.title, items: itemMap })
+    })
+    table[hubId] = sectionMap
+  })
+  return table
+})()
+
+export function hubSlugToId(hubSlug: string): HubId | null {
+  return (HUB_ORDER as string[]).includes(hubSlug) ? (hubSlug as HubId) : null
+}
+
+export function serviceRouteFor(hubId: HubId, sectionTitle: string, itemName: string): string {
+  return `/services/${hubId}/${slugify(sectionTitle)}/${slugify(itemName)}`
+}
+
+export function hubRouteFor(hubId: HubId): string {
+  return `/services/${hubId}`
+}
+
+/** Resolves route segments back to the exact section/item objects, or null if any segment doesn't match. Never throws — callers treat null as "not found" (404 / fall back to the catalog). */
+export function resolveServiceRoute(
+  hubSlug: string,
+  sectionSlug: string,
+  serviceSlug: string
+): { hubId: HubId; sectionTitle: string; item: (typeof HUBS)[HubId]["sections"][number]["items"][number] } | null {
+  const hubId = hubSlugToId(hubSlug)
+  if (!hubId) return null
+  const section = SLUG_TABLE[hubId].get(sectionSlug)
+  if (!section) return null
+  const item = section.items.get(serviceSlug)
+  if (!item) return null
+  return { hubId, sectionTitle: section.title, item }
 }
