@@ -1,6 +1,7 @@
 // components/about/about-mission.tsx
 "use client"
 
+import Link from "next/link"
 import { ArrowRight, EnvelopeSimple } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -40,18 +41,18 @@ export function AboutMission({
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/services" className="abh-btn-cta w-full sm:w-64 justify-center px-8 py-4">
+          <Link href="/services" className="abh-btn-cta w-full sm:w-64 justify-center px-8 py-4">
             See All Services
             <ArrowRight size={16} weight="bold" />
-          </a>
-          <a
+          </Link>
+          <Link
             href="/contact"
             className="inline-flex items-center justify-center gap-2.5 w-full sm:w-64 px-8 py-4 rounded-[14px] font-medium text-base border-2 transition-all duration-300 active:scale-95 hover:-translate-y-0.5"
             style={{ borderColor: "var(--link-foreground)", color: "var(--link-foreground)" }}
           >
             <EnvelopeSimple size={16} weight="bold" />
             Get in Touch
-          </a>
+          </Link>
         </div>
       </ScrollBounce>
     </section>
