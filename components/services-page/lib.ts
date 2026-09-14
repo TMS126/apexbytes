@@ -56,9 +56,9 @@ export const HUB_ACCEPT: Record<HubId, string> = {
 }
 
 export const NOTICE = {
-  text:      "Add-on services will be available from ",
-  date:      "15 September 2026",
-  textAfter: ". Minor price adjustments have also been made across some services. We appreciate your continued support and will keep you updated as we grow.",
+  text:      "",
+  date:      "",
+  textAfter: "Add-ons and minor price adjustments are now live as of 15 September 2026. Thank you so much for your patience and continued support — it truly means everything to us.",
 }
 
 // ─── Turnaround lookup ────────────────────────────────────────────────────
