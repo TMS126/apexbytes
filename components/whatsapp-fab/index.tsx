@@ -239,7 +239,7 @@ export function WhatsAppFAB() {
           its send button. `visible` now hides it completely (display:
           none via FabTrigger's "hidden" class) whenever any other
           exclusive widget is open. */}
-      <FabTrigger visible={!isOtherOpen} dimmed={isScrolling} onOpen={() => setIsOpen(true)} />
+      <FabTrigger visible={!isOtherOpen || isOpen} dimmed={isScrolling} isOpen={isOpen} onOpen={() => setIsOpen(true)} onClose={handleClose} />
     </>
   )
 }

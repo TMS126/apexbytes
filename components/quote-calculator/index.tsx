@@ -275,7 +275,7 @@ export function QuoteCalculatorWidget() {
   const sendQuote = () => window.open(waLink(buildQuoteMessage(cart)), "_blank")
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
   const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!openHub || (event.target as HTMLElement).closest("[data-calculator-item-area], button, input, textarea")) {
+    if (!openHub || (event.target as HTMLElement).closest("[data-calculator-item-area], [data-calculator-cart-area], button, input, textarea")) {
       hubSwipeStart.current = null
       return
     }
@@ -285,7 +285,7 @@ export function QuoteCalculatorWidget() {
   const handleBodyTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
     const start = hubSwipeStart.current
     hubSwipeStart.current = null
-    if (!openHub || !start || (event.target as HTMLElement).closest("[data-calculator-item-area], button, input, textarea")) return
+    if (!openHub || !start || (event.target as HTMLElement).closest("[data-calculator-item-area], [data-calculator-cart-area], button, input, textarea")) return
     const touch = event.changedTouches[0]
     const dx = touch.clientX - start.x
     const dy = touch.clientY - start.y
@@ -366,6 +366,7 @@ export function QuoteCalculatorWidget() {
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
+            <div data-calculator-cart-area>
             <CartSummaryBar
               isDark={isDark}
               fabColor={fabColor}
@@ -391,6 +392,7 @@ export function QuoteCalculatorWidget() {
               handlePressStart={handlePressStart}
               handlePressEnd={handlePressEnd}
             />
+            </div>
 
             <SavedQuotesPanel
               savedQuotes={savedQuotes}

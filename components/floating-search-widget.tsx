@@ -279,17 +279,21 @@ export function FloatingSearchWidget() {
           </span>
           <button
             ref={fabRef}
-            onClick={handleOpen}
-            aria-label="Search services"
+onClick={isOpen ? handleClose : handleOpen}
+  aria-label={isOpen ? "Close search" : "Search services"}
             className="abh-press relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none"
           >
-            <MagnifyingGlass
-              size={22}
-              weight="bold"
-              aria-hidden="true"
-              className="transition-all duration-200 ease-out motion-reduce:transition-none"
-              style={{ color: accentColor, filter: iconGlow }}
-            />
+  {isOpen ? (
+  <X size={28} weight="bold" aria-hidden="true" />
+  ) : (
+  <MagnifyingGlass
+  size={22}
+  weight="bold"
+  aria-hidden="true"
+  className="transition-all duration-200 ease-out motion-reduce:transition-none"
+  style={{ color: accentColor, filter: iconGlow }}
+  />
+  )}
           </button>
         </div>
       </div>

@@ -8,7 +8,7 @@
    ============================================================ */
 
 import { usePathname } from "next/navigation"
-import { WhatsappLogo } from "@phosphor-icons/react"
+import { WhatsappLogo, X } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { BIZ } from "@/lib/brand"
 import { WA, TXT } from "./wa-theme"
@@ -16,10 +16,12 @@ import { WA, TXT } from "./wa-theme"
 interface FabTriggerProps {
   visible: boolean
   dimmed: boolean
+  isOpen: boolean
   onOpen: () => void
+  onClose: () => void
 }
 
-export function FabTrigger({ visible, dimmed, onOpen }: FabTriggerProps) {
+export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTriggerProps) {
   const pathname = usePathname()
   const onContactPage = pathname === "/contact" || pathname.startsWith("/contact/")
 
@@ -45,15 +47,19 @@ export function FabTrigger({ visible, dimmed, onOpen }: FabTriggerProps) {
           Chat
         </span>
         <button
-          onClick={onOpen}
-          aria-label={`Chat with ${BIZ.name} on WhatsApp`}
+          onClick={isOpen ? onClose : onOpen}
+          aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
           className="abh-press relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
         >
-          <WhatsappLogo
-            size={32}
-            weight="fill"
-            style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${WA.accent} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
-          />
+          {isOpen ? (
+            <X size={30} weight="bold" aria-hidden="true" />
+          ) : (
+            <WhatsappLogo
+              size={32}
+              weight="fill"
+              style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${WA.accent} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
+            />
+          )}
         </button>
       </div>
     </div>

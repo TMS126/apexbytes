@@ -369,7 +369,7 @@ export function HubBrowser({
 
                               <div
                                 className={cn(
-                                  "group relative overflow-hidden ml-6 flex items-center gap-2 p-2 rounded-[10px] shadow-sm transition-colors duration-150",
+                                  "group relative overflow-hidden ml-6 flex items-center gap-2 p-2 rounded-[14px] shadow-sm transition-colors duration-150",
                                   GLASS.item
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
