@@ -28,7 +28,7 @@ const LIKES_STORAGE_KEY = "apexbytes-gallery-likes"
 // part was already correct logic, untouched. Added active:scale press
 // feedback to every circle (was hover-only before, no tactile response
 // on tap).
-function HubFilterCircles({
+export function HubFilterCircles({
   activeFilter, onSelect, getAccent, isDark,
 }: {
   activeFilter: HubId | "all"

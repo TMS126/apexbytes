@@ -565,7 +565,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
             className={cn(
-              "flex items-center justify-center gap-2 w-full px-4 py-4 rounded-[14px] font-black text-base text-zinc-900 text-center transition-all active:scale-95",
+              "flex items-center justify-center gap-2 w-full px-4 py-4 rounded-[14px] font-black text-base text-center transition-all active:scale-95",
               ICON_BTN_FOCUS
             )}
             style={{ backgroundColor: "var(--brand-whatsapp)", color: "var(--on-whatsapp)" }}

@@ -144,7 +144,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
         <div className="px-6 md:px-10 py-6 border-t border-zinc-100 dark:border-zinc-800 shrink-0 bg-white dark:bg-zinc-950 flex justify-center">
           <button
             onClick={handleClose}
-            className="px-10 py-3 rounded-[14px] bg-brand-blue text-white font-black text-[1.08rem] active:scale-[0.98] transition-transform"
+            className="px-10 py-3 rounded-[14px] bg-[var(--brand-blue-dark)] text-[var(--background)] font-black text-[1.08rem] shadow-sm active:scale-[0.98] transition-transform"
           >
             I Agree
           </button>
@@ -152,4 +152,4 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
       </div>
     </div>
   )
-} 
+}

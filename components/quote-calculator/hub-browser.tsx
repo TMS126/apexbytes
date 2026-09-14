@@ -262,6 +262,7 @@ export function HubBrowser({
 
                   <div className="relative">
                     <button
+                      data-calculator-section-card
                       onClick={() => toggleSection(hubId, sIdx)}
                       aria-expanded={isSectionOpen}
                       aria-controls={sectionPanelId}
@@ -336,7 +337,7 @@ export function HubBrowser({
                     )}
                   >
                     <div className="overflow-hidden">
-                      <div className="pl-8 pb-2 space-y-1">
+                      <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
                         {section.items.map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)
@@ -369,7 +370,7 @@ export function HubBrowser({
 
                               <div
                                 className={cn(
-                                  "group relative overflow-hidden ml-6 flex items-center gap-2 p-2 rounded-[10px] shadow-sm transition-colors duration-150",
+                                  "group relative overflow-hidden ml-6 flex items-center gap-2 p-2 rounded-[14px] shadow-sm transition-colors duration-150",
                                   GLASS.item
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}

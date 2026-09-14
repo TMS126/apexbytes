@@ -24,11 +24,6 @@ import { FooterActions } from "./footer-actions"
 
 const VIEW_KEY = "apexbytes-quote-view"
 
-// ── Swipe tuning: how far (px) and how "horizontal" a touch gesture must
-// be before it counts as a swipe rather than a vertical scroll. ──
-const SWIPE_MIN_DISTANCE = 50
-const SWIPE_DOMINANCE = 1.5 // horizontal movement must exceed vertical by this factor
-
 export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
@@ -54,29 +49,7 @@ export function QuoteCalculatorWidget() {
   const [showSavedList, setShowSavedList] = useState(false)
 
   const [miniExpanded, setMiniExpanded] = useState(false)
-
-  // ── Swipe-to-toggle-hub: tracks the touch start point on the panel body.
-  // Only acts when a hub is currently open (per your instruction). ──
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
-  const handleBodyTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const t = e.touches[0]
-    touchStartRef.current = { x: t.clientX, y: t.clientY }
-  }
-  const handleBodyTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    const start = touchStartRef.current
-    touchStartRef.current = null
-    if (!openHub || !start) return
-    const t = e.changedTouches[0]
-    const dx = t.clientX - start.x
-    const dy = t.clientY - start.y
-    if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dx) < Math.abs(dy) * SWIPE_DOMINANCE) return
-    const idx = HUB_ORDER.indexOf(openHub)
-    if (idx === -1) return
-    const nextIdx = dx < 0
-      ? (idx + 1) % HUB_ORDER.length
-      : (idx - 1 + HUB_ORDER.length) % HUB_ORDER.length
-    setOpenHub(HUB_ORDER[nextIdx])
-  }
+  const hubSwipeStart = useRef<{ x: number; y: number } | null>(null)
 
   const [now, setNow] = useState<Date | null>(null)
   useEffect(() => {
@@ -301,6 +274,27 @@ export function QuoteCalculatorWidget() {
 
   const sendQuote = () => window.open(waLink(buildQuoteMessage(cart)), "_blank")
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
+  const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!openHub || (event.target as HTMLElement).closest("[data-calculator-cart-area], input, textarea, [data-calculator-swipe-block]")) {
+      hubSwipeStart.current = null
+      return
+    }
+    const touch = event.touches[0]
+    hubSwipeStart.current = { x: touch.clientX, y: touch.clientY }
+  }
+  const handleBodyTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const start = hubSwipeStart.current
+    hubSwipeStart.current = null
+    if (!openHub || !start || (event.target as HTMLElement).closest("[data-calculator-cart-area], input, textarea, [data-calculator-swipe-block]")) return
+    const touch = event.changedTouches[0]
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    if (Math.abs(dx) < 52 || Math.abs(dx) < Math.abs(dy) * 1.35) return
+    const currentIndex = HUB_ORDER.indexOf(openHub)
+    if (currentIndex < 0) return
+    const nextIndex = dx < 0 ? (currentIndex + 1) % HUB_ORDER.length : (currentIndex - 1 + HUB_ORDER.length) % HUB_ORDER.length
+    setOpenHub(HUB_ORDER[nextIndex])
+  }
 
   const confirmSaveQuote = () => {
     if (cart.length === 0) return
@@ -368,10 +362,11 @@ export function QuoteCalculatorWidget() {
 
           <div
             className="flex-1 overflow-y-auto overscroll-contain min-h-0"
-            style={{ WebkitOverflowScrolling: "touch" }}
+            style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
+            <div data-calculator-cart-area>
             <CartSummaryBar
               isDark={isDark}
               fabColor={fabColor}
@@ -397,6 +392,7 @@ export function QuoteCalculatorWidget() {
               handlePressStart={handlePressStart}
               handlePressEnd={handlePressEnd}
             />
+            </div>
 
             <SavedQuotesPanel
               savedQuotes={savedQuotes}

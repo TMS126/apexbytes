@@ -17,6 +17,7 @@ import { HUB_ORDER, dispatchAddToQuote, dispatchRemoveFromQuote, searchHubs } fr
 import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
 import { NoticePill } from '@/components/notice-pill'
+import { HubFilterCircles } from '@/components/gallery-page'
 
 export default function PricingPage({ nonce }: { nonce?: string }) {
   const { resolvedTheme } = useTheme()
@@ -231,30 +232,13 @@ const displayedHub = hoveredHub ?? selectedHub
             {results === null && (
               <div className="md:hidden space-y-4">
                 <ScrollBounce delay={0.1}>
-                  <div className="no-print flex flex-wrap justify-center gap-x-5 gap-y-2.5">
-                    {HUB_ORDER.map(hubId => {
-                      const isOpen = openHubs.has(hubId)
-                      return (
-                        <button
-                          key={hubId}
-                          onClick={() => jumpToHub(hubId)}
-                          aria-pressed={isOpen}
-                          className="relative pb-1 text-sm font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
-                          style={
-                            isOpen
-                              ? { color: accent, ['--tw-ring-color' as string]: accent }
-                              : { ['--tw-ring-color' as string]: accent }
-                          }
-                        >
-                          {HUBS[hubId].title}
-                          <span
-                            className="absolute left-0 right-0 -bottom-0.5 h-[2px] rounded-full transition-opacity duration-200"
-                            style={{ backgroundColor: accent, opacity: isOpen ? 1 : 0 }}
-                            aria-hidden="true"
-                          />
-                        </button>
-                      )
-                    })}
+                  <div className="no-print">
+                    <HubFilterCircles
+                      activeFilter={displayedHub ?? "all"}
+                      onSelect={(id) => id !== "all" && jumpToHub(id)}
+                      getAccent={(id) => isDark ? HUBS[id].tagStyleDark.color : HUBS[id].tagStyle.color}
+                      isDark={isDark}
+                    />
                   </div>
                 </ScrollBounce>
                 <ScrollBounce delay={0.14}>

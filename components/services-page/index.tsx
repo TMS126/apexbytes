@@ -1,8 +1,8 @@
 // components/services-page/index.tsx
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { Megaphone, ArrowRight, CaretRight, CaretLeft } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
@@ -10,11 +10,14 @@ import { cn } from "@/lib/utils"
 import { TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { useModalBackStack, HubIcon, ServiceIcon } from "./shared"
+import { HubIcon, ServiceIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
-import { HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService } from "./lib"
+import {
+  HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService,
+  hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor,
+} from "./lib"
 import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
@@ -37,8 +40,6 @@ function ClosingTagline() {
     </div>
   )
 }
-
-
 
 function Pill({
   icon, label, fill, isActive, onClick, size = "md",
@@ -180,14 +181,35 @@ function ServiceCard({
 
 export function ServicesPage() {
   const { resolvedTheme } = useTheme()
-  const isDark       = resolvedTheme === "dark"
-  const searchParams = useSearchParams()
-  const router       = useRouter()
-  const consumedParamsKey = useRef<string | null>(null)
+  const isDark = resolvedTheme === "dark"
+  const params = useParams<{ slug?: string[] }>()
+  const router = useRouter()
+  const slug = params?.slug ?? []
 
-  const [activeHub,       setActiveHub]       = useState<HubId | null>(null)
-  const [hubOriginSide,   setHubOriginSide]   = useState<"left" | "right">("right")
-  const [selectedService, setSelectedService] = useState<SelectedService | null>(null)
+  // ── Route-derived state — the URL is the only source of truth ──────
+  // No useState for activeHub/selectedService, no manual history
+  // bookkeeping. Whatever the URL says IS the state; navigating deeper
+  // is router.push, and the physical back button works automatically
+  // through real browser history — nothing custom needed for it.
+  const routeHubId = slug.length >= 1 ? hubSlugToId(slug[0]) : null
+  const routeService = slug.length === 3 ? resolveServiceRoute(slug[0], slug[1], slug[2]) : null
+
+  const activeHub: HubId | null = routeService ? null : routeHubId
+  const selectedService: SelectedService | null = routeService
+    ? {
+        name: routeService.item.name,
+        price: routeService.item.price,
+        hubId: routeService.hubId,
+        sectionTitle: routeService.sectionTitle,
+        requirements: routeService.item.requirements,
+        desc: routeService.item.description,
+        turnaround: getTurnaround(routeService.sectionTitle, routeService.item.name),
+        tips: routeService.item.tips ? [...routeService.item.tips] : undefined,
+        notice: routeService.item.notice,
+      }
+    : null
+
+  const [hubOriginSide, setHubOriginSide] = useState<"left" | "right">("right")
   const [clientNoticeDismissed, setClientNoticeDismissed] = useState(false)
   const showBackToTop = useBackToTop()
 
@@ -202,13 +224,13 @@ export function ServicesPage() {
       service_name:  svc.name,
       section_title: svc.sectionTitle,
     })
-    setSelectedService(svc)
+    router.push(serviceRouteFor(svc.hubId, svc.sectionTitle, svc.name))
   }
 
   const handleOpenHub = (hubId: HubId, originSide: "left" | "right") => {
     trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
     setHubOriginSide(originSide)
-    setActiveHub(hubId)
+    router.push(hubRouteFor(hubId))
   }
 
   const handleDesktopSelectHub = (hubId: HubId) => {
@@ -241,6 +263,8 @@ export function ServicesPage() {
     setDesktopActiveSection(null)
   }
 
+  // Real effect now. Other parts of the app (e.g. the WhatsApp FAB)
+  // dispatch this to jump straight to a service.
   useEffect(() => {
     const handler = (e: Event) => {
       const svc = (e as CustomEvent<SelectedService>).detail
@@ -250,40 +274,17 @@ export function ServicesPage() {
     return () => window.removeEventListener("abh:selectService", handler)
   }, [])
 
-  useEffect(() => {
-    const hubParam     = searchParams.get("hub")
-    const sectionParam = searchParams.get("section")
-    const serviceParam = searchParams.get("service")
-    if (!hubParam || !HUB_ORDER.includes(hubParam as HubId)) return
+  // Always push to the exact parent URL — deterministic, no history-depth
+  // guessing. The physical back button is unaffected by this and keeps
+  // working correctly on its own via real route history.
+  const closeService = () => {
+    if (!selectedService) return
+    router.push(hubRouteFor(selectedService.hubId))
+  }
+  const closeHub = () => router.push("/services")
 
-    const paramsKey = `${hubParam}|${sectionParam ?? ""}|${serviceParam ?? ""}`
-    if (consumedParamsKey.current === paramsKey) return
-    consumedParamsKey.current = paramsKey
-
-    if (sectionParam && serviceParam) {
-      const section = HUBS[hubParam as HubId].sections.find((s) => s.title === sectionParam)
-      const item = section?.items.find((i) => i.name === serviceParam)
-      if (section && item) {
-        const frame = requestAnimationFrame(() => {
-          handleSelectService({
-            name: item.name, price: item.price, hubId: hubParam as HubId,
-            sectionTitle: section.title, requirements: item.requirements,
-            desc: item.description, turnaround: getTurnaround(section.title, item.name),
-            tips: item.tips ? [...item.tips] : undefined,
-                    })
-        })
-        router.replace("/services", { scroll: false })
-        return () => cancelAnimationFrame(frame)
-      }
-    }
-
-    const frame = requestAnimationFrame(() => handleOpenHub(hubParam as HubId, "right"))
-    router.replace("/services", { scroll: false })
-    return () => cancelAnimationFrame(frame)
-  }, [searchParams, router])
-
-  const { closeHub, closeService } = useModalBackStack(activeHub, setActiveHub, selectedService, setSelectedService)
-
+  // Real effect now — this is the one that was silently never cleaning
+  // up and would have left the page permanently unscrollable.
   useEffect(() => {
     if (!isModalOpen) return
     const scrollY = window.scrollY
@@ -487,9 +488,9 @@ export function ServicesPage() {
                   {desktopActiveSectionData.items.map((item, iIdx) => (
                     <ServiceCard
                       key={iIdx}
-  item={item}
-  accent={desktopHubAccent}
-  onClick={() =>
+                      item={item}
+                      accent={desktopHubAccent}
+                      onClick={() =>
                         handleSelectService({
                           name: item.name,
                           price: item.price,
@@ -499,7 +500,8 @@ export function ServicesPage() {
                           desc: item.description,
                           turnaround: getTurnaround(desktopActiveSectionData.title, item.name),
                           tips: item.tips ? [...item.tips] : undefined,
-                                                })
+                          notice: item.notice,
+                        })
                       }
                     />
                   ))}
@@ -533,4 +535,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-} 
+      } 

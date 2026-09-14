@@ -65,14 +65,14 @@ export function PricingSearchResults({
               <p className="text-[0.9rem] text-muted-foreground mt-0.5">{r.hubTitle} · {r.section}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[1.05rem] font-black" style={{ color: r.accent }}>{r.price}</span>
+              <span className="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-black" style={{ backgroundColor: `color-mix(in srgb, ${r.accent} 12%, transparent)`, color: r.accent }}>{r.price}</span>
               <button
                 onClick={() => onAdd(r.hubId, r.section, r.name, r.price)}
                 aria-label={`Add ${r.name} to quote`}
-                className="w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-150 active:scale-90 hover:scale-110"
+                className="group w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-150 active:scale-90 hover:scale-110"
                 style={{ color: justAdded === key ? '#16a34a' : r.accent }}
               >
-                {justAdded === key ? <Check size={20} weight="bold" /> : <PlusCircle size={20} weight="fill" />}
+                {justAdded === key ? <Check size={20} weight="bold" /> : <PlusCircle size={20} weight="regular" className="transition-all duration-150 group-hover:fill-current group-focus-visible:fill-current" />}
               </button>
             </div>
           </div>
