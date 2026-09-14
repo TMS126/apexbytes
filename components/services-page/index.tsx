@@ -271,6 +271,10 @@ export function ServicesPage() {
     consumedParamsKey.current = paramsKey
 
     if (sectionParam && serviceParam) {
+      const currentUrl = `${window.location.pathname}${window.location.search}`
+      const hubUrl = `/services?hub=${encodeURIComponent(hubParam)}`
+      window.history.replaceState({ abModal: "hub" }, "", hubUrl)
+      window.history.pushState({ abModal: "service" }, "", currentUrl)
       const section = HUBS[hubParam as HubId].sections.find((s) => s.title === sectionParam)
       const item = section?.items.find((i) => i.name === serviceParam)
       if (section && item) {
@@ -287,6 +291,7 @@ export function ServicesPage() {
       }
     }
 
+    window.history.replaceState({ abModal: "hub" }, "", window.location.href)
     const frame = requestAnimationFrame(() => {
       setHubOriginSide("right")
       setActiveHub(hubParam as HubId)

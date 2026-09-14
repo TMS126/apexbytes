@@ -67,7 +67,7 @@ export function useModalBackStack(
 
   useEffect(() => {
     if (activeHub && !hubPushed.current) {
-      window.history.pushState({ abModal: "hub" }, "")
+      if (window.history.state?.abModal !== "hub") window.history.pushState({ abModal: "hub" }, "")
       hubPushed.current = true
     }
     if (!activeHub) hubPushed.current = false
@@ -75,7 +75,7 @@ export function useModalBackStack(
 
   useEffect(() => {
     if (selectedService && !servicePushed.current) {
-      window.history.pushState({ abModal: "service" }, "")
+      if (window.history.state?.abModal !== "service") window.history.pushState({ abModal: "service" }, "")
       servicePushed.current = true
     }
     if (!selectedService) servicePushed.current = false
