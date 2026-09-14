@@ -336,7 +336,7 @@ export function HubBrowser({
                     )}
                   >
                     <div className="overflow-hidden">
-                      <div className="pl-8 pb-2 space-y-1">
+                      <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
                         {section.items.map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)

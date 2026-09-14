@@ -16,6 +16,27 @@ import { WA, TXT, HUBS, GREETING, REPLY_TIME_NOTE, QUICK_NOTES } from "./wa-them
 
 interface Stage { name: boolean; hub: boolean; note: boolean }
 
+interface BubbleProps {
+  field: keyof Stage
+  followTyping: Stage
+  revealed: Stage
+  children: React.ReactNode
+}
+
+function ChatBubble({ field, followTyping, revealed, children }: BubbleProps) {
+  return (
+    <div
+      className={cn(
+        "relative self-start w-[92%] max-w-[92%] px-4 py-3 rounded-lg rounded-tl-none shadow-sm transition-opacity duration-200 ease-out motion-reduce:transition-none",
+        (followTyping[field] || revealed[field]) ? "opacity-100" : "opacity-0"
+      )}
+      style={{ backgroundColor: WA.bubbleIn }}
+    >
+      {followTyping[field] ? <TypingLoader subColor={WA.sub} /> : children}
+    </div>
+  )
+}
+
 interface ChatFormProps {
   dateLabel: string
   showGreeting: boolean
@@ -46,18 +67,6 @@ export function ChatForm({
 }: ChatFormProps) {
   const selectedHub = HUBS.find(h => h.id === hub)
 
-  const Bubble = ({ field, children }: { field: keyof Stage; children: React.ReactNode }) => (
-    <div
-      className={cn(
-        "relative self-start w-[92%] max-w-[92%] px-4 py-3 rounded-lg rounded-tl-none shadow-sm transition-opacity duration-200 ease-out motion-reduce:transition-none",
-        (followTyping[field] || revealed[field]) ? "opacity-100" : "opacity-0"
-      )}
-      style={{ backgroundColor: WA.bubbleIn }}
-    >
-      {followTyping[field] ? <TypingLoader subColor={WA.sub} /> : children}
-    </div>
-  )
-
   return (
     <div className="relative z-10 px-4 py-5 flex flex-col gap-3">
       <DateDivider dateLabel={dateLabel} subColor={WA.sub} />
@@ -79,7 +88,7 @@ export function ChatForm({
         </div>
       )}
 
-      <Bubble field="name">
+      <ChatBubble field="name" followTyping={followTyping} revealed={revealed}>
         <label className={cn(TXT.label, "block mb-1.5")} style={{ color: WA.sub }}>Your Name</label>
         <input
           type="text"
@@ -101,9 +110,9 @@ export function ChatForm({
           ) : <span />}
           <span className={TXT.time} style={{ color: WA.sub }}>{openTime}</span>
         </div>
-      </Bubble>
+      </ChatBubble>
 
-      <Bubble field="hub">
+      <ChatBubble field="hub" followTyping={followTyping} revealed={revealed}>
         <label className={cn(TXT.label, "block mb-1.5")} style={{ color: WA.sub }}>What do you need help with?</label>
         <div className="relative">
           {hubPicking && (
@@ -131,9 +140,9 @@ export function ChatForm({
         <div className="flex justify-end mt-1.5">
           <span className={TXT.time} style={{ color: WA.sub }}>{openTime}</span>
         </div>
-      </Bubble>
+      </ChatBubble>
 
-      <Bubble field="note">
+      <ChatBubble field="note" followTyping={followTyping} revealed={revealed}>
         <label className={cn(TXT.label, "block mb-1.5")} style={{ color: WA.sub }}>
           Anything else? <span className="normal-case font-semibold opacity-60">(optional)</span>
         </label>
@@ -174,7 +183,7 @@ export function ChatForm({
         <div className="flex justify-end mt-1.5">
           <span className={TXT.time} style={{ color: WA.sub }}>{openTime}</span>
         </div>
-      </Bubble>
+      </ChatBubble>
     </div>
   )
 }

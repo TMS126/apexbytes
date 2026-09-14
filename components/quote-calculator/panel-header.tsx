@@ -20,10 +20,13 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
   return (
     <>
       <div className="flex items-center justify-between px-5 pb-2 shrink-0" style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}>
-        <span className="font-sans font-black text-sm tracking-tight" style={{ color: titleAccent }}>{BIZ.name}</span>
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="" className="size-8 object-contain" />
+          <span className="font-sans font-black text-lg tracking-tight" style={{ color: titleAccent }}>{BIZ.name}</span>
+        </div>
         <div className="flex items-center gap-2">
           {clockLabel && (
-            <span className="text-[0.62rem] font-bold uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
+            <span className="text-[0.78rem] font-bold uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
               {clockLabel}
             </span>
           )}

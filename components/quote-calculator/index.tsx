@@ -49,6 +49,7 @@ export function QuoteCalculatorWidget() {
   const [showSavedList, setShowSavedList] = useState(false)
 
   const [miniExpanded, setMiniExpanded] = useState(false)
+  const hubSwipeStart = useRef<{ x: number; y: number } | null>(null)
 
   const [now, setNow] = useState<Date | null>(null)
   useEffect(() => {
@@ -273,6 +274,27 @@ export function QuoteCalculatorWidget() {
 
   const sendQuote = () => window.open(waLink(buildQuoteMessage(cart)), "_blank")
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
+  const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!openHub || (event.target as HTMLElement).closest("[data-calculator-item-area], button, input, textarea")) {
+      hubSwipeStart.current = null
+      return
+    }
+    const touch = event.touches[0]
+    hubSwipeStart.current = { x: touch.clientX, y: touch.clientY }
+  }
+  const handleBodyTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const start = hubSwipeStart.current
+    hubSwipeStart.current = null
+    if (!openHub || !start || (event.target as HTMLElement).closest("[data-calculator-item-area], button, input, textarea")) return
+    const touch = event.changedTouches[0]
+    const dx = touch.clientX - start.x
+    const dy = touch.clientY - start.y
+    if (Math.abs(dx) < 52 || Math.abs(dx) < Math.abs(dy) * 1.35) return
+    const currentIndex = HUB_ORDER.indexOf(openHub)
+    if (currentIndex < 0) return
+    const nextIndex = dx < 0 ? (currentIndex + 1) % HUB_ORDER.length : (currentIndex - 1 + HUB_ORDER.length) % HUB_ORDER.length
+    setOpenHub(HUB_ORDER[nextIndex])
+  }
 
   const confirmSaveQuote = () => {
     if (cart.length === 0) return
@@ -340,7 +362,9 @@ export function QuoteCalculatorWidget() {
 
           <div
             className="flex-1 overflow-y-auto overscroll-contain min-h-0"
-            style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-y" }}
+            style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
+            onTouchStart={handleBodyTouchStart}
+            onTouchEnd={handleBodyTouchEnd}
           >
             <CartSummaryBar
               isDark={isDark}
