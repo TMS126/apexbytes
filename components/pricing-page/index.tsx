@@ -13,6 +13,7 @@ import { itemHasBulk, hubHasBulk } from '@/components/quote-calculator/lib'
 import { PricingSearchInput, PricingSearchResults } from './search-bar'
 import { HubAccordionCard, HubCompactCard, HubExpandedPanel } from './hub-card'
 import { PdfPillButton } from './shared'
+import { AddOnsCard } from './addons-card'
 import { HUB_ORDER, dispatchAddToQuote, dispatchRemoveFromQuote, searchHubs } from './lib'
 import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
@@ -27,10 +28,10 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
   // Mobile accordion state
   const [openHubs, setOpenHubs] = useState<Set<HubId>>(new Set())
   // Desktop selected hub state
-  
-const [selectedHub, setSelectedHub] = useState<HubId | null>(null)
-const [hoveredHub, setHoveredHub] = useState<HubId | null>(null)
-const displayedHub = hoveredHub ?? selectedHub
+
+  const [selectedHub, setSelectedHub] = useState<HubId | null>(null)
+  const [hoveredHub, setHoveredHub] = useState<HubId | null>(null)
+  const displayedHub = hoveredHub ?? selectedHub
   const [query, setQuery] = useState('')
   const [rushNoticeDismissed, setRushNoticeDismissed] = useState(false)
   const [bulkNoticeDismissed, setBulkNoticeDismissed] = useState(false)
@@ -132,7 +133,7 @@ const displayedHub = hoveredHub ?? selectedHub
         <HubAccordionCard
           hubId={hubId}
           accent={accent}
-          isDark={isDark} 
+          isDark={isDark}
           isOpen={openHubs.has(hubId)}
           onToggle={() => toggleHub(hubId)}
           justAdded={justAdded}
@@ -185,6 +186,7 @@ const displayedHub = hoveredHub ?? selectedHub
                     Icon={Lightning}
                     collapsedLabel="Rush Fee"
                     expandedLabel="Rush Fee"
+                    isDark={isDark}
                     onDismiss={() => setRushNoticeDismissed(true)}
                   >
                     A{' '}
@@ -203,6 +205,7 @@ const displayedHub = hoveredHub ?? selectedHub
                     Icon={SealPercent}
                     collapsedLabel="Bulk Deals"
                     expandedLabel="Bulk Pricing"
+                    isDark={isDark}
                     onDismiss={() => setBulkNoticeDismissed(true)}
                   >
                     Look for the{' '}
@@ -219,10 +222,17 @@ const displayedHub = hoveredHub ?? selectedHub
             </div>
           </div>
 
+          {/* ── New Add-Ons card — own card, not a dismissible notice ── */}
+          <div className="max-w-[980px] mx-auto px-4 pb-4">
+            <ScrollBounce delay={0.08}>
+              <AddOnsCard />
+            </ScrollBounce>
+          </div>
+
           <div className="max-w-[980px] mx-auto px-4 pb-16 space-y-8">
 
             {/* ── Sticky search bar ── */}
-            <ScrollBounce delay={0.08}>
+            <ScrollBounce delay={0.1}>
               <div className="no-print sticky top-[calc(var(--nav-h,74px)+0.5rem)] z-10 bg-background max-w-2xl mx-auto">
                 <PricingSearchInput query={query} setQuery={setQuery} />
               </div>
@@ -231,7 +241,7 @@ const displayedHub = hoveredHub ?? selectedHub
             {/* ── Mobile-only: hub nav pills + expand all ── */}
             {results === null && (
               <div className="md:hidden space-y-4">
-                <ScrollBounce delay={0.1}>
+                <ScrollBounce delay={0.12}>
                   <div className="no-print">
                     <HubFilterCircles
                       activeFilter={displayedHub ?? "all"}
@@ -241,7 +251,7 @@ const displayedHub = hoveredHub ?? selectedHub
                     />
                   </div>
                 </ScrollBounce>
-                <ScrollBounce delay={0.14}>
+                <ScrollBounce delay={0.16}>
                   <div className="no-print flex justify-center">
                     <button
                       onClick={toggleAll}
@@ -293,49 +303,49 @@ const displayedHub = hoveredHub ?? selectedHub
                 </div>
 
                 {/* ── Desktop: 5-card selector row + two-card expanded panel ── */}
-<div className="hidden md:block" onMouseLeave={() => setHoveredHub(null)}>
+                <div className="hidden md:block" onMouseLeave={() => setHoveredHub(null)}>
 
-  {/* Selector row */}
-  <ScrollBounce delay={0.06}>
-    <div className="grid grid-cols-5 gap-3">
-      {HUB_ORDER.map((hubId, idx) => (
-        <ScrollBounce key={hubId} delay={idx * 0.05}>
-          <HubCompactCard
-            hubId={hubId}
-            isDark={isDark}
-            isSelected={selectedHub === hubId}
-            isActive={displayedHub === hubId}
-            hubHasBulk={hubHasBulk(hubId)}
-            onSelect={() => selectHub(hubId)}
-            onHover={() => setHoveredHub(hubId)}
-          />
-        </ScrollBounce>
-      ))}
-    </div>
-  </ScrollBounce>
+                  {/* Selector row */}
+                  <ScrollBounce delay={0.06}>
+                    <div className="grid grid-cols-5 gap-3">
+                      {HUB_ORDER.map((hubId, idx) => (
+                        <ScrollBounce key={hubId} delay={idx * 0.05}>
+                          <HubCompactCard
+                            hubId={hubId}
+                            isDark={isDark}
+                            isSelected={selectedHub === hubId}
+                            isActive={displayedHub === hubId}
+                            hubHasBulk={hubHasBulk(hubId)}
+                            onSelect={() => selectHub(hubId)}
+                            onHover={() => setHoveredHub(hubId)}
+                          />
+                        </ScrollBounce>
+                      ))}
+                    </div>
+                  </ScrollBounce>
 
-  {/* Expanded panel — two cards fused below selector */}
-  {displayedHub && (
-    <HubExpandedPanel
-      hubId={displayedHub}
-      accent={accent}
-      isDark={isDark}
-      justAdded={justAdded}
-      onAdd={(section, name, price) =>
-        handleAdd(displayedHub, section, name, price)
-      }
-      onDownload={() => handleHubDownload(displayedHub)}
-      hasBulk={(section, name) => itemHasBulk(displayedHub, section, name)}
-    />
-  )}
+                  {/* Expanded panel — two cards fused below selector */}
+                  {displayedHub && (
+                    <HubExpandedPanel
+                      hubId={displayedHub}
+                      accent={accent}
+                      isDark={isDark}
+                      justAdded={justAdded}
+                      onAdd={(section, name, price) =>
+                        handleAdd(displayedHub, section, name, price)
+                      }
+                      onDownload={() => handleHubDownload(displayedHub)}
+                      hasBulk={(section, name) => itemHasBulk(displayedHub, section, name)}
+                    />
+                  )}
 
-  {/* Hint when nothing is selected or hovered */}
-  {!displayedHub && (
-    <p className="text-center text-sm text-muted-foreground py-4 mt-4">
-      Select a hub above to see its services and pricing.
-    </p>
-  )}
-</div>
+                  {/* Hint when nothing is selected or hovered */}
+                  {!displayedHub && (
+                    <p className="text-center text-sm text-muted-foreground py-4 mt-4">
+                      Select a hub above to see its services and pricing.
+                    </p>
+                  )}
+                </div>
               </>
             )}
 
@@ -346,7 +356,7 @@ const displayedHub = hoveredHub ?? selectedHub
                   label="Download All-Hubs Pricing Catalog"
                   onClick={handleDownload}
                   size="lg"
-                  color={accent} 
+                  color={accent}
                 />
               </div>
             </ScrollBounce>
@@ -369,5 +379,4 @@ const displayedHub = hoveredHub ?? selectedHub
       </div>
     </>
   )
-}
- 
+      }
