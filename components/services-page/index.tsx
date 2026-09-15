@@ -1,39 +1,40 @@
-// components/services-page/index.tsx
 "use client"
 
-import { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+/**
+ * ════════════════════════════════════════════════════════════════════════
+ * SERVICES PAGE — the main /services page showing all 5 hub cards.
+ *
+ * NOTICE BADGE:
+ *   A small round orange "!" badge appears in the top-right corner of a
+ *   hub's card (both the desktop grid and the mobile stacked list) if ANY
+ *   service inside ANY section of that hub currently has a `notice` set.
+ *   Fully dynamic — no hub name hardcoded, just checks the data.
+ * ════════════════════════════════════════════════════════════════════════
+ */
+
+import { useState, useEffect, useRef } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { Megaphone, ArrowRight, CaretRight, CaretLeft } from "@phosphor-icons/react"
+import { Sparkle, ArrowRight, WarningCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
+import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { HubIcon, ServiceIcon } from "./shared"
+import { useModalBackStack, HubIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
-import {
-  HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService,
-  hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor,
-} from "./lib"
+import { HUB_ORDER, HUB_PREVIEWS, NOTICE, trackEvent, getTurnaround, SelectedService } from "./lib"
 import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
-import { MobileHubCard, BulkRibbon, NoticeBadge } from "./mobile-hub-card"
-
-const PILL_NEUTRAL = {
-  border: "var(--border)",
-  text: "var(--muted-foreground)",
-  hoverBg: "var(--muted)",
-}
 
 function ClosingTagline() {
   return (
     <div className="mt-2 mb-4 text-center px-6 py-6">
-      <p className="abh-eyebrow text-muted-foreground mb-3">Why ApexbytesHub</p>
-      <p className="font-sans font-black text-2xl md:text-3xl text-foreground leading-snug max-w-2xl mx-auto">
+      <p className="abh-eyebrow text-zinc-400 dark:text-zinc-500 mb-3">Why ApexbytesHub</p>
+      <p className="font-sans font-black text-2xl md:text-3xl text-zinc-900 dark:text-zinc-50 leading-snug max-w-2xl mx-auto">
         From your first CV to your next big idea — one hub does it all, right here in Bothaville.
       </p>
       <div className="abh-divider" />
@@ -41,180 +42,75 @@ function ClosingTagline() {
   )
 }
 
-function Pill({
-  icon, label, fill, isActive, onClick, size = "md",
-}: {
-  icon?: React.ReactNode
-  label: string
-  fill: string
-  isActive: boolean
-  onClick: () => void
-  size?: "md" | "sm"
-}) {
+function HubCta({ label, accent, pointsRight }: { label: string; accent: string; pointsRight: boolean }) {
   return (
-    <button
-      onClick={onClick}
-      aria-pressed={isActive}
-      className={cn(
-        "inline-flex items-center gap-2 rounded-full font-black transition-all duration-200 active:scale-95 border",
-        size === "md" ? "pl-2 pr-4 py-2 text-[0.9rem]" : "pl-2 pr-3.5 py-1.5 text-[0.82rem]"
-      )}
-      style={
-        isActive
-          ? {
-              backgroundColor: fill,
-              borderColor: fill,
-              color: "var(--on-primary-fill)",
-              boxShadow: `0 0 0 4px color-mix(in srgb, ${fill} 12%, transparent)`,
-            }
-          : {
-              backgroundColor: "transparent",
-              borderColor: PILL_NEUTRAL.border,
-              color: PILL_NEUTRAL.text,
-            }
-      }
+    <span
+      className="relative inline-flex items-center gap-1 text-[0.94rem] font-black text-zinc-400 dark:text-zinc-500 transition-colors duration-200 group-hover/hubcard:text-[var(--hub-accent)]"
+      style={{ ["--hub-accent" as any]: accent }}
     >
-      {icon && (
+      <span className="relative">
+        {label}
         <span
-          className={cn("rounded-full flex items-center justify-center shrink-0", size === "md" ? "w-6 h-6" : "w-5 h-5")}
-          style={{ backgroundColor: isActive ? "rgba(255,255,255,0.25)" : "var(--muted)" }}
-        >
-          {icon}
-        </span>
-      )}
-      {label}
-    </button>
-  )
-}
-
-function BackPill({ onClick, label }: { onClick: () => void; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className="inline-flex items-center gap-1.5 pl-2.5 pr-3.5 py-1.5 rounded-full font-black text-[0.82rem] border transition-all duration-200 active:scale-95 hover:bg-[var(--muted)]"
-      style={{ borderColor: PILL_NEUTRAL.border, color: PILL_NEUTRAL.text }}
-    >
-      <CaretLeft size={12} weight="bold" />
-      {label}
-    </button>
-  )
-}
-
-function SectionCard({
-  section, accent, onClick,
-}: {
-  section: (typeof HUBS)[HubId]["sections"][number]
-  accent: string
-  onClick: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="group/sectioncard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-5"
-    >
-      <div className="flex items-start justify-between gap-2 mb-3">
-        <h4 className="flex items-center gap-2 font-black text-[1.02rem] text-foreground leading-tight break-words">
-          <ServiceIcon name={section.items[0]?.name ?? section.title} size={20} color={accent} />
-          <span>{section.title}</span>
-        </h4>
-      </div>
-
-      {section.desc && (
-        <p className="text-[0.82rem] text-muted-foreground leading-snug mb-4">
-          {section.desc}
-        </p>
-      )}
-
-      <div className="flex items-center justify-between">
-        <span className="text-[0.78rem] font-bold" style={{ color: accent }}>
-          {section.items.length} service{section.items.length === 1 ? "" : "s"}
-        </span>
-        <span
-          className="w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
-          style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
-        >
-          <CaretRight size={12} weight="bold" />
-        </span>
-      </div>
-    </button>
-  )
-}
-
-function ServiceCard({
-  item, accent, onClick,
-}: {
-  item: { name: string; price: string; description?: string }
-  accent: string
-  onClick: () => void
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="group/svccard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-4 flex flex-col"
-    >
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
-          <ServiceIcon name={item.name} size={19} color={accent} />
-          <span className="break-words">{item.name}</span>
-        </span>
-      </div>
-
-      <p className="text-[0.8rem] text-muted-foreground leading-snug mb-3 flex-1">
-        {item.description || "Tap to view full pricing and details."}
-      </p>
-
-      <span
-        className="inline-flex items-center gap-1 text-[0.78rem] font-black transition-colors duration-200"
-        style={{ color: accent }}
-      >
-        View details
-        <ArrowRight
-          size={11}
-          weight="bold"
           aria-hidden="true"
-          className="transition-transform duration-200 group-hover/svccard:translate-x-0.5"
+          className="absolute left-0 bottom-[-2px] h-[2px] w-0 bg-current transition-[width] duration-300 ease-linear group-hover/hubcard:w-full"
         />
       </span>
-    </button>
+      <ArrowRight size={12} weight="bold" aria-hidden="true" className={cn(!pointsRight && "rotate-180")} />
+    </span>
+  )
+}
+
+function HubCornerIcon({ hubId, accent }: { hubId: HubId; accent: string }) {
+  return (
+    <div
+      className="pointer-events-none absolute -bottom-4 -right-4 w-24 h-24 flex items-center justify-center text-zinc-300 dark:text-zinc-600 opacity-90 transition-all duration-300 group-hover/hubcard:opacity-100 group-hover/hubcard:text-[var(--hub-accent)] group-hover/hubcard:scale-105"
+      style={{ ["--hub-accent" as any]: accent }}
+      aria-hidden="true"
+    >
+      <HubIcon id={hubId} size={72} color="currentColor" />
+    </div>
+  )
+}
+
+function BulkRibbon() {
+  return (
+    <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
+      <span
+        className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider text-white"
+        style={{ backgroundColor: BRAND.blue, boxShadow: "0 4px 10px -2px rgba(30,111,168,0.55), 0 2px 4px -1px rgba(0,0,0,0.25)" }}
+      >
+        Bulk
+      </span>
+    </div>
+  )
+}
+
+function NoticeBadge() {
+  return (
+    <div className="absolute top-3 right-3 z-20 pointer-events-none">
+      <div
+        className="w-7 h-7 rounded-full flex items-center justify-center"
+        style={{ backgroundColor: "#ffffff", color: TOKEN.warningBg, boxShadow: "0 2px 6px -1px rgba(0,0,0,0.2)" }}
+        aria-label="Notice for some services in this hub"
+      >
+        <WarningCircle size={16} weight="bold" aria-hidden="true" />
+      </div>
+    </div>
   )
 }
 
 export function ServicesPage() {
   const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-  const params = useParams<{ slug?: string[] }>()
-  const router = useRouter()
-  const slug = params?.slug ?? []
+  const isDark       = resolvedTheme === "dark"
+  const searchParams = useSearchParams()
+  const router       = useRouter()
+  const consumedParamsKey = useRef<string | null>(null)
 
-  // ── Route-derived state — the URL is the only source of truth ──────
-  // No useState for activeHub/selectedService, no manual history
-  // bookkeeping. Whatever the URL says IS the state; navigating deeper
-  // is router.push, and the physical back button works automatically
-  // through real browser history — nothing custom needed for it.
-  const routeHubId = slug.length >= 1 ? hubSlugToId(slug[0]) : null
-  const routeService = slug.length === 3 ? resolveServiceRoute(slug[0], slug[1], slug[2]) : null
-
-  const activeHub: HubId | null = routeService ? null : routeHubId
-  const selectedService: SelectedService | null = routeService
-    ? {
-        name: routeService.item.name,
-        price: routeService.item.price,
-        hubId: routeService.hubId,
-        sectionTitle: routeService.sectionTitle,
-        requirements: routeService.item.requirements,
-        desc: routeService.item.description,
-        turnaround: getTurnaround(routeService.sectionTitle, routeService.item.name),
-        tips: routeService.item.tips ? [...routeService.item.tips] : undefined,
-        notice: routeService.item.notice,
-      }
-    : null
-
-  const [hubOriginSide, setHubOriginSide] = useState<"left" | "right">("right")
+  const [activeHub,       setActiveHub]       = useState<HubId | null>(null)
+  const [hubOriginSide,   setHubOriginSide]   = useState<"left" | "right">("right")
+  const [selectedService, setSelectedService] = useState<SelectedService | null>(null)
   const [clientNoticeDismissed, setClientNoticeDismissed] = useState(false)
   const showBackToTop = useBackToTop()
-
-  const [desktopActiveHub, setDesktopActiveHub] = useState<HubId | null>(null)
-  const [desktopActiveSection, setDesktopActiveSection] = useState<number | null>(null)
 
   const isModalOpen = !!(activeHub || selectedService)
 
@@ -224,47 +120,15 @@ export function ServicesPage() {
       service_name:  svc.name,
       section_title: svc.sectionTitle,
     })
-    router.push(serviceRouteFor(svc.hubId, svc.sectionTitle, svc.name))
+    setSelectedService(svc)
   }
 
   const handleOpenHub = (hubId: HubId, originSide: "left" | "right") => {
     trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
     setHubOriginSide(originSide)
-    router.push(hubRouteFor(hubId))
+    setActiveHub(hubId)
   }
 
-  const handleDesktopSelectHub = (hubId: HubId) => {
-    trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
-    setDesktopActiveHub(hubId)
-    setDesktopActiveSection(null)
-  }
-
-  const handleDesktopSwitchHub = (hubId: HubId) => {
-    if (hubId === desktopActiveHub) return
-    trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
-    setDesktopActiveHub(hubId)
-    setDesktopActiveSection(null)
-  }
-
-  const handleDesktopBackToHubs = () => {
-    setDesktopActiveHub(null)
-    setDesktopActiveSection(null)
-  }
-
-  const handleDesktopSelectSection = (idx: number) => {
-    setDesktopActiveSection(idx)
-  }
-
-  const handleDesktopSwitchSection = (idx: number) => {
-    setDesktopActiveSection(idx)
-  }
-
-  const handleDesktopBackToSections = () => {
-    setDesktopActiveSection(null)
-  }
-
-  // Real effect now. Other parts of the app (e.g. the WhatsApp FAB)
-  // dispatch this to jump straight to a service.
   useEffect(() => {
     const handler = (e: Event) => {
       const svc = (e as CustomEvent<SelectedService>).detail
@@ -274,17 +138,38 @@ export function ServicesPage() {
     return () => window.removeEventListener("abh:selectService", handler)
   }, [])
 
-  // Always push to the exact parent URL — deterministic, no history-depth
-  // guessing. The physical back button is unaffected by this and keeps
-  // working correctly on its own via real route history.
-  const closeService = () => {
-    if (!selectedService) return
-    router.push(hubRouteFor(selectedService.hubId))
-  }
-  const closeHub = () => router.push("/services")
+  useEffect(() => {
+    const hubParam     = searchParams.get("hub")
+    const sectionParam = searchParams.get("section")
+    const serviceParam = searchParams.get("service")
+    if (!hubParam || !HUB_ORDER.includes(hubParam as HubId)) return
 
-  // Real effect now — this is the one that was silently never cleaning
-  // up and would have left the page permanently unscrollable.
+    const paramsKey = `${hubParam}|${sectionParam ?? ""}|${serviceParam ?? ""}`
+    if (consumedParamsKey.current === paramsKey) return
+    consumedParamsKey.current = paramsKey
+
+    if (sectionParam && serviceParam) {
+      const section = HUBS[hubParam as HubId].sections.find((s) => s.title === sectionParam)
+      const item = section?.items.find((i) => i.name === serviceParam)
+      if (section && item) {
+        handleSelectService({
+          name: item.name, price: item.price, hubId: hubParam as HubId,
+          sectionTitle: section.title, requirements: item.requirements,
+          desc: item.description, turnaround: getTurnaround(section.title, item.name),
+          tips: item.tips ? [...item.tips] : undefined,
+          notice: item.notice,
+        })
+        router.replace("/services", { scroll: false })
+        return
+      }
+    }
+
+    handleOpenHub(hubParam as HubId, "right")
+    router.replace("/services", { scroll: false })
+  }, [searchParams, router])
+
+  const { closeHub, closeService } = useModalBackStack(activeHub, setActiveHub, selectedService, setSelectedService)
+
   useEffect(() => {
     if (!isModalOpen) return
     const scrollY = window.scrollY
@@ -306,15 +191,8 @@ export function ServicesPage() {
     }
   }, [isModalOpen])
 
-  const desktopHub = desktopActiveHub ? HUBS[desktopActiveHub] : null
-  const desktopHubColors = desktopActiveHub ? HUB_COLORS[desktopActiveHub as HubKey] : null
-  const desktopHubAccent = desktopHubColors ? (isDark ? desktopHubColors.accentDark : desktopHubColors.accentLight) : "#000000"
-  const desktopHubFill = desktopHubColors ? desktopHubColors.primary : "#000000"
-  const desktopActiveSectionData =
-    desktopHub && desktopActiveSection !== null ? desktopHub.sections[desktopActiveSection] : null
-
   return (
-    <section className="min-h-screen bg-background transition-colors duration-300 pb-24 overflow-x-hidden">
+    <section className="min-h-screen bg-white dark:bg-[#081428] transition-colors duration-300 pb-24 overflow-x-hidden">
 
       <motion.div
         layout
@@ -340,15 +218,28 @@ export function ServicesPage() {
         {!clientNoticeDismissed && (
           <ScrollBounce delay={0.08} className="relative z-0 w-full flex justify-center mb-6">
             <NoticePill
-              variant="warning"
-              Icon={Megaphone}
-              collapsedLabel="Notice"
-              expandedLabel="Notice to Clients"
+              variant="success"
+              Icon={Sparkle}
+              collapsedLabel="New Add-Ons"
+              expandedLabel={NOTICE.header}
+              isDark={isDark}
               onDismiss={() => setClientNoticeDismissed(true)}
             >
-              {NOTICE.text}
-              <span className="font-black" style={{ color: TOKEN.blueText }}>{NOTICE.date}</span>
-              {NOTICE.textAfter}
+              <span className="block mb-2">{NOTICE.intro}</span>
+              <ul className="flex flex-col gap-1.5 mb-3">
+                {NOTICE.paid.map((a) => (
+                  <li key={a.name}>
+                    <span className="font-black">{a.name} — {a.price}</span>: {a.desc}
+                  </li>
+                ))}
+              </ul>
+              <span className="block font-black mb-1.5">Free — No Extra Charge:</span>
+              <ul className="flex flex-col gap-1 mb-2">
+                {NOTICE.free.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+              </ul>
+              <span className="block italic">{NOTICE.footer}</span>
             </NoticePill>
           </ScrollBounce>
         )}
@@ -359,8 +250,8 @@ export function ServicesPage() {
           </div>
         </ScrollBounce>
 
-        {/* MOBILE — all cards landscape, single column */}
-        <div className="grid md:hidden grid-cols-1 gap-4 pb-2 w-full">
+        {/* ══════════════════ DESKTOP GRID ══════════════════ */}
+        <div className="hidden md:grid md:grid-cols-6 gap-6 pb-2 w-full">
           {HUB_ORDER.map((hubId, index) => {
             const hub    = HUBS[hubId]
             const colors = HUB_COLORS[hubId as HubKey]
@@ -369,147 +260,112 @@ export function ServicesPage() {
             const hubHasNotice = hub.sections.some((s) => s.items.some((i) => !!i.notice))
 
             return (
-              <ScrollBounce key={hubId} delay={index * 0.06}>
-                <MobileHubCard
-                  hubId={hubId}
-                  hub={hub}
-                  accent={accent}
-                  primary={colors.primary}
-                  hubHasBulk={hubHasBulk}
-                  orderIndex={index}
-                  hubHasNotice={hubHasNotice}
-                  onClick={() => handleOpenHub(hubId, "right")}
-                />
-              </ScrollBounce>
+              <div
+                key={hubId}
+                className={cn(
+                  "col-span-2",
+                  index === 3 && "md:col-start-2",
+                  index === 4 && "md:col-start-4"
+                )}
+              >
+                <ScrollBounce delay={index * 0.06}>
+                  <div
+                    className="group/hubcard relative flex flex-col items-center text-center h-full rounded-[14px] bg-white dark:bg-zinc-950 abh-shadow-card overflow-hidden transition-all duration-300 hover:-translate-y-1 transform-gpu px-6 py-8 cursor-pointer"
+                    onClick={() => handleOpenHub(hubId, "right")}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === "Enter" && handleOpenHub(hubId, "right")}
+                    aria-label={`Open ${hub.title}`}
+                    style={{ ["--hub-accent" as any]: accent }}
+                  >
+                    <HubCornerIcon hubId={hubId} accent={accent} />
+                    {hubHasBulk && <BulkRibbon />}
+                    {hubHasNotice && <NoticeBadge />}
+
+                    <h3 className="relative z-10 font-sans font-black text-[1.45rem] leading-tight mb-2 text-zinc-900 dark:text-zinc-50 group-hover/hubcard:text-[var(--hub-accent)] transition-colors duration-200">
+                      {hub.title}
+                    </h3>
+
+                    <div className="relative z-10 flex flex-wrap justify-center gap-x-1.5 gap-y-0.5 mb-2.5">
+                      {HUB_PREVIEWS[hubId].map((hint, i) => (
+                        <span key={i} className="text-[0.76rem] font-medium text-zinc-400 dark:text-zinc-500">
+                          {hint}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p className="relative z-10 abh-body text-[0.88rem] line-clamp-2 leading-snug mb-6 max-w-[190px]">
+                      {hub.desc}
+                    </p>
+
+                    <div className="relative z-10 mt-auto">
+                      <HubCta label="View more" accent={accent} pointsRight={true} />
+                    </div>
+                  </div>
+                </ScrollBounce>
+              </div>
             )
           })}
         </div>
 
-        {/* ══════════════════ DESKTOP — Level 0: same minimal card style as
-            mobile, "Explore" pill bottom-center instead of a preview-hints
-            list + arrow. ══════════════════ */}
-        {!desktopActiveHub && (
-          <div className="hidden md:grid md:grid-cols-6 gap-6 pb-2 w-full">
-            {HUB_ORDER.map((hubId, index) => {
-              const hub    = HUBS[hubId]
-              const colors = HUB_COLORS[hubId as HubKey]
-              const accent = isDark ? colors.accentDark : colors.accentLight
-              const hubHasBulk = hub.sections.some((s) => sectionHasBulk(hubId, s.title, s.items))
-              const hubHasNotice = hub.sections.some((s) => s.items.some((i) => !!i.notice))
+        {/* ══════════════════ MOBILE STACKED CARDS ══════════════════ */}
+        <div className="flex md:hidden flex-col gap-6 pb-2 w-full">
+          {HUB_ORDER.map((hubId, index) => {
+            const hub    = HUBS[hubId]
+            const colors = HUB_COLORS[hubId as HubKey]
+            const accent = isDark ? colors.accentDark : colors.accentLight
+            const hubHasBulk = hub.sections.some((s) => sectionHasBulk(hubId, s.title, s.items))
+            const hubHasNotice = hub.sections.some((s) => s.items.some((i) => !!i.notice))
 
-              return (
-                <div
-                  key={hubId}
-                  className={cn(
-                    "col-span-2",
-                    index === 3 && "md:col-start-2",
-                    index === 4 && "md:col-start-4"
-                  )}
+            return (
+              <ScrollBounce key={hubId} delay={index * 0.08}>
+                <button
+                  onClick={() => handleOpenHub(hubId, "right")}
+                  aria-label={`Open ${hub.title}`}
+                  className="group/hubcard relative flex flex-col items-center text-center w-full rounded-[14px] bg-white dark:bg-zinc-950 abh-shadow-card overflow-hidden transition-all duration-200 active:scale-[0.98] transform-gpu px-6 py-8"
+                  style={{ ["--hub-accent" as any]: accent }}
                 >
-                  <ScrollBounce delay={index * 0.06}>
-                    <MobileHubCard
-                      variant="desktop"
-                      hubId={hubId}
-                      hub={hub}
-                      accent={accent}
-                      primary={colors.primary}
-                      hubHasBulk={hubHasBulk}
-                      hubHasNotice={hubHasNotice}
-                      orderIndex={index}
-                      onClick={() => handleDesktopSelectHub(hubId)}
-                    />
-                  </ScrollBounce>
-                </div>
-              )
-            })}
-          </div>
-        )}
+                  <HubCornerIcon hubId={hubId} accent={accent} />
+                  {hubHasBulk && <BulkRibbon />}
+                  {hubHasNotice && <NoticeBadge />}
 
-        {/* DESKTOP — Level 1 & 2: pills + card grids */}
-        {desktopActiveHub && desktopHub && (
-          <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
+                  <h3 className="relative z-10 font-sans font-black text-[1.45rem] leading-tight mb-2 text-zinc-900 dark:text-zinc-50 group-hover/hubcard:text-[var(--hub-accent)] transition-colors duration-200">
+                    {hub.title}
+                  </h3>
 
-            <div className="flex flex-wrap justify-center gap-2.5 mb-6">
-              <BackPill onClick={handleDesktopBackToHubs} label="All Hubs" />
-              {HUB_ORDER.map((hubId) => {
-                const colors = HUB_COLORS[hubId as HubKey]
-                const accent = isDark ? colors.accentDark : colors.accentLight
-                const isActivePill = hubId === desktopActiveHub
-                return (
-                  <Pill
-                    key={hubId}
-                    label={HUBS[hubId].title}
-                    fill={colors.primary}
-                    isActive={isActivePill}
-                    onClick={() => handleDesktopSwitchHub(hubId)}
-                    icon={<HubIcon id={hubId} size={13} color={isActivePill ? "#ffffff" : accent} />}
-                  />
-                )
-              })}
-            </div>
+                  <div className="relative z-10 flex flex-wrap justify-center gap-x-1.5 gap-y-0.5 mb-2.5">
+                    {HUB_PREVIEWS[hubId].map((hint, i) => (
+                      <span key={i} className="text-[0.76rem] font-medium text-zinc-400 dark:text-zinc-500">
+                        {hint}
+                      </span>
+                    ))}
+                  </div>
 
-            {desktopActiveSectionData && (
-              <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
-                <BackPill onClick={handleDesktopBackToSections} label="All Sections" />
-                {desktopHub.sections.map((section, sIdx) => (
-                  <Pill
-                    key={sIdx}
-                    label={section.title}
-                    fill={desktopHubFill}
-                    isActive={sIdx === desktopActiveSection}
-                    onClick={() => handleDesktopSwitchSection(sIdx)}
-                    size="sm"
-                  />
-                ))}
-              </div>
-            )}
-
-            {!desktopActiveSectionData && (
-              <div className="w-full max-w-3xl grid grid-cols-2 lg:grid-cols-3 gap-4 mb-2">
-                {desktopHub.sections.map((section, sIdx) => (
-                  <SectionCard
-                    key={sIdx}
-                    section={section}
-                    accent={desktopHubAccent}
-                    onClick={() => handleDesktopSelectSection(sIdx)}
-                  />
-                ))}
-              </div>
-            )}
-
-            {desktopActiveSectionData && (
-              <div className="w-full max-w-3xl">
-                {desktopActiveSectionData.desc && (
-                  <p className="text-center text-[0.9rem] text-muted-foreground mb-5 max-w-xl mx-auto">
-                    {desktopActiveSectionData.desc}
+                  <p className="relative z-10 abh-body text-[0.88rem] line-clamp-2 leading-snug mb-4 max-w-[260px]">
+                    {hub.desc}
                   </p>
-                )}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {desktopActiveSectionData.items.map((item, iIdx) => (
-                    <ServiceCard
-                      key={iIdx}
-                      item={item}
-                      accent={desktopHubAccent}
-                      onClick={() =>
-                        handleSelectService({
-                          name: item.name,
-                          price: item.price,
-                          hubId: desktopActiveHub,
-                          sectionTitle: desktopActiveSectionData.title,
-                          requirements: item.requirements,
-                          desc: item.description,
-                          turnaround: getTurnaround(desktopActiveSectionData.title, item.name),
-                          tips: item.tips ? [...item.tips] : undefined,
-                          notice: item.notice,
-                        })
-                      }
+
+                  <div className="relative z-10 flex flex-col items-center gap-1.5">
+                    <span className="inline-flex items-center gap-1 text-[0.88rem] font-black text-zinc-400 dark:text-zinc-500 group-hover/hubcard:text-[var(--hub-accent)] transition-colors duration-200">
+                      <span
+                        className="border-b-2 border-dotted pb-0.5 opacity-45 group-hover/hubcard:opacity-100 transition-opacity duration-200"
+                        style={{ borderColor: accent }}
+                      >
+                        Explore
+                      </span>
+                      <ArrowRight size={12} weight="bold" aria-hidden="true" />
+                    </span>
+                    <span
+                      className="block w-1.5 h-1.5 rounded-full opacity-0 group-hover/hubcard:opacity-100 transition-opacity duration-200"
+                      style={{ backgroundColor: accent }}
+                      aria-hidden="true"
                     />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+                  </div>
+                </button>
+              </ScrollBounce>
+            )
+          })}
+        </div>
 
         <ScrollBounce className="w-full mt-14 md:mt-20">
           <ClosingTagline />
@@ -535,4 +391,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-      } 
+        }
