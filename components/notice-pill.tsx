@@ -21,6 +21,7 @@ export function NoticePill({
   Icon,
   collapsedLabel,
   expandedLabel,
+  isDark,
   children,
   onDismiss,
   className,
@@ -29,6 +30,7 @@ export function NoticePill({
   Icon: React.ElementType
   collapsedLabel: string
   expandedLabel: string
+  isDark: boolean
   children: React.ReactNode
   onDismiss?: () => void
   className?: string
@@ -36,8 +38,6 @@ export function NoticePill({
   const [expanded, setExpanded] = useState(false)
 
   const iconColor = VARIANT_TEXT[variant]
-  // Variant accents remain identity cues, while the surface/text pair is
-  // always readable in both themes.
   const headerColor = VARIANT_TEXT[variant]
 
   return (
@@ -50,7 +50,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full border border-border bg-[var(--notice-surface)]"
+            className="inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
           >
             <button
               type="button"
@@ -70,7 +70,7 @@ export function NoticePill({
                 type="button"
                 onClick={onDismiss}
                 aria-label={`Dismiss: ${collapsedLabel}`}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
               >
                 <X size={13} weight="bold" aria-hidden="true" />
               </button>
@@ -85,7 +85,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="abh-shadow-badge relative w-full max-w-[440px] rounded-[14px] border border-border bg-[var(--notice-surface)]"
+            className="relative w-full max-w-[440px] rounded-[14px] bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
           >
             <button
               type="button"
@@ -102,7 +102,7 @@ export function NoticePill({
                 <span className="text-[0.75rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
                   {expandedLabel}
                 </span>
-                <span className="text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
+                <span className="text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200 max-h-[55vh] overflow-y-auto pr-1">
                   {children}
                 </span>
               </span>
@@ -113,7 +113,7 @@ export function NoticePill({
                 type="button"
                 onClick={onDismiss}
                 aria-label={`Dismiss: ${expandedLabel}`}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-400 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
               >
                 <X size={14} weight="bold" aria-hidden="true" />
               </button>
@@ -123,5 +123,4 @@ export function NoticePill({
       </AnimatePresence>
     </motion.div>
   )
-} 
-
+                } 
