@@ -11,7 +11,7 @@
 // is the one minimal "seal orange" accent, always visible, matching the
 // reference screenshot.
 
-import { Printer, FileText, PaintBrush, Globe, Desktop, ArrowUpRight } from "@phosphor-icons/react"
+import { Printer, PaintBrush, Globe, Desktop, ArrowUpRight } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, TOKEN } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"

@@ -8,7 +8,6 @@
 
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowCounterClockwise, ArrowsOutSimple, ArrowsInSimple, FloppyDisk, Trash } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
 import { HubId } from "@/lib/data"
 import { CartItem, getDisplayName } from "./lib"
 import { CartItemChip } from "./cart-item-chip"

@@ -15,14 +15,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Cache hashed static files hard — filenames change automatically when you update code,
-        // so "forever" caching here is safe and just makes repeat visits instant
-        source: '/_next/static/:path*',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
-      {
         source: '/(.*)',
         headers: [
           { key: 'X-Content-Type-Options',  value: 'nosniff' },

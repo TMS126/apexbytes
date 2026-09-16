@@ -3,7 +3,7 @@
 import { ImageResponse } from 'next/og'
 import { BIZ, OG_COLORS } from '@/lib/brand'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 

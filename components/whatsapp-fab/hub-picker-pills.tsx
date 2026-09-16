@@ -9,7 +9,6 @@
    the resting state stays calm and consistent.
    ============================================================ */
 
-import { cn } from "@/lib/utils"
 import { HUBS, HUB_PILL_COLOR } from "./wa-theme"
 
 interface HubPickerPillsProps {
