@@ -353,11 +353,11 @@ export function ServicesPage() {
                     <span>Paid add-ons</span>
                     <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                   </summary>
-                  <ul className="grid gap-2 px-3.5 pb-3.5">
+                  <ul className="grid grid-cols-1 gap-2 px-3.5 pb-3.5 sm:grid-cols-2">
                     {NOTICE.paid.map((a) => (
-                      <li key={a.name} className="rounded-lg bg-white/80 px-3 py-2.5 dark:bg-zinc-950/70">
+                      <li key={a.name} className="flex min-h-[92px] flex-col rounded-lg bg-white/80 px-3 py-2.5 dark:bg-zinc-950/70">
                         <div className="flex items-start justify-between gap-3">
-                          <span className="font-black text-zinc-800 dark:text-zinc-100">{a.name}</span>
+                          <span className="min-w-0 text-[0.84rem] font-black leading-tight text-zinc-800 dark:text-zinc-100">{a.name}</span>
                           <span className="shrink-0 text-[0.78rem] font-black text-emerald-700 dark:text-emerald-400">{a.price}</span>
                         </div>
                         <p className="mt-1 text-[0.78rem] font-medium leading-snug text-zinc-500 dark:text-zinc-400">{a.desc}</p>
@@ -370,9 +370,9 @@ export function ServicesPage() {
                     <span>Free add-ons</span>
                     <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                   </summary>
-                  <ul className="grid gap-2 px-3.5 pb-3.5">
+                  <ul className="grid grid-cols-1 gap-2 px-3.5 pb-3.5 sm:grid-cols-2">
                     {NOTICE.free.map((f) => (
-                      <li key={f} className="flex items-start gap-2 rounded-lg bg-white/80 px-3 py-2.5 text-[0.82rem] font-semibold text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200">
+                      <li key={f} className="flex min-h-10 items-start gap-2 rounded-lg bg-white/80 px-3 py-2.5 text-[0.82rem] font-semibold leading-snug text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200">
                         <CheckCircle size={14} weight="bold" className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                         <span>{f}</span>
                       </li>
