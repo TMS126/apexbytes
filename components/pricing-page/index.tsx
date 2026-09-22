@@ -18,6 +18,7 @@ import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
 import { NoticePill } from '@/components/notice-pill'
 import { HubFilterCircles } from '@/components/gallery-page'
+import { AddOnsCard } from './addons-card'
 
 export default function PricingPage({ nonce }: { nonce?: string }) {
   const { resolvedTheme } = useTheme()
@@ -339,8 +340,12 @@ const displayedHub = hoveredHub ?? selectedHub
               </>
             )}
 
-            {/* ── Download full catalog ── */}
-            <ScrollBounce delay={0.24}>
+          <ScrollBounce delay={0.22}>
+            <AddOnsCard />
+          </ScrollBounce>
+
+          {/* ── Download full catalog ── */}
+          <ScrollBounce delay={0.24}>
               <div className="no-print flex justify-center pt-2">
                 <PdfPillButton
                   label="Download All-Hubs Pricing Catalog"
