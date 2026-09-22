@@ -346,21 +346,21 @@ export function ServicesPage() {
               expandedLabel="Notice to Clients"
               onDismiss={() => setClientNoticeDismissed(true)}
             >
-              <p className="mb-3 text-[0.86rem] leading-relaxed text-zinc-600 dark:text-zinc-300">{NOTICE.intro}</p>
+              <p className="mb-3 text-[0.92rem] leading-relaxed text-zinc-600 dark:text-zinc-300 md:text-[0.8rem]">{NOTICE.intro}</p>
               <div className="overflow-hidden rounded-xl border border-zinc-200/80 bg-zinc-50/80 dark:border-zinc-700/80 dark:bg-zinc-900/70">
                 <details open className="group border-b border-zinc-200/80 dark:border-zinc-700/80">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] font-black uppercase tracking-[0.12em] text-zinc-700 dark:text-zinc-200">
                     <span>Paid add-ons</span>
                     <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                   </summary>
-                  <ul className="grid grid-cols-2 gap-2 px-3.5 pb-3.5">
+                  <ul className="grid grid-cols-1 gap-2 px-3.5 pb-3.5 md:grid-cols-2 md:gap-x-6 md:gap-y-1.5">
                     {NOTICE.paid.map((a) => (
-                      <li key={a.name} className="flex min-h-[92px] min-w-0 flex-col rounded-lg bg-white/80 px-2.5 py-2.5 sm:px-3 dark:bg-zinc-950/70">
+                      <li key={a.name} className="flex min-h-[92px] min-w-0 flex-col rounded-lg bg-white/80 px-3 py-3 dark:bg-zinc-950/70 md:min-h-[72px] md:rounded-none md:border-b md:border-zinc-200/70 md:bg-transparent md:px-0 md:py-2 md:dark:border-zinc-700/70 md:dark:bg-transparent">
                         <div className="flex items-start justify-between gap-3">
-                          <span className="min-w-0 text-[0.84rem] font-black leading-tight text-zinc-800 dark:text-zinc-100">{a.name}</span>
+                          <span className="min-w-0 text-[0.88rem] font-black leading-tight text-zinc-800 dark:text-zinc-100 md:text-[0.78rem]">{a.name}</span>
                           <span className="shrink-0 text-[0.78rem] font-black text-emerald-700 dark:text-emerald-400">{a.price}</span>
                         </div>
-                        <p className="mt-1 text-[0.78rem] font-medium leading-snug text-zinc-500 dark:text-zinc-400">{a.desc}</p>
+                        <p className="mt-1 text-[0.82rem] font-medium leading-snug text-zinc-500 dark:text-zinc-400 md:text-[0.7rem]">{a.desc}</p>
                       </li>
                     ))}
                   </ul>
@@ -370,9 +370,9 @@ export function ServicesPage() {
                     <span>Free add-ons</span>
                     <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                   </summary>
-                  <ul className="grid grid-cols-2 gap-2 px-3.5 pb-3.5">
+                  <ul className="grid grid-cols-1 gap-2 px-3.5 pb-3.5 md:grid-cols-2 md:gap-x-6 md:gap-y-1.5">
                     {NOTICE.free.map((f) => (
-                      <li key={f} className="flex min-h-10 min-w-0 items-start gap-1.5 rounded-lg bg-white/80 px-2.5 py-2.5 text-[0.78rem] font-semibold leading-snug text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200 sm:gap-2 sm:px-3 sm:text-[0.82rem]">
+                      <li key={f} className="flex min-h-10 min-w-0 items-start gap-2 rounded-lg bg-white/80 px-3 py-2.5 text-[0.86rem] font-semibold leading-snug text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200 md:min-h-0 md:rounded-none md:border-b md:border-zinc-200/70 md:bg-transparent md:px-0 md:py-1.5 md:text-[0.7rem] md:dark:border-zinc-700/70 md:dark:bg-transparent">
                         <CheckCircle size={14} weight="bold" className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                         <span>{f}</span>
                       </li>

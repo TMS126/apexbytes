@@ -85,7 +85,7 @@ export function NoticePill({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="abh-shadow-badge relative w-full max-w-[440px] rounded-[14px] border border-border bg-[var(--notice-surface)]"
+            className="abh-shadow-badge relative w-full max-w-[440px] rounded-[14px] border border-border bg-[var(--notice-surface)] md:max-w-3xl lg:max-w-5xl"
           >
             <div className={cn("flex items-start gap-3 text-left w-full pl-4 pt-4", onDismiss ? "pr-10" : "pr-4")}>
               <Icon size={20} weight="bold" style={{ color: iconColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
