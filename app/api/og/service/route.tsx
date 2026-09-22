@@ -5,7 +5,7 @@ import { NextRequest } from 'next/server'
 import { HUBS, type HubId } from '@/lib/data'
 import { BIZ, HUB_HEX_COLORS, OG_COLORS } from '@/lib/brand'
 
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 const HUB_ORDER: HubId[] = ['print', 'doc', 'design', 'eservice', 'tech']

@@ -22,6 +22,7 @@
  */
 
 import { HUBS, HubId, TURNAROUND, TURNAROUND_OVERRIDE } from "@/lib/data"
+import { ADD_ONS_EFFECTIVE_DATE, ADD_ONS_FOOTER, FREE_ADD_ONS, PAID_ADD_ONS } from "@/lib/add-ons"
 
 // ─── Constants ────────────────────────────────────────────────────────────
 export const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
@@ -56,9 +57,12 @@ export const HUB_ACCEPT: Record<HubId, string> = {
 }
 
 export const NOTICE = {
-  text:      "",
-  date:      "",
-  textAfter: "Add-ons and minor price adjustments are now live as of 15 September 2026. Thank you so much for your patience and continued support — it truly means everything to us.",
+  header: "Add-ons and minor price adjustments",
+  intro: "A few optional extras are now available when you need a little more from your service.",
+  date: ADD_ONS_EFFECTIVE_DATE,
+  paid: PAID_ADD_ONS,
+  free: FREE_ADD_ONS,
+  footer: `${ADD_ONS_FOOTER} Thank you for your continued support.`,
 }
 
 // ─── Turnaround lookup ────────────────────────────────────────────────────
