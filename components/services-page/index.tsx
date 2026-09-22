@@ -15,7 +15,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { Sparkle, ArrowRight, WarningCircle } from "@phosphor-icons/react"
+import { Sparkle, ArrowRight, WarningCircle, CaretDown, CheckCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { BRAND, TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
@@ -225,21 +225,41 @@ export function ServicesPage() {
               isDark={isDark}
               onDismiss={() => setClientNoticeDismissed(true)}
             >
-              <span className="block mb-2">{NOTICE.intro}</span>
-              <ul className="flex flex-col gap-1.5 mb-3">
-                {NOTICE.paid.map((a) => (
-                  <li key={a.name}>
-                    <span className="font-black">{a.name} — {a.price}</span>: {a.desc}
-                  </li>
-                ))}
-              </ul>
-              <span className="block font-black mb-1.5">Free — No Extra Charge:</span>
-              <ul className="flex flex-col gap-1 mb-2">
-                {NOTICE.free.map((f) => (
-                  <li key={f}>{f}</li>
-                ))}
-              </ul>
-              <span className="block italic">{NOTICE.footer}</span>
+              <p className="mb-3 text-[0.86rem] leading-relaxed text-zinc-600 dark:text-zinc-300">{NOTICE.intro}</p>
+              <div className="overflow-hidden rounded-xl border border-zinc-200/80 bg-zinc-50/80 dark:border-zinc-700/80 dark:bg-zinc-900/70">
+                <details open className="group border-b border-zinc-200/80 last:border-b-0 dark:border-zinc-700/80">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] font-black uppercase tracking-[0.12em] text-zinc-700 marker:hidden dark:text-zinc-200">
+                    <span>Paid add-ons</span>
+                    <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+                  </summary>
+                  <ul className="grid gap-2 px-3.5 pb-3.5">
+                    {NOTICE.paid.map((a) => (
+                      <li key={a.name} className="rounded-lg bg-white/80 px-3 py-2.5 dark:bg-zinc-950/70">
+                        <div className="flex items-start justify-between gap-3">
+                          <span className="font-black text-zinc-800 dark:text-zinc-100">{a.name}</span>
+                          <span className="shrink-0 text-[0.78rem] font-black text-emerald-700 dark:text-emerald-400">{a.price}</span>
+                        </div>
+                        <p className="mt-1 text-[0.78rem] font-medium leading-snug text-zinc-500 dark:text-zinc-400">{a.desc}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+                <details open className="group">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] font-black uppercase tracking-[0.12em] text-zinc-700 marker:hidden dark:text-zinc-200">
+                    <span>Free add-ons</span>
+                    <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+                  </summary>
+                  <ul className="grid gap-2 px-3.5 pb-3.5">
+                    {NOTICE.free.map((f) => (
+                      <li key={f} className="flex items-start gap-2 rounded-lg bg-white/80 px-3 py-2.5 text-[0.82rem] font-semibold text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200">
+                        <CheckCircle size={14} weight="bold" className="mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </div>
+              <p className="mt-3 text-[0.78rem] font-medium italic text-zinc-500 dark:text-zinc-400">{NOTICE.footer}</p>
             </NoticePill>
           </ScrollBounce>
         )}

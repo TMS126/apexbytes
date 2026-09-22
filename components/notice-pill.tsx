@@ -87,26 +87,25 @@ export function NoticePill({
             transition={{ duration: 0.22, ease: "easeOut" }}
             className="relative w-full max-w-[440px] rounded-[14px] bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
           >
-            <button
-              type="button"
-              onClick={() => setExpanded(false)}
-              aria-expanded={true}
-              aria-label={`Collapse: ${expandedLabel}`}
-              className={cn(
-                "flex items-start gap-3 text-left w-full pl-4 py-4 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-400",
-                onDismiss ? "pr-10" : "pr-4"
-              )}
-            >
+            <div className="flex items-start gap-3 px-4 pt-4 text-left">
               <Icon size={20} weight="bold" style={{ color: iconColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
-              <span className="flex flex-col gap-1">
-                <span className="text-[0.75rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
-                  {expandedLabel}
-                </span>
-                <span className="text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200 max-h-[55vh] overflow-y-auto pr-1">
-                  {children}
-                </span>
-              </span>
-            </button>
+              <div className="min-w-0 flex-1">
+                <button
+                  type="button"
+                  onClick={() => setExpanded(false)}
+                  aria-expanded={true}
+                  aria-label={`Collapse: ${expandedLabel}`}
+                  className="rounded-[8px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-400"
+                >
+                  <span className="text-[0.75rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
+                    {expandedLabel}
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div className="px-4 pb-4 pt-2 text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200 max-h-[55vh] overflow-y-auto">
+              {children}
+            </div>
 
             {onDismiss && (
               <button
