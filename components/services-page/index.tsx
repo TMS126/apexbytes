@@ -74,14 +74,7 @@ function Pill({
             }
       }
     >
-      {icon && (
-        <span
-          className={cn("rounded-full flex items-center justify-center shrink-0", size === "md" ? "w-6 h-6" : "w-5 h-5")}
-          style={{ backgroundColor: isActive ? "rgba(255,255,255,0.25)" : "var(--muted)" }}
-        >
-          {icon}
-        </span>
-      )}
+      {icon && <span className="shrink-0">{icon}</span>}
       {label}
     </button>
   )
@@ -129,12 +122,13 @@ function SectionCard({
         <span className="text-[0.78rem] font-bold" style={{ color: accent }}>
           {section.items.length} service{section.items.length === 1 ? "" : "s"}
         </span>
-        <span
-          className="w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
-          style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
-        >
-          <CaretRight size={12} weight="bold" />
-        </span>
+        <CaretRight
+          size={15}
+          weight="bold"
+          className="transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
+          style={{ color: accent }}
+          aria-hidden="true"
+        />
       </div>
     </button>
   )
