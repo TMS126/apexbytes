@@ -31,6 +31,7 @@ export function NoticePill({
   expandedLabel: string
   children: React.ReactNode
   onDismiss?: () => void
+  isDark?: boolean
   className?: string
 }) {
   const [expanded, setExpanded] = useState(false)
