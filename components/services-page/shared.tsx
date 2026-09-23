@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
 import { ServiceGlyph } from "@/lib/service-icons"
+import type { SelectedService } from "./lib"
 
 export function HubIcon({ id, size = 28, color, weight = "regular" }: { id: HubId; size?: number; color?: string; weight?: "thin" | "light" | "regular" | "bold" | "fill" | "duotone" }) {
   const p = { size, weight, color: color ?? "currentColor", "aria-hidden": true }
@@ -44,6 +45,48 @@ export function DragHandle() {
 
 export function shouldDismissOnDrag(info: PanInfo) {
   return info.offset.y > 120 || info.velocity.y > 600
+}
+
+export function useModalBackStack(
+  activeHub: HubId | null,
+  setActiveHub: (value: HubId | null) => void,
+  selectedService: SelectedService | null,
+  setSelectedService: (value: SelectedService | null) => void,
+) {
+  const hubPushed = useRef(false)
+  const servicePushed = useRef(false)
+
+  useEffect(() => {
+    if (activeHub && !hubPushed.current) {
+      if (window.history.state?.abModal !== "hub") window.history.pushState({ abModal: "hub" }, "")
+      hubPushed.current = true
+    }
+    if (selectedService && !servicePushed.current) {
+      if (window.history.state?.abModal !== "service") window.history.pushState({ abModal: "service" }, "")
+      servicePushed.current = true
+    }
+    if (!activeHub) hubPushed.current = false
+    if (!selectedService) servicePushed.current = false
+  }, [activeHub, selectedService])
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (selectedService) {
+        setSelectedService(null)
+        servicePushed.current = false
+      } else if (activeHub) {
+        setActiveHub(null)
+        hubPushed.current = false
+      }
+    }
+    window.addEventListener("popstate", handlePopState)
+    return () => window.removeEventListener("popstate", handlePopState)
+  }, [activeHub, selectedService, setActiveHub, setSelectedService])
+
+  return {
+    closeHub: () => { setActiveHub(null); if (window.history.state?.abModal === "hub") window.history.back() },
+    closeService: () => { setSelectedService(null); if (window.history.state?.abModal === "service") window.history.back() },
+  }
 }
 
 export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTMLElement | null>) {

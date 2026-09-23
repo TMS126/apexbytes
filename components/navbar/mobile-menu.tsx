@@ -3,7 +3,7 @@
 
 import { useEffect, useRef } from "react"
 import Image from "next/image"
-import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
+import { NAV_ITEMS, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
 // FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
