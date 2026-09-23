@@ -17,6 +17,9 @@ html[data-scroll-locked] body { overflow: hidden; }
 [class~="text-blue-900"], [class~="text-blue-800"], [class~="text-blue-700"], [class~="text-blue-600"], [class~="text-blue-500"] { color: var(--link-foreground) !important; }
 [class~="text-orange-900"], [class~="text-orange-800"], [class~="text-orange-700"], [class~="text-orange-600"], [class~="text-orange-500"] { color: var(--brand-orange-text) !important; }
 
+.services-page-icon { color: var(--neutral-icon-light); }
+.dark .services-page-icon { color: var(--neutral-icon-dark); }
+
 img, video, svg, canvas { max-width: 100%; display: block; }
 input, button, textarea, select { font: inherit; max-width: 100%; }
 

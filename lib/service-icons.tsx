@@ -28,7 +28,7 @@ export function serviceIconName(label: string): keyof typeof Phosphor {
   return key ? ICONS[key] : "FileText"
 }
 
-export function ServiceGlyph({ label, size = 19, color }: { label: string; size?: number; color?: string }) {
+export function ServiceGlyph({ label, size = 19, color, className }: { label: string; size?: number; color?: string; className?: string }) {
   const Icon = Phosphor[serviceIconName(label)] as React.ElementType
-  return <Icon size={size} weight="regular" color={color ?? "currentColor"} aria-hidden="true" />
+  return <Icon size={size} weight="regular" color={color ?? "currentColor"} className={className} aria-hidden="true" />
 }

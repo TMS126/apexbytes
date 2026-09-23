@@ -110,7 +110,7 @@ function SectionCard({
     >
       <div className="flex items-start justify-between gap-2 mb-3">
         <h4 className="flex items-center gap-2 font-black text-[1.02rem] text-foreground leading-tight break-words">
-          <ServiceIcon name={section.title} size={20} color={accent} />
+          <ServiceIcon name={section.title} size={20} />
           <span>{section.title}</span>
         </h4>
       </div>
@@ -152,7 +152,7 @@ function ServiceCard({
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
-          <ServiceIcon name={item.name} size={19} color={accent} />
+          <ServiceIcon name={item.name} size={19} />
           <span className="break-words">{item.name}</span>
         </span>
       </div>
