@@ -22,7 +22,7 @@
  */
 
 import { HUBS, HubId, TURNAROUND, TURNAROUND_OVERRIDE } from "@/lib/data"
-import { PAID_ADD_ONS, FREE_ADD_ONS, ADD_ONS_FOOTER, ADD_ONS_EFFECTIVE_DATE } from "@/lib/add-ons"
+import { ADD_ONS_EFFECTIVE_DATE, ADD_ONS_FOOTER, FREE_ADD_ONS, PAID_ADD_ONS } from "@/lib/add-ons"
 
 // ─── Constants ────────────────────────────────────────────────────────────
 export const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
@@ -56,14 +56,13 @@ export const HUB_ACCEPT: Record<HubId, string> = {
   tech: ALLOWED_UPLOAD_EXTENSIONS,
 }
 
-// Sourced from lib/add-ons.ts so this notice and the Pricing-page card
-// can never say two different things.
 export const NOTICE = {
-  header: "New Add-Ons & Free Features",
-  intro: `Effective ${ADD_ONS_EFFECTIVE_DATE} — new add-ons to make your prints better:`,
+  header: "Add-ons and minor price adjustments",
+  intro: "A few optional extras are now available when you need a little more from your service.",
+  date: ADD_ONS_EFFECTIVE_DATE,
   paid: PAID_ADD_ONS,
   free: FREE_ADD_ONS,
-  footer: ADD_ONS_FOOTER,
+  footer: `${ADD_ONS_FOOTER} Thank you for your continued support.`,
 }
 
 // ─── Turnaround lookup ────────────────────────────────────────────────────
@@ -170,11 +169,15 @@ export function buildSearchIndex(): SearchableService[] {
 }
 
 // ─── SelectedService ──────────────────────────────────────────────────────
+// This is the shape passed from HubModal -> ServicesPage -> ServiceDetailModal
+// whenever someone taps a service. `tips` and `notice` are both optional —
+// most services have neither, some have tips, and a rare few (like an
+// NSFAS item during a known delay) also carry a `notice`.
 export interface SelectedService {
   name: string; price: string; hubId: HubId
   sectionTitle: string; requirements: string[]; desc?: string; turnaround?: string
   tips?: string[]
-  notice?: string
+  notice?: string   // Set only when this specific service has an active warning to show
 }
 
 // ─── Routing: slugs ─────────────────────────────────────────────────────
@@ -192,6 +195,8 @@ interface SlugSection {
 }
 type SlugTable = Record<HubId, Map<string, SlugSection>>
 
+// Built once at module load, from the real data — a slug can only ever
+// point at the exact section/item object that produced it.
 const SLUG_TABLE: SlugTable = (() => {
   const table = {} as SlugTable
   HUB_ORDER.forEach((hubId) => {
@@ -228,6 +233,7 @@ export function hubRouteFor(hubId: HubId): string {
   return `/services/${hubId}`
 }
 
+/** Resolves route segments back to the exact section/item objects, or null if any segment doesn't match. Never throws — callers treat null as "not found" (404 / fall back to the catalog). */
 export function resolveServiceRoute(
   hubSlug: string,
   sectionSlug: string,
@@ -240,4 +246,4 @@ export function resolveServiceRoute(
   const item = section.items.get(serviceSlug)
   if (!item) return null
   return { hubId, sectionTitle: section.title, item }
-          }
+}

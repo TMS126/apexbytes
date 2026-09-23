@@ -13,12 +13,12 @@ import { itemHasBulk, hubHasBulk } from '@/components/quote-calculator/lib'
 import { PricingSearchInput, PricingSearchResults } from './search-bar'
 import { HubAccordionCard, HubCompactCard, HubExpandedPanel } from './hub-card'
 import { PdfPillButton } from './shared'
-import { AddOnsCard } from './addons-card'
 import { HUB_ORDER, dispatchAddToQuote, dispatchRemoveFromQuote, searchHubs } from './lib'
 import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
 import { NoticePill } from '@/components/notice-pill'
 import { HubFilterCircles } from '@/components/gallery-page'
+import { AddOnsCard } from './addons-card'
 
 export default function PricingPage({ nonce }: { nonce?: string }) {
   const { resolvedTheme } = useTheme()
@@ -349,8 +349,12 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
               </>
             )}
 
-            {/* ── Download full catalog ── */}
-            <ScrollBounce delay={0.24}>
+          <ScrollBounce delay={0.22}>
+            <AddOnsCard />
+          </ScrollBounce>
+
+          {/* ── Download full catalog ── */}
+          <ScrollBounce delay={0.24}>
               <div className="no-print flex justify-center pt-2">
                 <PdfPillButton
                   label="Download All-Hubs Pricing Catalog"
