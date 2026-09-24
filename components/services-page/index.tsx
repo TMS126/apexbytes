@@ -459,39 +459,46 @@ export function ServicesPage() {
         {desktopActiveHub && desktopHub && (
           <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
 
-            <div className="flex flex-wrap justify-center gap-2.5 mb-6">
-              <BackPill onClick={handleDesktopBackToHubs} label="All Hubs" />
+            <nav aria-label="Service hubs" className="mb-7 flex flex-wrap items-end justify-center gap-x-7 gap-y-3">
+              <button type="button" onClick={handleDesktopBackToHubs} className="group inline-flex items-center gap-1.5 pb-2 text-[0.78rem] font-bold text-muted-foreground transition-colors hover:text-foreground">
+                <CaretLeft size={14} weight="bold" aria-hidden="true" />
+                All hubs
+              </button>
               {HUB_ORDER.map((hubId) => {
                 const colors = HUB_COLORS[hubId as HubKey]
                 const accent = isDark ? colors.accentDark : colors.accentLight
-                const isActivePill = hubId === desktopActiveHub
+                const isActiveHub = hubId === desktopActiveHub
                 return (
-                  <Pill
+                  <button
                     key={hubId}
-                    label={HUBS[hubId].title}
-                    fill={colors.primary}
-                    isActive={isActivePill}
+                    type="button"
+                    aria-current={isActiveHub ? "page" : undefined}
                     onClick={() => handleDesktopSwitchHub(hubId)}
-                    icon={<HubIcon id={hubId} size={13} color={isActivePill ? "#ffffff" : (isDark ? colors.accentLight : colors.primary)} />}
-                  />
+                    className={cn("group relative inline-flex items-center gap-2 pb-2 text-[0.82rem] font-black transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", isActiveHub ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")}
+                    style={{ color: isActiveHub ? accent : undefined, ['--underline-color' as string]: accent }}
+                  >
+                    <HubIcon id={hubId} size={20} color="currentColor" />
+                    {HUBS[hubId].title}
+                  </button>
                 )
               })}
-            </div>
+            </nav>
 
             {desktopActiveSectionData && (
-              <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
-                <BackPill onClick={handleDesktopBackToSections} label="All Sections" />
-                {desktopHub.sections.map((section, sIdx) => (
-                  <Pill
-                    key={sIdx}
-                    label={section.title}
-                    fill={desktopHubFill}
-                    isActive={sIdx === desktopActiveSection}
-                    onClick={() => handleDesktopSwitchSection(sIdx)}
-                    size="sm"
-                  />
-                ))}
-              </div>
+              <nav aria-label="Service sections" className="mb-8 flex flex-wrap items-end justify-center gap-x-6 gap-y-2">
+                <button type="button" onClick={handleDesktopBackToSections} className="inline-flex items-center gap-1.5 pb-2 text-[0.75rem] font-bold text-muted-foreground transition-colors hover:text-foreground">
+                  <CaretLeft size={14} weight="bold" aria-hidden="true" />
+                  All sections
+                </button>
+                {desktopHub.sections.map((section, sIdx) => {
+                  const selected = sIdx === desktopActiveSection
+                  return (
+                    <button key={section.title} type="button" aria-current={selected ? "page" : undefined} onClick={() => handleDesktopSwitchSection(sIdx)} className={cn("relative pb-2 text-[0.8rem] font-black transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", selected ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")} style={{ color: selected ? desktopHubAccent : undefined, ['--underline-color' as string]: desktopHubAccent }}>
+                      {section.title}
+                    </button>
+                  )
+                })}
+              </nav>
             )}
 
             {!desktopActiveSectionData && (

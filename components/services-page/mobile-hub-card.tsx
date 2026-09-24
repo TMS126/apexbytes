@@ -22,9 +22,9 @@ export const HUB_ICON: Record<HubId, React.ElementType> = {
 // hub-colored" rule.
 export function BulkRibbon({ accent }: { accent: string }) {
   return (
-    <div className="absolute top-4 -right-8 rotate-45 z-20 pointer-events-none">
+    <div className="absolute top-3 right-3 z-20 pointer-events-none">
       <span
-        className="block w-28 text-center py-0.5 text-[0.62rem] font-black uppercase tracking-wider abh-shadow-badge border"
+        className="block rounded-full px-3 py-1 text-center text-[0.62rem] font-black uppercase tracking-wider abh-shadow-badge border"
         style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
       >
         Bulk
@@ -52,7 +52,7 @@ export function NoticeBadge() {
 function BulkEdgePill({ accent }: { accent: string }) {
   return (
     <span
-      className="absolute left-1/2 -bottom-2.5 -translate-x-1/2 z-20 px-3 py-0.5 rounded-full text-[0.68rem] font-medium whitespace-nowrap abh-shadow-badge border"
+      className="absolute bottom-3 right-3 z-20 px-3 py-1 rounded-full text-[0.68rem] font-medium whitespace-nowrap abh-shadow-badge border"
       style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
     >
       Bulk pricing
@@ -144,7 +144,7 @@ export function MobileHubCard({
       {isDesktop ? (
         <div className="flex justify-center mt-4 w-full">
           <span
-            className="inline-flex items-center gap-1 px-4 py-1.5 rounded-[14px] border text-[0.8rem] font-black transition-colors duration-200 group-hover:border-[var(--hub-accent)] group-hover:text-[var(--hub-accent)]"
+            className="inline-flex items-center gap-1 px-4 py-1.5 text-[0.8rem] font-black text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-accent)]"
             style={{ borderColor: TOKEN.orangeText, color: TOKEN.orangeText }}
           >
             Explore
