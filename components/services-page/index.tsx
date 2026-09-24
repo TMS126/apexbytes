@@ -89,7 +89,7 @@ function BackPill({ onClick, label }: { onClick: () => void; label: string }) {
       className="inline-flex items-center gap-1.5 pl-2.5 pr-3.5 py-1.5 rounded-full font-black text-[0.82rem] border transition-all duration-200 active:scale-95 hover:bg-[var(--muted)]"
       style={{ borderColor: PILL_NEUTRAL.border, color: PILL_NEUTRAL.text }}
     >
-      <CaretLeft size={12} weight="bold" />
+      <CaretLeft size={12} weight="bold" color="currentColor" />
       {label}
     </button>
   )
@@ -472,7 +472,7 @@ export function ServicesPage() {
                     fill={colors.primary}
                     isActive={isActivePill}
                     onClick={() => handleDesktopSwitchHub(hubId)}
-                    icon={<HubIcon id={hubId} size={13} color={isActivePill ? "#ffffff" : accent} />}
+                    icon={<HubIcon id={hubId} size={13} color={isActivePill ? "#ffffff" : (isDark ? colors.accentLight : colors.primary)} />}
                   />
                 )
               })}
