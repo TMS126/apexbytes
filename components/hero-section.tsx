@@ -34,7 +34,10 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
 
 function HubIconField({ isDark }: { isDark: boolean }) {
   return (
-    <div className="relative mx-auto w-full max-w-[560px] aspect-square">
+    <div className="relative mx-auto w-full max-w-[560px] aspect-square overflow-hidden rounded-[28px]">
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[28px]" aria-hidden="true">
+        <div className="absolute -right-16 top-1/4 h-1/2 w-[125%] -rotate-[24deg] bg-blue-300/20 blur-3xl dark:bg-orange-500/15" />
+      </div>
       <Image
         src={isDark ? "/Hpl-transparent.png" : "/Hpd-transparent.png"}
         alt="Isometric printer, CV clipboard, design tools, globe with shield, laptop, and PC representing ApexbytesHub services"
@@ -138,7 +141,7 @@ export function HeroSection() {
                 className="group/quote flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 abh-shadow-badge"
                   style={{ backgroundColor: "var(--home-cta-bg)", color: "var(--home-cta-text)" }}
                 >
-                  <span className="min-w-[10.5rem] transition-opacity duration-150 group-active/quote:opacity-70">{quoteLabel}</span>
+                  <span className="min-w-[10.5rem] md:max-lg:min-w-0 transition-opacity duration-150 group-active/quote:opacity-70"><span className="md:max-lg:hidden">{quoteLabel}</span><span className="hidden md:max-lg:inline">Quote</span></span>
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
                 </button>
               </ScrollBounce>
@@ -147,7 +150,7 @@ export function HeroSection() {
                 onClick={handleServicesClick}
                 className="group/services-cta flex items-center justify-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-transparent text-foreground border-2 border-[var(--link-foreground)] transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--brand-blue)] dark:hover:text-[var(--brand-light-blue)]"
               >
-                See Our Services
+                <span className="md:max-lg:hidden">See Our Services</span><span className="hidden md:max-lg:inline">Services</span>
                 <ArrowUpRight
                   weight="bold"
                   className="w-4 h-4 transition-transform duration-200 group-hover/services-cta:translate-x-0.5 group-hover/services-cta:-translate-y-0.5"

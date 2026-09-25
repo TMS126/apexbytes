@@ -99,10 +99,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
 
   if (dismissed || notices.length === 0) return null
 
-  const handlePillClick = () => {
-    if (isMulti) setModalOpen(true)
-    else setSingleExpanded((v) => !v)
-  }
+  const handlePillClick = () => setModalOpen(true)
 
   const collapsedColor = isMulti ? TOKEN.orangeText : VARIANT_TEXT[first.variant]
   const collapsedLabel = isMulti ? `${notices.length} Updates` : first.header
@@ -197,7 +194,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
       </motion.div>
 
       <AnimatePresence>
-        {isMulti && modalOpen && (
+        {modalOpen && (
           <motion.div
             key="notice-modal-backdrop"
             initial={{ opacity: 0 }}
