@@ -10,18 +10,18 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 function CompactTestimonials() {
   const [hovered, setHovered] = useState<number | null>(null)
   return (
-    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5" aria-label="What clients say">
+    <ul className="grid auto-rows-fr grid-cols-1 items-stretch gap-5 sm:grid-cols-3" aria-label="What clients say">
       {SAMPLE_REVIEWS.map((r, i) => {
         const isHovered = hovered === i
         return (
-          <ScrollBounce key={r.name + i} delay={i * 0.1}>
+          <ScrollBounce key={r.name + i} delay={i * 0.1} className="h-full">
             <li
               onMouseEnter={() => setHovered(i)}
               onMouseLeave={() => setHovered(null)}
               onFocus={() => setHovered(i)}
               onBlur={() => setHovered(null)}
               tabIndex={0}
-              className={cn("rounded-[14px] bg-card p-5 flex flex-col items-center text-center outline-none transition-all duration-300 abh-shadow-elevated min-w-0", isHovered && "-translate-y-1.5 shadow-lg")}
+              className={cn("h-full min-h-[260px] w-full rounded-[14px] bg-card p-5 flex flex-col items-center text-center outline-none transition-all duration-300 abh-shadow-elevated min-w-0", isHovered && "-translate-y-1.5 shadow-lg")}
             >
               <Quotes size={16} weight="fill" className="mb-2 opacity-30 text-muted-foreground dark:text-muted-foreground" aria-hidden="true" />
               <p className="text-[0.92rem] font-normal text-zinc-600 dark:text-zinc-300 leading-relaxed mb-3">{r.quote}</p>
