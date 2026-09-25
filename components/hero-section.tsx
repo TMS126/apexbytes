@@ -36,7 +36,7 @@ function HubIconField({ isDark }: { isDark: boolean }) {
   return (
     <div className="relative mx-auto w-full max-w-[560px] aspect-square overflow-hidden rounded-[28px]">
       <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[28px]" aria-hidden="true">
-        <div className="absolute -right-16 top-1/4 h-1/2 w-[125%] -rotate-[24deg] bg-blue-300/20 blur-3xl dark:bg-orange-500/15" />
+        <div className="absolute -inset-x-1/4 top-1/4 h-1/2 -rotate-[24deg] bg-gradient-to-r from-transparent via-blue-300/20 to-transparent blur-[70px] [mask-image:radial-gradient(ellipse_at_center,black_0%,transparent_76%)] dark:via-orange-500/15" />
       </div>
       <Image
         src={isDark ? "/Hpl-transparent.png" : "/Hpd-transparent.png"}
@@ -126,7 +126,7 @@ export function HeroSection() {
 
             <h1 className="font-sans font-black text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4">
               <span className="block text-foreground">Design.</span>
-              <span className="block text-muted-foreground">Print.</span>
+              <span className="block text-foreground">Print.</span>
               <span className="block text-foreground">Upgrade.</span>
             </h1>
 

@@ -97,6 +97,15 @@ const CATEGORY_DATA = [
   },
 ]
 
+const HUB_CARDS = CATEGORY_DATA.flatMap((category) =>
+  category.hubs.map((hub) => ({
+    ...category,
+    id: `${category.id}-${hub.hubId}`,
+    label: hub.name,
+    hubs: [hub],
+  }))
+)
+
 export function CoreHubGrid() {
   return (
     <section className="px-4 md:px-8 py-14 md:py-20" aria-labelledby="core-hubs-title">
@@ -113,7 +122,7 @@ export function CoreHubGrid() {
         </ScrollBounce>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {CATEGORY_DATA.map((category, index) => {
+          {HUB_CARDS.map((category, index) => {
             const CategoryIcon = category.icon
             const primaryHub = category.hubs[0].hubId
             const primaryAccent = HUB_COLORS[primaryHub].accentLight

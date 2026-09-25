@@ -526,7 +526,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
         </div>
       ) : (
         <>
-          <div className="hidden md:flex md:w-[46%] md:h-full md:shrink-0 md:flex-col md:min-h-0">
+          <div className="hidden md:flex md:w-[52%] md:h-full md:shrink-0 md:flex-col md:min-h-0 bg-zinc-50/70 dark:bg-zinc-900/30">
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
@@ -546,8 +546,8 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             </div>
           </div>
 
-          <div className="hidden md:flex md:flex-1 md:h-full md:flex-col md:min-h-0">
-            <div className="shrink-0 max-w-xl">
+          <div className="hidden md:flex md:flex-1 md:h-full md:flex-col md:min-h-0 border-l border-zinc-200/80 dark:border-zinc-800/80">
+            <div className="shrink-0 w-full max-w-2xl px-6 md:px-8 pt-6">
               <ProjectHeader project={project} accent={accent} onClose={onClose} />
               <DesktopActionRow
                 project={project}
@@ -561,7 +561,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
               />
             </div>
             <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
-              <div className="max-w-xl px-6 md:px-8 pt-4 pb-4">
+              <div className="w-full max-w-2xl px-6 md:px-8 pt-5 pb-6">
                 <ProjectDetailsBody project={project} accent={accent} />
               </div>
               <div className="h-28" aria-hidden="true" />

@@ -108,7 +108,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
     <>
       <motion.div layout className="w-full flex justify-center" transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
         <AnimatePresence mode="wait" initial={false}>
-          {!singleExpanded ? (
+          {true ? (
             <motion.div
               key="collapsed"
               initial={{ opacity: 0 }}
@@ -120,9 +120,9 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
               <button
                 type="button"
                 onClick={handlePillClick}
-                aria-haspopup={isMulti ? "dialog" : undefined}
-                aria-expanded={isMulti ? modalOpen : singleExpanded}
-                aria-label={isMulti ? `Open ${notices.length} updates` : `Expand: ${first.header}`}
+                aria-haspopup="dialog"
+                aria-expanded={modalOpen}
+                aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
                 className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
               >
                 <first.Icon size={16} weight="bold" style={{ color: collapsedColor }} aria-hidden="true" />
