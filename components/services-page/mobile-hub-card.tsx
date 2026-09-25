@@ -99,7 +99,7 @@ export function MobileHubCard({
       style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: accent }}
       className={cn(
         "group relative w-full text-left rounded-[14px] bg-card overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col hover:shadow-[var(--shadow-card-lift)]",
-        isDesktop ? "min-h-[220px] p-5 items-center text-center h-full" : "min-h-[152px] p-4"
+        isDesktop ? "min-h-[220px] p-5 items-center text-center h-full" : "min-h-[152px] p-4 sm:min-h-[164px] sm:p-5"
       )}
     >
       <div className={cn("flex items-start justify-between mb-3", isDesktop && "w-full")}>
@@ -144,8 +144,7 @@ export function MobileHubCard({
       {isDesktop ? (
         <div className="flex justify-center mt-4 w-full">
           <span
-            className="inline-flex items-center gap-1 px-4 py-1.5 text-[0.8rem] font-black text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-accent)]"
-            style={{ borderColor: TOKEN.orangeText, color: TOKEN.orangeText }}
+            className="inline-flex min-h-9 items-center justify-center gap-1 px-4 py-2 text-[0.8rem] font-black text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-accent)]"
           >
             Explore
           </span>
