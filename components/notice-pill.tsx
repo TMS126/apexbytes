@@ -128,7 +128,7 @@ export function NoticePill({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 dark:bg-black/70"
+            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-[3px] dark:bg-black/75"
             onClick={() => setModalOpen(false)}
           >
             <motion.div
@@ -139,7 +139,7 @@ export function NoticePill({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               onClick={(event) => event.stopPropagation()}
-              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[14px] border border-border bg-background p-5 shadow-2xl"
+              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 shadow-[0_28px_90px_-18px_rgba(0,0,0,0.72),0_10px_30px_-12px_rgba(0,0,0,0.42)] ring-1 ring-black/10 dark:ring-white/10"
             >
               <div className="flex items-start gap-3 pr-8">
                 <Icon size={20} weight="bold" style={{ color: iconColor }} className="mt-0.5 shrink-0" aria-hidden="true" />

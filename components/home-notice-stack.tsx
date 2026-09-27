@@ -2,6 +2,7 @@
 "use client"
 
 import { useEffect, useId, useState } from "react"
+import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
@@ -194,14 +195,14 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
       </motion.div>
 
       <AnimatePresence>
-        {modalOpen && (
+        {modalOpen && typeof document !== "undefined" && createPortal(
           <motion.div
             key="notice-modal-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed inset-0 z-[100] bg-black/60 dark:bg-black/70 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-[3px] dark:bg-black/75 flex items-center justify-center p-4"
             onClick={() => setModalOpen(false)}
           >
             <motion.div
@@ -213,7 +214,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-md max-h-[80vh] overflow-y-auto rounded-[14px] bg-background p-5 flex flex-col gap-3"
+              className="relative w-full max-w-md max-h-[80vh] overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 flex flex-col gap-3 shadow-[0_28px_90px_-18px_rgba(0,0,0,0.72),0_10px_30px_-12px_rgba(0,0,0,0.42)] ring-1 ring-black/10 dark:ring-white/10"
             >
               <div className="flex items-center justify-between mb-1">
                 <h2 id={titleId} className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
