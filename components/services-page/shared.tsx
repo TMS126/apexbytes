@@ -21,8 +21,8 @@ export function HubIcon({ id, size = 28, color, weight = "regular" }: { id: HubI
   }
 }
 
-export function ServiceIcon({ name, size = 19, color }: { name: string; size?: number; color?: string }) {
-  return <ServiceGlyph label={name} size={size} color={color} />
+export function ServiceIcon({ name, size = 19 }: { name: string; size?: number }) {
+  return <ServiceGlyph label={name} size={size} className="services-page-icon" />
 }
 
 export function AbhLoader({ size = 28, color }: { size?: number; color?: string }) {

@@ -69,6 +69,7 @@ export const metadata: Metadata = {
   description: `We make technology and important services accessible to everyone — no jargon, no stress. Right here in ${BIZ.address}.`,
   keywords: ['printing Bothaville','printing Kgotsong','CV writing Kgotsong','SASSA help Kgotsong','ApexbytesHub'],
   authors: [{ name: BIZ.name }],
+  robots: { index: true, follow: true },
   
 openGraph: {
   type: 'website', locale: 'en_ZA', url: SITE_URL, siteName: BIZ.name,

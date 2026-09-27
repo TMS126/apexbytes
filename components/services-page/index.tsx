@@ -53,6 +53,7 @@ function Pill({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-pressed={isActive}
       className={cn(
@@ -83,11 +84,12 @@ function Pill({
 function BackPill({ onClick, label }: { onClick: () => void; label: string }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className="inline-flex items-center gap-1.5 pl-2.5 pr-3.5 py-1.5 rounded-full font-black text-[0.82rem] border transition-all duration-200 active:scale-95 hover:bg-[var(--muted)]"
       style={{ borderColor: PILL_NEUTRAL.border, color: PILL_NEUTRAL.text }}
     >
-      <CaretLeft size={12} weight="bold" />
+      <CaretLeft size={12} weight="bold" color="currentColor" />
       {label}
     </button>
   )
@@ -102,12 +104,13 @@ function SectionCard({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className="group/sectioncard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-5"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
         <h4 className="flex items-center gap-2 font-black text-[1.02rem] text-foreground leading-tight break-words">
-          <ServiceIcon name={section.items[0]?.name ?? section.title} size={20} color={accent} />
+          <ServiceIcon name={section.title} size={20} />
           <span>{section.title}</span>
         </h4>
       </div>
@@ -143,12 +146,13 @@ function ServiceCard({
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       className="group/svccard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-4 flex flex-col"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
-          <ServiceIcon name={item.name} size={19} color={accent} />
+          <ServiceIcon name={item.name} size={19} />
           <span className="break-words">{item.name}</span>
         </span>
       </div>
@@ -343,7 +347,7 @@ export function ServicesPage() {
               <p className="mb-3 text-[0.92rem] leading-relaxed text-zinc-600 dark:text-zinc-300 md:text-[0.8rem]">{NOTICE.intro}</p>
               <div className="overflow-hidden rounded-xl border border-zinc-200/80 bg-zinc-50/80 dark:border-zinc-700/80 dark:bg-zinc-900/70">
                 <details open className="group border-b border-zinc-200/80 dark:border-zinc-700/80">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] font-black uppercase tracking-[0.12em] text-zinc-700 dark:text-zinc-200">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] [&::-webkit-details-marker]:hidden font-black uppercase tracking-[0.12em] text-zinc-700 dark:text-zinc-200">
                     <span>Paid add-ons</span>
                     <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                   </summary>
@@ -360,7 +364,7 @@ export function ServicesPage() {
                   </ul>
                 </details>
                 <details open className="group">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] font-black uppercase tracking-[0.12em] text-zinc-700 dark:text-zinc-200">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3.5 py-3 text-left text-[0.74rem] [&::-webkit-details-marker]:hidden font-black uppercase tracking-[0.12em] text-zinc-700 dark:text-zinc-200">
                     <span>Free add-ons</span>
                     <CaretDown size={15} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
                   </summary>
@@ -455,39 +459,46 @@ export function ServicesPage() {
         {desktopActiveHub && desktopHub && (
           <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
 
-            <div className="flex flex-wrap justify-center gap-2.5 mb-6">
-              <BackPill onClick={handleDesktopBackToHubs} label="All Hubs" />
+            <nav aria-label="Service hubs" className="mb-7 flex w-full max-w-5xl flex-wrap items-end justify-center gap-x-5 gap-y-3 px-2 sm:gap-x-7 sm:px-4">
+              <button type="button" onClick={handleDesktopBackToHubs} className="group inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.78rem] font-bold text-muted-foreground transition-colors hover:text-foreground">
+                <CaretLeft size={14} weight="bold" aria-hidden="true" />
+                All hubs
+              </button>
               {HUB_ORDER.map((hubId) => {
                 const colors = HUB_COLORS[hubId as HubKey]
                 const accent = isDark ? colors.accentDark : colors.accentLight
-                const isActivePill = hubId === desktopActiveHub
+                const isActiveHub = hubId === desktopActiveHub
                 return (
-                  <Pill
+                  <button
                     key={hubId}
-                    label={HUBS[hubId].title}
-                    fill={colors.primary}
-                    isActive={isActivePill}
+                    type="button"
+                    aria-current={isActiveHub ? "page" : undefined}
                     onClick={() => handleDesktopSwitchHub(hubId)}
-                    icon={<HubIcon id={hubId} size={13} color={isActivePill ? "#ffffff" : accent} />}
-                  />
+                    className={cn("group relative inline-flex min-h-9 items-center gap-2 pb-2 text-[0.82rem] font-black transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", isActiveHub ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")}
+                    style={{ color: isActiveHub ? accent : undefined, ['--underline-color' as string]: accent }}
+                  >
+                    <HubIcon id={hubId} size={20} color="currentColor" />
+                    {HUBS[hubId].title}
+                  </button>
                 )
               })}
-            </div>
+            </nav>
 
             {desktopActiveSectionData && (
-              <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
-                <BackPill onClick={handleDesktopBackToSections} label="All Sections" />
-                {desktopHub.sections.map((section, sIdx) => (
-                  <Pill
-                    key={sIdx}
-                    label={section.title}
-                    fill={desktopHubFill}
-                    isActive={sIdx === desktopActiveSection}
-                    onClick={() => handleDesktopSwitchSection(sIdx)}
-                    size="sm"
-                  />
-                ))}
-              </div>
+              <nav aria-label="Service sections" className="mb-8 flex w-full max-w-4xl flex-wrap items-end justify-center gap-x-4 gap-y-2 px-2 sm:gap-x-6 sm:px-4">
+                <button type="button" onClick={handleDesktopBackToSections} className="inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.75rem] font-bold text-muted-foreground transition-colors hover:text-foreground">
+                  <CaretLeft size={14} weight="bold" aria-hidden="true" />
+                  All sections
+                </button>
+                {desktopHub.sections.map((section, sIdx) => {
+                  const selected = sIdx === desktopActiveSection
+                  return (
+                    <button key={section.title} type="button" aria-current={selected ? "page" : undefined} onClick={() => handleDesktopSwitchSection(sIdx)} className={cn("relative inline-flex min-h-9 items-center pb-2 text-[0.8rem] font-black transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", selected ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")} style={{ color: selected ? desktopHubAccent : undefined, ['--underline-color' as string]: desktopHubAccent }}>
+                      {section.title}
+                    </button>
+                  )
+                })}
+              </nav>
             )}
 
             {!desktopActiveSectionData && (
@@ -513,7 +524,7 @@ export function ServicesPage() {
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                   {desktopActiveSectionData.items.map((item, iIdx) => (
                     <ServiceCard
-                      key={iIdx}
+                      key={item.name}
                       item={item}
                       accent={desktopHubAccent}
                       onClick={() =>
