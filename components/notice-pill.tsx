@@ -34,7 +34,7 @@ export function NoticePill({
   isDark?: boolean
   className?: string
 }) {
-  const [expanded, setExpanded] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const iconColor = VARIANT_TEXT[variant]
   // Variant accents remain identity cues, while the surface/text pair is
@@ -44,7 +44,7 @@ export function NoticePill({
   return (
     <motion.div layout className={cn("w-full flex justify-center", className)} transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
       <AnimatePresence mode="wait" initial={false}>
-        {!expanded ? (
+        {true ? (
           <motion.div
             key="collapsed"
             initial={{ opacity: 0 }}
@@ -55,9 +55,10 @@ export function NoticePill({
           >
             <button
               type="button"
-              onClick={() => setExpanded(true)}
-              aria-expanded={false}
-              aria-label={`Expand: ${collapsedLabel}`}
+              onClick={() => setModalOpen(true)}
+              aria-expanded={modalOpen}
+              aria-haspopup="dialog"
+              aria-label={`Open: ${collapsedLabel}`}
               className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
             >
               <Icon size={16} weight="bold" style={{ color: iconColor }} aria-hidden="true" />
@@ -92,9 +93,10 @@ export function NoticePill({
               <Icon size={20} weight="bold" style={{ color: iconColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
               <button
                 type="button"
-                onClick={() => setExpanded(false)}
-                aria-expanded={true}
-                aria-label={`Collapse: ${expandedLabel}`}
+                onClick={() => setModalOpen(true)}
+                aria-expanded={modalOpen}
+                aria-haspopup="dialog"
+                aria-label={`Open: ${expandedLabel}`}
                 className="rounded-[8px] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-400"
               >
                 <span className="text-[0.75rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
@@ -118,8 +120,44 @@ export function NoticePill({
             )}
           </motion.div>
         )}
+        </AnimatePresence>
+
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 dark:bg-black/70"
+            onClick={() => setModalOpen(false)}
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={expandedLabel}
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              onClick={(event) => event.stopPropagation()}
+              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[14px] border border-border bg-background p-5 shadow-2xl"
+            >
+              <div className="flex items-start gap-3 pr-8">
+                <Icon size={20} weight="bold" style={{ color: iconColor }} className="mt-0.5 shrink-0" aria-hidden="true" />
+                <h2 className="text-[0.78rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
+                  {expandedLabel}
+                </h2>
+              </div>
+              <div className="pl-[2rem] pt-3 text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
+                {children}
+              </div>
+              <button type="button" onClick={() => setModalOpen(false)} aria-label="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <X size={14} weight="bold" aria-hidden="true" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </motion.div>
   )
-} 
+}
 
