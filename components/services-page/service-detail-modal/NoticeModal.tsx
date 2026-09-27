@@ -14,10 +14,23 @@
  * a warning should look visually different from a hub-colored tip, so
  * customers instantly recognize it as "something to be aware of" rather
  * than a regular helpful hint.
+ *
+ * Portaled straight to document.body (same convention as
+ * SimpleDropdown / NoticePill / HomeNoticeStack elsewhere in this
+ * codebase). This popup used to render inline inside
+ * ServiceDetailModal's own tree; if any ancestor there ever picks up a
+ * CSS transform (Framer Motion sets one inline mid-animation), that
+ * ancestor becomes the containing block for this modal's
+ * position:fixed wrapper instead of the viewport, and the notice can
+ * end up clipped into the wrong stacking context — rendering behind
+ * later page content instead of on top of everything. Portaling
+ * removes that dependency entirely, regardless of what
+ * ServiceDetailModal does above it.
  * ────────────────────────────────────────────────────────────────────────
  */
 
-import { useEffect } from "react"
+import { useEffect, useSyncExternalStore } from "react"
+import { createPortal } from "react-dom"
 import { X, WarningCircle } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 
@@ -29,6 +42,10 @@ export function NoticeModal({
   notice: string         // The actual warning text to display
   hubTitle: string       // Used only for the accessible aria-label
 }) {
+  // Hydration-safe "are we in the browser yet" check — the portal
+  // target (document.body) doesn't exist during SSR.
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false)
+
   // Close on Escape key, same behavior as TipsModal
   useEffect(() => {
     if (!open) return
@@ -38,10 +55,10 @@ export function NoticeModal({
   }, [open, onClose])
 
   // Nothing renders at all when closed — no invisible leftover DOM
-  if (!open) return null
+  if (!open || !mounted) return null
 
-  return (
-    <div className="fixed inset-0 z-[10300] flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[10300] flex items-center justify-center p-4" style={{ perspective: 1200 }}>
       {/* Backdrop — tapping it closes the modal */}
       <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-150" onClick={onClose} />
 
@@ -49,8 +66,12 @@ export function NoticeModal({
         role="dialog"
         aria-modal="true"
         aria-label={`Notice for ${hubTitle}`}
-        className="relative w-full max-w-sm bg-[var(--surface-modal)] shadow-2xl border border-border rounded-[14px] max-h-[80vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
-        style={{ boxShadow: "0 30px 70px -18px rgba(0,0,0,0.5), 0 10px 24px -8px rgba(0,0,0,0.3)" }}
+        className="transform-gpu will-change-transform relative w-full max-w-sm bg-[var(--surface-modal)] border border-border rounded-[14px] max-h-[80vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+        style={{
+          transformStyle: "preserve-3d",
+          boxShadow:
+            "0 48px 110px -20px rgba(0,0,0,0.85), 0 22px 55px -14px rgba(0,0,0,0.6), 0 8px 22px -6px rgba(0,0,0,0.4)",
+        }}
       >
         {/* ── Header: warning icon + "Notice" title + close button ── */}
         <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
@@ -78,6 +99,7 @@ export function NoticeModal({
           <p className="abh-body text-[0.95rem] leading-relaxed">{notice}</p>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
-}
+} 
