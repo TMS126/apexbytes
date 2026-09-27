@@ -34,12 +34,29 @@ const ICON_BTN_FOCUS = "focus:outline-none focus-visible:ring-2 focus-visible:ri
 // Update, Appeal) since those stay relevant/actionable regardless of
 // whether the application window is currently open. Kept as a
 // component-level check rather than a lib/data field, per instruction
-// not to touch that file. Verified via search before writing: the most
-// recent NSFAS intake (TVET Trimester 3) ran 14–23 Aug 2026 and has
-// just closed as of today.
-const NSFAS_CLOSED_NOTICE_ITEM = "NSFAS Application"
+// not to touch that file.
+//
+// Self-updating date window instead of a static "closed" flag, so this
+// doesn't go stale again on its own the way the previous hardcoded
+// notice did. The NSFAS 2027 main cycle: opened 18 Sept 2026, closes
+// 31 Oct 2026 (govt launch advisory + nsfas.org.za, confirmed via
+// @myNSFAS as of 27 Sept 2026 with no change posted). While today
+// falls inside that window, no notice renders at all — nothing to warn
+// about. Once the window has passed, the closed-notice text renders
+// automatically without needing another manual edit. If NSFAS extends
+// or changes the 31 Oct closing date, update NSFAS_2027_CLOSE below
+// (re-verify against nsfas.org.za / @myNSFAS before changing).
+const NSFAS_APPLICATION_ITEM = "NSFAS Application"
+const NSFAS_2027_OPEN_FROM = new Date("2026-09-18T00:00:00+02:00")
+const NSFAS_2027_CLOSE = new Date("2026-10-31T23:59:59+02:00")
 const NSFAS_CLOSED_NOTICE_TEXT =
-  "NSFAS applications are currently closed — the most recent window (TVET Trimester 3) closed 23 August 2026. We can still help you prepare your documents ahead of the next opening, or assist with other NSFAS services like status checks and appeals."
+  "NSFAS 2027 applications are currently closed — the main cycle ran 18 September to 31 October 2026. We can still help you prepare your documents ahead of the next opening, or assist with other NSFAS services like status checks and appeals."
+
+function getNsfasWindowStatus(now: Date): "not-yet-open" | "open" | "closed" {
+  if (now < NSFAS_2027_OPEN_FROM) return "not-yet-open"
+  if (now <= NSFAS_2027_CLOSE) return "open"
+  return "closed"
+}
 
 type Tab = "bring" | "about"
 
@@ -275,9 +292,9 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   const desc = svc.desc?.trim() || null
   const inQuote = quoteQty > 0
   const neutralIconColor = isDark ? "#e4e4e7" : "#3f3f46"
-  const showNsfasClosedNotice = svc.name === NSFAS_CLOSED_NOTICE_ITEM
-
-/* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
+  const showNsfasClosedNotice =
+    svc.name === NSFAS_APPLICATION_ITEM && getNsfasWindowStatus(new Date()) === "closed"
+  /* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
   return (
     <div className="fixed inset-0 z-[10200] flex items-center justify-center p-3 md:p-4">
       <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-200" onClick={onClose} />
@@ -540,11 +557,14 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
           />
 
           {/* NEW — NSFAS application-window closure notice. Only renders
-              for the "NSFAS Application" item specifically — see
-              showNsfasClosedNotice / NSFAS_CLOSED_NOTICE_ITEM in Part 1.
-              Styled to match the existing warning-notice visual language
-              (BRAND.orange + WarningCircle) already used by NoticeModal
-              elsewhere in this file, for visual consistency. */}
+              for the "NSFAS Application" item, and only once the
+              self-updating date window says the cycle is closed — see
+              showNsfasClosedNotice / getNsfasWindowStatus in Part 1.
+              Silent (no notice at all) while the window is open or not
+              yet open. Styled to match the existing warning-notice
+              visual language (BRAND.orange + WarningCircle) already
+              used by NoticeModal elsewhere in this file, for visual
+              consistency. */}
           {showNsfasClosedNotice && (
             <div
               className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
@@ -588,4 +608,4 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
 
     </div>
   )
-    }
+        }
