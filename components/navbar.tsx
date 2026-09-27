@@ -1,3 +1,4 @@
+// components/navbar.tsx
 "use client"
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react"
@@ -5,24 +6,11 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
-import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useLogoAnimation, useNavContrast } from "@/hooks/use-navbar"
 import { MobileMenu } from "@/components/navbar/mobile-menu"
-
-// FIX: was a hardcoded "#F4A261" — that exact hex is documented in
-// globals.css as the OLD, failing --brand-orange value ("was #F4A261 at
-// 2.06:1"), already replaced everywhere else in the design system but
-// still in direct use here for nav text/border/hover-background. Ratio
-// is symmetric regardless of which side is text vs background, so this
-// affected: active link text, CTA hover fill (white text on top), and
-// the mobile menu's active border/text. Now uses verified tokens instead:
-// TOKEN.orangeText for text/border roles (5.78–6.48:1, theme-aware),
-// BRAND.orangeDark for solid-fill-behind-white-text roles (4.55:1,
-// the same pairing already verified for HUB_COLORS.design).
-const HOVER_TEXT = TOKEN.orangeText
-const HOVER_FILL = BRAND.orangeDark
+import { DesktopMenu } from "@/components/navbar/desktop-menu"
 
 // Shared by both the logo icon's neutral color and the nav-controls'
 // neutral color — previously duplicated as two near-identical ternary
@@ -43,8 +31,6 @@ export function Navbar() {
   // Keep theme-dependent markup deterministic during SSR and the first client
   // render. next-themes resolves the stored theme only after hydration.
   const [mounted, setMounted] = useState(false)
-  const [desktopNavOpen, setDesktopNavOpen] = useState(false)
-  const [contactHovered, setContactHovered] = useState(false)
   const [ctaPulse, setCtaPulse] = useState(false)
 
   const navVisible = useNavVisibility()
@@ -57,42 +43,16 @@ export function Navbar() {
     setMounted(true)
   }, [])
 
-  const desktopNavRef = useRef<HTMLDivElement>(null)
-  const desktopNavToggleRef = useRef<HTMLButtonElement>(null)
   const logoButtonRef = useRef<HTMLButtonElement>(null)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
 
+  // Closes whichever menu (mobile overlay or desktop dropdown) is open
+  // whenever the route changes — including via browser back/forward,
+  // which bypasses navigate()'s own setMenuOpen(false).
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setDesktopNavOpen(false))
+    const frame = requestAnimationFrame(() => setMenuOpen(false))
     return () => cancelAnimationFrame(frame)
-  }, [pathname])
-
-  useEffect(() => {
-    if (!desktopNavOpen) return
-    const onPointerDown = (e: PointerEvent) => {
-      if (desktopNavRef.current && !desktopNavRef.current.contains(e.target as Node)) {
-        setDesktopNavOpen(false)
-      }
-    }
-    document.addEventListener("pointerdown", onPointerDown)
-    return () => document.removeEventListener("pointerdown", onPointerDown)
-  }, [desktopNavOpen])
-
-  // NEW — parity fix: MobileMenu already closes on Escape (see its own
-  // keydown handler), but this desktop flyout had no equivalent. Keyboard
-  // users previously had no way to close it except tabbing all the way
-  // past every link. Also restores focus to the trigger button, matching
-  // standard disclosure-widget behavior.
-  useEffect(() => {
-    if (!desktopNavOpen) return
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setDesktopNavOpen(false)
-        desktopNavToggleRef.current?.focus()
-      }
-    }
-    document.addEventListener("keydown", onKeyDown)
-    return () => document.removeEventListener("keydown", onKeyDown)
-  }, [desktopNavOpen])
+  }, [pathname, setMenuOpen])
 
   useEffect(() => {
     const resetFrame = requestAnimationFrame(() => setCtaPulse(false))
@@ -114,7 +74,6 @@ export function Navbar() {
     (path: string) => {
       router.push(path)
       setMenuOpen(false)
-      setDesktopNavOpen(false)
       window.scrollTo({ top: 0, behavior: "smooth" })
     },
     [router, setMenuOpen]
@@ -130,13 +89,6 @@ export function Navbar() {
   )
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
-
-  const handleNavFocus = () => setDesktopNavOpen(true)
-  const handleNavBlur = (e: React.FocusEvent<HTMLDivElement>) => {
-    if (!desktopNavRef.current?.contains(e.relatedTarget as Node)) {
-      setDesktopNavOpen(false)
-    }
-  }
 
   if (calculatorOpen) return null
 
@@ -194,123 +146,13 @@ export function Navbar() {
               </div>
             </button>
 
-            {/* Desktop nav */}
-            <div
-              ref={desktopNavRef}
-              onMouseEnter={() => setDesktopNavOpen(true)}
-              onMouseLeave={() => setDesktopNavOpen(false)}
-              onFocus={handleNavFocus}
-              onBlur={handleNavBlur}
-              className={cn(
-                "hidden md:flex items-center pointer-events-auto absolute left-1/2 -translate-x-1/2 transition-all duration-300",
-                !navVisible && !menuOpen ? "-translate-y-20 opacity-0" : "translate-y-0 opacity-100"
-              )}
-            >
-              <div className={cn("flex items-center py-2 transition-all duration-300 ease-out", desktopNavOpen ? "gap-1 px-1" : "px-2")}>
-                <button
-                  ref={desktopNavToggleRef}
-                  type="button"
-                  onClick={() => setDesktopNavOpen((v) => !v)}
-                  aria-label={desktopNavOpen ? "Collapse navigation" : "Expand navigation"}
-                  aria-expanded={desktopNavOpen}
-                  className="relative flex items-center justify-center shrink-0 w-9 h-9"
-                >
-                  <span className="w-4 h-[12px] flex flex-col justify-between items-center" aria-hidden="true">
-                    <span
-                      className="w-full h-[2px] rounded-full transition-transform duration-300 ease-out"
-                      style={{
-                        backgroundColor: neutralColor,
-                        transform: desktopNavOpen ? "translateY(5px) rotate(45deg)" : "none",
-                      }}
-                    />
-                    <span
-                      className="w-full h-[2px] rounded-full transition-all duration-200 ease-out"
-                      style={{
-                        backgroundColor: neutralColor,
-                        opacity: desktopNavOpen ? 0 : 1,
-                        transform: desktopNavOpen ? "scaleX(0)" : "scaleX(1)",
-                      }}
-                    />
-                    <span
-                      className="w-full h-[2px] rounded-full transition-transform duration-300 ease-out"
-                      style={{
-                        backgroundColor: neutralColor,
-                        transform: desktopNavOpen ? "translateY(-5px) rotate(-45deg)" : "none",
-                      }}
-                    />
-                  </span>
-                </button>
-
-                <div
-                  className={cn(
-                    "flex items-center gap-1 transition-all duration-300 ease-out backdrop-blur-md rounded-[14px]",
-                    desktopNavOpen ? "opacity-100 translate-x-0 max-w-[600px] px-1" : "opacity-0 -translate-x-2 max-w-0 pointer-events-none"
-                  )}
-                >
-                  {NAV_ITEMS.map((item, idx) => {
-                    const isActive = pathname === item.path
-
-                    if (item.isCta) {
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => navigate(item.path)}
-                          onMouseEnter={() => setContactHovered(true)}
-                          onMouseLeave={() => setContactHovered(false)}
-                          aria-current={isActive ? "page" : undefined}
-                          style={{
-                            transitionDelay: desktopNavOpen ? `${idx * 30}ms` : "0ms",
-                            backgroundColor: contactHovered ? HOVER_FILL : BRAND.blue,
-                            borderColor: contactHovered ? HOVER_FILL : BRAND.blue,
-                            color: "#ffffff",
-                          }}
-                          className={cn(
-                            "px-4 py-2 rounded-[10px] text-base whitespace-nowrap border-2 font-black transition-all duration-200",
-                            desktopNavOpen ? "opacity-100 scale-100" : "opacity-0 scale-75",
-                            ctaPulse && "abh-cta-pulse"
-                          )}
-                        >
-                          {item.label}
-                        </button>
-                      )
-                    }
-
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={() => navigate(item.path)}
-                        aria-current={isActive ? "page" : undefined}
-                        style={{
-                          transitionDelay: desktopNavOpen ? `${idx * 30}ms` : "0ms",
-                          color: isActive ? HOVER_TEXT : neutralColor,
-                        }}
-                        className={cn(
-                          "px-3.5 py-2 text-base whitespace-nowrap bg-transparent border-2 border-transparent transition-all duration-200",
-                          desktopNavOpen ? "opacity-100 scale-100" : "opacity-0 scale-75",
-                          isActive ? "font-black" : "font-medium"
-                        )}
-                        onMouseEnter={(e) => {
-                          if (!isActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isActive) (e.currentTarget as HTMLElement).style.color = neutralColor
-                        }}
-                      >
-                        {item.label}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Controls */}
+            {/* Controls — same pill on every breakpoint. Order of the two
+                buttons swaps at md: mobile reads [theme, hamburger];
+                desktop reads [hamburger, theme], both still top-right. */}
             <div
               className={cn(
                 glassPillClass,
-                "flex items-center gap-3 pl-3 pr-3 pointer-events-auto ml-4 transition-all duration-300",
+                "relative flex items-center gap-3 pl-3 pr-3 pointer-events-auto ml-4 transition-all duration-300",
                 !navVisible && !menuOpen ? "-translate-y-20 opacity-0" : "translate-y-0 opacity-100"
               )}
               style={{ transition: "opacity 300ms, transform 300ms" }}
@@ -318,7 +160,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={handleThemeToggle}
-                className="flex items-center justify-center w-7 h-7 active:scale-90 transition-transform"
+                className="order-1 md:order-2 flex items-center justify-center w-7 h-7 active:scale-90 transition-transform"
                 aria-label={mounted ? (theme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
               >
                 {mounted &&
@@ -330,11 +172,12 @@ export function Navbar() {
               </button>
 
               <button
+                ref={menuToggleRef}
                 type="button"
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
-                className="flex items-center justify-center w-7 h-7 active:scale-90 md:hidden"
+                className="order-2 md:order-1 flex items-center justify-center w-7 h-7 active:scale-90"
               >
                 <span className="relative w-4 h-[12px] flex flex-col justify-between items-center" aria-hidden="true">
                   <span
@@ -361,6 +204,16 @@ export function Navbar() {
                   />
                 </span>
               </button>
+
+              <DesktopMenu
+                menuOpen={menuOpen}
+                setMenuOpen={setMenuOpen}
+                pathname={pathname}
+                navigate={navigate}
+                neutralColor={neutralColor}
+                triggerRef={menuToggleRef}
+                ctaPulse={ctaPulse}
+              />
             </div>
           </div>
         </div>
@@ -369,4 +222,4 @@ export function Navbar() {
       <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} pathname={pathname} navigate={navigate} neutralColor={neutralColor} />
     </>
   )
-}
+     } 
