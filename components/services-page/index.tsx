@@ -4,13 +4,13 @@
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { Megaphone, ArrowRight, CaretRight, CaretLeft, CaretDown, CheckCircle } from "@phosphor-icons/react"
+import { Megaphone, CaretLeft, CaretDown, CheckCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { TOKEN, HUB_COLORS, HubKey } from "@/lib/brand"
+import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { HubIcon, ServiceIcon } from "./shared"
+import { HubIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
@@ -21,162 +21,13 @@ import {
 import { sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
-import { MobileHubCard, BulkRibbon, NoticeBadge } from "./mobile-hub-card"
+import { MobileHubCard } from "./mobile-hub-card"
+import { DesktopHubGrid } from "./desktop-hub-grid"
+import { ClosingTagline, SectionCard, ServiceCard } from "./cards"
 
-const PILL_NEUTRAL = {
-  border: "var(--border)",
-  text: "var(--muted-foreground)",
-  hoverBg: "var(--muted)",
-}
-
-function ClosingTagline() {
-  return (
-    <div className="mt-2 mb-4 text-center px-6 py-6">
-      <p className="abh-eyebrow text-muted-foreground mb-3">Why ApexbytesHub</p>
-      <p className="font-sans font-black text-2xl md:text-3xl text-foreground leading-snug max-w-2xl mx-auto">
-        From your first CV to your next big idea — one hub does it all, right here in Bothaville.
-      </p>
-      <div className="abh-divider" />
-    </div>
-  )
-}
-
-function Pill({
-  icon, label, fill, isActive, onClick, size = "md",
-}: {
-  icon?: React.ReactNode
-  label: string
-  fill: string
-  isActive: boolean
-  onClick: () => void
-  size?: "md" | "sm"
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={isActive}
-      className={cn(
-        "inline-flex items-center gap-2 rounded-full font-black transition-all duration-200 active:scale-95 border",
-        size === "md" ? "pl-2 pr-4 py-2 text-[0.9rem]" : "pl-2 pr-3.5 py-1.5 text-[0.82rem]"
-      )}
-      style={
-        isActive
-          ? {
-              backgroundColor: fill,
-              borderColor: fill,
-              color: "var(--on-primary-fill)",
-              boxShadow: `0 0 0 4px color-mix(in srgb, ${fill} 12%, transparent)`,
-            }
-          : {
-              backgroundColor: "transparent",
-              borderColor: PILL_NEUTRAL.border,
-              color: PILL_NEUTRAL.text,
-            }
-      }
-    >
-      {icon && <span className="shrink-0">{icon}</span>}
-      {label}
-    </button>
-  )
-}
-
-function BackPill({ onClick, label }: { onClick: () => void; label: string }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="inline-flex items-center gap-1.5 pl-2.5 pr-3.5 py-1.5 rounded-full font-black text-[0.82rem] border transition-all duration-200 active:scale-95 hover:bg-[var(--muted)]"
-      style={{ borderColor: PILL_NEUTRAL.border, color: PILL_NEUTRAL.text }}
-    >
-      <CaretLeft size={12} weight="bold" color="currentColor" />
-      {label}
-    </button>
-  )
-}
-
-function SectionCard({
-  section, accent, onClick,
-}: {
-  section: (typeof HUBS)[HubId]["sections"][number]
-  accent: string
-  onClick: () => void
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="group/sectioncard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-5"
-    >
-      <div className="flex items-start justify-between gap-2 mb-3">
-        <h4 className="flex items-center gap-2 font-black text-[1.02rem] text-foreground leading-tight break-words">
-          <ServiceIcon name={section.title} size={20} />
-          <span>{section.title}</span>
-        </h4>
-      </div>
-
-      {section.desc && (
-        <p className="text-[0.82rem] text-muted-foreground leading-snug mb-4">
-          {section.desc}
-        </p>
-      )}
-
-      <div className="flex items-center justify-between">
-        <span className="text-[0.78rem] font-bold" style={{ color: accent }}>
-          {section.items.length} service{section.items.length === 1 ? "" : "s"}
-        </span>
-        <CaretRight
-          size={15}
-          weight="bold"
-          className="transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
-          style={{ color: accent }}
-          aria-hidden="true"
-        />
-      </div>
-    </button>
-  )
-}
-
-function ServiceCard({
-  item, accent, onClick,
-}: {
-  item: { name: string; price: string; description?: string }
-  accent: string
-  onClick: () => void
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="group/svccard text-left rounded-[14px] bg-card overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98] p-4 flex flex-col"
-    >
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <span className="text-foreground leading-snug flex items-start gap-2 min-w-0">
-          <ServiceIcon name={item.name} size={19} />
-          <span className="break-words">{item.name}</span>
-        </span>
-      </div>
-
-      <p className="text-[0.8rem] text-muted-foreground leading-snug mb-3 flex-1">
-        {item.description || "Tap to view full pricing and details."}
-      </p>
-
-      <span
-        className="inline-flex items-center gap-1 text-[0.78rem] font-black transition-colors duration-200"
-        style={{ color: accent }}
-      >
-        View details
-        <ArrowRight
-          size={11}
-          weight="bold"
-          aria-hidden="true"
-          className="transition-transform duration-200 group-hover/svccard:translate-x-0.5"
-        />
-      </span>
-    </button>
-  )
-}
-
+// ============================================================
+// SERVICES PAGE
+// ============================================================
 export function ServicesPage() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
@@ -307,7 +158,6 @@ export function ServicesPage() {
   const desktopHub = desktopActiveHub ? HUBS[desktopActiveHub] : null
   const desktopHubColors = desktopActiveHub ? HUB_COLORS[desktopActiveHub as HubKey] : null
   const desktopHubAccent = desktopHubColors ? (isDark ? desktopHubColors.accentDark : desktopHubColors.accentLight) : "#000000"
-  const desktopHubFill = desktopHubColors ? desktopHubColors.primary : "#000000"
   const desktopActiveSectionData =
     desktopHub && desktopActiveSection !== null ? desktopHub.sections[desktopActiveSection] : null
 
@@ -404,9 +254,7 @@ export function ServicesPage() {
                   hubId={hubId}
                   hub={hub}
                   accent={accent}
-                  primary={colors.primary}
                   hubHasBulk={hubHasBulk}
-                  orderIndex={index}
                   hubHasNotice={hubHasNotice}
                   onClick={() => handleOpenHub(hubId, "right")}
                 />
@@ -415,45 +263,8 @@ export function ServicesPage() {
           })}
         </div>
 
-        {/* ══════════════════ DESKTOP — Level 0: same minimal card style as
-            mobile, "Explore" pill bottom-center instead of a preview-hints
-            list + arrow. ══════════════════ */}
-        {!desktopActiveHub && (
-          <div className="hidden md:grid md:grid-cols-6 gap-6 pb-2 w-full">
-            {HUB_ORDER.map((hubId, index) => {
-              const hub    = HUBS[hubId]
-              const colors = HUB_COLORS[hubId as HubKey]
-              const accent = isDark ? colors.accentDark : colors.accentLight
-              const hubHasBulk = hub.sections.some((s) => sectionHasBulk(hubId, s.title, s.items))
-              const hubHasNotice = hub.sections.some((s) => s.items.some((i) => !!i.notice))
-
-              return (
-                <div
-                  key={hubId}
-                  className={cn(
-                    "col-span-2",
-                    index === 3 && "md:col-start-2",
-                    index === 4 && "md:col-start-4"
-                  )}
-                >
-                  <ScrollBounce delay={index * 0.06}>
-                    <MobileHubCard
-                      variant="desktop"
-                      hubId={hubId}
-                      hub={hub}
-                      accent={accent}
-                      primary={colors.primary}
-                      hubHasBulk={hubHasBulk}
-                      hubHasNotice={hubHasNotice}
-                      orderIndex={index}
-                      onClick={() => handleDesktopSelectHub(hubId)}
-                    />
-                  </ScrollBounce>
-                </div>
-              )
-            })}
-          </div>
-        )}
+        {/* DESKTOP — Level 0: 3 × 2 grid (5 hub cards + hub finder) */}
+        {!desktopActiveHub && <DesktopHubGrid onSelectHub={handleDesktopSelectHub} />}
 
         {/* DESKTOP — Level 1 & 2: pills + card grids */}
         {desktopActiveHub && desktopHub && (
@@ -522,7 +333,7 @@ export function ServicesPage() {
                   </p>
                 )}
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {desktopActiveSectionData.items.map((item, iIdx) => (
+                  {desktopActiveSectionData.items.map((item) => (
                     <ServiceCard
                       key={item.name}
                       item={item}
@@ -572,4 +383,4 @@ export function ServicesPage() {
       <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
-      } 
+                        }
