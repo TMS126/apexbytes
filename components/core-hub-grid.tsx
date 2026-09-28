@@ -1,8 +1,8 @@
 // components/core-hub-grid.tsx
 // Landing-page "What We Can Help With" section: five hub cards stacked in
-// one vertical column on every screen size. Neutral at rest — hub colour
-// only on hover / press / focus (see home-hub-card.tsx). Presentation only:
-// no changes to lib/data, HUB_COLORS or the Services page.
+// one vertical column on every screen size. Cards alternate layout:
+// text left / icon right, then icon left / text right, and so on.
+// Display only — not clickable. Hub colour on hover only.
 
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { HomeHubCard } from "@/components/home-hub-card"
@@ -30,7 +30,7 @@ export function CoreHubGrid() {
           {HUB_ORDER.map((hubId, index) => (
             <li key={hubId}>
               <ScrollBounce delay={index * 0.06}>
-                <HomeHubCard hubId={hubId} />
+                <HomeHubCard hubId={hubId} flip={index % 2 === 1} />
               </ScrollBounce>
             </li>
           ))}
