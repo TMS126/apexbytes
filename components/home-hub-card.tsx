@@ -1,8 +1,6 @@
 // components/home-hub-card.tsx
 "use client"
 
-import Link from "next/link"
-import { ArrowUpRight } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HUB_ON_COLOR } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
@@ -20,58 +18,48 @@ const BLURB: Record<HubId, string> = {
 }
 
 // ============================================================
-// STATE CLASSES
+// HOVER CLASSES — colour only. No movement, no shadow, no scale.
 // ============================================================
-// Neutral at rest. The hub colour appears only on hover (mouse), press
-// (touch — there is no hover on phones) and keyboard focus. Tailwind wraps
-// hover: in (hover: hover), so touch devices never get a stuck hover state.
-const CARD_ACCENT =
-  "hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)] hover:shadow-[var(--shadow-card-lift)] " +
-  "active:bg-[var(--hub-fill)] active:text-[var(--hub-on)] " +
-  "focus-visible:bg-[var(--hub-fill)] focus-visible:text-[var(--hub-on)]"
+const CARD_HOVER = "hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)]"
 
-const TEXT_FLIP =
-  "group-hover:text-[var(--hub-on)] group-active:text-[var(--hub-on)] group-focus-visible:text-[var(--hub-on)]"
+const TEXT_HOVER = "group-hover:text-[var(--hub-on)]"
 
-const ICON_ACCENT =
-  "group-hover:-translate-x-1 group-hover:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)] " +
-  "group-active:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)] " +
-  "group-focus-visible:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)]"
+const ICON_HOVER =
+  "group-hover:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)]"
 
 // ============================================================
-// HOME HUB CARD — one card, every screen size.
-// Text on the left, oversized hub icon bleeding off the right edge
-// (overflow-hidden crops it). Text column is capped so it never runs
-// under the icon.
+// HOME HUB CARD — display only, not clickable.
+// flip = false → text left, icon right
+// flip = true  → icon left, text right
 // ============================================================
-export function HomeHubCard({ hubId }: { hubId: HubId }) {
+export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: boolean }) {
   const hub = HUBS[hubId]
   const Icon = HUB_ICON[hubId]
   const serviceCount = hub.sections.reduce((total, section) => total + section.items.length, 0)
 
   return (
-    <Link
-      href={`/services/${hubId}`}
+    <div
       style={{
         ["--hub-fill" as string]: HUB_COLORS[hubId].primary,
         ["--hub-on" as string]: HUB_ON_COLOR[hubId],
       }}
       className={cn(
         "group relative flex w-full flex-col justify-center overflow-hidden rounded-[14px] bg-card text-foreground",
-        "min-h-[140px] py-6 pl-6 pr-[40%] md:min-h-[200px] md:pl-10 md:pr-[45%]",
-        "transition-[background-color,color,box-shadow,transform] duration-200 active:scale-[0.98] motion-reduce:transition-none",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hub-fill)]",
-        CARD_ACCENT
+        "min-h-[140px] py-6 md:min-h-[200px]",
+        flip ? "pl-[40%] pr-6 md:pl-[45%] md:pr-10" : "pl-6 pr-[40%] md:pl-10 md:pr-[45%]",
+        "transition-[background-color,color] duration-200 motion-reduce:transition-none",
+        CARD_HOVER
       )}
     >
-      {/* ── Icon, cropped by the right edge ─────────────────── */}
+      {/* ── Icon, cropped by the card edge ──────────────────── */}
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute -right-8 top-1/2 -translate-y-1/2 transform-gpu leading-none md:-right-12",
+          "pointer-events-none absolute top-1/2 -translate-y-1/2 leading-none",
+          flip ? "-left-8 md:-left-12" : "-right-8 md:-right-12",
           "text-[150px] md:text-[240px] text-muted-foreground/20",
-          "transition-[color,transform] duration-300 motion-reduce:transition-none",
-          ICON_ACCENT
+          "transition-colors duration-300 motion-reduce:transition-none",
+          ICON_HOVER
         )}
       >
         <Icon size="1em" weight="fill" />
@@ -81,24 +69,15 @@ export function HomeHubCard({ hubId }: { hubId: HubId }) {
       <div className="relative z-10">
         <p className="mb-1 flex items-baseline gap-1.5">
           <span className="font-sans text-[1.9rem] font-black leading-none md:text-[2.4rem]">{serviceCount}</span>
-          <span className={cn("text-[0.78rem] font-bold text-muted-foreground md:text-[0.85rem]", TEXT_FLIP)}>
+          <span className={cn("text-[0.78rem] font-bold text-muted-foreground md:text-[0.85rem]", TEXT_HOVER)}>
             services
           </span>
         </p>
         <h3 className="break-words font-sans text-[1.3rem] font-black leading-tight md:text-[1.6rem]">{hub.title}</h3>
-        <p className={cn("mt-1 text-[0.82rem] leading-snug text-muted-foreground md:text-[0.95rem]", TEXT_FLIP)}>
+        <p className={cn("mt-1 text-[0.82rem] leading-snug text-muted-foreground md:text-[0.95rem]", TEXT_HOVER)}>
           {BLURB[hubId]}
         </p>
-        <span className="mt-3 inline-flex items-center gap-1 text-[0.8rem] font-black md:text-[0.88rem]">
-          Explore
-          <ArrowUpRight
-            size={14}
-            weight="bold"
-            aria-hidden="true"
-            className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
-          />
-        </span>
       </div>
-    </Link>
+    </div>
   )
 }
