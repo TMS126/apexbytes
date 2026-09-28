@@ -11,12 +11,17 @@
 // is the one minimal "seal orange" accent, always visible, matching the
 // reference screenshot.
 
+import Link from "next/link"
+import type { CSSProperties } from "react"
 import { Printer, PaintBrush, Globe, Desktop, ArrowUpRight } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { HUB_COLORS, TOKEN } from "@/lib/brand"
+import { HUB_COLORS, HUB_NAMES, TOKEN } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
+import { HomeHubCardsMobile } from "@/components/home-hub-cards-mobile"
 
-
+// ============================================================
+// DATA
+// ============================================================
 const CATEGORY_DATA = [
   {
     id: "print-doc",
@@ -26,7 +31,7 @@ const CATEGORY_DATA = [
     hubs: [
       {
         hubId: "print" as const,
-        name: "Print Hub",
+        name: HUB_NAMES.print,
         highlights: [
           { name: "B&W Print", price: "R5/page" },
           { name: "Colour Print", price: "R8/page" },
@@ -35,7 +40,7 @@ const CATEGORY_DATA = [
       },
       {
         hubId: "doc" as const,
-        name: "Docu Hub",
+        name: HUB_NAMES.doc,
         highlights: [
           { name: "CV from Scratch", price: "R30" },
           { name: "Laminating A4", price: "R20" },
@@ -52,7 +57,7 @@ const CATEGORY_DATA = [
     hubs: [
       {
         hubId: "design" as const,
-        name: "Design Hub",
+        name: HUB_NAMES.design,
         highlights: [
           { name: "Logo (Standard)", price: "R500" },
           { name: "Business Card (Double Side)", price: "R180" },
@@ -69,7 +74,7 @@ const CATEGORY_DATA = [
     hubs: [
       {
         hubId: "eservice" as const,
-        name: "E-Service Hub",
+        name: HUB_NAMES.eservice,
         highlights: [
           { name: "SASSA SRD Application", price: "R40" },
           { name: "SARS New Taxpayer / eFiling", price: "R70" },
@@ -86,7 +91,7 @@ const CATEGORY_DATA = [
     hubs: [
       {
         hubId: "tech" as const,
-        name: "Tech Hub",
+        name: HUB_NAMES.tech,
         highlights: [
           { name: "PC Setup", price: "R250" },
           { name: "Virus / Malware Removal", price: "R200" },
@@ -106,6 +111,9 @@ const HUB_CARDS = CATEGORY_DATA.flatMap((category) =>
   }))
 )
 
+// ============================================================
+// SECTION
+// ============================================================
 export function CoreHubGrid() {
   return (
     <section className="px-4 md:px-8 py-14 md:py-20" aria-labelledby="core-hubs-title">
@@ -121,7 +129,11 @@ export function CoreHubGrid() {
           </div>
         </ScrollBounce>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* MOBILE — price-free hub ads */}
+        <HomeHubCardsMobile />
+
+        {/* DESKTOP — detailed cards with highlights */}
+        <div className="hidden md:grid md:grid-cols-2 gap-6">
           {HUB_CARDS.map((category, index) => {
             const CategoryIcon = category.icon
             const primaryHub = category.hubs[0].hubId
@@ -131,7 +143,7 @@ export function CoreHubGrid() {
               <ScrollBounce key={category.id} delay={index * 0.08}>
                 <div
                   className="group/hubcat abh-card flex flex-col h-full p-6 md:p-7 transition-transform duration-300 hover:-translate-y-1"
-                  style={{ ["--hub-accent" as any]: primaryAccent }}
+                  style={{ ["--hub-accent" as string]: primaryAccent } as CSSProperties}
                 >
                   <div className="flex items-center gap-3 mb-3">
                     {/* Neutral at rest, hub-colored on hover — matches the
@@ -177,7 +189,7 @@ export function CoreHubGrid() {
                       reference screenshot's small orange arrow. */}
                   <div className="flex flex-wrap gap-4 mt-auto">
                     {category.hubs.map((hub) => (
-                      <a
+                      <Link
                         key={hub.hubId}
                         href={`/services/${hub.hubId}`}
                         className={cn(
@@ -187,7 +199,7 @@ export function CoreHubGrid() {
                       >
                         {category.hubs.length > 1 ? `Explore ${hub.name}` : "Explore Services"}
                         <ArrowUpRight size={14} weight="bold" style={{ color: TOKEN.orangeText }} aria-hidden="true" />
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -198,4 +210,4 @@ export function CoreHubGrid() {
       </div>
     </section>
   )
-                  } 
+} 
