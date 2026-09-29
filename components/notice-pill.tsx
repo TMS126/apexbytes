@@ -112,16 +112,14 @@ export function NoticePill({
                 role="dialog"
                 aria-modal="true"
                 aria-label={expandedLabel}
-                initial={{ opacity: 0, y: 32, scale: 0.86, rotateX: 14 }}
-                animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                exit={{ opacity: 0, y: 20, scale: 0.92, rotateX: 8 }}
-                transition={{ type: "spring", stiffness: 300, damping: 28, mass: 0.9 }}
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 6, scale: 0.99 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
                 onClick={(event) => event.stopPropagation()}
                 className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 ring-1 ring-black/10 dark:ring-white/10"
                 style={{
-                  transformStyle: "preserve-3d",
-                  boxShadow:
-                    "0 48px 110px -20px rgba(0,0,0,0.85), 0 22px 55px -14px rgba(0,0,0,0.6), 0 8px 22px -6px rgba(0,0,0,0.4)",
+                  boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}
               >
                 <div className="flex items-start gap-3 pr-8">

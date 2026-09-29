@@ -349,10 +349,6 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
               </>
             )}
 
-          <ScrollBounce delay={0.22}>
-            <AddOnsCard />
-          </ScrollBounce>
-
           {/* ── Download full catalog ── */}
           <ScrollBounce delay={0.24}>
               <div className="no-print flex justify-center pt-2">
