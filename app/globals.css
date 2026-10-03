@@ -66,19 +66,19 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --hub-tech-primary: #333333;
   --hub-tech-light: #B8CCE0;
   --hub-tag-bg-light: transparent;
-  --hub-tag-text-light: #374151;
+  --hub-tag-text-light: #43455A;
   --hub-tag-text-dark: #FFFFFF;
-  --hub-print-tag-bg-dark: #1E40AF;
-  --hub-doc-tag-bg-dark: #166534;
-  --hub-design-tag-bg-dark: #9A3412;
+  --hub-print-tag-bg-dark: #15537D;
+  --hub-doc-tag-bg-dark: #35600D;
+  --hub-design-tag-bg-dark: #8D4D1F;
   --hub-eservice-tag-bg-dark: #2C5E60;
-  --hub-tech-tag-bg-dark: #1F2937;
+  --hub-tech-tag-bg-dark: #3D4A5C;
   --neutral-icon-light: #333333;
   --neutral-icon-dark: #B8CCE0;
   --color-ink: var(--brand-blue-dark);
   --color-ink-muted: var(--brand-neutral-500);
   --color-inverse: var(--brand-white);
-  --color-overlay: rgba(15, 23, 42, 0.62);
+  --color-overlay: rgba(15, 63, 102, 0.62);
   --color-overlay-soft: rgba(255, 255, 255, 0.72);
   --color-success: #16A34A;
   --color-success-strong: #15803D;
@@ -105,8 +105,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-weather-rain: #60A5FA;
   --color-weather-storm: #A78BFA;
   --color-weather-snow: #7DD3FC;
-  --shadow-soft: 0 2px 8px -2px rgba(15, 23, 42, 0.12), 0 1px 3px -1px rgba(15, 23, 42, 0.08);
-  --shadow-modal: 0 45px 100px -20px rgba(15, 23, 42, 0.55), 0 20px 48px -14px rgba(15, 23, 42, 0.4);
+  --shadow-soft: 0 2px 8px -2px rgba(15, 63, 102, 0.12), 0 1px 3px -1px rgba(15, 63, 102, 0.08);
+  --shadow-modal: 0 45px 100px -20px rgba(15, 63, 102, 0.45), 0 20px 48px -14px rgba(15, 63, 102, 0.32);
   --surface-modal: var(--card);
   --surface-modal-raised: var(--background);
   --surface-modal-control: var(--secondary);
@@ -146,7 +146,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-blue-text: var(--brand-blue-dark);
   --brand-orange-text: #7B3306;
   --brand-green-text: var(--brand-green-dark);
-  --brand-whatsapp-text: #0F172A;
+  --brand-whatsapp-text: #0F3F66;
 
   --on-brand-blue: #FFFFFF;
   --on-brand-green: #FFFFFF;
@@ -258,19 +258,19 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --hub-tech-primary: #B8CCE0;
   --hub-tech-light: #D9E6F0;
   --hub-tag-bg-light: transparent;
-  --hub-tag-text-light: #374151;
+  --hub-tag-text-light: #43455A;
   --hub-tag-text-dark: #FFFFFF;
-  --hub-print-tag-bg-dark: #1E40AF;
-  --hub-doc-tag-bg-dark: #166534;
-  --hub-design-tag-bg-dark: #9A3412;
+  --hub-print-tag-bg-dark: #15537D;
+  --hub-doc-tag-bg-dark: #35600D;
+  --hub-design-tag-bg-dark: #8D4D1F;
   --hub-eservice-tag-bg-dark: #2C5E60;
-  --hub-tech-tag-bg-dark: #1F2937;
+  --hub-tech-tag-bg-dark: #3D4A5C;
   --neutral-icon-light: #333333;
   --neutral-icon-dark: #B8CCE0;
   --color-ink: var(--foreground);
   --color-ink-muted: var(--brand-neutral-500);
   --color-inverse: var(--brand-blue-dark);
-  --color-overlay: rgba(0, 0, 0, 0.62);
+  --color-overlay: rgba(20, 22, 38, 0.72);
   --color-overlay-soft: rgba(255, 255, 255, 0.1);
   --color-success: #4ADE80;
   --color-success-strong: #86EFAC;
@@ -297,8 +297,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --color-weather-rain: #93C5FD;
   --color-weather-storm: #C4B5FD;
   --color-weather-snow: #BAE6FD;
-  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.28), 0 1px 3px -1px rgba(0, 0, 0, 0.22);
-  --shadow-modal: 0 45px 100px -20px rgba(0, 0, 0, 0.55), 0 20px 48px -14px rgba(0, 0, 0, 0.4);
+  --shadow-soft: 0 2px 8px -2px rgba(14, 16, 30, 0.35), 0 1px 3px -1px rgba(14, 16, 30, 0.28);
+  --shadow-modal: 0 45px 100px -20px rgba(14, 16, 30, 0.6), 0 20px 48px -14px rgba(14, 16, 30, 0.45);
   --surface-modal: var(--card);
   --surface-modal-raised: var(--background);
   --surface-modal-control: var(--secondary);
@@ -309,10 +309,12 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --shadow-action-whatsapp: 0 4px 14px color-mix(in srgb, var(--brand-whatsapp) 30%, transparent);
   --surface-modal-bright-text: var(--brand-dark-100);
   --surface-modal-accent-text: var(--brand-blue-dark);
-  --surface-modal-on-accent: var(--brand-dark-100);
+  /* FIX: was var(--brand-dark-100), which is LIGHT in dark mode (light text on a light accent fill) */
+  --surface-modal-on-accent: #25283E;
   --surface-accent-soft: color-mix(in srgb, var(--brand-blue-dark) 18%, var(--card));
   --text-on-bright: #25283E;
-  --text-on-accent: #162032;
+  /* FIX: was #162032 (near-black) */
+  --text-on-accent: #25283E;
   --text-on-hub-tag: #FFFFFF;
   --surface-accent: var(--brand-light-blue);
   --surface-service: var(--card);
@@ -331,7 +333,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-whatsapp-dark: #6BE995;
   --brand-whatsapp-accessible: #55DB82;
   --brand-whatsapp-accessible-dark: #7CEBA1;
-  --brand-whatsapp-text: #0A1110;
+  /* FIX: was #0A1110 (near-black) */
+  --brand-whatsapp-text: #0B2C47;
   --brand-error-text: #F3A39D;
   --background: #25283E;
   --foreground: #F1F1EC;
@@ -340,15 +343,17 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --popover: #2D314B;
   --popover-foreground: #F1F1EC;
   --primary: var(--brand-blue);
-  --primary-foreground: var(--brand-blue-dark);
+  /* FIX: primary/accent/destructive foregrounds pointed at --brand-blue-dark,
+     which is #EEF8FD (near-white) in dark mode = invisible text on light fills */
+  --primary-foreground: #25283E;
   --secondary: #343852;
   --secondary-foreground: #F1F1EC;
   --muted: #343852;
   --muted-foreground: #BFC2CE;
   --accent: var(--brand-blue);
-  --accent-foreground: var(--brand-blue-dark);
+  --accent-foreground: #25283E;
   --destructive: #E66C61;
-  --destructive-foreground: var(--brand-blue-dark);
+  --destructive-foreground: #25283E;
   --border: #484D68;
   --input: #343852;
   --ring: var(--brand-blue);
@@ -361,6 +366,16 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-blue-text: #D9EEFA;
   --on-brand-blue: var(--background);
   --brand-green-text: #D5E8C2;
+
+  /* FIX: these "on-" tokens were never overridden for dark mode, so they stayed
+     white on top of dark-mode pastel fills (green #CDEB9F, orange #FF9B73,
+     teal #9AD4CE, destructive #E66C61, accessible WhatsApp #55DB82). */
+  --on-brand-green: #25283E;
+  --on-brand-orange: #25283E;
+  --on-brand-teal: #25283E;
+  --on-destructive: #25283E;
+  --on-whatsapp-accessible: #25283E;
+  --on-pastel: #25283E;
 
   --wa-header: #1F2C34;
   --wa-wallpaper: #0B141A;
@@ -393,9 +408,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 .abh-accent-fill { color: var(--surface-modal-on-accent); }
 
 @theme inline {
-  --font-sans: var(--font-body), 'DM Sans Fallback', sans-serif;
-  --font-heading: var(--font-manrope), 'Manrope Fallback', sans-serif;
-  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono Fallback', monospace;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -649,10 +664,10 @@ button, a, [role="button"] {
   .abh-shadow-modal { box-shadow: var(--shadow-modal); }
 
   .abh-shadow-popover {
-    box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 20px 44px -12px rgba(15, 63, 102, 0.22);
   }
   .dark .abh-shadow-popover {
-    box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 16px 36px -10px rgba(14, 16, 30, 0.5);
   }
 
   .abh-shadow-project-card {
@@ -662,17 +677,17 @@ button, a, [role="button"] {
   .abh-shadow-project-card:hover { box-shadow: none; }
 
   .abh-shadow-zoom-image {
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 60px -15px rgba(14, 16, 30, 0.7), 0 0 50px rgba(255, 255, 255, 0.05);
   }
 
   .abh-shadow-badge {
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px 0 rgba(15, 63, 102, 0.1), 0 1px 2px -1px rgba(15, 63, 102, 0.1);
   }
   .abh-shadow-icon-inset {
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px 0 rgba(15, 63, 102, 0.05);
   }
   .abh-shadow-handle {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(15, 63, 102, 0.1), 0 8px 10px -6px rgba(15, 63, 102, 0.1);
   }
 
   .abh-divider {
@@ -831,4 +846,4 @@ button, a, [role="button"] {
 .abh-hub-pill:hover, .abh-hub-pill:focus-visible {
   color: var(--pill-hover-color) !important;
   border-color: var(--pill-hover-color) !important;
-  } 
+     } 

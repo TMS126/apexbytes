@@ -1,4 +1,4 @@
-// lib/brand.ts — full file, paste over the current one
+// lib/brand.ts
 /**
  * ────────────────────────────────────────────────────────────────────────────
  * APEXBYTES HUB — CORE BUSINESS LAYER
@@ -44,7 +44,8 @@ export const TOKEN = {
 
 // ============================================================
 // RAW HEX PALETTE — for contexts that can't consume CSS vars
-// (canvas/SVG generation, OG images, HUB_HEX_COLORS below).
+// (canvas/SVG generation, OG images, HUB_HEX_COLORS below,
+// <meta name="theme-color"> in app/layout.tsx).
 // Every value here must be kept in lockstep with the matching
 // var in globals.css :root / .dark — this is duplicated data,
 // not derived, so it drifts silently if not hand-verified.
@@ -68,10 +69,8 @@ export const HEX = {
     teal: "#9AD4CE", tealDark: "#BCE5E0", tealLight: "#284947",
     warningBg: "#E08A64",
     lightBlue: "#D9EEFA", lightGreen: "#E5F6C9", lightOrange: "#FFE5D3",
-    // FIX: these two were still holding the *light*-theme values.
     // globals.css .dark overrides --brand-dark-100 to #EEF1F7 and
-    // --brand-dark-200 to #D8DDE8 — anything calling pickHex('dark100'/
-    // 'dark200', true) was silently getting the wrong-theme color.
+    // --brand-dark-200 to #D8DDE8 — these must match, not the light values.
     dark100: "#EEF1F7", dark200: "#D8DDE8", techGreyDark: "#B8CCE0",
   },
   neutral100: "#E8E8E2", neutral200: "#ECECE7", neutral300: "#D5D5CE",
@@ -79,7 +78,8 @@ export const HEX = {
   white: "#FFFFFF",
   whatsapp: "#25D366", whatsappDark: "#1ebe5a",
   whatsappAccessible: "#178540", whatsappAccessibleDark: "#125F2F",
-  whatsappText: "#0f172a",
+  // FIX: was "#0f172a" (near-black). Now brand navy, matches --brand-whatsapp-text.
+  whatsappText: "#0F3F66",
 } as const
 
 // ============================================================
@@ -194,19 +194,17 @@ export const HUB_ON_COLOR: Record<HubKey, string> = {
 // ============================================================
 // HUB HEX COLORS — raw hex mirror of HUB_COLORS for non-CSS
 // contexts (canvas-rendered portfolio covers, generated images).
-// Must match the live --hub-*-primary / --hub-*-light values.
+// Must match the live --hub-*-primary / --hub-*-light values
+// (light theme) and the --hub-*-tag-bg-dark values.
 // ============================================================
 export const HUB_HEX_COLORS = {
-  print: { primary: HEX.light.blue, light: HEX.dark.blue, tagBgDark: "#1E40AF" },
-  doc: { primary: HEX.light.green, light: HEX.dark.green, tagBgDark: "#166534" },
-  design: { primary: HEX.light.orangeDark, light: HEX.dark.orangeDark, tagBgDark: "#9A3412" },
-  eservice: { primary: HEX.light.teal, light: HEX.dark.teal, tagBgDark: HEX.light.tealDark },
-  // FIX: primary was HEX.light.dark100 ("#25283E") — that's brand-dark-100,
-  // not the tech hub's color. --hub-tech-primary in globals.css is its own
-  // literal, #333333, unrelated to the dark100/dark200 palette entries.
-  // `light` was already correct (techGreyDark matches the dark-mode
-  // --hub-tech-primary override, and is identical in both HEX.light/dark).
-  tech: { primary: "#333333", light: HEX.light.techGreyDark, tagBgDark: "#1F2937" },
+  print: { primary: HEX.light.blue, light: HEX.dark.blue, tagBgDark: "#15537D" },
+  doc: { primary: HEX.light.green, light: HEX.dark.green, tagBgDark: "#35600D" },
+  design: { primary: HEX.light.orangeDark, light: HEX.dark.orangeDark, tagBgDark: "#8D4D1F" },
+  // FIX: light was HEX.dark.teal (#9AD4CE), but light-theme --hub-eservice-light is #D3E9E5.
+  eservice: { primary: HEX.light.teal, light: HEX.light.tealLight, tagBgDark: HEX.light.tealDark },
+  // --hub-tech-primary in globals.css is its own literal, #333333.
+  tech: { primary: "#333333", light: HEX.light.techGreyDark, tagBgDark: "#3D4A5C" },
 } as const
 
 // ============================================================
@@ -276,8 +274,7 @@ export const BIZ = {
   lng: 26.6599691,
   mapsUrl: "https://maps.app.goo.gl/v25Le9SfmCBfTh616?g_st=ac",
   founder: "Theji Meje",
-  // FIX: was a hardcoded "2026" (copyright year) — would go stale every
-  // January and need a manual edit. Now self-updates at build time.
+  // Self-updating copyright year (computed at build time).
   year: String(new Date().getFullYear()),
   yearFounded: "2023",
   hubCount: 5,
@@ -449,9 +446,9 @@ export const CONTACT_LINKS = [
 export const FOOTER_NAV = [
   { label: "Home", path: "/" },
   { label: "Services", path: "/services" },
-  { label: "Gallery", path: "/gallery"}, 
+  { label: "Gallery", path: "/gallery" },
   { label: "Pricing", path: "/pricing" },
   { label: "Tools", path: "/tools" },
-  { label: "About", path: "/about" }, 
+  { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
 ] as const 
