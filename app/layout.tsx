@@ -100,7 +100,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         <MaintenanceBanner />
 
-        <LocalBusinessJsonLd />
+        <LocalBusinessJsonLd nonce={nonce ?? ""} />
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>

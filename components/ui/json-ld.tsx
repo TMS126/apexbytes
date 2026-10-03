@@ -4,7 +4,7 @@ import { BIZ } from '@/lib/brand'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 
-export function LocalBusinessJsonLd() {
+export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'ProfessionalService'],
@@ -123,6 +123,7 @@ export function LocalBusinessJsonLd() {
       id="local-business-jsonld"
       type="application/ld+json"
       strategy="beforeInteractive"
+      nonce={nonce}
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />
   )
