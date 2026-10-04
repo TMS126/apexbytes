@@ -382,7 +382,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
       )}
 
       {/* ─── CROP FRAME ─────────────────────────────────────────────────── */}
-      <div className="relative flex-1 flex items-center justify-center p-4 min-h-0">
+      <div className="relative flex-1 flex items-center justify-center p-4 min-h-0 overflow-auto overscroll-contain">
         <div
           ref={frameRef}
           className="relative"
@@ -403,7 +403,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
               <div
                 className="absolute pointer-events-none"
                 style={{
-                  boxShadow: "0 0 0 9999px rgba(0,0,0,0.6)",
+                  boxShadow: "0 0 0 9999px rgba(0,0,0,0.28)",
                   top: `${toFrame(inset.top, "y")}%`, left: `${toFrame(inset.left, "x")}%`,
                   right: `${100 - toFrame(100 - inset.right, "x")}%`, bottom: `${100 - toFrame(100 - inset.bottom, "y")}%`,
                 }}
