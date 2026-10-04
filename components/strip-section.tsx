@@ -67,10 +67,8 @@ export function CtaBar({
   buttonHref,
   onButtonClick,
   badgeText = "Get In Touch",
-  variant = "default",
   fullBleed = false,
 }: {
-  variant?: "default" | "flat"
   fullBleed?: boolean
   title: string
   description: string

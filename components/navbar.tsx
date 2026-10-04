@@ -40,7 +40,8 @@ export function Navbar() {
   const isLogoDarkBehind = useNavContrast(0.07)
 
   useEffect(() => {
-    setMounted(true)
+    const frame = window.requestAnimationFrame(() => setMounted(true))
+    return () => window.cancelAnimationFrame(frame)
   }, [])
 
   const logoButtonRef = useRef<HTMLButtonElement>(null)
@@ -212,7 +213,7 @@ export function Navbar() {
         </div>
       </header>
 
-      <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} pathname={pathname} navigate={navigate} neutralColor={neutralColor} />
+      <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} pathname={pathname} neutralColor={neutralColor} />
     </>
   )
      } 

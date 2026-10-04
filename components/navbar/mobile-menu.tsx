@@ -20,11 +20,10 @@ interface MobileMenuProps {
   menuOpen: boolean
   setMenuOpen: (open: boolean) => void
   pathname: string
-  navigate: (path: string) => void
   neutralColor: string
 }
 
-export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralColor }: MobileMenuProps) {
+export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: MobileMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
 
