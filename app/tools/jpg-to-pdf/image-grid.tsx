@@ -64,7 +64,7 @@ function GridItem({
           fill
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover"
-          style={{ transform: `rotate(color-mix(in srgb, ${cssRotation} 12%, transparent)g)` }}
+          style={{ transform: `rotate(${cssRotation}deg)` }}
           unoptimized
         />
         {img.crop && (
@@ -189,7 +189,7 @@ export function ImageGrid({
     errors.find((e) => (e.id ? e.id === img.id : e.fileName === img.file.name))
 
   return (
-    <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4" aria-label="Images to convert">
       <AnimatePresence initial={false}>
         {images.map((img, index) => (
           <MemoGridItem

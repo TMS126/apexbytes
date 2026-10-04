@@ -121,7 +121,7 @@ export function SettingsBar({
   return (
     <div className="flex flex-col gap-4">
       {/* ─── OUTPUT / SIZE DROPDOWNS ────────────────────────────────────── */}
-      <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <SimpleDropdown
           label="Output" value={mode} accentColor={accentColor}
           onChange={(v) => setMode(v as ConvertMode)}
