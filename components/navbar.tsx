@@ -94,13 +94,6 @@ export function Navbar() {
 
   return (
     <>
-      <a
-        href="#main-content"
-        className="fixed left-4 top-4 z-[10000] -translate-y-24 focus:translate-y-0 transition-transform duration-200 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 font-bold text-sm px-3 py-2 rounded-md whitespace-nowrap"
-      >
-        Skip to content
-      </a>
-
       <header
         className="fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col pointer-events-none transition-[top] duration-300 ease-out"
       >
