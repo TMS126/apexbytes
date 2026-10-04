@@ -63,10 +63,15 @@ export function HeroSection() {
   const showBackToTop = useBackToTop()
 
   useEffect(() => {
-    setMounted(true)
-    setStatus(getBusinessStatus())
+    const frame = window.requestAnimationFrame(() => {
+      setMounted(true)
+      setStatus(getBusinessStatus())
+    })
     const id = setInterval(() => setStatus(getBusinessStatus()), 60_000)
-    return () => clearInterval(id)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      clearInterval(id)
+    }
   }, [])
 
   useEffect(() => {

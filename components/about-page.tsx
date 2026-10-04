@@ -22,13 +22,11 @@ export function AboutPage() {
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
 
-  const pageBg = isDark ? THEME_BG.dark.page : THEME_BG.light.page
   const cardBg = isDark ? THEME_BG.dark.card : THEME_BG.light.card
   const blueColor = isDark ? BRAND.lightBlue : BRAND.blue
   const orangeColor = isDark ? BRAND.lightOrange : BRAND.orangeDark
   const neutralColor = isDark ? ABOUT_NEUTRAL.dark : ABOUT_NEUTRAL.light
 
-  const blueOnPage = ensureAccessible(blueColor, pageBg, 4.5)
   const blueOnCard = ensureAccessible(blueColor, cardBg, 4.5)
   const orangeOnCard = ensureAccessible(orangeColor, cardBg, 4.5)
 
@@ -37,12 +35,12 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <AboutHeader blueColor={blueColor} blueOnPage={blueOnPage} />
+      <AboutHeader blueColor={blueColor} />
       <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
       <AboutTeam blueColor={blueColor} />
-      <AboutStandards blueColor={blueColor} neutralColor={neutralColor} />
+      <AboutStandards neutralColor={neutralColor} />
       <AboutTestimonials />
-      <AboutMission blueOnPage={blueOnPage} missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
+      <AboutMission missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
       <BackToTopButton visible={showBackToTop} />
     </div>
   )

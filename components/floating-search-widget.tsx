@@ -10,13 +10,11 @@ import { BRAND } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
-import { useScrollHide } from "@/hooks/use-scroll-hide"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
 
 const SEARCH_ORANGE = { light: BRAND.orange, dark: BRAND.lightOrange }
 
-const CLOSED_SIZE = 56
 const FLY_DURATION = 340
 const FADE_DURATION = 200
 
@@ -118,7 +116,8 @@ export function FloatingSearchWidget() {
   useEffect(() => {
     if (!isServicesPage && isOpen) {
       setIsOpen(false)
-      setQuery("")
+      const clearQuery = window.setTimeout(() => setQuery(""), 0)
+      return () => window.clearTimeout(clearQuery)
     }
   }, [isServicesPage, isOpen, setIsOpen])
 
