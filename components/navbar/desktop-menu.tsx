@@ -49,7 +49,7 @@ export function DesktopMenu({
 
   // ── Close on outside click / Escape ──────────────────────────────
   useEffect(() => {
-    if (!menuOpen) return
+    if (!menuOpen || window.matchMedia("(max-width: 767px)").matches) return
     const onPointerDown = (e: PointerEvent) => {
       const target = e.target as Node
       if (containerRef.current?.contains(target)) return

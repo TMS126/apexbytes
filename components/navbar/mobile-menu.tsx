@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { NAV_ITEMS, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
@@ -95,10 +96,9 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
 
             if (item.isCta) {
               return (
-                <button
+                <Link
                   key={item.id}
-                  type="button"
-                  onClick={() => navigate(item.path)}
+                  href={item.path}
                   aria-current={isActive ? "page" : undefined}
                   tabIndex={menuOpen ? 0 : -1}
                   style={{
@@ -112,15 +112,14 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                   )}
                 >
                   {item.label}
-                </button>
-              )
-            }
+</Link>
+                )
+              }
 
             return (
-              <button
+              <Link
                 key={item.id}
-                type="button"
-                onClick={() => navigate(item.path)}
+                href={item.path}
                 aria-current={isActive ? "page" : undefined}
                 tabIndex={menuOpen ? 0 : -1}
                 style={{
@@ -135,8 +134,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                 )}
               >
                 {item.label}
-              </button>
-            )
+</Link>
+              )
           })}
         </nav>
       </div>
