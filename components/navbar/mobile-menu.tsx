@@ -3,6 +3,7 @@
 
 import { useEffect, useRef } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { NAV_ITEMS, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 
@@ -91,14 +92,14 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
         <nav className="w-full max-w-[320px] flex flex-col items-center gap-2.5" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
-            const isActive = pathname === item.path
+            const isActive =
+              pathname === item.path || (item.path === "/tools" && pathname.startsWith("/tools"))
 
             if (item.isCta) {
               return (
-                <button
+                <Link
                   key={item.id}
-                  type="button"
-                  onClick={() => navigate(item.path)}
+                  href={item.path}
                   aria-current={isActive ? "page" : undefined}
                   tabIndex={menuOpen ? 0 : -1}
                   style={{
@@ -112,15 +113,14 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                   )}
                 >
                   {item.label}
-                </button>
-              )
-            }
+</Link>
+                )
+              }
 
             return (
-              <button
+              <Link
                 key={item.id}
-                type="button"
-                onClick={() => navigate(item.path)}
+                href={item.path}
                 aria-current={isActive ? "page" : undefined}
                 tabIndex={menuOpen ? 0 : -1}
                 style={{
@@ -135,8 +135,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                 )}
               >
                 {item.label}
-              </button>
-            )
+</Link>
+              )
           })}
         </nav>
       </div>

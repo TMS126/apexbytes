@@ -80,7 +80,7 @@ export default function JpgToPdfPage() {
 
         {/* ─── MAIN LAYOUT: SIDEBAR + GRID ───────────────────────────── */}
         <section className="px-4 md:px-8 pb-16">
-          <div className="max-w-[1100px] mx-auto lg:grid lg:grid-cols-[340px_1fr] lg:gap-10 lg:items-start">
+          <div className={`mx-auto grid max-w-[1200px] grid-cols-1 gap-8 lg:items-start lg:gap-8 xl:gap-10 ${t.images.length > 0 ? "lg:grid-cols-[300px_minmax(0,1fr)]" : "max-w-[720px]"}`}>
             <div className="lg:sticky lg:top-24 flex flex-col gap-5">
               <ScrollBounce>
                 <SettingsBar
@@ -100,7 +100,12 @@ export default function JpgToPdfPage() {
                   onClick={() => inputRef.current?.click()}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") inputRef.current?.click() }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault()
+                      inputRef.current?.click()
+                    }
+                  }}
                   aria-label="Upload images: drag and drop, or press Enter to browse"
                   className={`rounded-[14px] border-2 border-dashed cursor-pointer transition-colors flex flex-col items-center justify-center gap-2.5 py-10 px-6 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue ${isDragging ? "border-brand-blue bg-brand-blue/5" : "border-zinc-200 dark:border-zinc-800 hover:border-brand-blue/50"}`}
                 >
@@ -121,7 +126,7 @@ export default function JpgToPdfPage() {
               )}
             </div>
 
-            <div className="mt-8 lg:mt-0">
+            <div className="min-w-0 lg:mt-0">
               {t.images.length > 0 && (
                 <>
                   <div className="flex items-center justify-between mb-3">

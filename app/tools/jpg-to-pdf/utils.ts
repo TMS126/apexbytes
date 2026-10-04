@@ -38,9 +38,11 @@ export function resolveFileType(file: File, acceptedTypes: string[]): string | n
 }
 
 export function qualityLabel(q: number) {
-  if (q >= 0.85) return "High quality"
+  if (q >= 0.9) return "Best quality"
+  if (q >= 0.78) return "High quality"
   if (q >= 0.6) return "Balanced"
-  return "Smaller file"
+  if (q >= 0.48) return "Smaller file"
+  return "Smallest file"
 }
 
 export const formatBytes = (bytes: number) => {
@@ -130,7 +132,7 @@ async function decodeViaBitmapCascade(file: File, naturalW: number, naturalH: nu
   for (const target of DECODE_SIZE_CASCADE) {
     const { w, h } = cappedDims(naturalW, naturalH, target)
     try {
-      const bitmap = await createImageBitmap(file, { resizeWidth: w, resizeHeight: h, resizeQuality: "medium" })
+      const bitmap = await createImageBitmap(file, { resizeWidth: w, resizeHeight: h, resizeQuality: "high" })
       return { source: bitmap, width: bitmap.width, height: bitmap.height, cleanup: () => bitmap.close() }
     } catch (err) {
       lastErr = err
@@ -223,14 +225,19 @@ function applyCanvasFilter(canvas: HTMLCanvasElement, filter: ImageFilter | unde
     const data = imageData.data
     for (let i = 0; i < data.length; i += 4) {
       const r = data[i], g = data[i + 1], b = data[i + 2]
-      if (filter === "grayscale") {
-        const gray = r * 0.299 + g * 0.587 + b * 0.114
-        data[i] = data[i + 1] = data[i + 2] = gray
-      } else if (filter === "bw") {
-        const gray = r * 0.299 + g * 0.587 + b * 0.114
-        const v = gray > 128 ? 255 : 0
-        data[i] = data[i + 1] = data[i + 2] = v
-      } else if (filter === "sepia") {
+  if (filter === "grayscale") {
+      const gray = r * 0.299 + g * 0.587 + b * 0.114
+      const lifted = Math.min(255, gray * 1.08 + 6)
+      data[i] = data[i + 1] = data[i + 2] = lifted
+    } else if (filter === "bw") {
+      const gray = r * 0.299 + g * 0.587 + b * 0.114
+      // Use a soft contrast curve instead of a hard 128 threshold so detail
+      // survives in shadows and highlights instead of becoming a flat mask.
+      const normalized = Math.max(0, Math.min(1, (gray - 128) / 105 + 0.5))
+      const curved = normalized * normalized * (3 - 2 * normalized)
+      const v = Math.round(curved * 255)
+      data[i] = data[i + 1] = data[i + 2] = v
+    } else if (filter === "sepia") {
         data[i] = Math.min(255, r * 0.393 + g * 0.769 + b * 0.189)
         data[i + 1] = Math.min(255, r * 0.349 + g * 0.686 + b * 0.168)
         data[i + 2] = Math.min(255, r * 0.272 + g * 0.534 + b * 0.131)

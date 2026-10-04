@@ -121,7 +121,7 @@ export function SettingsBar({
   return (
     <div className="flex flex-col gap-4">
       {/* ─── OUTPUT / SIZE DROPDOWNS ────────────────────────────────────── */}
-      <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <SimpleDropdown
           label="Output" value={mode} accentColor={accentColor}
           onChange={(v) => setMode(v as ConvertMode)}
@@ -137,7 +137,10 @@ export function SettingsBar({
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
       <div className="rounded-[14px] bg-secondary/60 p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
+          <div>
+            <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
+            <p className="mt-0.5 text-[0.68rem] text-muted-foreground">Higher keeps more detail; lower makes a smaller PDF.</p>
+          </div>
           <span className="text-sm font-bold" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
         </div>
 
