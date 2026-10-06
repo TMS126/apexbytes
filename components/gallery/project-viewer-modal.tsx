@@ -46,7 +46,7 @@ function ExpandableText({ text, accent }: { text: string; accent: string }) {
       <p
         className={cn(
           "text-base text-zinc-700 dark:text-zinc-200 leading-relaxed font-medium",
-          !expanded && isLong && "line-clamp-4"
+          false
         )}
       >
         {text}
@@ -142,8 +142,8 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
           <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>
-            <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover transition-transform group-hover:scale-105" /></span>
-            <span className="min-w-0 truncate text-sm font-bold text-zinc-700 dark:text-zinc-200">{p.title}</span>
+            <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover grayscale transition-[filter,transform] duration-300 group-hover:grayscale-0 group-hover:scale-105" /></span>
+            <span className="min-w-0 whitespace-normal break-words text-sm font-bold text-zinc-700 dark:text-zinc-200">{p.title}</span>
           </button>
         ))}
       </div>
@@ -173,7 +173,7 @@ function FloatingOtherProjectsWidget({ siblings, currentId, accent, onSelect }: 
             <span className="relative w-7 h-7 rounded-full overflow-hidden shrink-0">
               <SafeImage src={p.image} alt={p.title} accent={accent} fill sizes="28px" className="object-cover" />
             </span>
-            <span className="text-[0.78rem] font-bold text-zinc-700 dark:text-zinc-200 whitespace-nowrap max-w-[120px] truncate">{p.title}</span>
+            <span className="text-[0.78rem] font-bold text-zinc-700 dark:text-zinc-200 whitespace-nowrap whitespace-normal break-words">{p.title}</span>
           </button>
         ))}
       </div>
