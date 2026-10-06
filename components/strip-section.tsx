@@ -37,11 +37,10 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
     <div
       tabIndex={0}
       aria-label={item.title}
-      className="relative rounded-[14px] p-6 transition-transform duration-300 group overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
-      style={{ backgroundColor: "var(--card)" }}
+      className="relative h-full border-l-2 border-brand-orange/70 py-3 pl-6 pr-4 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
     >
       <div className="relative z-10">
-        <div className="mb-5 text-foreground">
+        <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-full bg-background/70 text-foreground shadow-sm">
           {item.iconName === "Rocket" && <Rocket weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "CurrencyDollar" && <CurrencyDollar weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "HandHeart" && <HandHeart weight="regular" className="w-6 h-6" aria-hidden="true" />}

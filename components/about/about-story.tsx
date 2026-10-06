@@ -82,10 +82,10 @@ export function AboutStory({
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch">
           {/* Card minimization: kept — repeated value siblings. */}
-          <ul className="flex flex-col gap-4 h-full" aria-label="Our values">
+          <ul className="flex flex-col gap-4 border-l-2 border-brand-orange/70 pl-6 h-full" aria-label="Our values">
             {ABOUT_VALUES.map((item, index) => (
               <li key={index} className="abh-card abh-shadow-elevated rounded-[14px] p-5 flex flex-row items-center text-left gap-4 flex-1 min-w-0">
-                <div className="shrink-0 flex items-center justify-center" style={{ color: blueColor }} aria-hidden="true">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-background shadow-sm" style={{ color: blueColor }} aria-hidden="true">
                   {renderIcon(item.iconName, "w-7 h-7")}
                 </div>
                 <div className="min-w-0">

@@ -299,8 +299,8 @@ function DesktopImageStack({
               fill
               sizes="34vw"
               className={cn(
-                "object-cover transition-all duration-300 md:group-hover/stackimg:scale-105",
-                !isActive && "grayscale opacity-70"
+"object-cover grayscale transition-[filter,transform] duration-300 md:group-hover/stackimg:grayscale-0 md:group-hover/stackimg:scale-105",
+              isActive ? "grayscale-0" : "opacity-70"
               )}
             />
             {isActive && (

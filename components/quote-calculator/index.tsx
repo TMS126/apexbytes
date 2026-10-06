@@ -348,7 +348,7 @@ export function QuoteCalculatorWidget() {
           aria-label="Quotation Calculator"
           className={cn(
             "fixed inset-0 md:inset-auto md:bottom-24 md:right-5 left-auto z-[9991]",
-            "w-full h-full md:h-auto md:w-[min(760px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
+            "w-full h-full md:h-auto md:w-[min(820px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
             "rounded-none md:rounded-[14px] shadow-2xl flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
             GLASS.panel,
@@ -361,7 +361,7 @@ export function QuoteCalculatorWidget() {
           <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
 
           <div
-            className="flex-1 overflow-y-auto overscroll-contain min-h-0"
+            className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]"
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}

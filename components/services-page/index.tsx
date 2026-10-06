@@ -213,12 +213,14 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
         <ScrollBounce delay={0.12} className="relative z-0 mb-7 w-full max-w-[980px]">
           <details className="group overflow-hidden rounded-[14px] border border-border/70 bg-card/70">
             <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 text-left text-[0.76rem] font-black uppercase tracking-[0.12em] text-muted-foreground [&::-webkit-details-marker]:hidden">
-              <span>View add-ons and free features</span>
+              <span title="See optional add-ons and included features">View add-ons and free features</span>
               <CaretDown size={16} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
-            <div className="border-t border-border/70 p-3 sm:p-4">
-              <AddOnsCard />
-            </div>
+<div className="grid grid-rows-[0fr] border-t border-border/70 transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
+    <div className="min-h-0 overflow-hidden">
+      <div className="p-3 sm:p-4"><AddOnsCard /></div>
+    </div>
+  </div>
           </details>
         </ScrollBounce>
 
