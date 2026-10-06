@@ -90,7 +90,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
         <p className="mb-4 text-[0.85rem] leading-snug text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-on)] group-focus-visible:text-[var(--hub-on)] motion-reduce:transition-none">
           {hub.desc}
         </p>
-        <span className="inline-flex items-center gap-1 text-[0.82rem] font-black">
+        <span className="abh-link-underline inline-flex items-center gap-1 text-[0.82rem] font-black">
           Explore
           <ArrowUpRight
             size={14}

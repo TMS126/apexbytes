@@ -57,6 +57,7 @@ export const HEX = {
     green: "#4A8011", greenDeep: "#2F5E0B",
     orange: "#FA5215", orangeDark: "#B06225", orangeBrown: "#8D4D1F",
     teal: "#3E7473", tealDark: "#2C5E60", tealLight: "#D3E9E5",
+    adobePdfRed: "#EC1C24",
     warningBg: "#A84516",
     lightBlue: "#A9D6F2", lightGreen: "#CDEB9F", lightOrange: "#F9D1B0",
     dark100: "#25283E", dark200: "#43455A", techGreyDark: "#B8CCE0",
@@ -67,6 +68,7 @@ export const HEX = {
     green: "#CDEB9F", greenDeep: "#E5F6C9",
     orange: "#FF9B73", orangeDark: "#F9D1B0", orangeBrown: "#FFE5D3",
     teal: "#9AD4CE", tealDark: "#BCE5E0", tealLight: "#284947",
+    adobePdfRed: "#FF6B6B",
     warningBg: "#E08A64",
     lightBlue: "#D9EEFA", lightGreen: "#E5F6C9", lightOrange: "#FFE5D3",
     // globals.css .dark overrides --brand-dark-100 to #EEF1F7 and

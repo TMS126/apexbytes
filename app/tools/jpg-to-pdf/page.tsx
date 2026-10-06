@@ -34,7 +34,7 @@ export default function JpgToPdfPage() {
   const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
   const pageBg = isDark ? THEME_HEX.dark.page : THEME_HEX.light.page
-  const accentColor = ensureAccessible(isDark ? HEX.dark.blue : HEX.light.blue, pageBg, 4.5)
+  const accentColor = ensureAccessible(isDark ? HEX.dark.adobePdfRed : HEX.light.adobePdfRed, pageBg, 4.5)
 
   const t = useJpgToPdf()
 

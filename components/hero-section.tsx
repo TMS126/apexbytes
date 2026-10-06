@@ -148,7 +148,7 @@ export function HeroSection() {
 
               <button
                 onClick={handleServicesClick}
-                className="group/services-cta flex items-center justify-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-transparent text-foreground border-2 border-[var(--link-foreground)] transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--brand-blue)] dark:hover:text-[var(--brand-light-blue)]"
+                className="group/services-cta flex items-center justify-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-transparent text-foreground border-2 border-[var(--line-rule)] transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--line-rule)]"
               >
                 <span className="md:max-lg:hidden">See Our Services</span><span className="hidden md:max-lg:inline">Services</span>
                 <ArrowUpRight
