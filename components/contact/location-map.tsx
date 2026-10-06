@@ -9,7 +9,7 @@ export function LocationMap() {
     <div className="relative w-full h-[320px] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
       <iframe
         title={`Map showing ${BIZ.address}`}
-        src={`https://www.google.com/maps?q=${encodeURIComponent(BIZ.address)}&output=embed`}
+        src={`https://maps.google.com/maps?q=${encodeURIComponent(BIZ.address)}&t=m&z=15&output=embed`}
         className="absolute inset-0 h-full w-full border-0 grayscale-[15%] dark:invert-[.9] dark:hue-rotate-180"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"

@@ -32,6 +32,15 @@ import { ClosingTagline, SectionCard, ServiceCard } from "./cards"
 export function ServicesPage() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)")
+    const syncViewport = () => setIsMobileViewport(media.matches)
+    syncViewport()
+    media.addEventListener("change", syncViewport)
+    return () => media.removeEventListener("change", syncViewport)
+  }, [])
   const params = useParams<{ slug?: string[] }>()
   const router = useRouter()
   const slug = params?.slug ?? []
@@ -136,7 +145,7 @@ export function ServicesPage() {
   // Real effect now — this is the one that was silently never cleaning
   // up and would have left the page permanently unscrollable.
   useEffect(() => {
-    if (!isModalOpen) return
+    if (!isModalOpen || !isMobileViewport) return
     const scrollY = window.scrollY
     const { style } = document.body
     style.position = "fixed"
@@ -168,12 +177,12 @@ export function ServicesPage() {
       <motion.div
         layout
         transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}
-        className="max-w-[1248px] mx-auto px-4 md:px-8 flex flex-col items-center transition-opacity duration-200"
-        style={{
+        className="max-w-[1248px] mx-auto px-4 md:px-8 flex flex-col items-center transition-opacity duration-200 md:opacity-100 md:pointer-events-auto"
+        style={isMobileViewport ? {
           opacity: isModalOpen ? 0 : 1,
           pointerEvents: isModalOpen ? "none" : "auto",
-        }}
-        aria-hidden={isModalOpen}
+        } : undefined}
+        aria-hidden={isMobileViewport ? isModalOpen : undefined}
       >
 
         <ScrollBounce className="w-full">
