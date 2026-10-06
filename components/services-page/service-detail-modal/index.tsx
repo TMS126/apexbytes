@@ -296,8 +296,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     svc.name === NSFAS_APPLICATION_ITEM && getNsfasWindowStatus(new Date()) === "closed"
   /* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
   return (
-    <div className="fixed inset-0 z-[10200] flex items-center justify-center p-3 md:relative md:inset-auto md:block md:p-0">
-      <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-200 md:hidden" onClick={onClose} />
+    <div className="relative z-[10200] flex min-h-[calc(100vh-5rem)] items-center justify-center px-4 py-12 md:px-8">
 
       <div
         ref={containerRef}

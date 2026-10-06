@@ -29,7 +29,7 @@ import { ClosingTagline, SectionCard, ServiceCard } from "./cards"
 // ============================================================
 // SERVICES PAGE
 // ============================================================
-export function ServicesPage() {
+export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?: boolean }) {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
   const [isMobileViewport, setIsMobileViewport] = useState(false)
@@ -364,9 +364,9 @@ export function ServicesPage() {
             onSwitchHub={(id) => handleOpenHub(id, "right")}
           />
         )}
-        {selectedService && (
-          <ServiceDetailModal key={selectedService.name} svc={selectedService} onClose={closeService} />
-        )}
+{showServiceDetail && selectedService && (
+            <ServiceDetailModal key={selectedService.name} svc={selectedService} onClose={closeService} />
+          )}
       </AnimatePresence>
 
       <BackToTopButton visible={showBackToTop && !isModalOpen} />

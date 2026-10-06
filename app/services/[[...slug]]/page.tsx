@@ -4,6 +4,7 @@ import { redirect } from "next/navigation"
 import { Suspense } from "react"
 import type { Metadata } from "next"
 import { ServicesPage } from "@/components/services-page"
+import { ServiceDetailPage } from "@/components/services-page/service-detail-page"
 import { CtaBar } from "@/components/strip-section"
 import { Navbar } from "@/components/navbar"
 import { TestimonialsSection } from "@/components/testimonials-section"
@@ -120,13 +121,29 @@ export default async function ServicesRoute({
     redirect("/services")
   }
 
+  const resolvedService = slug.length === 3 ? resolveServiceRoute(slug[0], slug[1], slug[2]) : null
+  const selectedService = resolvedService ? {
+    name: resolvedService.item.name,
+    price: resolvedService.item.price,
+    hubId: resolvedService.hubId,
+    sectionTitle: resolvedService.sectionTitle,
+    requirements: resolvedService.item.requirements,
+    desc: resolvedService.item.description,
+    turnaround: undefined,
+    tips: resolvedService.item.tips ? [...resolvedService.item.tips] : undefined,
+    notice: resolvedService.item.notice,
+  } : null
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       <div>
-        <Suspense fallback={null}>
-          <ServicesPage />
-        </Suspense>
+        {!selectedService && (
+          <Suspense fallback={null}>
+            <ServicesPage />
+          </Suspense>
+        )}
+        {selectedService && <ServiceDetailPage service={selectedService} />}
         <TestimonialsSection />
         <CtaBar
           title="Not sure what you need?"
