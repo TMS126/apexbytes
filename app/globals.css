@@ -9,6 +9,29 @@ body { overflow-x: hidden; min-height: 100dvh; -webkit-font-smoothing: antialias
 
 html[data-scroll-locked] body { overflow: hidden; }
 
+/* Interactive text controls use a theme-aware underline instead of pill-shaped chrome. */
+.abh-link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.abh-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -0.25rem;
+  height: 2px;
+  background: var(--link-foreground);
+  transition: right 220ms ease-out;
+}
+.abh-link-underline:hover::after,
+.abh-link-underline:focus-visible::after,
+.abh-link-underline[aria-current="page"]::after { right: 0; }
+.dark .abh-link-underline::after { background: var(--brand-orange); }
+@media (prefers-reduced-motion: reduce) {
+  .abh-link-underline::after { transition: none; }
+}
+
 /* Site-wide text hierarchy: neutral copy stays readable and consistent;
    brand colors remain reserved for links, actions, and meaningful status. */
 [class~="text-zinc-900"], [class~="text-zinc-800"], [class~="text-slate-900"], [class~="text-slate-800"], [class~="text-gray-900"], [class~="text-gray-800"] { color: var(--foreground) !important; }

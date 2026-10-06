@@ -274,8 +274,8 @@ export function HubBrowser({
                           className={cn(
                             "text-[0.78rem] font-black uppercase tracking-[0.15em] transition-colors duration-200",
                             isSectionOpen
-                              ? "px-2.5 py-1 rounded-full"
-                              : "px-0 py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                              ? "abh-link-underline py-1 [color:var(--hub-accent)]"
+                              : "abh-link-underline px-0 py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
                           )}
                           style={isSectionOpen ? { backgroundColor: solidAccent, color: onSolid } : undefined}
                         >
@@ -370,8 +370,7 @@ export function HubBrowser({
 
                               <div
                                 className={cn(
-                                  "group relative overflow-hidden ml-6 flex items-center gap-2 p-2 rounded-[14px] shadow-sm transition-colors duration-150",
-                                  GLASS.item
+                                  "group relative ml-6 flex items-center gap-2 border-l border-border/80 py-2 pl-3 pr-1 transition-colors duration-150 hover:border-[var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
@@ -385,7 +384,7 @@ export function HubBrowser({
                                   </span>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-[0.9rem] font-bold text-zinc-700 dark:text-zinc-300 truncate">
+                                  <p className="break-words text-[0.9rem] font-bold text-zinc-700 dark:text-zinc-300">
                                     {getDisplayName(section.title, item.name)}
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
@@ -394,7 +393,7 @@ export function HubBrowser({
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
                                     <span
-                                      className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
+className="flex items-center gap-0.5 border-l border-border pl-2 text-[0.6rem] font-black text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                                       aria-label={`${itemQty} already in your quote`}
                                     >
                                       <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -407,7 +406,7 @@ export function HubBrowser({
                                       ["--hub-accent" as unknown as string]: solidAccent,
                                       ["--hub-on-accent" as unknown as string]: onSolid,
                                     }}
-                                    className="abh-press w-7 h-7 rounded-full flex items-center justify-center shadow-sm bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
+                                    className="abh-press flex h-8 w-8 items-center justify-center border border-border bg-secondary text-foreground transition-colors duration-150 hover:border-[var(--hub-accent)] hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
                                     aria-label={`Add ${item.name}`}
                                   >
                                     <Plus size={13} weight="bold" aria-hidden="true" />
