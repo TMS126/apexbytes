@@ -75,11 +75,11 @@ function ExpandableText({ text, accent }: { text: string; accent: string }) {
 function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent: string }) {
   return (
     <div className="space-y-5">
-      <div className="border-l-2 border-brand-orange/70 py-1 pl-5">
+      <div className="border-l-2 abh-line-left py-1 pl-5">
         <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
         <ExpandableText text={project.clientGoal} accent={accent} />
       </div>
-      <div className="border-l-2 border-brand-orange/70 py-1 pl-5">
+      <div className="border-l-2 abh-line-left py-1 pl-5">
         <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
         <ul className="space-y-2">
           {project.whatWeDid.map((item, i) => (
@@ -89,7 +89,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
           ))}
         </ul>
       </div>
-      <div className="border-l-2 border-brand-orange/70 py-1 pl-5">
+      <div className="border-l-2 abh-line-left py-1 pl-5">
         <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
         <ExpandableText text={project.result} accent={accent} />
       </div>
@@ -138,7 +138,7 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
   if (others.length === 0) return null
   return (
     <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "p-5" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
-      <h3 className="border-l-2 border-brand-orange/70 pl-3 text-xs font-black uppercase tracking-widest text-muted-foreground">Other projects</h3>
+      <h3 className="border-l-2 abh-line-left pl-3 text-xs font-black uppercase tracking-widest text-muted-foreground">Other projects</h3>
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
           <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>

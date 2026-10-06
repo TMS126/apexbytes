@@ -37,7 +37,7 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
     <div
       tabIndex={0}
       aria-label={item.title}
-      className="relative h-full border-l-2 border-brand-orange/70 py-3 pl-6 pr-4 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
+      className="relative h-full border-l-2 abh-line-left py-3 pl-6 pr-4 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
     >
       <div className="relative z-10">
         <div className="abh-icon-chip mb-5 flex h-9 w-9 items-center justify-center bg-background/70 text-foreground">

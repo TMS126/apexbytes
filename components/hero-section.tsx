@@ -161,7 +161,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap items-stretch justify-center md:justify-start">
               {TRUST_HINTS.map((hint, index) => (
-                <span key={hint} className={`px-4 text-sm font-semibold text-muted-foreground dark:text-muted-foreground first:pl-0 ${index > 0 ? "border-l border-brand-orange/70" : ""}`}>
+                <span key={hint} className={`px-4 text-sm font-semibold text-muted-foreground dark:text-muted-foreground first:pl-0 ${index > 0 ? "border-l abh-line-left" : ""}`}>
                   {hint}
                 </span>
               ))}

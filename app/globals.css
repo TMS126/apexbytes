@@ -21,13 +21,13 @@ html[data-scroll-locked] body { overflow: hidden; }
   right: 100%;
   bottom: -0.25rem;
   height: 2px;
-  background: var(--link-foreground);
+  background: var(--line-rule);
   transition: right 220ms ease-out;
 }
 .abh-link-underline:hover::after,
 .abh-link-underline:focus-visible::after,
 .abh-link-underline[aria-current="page"]::after { right: 0; }
-.dark .abh-link-underline::after { background: var(--brand-orange); }
+.dark .abh-link-underline::after { background: var(--line-rule); }
 @media (prefers-reduced-motion: reduce) {
   .abh-link-underline::after { transition: none; }
 }
@@ -103,7 +103,10 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-green-deep: #2F5E0B;
   --brand-orange-brown: #8D4D1F;
   --brand-white: #FFFFFF;
-  --card-rule: var(--brand-orange);
+  /* Decorative rules are blue in light mode and orange in dark mode. */
+  --line-rule: var(--brand-blue);
+  --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
+  --card-rule: var(--line-rule);
   --brand-adobe-pdf-red: #EC1C24;
 
   --hub-print-primary: #1E6FA8;
@@ -280,6 +283,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-green: #CDEB9F;
   --brand-green-deep: #E5F6C9;
   --brand-orange: #FF9B73;
+  --line-rule: var(--brand-orange);
+  --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --brand-orange-dark: #F9D1B0;
   --brand-orange-brown: #FFE5D3;
   --brand-green-dark: #B8D993;
@@ -758,9 +763,17 @@ button, a, [role="button"] {
     box-shadow: 0 20px 25px -5px rgba(15, 63, 102, 0.1), 0 8px 10px -6px rgba(15, 63, 102, 0.1);
   }
 
+  .abh-line-left {
+    border-left-color: var(--line-rule-soft) !important;
+  }
+
+  .abh-line-focus:focus-within {
+    border-color: var(--line-rule) !important;
+  }
+
   .abh-divider {
     @apply mt-6 h-px w-20 max-w-full mx-auto;
-    background: var(--brand-orange);
+    background: var(--line-rule);
     box-shadow: none;
   }
 
