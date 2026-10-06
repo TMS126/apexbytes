@@ -110,7 +110,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           rel="noopener noreferrer"
           onClick={onClose}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
-          className="flex-1 flex items-center justify-center gap-2 py-3.5 text-[0.92rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[0.82rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
@@ -120,7 +120,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
         <Link
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
-          className="flex-1 flex items-center justify-center gap-2 py-3.5 text-[0.92rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[0.82rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
@@ -244,16 +244,8 @@ function DesktopImageStack({
   images: string[]; activeIdx: number; setActiveIdx: (i: number) => void
   accent: string; onOpenZoom: (i: number) => void; isDark: boolean
 }) {
-  const handleWheel = (e: React.WheelEvent) => {
-    if (images.length < 2) return
-    if (Math.abs(e.deltaY) < 8) return
-    e.preventDefault()
-    if (e.deltaY > 0) setActiveIdx(activeIdx < images.length - 1 ? activeIdx + 1 : 0)
-    else setActiveIdx(activeIdx > 0 ? activeIdx - 1 : images.length - 1)
-  }
-
   return (
-    <div className="flex flex-col gap-2.5 w-full h-full" onWheel={handleWheel}>
+    <div className="flex flex-col gap-2.5 w-full h-full">
       {images.map((img, idx) => {
         const isActive = idx === activeIdx
         return (

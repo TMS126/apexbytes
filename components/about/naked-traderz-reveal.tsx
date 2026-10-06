@@ -78,13 +78,13 @@ export function TheNakedTradersZAReveal({
       {modalOpen && (
         <div role="dialog" aria-modal="true" aria-labelledby="nt-modal-title" className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/55 transition-opacity duration-300 ease-out"
+            className="absolute inset-0 bg-black/72 backdrop-blur-[2px] transition-opacity duration-500 ease-out"
             style={{ opacity: animateIn ? 1 : 0 }}
             onClick={() => closeModal()}
             aria-hidden="true"
           />
           <div
-            className="relative w-full max-w-xs rounded-[20px] bg-card shadow-2xl p-5 transition-all duration-300"
+            className="relative w-full max-w-sm p-4 sm:p-6 transition-all duration-500"
             style={{
               opacity: animateIn ? 1 : 0,
               transform: animateIn ? "translateY(0) scale(1)" : "translateY(8px) scale(0.94)",
@@ -110,7 +110,7 @@ export function TheNakedTradersZAReveal({
             <h3 id="nt-modal-title" className="abh-card-heading text-lg mb-1">The Naked Traders ZA</h3>
             <p className="abh-muted mb-4">Market trading group — forex &amp; CFD trading (e.g. EUR/USD)</p>
 
-            <div className="relative w-full aspect-square rounded-[14px] overflow-hidden shadow-md bg-zinc-50 dark:bg-zinc-900/50">
+            <div className="relative w-full aspect-square overflow-hidden rounded-[28px] bg-zinc-50/95 shadow-2xl ring-1 ring-white/30 dark:bg-zinc-900/95">
               <Image src="/nto.webp" alt="The Naked Traders ZA logo" fill sizes="288px" className="object-contain" />
             </div>
           </div>

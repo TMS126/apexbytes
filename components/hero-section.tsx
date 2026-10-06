@@ -159,10 +159,9 @@ export function HeroSection() {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-1.5">
-              {TRUST_HINTS.map((hint) => (
-                <span key={hint} className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground dark:text-muted-foreground">
-                  <CheckCircle size={15} weight="regular" style={{ color: TOKEN.orangeText }} aria-hidden="true" />
+            <div className="flex flex-wrap items-stretch justify-center md:justify-start">
+              {TRUST_HINTS.map((hint, index) => (
+                <span key={hint} className={`px-4 text-sm font-semibold text-muted-foreground dark:text-muted-foreground first:pl-0 ${index > 0 ? "border-l border-brand-orange/70" : ""}`}>
                   {hint}
                 </span>
               ))}

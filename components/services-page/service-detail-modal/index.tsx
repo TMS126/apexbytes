@@ -296,8 +296,8 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     svc.name === NSFAS_APPLICATION_ITEM && getNsfasWindowStatus(new Date()) === "closed"
   /* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
   return (
-    <div className="fixed inset-0 z-[10200] flex items-center justify-center p-3 md:p-4">
-      <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-200" onClick={onClose} />
+    <div className="fixed inset-0 z-[10200] flex items-center justify-center p-3 md:relative md:inset-auto md:block md:p-0">
+      <div className="absolute inset-0 bg-black/55 animate-in fade-in duration-200 md:hidden" onClick={onClose} />
 
       <div
         ref={containerRef}
@@ -305,7 +305,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         role="dialog"
         aria-modal="true"
         aria-label={svc.name}
-        className="relative w-full max-w-lg bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[88vh] flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in duration-150"
+        className="relative w-full max-w-lg md:max-w-3xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[88vh] md:max-h-none flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in duration-150 md:shadow-none md:rounded-[18px]"
         style={{ boxShadow: "var(--shadow-modal)" }}
       >
         {hasBulk && (

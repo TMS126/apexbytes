@@ -1,20 +1,24 @@
 // components/contact/location-map.tsx
 "use client"
 
-import { MapPin, ArrowSquareOut } from "@phosphor-icons/react"
+import { ArrowSquareOut } from "@phosphor-icons/react"
 import { BRAND, TOKEN, BIZ } from "@/lib/brand"
 
 export function LocationMap() {
   return (
-    <div className="w-full h-[260px] flex flex-col items-center justify-center gap-3 bg-zinc-50 dark:bg-zinc-900 text-center px-6">
-      <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ backgroundColor: `color-mix(in srgb, ${BRAND.blue} 8%, transparent)` }}>
-        <MapPin size={28} weight="fill" style={{ color: BRAND.blue }} aria-hidden="true" />
-      </div>
-
-      <div>
-        <p className="text-[1.05rem] font-medium text-zinc-800 dark:text-zinc-100">{BIZ.address}</p>
-        <p className="abh-muted mt-0.5">Walk-in or by appointment</p>
-      </div>
+    <div className="relative w-full h-[320px] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+      <iframe
+        title={`Map showing ${BIZ.address}`}
+        src={`https://www.google.com/maps?q=${encodeURIComponent(BIZ.address)}&output=embed`}
+        className="absolute inset-0 h-full w-full border-0 grayscale-[15%] dark:invert-[.9] dark:hue-rotate-180"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+      <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 rounded-xl border border-white/40 bg-white/90 px-4 py-3 shadow-lg backdrop-blur dark:border-zinc-700/60 dark:bg-zinc-950/90">
+        <div className="min-w-0">
+          <p className="truncate text-sm font-bold text-zinc-900 dark:text-zinc-100">{BIZ.address}</p>
+          <p className="abh-muted mt-0.5">Walk-in or by appointment</p>
+        </div>
 
       <a
         href={BIZ.mapsUrl}
@@ -26,6 +30,7 @@ export function LocationMap() {
         Open in Google Maps
         <ArrowSquareOut size={14} weight="bold" />
       </a>
+      </div>
     </div>
   )
 } 
