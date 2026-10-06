@@ -101,7 +101,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
   return (
     <div className="fixed inset-x-0 bottom-6 z-30 flex justify-center px-6 pointer-events-none">
       <div
-        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-full overflow-hidden backdrop-blur-xl bg-white/45 dark:bg-zinc-900/40 border border-white/40 dark:border-white/10"
+        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-[14px] overflow-hidden backdrop-blur-xl bg-white/45 dark:bg-zinc-900/40 border border-white/40 dark:border-white/10"
         style={{ boxShadow: "0 16px 38px -10px rgba(0,0,0,0.35), 0 6px 16px -6px rgba(0,0,0,0.2)" }}
       >
         <a
@@ -110,8 +110,8 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           rel="noopener noreferrer"
           onClick={onClose}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[0.82rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
-          style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
+          className="abh-wa-btn flex-1 py-2.5 text-[0.82rem] font-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
           Order
@@ -120,7 +120,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
         <Link
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[0.82rem] font-black transition-opacity active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="abh-line-cta flex-1 py-2.5 text-[0.82rem] font-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />

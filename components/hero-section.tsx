@@ -138,8 +138,7 @@ export function HeroSection() {
               <ScrollBounce>
               <button
                 onClick={handleCtaClick}
-                className="group/quote flex items-center justify-center gap-2 px-7 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 abh-shadow-badge"
-                  style={{ backgroundColor: "var(--home-cta-bg)", color: "var(--home-cta-text)" }}
+                className="abh-line-cta group/quote px-7 py-4 font-sans font-black text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
                 >
                   <span className="min-w-[10.5rem] md:max-lg:min-w-0 transition-opacity duration-150 group-active/quote:opacity-70"><span className="md:max-lg:hidden">{quoteLabel}</span><span className="hidden md:max-lg:inline">Quote</span></span>
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
@@ -148,7 +147,7 @@ export function HeroSection() {
 
               <button
                 onClick={handleServicesClick}
-                className="group/services-cta flex items-center justify-center gap-2 px-6 py-4 rounded-[14px] font-sans font-black text-lg sm:text-xl bg-transparent text-foreground border-2 border-[var(--line-rule)] transition-all duration-150 active:scale-[0.94] active:brightness-95 hover:-translate-y-0.5 hover:bg-secondary hover:text-[var(--line-rule)]"
+                className="abh-line-cta group/services-cta px-6 py-4 font-sans font-black text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
               >
                 <span className="md:max-lg:hidden">See Our Services</span><span className="hidden md:max-lg:inline">Services</span>
                 <ArrowUpRight

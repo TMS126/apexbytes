@@ -296,7 +296,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     svc.name === NSFAS_APPLICATION_ITEM && getNsfasWindowStatus(new Date()) === "closed"
   /* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
   return (
-    <div className="relative z-[10200] flex min-h-[calc(100vh-5rem)] items-center justify-center px-4 py-12 md:px-8">
+    <div className="fixed inset-0 z-[11000] flex items-center justify-center overflow-y-auto bg-black/55 px-4 py-8 backdrop-blur-[2px] md:px-8" role="presentation">
 
       <div
         ref={containerRef}
@@ -304,7 +304,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         role="dialog"
         aria-modal="true"
         aria-label={svc.name}
-        className="relative w-full max-w-lg md:max-w-3xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[88vh] md:max-h-none flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in duration-150 md:shadow-none md:rounded-[18px]"
+            className="relative w-full max-w-lg md:max-w-3xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[88vh] md:max-h-none flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in duration-150"
         style={{ boxShadow: "var(--shadow-modal)" }}
       >
         {hasBulk && (
@@ -584,10 +584,9 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
             className={cn(
-              "flex items-center justify-center gap-2 w-full px-4 py-4 rounded-[14px] font-black text-base text-center transition-all active:scale-95",
+              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-4 font-black text-base text-center",
               ICON_BTN_FOCUS
             )}
-            style={{ backgroundColor: "var(--brand-whatsapp)", color: "var(--on-whatsapp)" }}
           >
             Request {naturalLabel}
           </a>

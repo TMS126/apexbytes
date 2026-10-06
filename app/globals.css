@@ -782,13 +782,14 @@ button, a, [role="button"] {
     background: transparent;
     color: var(--brand-whatsapp-accessible);
     border: 0;
-    border-radius: 0;
+    border-radius: 14px;
     box-shadow: none;
     position: relative;
     padding: .35rem 0 .45rem;
   }
   .abh-wa-btn::after { content: ""; position: absolute; left: 0; right: 0; bottom: .05rem; height: 2px; background: var(--brand-whatsapp-accessible); transition: opacity 220ms ease-out; }
   .abh-wa-btn:hover::after, .abh-wa-btn:focus-visible::after { opacity: .72; }
+  .abh-wa-btn:hover, .abh-wa-btn:focus-visible { background: color-mix(in srgb, var(--brand-whatsapp) 12%, transparent); border-radius: 9999px; }
 
   .abh-btn-primary,
   .abh-btn-cta {
@@ -808,6 +809,36 @@ button, a, [role="button"] {
   .abh-btn-primary:focus-visible::after,
   .abh-btn-cta:hover::after,
   .abh-btn-cta:focus-visible::after { opacity: .72; }
+  .abh-btn-primary:hover,
+  .abh-btn-primary:focus-visible,
+  .abh-btn-cta:hover,
+  .abh-btn-cta:focus-visible { background: color-mix(in srgb, var(--cta-action) 10%, transparent); border-radius: 9999px; }
+
+  .abh-line-cta {
+    @apply inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-95;
+    position: relative;
+    color: var(--cta-action);
+    background: transparent;
+    border: 0;
+    border-radius: 14px;
+  }
+  .abh-line-cta::after {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: .35rem;
+    height: 2px;
+    background: currentColor;
+    transition: opacity 220ms ease-out;
+  }
+  .abh-line-cta:hover,
+  .abh-line-cta:focus-visible {
+    background: color-mix(in srgb, currentColor 10%, transparent);
+    border-radius: 9999px;
+  }
+  .abh-line-cta:hover::after,
+  .abh-line-cta:focus-visible::after { opacity: .72; }
 
   .abh-identity-btn {
     @apply font-sans inline-flex items-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;

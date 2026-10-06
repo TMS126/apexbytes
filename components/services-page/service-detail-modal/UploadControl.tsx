@@ -25,9 +25,9 @@ export function UploadButton({ phase, accent, onClick }: { phase: UploadPhase; a
       onPointerLeave={() => setPressed(false)}
       onPointerCancel={() => setPressed(false)}
       aria-label={isDone ? "File attached" : "Attach file"}
-      className="flex items-center justify-center py-3.5 rounded-[14px] transition-all duration-150"
+      className="abh-line-cta flex items-center justify-center py-3.5 transition-all duration-150"
       style={{
-        backgroundColor: isDone ? "#22c55e18" : `color-mix(in srgb, ${accent} 10%, transparent)`,
+        backgroundColor: "transparent",
         color: isDone ? "#16a34a" : accent,
         boxShadow: pressed
           ? "inset 0 2px 6px -1px rgba(0,0,0,0.22), inset 0 1px 3px -1px rgba(0,0,0,0.14)"
@@ -113,8 +113,8 @@ export function UploadStatus({
         <button
           type="button"
           onClick={onRetry}
-          className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-[12px] text-sm font-black transition-all active:scale-[0.98]"
-          style={{ backgroundColor: `color-mix(in srgb, ${accent} 7%, transparent)`, color: accent }}
+          className="abh-line-cta flex items-center justify-center gap-1.5 w-full py-2.5 text-sm font-black"
+          style={{ color: accent }}
         >
           <ArrowClockwise size={14} weight="bold" aria-hidden="true" />
           Try a Different File
