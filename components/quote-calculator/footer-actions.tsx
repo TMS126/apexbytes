@@ -24,7 +24,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
   return (
     <>
       {hasItems && (
-        <div className="px-4 pt-3 shrink-0 border-t border-zinc-100 dark:border-white/10 space-y-3 shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_-6px_14px_-6px_rgba(0,0,0,0.5)]">
+        <div className="px-4 pt-3 shrink-0 border-t border-zinc-100 dark:border-white/10 space-y-3">
           {totalSavings > 0 && (
             <div className="flex items-center gap-1.5 text-[0.7rem] font-bold text-emerald-600 dark:text-emerald-400">
               <SealPercent size={14} weight="fill" aria-hidden="true" />
@@ -38,7 +38,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
           <div className="flex items-center gap-2">
             <button
               onClick={onExportPdf}
-              className={cn("abh-press shrink-0 w-12 h-12 rounded-[14px] flex items-center justify-center transition-all duration-150 shadow-md hover:shadow-lg transform-gpu", GLASS.btn)}
+              className={cn("abh-press abh-icon-chip shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-150", GLASS.btn)}
               aria-label="Download or print quote as PDF"
               title="Download / print as PDF"
             >
@@ -46,7 +46,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
             </button>
             <button
               onClick={onSendQuote}
-              className="abh-press flex-1 flex items-center justify-center gap-2 py-3.5 rounded-[14px] font-black text-sm text-emerald-950 transition-transform duration-150 shadow-lg transform-gpu"
+              className="abh-press flex-1 flex items-center justify-center gap-2 py-3 rounded-[12px] font-black text-sm text-emerald-950 transition-transform duration-150"
               style={{ backgroundColor: "#25D366" }}
             >
               <WhatsappLogo size={20} weight="fill" aria-hidden="true" /> Send Quote via WhatsApp
@@ -59,7 +59,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
         <button
           onClick={onClose}
           aria-label="Close quotation calculator"
-          className={cn("abh-press w-11 h-11 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-150 shadow-md", GLASS.btn)}
+          className={cn("abh-press abh-icon-chip w-11 h-11 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-150", GLASS.btn)}
         >
           <X size={18} weight="bold" aria-hidden="true" />
         </button>

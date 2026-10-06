@@ -34,7 +34,7 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
             type="button"
             onClick={onToggleTheme}
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="abh-press w-8 h-8 rounded-full flex items-center justify-center bg-[var(--surface-modal-control)] text-foreground hover:bg-[var(--surface-modal-control-hover)] transition-colors"
+            className="abh-press abh-icon-chip w-8 h-8 rounded-full flex items-center justify-center bg-[var(--surface-modal-control)] text-foreground hover:bg-[var(--surface-modal-control-hover)] transition-colors"
           >
             {isDark ? <Sun size={16} weight="bold" aria-hidden="true" /> : <Moon size={16} weight="bold" aria-hidden="true" />}
           </button>

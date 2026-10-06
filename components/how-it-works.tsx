@@ -6,7 +6,7 @@
 // badge is the one minimal seal-orange accent, replacing the previous
 // always-on BRAND.blue treatment on both the icon tile and the number.
 "use client"
-import { ArrowRight, ChatCircleText, ClipboardText, Package } from "@phosphor-icons/react"
+import { ChatCircleText, ClipboardText, Package } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
@@ -47,7 +47,7 @@ export function HowItWorks() {
           {STEPS.map((step, index) => {
             const StepIcon = step.icon
             return (
-              <ScrollBounce key={step.title} delay={index * 0.1} className="relative">
+              <ScrollBounce key={step.title} delay={index * 0.1}>
                 <div className="abh-card h-full p-6 md:p-7 flex flex-col items-center text-center">
                   <div className="relative mb-4">
                     <div className="w-14 h-14 rounded-[14px] flex items-center justify-center bg-secondary text-muted-foreground">
@@ -67,14 +67,6 @@ export function HowItWorks() {
                   </h3>
                   <p className="abh-body text-[0.92rem]">{step.desc}</p>
                 </div>
-                {index < STEPS.length - 1 && (
-                  <ArrowRight
-                    size={22}
-                    weight="bold"
-                    className="pointer-events-none absolute -right-5 top-1/2 hidden -translate-y-1/2 text-[var(--line-rule)] sm:block"
-                    aria-hidden="true"
-                  />
-                )}
               </ScrollBounce>
             )
           })}

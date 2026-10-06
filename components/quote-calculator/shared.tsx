@@ -33,8 +33,8 @@ export function getReadableTextColor(hex: string): string {
 
 export const GLASS = {
   panel:   "bg-white/95 dark:bg-zinc-900/95 shadow-[0_2px_20px_-2px_rgba(0,0,0,0.10)] dark:shadow-[0_2px_24px_-2px_rgba(0,0,0,0.55)]",
-  section: "bg-zinc-50 dark:bg-white/[0.04] shadow-[0_1px_8px_-2px_rgba(0,0,0,0.07)] dark:shadow-[0_1px_10px_-2px_rgba(0,0,0,0.35)]",
-  item:    "bg-white dark:bg-white/[0.05] shadow-[0_1px_6px_-1px_rgba(0,0,0,0.07)] dark:shadow-[0_1px_8px_-1px_rgba(0,0,0,0.35)]",
+  section: "bg-zinc-50 dark:bg-white/[0.04]",
+  item:    "bg-white dark:bg-white/[0.05]",
   pill:    "bg-zinc-100 dark:bg-white/[0.08]",
   btn:     "bg-zinc-100 dark:bg-white/[0.07]",
 } as const
