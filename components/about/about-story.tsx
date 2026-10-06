@@ -82,7 +82,7 @@ export function AboutStory({
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch">
           {/* Card minimization: kept — repeated value siblings. */}
-          <ul className="flex flex-col gap-4 border-l-2 border-brand-orange/70 pl-6 h-full" aria-label="Our values">
+          <ul className="flex flex-col gap-4 h-full" aria-label="Our values">
             {ABOUT_VALUES.map((item, index) => (
               <li key={index} className="abh-card abh-card-rule p-5 flex flex-row items-center text-left gap-4 flex-1 min-w-0">
                 <div className="abh-icon-chip flex h-10 w-10 shrink-0 items-center justify-center bg-background" style={{ color: blueColor }} aria-hidden="true">
