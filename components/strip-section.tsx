@@ -40,7 +40,7 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
       className="relative h-full border-l-2 border-brand-orange/70 py-3 pl-6 pr-4 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue/60"
     >
       <div className="relative z-10">
-        <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-full bg-background/70 text-foreground shadow-sm">
+        <div className="abh-icon-chip mb-5 flex h-9 w-9 items-center justify-center bg-background/70 text-foreground">
           {item.iconName === "Rocket" && <Rocket weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "CurrencyDollar" && <CurrencyDollar weight="regular" className="w-6 h-6" aria-hidden="true" />}
           {item.iconName === "HandHeart" && <HandHeart weight="regular" className="w-6 h-6" aria-hidden="true" />}

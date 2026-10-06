@@ -34,10 +34,10 @@ export function AboutStandards({ blueColor, neutralColor }: { blueColor: string;
                   onFocus={() => setHoveredCard(item.id)}
                   onBlur={() => setHoveredCard(null)}
                   tabIndex={0}
-                  className={cn("abh-card p-6 flex flex-col h-full outline-none transition-all duration-300 rounded-[14px] abh-shadow-elevated", isHovered && "-translate-y-1.5 shadow-lg")}
+                  className={cn("abh-card abh-card-rule p-6 flex flex-col h-full outline-none transition-all duration-300", isHovered && "-translate-y-1.5")}
                 >
                   <div
-                    className="w-11 h-11 rounded-[12px] flex items-center justify-center mb-5 border border-transparent shrink-0"
+                    className="abh-icon-chip flex h-11 w-11 items-center justify-center mb-5 bg-background shrink-0"
                     style={{ backgroundColor: `color-mix(in srgb, ${neutralColor} 8%, transparent)`, color: neutralColor }}
                     aria-hidden="true"
                   >

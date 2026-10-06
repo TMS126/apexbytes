@@ -47,8 +47,8 @@ export function AboutMission({
           </Link>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center gap-2.5 w-full sm:w-64 px-8 py-4 rounded-[14px] font-medium text-base border-2 transition-all duration-300 active:scale-95 hover:-translate-y-0.5"
-            style={{ borderColor: "var(--link-foreground)", color: "var(--link-foreground)" }}
+            className="abh-underline-button w-full sm:w-64 font-medium text-base"
+            style={{ color: "var(--link-foreground)" }}
           >
             <EnvelopeSimple size={16} weight="bold" />
             Get in Touch

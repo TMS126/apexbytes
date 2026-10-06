@@ -32,6 +32,33 @@ html[data-scroll-locked] body { overflow: hidden; }
   .abh-link-underline::after { transition: none; }
 }
 
+.abh-underline-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: .35rem 0 .45rem;
+  color: var(--foreground);
+}
+.abh-underline-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: .05rem;
+  height: 2px;
+  background: var(--card-rule);
+  transition: right 220ms ease-out;
+}
+.abh-underline-button:hover::after,
+.abh-underline-button:focus-visible::after,
+.abh-underline-button[aria-current="page"]::after { right: 0; }
+
 /* Site-wide text hierarchy: neutral copy stays readable and consistent;
    brand colors remain reserved for links, actions, and meaningful status. */
 [class~="text-zinc-900"], [class~="text-zinc-800"], [class~="text-slate-900"], [class~="text-slate-800"], [class~="text-gray-900"], [class~="text-gray-800"] { color: var(--foreground) !important; }
@@ -76,6 +103,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-green-deep: #2F5E0B;
   --brand-orange-brown: #8D4D1F;
   --brand-white: #FFFFFF;
+  --card-rule: var(--brand-orange);
   --brand-adobe-pdf-red: #EC1C24;
 
   --hub-print-primary: #1E6FA8;
@@ -616,6 +644,20 @@ button, a, [role="button"] {
     box-shadow: none;
   }
 
+  .abh-card-rule {
+    border-inline: 2px solid var(--card-rule) !important;
+    border-block: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .abh-icon-chip {
+    border: 0 !important;
+    border-radius: 9999px;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
+  }
+
   .abh-page-title {
     @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
     color: var(--title-color);
@@ -720,21 +762,36 @@ button, a, [role="button"] {
   }
 
   .abh-wa-btn {
-    @apply font-sans flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
-    background: var(--brand-whatsapp);
-    color: var(--on-whatsapp);
+    @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
+    background: transparent;
+    color: var(--foreground);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+    padding: .35rem 0 .45rem;
   }
-  .abh-wa-btn:hover { background: var(--brand-whatsapp-dark); }
+  .abh-wa-btn::after { content: ""; position: absolute; left: 0; right: 100%; bottom: .05rem; height: 2px; background: var(--card-rule); transition: right 220ms ease-out; }
+  .abh-wa-btn:hover::after, .abh-wa-btn:focus-visible::after { right: 0; }
 
   .abh-btn-primary,
   .abh-btn-cta {
-    @apply font-sans inline-flex items-center justify-center gap-2 font-medium text-base rounded-[14px] px-6 py-3 transition-all duration-200 active:scale-95;
-    background: var(--primary-fill);
-    color: var(--on-primary-fill);
+    @apply font-sans inline-flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
+    background: transparent;
+    color: var(--foreground);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+    padding: .35rem 0 .45rem;
   }
-  .abh-btn-cta { @apply gap-3 py-4 duration-300; }
-  .abh-btn-primary:hover,
-  .abh-btn-cta:hover { background: var(--brand-blue-mid); }
+  .abh-btn-cta { @apply gap-3 duration-300; }
+  .abh-btn-primary::after,
+  .abh-btn-cta::after { content: ""; position: absolute; left: 0; right: 100%; bottom: .05rem; height: 2px; background: var(--card-rule); transition: right 220ms ease-out; }
+  .abh-btn-primary:hover::after,
+  .abh-btn-primary:focus-visible::after,
+  .abh-btn-cta:hover::after,
+  .abh-btn-cta:focus-visible::after { right: 0; }
 
   .abh-logo-primary { color: var(--logo-primary); }
   .abh-logo-secondary { color: var(--logo-secondary); }
@@ -749,13 +806,7 @@ button, a, [role="button"] {
 }
 
 .dark .abh-btn-primary,
-.dark .abh-btn-cta {
-  background: var(--home-cta-bg);
-  color: var(--home-cta-text);
-}
-
-.dark .abh-btn-primary:hover,
-.dark .abh-btn-cta:hover { background: var(--brand-orange-dark); }
+.dark .abh-btn-cta { color: var(--foreground); }
 
 .dark .dark\:bg-zinc-900,
 .dark .dark\:bg-zinc-950,

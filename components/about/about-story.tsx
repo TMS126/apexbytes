@@ -42,7 +42,7 @@ export function AboutStory({
         {/* Card minimization: kept — a media unit (photo + caption) that
             needs a solid surface against the image, not a plain info box. */}
         <ScrollBounce delay={0.18}>
-          <div className="max-w-[720px] mx-auto mb-14 rounded-[16px] overflow-hidden abh-shadow-elevated">
+          <div className="max-w-[720px] mx-auto mb-14 overflow-hidden abh-card-rule">
             <div className="relative aspect-[16/9]">
               <Image
                 src="/storefront.webp"
@@ -84,8 +84,8 @@ export function AboutStory({
           {/* Card minimization: kept — repeated value siblings. */}
           <ul className="flex flex-col gap-4 border-l-2 border-brand-orange/70 pl-6 h-full" aria-label="Our values">
             {ABOUT_VALUES.map((item, index) => (
-              <li key={index} className="abh-card abh-shadow-elevated rounded-[14px] p-5 flex flex-row items-center text-left gap-4 flex-1 min-w-0">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-background shadow-sm" style={{ color: blueColor }} aria-hidden="true">
+              <li key={index} className="abh-card abh-card-rule p-5 flex flex-row items-center text-left gap-4 flex-1 min-w-0">
+                <div className="abh-icon-chip flex h-10 w-10 shrink-0 items-center justify-center bg-background" style={{ color: blueColor }} aria-hidden="true">
                   {renderIcon(item.iconName, "w-7 h-7")}
                 </div>
                 <div className="min-w-0">
@@ -103,7 +103,7 @@ export function AboutStory({
           <ScrollBounce delay={0.2}>
             <div className="flex flex-col h-full" aria-label="Business overview">
               <div className="flex flex-col items-center text-center gap-2 mb-7 pb-6 border-b border-zinc-100 dark:border-zinc-800">
-                <div className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor }}>
+                <div className="abh-icon-chip flex h-10 w-10 items-center justify-center shrink-0 bg-background" style={{ color: blueColor }}>
                   <UsersThree size={20} weight="fill" />
                 </div>
                 <div>
@@ -117,8 +117,8 @@ export function AboutStory({
                   { value: <WhatsappLogo weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "WhatsApp Ready" },
                   { value: <ShieldCheck weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "Community Trusted" },
                 ].map((stat, index) => (
-                  <div key={index} className="p-5 flex flex-col justify-center items-center">
-                    <div className="mb-1 flex items-center justify-center text-zinc-700 dark:text-zinc-300">{stat.value}</div>
+                    <div key={index} className="p-5 flex flex-col justify-center items-center">
+                    <div className="abh-icon-chip mb-1 flex h-9 w-9 items-center justify-center bg-background text-zinc-700 dark:text-zinc-300">{stat.value}</div>
                     <p className="abh-eyebrow text-center">{stat.label}</p>
                   </div>
                 ))}

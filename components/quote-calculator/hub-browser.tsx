@@ -406,7 +406,7 @@ className="flex items-center gap-0.5 border-l border-border pl-2 text-[0.6rem] f
                                       ["--hub-accent" as unknown as string]: solidAccent,
                                       ["--hub-on-accent" as unknown as string]: onSolid,
                                     }}
-                                    className="abh-press flex h-8 w-8 items-center justify-center border border-border bg-secondary text-foreground transition-colors duration-150 hover:border-[var(--hub-accent)] hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
+                                    className="abh-press abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
                                     aria-label={`Add ${item.name}`}
                                   >
                                     <Plus size={13} weight="bold" aria-hidden="true" />

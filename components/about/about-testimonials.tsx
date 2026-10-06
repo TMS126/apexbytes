@@ -21,11 +21,11 @@ function CompactTestimonials() {
               onFocus={() => setHovered(i)}
               onBlur={() => setHovered(null)}
               tabIndex={0}
-              className={cn("h-full min-h-[260px] w-full rounded-[14px] bg-card p-5 flex flex-col items-center text-center outline-none transition-all duration-300 abh-shadow-elevated min-w-0", isHovered && "-translate-y-1.5 shadow-lg")}
+              className={cn("abh-card abh-card-rule h-full min-h-[260px] w-full p-5 flex flex-col items-center text-center outline-none transition-all duration-300 min-w-0", isHovered && "-translate-y-1.5")}
             >
               <Quotes size={16} weight="fill" className="mb-2 opacity-30 text-muted-foreground dark:text-muted-foreground" aria-hidden="true" />
               <p className="text-[0.92rem] font-normal text-zinc-600 dark:text-zinc-300 leading-relaxed mb-3">{r.quote}</p>
-              <div className="w-12 h-12 rounded-full flex items-center justify-center mb-1.5 bg-zinc-100 dark:bg-zinc-800 text-muted-foreground dark:text-muted-foreground" aria-hidden="true">
+              <div className="abh-icon-chip flex h-12 w-12 items-center justify-center mb-1.5 bg-background text-muted-foreground dark:text-muted-foreground" aria-hidden="true">
                 <UserCircle size={30} weight="fill" />
               </div>
               <p className="abh-card-heading text-[0.9rem] truncate max-w-full">{r.name}</p>
