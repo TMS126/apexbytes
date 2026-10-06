@@ -131,6 +131,26 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
   )
 }
 
+function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = false }: {
+  siblings: ProjectData[]; currentId: string; accent: string; onSelect: (p: ProjectData) => void; compact?: boolean
+}) {
+  const others = siblings.filter((p) => p.id !== currentId)
+  if (others.length === 0) return null
+  return (
+    <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "p-5" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
+      <h3 className="border-l-2 border-brand-orange/70 pl-3 text-xs font-black uppercase tracking-widest text-muted-foreground">Other projects</h3>
+      <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
+        {others.map((p) => (
+          <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>
+            <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover transition-transform group-hover:scale-105" /></span>
+            <span className="min-w-0 truncate text-sm font-bold text-zinc-700 dark:text-zinc-200">{p.title}</span>
+          </button>
+        ))}
+      </div>
+    </aside>
+  )
+}
+
 function FloatingOtherProjectsWidget({ siblings, currentId, accent, onSelect }: {
   siblings: ProjectData[]; currentId: string; accent: string; onSelect: (p: ProjectData) => void
 }) {
@@ -308,6 +328,7 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
       </div>
       <button
         onClick={onClose}
+        title="Close project"
         aria-label="Close project"
         className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-muted-foreground dark:text-muted-foreground transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
         style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
@@ -518,7 +539,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
         </div>
       ) : (
         <>
-          <div className="hidden md:flex md:w-[52%] md:h-full md:shrink-0 md:flex-col md:min-h-0 bg-zinc-50/70 dark:bg-zinc-900/30">
+          <div className="hidden md:flex md:w-[42%] md:h-full md:shrink-0 md:flex-col md:min-h-0 bg-zinc-50/70 dark:bg-zinc-900/30">
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
@@ -538,7 +559,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             </div>
           </div>
 
-          <div className="hidden md:flex md:flex-1 md:h-full md:flex-col md:min-h-0 border-l border-zinc-200/80 dark:border-zinc-800/80">
+          <div className="hidden md:flex md:w-[33%] md:h-full md:flex-col md:min-h-0 border-l border-zinc-200/80 dark:border-zinc-800/80">
             <div className="shrink-0 w-full max-w-2xl px-6 md:px-8 pt-6">
               <ProjectHeader project={project} accent={accent} onClose={onClose} />
               <DesktopActionRow
@@ -559,10 +580,10 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
               <div className="h-28" aria-hidden="true" />
             </div>
           </div>
+          <OtherProjectsPanel siblings={siblings} currentId={project.id} accent={accent} onSelect={onNavigate} compact />
         </>
       )}
 
-      <FloatingOtherProjectsWidget siblings={siblings} currentId={project.id} accent={accent} onSelect={onNavigate} />
       <FloatingCTAPill project={project} onClose={onClose} accent={accent} />
 
       {zoomIndex !== null && (
