@@ -787,9 +787,7 @@ button, a, [role="button"] {
     position: relative;
     padding: .35rem 0 .45rem;
   }
-  .abh-wa-btn::after { content: ""; position: absolute; left: 0; right: 0; bottom: .05rem; height: 2px; background: var(--brand-whatsapp-accessible); opacity: 0; transition: opacity 180ms ease-out; }
   .abh-wa-btn:hover, .abh-wa-btn:focus-visible, .abh-wa-btn:active { background: color-mix(in srgb, var(--brand-whatsapp) 12%, transparent); border-radius: 9999px; box-shadow: var(--shadow-action-whatsapp); }
-  .abh-wa-btn:hover::after, .abh-wa-btn:focus-visible::after, .abh-wa-btn:active::after { opacity: .72; }
 
   .abh-btn-primary,
   .abh-btn-cta {
@@ -803,16 +801,10 @@ button, a, [role="button"] {
     padding: .35rem 0 .45rem;
   }
   .abh-btn-cta { @apply gap-3 duration-300; }
-  .abh-btn-primary::after,
-  .abh-btn-cta::after { content: ""; position: absolute; left: 0; right: 0; bottom: .05rem; height: 2px; background: var(--cta-action); transition: opacity 220ms ease-out; }
-  .abh-btn-primary:hover::after,
-  .abh-btn-primary:focus-visible::after,
-  .abh-btn-cta:hover::after,
-  .abh-btn-cta:focus-visible::after { opacity: .72; }
   .abh-btn-primary:hover,
   .abh-btn-primary:focus-visible,
   .abh-btn-cta:hover,
-  .abh-btn-cta:focus-visible { background: color-mix(in srgb, var(--cta-action) 10%, transparent); border-radius: 9999px; }
+  .abh-btn-cta:focus-visible { background: color-mix(in srgb, var(--cta-action) 10%, transparent); border-radius: 9999px; box-shadow: var(--shadow-action-brand); }
 
   .abh-line-cta {
     @apply inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-95;
@@ -823,17 +815,6 @@ button, a, [role="button"] {
     border-radius: 0;
     box-shadow: none;
   }
-  .abh-line-cta::after {
-    content: "";
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    bottom: .35rem;
-    height: 2px;
-    background: currentColor;
-    opacity: 0;
-    transition: opacity 180ms ease-out;
-  }
   .abh-line-cta:hover,
   .abh-line-cta:focus-visible,
   .abh-line-cta:active {
@@ -841,9 +822,6 @@ button, a, [role="button"] {
     border-radius: 9999px;
     box-shadow: var(--shadow-action-brand);
   }
-  .abh-line-cta:hover::after,
-  .abh-line-cta:focus-visible::after,
-  .abh-line-cta:active::after { opacity: .72; }
 
   .abh-identity-btn {
     @apply font-sans inline-flex items-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
@@ -854,18 +832,9 @@ button, a, [role="button"] {
     border-radius: 14px;
     box-shadow: none;
   }
-  .abh-identity-btn::after {
-    content: "";
-    position: absolute;
-    left: 1.5rem;
-    right: 1.5rem;
-    bottom: .55rem;
-    height: 2px;
-    background: var(--line-rule);
-    transition: opacity 220ms ease-out;
-  }
-  .abh-identity-btn:hover::after,
-  .abh-identity-btn:focus-visible::after { opacity: .72; }
+  .abh-identity-btn:hover,
+  .abh-identity-btn:focus-visible,
+  .abh-identity-btn:active { background: color-mix(in srgb, currentColor 10%, transparent); border-radius: 9999px; box-shadow: var(--shadow-action-brand); }
 
   .abh-logo-primary { color: var(--logo-primary); }
   .abh-logo-secondary { color: var(--logo-secondary); }
