@@ -3,19 +3,18 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle, PaperPlaneTilt, Plus, DownloadSimple } from "@phosphor-icons/react"
+import { CheckCircle, PaperPlaneTilt, DownloadSimple } from "@phosphor-icons/react"
 import { SimpleDropdown } from "@/components/ui/simple-dropdown"
 import { formatBytes } from "./utils"
 import type { ConvertedFile } from "./types"
 
 export function ResultsPanel({
-  convertedFiles, sendNotice, accentColor, onSend, onAddMore,
+  convertedFiles, sendNotice, accentColor, onSend,
 }: {
   convertedFiles: ConvertedFile[]
   sendNotice: string | null
   accentColor: string
   onSend: (file: ConvertedFile) => void
-  onAddMore: () => void
 }) {
   const [fileName, setFileName] = useState(convertedFiles[0]?.fileName || "")
   useEffect(() => {
@@ -36,7 +35,6 @@ export function ResultsPanel({
               {convertedFiles.length} file{convertedFiles.length > 1 ? "s" : ""} converted
             </span>
           </div>
-          {/* Real measured size of the actual output — not an estimate. */}
           <p className="text-xs text-muted-foreground dark:text-muted-foreground mb-1">
             Actual size: {formatBytes(totalActualBytes)}
           </p>
@@ -45,10 +43,6 @@ export function ResultsPanel({
             Saved to your device automatically
           </div>
 
-          {/* Hub dropdown removed — one WhatsApp number means it never
-              routed anywhere different, it just relabeled the send
-              button. File picker (when there's more than one result)
-              is the only dropdown left. */}
           {convertedFiles.length > 1 && (
             <div className="flex flex-wrap justify-center gap-2 mb-4">
               <SimpleDropdown label="File" value={fileName} accentColor={accentColor} onChange={setFileName}
@@ -66,14 +60,6 @@ export function ResultsPanel({
               <PaperPlaneTilt weight="fill" className="w-4 h-4" aria-hidden="true" />
               Send to ApexbytesHub
             </button>
-            <button
-              type="button"
-              onClick={onAddMore}
-              className="col-span-2 flex items-center justify-center gap-2 rounded-[12px] border border-zinc-200 dark:border-zinc-800 py-2.5 px-4 text-sm font-semibold text-zinc-600 dark:text-zinc-300 hover:border-brand-blue hover:text-brand-blue transition-colors"
-            >
-              <Plus size={16} weight="bold" aria-hidden="true" />
-              Add more photos
-            </button>
           </div>
 
           {sendNotice && <p className="mt-4 text-sm font-medium text-muted-foreground dark:text-muted-foreground" aria-live="polite">{sendNotice}</p>}
@@ -81,4 +67,4 @@ export function ResultsPanel({
       )}
     </AnimatePresence>
   )
-            } 
+}
