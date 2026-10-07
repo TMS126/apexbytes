@@ -60,7 +60,7 @@ export default function JpgToPdfPage() {
       <Navbar />
       <>
         {/* ─── HERO ───────────────────────────────────────────────────── */}
-        <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
+        <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+1.5rem)] pb-5">
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
               <Link href="/tools"
@@ -69,18 +69,18 @@ export default function JpgToPdfPage() {
                 All Tools
               </Link>
               <FilePdf weight="fill" className="w-10 h-10 mx-auto mb-4" style={{ color: accentColor }} aria-hidden="true" />
-              <h1 className="abh-page-title mb-3">JPG to PDF</h1>
+              <h1 className="abh-page-title mb-2">JPG to PDF</h1>
             </ScrollBounce>
             <p className="abh-tagline max-w-md mx-auto">
               Convert images into a PDF right in your browser. Nothing is uploaded — your files never leave your device.
             </p>
-            <div className="abh-divider" />
+            <div className="mx-auto h-px w-20 bg-brand-blue/55" />
           </div>
         </section>
 
         {/* ─── MAIN LAYOUT: SIDEBAR + GRID ───────────────────────────── */}
         <section className="px-4 md:px-8 pb-16">
-          <div className={`mx-auto grid max-w-[1200px] grid-cols-1 gap-8 lg:items-start lg:gap-8 xl:gap-10 ${t.images.length > 0 ? "lg:grid-cols-[300px_minmax(0,1fr)]" : "max-w-[720px]"}`}>
+          <div className={`mx-auto grid max-w-[1400px] grid-cols-1 gap-6 lg:items-start lg:gap-7 xl:gap-8 ${t.images.length > 0 ? "lg:grid-cols-[280px_minmax(0,1fr)]" : "max-w-[720px]"}`}>
             <div className="lg:sticky lg:top-24 flex flex-col gap-5">
               <ScrollBounce>
                 <SettingsBar
@@ -107,7 +107,7 @@ export default function JpgToPdfPage() {
                     }
                   }}
                   aria-label="Upload images: drag and drop, or press Enter to browse"
-                  className={`rounded-[14px] border-2 border-dashed cursor-pointer transition-colors flex flex-col items-center justify-center gap-2.5 py-10 px-6 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue ${isDragging ? "border-brand-blue bg-brand-blue/5" : "border-zinc-200 dark:border-zinc-800 hover:border-brand-blue/50"}`}
+                  className={`rounded-xl border-2 border-dashed cursor-pointer transition-colors flex flex-col items-center justify-center gap-2.5 py-10 px-6 text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue ${isDragging ? "border-brand-blue bg-brand-blue/5" : "border-zinc-200 dark:border-zinc-800 hover:border-brand-blue/50"}`}
                 >
                   <UploadSimple weight="bold" className="w-7 h-7 text-muted-foreground" aria-hidden="true" />
                   <p className="font-medium text-sm text-zinc-700 dark:text-zinc-300">Drag & drop, or tap to browse</p>
@@ -166,7 +166,7 @@ export default function JpgToPdfPage() {
                       onClick={t.requestConvert}
                       disabled={t.isConverting || t.selectedCount === 0}
                       aria-busy={t.isConverting}
-                      className="rounded-[14px] font-black py-3 px-8 text-white transition-transform active:scale-[0.98] disabled:opacity-60"
+                      className="rounded-lg font-black py-2.5 px-6 text-white transition-transform active:scale-[0.98] disabled:opacity-60"
                       style={{ backgroundColor: accentColor }}
                     >
                       {t.isConverting ? `Converting… ${t.progress}%` : "Convert to PDF"}
