@@ -115,17 +115,6 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
 
   useEffect(() => {
     if (!svc) return
-    const html = document.documentElement
-    const previous = html.getAttribute("data-scroll-locked")
-    html.setAttribute("data-scroll-locked", "true")
-    return () => {
-      if (previous === null) html.removeAttribute("data-scroll-locked")
-      else html.setAttribute("data-scroll-locked", previous)
-    }
-  }, [svc])
-
-  useEffect(() => {
-    if (!svc) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return
       if (tipsOpen) return
@@ -315,7 +304,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         role="dialog"
         aria-modal="true"
         aria-label={svc.name}
-        className="relative flex w-full max-w-lg flex-col overflow-hidden rounded-[14px] border border-border bg-[var(--surface-modal)] outline-none animate-in fade-in duration-150 md:max-w-2xl md:max-h-[86vh]"
+            className="relative w-full max-w-lg md:max-w-3xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[88vh] md:max-h-none flex flex-col outline-none rounded-[14px] overflow-hidden animate-in fade-in duration-150"
         style={{ boxShadow: "var(--shadow-modal)" }}
       >
         {hasBulk && (
@@ -389,7 +378,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
         </div>
 
         {/* ══════════════════ HEADER ══════════════════ */}
-        <div className="shrink-0 px-6 pb-4 pt-5">
+        <div className="px-6 pt-6 pb-5 flex-shrink-0">
           <div className={cn(HEADER_GRID, "items-start mb-2")}>
             <div aria-hidden="true" />
             <div className="min-w-0 text-center">
@@ -426,7 +415,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
         </div>
 
         {/* ══════════════════ TABS ("Needs" / "Description") ══════════════════ */}
-        <div className="shrink-0 px-6 pt-1">
+        <div className="px-6 pt-1">
           <div className={cn(HEADER_GRID, "items-center")}>
             <div aria-hidden="true" />
             <div role="tablist" aria-label="Service info sections" className="flex items-center justify-center gap-6 border-b border-zinc-100 dark:border-zinc-800">
@@ -500,7 +489,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
         </div>
 
         {/* ══════════════════ FOOTER ══════════════════ */}
-        <div className="shrink-0 space-y-2 border-t border-zinc-100 px-5 pb-4 pt-2.5 dark:border-zinc-800">
+        <div className="px-6 pb-8 pt-4 flex-shrink-0 border-t border-zinc-100 dark:border-zinc-800 space-y-3">
           <input ref={fileRef} type="file" accept={HUB_ACCEPT[svc.hubId]} onChange={handleFilePick} className="hidden" />
 
           {TURNSTILE_SITE_KEY ? (
@@ -514,7 +503,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             <p className="abh-muted text-xs text-center">Document upload is temporarily unavailable.</p>
           )}
 
-          <div className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-2">
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-3">
             <UploadButton
               phase={uploadPhase}
               accent={accent}
@@ -532,7 +521,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 fileRef.current?.click()
               }}
             />
-            <div className="abh-divider-vertical" aria-hidden="true" />
+            <div className="w-px bg-zinc-200 dark:bg-zinc-700/60" aria-hidden="true" />
             <QuoteControl
               inQuote={inQuote}
               quoteQty={quoteQty}
@@ -585,7 +574,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             </div>
           )}
 
-          <div className="h-px bg-[var(--line-rule-soft)]" />
+          <div className="h-px bg-zinc-100 dark:bg-zinc-800" />
 
           {/* CTA — was text-white on the #25D366 fill; switched to dark
               text (zinc-900) per request. Fill unchanged. */}
@@ -595,7 +584,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
             className={cn(
-              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-2.5 font-black text-sm text-center",
+              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-4 font-black text-base text-center",
               ICON_BTN_FOCUS
             )}
           >

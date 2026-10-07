@@ -101,7 +101,8 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
   return (
     <div className="fixed inset-x-0 bottom-6 z-30 flex justify-center px-6 pointer-events-none">
       <div
-        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-[14px] overflow-hidden bg-white/45 shadow-none transition-shadow duration-200 hover:shadow-[0_16px_38px_-10px_rgba(0,0,0,0.35),0_6px_16px_-6px_rgba(0,0,0,0.2)] dark:bg-zinc-900/40"
+        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-[14px] overflow-hidden backdrop-blur-xl bg-white/45 dark:bg-zinc-900/40 border border-white/40 dark:border-white/10"
+        style={{ boxShadow: "0 16px 38px -10px rgba(0,0,0,0.35), 0 6px 16px -6px rgba(0,0,0,0.2)" }}
       >
         <a
           href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I saw "${project.title}" in your gallery and I'd like something similar.`)}`}
@@ -115,7 +116,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
           Order
         </a>
-        <div className="abh-divider-vertical" aria-hidden="true" />
+        <div className="w-px bg-zinc-300/60 dark:bg-zinc-600/60" aria-hidden="true" />
         <Link
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}

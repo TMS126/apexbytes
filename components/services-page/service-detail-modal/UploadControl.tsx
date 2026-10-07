@@ -25,11 +25,13 @@ export function UploadButton({ phase, accent, onClick }: { phase: UploadPhase; a
       onPointerLeave={() => setPressed(false)}
       onPointerCancel={() => setPressed(false)}
       aria-label={isDone ? "File attached" : "Attach file"}
-      className="abh-line-cta flex min-h-11 items-center justify-center py-2.5 transition-all duration-150"
+      className="abh-line-cta flex items-center justify-center py-3.5 transition-all duration-150"
       style={{
         backgroundColor: "transparent",
         color: isDone ? "#16a34a" : accent,
-        boxShadow: pressed ? "inset 0 2px 6px -1px rgba(0,0,0,0.22)" : undefined,
+        boxShadow: pressed
+          ? "inset 0 2px 6px -1px rgba(0,0,0,0.22), inset 0 1px 3px -1px rgba(0,0,0,0.14)"
+          : "0 2px 8px -2px rgba(0,0,0,0.12), 0 1px 3px -1px rgba(0,0,0,0.08)",
         transform: pressed ? "translateY(1px) scale(0.97)" : "translateY(0) scale(1)",
       }}
     >
@@ -111,7 +113,7 @@ export function UploadStatus({
         <button
           type="button"
           onClick={onRetry}
-          className="abh-line-cta flex min-h-10 w-full items-center justify-center gap-1.5 py-2 text-sm font-black"
+          className="abh-line-cta flex items-center justify-center gap-1.5 w-full py-2.5 text-sm font-black"
           style={{ color: accent }}
         >
           <ArrowClockwise size={14} weight="bold" aria-hidden="true" />

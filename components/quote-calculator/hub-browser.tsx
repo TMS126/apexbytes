@@ -342,8 +342,26 @@ export function HubBrowser({
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)
                           const itemQty = getItemQty(itemId)
+                          const isLastItem = iIdx === section.items.length - 1
                           return (
                             <div key={iIdx} className="relative">
+                              {!isLastItem && (
+                                <span
+                                  className="absolute left-3 top-[22px] bottom-0 w-0.5 pointer-events-none"
+                                  style={{ backgroundColor: "var(--border)" }}
+                                  aria-hidden="true"
+                                />
+                              )}
+                              <span
+                                className="absolute left-3 top-0 h-[22px] w-0.5 pointer-events-none"
+                                style={{ backgroundColor: "var(--border)" }}
+                                aria-hidden="true"
+                              />
+                              <span
+                                className="absolute left-3 top-[22px] -translate-y-1/2 w-2 h-0.5 pointer-events-none"
+                                style={{ backgroundColor: "var(--border)" }}
+                                aria-hidden="true"
+                              />
                               <span
                                 className="absolute left-[1.15rem] top-[22px] -translate-y-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
                                 style={{ backgroundColor: "var(--muted-foreground)" }}
@@ -352,7 +370,7 @@ export function HubBrowser({
 
                               <div
                                 className={cn(
-                                  "group relative ml-6 flex items-center gap-2 py-2 pl-3 pr-1 transition-colors duration-150"
+                                  "group relative ml-6 flex items-center gap-2 border-l border-border/80 py-2 pl-3 pr-1 transition-colors duration-150 hover:border-[var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
@@ -375,7 +393,7 @@ export function HubBrowser({
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
                                     <span
-                                      className="flex items-center gap-0.5 pl-2 text-[0.6rem] font-black text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
+className="flex items-center gap-0.5 border-l border-border pl-2 text-[0.6rem] font-black text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                                       aria-label={`${itemQty} already in your quote`}
                                     >
                                       <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />

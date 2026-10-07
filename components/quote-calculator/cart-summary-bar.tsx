@@ -86,7 +86,7 @@ export function CartSummaryBar({
                   aria-pressed={expandView}
                   aria-label={expandView ? "Switch to compact view" : "Switch to expanded view"}
                   title={expandView ? "Compact view" : "Expand view"}
-                  className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
+                  className="abh-press w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
                 >
                   {expandView ? <ArrowsInSimple size={14} weight="bold" aria-hidden="true" /> : <ArrowsOutSimple size={14} weight="bold" aria-hidden="true" />}
                 </button>
@@ -94,7 +94,7 @@ export function CartSummaryBar({
                   onClick={() => setShowSaveForm(v => !v)}
                   aria-label="Save quote"
                   title="Save quote"
-                  className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
+                  className="abh-press w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
                 >
                   <FloppyDisk size={14} weight="bold" aria-hidden="true" />
                 </button>
@@ -102,7 +102,7 @@ export function CartSummaryBar({
                   onClick={clearCart}
                   aria-label="Clear quote"
                   title="Clear quote"
-                  className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-red-500 hover:bg-white dark:hover:bg-white/10 transition-colors"
+                  className="abh-press w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-red-500 hover:bg-white dark:hover:bg-white/10 transition-colors"
                 >
                   <Trash size={14} weight="bold" aria-hidden="true" />
                 </button>

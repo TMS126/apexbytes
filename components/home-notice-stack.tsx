@@ -161,7 +161,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="fixed inset-0 z-[99999] bg-black/55 transition-opacity duration-200 dark:bg-black/70 flex items-center justify-center p-4"
+              className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-[3px] dark:bg-black/80 flex items-center justify-center p-4"
               style={{ perspective: 1200 }}
               onClick={() => setModalOpen(false)}
             >
@@ -172,7 +172,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
                 className="transform-gpu will-change-transform relative w-full max-w-md max-h-[80vh] overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 flex flex-col gap-3 ring-1 ring-black/10 dark:ring-white/10"
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}

@@ -22,11 +22,13 @@ export function QuoteControl({
         onPointerLeave={() => setPressed(false)}
         onPointerCancel={() => setPressed(false)}
         aria-label="Add to quote"
-        className="abh-line-cta flex min-h-11 items-center justify-center py-2.5 transition-all duration-150"
+        className="abh-line-cta flex items-center justify-center py-3.5 transition-all duration-150"
         style={{
           backgroundColor: "transparent",
           color: accent,
-          boxShadow: pressed ? "inset 0 2px 6px -1px rgba(0,0,0,0.22)" : undefined,
+          boxShadow: pressed
+            ? "inset 0 2px 6px -1px rgba(0,0,0,0.22), inset 0 1px 3px -1px rgba(0,0,0,0.14)"
+            : "0 2px 8px -2px rgba(0,0,0,0.12), 0 1px 3px -1px rgba(0,0,0,0.08)",
         }}
       >
         <ShoppingCartSimple size={22} weight="bold" aria-hidden="true" />
@@ -35,7 +37,7 @@ export function QuoteControl({
   }
 
   return (
-    <div className="flex min-h-11 items-center justify-between gap-2 rounded-[12px] px-2.5 py-1.5" style={{ backgroundColor: "#22c55e10" }}>
+    <div className="flex items-center justify-between gap-2 rounded-[14px] py-2 px-2.5" style={{ backgroundColor: "#22c55e10", boxShadow: "0 2px 8px -2px rgba(0,0,0,0.12)" }}>
       <button
         type="button"
         onClick={() => onStep(-1)}

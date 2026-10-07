@@ -104,7 +104,7 @@ export function NoticePill({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/55 p-4 transition-opacity duration-200 dark:bg-black/70"
+              className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-[3px] dark:bg-black/80"
               style={{ perspective: 1200 }}
               onClick={close}
             >
@@ -115,7 +115,7 @@ export function NoticePill({
                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
                 onClick={(event) => event.stopPropagation()}
                 className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 ring-1 ring-black/10 dark:ring-white/10"
                 style={{
