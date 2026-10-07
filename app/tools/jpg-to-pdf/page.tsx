@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, X, GraspHorizontal } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
