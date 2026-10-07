@@ -72,6 +72,7 @@ html[data-scroll-locked] body { overflow: hidden; }
 
 img, video, svg, canvas { max-width: 100%; display: block; }
 input, button, textarea, select { font: inherit; max-width: 100%; }
+button, [role="button"] { border: 0 !important; border-radius: 14px; }
 
 @custom-variant dark (&:is(.dark *));
 
@@ -652,7 +653,7 @@ button, a, [role="button"] {
   }
 
   .abh-card-rule {
-    border-left: 2px solid var(--card-rule) !important;
+    border-left: 1px solid var(--card-rule) !important;
     border-right: 0 !important;
     border-block: 0 !important;
     border-radius: 0 !important;
@@ -662,7 +663,7 @@ button, a, [role="button"] {
 
   .abh-icon-chip {
     border: 0 !important;
-    border-radius: 9999px;
+    border-radius: 14px;
     box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
   }
 
@@ -764,7 +765,14 @@ button, a, [role="button"] {
   }
 
   .abh-line-left {
+    border-left-width: 1px !important;
     border-left-color: var(--line-rule-soft) !important;
+  }
+
+  .abh-divider-vertical {
+    width: 1px;
+    align-self: stretch;
+    background: var(--line-rule-soft);
   }
 
   .abh-line-focus:focus-within {
@@ -909,6 +917,13 @@ button, a, [role="button"] {
 .abh-chip-strip::-webkit-scrollbar-track { background: transparent; }
 .abh-chip-strip::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--foreground) 28%, transparent); border-radius: 9999px; }
 .abh-chip-strip::-webkit-scrollbar-thumb:hover { background: var(--line-rule); }
+
+/* Every button starts as a restrained 14px control; interaction styles may
+   deliberately turn it into a pill when the control is hovered or pressed. */
+button:not(:hover):not(:focus-visible):not(:active),
+[role="button"]:not(:hover):not(:focus-visible):not(:active) {
+  border-radius: 14px !important;
+}
 
 @keyframes abh-drip-pill {
   0%   { transform: translateY(-110px) scaleX(0.12) scaleY(0.5); opacity: 1; }

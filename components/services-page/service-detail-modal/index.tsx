@@ -500,7 +500,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
         </div>
 
         {/* ══════════════════ FOOTER ══════════════════ */}
-        <div className="shrink-0 space-y-2.5 border-t border-zinc-100 px-6 pb-5 pt-3 dark:border-zinc-800">
+        <div className="shrink-0 space-y-2 border-t border-zinc-100 px-5 pb-4 pt-2.5 dark:border-zinc-800">
           <input ref={fileRef} type="file" accept={HUB_ACCEPT[svc.hubId]} onChange={handleFilePick} className="hidden" />
 
           {TURNSTILE_SITE_KEY ? (
@@ -514,7 +514,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             <p className="abh-muted text-xs text-center">Document upload is temporarily unavailable.</p>
           )}
 
-          <div className="grid grid-cols-2 items-stretch gap-2.5">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-stretch gap-2">
             <UploadButton
               phase={uploadPhase}
               accent={accent}
@@ -532,6 +532,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 fileRef.current?.click()
               }}
             />
+            <div className="abh-divider-vertical" aria-hidden="true" />
             <QuoteControl
               inQuote={inQuote}
               quoteQty={quoteQty}
@@ -584,7 +585,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             </div>
           )}
 
-          <div className="h-px bg-zinc-100 dark:bg-zinc-800" />
+          <div className="h-px bg-[var(--line-rule-soft)]" />
 
           {/* CTA — was text-white on the #25D366 fill; switched to dark
               text (zinc-900) per request. Fill unchanged. */}
@@ -594,7 +595,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
             className={cn(
-              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-4 font-black text-base text-center",
+              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-2.5 font-black text-sm text-center",
               ICON_BTN_FOCUS
             )}
           >

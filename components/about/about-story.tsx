@@ -42,7 +42,7 @@ export function AboutStory({
         {/* Card minimization: kept — a media unit (photo + caption) that
             needs a solid surface against the image, not a plain info box. */}
         <ScrollBounce delay={0.18}>
-          <div className="max-w-[720px] mx-auto mb-14 overflow-hidden">
+          <div className="max-w-[720px] mx-auto mb-14 overflow-hidden rounded-[14px]">
             <div className="relative aspect-[16/9]">
               <Image
                 src="/storefront.webp"
