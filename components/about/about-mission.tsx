@@ -41,14 +41,13 @@ export function AboutMission({
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/services" className="abh-identity-btn w-full sm:w-64 justify-center px-8 py-4">
+          <Link href="/services" className="abh-identity-btn abh-mission-cta w-full sm:w-64 justify-center px-8 py-3.5 font-black">
             See All Services
             <ArrowRight size={16} weight="bold" />
           </Link>
           <Link
             href="/contact"
-            className="abh-identity-btn w-full sm:w-64 justify-center px-8 py-4"
-            style={{ color: "var(--link-foreground)" }}
+            className="abh-identity-btn abh-mission-cta-secondary w-full sm:w-64 justify-center px-8 py-3.5 font-black"
           >
             <EnvelopeSimple size={16} weight="bold" />
             Get in Touch

@@ -68,7 +68,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     ],
     sameAs: [
       `https://wa.me/${BIZ.phoneE164.replace('+', '')}`,
-      'https://www.facebook.com/16558343683795756839',
+      BIZ.facebookUrl,
       BIZ.mapsUrl,
     ],
     hasOfferCatalog: {
