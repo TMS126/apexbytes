@@ -15,9 +15,8 @@ const QUALITY_MAX = 0.95
 // color-stop cuts — each color holds its "core" briefly then eases into
 // the next over a short blend zone.
 const TRACK_GRADIENT = `linear-gradient(90deg,
-  ${BRAND.blue} 0%, ${BRAND.blue} 52%,
-  ${BRAND.green} 68%, ${BRAND.green} 82%,
-  ${BRAND.orange} 94%, ${BRAND.orange} 100%)`
+  ${BRAND.blue} 0%, ${BRAND.blue} 58%,
+  ${BRAND.green} 100%)`
 
 function QualitySlider({
   quality, setQuality,
@@ -121,7 +120,7 @@ export function SettingsBar({
   return (
     <div className="flex flex-col gap-4">
       {/* ─── OUTPUT / SIZE DROPDOWNS ────────────────────────────────────── */}
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-2">
         <SimpleDropdown
           label="Output" value={mode} accentColor={accentColor}
           onChange={(v) => setMode(v as ConvertMode)}
@@ -135,7 +134,7 @@ export function SettingsBar({
       </div>
 
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
-      <div className="rounded-[14px] bg-secondary/60 p-4">
+      <div className="border-l-2 border-brand-blue/70 py-2 pl-4 pr-1">
         <div className="flex items-center justify-between mb-2">
           <div>
             <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
