@@ -54,7 +54,7 @@ function GridItem({
       onDragStart={(e) => (e as unknown as React.DragEvent<HTMLLIElement>).dataTransfer.setData("text/plain", String(index))}
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => onReorder(Number(e.dataTransfer.getData("text/plain")), index)}
-      className={`relative rounded-[14px] overflow-hidden border bg-zinc-100 dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "border-red-300 dark:border-red-800" : "border-zinc-200 dark:border-zinc-800"}`}
+      className={`relative rounded-[14px] overflow-hidden border bg-zinc-100 dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "border-red-300 dark:border-red-800" : "border-zinc-200 dark:border-zinc-700"}`}
     >
       {/* ─── IMAGE / ZOOM TRIGGER ────────────────────────────────────── */}
       <button type="button" onClick={() => onZoom(img.id)} aria-label={`View ${img.file.name} full size`} className="relative block w-full aspect-square">
@@ -97,10 +97,6 @@ function GridItem({
       </button>
 
       {/* ─── ERROR OVERLAY ───────────────────────────────────────────── */}
-      {/* Refresh now actually re-attempts decoding this file (see
-          retryImage in the hook) rather than just hiding the error text —
-          shows a spinner while that check runs, and only clears once a
-          real decode succeeds. */}
       {err && (
         <div
           className="absolute inset-0 bg-red-600/70 flex flex-col items-center justify-center gap-2 px-3 text-center pointer-events-none"
@@ -114,7 +110,7 @@ function GridItem({
             disabled={isRetrying}
             aria-label={`Retry ${img.file.name}`}
             aria-busy={isRetrying}
-            className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-bold px-3 py-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-bold px-3 py-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
           >
             {isRetrying ? (
               <CircleNotch size={12} weight="bold" className="animate-spin" aria-hidden="true" />
@@ -216,4 +212,4 @@ export function ImageGrid({
       </AnimatePresence>
     </ul>
   )
-  } 
+}

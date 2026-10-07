@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -238,6 +238,26 @@ export default function JpgToPdfPage() {
                       onSetFilter={t.setFilter}
                     />
                   </ScrollBounce>
+
+                  {/* Add More Button */}
+                  <button
+                    onClick={() => inputRef.current?.click()}
+                    className="w-full mt-4 rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-all flex flex-col items-center justify-center gap-2"
+                  >
+                    <Plus size={24} style={{ color: accentColor }} weight="bold" />
+                    <span className="text-sm font-medium text-foreground">Add More Images</span>
+                    <span className="text-xs text-muted-foreground">Add up to {20 - t.images.length} more</span>
+                  </button>
+                  <input 
+                    ref={inputRef} 
+                    type="file" 
+                    accept="image/jpeg,image/png,image/webp" 
+                    multiple 
+                    onChange={handleFileInput} 
+                    className="hidden" 
+                    aria-hidden="true" 
+                    tabIndex={-1} 
+                  />
                 </div>
 
                 {/* Error State */}
