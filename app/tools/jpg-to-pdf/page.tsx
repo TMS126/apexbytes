@@ -3,7 +3,7 @@
 
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, Trash } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, X, GraspHorizontal } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -58,43 +58,45 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <>
-        {/* ─── HERO SECTION ─────────────────────────────────────────────────── */}
-        <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-8 md:pb-12">
-          <div className="max-w-[900px] mx-auto">
-            <ScrollBounce>
-              <Link href="/tools"
-                className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary/70 px-3 py-1.5 text-[0.8rem] font-bold text-muted-foreground shadow-sm transition-colors hover:bg-secondary/90 mb-6"
-                aria-label="Back to all tools"
-              >
-                <CaretLeft size={12} weight="bold" aria-hidden="true" />
-                All Tools
-              </Link>
-              
-              <div className="flex items-center gap-3 mb-6">
-                <FilePdf weight="fill" className="w-12 h-12" style={{ color: accentColor }} aria-hidden="true" />
-                <h1 className="abh-page-title mb-0">JPG to PDF Converter</h1>
-              </div>
-            </ScrollBounce>
+      
+      <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
+        {/* HERO HEADER */}
+        <section className="w-full pt-8 md:pt-12 pb-8 md:pb-12">
+          <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
+            <Link 
+              href="/tools"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-6"
+            >
+              <CaretLeft size={16} weight="bold" />
+              Back to Tools
+            </Link>
             
-            <p className="abh-tagline max-w-2xl mx-auto mb-2">
-              Convert your images into a professional PDF instantly. No upload, no registration — everything stays on your device.
+            <div className="flex justify-center mb-5">
+              <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground mb-3 tracking-tight">
+              JPG to PDF
+            </h1>
+            
+            <p className="text-lg text-muted-foreground mb-1">
+              Convert your images into PDF in seconds
             </p>
-            <p className="text-sm text-muted-foreground text-center">
-              Supports JPG, PNG, and WEBP • Up to 20 images • Adjust quality, page size, and more
+            
+            <p className="text-sm text-muted-foreground">
+              No upload • No registration • 100% secure
             </p>
-            <div className="abh-divider mx-auto mt-6" />
           </div>
         </section>
 
-        {/* ─── MAIN WORKSPACE ───────────────────────────────────────────────── */}
-        <section className="px-4 md:px-8 pb-20">
-          <div className="max-w-[1400px] mx-auto">
-            {/* Desktop: Sidebar + Canvas Layout */}
+        {/* MAIN CONTENT */}
+        <section className="flex-1 w-full px-4 md:px-6 pb-12">
+          <div className="max-w-2xl mx-auto">
             {t.images.length === 0 ? (
-              // Empty State — Full-Width Upload
-              <div className="max-w-[900px] mx-auto">
-                <ScrollBounce delay={0.05}>
+              // EMPTY STATE
+              <>
+                {/* Upload Zone */}
+                <ScrollBounce>
                   <div
                     onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
                     onDragLeave={() => setIsDragging(false)}
@@ -109,31 +111,30 @@ export default function JpgToPdfPage() {
                       }
                     }}
                     aria-label="Upload images: drag and drop, or press Enter to browse"
-                    className={`relative rounded-[18px] border-2 ${
-                      isDragging ? "border-solid bg-primary/5" : "border-dashed"
-                    } border-border cursor-pointer transition-all duration-200 flex flex-col items-center justify-center gap-3 py-16 px-8 text-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary`}
+                    className={`relative w-full rounded-2xl border-2 transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                      isDragging
+                        ? "border-solid bg-primary/8 border-primary"
+                        : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"
+                    }`}
                   >
-                    {/* Animated Upload Icon */}
-                    <div className="relative">
-                      <div 
-                        className="w-16 h-16 rounded-2xl flex items-center justify-center transition-colors"
-                        style={{ backgroundColor: `${accentColor}15` }}
-                      >
-                        <UploadSimple weight="bold" className="w-8 h-8" style={{ color: accentColor }} aria-hidden="true" />
-                      </div>
+                    <div 
+                      className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transition-colors"
+                      style={{ backgroundColor: `${accentColor}12` }}
+                    >
+                      <UploadSimple 
+                        weight="bold" 
+                        size={40}
+                        style={{ color: accentColor }}
+                        aria-hidden="true" 
+                      />
                     </div>
                     
-                    <div>
-                      <p className="font-heading font-semibold text-lg text-foreground mb-1">
-                        Drag & drop your images here
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        or click to browse from your device
-                      </p>
-                    </div>
+                    <h2 className="text-xl font-semibold text-foreground mb-2 text-center">
+                      Select images or drag them here
+                    </h2>
                     
-                    <p className="text-xs text-muted-foreground mt-2 px-4">
-                      JPG, PNG, WEBP • Max 15 MB each • Up to 20 images
+                    <p className="text-sm text-muted-foreground text-center mb-6">
+                      JPG, PNG, or WEBP • Maximum 15 MB each • Up to 20 images
                     </p>
 
                     <input 
@@ -149,181 +150,163 @@ export default function JpgToPdfPage() {
                   </div>
                 </ScrollBounce>
 
-                {/* Quick Tips */}
-                <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Features Grid */}
+                <div className="grid grid-cols-3 gap-4 mt-12">
                   <ScrollBounce delay={0.1}>
-                    <div className="rounded-[14px] bg-secondary/50 p-4 text-center">
-                      <p className="text-sm font-medium text-foreground mb-1">Fast Processing</p>
-                      <p className="text-xs text-muted-foreground">Convert instantly in your browser</p>
+                    <div className="text-center">
+                      <div className="text-sm font-semibold text-foreground mb-1">No Upload</div>
+                      <div className="text-xs text-muted-foreground">Process locally</div>
                     </div>
                   </ScrollBounce>
                   <ScrollBounce delay={0.15}>
-                    <div className="rounded-[14px] bg-secondary/50 p-4 text-center">
-                      <p className="text-sm font-medium text-foreground mb-1">Privacy First</p>
-                      <p className="text-xs text-muted-foreground">Your files never leave your device</p>
+                    <div className="text-center">
+                      <div className="text-sm font-semibold text-foreground mb-1">Secure</div>
+                      <div className="text-xs text-muted-foreground">Files stay private</div>
                     </div>
                   </ScrollBounce>
                   <ScrollBounce delay={0.2}>
-                    <div className="rounded-[14px] bg-secondary/50 p-4 text-center">
-                      <p className="text-sm font-medium text-foreground mb-1">Full Control</p>
-                      <p className="text-xs text-muted-foreground">Crop, rotate, filter & adjust quality</p>
+                    <div className="text-center">
+                      <div className="text-sm font-semibold text-foreground mb-1">Fast</div>
+                      <div className="text-xs text-muted-foreground">Instant results</div>
                     </div>
                   </ScrollBounce>
                 </div>
-              </div>
+              </>
             ) : (
-              // Active State — Sidebar + Grid
-              <div className={`grid grid-cols-1 gap-8 lg:items-start lg:gap-8 xl:gap-10 ${t.images.length > 0 ? "lg:grid-cols-[320px_minmax(0,1fr)]" : ""}`}>
-                {/* LEFT SIDEBAR — Settings & Upload */}
-                <div className="lg:sticky lg:top-28 space-y-5">
+              // ACTIVE STATE
+              <>
+                {/* Settings Bar */}
+                <ScrollBounce className="mb-8">
+                  <SettingsBar
+                    mode={t.mode}
+                    setMode={t.setMode}
+                    pageSize={t.pageSize}
+                    setPageSize={t.setPageSize}
+                    quality={t.quality}
+                    setQuality={t.setQuality}
+                    originalBytes={originalBytes}
+                    estimatedBytes={t.estimatedBytes}
+                    accentColor={accentColor}
+                  />
+                </ScrollBounce>
+
+                {/* Image Grid - Centered */}
+                <div className="mb-8">
+                  {/* Controls Bar */}
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/50">
+                    <div className="text-sm font-medium text-foreground">
+                      {t.selectedCount} of {t.images.length} selected
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button 
+                        type="button" 
+                        onClick={() => t.selectAll(!allSelected)} 
+                        className="text-sm font-medium transition-colors hover:text-primary"
+                        style={{ color: allSelected ? accentColor : "inherit" }}
+                      >
+                        {allSelected ? "Deselect All" : "Select All"}
+                      </button>
+                      <span className="text-border/50">•</span>
+                      <button 
+                        type="button" 
+                        onClick={t.clearAll} 
+                        className="text-sm font-medium text-muted-foreground hover:text-destructive transition-colors"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Image Grid */}
                   <ScrollBounce>
-                    <SettingsBar
-                      mode={t.mode}
-                      setMode={t.setMode}
-                      pageSize={t.pageSize}
-                      setPageSize={t.setPageSize}
-                      quality={t.quality}
-                      setQuality={t.setQuality}
-                      originalBytes={originalBytes}
-                      estimatedBytes={t.estimatedBytes}
+                    <ImageGrid
+                      images={t.images}
+                      rotations={t.rotations}
+                      filters={t.filters}
+                      errors={t.errors}
+                      retryingIds={t.retryingIds}
+                      convertedIds={t.convertedIds}
                       accentColor={accentColor}
+                      onToggleSelect={t.toggleSelect}
+                      onRotate={t.rotateImage}
+                      onResetRotation={t.resetRotation}
+                      onRemove={t.removeImage}
+                      onZoom={setZoomId}
+                      onCrop={setCropId}
+                      onRetry={t.retryImage}
+                      onReorder={t.reorder}
+                      onSetFilter={t.setFilter}
                     />
                   </ScrollBounce>
+                </div>
 
-                  <ScrollBounce delay={0.05}>
-                    <button
-                      onClick={() => inputRef.current?.click()}
-                      className="w-full rounded-[14px] border-2 border-dashed border-border bg-secondary/30 px-4 py-5 transition-all hover:border-primary hover:bg-primary/5 active:scale-95"
-                    >
-                      <UploadSimple weight="bold" className="w-5 h-5 mx-auto mb-2" style={{ color: accentColor }} aria-hidden="true" />
-                      <p className="text-sm font-semibold text-foreground">Add More</p>
-                      <p className="text-xs text-muted-foreground mt-1">Images</p>
-                      <input 
-                        ref={inputRef} 
-                        type="file" 
-                        accept="image/jpeg,image/png,image/webp" 
-                        multiple 
-                        onChange={handleFileInput} 
-                        className="hidden" 
-                        aria-hidden="true" 
-                        tabIndex={-1} 
-                      />
-                    </button>
-                  </ScrollBounce>
-
-                  {t.errors.length > 0 && (
-                    <div className="flex items-start gap-3 rounded-[12px] bg-red-50 dark:bg-red-950/30 px-4 py-3" aria-live="polite">
-                      <WarningCircle weight="fill" className="w-5 h-5 text-red-500 shrink-0 mt-0.5" aria-hidden="true" />
-                      <div>
-                        <p className="text-sm font-medium text-red-700 dark:text-red-400 mb-1">
-                          {t.errors.length} issue{t.errors.length > 1 ? "s" : ""} found
-                        </p>
-                        <p className="text-xs text-red-600 dark:text-red-300">Check thumbnails for details</p>
-                      </div>
+                {/* Error State */}
+                {t.errors.length > 0 && (
+                  <div className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
+                    <WarningCircle weight="fill" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
+                    <div>
+                      <p className="text-sm font-medium text-red-900 dark:text-red-200">
+                        {t.errors.length} issue{t.errors.length > 1 ? "s" : ""} found
+                      </p>
+                      <p className="text-xs text-red-800 dark:text-red-300">Check thumbnails for details</p>
                     </div>
-                  )}
-
-                  <div className="text-xs text-muted-foreground p-3 rounded-[12px] bg-secondary/40 text-center">
-                    <p><strong>{t.selectedCount}</strong> of <strong>{t.images.length}</strong> selected</p>
                   </div>
+                )}
+
+                {/* Reconvert Banner */}
+                <ReconvertBanner prompt={t.reconvertPrompt} onResolve={t.resolveReconvert} />
+
+                {/* Convert Button */}
+                <div className="flex justify-center mt-8 mb-12">
+                  <button
+                    type="button"
+                    onClick={t.requestConvert}
+                    disabled={t.isConverting || t.selectedCount === 0}
+                    aria-busy={t.isConverting}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                    style={{ 
+                      backgroundColor: accentColor,
+                      boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"
+                    }}
+                  >
+                    <Download size={20} weight="bold" />
+                    <span>{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
+                  </button>
+                  <span className="sr-only" aria-live="polite">
+                    {t.isConverting ? `Converting, ${t.progress} percent complete` : ""}
+                  </span>
                 </div>
 
-                {/* RIGHT CANVAS — Images & Actions */}
-                <div className="min-w-0">
-                  {t.images.length > 0 && (
-                    <>
-                      {/* Image Grid Controls */}
-                      <div className="flex items-center justify-between gap-3 mb-4 pb-4 border-b border-border">
-                        <button 
-                          type="button" 
-                          onClick={() => t.selectAll(!allSelected)} 
-                          className="text-sm font-semibold hover:text-primary transition-colors"
-                          style={{ color: allSelected ? accentColor : "inherit" }}
-                        >
-                          {allSelected ? "Deselect All" : "Select All"}
-                        </button>
-                        <span className="text-xs font-medium text-muted-foreground">
-                          {t.selectedCount} / {t.images.length} selected
-                        </span>
-                        <button 
-                          type="button" 
-                          onClick={t.clearAll} 
-                          className="text-sm font-semibold text-red-500 hover:text-red-600 transition-colors flex items-center gap-1"
-                        >
-                          <Trash size={14} />
-                          Clear All
-                        </button>
-                      </div>
+                {/* Results Panel */}
+                <ResultsPanel
+                  convertedFiles={t.convertedFiles}
+                  sendNotice={t.sendNotice}
+                  accentColor={accentColor}
+                  onSend={t.handleSend}
+                  onAddMore={() => inputRef.current?.click()}
+                />
 
-                      {/* Image Grid */}
-                      <ScrollBounce>
-                        <ImageGrid
-                          images={t.images}
-                          rotations={t.rotations}
-                          filters={t.filters}
-                          errors={t.errors}
-                          retryingIds={t.retryingIds}
-                          convertedIds={t.convertedIds}
-                          accentColor={accentColor}
-                          onToggleSelect={t.toggleSelect}
-                          onRotate={t.rotateImage}
-                          onResetRotation={t.resetRotation}
-                          onRemove={t.removeImage}
-                          onZoom={setZoomId}
-                          onCrop={setCropId}
-                          onRetry={t.retryImage}
-                          onReorder={t.reorder}
-                          onSetFilter={t.setFilter}
-                        />
-                      </ScrollBounce>
-
-                      <ReconvertBanner prompt={t.reconvertPrompt} onResolve={t.resolveReconvert} />
-
-                      {/* Convert CTA */}
-                      <div className="mt-8 flex gap-3 justify-center">
-                        <button
-                          type="button"
-                          onClick={t.requestConvert}
-                          disabled={t.isConverting || t.selectedCount === 0}
-                          aria-busy={t.isConverting}
-                          className="inline-flex items-center gap-2 rounded-[14px] font-bold py-3 px-8 text-white transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
-                          style={{ backgroundColor: accentColor }}
-                        >
-                          <Download size={18} weight="bold" />
-                          {t.isConverting ? `Converting… ${t.progress}%` : "Convert to PDF"}
-                        </button>
-                        <span className="sr-only" aria-live="polite">
-                          {t.isConverting ? `Converting, ${t.progress} percent complete` : ""}
-                        </span>
-                      </div>
-                    </>
-                  )}
-
-                  <ResultsPanel
-                    convertedFiles={t.convertedFiles}
-                    sendNotice={t.sendNotice}
-                    accentColor={accentColor}
-                    onSend={t.handleSend}
-                    onAddMore={() => inputRef.current?.click()}
-                  />
-
-                  <HistoryPanel history={t.history} onClear={t.clearRecents} />
-                </div>
-              </div>
+                {/* History Panel */}
+                <HistoryPanel history={t.history} onClear={t.clearRecents} />
+              </>
             )}
           </div>
         </section>
+      </main>
 
-        <CtaBar
-          badgeText="Tips"
-          title="While You're Here"
-          description={tip}
-          buttonText={waPhrase}
-          variant="flat"
-        />
-      </>
+      {/* CTA Bar */}
+      <CtaBar
+        badgeText="Tips"
+        title="While You're Here"
+        description={tip}
+        buttonText={waPhrase}
+        variant="flat"
+      />
+
+      {/* Footer */}
       <Footer />
 
+      {/* Lightbox & Modals */}
       <ImageLightbox
         imageUrl={zoomImage?.previewUrl || null}
         fileName={zoomImage?.file.name}
