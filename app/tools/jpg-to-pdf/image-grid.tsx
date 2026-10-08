@@ -54,7 +54,7 @@ function GridItem({
       onDragStart={(e) => (e as unknown as React.DragEvent<HTMLLIElement>).dataTransfer.setData("text/plain", String(index))}
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => onReorder(Number(e.dataTransfer.getData("text/plain")), index)}
-      className={`relative rounded-[14px] overflow-hidden border bg-zinc-100 dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "border-red-300 dark:border-red-800" : "border-zinc-200 dark:border-zinc-700"}`}
+      className={`relative overflow-hidden rounded-xl bg-zinc-100 shadow-sm dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "ring-2 ring-red-500/70" : ""}`}
     >
       {/* ─── IMAGE / ZOOM TRIGGER ────────────────────────────────────── */}
       <button type="button" onClick={() => onZoom(img.id)} aria-label={`View ${img.file.name} full size`} className="relative block w-full aspect-square">
@@ -97,6 +97,10 @@ function GridItem({
       </button>
 
       {/* ─── ERROR OVERLAY ───────────────────────────────────────────── */}
+      {/* Refresh now actually re-attempts decoding this file (see
+          retryImage in the hook) rather than just hiding the error text —
+          shows a spinner while that check runs, and only clears once a
+          real decode succeeds. */}
       {err && (
         <div
           className="absolute inset-0 bg-red-600/70 flex flex-col items-center justify-center gap-2 px-3 text-center pointer-events-none"
@@ -110,7 +114,7 @@ function GridItem({
             disabled={isRetrying}
             aria-label={`Retry ${img.file.name}`}
             aria-busy={isRetrying}
-            className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-bold px-3 py-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+            className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-bold px-3 py-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             {isRetrying ? (
               <CircleNotch size={12} weight="bold" className="animate-spin" aria-hidden="true" />
@@ -124,7 +128,7 @@ function GridItem({
 
       {/* ─── BOTTOM OVERLAY: NAME, SIZE, ACTIONS ─────────────────────── */}
       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/75 to-transparent px-2 pt-7 pb-1.5">
-        <p className="text-[0.68rem] font-semibold text-white truncate mb-1">{img.file.name}</p>
+        <p className="break-words text-[0.68rem] font-semibold text-white mb-1">{img.file.name}</p>
         <p className="text-[0.6rem] text-white/80 mb-1">
           {formatBytes(img.file.size)}
           {filter !== "none" && <span className="text-white/85"> · {FILTER_LABELS[filter]}</span>}
@@ -185,7 +189,7 @@ export function ImageGrid({
     errors.find((e) => (e.id ? e.id === img.id : e.fileName === img.file.name))
 
   return (
-    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4" aria-label="Images to convert">
+    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5" aria-label="Images to convert">
       <AnimatePresence initial={false}>
         {images.map((img, index) => (
           <MemoGridItem
@@ -212,4 +216,4 @@ export function ImageGrid({
       </AnimatePresence>
     </ul>
   )
-}
+  } 
