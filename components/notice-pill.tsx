@@ -63,14 +63,8 @@ export function NoticePill({
   }, [open])
 
   return (
-    <motion.div layout className={cn("w-full flex justify-center", className)} transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.22, ease: "easeOut" }}
-        className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full border border-border bg-[var(--notice-surface)]"
-      >
+    <div className={cn("w-full flex justify-center", className)}>
+      <div className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full border border-border bg-[var(--notice-surface)]">
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -95,16 +89,17 @@ export function NoticePill({
             <X size={13} weight="bold" aria-hidden="true" />
           </button>
         )}
-      </motion.div>
+      </div>
 
       {mounted && createPortal(
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {open && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/55 p-4 transition-opacity duration-200 dark:bg-black/70"
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/55 p-4 dark:bg-black/70"
               style={{ perspective: 1200 }}
               onClick={close}
             >
@@ -115,7 +110,7 @@ export function NoticePill({
                 initial={{ opacity: 0, y: 10, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
-                transition={{ duration: 0.22, ease: "easeOut" }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(event) => event.stopPropagation()}
                 className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 ring-1 ring-black/10 dark:ring-white/10"
                 style={{
@@ -140,6 +135,6 @@ export function NoticePill({
         </AnimatePresence>,
         document.body
       )}
-    </motion.div>
+    </div>
   )
       } 
