@@ -182,8 +182,8 @@ export default function JpgToPdfPage() {
                 convertedFiles={t.convertedFiles}
                 sendNotice={t.sendNotice}
                 accentColor={accentColor}
-                onSend={t.handleSend}
-                onAddMore={() => inputRef.current?.click()}
+                  onSend={t.handleSend}
+
               />
 
               <HistoryPanel history={t.history} onClear={t.clearRecents} />
