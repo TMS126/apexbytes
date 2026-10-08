@@ -309,21 +309,6 @@ export function QuoteCalculatorWidget() {
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
-      <style>{`
-        @keyframes abh-calc-slide-up {
-          0% { opacity: 0; transform: translateY(28px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .abh-calc-anim {
-          animation: abh-calc-slide-up 260ms cubic-bezier(0.16, 1, 0.3, 1);
-          transform-origin: bottom center;
-        }
-        @media (min-width: 768px) {
-          .abh-calc-anim { animation: abh-calc-grow 280ms cubic-bezier(0.16, 1, 0.3, 1); }
-        }
-        @media (prefers-reduced-motion: reduce) { .abh-calc-anim { animation: none; } }
-      `}</style>
-
       {isOpen && (
         <div className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none md:backdrop-blur-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
       )}
