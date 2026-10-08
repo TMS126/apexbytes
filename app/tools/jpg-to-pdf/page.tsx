@@ -303,6 +303,7 @@ export default function JpgToPdfPage() {
                   sendNotice={t.sendNotice}
                   accentColor={accentColor}
                   onSend={t.handleSend}
+                  onAddMore={() => inputRef.current?.click()}
                 />
 
                 {/* History Panel */}
