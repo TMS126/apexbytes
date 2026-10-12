@@ -73,7 +73,7 @@ export function DesktopMenu({
   // Collapse the hubs flyout whenever the menu itself closes, so it
   // isn't already expanded the next time the menu opens.
   useEffect(() => {
-    if (!menuOpen) setHubsOpen(false)
+    if (!menuOpen) requestAnimationFrame(() => setHubsOpen(false))
   }, [menuOpen])
 
   return (

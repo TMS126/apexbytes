@@ -122,7 +122,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     <Script
       id="local-business-jsonld"
       type="application/ld+json"
-      strategy="beforeInteractive"
+      strategy="afterInteractive"
       nonce={nonce}
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
     />

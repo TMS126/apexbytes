@@ -1,7 +1,7 @@
 // components/logo-marquee.tsx
 "use client"
 
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { Play, Pause } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
@@ -110,20 +110,19 @@ export function LogoMarquee() {
 
   const SPEED_PX_PER_FRAME = 0.6
 
-  const tick = useCallback(() => {
-    const track = trackRef.current
-    if (track && !paused && !isInteracting.current) {
-      track.scrollLeft += SPEED_PX_PER_FRAME
-      const half = track.scrollWidth / 2
-      if (track.scrollLeft >= half) track.scrollLeft -= half
+  useEffect(() => {
+    const tick = () => {
+      const track = trackRef.current
+      if (track && !paused && !isInteracting.current) {
+        track.scrollLeft += SPEED_PX_PER_FRAME
+        const half = track.scrollWidth / 2
+        if (track.scrollLeft >= half) track.scrollLeft -= half
+      }
+      rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)
-  }, [paused])
-
-  useEffect(() => {
-    rafRef.current = requestAnimationFrame(tick)
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }
-  }, [tick])
+  }, [paused])
 
   const onMouseDown = (e: React.MouseEvent) => {
     isDragging.current = true
@@ -180,7 +179,7 @@ export function LogoMarquee() {
                 <div
                   key={`${copy}-${logo.id}`}
                   className="group flex items-center justify-center mx-7 sm:mx-10 h-14 w-36 sm:h-16 sm:w-44 shrink-0"
-                  style={{ ["--mark-accent" as any]: accent }}
+                  style={{ "--mark-accent": accent } as React.CSSProperties}
                 >
                   {logo.src ? (
                     // FIX: dark mode was dark:opacity-60 with no theme-aware

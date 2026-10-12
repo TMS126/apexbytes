@@ -1,7 +1,7 @@
 // components/services-page/index.tsx
 "use client"
 
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
 import { Megaphone, CaretLeft, CaretDown } from "@phosphor-icons/react"
@@ -77,14 +77,14 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
 
   const isModalOpen = !!(activeHub || selectedService)
 
-  const handleSelectService = (svc: SelectedService) => {
+  const handleSelectService = useCallback((svc: SelectedService) => {
     trackEvent("view_service", {
       hub_id:        svc.hubId,
       service_name:  svc.name,
       section_title: svc.sectionTitle,
     })
     router.push(serviceRouteFor(svc.hubId, svc.sectionTitle, svc.name))
-  }
+  }, [router])
 
   const handleOpenHub = (hubId: HubId, originSide: "left" | "right") => {
     trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
@@ -131,7 +131,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
     }
     window.addEventListener("abh:selectService", handler)
     return () => window.removeEventListener("abh:selectService", handler)
-  }, [])
+  }, [handleSelectService])
 
   // Always push to the exact parent URL — deterministic, no history-depth
   // guessing. The physical back button is unaffected by this and keeps
@@ -163,7 +163,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
       style.overflow = ""
       window.scrollTo(0, scrollY)
     }
-  }, [isModalOpen])
+  }, [isModalOpen, isMobileViewport])
 
   const desktopHub = desktopActiveHub ? HUBS[desktopActiveHub] : null
   const desktopHubColors = desktopActiveHub ? HUB_COLORS[desktopActiveHub as HubKey] : null

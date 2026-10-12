@@ -40,7 +40,8 @@ export function Navbar() {
   const isLogoDarkBehind = useNavContrast(0.07)
 
   useEffect(() => {
-    setMounted(true)
+    const frame = requestAnimationFrame(() => setMounted(true))
+    return () => cancelAnimationFrame(frame)
   }, [])
 
   const logoButtonRef = useRef<HTMLButtonElement>(null)
