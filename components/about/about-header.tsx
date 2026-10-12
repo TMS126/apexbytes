@@ -5,7 +5,7 @@ import { useState } from "react"
 import { BIZ } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
-export function AboutHeader({ blueColor, blueOnPage }: { blueColor: string; blueOnPage: string }) {
+export function AboutHeader({ blueColor }: { blueColor: string }) {
   const [statsHovered, setStatsHovered] = useState(false)
 
   return (

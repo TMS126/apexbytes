@@ -6,7 +6,6 @@ import {
   ArrowUpRight, WarningCircle,
   Printer, FileText, PaintBrush, Globe, Desktop,
 } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
 import { TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 

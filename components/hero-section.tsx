@@ -6,10 +6,10 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 import {
-  ArrowUpRight, Play, Pause, CheckCircle,
+  ArrowUpRight, Play, Pause,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BIZ, MARQUEE_ITEMS, TOKEN, WEATHER_THEME } from "@/lib/brand"
+import { BIZ, MARQUEE_ITEMS, WEATHER_THEME } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"

@@ -10,11 +10,9 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 // abh-card — nothing else on the page looks like it. Plain spacing + a
 // soft background tint now, no border/shadow shell.
 export function AboutMission({
-  blueOnPage,
   missionBadgeBg,
   missionBadgeText,
 }: {
-  blueOnPage: string
   missionBadgeBg: string
   missionBadgeText: string
 }) {

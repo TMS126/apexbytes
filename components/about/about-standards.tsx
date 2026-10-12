@@ -7,7 +7,7 @@ import { ABOUT_STANDARDS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { renderIcon } from "@/components/about/about-icons"
 
-export function AboutStandards({ blueColor, neutralColor }: { blueColor: string; neutralColor: string }) {
+export function AboutStandards({ neutralColor }: { neutralColor: string }) {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
 
   return (

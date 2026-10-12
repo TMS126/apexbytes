@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { Megaphone, CaretLeft, CaretDown, CheckCircle } from "@phosphor-icons/react"
+import { Megaphone, CaretLeft, CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey } from "@/lib/brand"

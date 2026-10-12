@@ -84,7 +84,10 @@ export function CtaBar({
     <section
       aria-label="Call to action"
       className={cn(
-        "relative overflow-hidden px-4 py-16 text-center transition-colors duration-300 md:px-8 md:py-20",
+        cn(
+          "relative overflow-hidden px-4 py-16 text-center transition-colors duration-300 md:px-8 md:py-20",
+          variant === "flat" ? "bg-transparent" : "bg-background/30",
+        ),
         fullBleed && "-mx-4 w-[calc(100%+2rem)] md:-mx-8 md:w-[calc(100%+4rem)]",
       )}
       style={{ backgroundColor: "color-mix(in srgb, var(--brand-blue) 4%, transparent)" }}

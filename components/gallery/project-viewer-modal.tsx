@@ -150,35 +150,6 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
   )
 }
 
-function FloatingOtherProjectsWidget({ siblings, currentId, accent, onSelect }: {
-  siblings: ProjectData[]; currentId: string; accent: string; onSelect: (p: ProjectData) => void
-}) {
-  const others = siblings.filter((p) => p.id !== currentId)
-  if (others.length === 0) return null
-  return (
-    <div className="hidden md:flex fixed inset-x-0 bottom-24 z-30 justify-center px-6 pointer-events-none">
-      <div
-        className="pointer-events-auto flex items-center gap-2 max-w-xl overflow-x-auto no-scrollbar px-3 py-2.5 rounded-full backdrop-blur-xl bg-white/45 dark:bg-zinc-900/40 border border-white/40 dark:border-white/10"
-        style={{ boxShadow: "0 16px 38px -10px rgba(0,0,0,0.3), 0 6px 16px -6px rgba(0,0,0,0.16)" }}
-      >
-        {others.map((p) => (
-          <button
-            key={p.id}
-            onClick={() => onSelect(p)}
-            aria-label={`View ${p.title}`}
-            className="shrink-0 flex items-center gap-2 pl-1.5 pr-3.5 py-1 rounded-full border border-zinc-200/60 dark:border-zinc-700/60 bg-white/60 dark:bg-zinc-900/60 transition-colors hover:border-current focus-visible:outline-none focus-visible:ring-2"
-            style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
-          >
-            <span className="relative w-7 h-7 rounded-full overflow-hidden shrink-0">
-              <SafeImage src={p.image} alt={p.title} accent={accent} fill sizes="28px" className="object-cover" />
-            </span>
-            <span className="text-[0.78rem] font-bold text-zinc-700 dark:text-zinc-200 whitespace-nowrap whitespace-normal break-words">{p.title}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 // ===== MOBILE IMAGE VIEWER — active image full-bleed object-cover (never
 // any letterbox bars), a genuine vertical stack of the other images as
