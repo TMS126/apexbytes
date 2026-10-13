@@ -82,7 +82,7 @@ export function Navbar() {
 
   const handleThemeToggle = () => setTheme(theme === "dark" ? "light" : "dark")
 
-  const glassPillClass = "backdrop-blur-md py-2 rounded-[14px] pointer-events-auto"
+  const glassPillClass = "py-2 rounded-[14px] pointer-events-auto"
 
   const neutralColor = useMemo(
     () => resolveNeutralColor(mounted, theme, isDarkBehind),
