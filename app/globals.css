@@ -221,11 +221,11 @@ button, [role="button"] { border: 0 !important; border-radius: 14px; }
   --footer-bg: var(--brand-blue-dark);
   --shadow: none;
   --card-border: transparent;
-  --background: #F1F1EC;
+  --background: #EAF4F8;
   --foreground: var(--brand-blue-dark);
-  --card: #E8E8E2;
+  --card: rgba(255, 255, 255, 0.52);
   --card-foreground: var(--brand-blue-dark);
-  --popover: #E8E8E2;
+  --popover: rgba(255, 255, 255, 0.72);
   --popover-foreground: var(--brand-blue-dark);
   --primary: var(--brand-blue);
   --primary-foreground: var(--brand-white);
@@ -395,11 +395,11 @@ button, [role="button"] { border: 0 !important; border-radius: 14px; }
   /* FIX: was #0A1110 (near-black) */
   --brand-whatsapp-text: #0B2C47;
   --brand-error-text: #F3A39D;
-  --background: #25283E;
+  --background: #111827;
   --foreground: #F1F1EC;
-  --card: #2D314B;
+  --card: rgba(31, 41, 55, 0.58);
   --card-foreground: #F1F1EC;
-  --popover: #2D314B;
+  --popover: rgba(31, 41, 55, 0.78);
   --popover-foreground: #F1F1EC;
   --primary: var(--brand-blue);
   /* FIX: primary/accent/destructive foregrounds pointed at --brand-blue-dark,
@@ -606,6 +606,64 @@ button, [role="button"] { border: 0 !important; border-radius: 14px; }
   border-radius: var(--radius);
 }
 .dark :focus-visible { outline-color: var(--brand-light-blue); }
+
+/* Site-wide glassmorphism system: every reusable surface shares one translucent,
+   blurred treatment while preserving semantic tokens and readable contrast. */
+:root {
+  --glass-tint: rgba(255, 255, 255, 0.42);
+  --glass-tint-strong: rgba(255, 255, 255, 0.62);
+  --glass-border: rgba(255, 255, 255, 0.62);
+  --glass-shadow: 0 18px 48px -28px rgba(15, 63, 102, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  --glass-blur: 18px;
+}
+.dark {
+  --glass-tint: rgba(31, 41, 55, 0.48);
+  --glass-tint-strong: rgba(31, 41, 55, 0.68);
+  --glass-border: rgba(217, 238, 250, 0.18);
+  --glass-shadow: 0 18px 48px -28px rgba(0, 0, 0, 0.76), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+body {
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--brand-light-blue) 34%, transparent), transparent 34rem),
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--brand-light-green) 28%, transparent), transparent 32rem),
+    var(--background);
+}
+.glass,
+[class*="bg-card"],
+[class*="bg-popover"],
+[class*="bg-background/"],
+[class*="bg-white"],
+[class*="bg-zinc-"],
+[class*="bg-slate-"],
+[class*="bg-gray-"] {
+  background-color: var(--glass-tint) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+}
+[class*="bg-popover"],
+[class*="bg-card/"],
+.glass-strong { background-color: var(--glass-tint-strong) !important; }
+[class*="shadow-"] { box-shadow: var(--glass-shadow); }
+[class*="border-"] { border-color: color-mix(in srgb, var(--glass-border) 72%, var(--border)) !important; }
+input, textarea, select,
+[class*="bg-input"], [class*="bg-secondary"], [class*="bg-muted"] {
+  background-color: color-mix(in srgb, var(--glass-tint-strong) 78%, transparent) !important;
+  border-color: var(--glass-border) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  backdrop-filter: blur(14px) saturate(135%);
+}
+button, [role="button"] {
+  -webkit-backdrop-filter: blur(12px) saturate(135%);
+  backdrop-filter: blur(12px) saturate(135%);
+}
+header, nav, footer, [role="dialog"], [data-radix-popper-content-wrapper] {
+  background-color: color-mix(in srgb, var(--glass-tint-strong) 88%, transparent);
+  border-color: var(--glass-border);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  backdrop-filter: blur(22px) saturate(145%);
+}
 
 input:focus, input:focus-visible,
 textarea:focus, textarea:focus-visible,
