@@ -1,6 +1,5 @@
 // app/layout.tsx
 import type { Metadata, Viewport } from 'next'
-import { Poppins, DM_Sans, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Analytics } from '@vercel/analytics/next'
@@ -21,29 +20,6 @@ export const dynamic = 'force-dynamic'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
-
-// Brand fonts: Poppins (headings), DM Sans (body), JetBrains Mono (mono).
-// Weight cap is 500 across the site, so only those weights are loaded.
-const poppinsHeading = Poppins({
-  subsets: ['latin'],
-  weight: ['500'],
-  variable: '--font-poppins',
-  display: 'swap',
-})
-
-const dmSansBody = DM_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-body',
-  display: 'swap',
-})
-
-const monoFont = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -91,7 +67,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${poppinsHeading.variable} ${dmSansBody.variable} ${monoFont.variable}`}
+      className=""
     >
       <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-[17.5px] leading-relaxed">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[99999] focus:px-4 focus:py-2 focus:bg-background focus:text-brand-blue focus:font-medium focus:rounded-lg focus:shadow-lg focus:outline-none">
