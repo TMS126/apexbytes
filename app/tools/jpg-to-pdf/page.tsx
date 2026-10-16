@@ -111,7 +111,7 @@ export default function JpgToPdfPage() {
                       }
                     }}
                     aria-label="Upload images: drag and drop, or press Enter to browse"
-                    className={`relative w-full rounded-2xl border-2 transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)] backdrop-blur-md transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                       isDragging
                         ? "border-solid bg-primary/8 border-primary"
                         : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"

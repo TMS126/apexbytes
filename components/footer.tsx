@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { WhatsappLogo, EnvelopeSimple, Heart, Copy, Check } from "@phosphor-icons/react"
+import { WhatsappLogo, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -159,7 +159,7 @@ function FooterContent() {
       </ScrollBounce>
 
       <ScrollBounce>
-        <div className="mt-8 bg-zinc-50 dark:bg-zinc-900/40 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="mt-8 bg-transparent border-t border-transparent">
           <div className="max-w-[1920px] mx-auto pt-8 pb-8 px-6 md:px-10 lg:px-12 xl:px-16 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
             <p className="text-[0.78rem] font-medium text-muted-foreground md:text-left text-center">
               © {new Date().getFullYear()} {BIZ.name}. All rights reserved.
@@ -186,10 +186,7 @@ function FooterContent() {
               </Link>
             </div>
 
-            <p className="text-[0.78rem] font-medium text-muted-foreground flex items-center justify-center md:justify-end gap-1.5">
-              Built with <Heart weight="fill" className="w-3 h-3 text-brand-orange" aria-hidden="true" /> for the
-              Kgotsong community
-            </p>
+            <span aria-hidden="true" />
           </div>
         </div>
       </ScrollBounce>
@@ -201,7 +198,7 @@ function FooterContent() {
 
 export function Footer() {
   return (
-    <footer className="bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900">
+    <footer className="bg-transparent border-0">
       <FooterContent />
     </footer>
   )

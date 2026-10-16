@@ -11,7 +11,6 @@ import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useLogoAnimation, useNavContrast } from "@/hooks/use-navbar"
 import { MobileMenu } from "@/components/navbar/mobile-menu"
 import { DesktopMenu } from "@/components/navbar/desktop-menu"
-import { NAV_ITEMS } from "@/lib/brand"
 
 // Shared by both the logo icon's neutral color and the nav-controls'
 // neutral color — previously duplicated as two near-identical ternary
@@ -141,28 +140,7 @@ export function Navbar() {
               </div>
             </button>
 
-            <nav className="hidden md:flex items-center gap-1.5 ml-auto mr-4 pointer-events-auto" aria-label="Primary navigation">
-              {NAV_ITEMS.map((item) => {
-                const isActive = pathname === item.path || (item.path === "/services" && pathname.startsWith("/services")) || (item.path === "/tools" && pathname.startsWith("/tools"))
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => navigate(item.path)}
-                    aria-current={isActive ? "page" : undefined}
-                    className={cn(
-                      "px-3 py-2 rounded-lg text-sm transition-colors duration-150",
-                      isActive ? "font-semibold text-brand-orange" : "font-medium text-foreground/70 hover:text-foreground hover:bg-foreground/[0.06]",
-                      item.isCta && "text-brand-orange"
-                    )}
-                  >
-                    {item.label}
-                  </button>
-                )
-              })}
-            </nav>
-
-            {/* Controls stay compact and transparent; the full desktop nav is horizontal above. */}
+            {/* Navigation stays behind the burger on every breakpoint so the header remains calm and uncluttered. */}
             <div
               className={cn(
                 glassPillClass,

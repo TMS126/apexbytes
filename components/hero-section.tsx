@@ -139,7 +139,7 @@ export function HeroSection() {
               {HERO_SUBHEAD}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center md:items-center gap-4 sm:gap-6 mb-8 md:mb-9">
+            <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 sm:gap-6 mb-8 md:mb-9">
               <ScrollBounce>
               <button
                 onClick={handleCtaClick}

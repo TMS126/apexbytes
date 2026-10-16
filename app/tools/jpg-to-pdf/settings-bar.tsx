@@ -135,7 +135,7 @@ export function SettingsBar({
       </div>
 
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
-      <div className="rounded-[14px] bg-secondary/60 p-4">
+      <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
         <div className="flex items-center justify-between mb-2">
           <div>
             <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
