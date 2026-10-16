@@ -809,17 +809,24 @@ button, a, [role="button"] {
   }
 
   .abh-eyebrow {
-    @apply inline-flex items-center justify-center font-sans font-semibold text-[0.68rem] uppercase tracking-[0.18em] rounded-[14px] px-4 py-2;
+    @apply inline-flex items-center gap-2 font-sans font-semibold text-[0.68rem] uppercase tracking-[0.18em];
     color: var(--brand-orange-text);
-    background: color-mix(in srgb, var(--cta-badge-bg) 68%, transparent);
-    border: 1px solid color-mix(in srgb, var(--brand-orange-text) 22%, transparent);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.42), 0 8px 24px -16px color-mix(in srgb, var(--brand-orange-text) 72%, transparent);
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
     letter-spacing: 0.18em;
   }
-  .dark .abh-eyebrow {
-    color: var(--brand-orange-text);
-    background: color-mix(in srgb, var(--cta-badge-bg) 54%, transparent);
+  .abh-eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    flex: 0 0 auto;
+    background: currentColor;
+    opacity: 0.7;
   }
+  .dark .abh-eyebrow { color: var(--brand-orange-text); }
 
   .abh-btn-label {
     @apply font-sans font-medium text-base;
