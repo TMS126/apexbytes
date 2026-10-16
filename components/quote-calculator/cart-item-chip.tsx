@@ -35,7 +35,7 @@ export function CartItemChip({
       role="listitem"
       className={cn(
         "shrink-0 flex items-center gap-2 pl-3 pr-1.5 py-2 rounded-full border-l-[3px] snap-start bg-white dark:bg-zinc-800 transition-all duration-300 ease-out motion-reduce:transition-none",
-        isHighlighted && "ring-2 scale-[1.03]"
+        "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{
         borderLeftColor: accent,
