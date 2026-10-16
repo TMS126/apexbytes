@@ -120,8 +120,7 @@ export function Navbar() {
             >
               <Image
                 src="/logo.png"
-                alt=""
-                aria-hidden="true"
+                alt="ApexbytesHub home"
                 width={36}
                 height={36}
                 className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 object-contain transition-[filter] duration-300"

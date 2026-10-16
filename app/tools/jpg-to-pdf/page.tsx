@@ -140,9 +140,10 @@ export default function JpgToPdfPage() {
                     <input 
                       ref={inputRef} 
                       type="file" 
-                      accept="image/jpeg,image/png,image/webp" 
-                      multiple 
-                      onChange={handleFileInput} 
+accept="image/jpeg,image/png,image/webp"
+                multiple
+                aria-label="Choose images to convert to PDF"
+                onChange={handleFileInput}
                       className="hidden" 
                       aria-hidden="true" 
                       tabIndex={-1} 
