@@ -810,7 +810,7 @@ button, a, [role="button"] {
 
   .abh-eyebrow {
     @apply inline-flex items-center gap-2 font-sans font-semibold text-[0.68rem] uppercase tracking-[0.18em];
-    color: var(--brand-orange-text);
+    color: #0f172a;
     background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -826,7 +826,7 @@ button, a, [role="button"] {
     background: currentColor;
     opacity: 0.7;
   }
-  .dark .abh-eyebrow { color: var(--brand-orange-text); }
+  .dark .abh-eyebrow { color: #f8fafc; }
 
   .abh-btn-label {
     @apply font-sans font-medium text-base;
@@ -927,7 +927,7 @@ button, a, [role="button"] {
   .abh-wa-btn {
     @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
     background: transparent;
-    color: var(--brand-whatsapp-accessible);
+    color: var(--brand-whatsapp-accessible-dark);
     border: 0;
     border-radius: 14px;
     box-shadow: none;

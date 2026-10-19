@@ -109,7 +109,7 @@ export function BusinessStatusNavbar() {
           <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[0.74rem] font-bold whitespace-nowrap bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-green-500 animate-pulse" />
             <span className="font-black">{printDoc.label}</span>
-            <span className="opacity-70 font-normal">Open</span>
+            <span className="font-medium text-zinc-700 dark:text-zinc-200">Open</span>
             <span className="opacity-40">·</span>
             <span>{printDoc.nextEvent}</span>
           </div>
@@ -126,7 +126,7 @@ export function BusinessStatusNavbar() {
           <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[0.74rem] font-bold whitespace-nowrap bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-green-500 animate-pulse" />
             <span className="font-black">{techEtc.label}</span>
-            <span className="opacity-70 font-normal">Open</span>
+            <span className="font-medium text-zinc-700 dark:text-zinc-200">Open</span>
             <span className="opacity-40">·</span>
             <span>{techEtc.nextEvent}</span>
           </div>

@@ -49,7 +49,7 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
                 </div>
                 <div className="min-w-0">
                   <h3 className="abh-card-heading text-base truncate">{member.name}</h3>
-                  <p className="abh-eyebrow mt-1" style={{ color: blueColor }}>{member.role}</p>
+                  <p className="abh-eyebrow mt-1 text-[#0f172a] dark:text-white">{member.role}</p>
                   <p className="abh-body text-sm mt-2 leading-relaxed">{member.note}</p>
                 </div>
               </li>
