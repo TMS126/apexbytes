@@ -194,7 +194,7 @@ export function WhatsAppFAB() {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-[9989] bg-black/30 transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
+        <div className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
       )}
 
       {isOpen && (

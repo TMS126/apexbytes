@@ -304,8 +304,7 @@ accept="image/jpeg,image/png,image/webp"
                   sendNotice={t.sendNotice}
                   accentColor={accentColor}
                   onSend={t.handleSend}
-                  onAddMore={() => inputRef.current?.click()}
-                />
+                  />
 
                 {/* History Panel */}
                 <HistoryPanel history={t.history} onClear={t.clearRecents} />

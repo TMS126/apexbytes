@@ -3,19 +3,18 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle, PaperPlaneTilt, Plus, DownloadSimple } from "@phosphor-icons/react"
+import { CheckCircle, PaperPlaneTilt, DownloadSimple } from "@phosphor-icons/react"
 import { SimpleDropdown } from "@/components/ui/simple-dropdown"
 import { formatBytes } from "./utils"
 import type { ConvertedFile } from "./types"
 
 export function ResultsPanel({
-  convertedFiles, sendNotice, accentColor, onSend, onAddMore,
+  convertedFiles, sendNotice, accentColor, onSend,
 }: {
   convertedFiles: ConvertedFile[]
   sendNotice: string | null
   accentColor: string
   onSend: (file: ConvertedFile) => void
-  onAddMore: () => void
 }) {
   const [fileName, setFileName] = useState(convertedFiles[0]?.fileName || "")
   useEffect(() => {
@@ -65,14 +64,6 @@ export function ResultsPanel({
             >
               <PaperPlaneTilt weight="fill" className="w-4 h-4" aria-hidden="true" />
               Send to ApexbytesHub
-            </button>
-            <button
-              type="button"
-              onClick={onAddMore}
-              className="col-span-2 flex items-center justify-center gap-2 rounded-[12px] border border-zinc-200 dark:border-zinc-800 py-2.5 px-4 text-sm font-semibold text-zinc-600 dark:text-zinc-300 hover:border-brand-blue hover:text-brand-blue transition-colors"
-            >
-              <Plus size={16} weight="bold" aria-hidden="true" />
-              Add more photos
             </button>
           </div>
 

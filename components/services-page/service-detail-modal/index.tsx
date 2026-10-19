@@ -307,7 +307,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
     svc.name === NSFAS_APPLICATION_ITEM && getNsfasWindowStatus(new Date()) === "closed"
   /* components/services-page/service-detail-modal/index.tsx — PART 2 OF 2 — continues directly from Part 1, same file */
   return (
-    <div className="fixed inset-0 z-[11000] flex items-center justify-center overflow-y-auto bg-black/55 px-4 py-8 backdrop-blur-[2px] md:px-8" role="presentation">
+    <div className="fixed inset-0 z-[11000] flex items-center justify-center overflow-y-auto bg-black/70 px-4 py-8 backdrop-blur-md md:px-8" role="presentation">
 
       <div
         ref={containerRef}
