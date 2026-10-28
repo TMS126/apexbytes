@@ -274,8 +274,8 @@ function DesktopImageStack({
               )}
             />
             {isActive && (
-              <div className="absolute inset-0 rounded-[14px] pointer-events-none" style={{ boxShadow: `inset 0 0 0 2px ${accent}` }} />
-            )}
+              <div className="absolute inset-0 rounded-[14px] pointer-events-none" style={{ boxShadow: `inset 0 0 36px -14px ${accent}` }} />
+          )}
           </div>
         )
       })}
