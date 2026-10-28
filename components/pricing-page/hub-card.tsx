@@ -38,7 +38,7 @@ const TURNAROUND: Record<HubId, { label: string; detail: string }> = {
 function SectionHeader({ title, color }: { title: string; color: string }) {
   return (
     <div className="mb-2.5">
-      <p className="text-xs font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
+      <p className="text-xs font-medium uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
         {title}
       </p>
       <span
@@ -82,7 +82,7 @@ function ServiceRow({
         </span>
         {isBulk && (
           <span
-            className="inline-flex items-center gap-0.5 text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0 transition-colors duration-200"
+            className="inline-flex items-center gap-0.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full shrink-0 transition-colors duration-200"
             style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
           >
             <SealPercent size={9} weight="fill" aria-hidden="true" />
@@ -92,7 +92,7 @@ function ServiceRow({
       </div>
       <div className="flex items-center gap-2.5 shrink-0">
         <span
-          className="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-black tabular-nums"
+          className="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium tabular-nums"
           style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accent }}
         >
           {item.price}
@@ -196,7 +196,7 @@ export function HubCompactCard({
       {/* Footer — service count accented on hover */}
       <div className="flex items-center justify-between mt-auto">
         <span
-          className="text-[10px] font-bold transition-colors duration-200"
+          className="text-[10px] font-medium transition-colors duration-200"
           style={{ color: isActive ? hubColor : '#a1a1aa' }}
         >
           {total} services
@@ -269,13 +269,13 @@ export function HubExpandedPanel({
           {/* ── Left: Hub identity ── */}
           <div className="px-6 pt-6 pb-6">
             <h2
-              className="text-2xl font-black tracking-tight mb-1 leading-tight"
+              className="text-2xl font-medium tracking-tight mb-1 leading-tight"
               style={{ color: hubColor }}
             >
               {hub.title}
             </h2>
 
-            <p className="text-sm font-bold mb-4" style={{ color: hubColor, opacity: 0.7 }}>
+            <p className="text-sm font-medium mb-4" style={{ color: hubColor, opacity: 0.7 }}>
               {total} services
             </p>
 
@@ -333,7 +333,7 @@ export function HubExpandedPanel({
           <div className="flex items-start gap-2 min-w-0">
             <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
             <div className="min-w-0">
-              <span className="text-xs font-black" style={{ color: hubColor }}>{turnaround.label}</span>
+              <span className="text-xs font-medium" style={{ color: hubColor }}>{turnaround.label}</span>
               <span className="text-xs text-muted-foreground ml-1.5">{turnaround.detail}</span>
             </div>
           </div>
@@ -392,11 +392,11 @@ export function HubAccordionCard({
         <div className="flex items-center gap-3 min-w-0">
           <HubIcon id={hubId} size={18} color={isOpen ? hubColor : '#a1a1aa'} />
           <div className="min-w-0">
-            <p className="text-base font-bold text-zinc-900 dark:text-white truncate">
+            <p className="text-base font-medium text-zinc-900 dark:text-white truncate">
               {hub.title}
             </p>
             <p className="text-sm mt-0.5" style={{ color: isOpen ? hubColor : '#a1a1aa' }}>
-              <span className="font-bold">{total} services</span>
+              <span className="font-medium">{total} services</span>
               {hubHasBulk ? ' · Bulk deals available' : ''}
             </p>
           </div>

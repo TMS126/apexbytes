@@ -72,7 +72,7 @@ let bg: string = `linear-gradient(135deg, ${OG_COLORS.background} 0%, ${OG_COLOR
           style={{
             display: 'flex',
             fontSize: '64px',
-            fontWeight: 800,
+            fontWeight: 500,
             color: OG_COLORS.white,
             letterSpacing: '-0.02em',
             lineHeight: 1.1,
@@ -82,7 +82,7 @@ let bg: string = `linear-gradient(135deg, ${OG_COLORS.background} 0%, ${OG_COLOR
           {title}
         </div>
         {price && (
-          <div style={{ display: 'flex', fontSize: '44px', fontWeight: 800, color: OG_COLORS.white, marginTop: '14px' }}>
+          <div style={{ display: 'flex', fontSize: '44px', fontWeight: 500, color: OG_COLORS.white, marginTop: '14px' }}>
             {price}
           </div>
         )}

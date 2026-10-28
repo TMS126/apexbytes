@@ -18,20 +18,20 @@ export function ReconvertBanner({ prompt, onResolve }: { prompt: ReconvertPrompt
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           <ArrowsClockwise weight="bold" className="w-4 h-4 text-amber-600 shrink-0" aria-hidden="true" />
-          <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+          <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
             {prompt.overlapCount} of {prompt.totalCount} image{prompt.overlapCount > 1 ? "s were" : " was"} already converted. Convert again?
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-2 mt-3">
-          <button type="button" onClick={() => onResolve("all")} className="px-4 py-2 rounded-[10px] text-sm font-black bg-amber-600 text-white hover:bg-amber-700 transition-colors">
+          <button type="button" onClick={() => onResolve("all")} className="px-4 py-2 rounded-[10px] text-sm font-medium bg-amber-600 text-white hover:bg-amber-700 transition-colors">
             Convert Again
           </button>
           {hasNew && (
-            <button type="button" onClick={() => onResolve("new-only")} className="px-4 py-2 rounded-[10px] text-sm font-black border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors">
+            <button type="button" onClick={() => onResolve("new-only")} className="px-4 py-2 rounded-[10px] text-sm font-medium border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors">
               Only New Ones
             </button>
           )}
-          <button type="button" onClick={() => onResolve("cancel")} className="px-4 py-2 rounded-[10px] text-sm font-black text-muted-foreground hover:text-zinc-700 transition-colors">
+          <button type="button" onClick={() => onResolve("cancel")} className="px-4 py-2 rounded-[10px] text-sm font-medium text-muted-foreground hover:text-zinc-700 transition-colors">
             Cancel
           </button>
         </div>

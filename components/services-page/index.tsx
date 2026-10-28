@@ -212,7 +212,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
 
         <ScrollBounce delay={0.12} className="relative z-0 mb-7 w-full max-w-[980px]">
           <details className="group overflow-hidden rounded-[14px] border border-border/70 bg-card/70">
-            <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 text-left text-[0.76rem] font-black uppercase tracking-[0.12em] text-muted-foreground [&::-webkit-details-marker]:hidden">
+            <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 text-left text-[0.76rem] font-medium uppercase tracking-[0.12em] text-muted-foreground [&::-webkit-details-marker]:hidden">
               <span title="See optional add-ons and included features">View add-ons and free features</span>
               <CaretDown size={16} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
@@ -262,7 +262,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
           <div className="hidden md:flex flex-col items-center w-full animate-in fade-in duration-200">
 
             <nav aria-label="Service hubs" className="mb-7 flex w-full max-w-5xl flex-wrap items-end justify-center gap-x-5 gap-y-3 px-2 sm:gap-x-7 sm:px-4">
-              <button type="button" onClick={handleDesktopBackToHubs} className="group inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.78rem] font-bold text-muted-foreground transition-colors hover:text-foreground">
+              <button type="button" onClick={handleDesktopBackToHubs} className="group inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.78rem] font-medium text-muted-foreground transition-colors hover:text-foreground">
                 <CaretLeft size={14} weight="bold" aria-hidden="true" />
                 All hubs
               </button>
@@ -276,7 +276,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
                     type="button"
                     aria-current={isActiveHub ? "page" : undefined}
                     onClick={() => handleDesktopSwitchHub(hubId)}
-                    className={cn("group relative inline-flex min-h-9 items-center gap-2 pb-2 text-[0.82rem] font-black transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", isActiveHub ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")}
+                    className={cn("group relative inline-flex min-h-9 items-center gap-2 pb-2 text-[0.82rem] font-medium transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", isActiveHub ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")}
                     style={{ color: isActiveHub ? accent : undefined, ['--underline-color' as string]: accent }}
                   >
                     <HubIcon id={hubId} size={20} color="currentColor" />
@@ -288,14 +288,14 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
 
             {desktopActiveSectionData && (
               <nav aria-label="Service sections" className="mb-8 flex w-full max-w-4xl flex-wrap items-end justify-center gap-x-4 gap-y-2 px-2 sm:gap-x-6 sm:px-4">
-                <button type="button" onClick={handleDesktopBackToSections} className="inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.75rem] font-bold text-muted-foreground transition-colors hover:text-foreground">
+                <button type="button" onClick={handleDesktopBackToSections} className="inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.75rem] font-medium text-muted-foreground transition-colors hover:text-foreground">
                   <CaretLeft size={14} weight="bold" aria-hidden="true" />
                   All sections
                 </button>
                 {desktopHub.sections.map((section, sIdx) => {
                   const selected = sIdx === desktopActiveSection
                   return (
-                    <button key={section.title} type="button" aria-current={selected ? "page" : undefined} onClick={() => handleDesktopSwitchSection(sIdx)} className={cn("relative inline-flex min-h-9 items-center pb-2 text-[0.8rem] font-black transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", selected ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")} style={{ color: selected ? desktopHubAccent : undefined, ['--underline-color' as string]: desktopHubAccent }}>
+                    <button key={section.title} type="button" aria-current={selected ? "page" : undefined} onClick={() => handleDesktopSwitchSection(sIdx)} className={cn("relative inline-flex min-h-9 items-center pb-2 text-[0.8rem] font-medium transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", selected ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")} style={{ color: selected ? desktopHubAccent : undefined, ['--underline-color' as string]: desktopHubAccent }}>
                       {section.title}
                     </button>
                   )

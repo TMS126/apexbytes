@@ -66,14 +66,14 @@ export function BeforeAfterSlider({ before, after, accent }: { before: string; a
     >
       <div className="absolute inset-0">
         <SafeImage src={after} alt="After" accent={accent} fill sizes="55vw" className="object-cover" priority />
-        <span className="absolute bottom-3 right-3 text-[0.6rem] font-black uppercase tracking-widest px-2 py-0.5 rounded-full abh-shadow-badge" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accentFg }}>After</span>
+        <span className="absolute bottom-3 right-3 text-[0.6rem] font-medium uppercase tracking-widest px-2 py-0.5 rounded-full abh-shadow-badge" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accentFg }}>After</span>
       </div>
 
       <div className="absolute inset-0 overflow-hidden" style={{ width: `${pos}%` }}>
         <div className="absolute inset-0" style={{ width: `${10000 / safePos}%` }}>
           <SafeImage src={before} alt="Before" accent={accent} fill sizes="55vw" className="object-cover" priority />
         </div>
-        <span className="absolute bottom-3 left-3 text-[0.6rem] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-black/50 text-white abh-shadow-badge">Before</span>
+        <span className="absolute bottom-3 left-3 text-[0.6rem] font-medium uppercase tracking-widest px-2 py-0.5 rounded-full bg-black/50 text-white abh-shadow-badge">Before</span>
       </div>
 
       <div className="absolute top-0 bottom-0 w-0.5 pointer-events-none" style={{ left: `${pos}%`, backgroundColor: "rgba(255,255,255,0.9)", boxShadow: "0 0 8px rgba(0,0,0,0.4)", transform: "translateX(-0.5px)" }} />
@@ -85,7 +85,7 @@ export function BeforeAfterSlider({ before, after, accent }: { before: string; a
         {!revealed && <div className="absolute inset-0 rounded-full animate-ping opacity-40" style={{ backgroundColor: accent }} />}
       </div>
 
-      <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[0.6rem] font-bold text-white/80 uppercase tracking-widest whitespace-nowrap pointer-events-none">
+      <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[0.6rem] font-medium text-white/80 uppercase tracking-widest whitespace-nowrap pointer-events-none">
         Drag • Double-tap to reset
       </p>
     </div>

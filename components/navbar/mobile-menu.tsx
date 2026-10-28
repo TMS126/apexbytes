@@ -129,7 +129,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                 }}
                 className={cn(
                   "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] border-2 bg-transparent transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",
-                  isActive ? "font-semibold" : "font-medium",
+                  isActive ? "font-semibold" : "font-semibold",
                   menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                 )}
               >

@@ -18,9 +18,9 @@ export function ComingSoonTool() {
         <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
           <Wrench weight="regular" className="size-7" aria-hidden="true" />
         </span>
-        <span className="text-sm font-bold text-foreground">Coming soon</span>
+        <span className="text-sm font-medium text-foreground">Coming soon</span>
         {open && (
-          <span id="coming-soon-tooltip" role="tooltip" className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-[14px] bg-foreground px-3 py-1.5 text-xs font-bold text-background shadow-md">
+          <span id="coming-soon-tooltip" role="tooltip" className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-[14px] bg-foreground px-3 py-1.5 text-xs font-medium text-background shadow-md">
             Coming Soon
           </span>
         )}

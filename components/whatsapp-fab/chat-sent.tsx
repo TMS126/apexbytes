@@ -39,14 +39,14 @@ export function ChatSent({ dateLabel, sentTime, onSendAnother, onClose }: ChatSe
       <div className="flex items-center gap-2">
         <button
           onClick={onSendAnother}
-          className={cn(TXT.hint, "abh-press px-4 py-2.5 rounded-full font-bold shadow-sm")}
+          className={cn(TXT.hint, "abh-press px-4 py-2.5 rounded-full font-medium shadow-sm")}
           style={{ backgroundColor: "color-mix(in srgb, var(--wa-accent) 12%, transparent)", color: WA.text }}
         >
           Send another
         </button>
         <button
           onClick={onClose}
-          className={cn(TXT.hint, "abh-press px-5 py-2.5 rounded-full font-bold shadow-sm")}
+          className={cn(TXT.hint, "abh-press px-5 py-2.5 rounded-full font-medium shadow-sm")}
           style={{ backgroundColor: WA.composeField, color: WA.text }}
         >
           Close

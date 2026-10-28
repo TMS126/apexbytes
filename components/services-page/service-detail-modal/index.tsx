@@ -368,7 +368,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               <span
                 role="status"
                 aria-live="polite"
-                className="absolute top-1/2 -translate-y-1/2 right-11 whitespace-nowrap text-[0.74rem] font-black uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-full shadow-lg animate-in fade-in zoom-in-95 duration-150"
+                className="absolute top-1/2 -translate-y-1/2 right-11 whitespace-nowrap text-[0.74rem] font-medium uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-full shadow-lg animate-in fade-in zoom-in-95 duration-150"
               >
                 Copied!
               </span>
@@ -395,9 +395,9 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             <div className="min-w-0 text-center">
               <div className="flex items-center justify-center gap-1.5 mb-1.5">
                 <HubIcon id={svc.hubId} size={11} color={accent} />
-                <span className="text-[0.72rem] font-black uppercase tracking-widest" style={{ color: accent }}>{hubTitle}</span>
+                <span className="text-[0.72rem] font-medium uppercase tracking-widest" style={{ color: accent }}>{hubTitle}</span>
               </div>
-              <span className="text-[0.72rem] font-semibold text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-2.5 inline-block">
+              <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-2.5 inline-block">
                 {cleanText(svc.sectionTitle)}
               </span>
               <h3 className="abh-card-heading text-[1.28rem] leading-tight">{svc.name}</h3>
@@ -410,10 +410,10 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
           <div className={cn(HEADER_GRID, "items-start")}>
             <div aria-hidden="true" />
             <div className="flex flex-col items-center gap-1.5">
-              <span className="text-5xl font-black tracking-tighter" style={{ color: accent }}>{svc.price}</span>
+              <span className="text-5xl font-medium tracking-tighter" style={{ color: accent }}>{svc.price}</span>
               {svc.turnaround && (
                 <span
-                  className="flex items-center gap-1 text-[0.82rem] font-bold pb-0.5 border-b"
+                  className="flex items-center gap-1 text-[0.82rem] font-medium pb-0.5 border-b"
                   style={{ color: accent, borderColor: `color-mix(in srgb, ${accent} 31%, transparent)` }}
                 >
                   <Clock size={12} weight="bold" aria-hidden="true" />
@@ -444,7 +444,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                     tabIndex={isActive ? 0 : -1}
                     onClick={() => setTab(t)}
                     className={cn(
-                      "py-2.5 text-[0.95rem] font-black uppercase tracking-wider transition-colors duration-200 border-b-2 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-modal)]",
+                      "py-2.5 text-[0.95rem] font-medium uppercase tracking-wider transition-colors duration-200 border-b-2 -mb-px focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-modal)]",
                       isActive ? "border-current" : "border-transparent text-muted-foreground dark:text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300"
                     )}
                     style={isActive ? { color: accent } : undefined}
@@ -493,7 +493,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             >
               {desc ? <p className="abh-body text-base">{desc}</p> : <p className="abh-muted text-base">No description available for this service yet.</p>}
               <p className="abh-muted mt-5">
-                Have questions? Switch to the <span className="font-black" style={{ color: accent }}>Needs</span> tab or chat with us directly.
+                Have questions? Switch to the <span className="font-medium" style={{ color: accent }}>Needs</span> tab or chat with us directly.
               </p>
             </div>
           )}
@@ -595,7 +595,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
             className={cn(
-              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-2.5 font-black text-sm text-center",
+              "abh-wa-btn flex items-center justify-center gap-2 w-full px-4 py-2.5 font-medium text-sm text-center",
               ICON_BTN_FOCUS
             )}
           >

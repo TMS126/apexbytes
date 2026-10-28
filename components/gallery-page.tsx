@@ -55,9 +55,9 @@ export function HubFilterCircles({
             className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 19%, transparent)` }}
           />
-          <span className={cn("relative text-[0.8rem] font-black", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
+          <span className={cn("relative text-[0.8rem] font-medium", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
         </span>
-        <span className="text-[0.72rem] font-bold text-muted-foreground dark:text-muted-foreground">All</span>
+        <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground">All</span>
       </button>
 
       {ROW_ORDER.map((row) => {
@@ -89,7 +89,7 @@ export function HubFilterCircles({
                 <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
-            <span className="text-[0.72rem] font-bold text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
+            <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
           </button>
         )
       })}
@@ -113,7 +113,7 @@ function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: strin
         >
           <HubIcon id={hubId} size={15} weight="regular" color="currentColor" />
         </span>
-        <h2 className="text-[0.82rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
+        <h2 className="text-[0.82rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
           {hubLabelFor(hubId)}
         </h2>
       </div>
@@ -164,7 +164,7 @@ function ProjectCard({
       </button>
 
       <button onClick={() => onSelect(p)} className="mt-1.5 min-w-0 text-left px-0.5 active:scale-[0.98] transition-transform duration-150">
-        <span className="block text-[0.72rem] font-black text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
+        <span className="block text-[0.72rem] font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
       </button>
     </div>
   )
@@ -391,7 +391,7 @@ function GalleryPageInner() {
                 onClick={handleSurprise}
                 aria-label="Surprise me with a random project"
                 className={cn(
-                  "shrink-0 flex items-center gap-1.5 pl-3 pr-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[0.82rem] font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-200 active:scale-95 group/surprise whitespace-nowrap",
+                  "shrink-0 flex items-center gap-1.5 pl-3 pr-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[0.82rem] font-medium text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-200 active:scale-95 group/surprise whitespace-nowrap",
                   surpriseFlash && "scale-90 opacity-60"
                 )}
               >
@@ -410,13 +410,13 @@ function GalleryPageInner() {
 
         {visibleProjects.length === 0 ? (
           <div className="max-w-md mx-auto text-center py-16 px-6">
-            <p className="text-base font-bold text-muted-foreground dark:text-muted-foreground">
+            <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">
               {searchLower ? `No projects match "${searchQuery.trim()}"` : "No projects in this category yet"}
             </p>
             {searchLower && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="mt-3 text-sm font-black underline text-brand-orange"
+                className="mt-3 text-sm font-medium underline text-brand-orange"
               >
                 Clear search
               </button>

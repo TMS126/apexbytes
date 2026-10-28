@@ -101,12 +101,12 @@ export function ChatForm({
             }
           }}
           placeholder="e.g. Thembi"
-          className={cn(TXT.body, "w-full bg-transparent font-semibold outline-none border-none")}
+          className={cn(TXT.body, "w-full bg-transparent font-medium outline-none border-none")}
           style={{ color: WA.text }}
         />
         <div className="flex items-center justify-between mt-1.5">
           {nameRemembered && name.trim().length > 1 ? (
-            <span className={cn(TXT.time, "font-bold")} style={{ color: WA.accent }}>Remembered from last time</span>
+            <span className={cn(TXT.time, "font-medium")} style={{ color: WA.accent }}>Remembered from last time</span>
           ) : <span />}
           <span className={TXT.time} style={{ color: WA.sub }}>{openTime}</span>
         </div>
@@ -122,11 +122,11 @@ export function ChatForm({
             <div className="flex flex-col min-w-0">
               {selectedHub ? (
                 <>
-                  <span className={cn(TXT.body, "font-black leading-tight")} style={{ color: WA.text }}>{selectedHub.label}</span>
-                  <span className={cn(TXT.hint, "font-semibold mt-0.5 truncate")} style={{ color: WA.sub }}>{selectedHub.hint}</span>
+                  <span className={cn(TXT.body, "font-medium leading-tight")} style={{ color: WA.text }}>{selectedHub.label}</span>
+                  <span className={cn(TXT.hint, "font-medium mt-0.5 truncate")} style={{ color: WA.sub }}>{selectedHub.hint}</span>
                 </>
               ) : (
-                <span className={cn(TXT.body, "font-semibold")} style={{ color: WA.sub }}>Tap to choose...</span>
+                <span className={cn(TXT.body, "font-medium")} style={{ color: WA.sub }}>Tap to choose...</span>
               )}
             </div>
             <CaretDown
@@ -144,7 +144,7 @@ export function ChatForm({
 
       <ChatBubble field="note" followTyping={followTyping} revealed={revealed}>
         <label className={cn(TXT.label, "block mb-1.5")} style={{ color: WA.sub }}>
-          Anything else? <span className="normal-case font-semibold opacity-60">(optional)</span>
+          Anything else? <span className="normal-case font-medium opacity-60">(optional)</span>
         </label>
         <textarea
           value={note}
@@ -157,14 +157,14 @@ export function ChatForm({
           }}
           placeholder="Anything else? Message here"
           rows={2}
-          className={cn(TXT.body, "w-full bg-transparent font-semibold outline-none border-none resize-none")}
+          className={cn(TXT.body, "w-full bg-transparent font-medium outline-none border-none resize-none")}
           style={{ color: WA.text }}
         />
         <div className="flex items-center gap-1.5 mt-2">
           <button
             type="button"
             onClick={() => addQuickNote(QUICK_NOTES[quickNoteIdx])}
-            className={cn(TXT.hint, "abh-press flex-1 min-w-0 flex items-center gap-1 px-2 py-1 rounded-full font-bold border transition-all duration-150 ease-out hover:-translate-y-0.5")}
+            className={cn(TXT.hint, "abh-press flex-1 min-w-0 flex items-center gap-1 px-2 py-1 rounded-full font-medium border transition-all duration-150 ease-out hover:-translate-y-0.5")}
             style={{ borderColor: "color-mix(in srgb, var(--wa-sub) 12%, transparent)", color: WA.text, backgroundColor: "color-mix(in srgb, var(--wa-accent) 7%, transparent)" }}
           >
             <Lightning size={9} weight="fill" style={{ color: WA.accent }} className="shrink-0" />

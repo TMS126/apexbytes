@@ -9,7 +9,7 @@ import { SealPercent, FilePdf } from '@phosphor-icons/react'
 export function BulkBadge() {
   return (
     <span
-      className="inline-flex items-center gap-1 text-[0.68rem] font-black uppercase tracking-wide px-2 py-0.5 rounded-full text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
+      className="inline-flex items-center gap-1 text-[0.68rem] font-medium uppercase tracking-wide px-2 py-0.5 rounded-full text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
       aria-label="Bulk pricing available"
     >
       <SealPercent size={11} weight="fill" aria-hidden="true" />
@@ -51,7 +51,7 @@ export function PdfPillButton({
       onMouseLeave={() => setHovered(false)}
       aria-label={label}
       title={label}
-      className={`inline-flex items-center gap-2 rounded-[14px] font-black transition-all duration-150 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 active:shadow-sm active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-900 ${
+      className={`inline-flex items-center gap-2 rounded-[14px] font-medium transition-all duration-150 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 active:shadow-sm active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-900 ${
         isLg ? 'px-5 py-3 text-[1.05rem]' : 'px-4 py-2 text-[0.9rem]'
       }`}
       style={{

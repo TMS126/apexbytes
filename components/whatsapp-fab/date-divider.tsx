@@ -12,7 +12,7 @@ export function DateDivider({ dateLabel, subColor }: { dateLabel: string; subCol
   return (
     <div className="flex justify-center mb-1">
       <span
-        className={cn("text-[0.6rem] font-bold uppercase tracking-wide px-3 py-1 rounded-full shadow-sm bg-white/70 dark:bg-white/10")}
+        className={cn("text-[0.6rem] font-medium uppercase tracking-wide px-3 py-1 rounded-full shadow-sm bg-white/70 dark:bg-white/10")}
         style={{ color: subColor }}
       >
         {dateLabel}

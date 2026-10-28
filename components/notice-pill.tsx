@@ -74,7 +74,7 @@ export function NoticePill({
           className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
         >
           <Icon size={16} weight="bold" style={{ color: iconColor }} aria-hidden="true" />
-          <span className="text-[0.92rem] font-bold whitespace-nowrap" style={{ color: headerColor }}>
+          <span className="text-[0.92rem] font-medium whitespace-nowrap" style={{ color: headerColor }}>
             {collapsedLabel}
           </span>
         </button>
@@ -119,11 +119,11 @@ export function NoticePill({
               >
                 <div className="flex items-start gap-3 pr-8">
                   <Icon size={20} weight="bold" style={{ color: iconColor }} className="mt-0.5 shrink-0" aria-hidden="true" />
-                  <h2 className="text-[0.78rem] font-black uppercase tracking-widest" style={{ color: headerColor }}>
+                  <h2 className="text-[0.78rem] font-medium uppercase tracking-widest" style={{ color: headerColor }}>
                     {expandedLabel}
                   </h2>
                 </div>
-                <div className="pl-[2rem] pt-3 text-[0.95rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
+                <div className="pl-[2rem] pt-3 text-[0.95rem] font-medium leading-snug abh-body text-zinc-700 dark:text-zinc-200">
                   {children}
                 </div>
                 <button type="button" onClick={close} aria-label="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">

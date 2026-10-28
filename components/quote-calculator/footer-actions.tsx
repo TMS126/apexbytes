@@ -28,11 +28,11 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-muted-foreground">Total</span>
-                <span className="text-xl font-black" style={{ color: fabColor }}>R{total}</span>
+                <span className="text-xs font-medium text-muted-foreground">Total</span>
+                <span className="text-xl font-medium" style={{ color: fabColor }}>R{total}</span>
               </div>
               {totalSavings > 0 && (
-                <div className="mt-0.5 flex items-center gap-1 text-[0.62rem] font-bold text-emerald-600 dark:text-emerald-400">
+                <div className="mt-0.5 flex items-center gap-1 text-[0.62rem] font-medium text-emerald-600 dark:text-emerald-400">
                   <SealPercent size={12} weight="fill" aria-hidden="true" />
                   Saving R{totalSavings} with bulk pricing
                 </div>
@@ -49,7 +49,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
             </button>
             <button
               onClick={onSendQuote}
-              className="abh-press flex items-center justify-center gap-1.5 rounded-[10px] px-3 py-2 text-xs font-black text-emerald-950 transition-transform duration-150"
+              className="abh-press flex items-center justify-center gap-1.5 rounded-[10px] px-3 py-2 text-xs font-medium text-emerald-950 transition-transform duration-150"
               style={{ backgroundColor: "var(--brand-whatsapp)" }}
             >
               <WhatsappLogo size={16} weight="fill" aria-hidden="true" /> Send
