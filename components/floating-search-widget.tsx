@@ -265,7 +265,7 @@ export function FloatingSearchWidget() {
 
       <div
         className={cn(
-          "fixed z-[9993] right-4 md:right-6 bottom-[10.5rem] group/search",
+          "fixed z-[9993] right-4 md:right-6 bottom-44 group/search",
           fabVisible ? "opacity-100 pointer-events-auto" : "hidden"
         )}
       >
