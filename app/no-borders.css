@@ -1,0 +1,22 @@
+/* app/no-borders.css (NEW FILE, create it next to app/globals.css) */
+
+/* 1. No borders anywhere. No exceptions except the loading spinner.
+      Raised specificity beats .abh-card-rule, .abh-line-left, hover rules and inline styles. */
+:root:root:root *:not(.animate-spin),
+:root:root:root *:not(.animate-spin)::before,
+:root:root:root *:not(.animate-spin)::after {
+  border: 0 none transparent !important;
+  border-color: transparent !important;
+}
+
+/* 2. No ring "borders". Keyboard focus rings stay, for accessibility. */
+:root:root:root *:not(:focus-visible) {
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  --tw-inset-ring-shadow: 0 0 #0000 !important;
+}
+
+/* 3. No stray outlines unless the element is focused. */
+:root:root:root *:not(:focus):not(:focus-visible) {
+  outline-style: none !important;
+}
