@@ -26,7 +26,7 @@ export function FabTrigger({
   return (
     <div
       className={cn(
-        "fixed z-[9992] right-[5.25rem] md:right-[6.25rem] bottom-6 flex items-center justify-end group/calc",
+        "fixed z-[9992] right-5 md:right-7 bottom-24 flex items-center justify-end group/calc",
         "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
         !visible ? "hidden" : dimmed ? "opacity-30 scale-100 pointer-events-auto" : "opacity-100 scale-100 pointer-events-auto"
       )}
