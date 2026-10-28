@@ -1165,4 +1165,142 @@ button:not(:hover):not(:focus-visible):not(:active),
 .abh-hub-pill:hover, .abh-hub-pill:focus-visible {
   color: var(--pill-hover-color) !important;
   border-color: var(--pill-hover-color) !important;
-     } 
+}
+
+/* ApexbytesHub tactile interface layer: soft acrylic, paper grain, and quiet depth. */
+:root {
+  --ui-radius-xs: 12px;
+  --ui-radius-sm: 18px;
+  --ui-radius-md: 26px;
+  --ui-radius-lg: 34px;
+  --ui-shadow-soft: 0 20px 50px -30px color-mix(in srgb, var(--foreground) 34%, transparent), 0 8px 20px -16px color-mix(in srgb, var(--foreground) 18%, transparent);
+  --ui-shadow-hover: 0 28px 64px -30px color-mix(in srgb, var(--foreground) 42%, transparent), 0 12px 24px -16px color-mix(in srgb, var(--foreground) 24%, transparent);
+  --ui-shadow-float: 0 32px 80px -34px color-mix(in srgb, var(--foreground) 52%, transparent), 0 10px 28px -18px color-mix(in srgb, var(--foreground) 24%, transparent);
+  --ui-highlight: rgba(255, 255, 255, 0.58);
+  --ui-grain: rgba(15, 63, 102, 0.045);
+}
+.dark {
+  --ui-highlight: rgba(255, 255, 255, 0.1);
+  --ui-grain: rgba(255, 255, 255, 0.035);
+}
+
+html {
+  background: var(--background);
+}
+body {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 14% 4%, color-mix(in srgb, var(--brand-light-blue) 28%, transparent), transparent 32rem),
+    radial-gradient(ellipse at 86% 18%, color-mix(in srgb, var(--brand-light-green) 22%, transparent), transparent 30rem),
+    radial-gradient(ellipse at 50% 100%, color-mix(in srgb, var(--brand-light-orange) 18%, transparent), transparent 38rem),
+    var(--background);
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.72;
+  background-image:
+    radial-gradient(circle at 20% 30%, var(--ui-grain) 0 0.7px, transparent 0.9px),
+    radial-gradient(circle at 70% 80%, var(--ui-grain) 0 0.65px, transparent 0.85px);
+  background-size: 13px 13px, 17px 17px;
+  mix-blend-mode: multiply;
+}
+.dark body::before { mix-blend-mode: screen; }
+
+/* Shared surfaces */
+.glass,
+.glass-strong,
+.abh-card,
+.abh-shadow-card,
+.abh-shadow-nested-group,
+.abh-shadow-nested-item,
+.abh-shadow-tile,
+.abh-shadow-contact-card,
+.abh-shadow-elevated,
+.abh-shadow-project-card,
+.abh-shadow-popover,
+[data-radix-popper-content-wrapper],
+[role="dialog"] {
+  border: 0 !important;
+  border-color: transparent !important;
+  border-radius: var(--ui-radius-md) !important;
+  box-shadow: var(--ui-shadow-soft) !important;
+  background-image: linear-gradient(145deg, color-mix(in srgb, var(--ui-highlight) 70%, transparent), transparent 48%) !important;
+  transition: box-shadow 240ms ease, transform 240ms ease, background-color 240ms ease;
+}
+.glass:hover,
+.abh-card:hover,
+.abh-shadow-card:hover,
+.abh-shadow-tile:hover,
+.abh-shadow-contact-card:hover,
+.abh-shadow-project-card:hover {
+  box-shadow: var(--ui-shadow-hover) !important;
+}
+.abh-shadow-popover,
+[data-radix-popper-content-wrapper] { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
+
+/* Buttons feel like physical controls rather than flat links. */
+button,
+[role="button"],
+.abh-btn-primary,
+.abh-btn-cta,
+.abh-line-cta,
+.abh-wa-btn {
+  border: 0 !important;
+  border-radius: var(--ui-radius-sm) !important;
+  transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+button:hover:not(:disabled),
+[role="button"]:hover,
+.abh-btn-primary:hover,
+.abh-btn-cta:hover,
+.abh-line-cta:hover,
+.abh-wa-btn:hover { transform: translateY(-2px); }
+button:active:not(:disabled),
+[role="button"]:active,
+.abh-btn-primary:active,
+.abh-btn-cta:active,
+.abh-line-cta:active,
+.abh-wa-btn:active { transform: translateY(0) scale(0.97); }
+
+/* Pills are soft labels with a subtle inset highlight, never hard outlines. */
+.abh-pill,
+.abh-hub-pill,
+.abh-badge,
+.abh-badge-circle,
+[class*="rounded-full"] {
+  box-shadow: inset 0 1px 0 var(--ui-highlight), 0 8px 18px -16px color-mix(in srgb, var(--foreground) 50%, transparent);
+}
+
+/* Fields share the same tactile language while keeping focus visible. */
+input, textarea, select {
+  border: 0 !important;
+  border-radius: var(--ui-radius-sm) !important;
+  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 1px 0 var(--ui-highlight) !important;
+  transition: box-shadow 180ms ease, background-color 180ms ease;
+}
+input:focus, textarea:focus, select:focus,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ring) 42%, transparent) !important;
+  outline-offset: 2px;
+  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 8px 22px -16px color-mix(in srgb, var(--ring) 60%, transparent) !important;
+}
+
+/* Dialogs and popovers float above the page with a calm acrylic veil. */
+[role="dialog"] {
+  border-radius: var(--ui-radius-lg) !important;
+  box-shadow: var(--ui-shadow-float) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(145%);
+  backdrop-filter: blur(28px) saturate(145%);
+}
+
+@media (max-width: 640px) {
+  .glass, .abh-card, .abh-shadow-card, .abh-shadow-tile, [role="dialog"] { border-radius: var(--ui-radius-sm) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button:hover:not(:disabled), [role="button"]:hover, .abh-btn-primary:hover, .abh-btn-cta:hover, .abh-line-cta:hover, .abh-wa-btn:hover { transform: none; }
+}
