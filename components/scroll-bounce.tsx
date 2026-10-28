@@ -23,7 +23,7 @@ export function ScrollBounce({ children, className, delay = 0 }: ScrollBouncePro
     <motion.div
       className={className}
       style={{ willChange: "transform, opacity" }}
-      initial={{ opacity: 0, y: 24, scale: 0.96 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       // FIX: was `margin: "0px 0px -80px 0px"`, which shrank the trigger
       // zone from the bottom. On mobile, the initial viewport (toolbar

@@ -26,7 +26,7 @@ export function FabTrigger({
   return (
     <div
       className={cn(
-        "fixed z-[9992] right-4 md:right-6 bottom-24 flex items-center justify-end group/calc",
+        "fixed z-[9992] right-5 md:right-7 bottom-24 flex items-center justify-end group/calc",
         "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
         !visible ? "hidden" : dimmed ? "opacity-30 scale-100 pointer-events-auto" : "opacity-100 scale-100 pointer-events-auto"
       )}
@@ -66,7 +66,7 @@ export function FabTrigger({
           onClick={onOpen}
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
-          className="abh-press relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+          className="abh-press relative h-16 w-12 rounded-[14px] bg-card/90 border border-white/30 shadow-[0_16px_32px_-18px_rgba(15,63,102,0.7)] backdrop-blur-md flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
         >
           <Calculator
             size={34}
@@ -79,7 +79,7 @@ export function FabTrigger({
           <button
             onClick={(e) => { e.stopPropagation(); onToggleMini() }}
             aria-label={miniExpanded ? "Hide quote total" : "Show quote total"}
-            className="abh-press abh-badge-circle abh-on-orange absolute -top-0.5 -right-0.5 min-w-[22px] h-[22px] bg-brand-orange text-[0.65rem] font-black border-2 border-white dark:border-zinc-950 shadow-md"
+            className="abh-press abh-on-orange absolute -top-2 -right-2 min-w-[22px] h-[22px] rounded-[14px] bg-brand-orange text-[0.65rem] font-black border border-white/70 dark:border-zinc-950 shadow-md"
           >
             {itemCount}
           </button>

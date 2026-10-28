@@ -156,7 +156,7 @@ export function HubCompactCard({
         onClick={onSelect}
         onMouseEnter={onHover}
         aria-pressed
-        className="h-full w-full rounded-[14px] bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
+        className="h-full w-full rounded-[14px] bg-white dark:bg-zinc-900 shadow-lg shadow-black/10 transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
       >
         <HubIcon id={hubId} size={40} weight="fill" color={hubColor} />
         <span className="sr-only">{hub.title} — selected</span>
@@ -169,7 +169,7 @@ export function HubCompactCard({
       onClick={onSelect}
       onMouseEnter={onHover}
       aria-pressed={false}
-      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98] bg-white/60 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-zinc-900 hover:shadow-sm flex flex-col"
+      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98] bg-white/60 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-zinc-900 hover:shadow-lg flex flex-col"
     >
       {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
@@ -212,7 +212,7 @@ export function HubCompactCard({
   )
 }
 
-// ── HubExpandedPanel — desktop: identity + services, one shared footer ─────────
+// ─��� HubExpandedPanel — desktop: identity + services, one shared footer ─────────
 //   Fully separate card now (no fusing with the selector row above), full
 //   rounding on every corner, hub-colored border around the whole panel
 

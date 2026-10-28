@@ -15,8 +15,9 @@ const QUALITY_MAX = 0.95
 // color-stop cuts — each color holds its "core" briefly then eases into
 // the next over a short blend zone.
 const TRACK_GRADIENT = `linear-gradient(90deg,
-  ${BRAND.blue} 0%, ${BRAND.blue} 58%,
-  ${BRAND.green} 100%)`
+  ${BRAND.blue} 0%, ${BRAND.blue} 52%,
+  ${BRAND.green} 68%, ${BRAND.green} 82%,
+  ${BRAND.orange} 94%, ${BRAND.orange} 100%)`
 
 function QualitySlider({
   quality, setQuality,
@@ -134,7 +135,7 @@ export function SettingsBar({
       </div>
 
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
-      <div className="border-l-2 border-brand-blue/70 py-2 pl-4 pr-1">
+      <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
         <div className="flex items-center justify-between mb-2">
           <div>
             <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>

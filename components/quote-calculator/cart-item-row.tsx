@@ -38,7 +38,7 @@ export function CartItemRow({
       className={cn(
         "p-3 rounded-[14px] shadow-sm space-y-2 transition-all duration-300 ease-out motion-reduce:transition-none",
         GLASS.item,
-        isHighlighted && "ring-2 scale-[1.02]"
+        "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : undefined}
     >

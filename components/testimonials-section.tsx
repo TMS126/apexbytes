@@ -244,7 +244,7 @@ export function TestimonialsSection({
                 >
                   <div
                     onClick={() => !isActive && goTo(i)}
-                    className="h-full rounded-[20px] bg-card border border-border flex flex-col items-center justify-center text-center px-8 sm:px-12 py-6 overflow-hidden"
+                    className="abh-card h-full flex flex-col items-center justify-center text-center px-8 sm:px-12 py-6 overflow-hidden"
                     style={{
                       cursor: isActive ? "default" : "pointer",
                       boxShadow: isActive

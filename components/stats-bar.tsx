@@ -7,7 +7,6 @@ import { PlusCircle, Gear, Wrench, CalendarCheck } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { BIZ, pickHex } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { getContrastText } from "@/lib/color"
 
 export function StatsBar() {
   const { resolvedTheme } = useTheme()
@@ -32,25 +31,25 @@ export function StatsBar() {
         {stats.map((stat, i) => {
           const isHov = hoveredCard === i
           const Icon = stat.icon
-          const textOnColor = getContrastText(stat.color)
           return (
             <ScrollBounce key={stat.label} delay={i * 0.08} className="h-full">
+              {/* data-hover-border = the ONLY element on the site allowed to show a border (hover only). */}
               <div
                 role="listitem"
+                data-hover-border
                 onMouseEnter={() => setHoveredCard(i)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => setHoveredCard(isHov ? null : i)}
                 aria-label={`${stat.value} ${stat.label}`}
                 className={cn(
-                  "flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center transition-colors duration-300",
-                  "rounded-[14px]",
-                  i > 0 && "sm:border-l-0"
+                  "flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center",
+                  "rounded-[14px] transition-[border-color] duration-300"
                 )}
-                style={{ color: isHov ? textOnColor : undefined, backgroundColor: isHov ? stat.color : "transparent" }}
+                style={{ border: `2px solid ${isHov ? stat.color : "transparent"}` }}
               >
-                <Icon size={24} weight="regular" aria-hidden="true" className="mb-0.5 transition-colors duration-300" />
-                <div className="text-2xl font-black transition-colors duration-300">{stat.value}</div>
-                <div className="text-[0.72rem] font-black uppercase tracking-widest transition-colors duration-300">{stat.label}</div>
+                <Icon size={24} weight="regular" aria-hidden="true" className="mb-0.5" />
+                <div className="text-2xl font-black">{stat.value}</div>
+                <div className="text-[0.72rem] font-black uppercase tracking-widest">{stat.label}</div>
               </div>
             </ScrollBounce>
           )
@@ -58,4 +57,4 @@ export function StatsBar() {
       </div>
     </section>
   )
-}
+    }

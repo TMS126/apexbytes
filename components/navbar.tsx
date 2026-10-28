@@ -120,8 +120,7 @@ export function Navbar() {
             >
               <Image
                 src="/logo.png"
-                alt=""
-                aria-hidden="true"
+                alt="ApexbytesHub home"
                 width={36}
                 height={36}
                 className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 object-contain transition-[filter] duration-300"
@@ -140,9 +139,7 @@ export function Navbar() {
               </div>
             </button>
 
-            {/* Controls — same pill on every breakpoint. Order of the two
-                buttons swaps at md: mobile reads [theme, hamburger];
-                desktop reads [hamburger, theme], both still top-right. */}
+            {/* Navigation stays behind the burger on every breakpoint so the header remains calm and uncluttered. */}
             <div
               className={cn(
                 glassPillClass,

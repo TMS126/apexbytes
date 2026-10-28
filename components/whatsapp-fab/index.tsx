@@ -14,6 +14,7 @@ import { BIZ } from "@/lib/brand"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
+import { useBackButtonDismiss } from "@/hooks/use-back-button-dismiss"
 import { ChatHeader } from "./chat-header"
 import { ChatForm } from "./chat-form"
 import { ChatSent } from "./chat-sent"
@@ -60,10 +61,16 @@ export function WhatsAppFAB() {
   const greetingTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const stageTimers   = useRef<ReturnType<typeof setTimeout>[]>([])
 
-  const handleClose = useCallback(() => {
+  // Closes the widget and resets the chat form after the exit animation.
+  const closeNow = useCallback((open: boolean) => {
+    if (open) return
     setIsOpen(false)
     setTimeout(() => { setStep("form"); setHub(""); setNote(""); setHubPicking(false) }, 400)
   }, [setIsOpen])
+
+  // Phone/browser BACK closes WhatsApp first (before leaving the page or touching anything else).
+  // Close button, backdrop tap and Escape all go through the same path.
+  const handleClose = useBackButtonDismiss(isOpen, closeNow)
 
   // Remember the person's name across visits — expires after 90 days.
   useEffect(() => {
@@ -166,7 +173,8 @@ export function WhatsAppFAB() {
     setFollowTyping({ name: false, hub: false, note: false })
   }
 
-  const handleGalleryClick = () => { handleClose(); router.push("/gallery") }
+  // Close instantly (no history.back) so it can't race with the page change.
+  const handleGalleryClick = () => { closeNow(false); router.push("/gallery") }
 
   if (calculatorOpen) return null
 
@@ -194,7 +202,7 @@ export function WhatsAppFAB() {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-[9989] bg-black/30 transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
+        <div className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
       )}
 
       {isOpen && (
@@ -233,13 +241,8 @@ export function WhatsAppFAB() {
         </div>
       )}
 
-      {/* AUDIT FIX: previously ignored the 3rd useExclusiveWidget value
-          entirely and only faded via isScrolling — this trigger stayed
-          on screen even while the Calculator panel was open, overlapping
-          its send button. `visible` now hides it completely (display:
-          none via FabTrigger's "hidden" class) whenever any other
-          exclusive widget is open. */}
+      {/* Hidden completely whenever another exclusive widget (Calculator) is open. */}
       <FabTrigger visible={!isOtherOpen || isOpen} dimmed={isScrolling} isOpen={isOpen} onOpen={() => setIsOpen(true)} onClose={handleClose} />
     </>
   )
-}
+     }

@@ -216,22 +216,22 @@ function ContactPageInner() {
               <div className="abh-card overflow-hidden flex-1" id="contact-map" style={SCROLL_MARGIN}>
                 <LocationMap />
                 <div className="p-6" id="contact-hours" style={SCROLL_MARGIN}>
-                  <span className="abh-eyebrow flex items-center gap-1.5 mb-3" style={{ color: greyColor }}>
+                  <span className="flex items-center gap-1.5 mb-3 text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[#0f172a] dark:text-white">
                     <Clock weight="regular" size={14} aria-hidden="true" /> Business Hours
                   </span>
-                  <div className="space-y-3">
+                  <div className="space-y-5">
                     <div>
-                      <p className="abh-eyebrow text-muted-foreground mb-1">{HOURS.printAndDoc.label}</p>
-                      <p className="text-base font-normal text-zinc-700 dark:text-zinc-300">{HOURS.printAndDoc.hours}</p>
+                      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#0f172a] dark:text-white mb-1">{HOURS.printAndDoc.label}</p>
+                      <p className="text-base font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">{HOURS.printAndDoc.hours}</p>
                       <p className="flex items-center gap-1.5 text-sm font-normal mt-1" style={{ color: BRAND.blue }}>
                         <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: BRAND.blue }} aria-hidden="true" />
                         Open on public holidays
                       </p>
                     </div>
                     <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                      <p className="abh-eyebrow text-muted-foreground mb-1">{HOURS.techDesignEservice.label}</p>
+                      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#0f172a] dark:text-white mb-1">{HOURS.techDesignEservice.label}</p>
                       {HOURS.techDesignEservice.lines.map((l) => (
-                        <p key={l} className="text-base font-normal text-zinc-700 dark:text-zinc-300">{l}</p>
+                        <p key={l} className="text-base font-medium text-zinc-700 dark:text-zinc-300 leading-relaxed">{l}</p>
                       ))}
                       <p className="flex items-center gap-1.5 text-sm font-normal mt-1 text-muted-foreground dark:text-muted-foreground">
                         <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-zinc-400 dark:bg-zinc-500" aria-hidden="true" />
@@ -239,7 +239,7 @@ function ContactPageInner() {
                       </p>
                     </div>
                     <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                      <p className="abh-eyebrow text-muted-foreground mb-2">Current Status</p>
+                      <p className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#0f172a] dark:text-white mb-2">Current Status</p>
                       <BusinessStatusFull />
                     </div>
                   </div>

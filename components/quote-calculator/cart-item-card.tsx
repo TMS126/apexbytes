@@ -41,7 +41,7 @@ export function CartItemCard({
       role="listitem"
       className={cn(
         "shrink-0 w-[250px] p-3.5 rounded-[16px] snap-start bg-white dark:bg-zinc-800 space-y-2 transition-all duration-300 ease-out motion-reduce:transition-none",
-        isHighlighted && "ring-2 scale-[1.02]"
+        "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{
         boxShadow: `0 6px 16px -3px color-mix(in srgb, ${accent} 25%, transparent), 0 3px 8px -2px rgba(0,0,0,0.18)`,
