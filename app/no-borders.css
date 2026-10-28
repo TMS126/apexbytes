@@ -1,22 +1,68 @@
-/* app/no-borders.css (NEW FILE, create it next to app/globals.css) */
+/* app/no-borders.css (same file as before, replace everything in it) */
+@layer theme, base, components, utilities;
 
-/* 1. No borders anywhere. No exceptions except the loading spinner.
-      Raised specificity beats .abh-card-rule, .abh-line-left, hover rules and inline styles. */
-:root:root:root *:not(.animate-spin),
-:root:root:root *:not(.animate-spin)::before,
-:root:root:root *:not(.animate-spin)::after {
-  border: 0 none transparent !important;
-  border-color: transparent !important;
+/* Layered !important beats unlayered !important, and an EARLIER layer beats a later one.
+   Old rules in "components" are !important, so these rules live in "base" to beat them. */
+@layer base {
+  /* 1. No borders anywhere. Only exceptions: loading spinner, and elements marked data-hover-border. */
+  :root:root:root *:not(.animate-spin):not([data-hover-border]),
+  :root:root:root *:not(.animate-spin):not([data-hover-border])::before,
+  :root:root:root *:not(.animate-spin):not([data-hover-border])::after {
+    border: 0 none transparent !important;
+    border-color: transparent !important;
+  }
+
+  /* 2. No ring "borders". Keyboard focus rings stay. */
+  :root:root:root *:not(:focus-visible) {
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    --tw-inset-ring-shadow: 0 0 #0000 !important;
+  }
+
+  /* 3. No stray outlines unless focused. */
+  :root:root:root *:not(:focus):not(:focus-visible) {
+    outline-style: none !important;
+  }
+
+  /* 4. About-page cards: real card look (surface + radius + shadow), no left rule. */
+  :root:root:root .abh-card-rule {
+    background: var(--card) !important;
+    border-radius: var(--ui-radius-md) !important;
+    box-shadow: var(--ui-shadow-soft) !important;
+  }
+
+  /* 5. Eyebrows: one strong colour everywhere (dark blue in light mode, near-white in dark mode). */
+  :root:root:root .abh-eyebrow,
+  :root:root:root [class*="uppercase"][class*="tracking-[0.2em]"] {
+    color: var(--foreground) !important;
+    opacity: 1 !important;
+  }
+
+  /* 6. Main buttons are pills. */
+  :root:root:root .abh-line-cta,
+  :root:root:root .abh-btn-primary,
+  :root:root:root .abh-btn-cta,
+  :root:root:root .abh-wa-btn {
+    border-radius: 9999px !important;
+  }
 }
 
-/* 2. No ring "borders". Keyboard focus rings stay, for accessibility. */
-:root:root:root *:not(:focus-visible) {
-  --tw-ring-shadow: 0 0 #0000 !important;
-  --tw-ring-offset-shadow: 0 0 #0000 !important;
-  --tw-inset-ring-shadow: 0 0 #0000 !important;
+/* 7. Pill background BEFORE hover (home hero buttons + WhatsApp CTA). */
+.abh-line-cta,
+.abh-btn-primary,
+.abh-btn-cta,
+.abh-wa-btn {
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
+  box-shadow: var(--ui-shadow-soft);
 }
-
-/* 3. No stray outlines unless the element is focused. */
-:root:root:root *:not(:focus):not(:focus-visible) {
-  outline-style: none !important;
-}
+.abh-line-cta:hover,
+.abh-line-cta:focus-visible,
+.abh-btn-primary:hover,
+.abh-btn-primary:focus-visible,
+.abh-btn-cta:hover,
+.abh-btn-cta:focus-visible,
+.abh-wa-btn:hover,
+.abh-wa-btn:focus-visible {
+  background-color: color-mix(in srgb, currentColor 22%, transparent);
+  box-shadow: var(--ui-shadow-hover);
+        }
