@@ -62,7 +62,7 @@ function CountBadge({
   return (
     <span
       className={cn(
-        "absolute flex items-center justify-center rounded-full font-black shadow-md border-2 border-white dark:border-zinc-900 leading-none",
+        "absolute flex items-center justify-center rounded-full font-medium shadow-md border-2 border-white dark:border-zinc-900 leading-none",
         big ? "-top-2 -right-2 min-w-[26px] h-[26px] px-1.5 text-[0.72rem]" : "-top-1.5 -right-1.5 min-w-[22px] h-[22px] px-1 text-[0.66rem]"
       )}
       style={{ backgroundColor: solidAccent, color: onSolid }}
@@ -81,7 +81,7 @@ export function HubBrowser({
 
   return (
     <div className="p-4 space-y-4">
-      <span className="text-[0.78rem] font-black uppercase tracking-widest text-muted-foreground px-1">
+      <span className="text-[0.78rem] font-medium uppercase tracking-widest text-muted-foreground px-1">
         Choose a Hub
       </span>
 
@@ -199,7 +199,7 @@ export function HubBrowser({
 
                   <span
                     className={cn(
-                      "text-[0.7rem] font-black text-center leading-tight transition-colors duration-150",
+                      "text-[0.7rem] font-medium text-center leading-tight transition-colors duration-150",
                       isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
@@ -225,7 +225,7 @@ export function HubBrowser({
           <div className="flex items-center justify-between px-3 py-2.5 border-b border-zinc-100 dark:border-white/10">
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: "var(--brand-orange)" }} aria-hidden="true" />
-              <span className="text-[0.95rem] font-black" style={{ color: getAccent(openHub) }}>
+              <span className="text-[0.95rem] font-medium" style={{ color: getAccent(openHub) }}>
                 {activeHub.title}
               </span>
             </span>
@@ -272,7 +272,7 @@ export function HubBrowser({
                       <span className="flex items-center gap-1.5">
                         <span
                           className={cn(
-                            "text-[0.78rem] font-black uppercase tracking-[0.15em] transition-colors duration-200",
+                            "text-[0.78rem] font-medium uppercase tracking-[0.15em] transition-colors duration-200",
                             isSectionOpen
                               ? "abh-link-underline py-1 [color:var(--hub-accent)]"
                               : "abh-link-underline px-0 py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
@@ -284,7 +284,7 @@ export function HubBrowser({
 
                         {!isSectionOpen && sectionBulk && (
                           <span
-                            className="flex items-center gap-0.5 text-[0.58rem] font-black px-1.5 py-0.5 rounded-full"
+                            className="flex items-center gap-0.5 text-[0.58rem] font-medium px-1.5 py-0.5 rounded-full"
                             style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 12%, transparent)", color: "var(--brand-orange-text)" }}
                             aria-label="Bulk pricing available in this section"
                           >
@@ -294,7 +294,7 @@ export function HubBrowser({
 
                         {!isSectionOpen && secSub && (
                           <span
-                            className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
+                            className="flex items-center gap-0.5 text-[0.6rem] font-medium px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                             aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
                           >
                             <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -358,7 +358,7 @@ export function HubBrowser({
                               >
                                 {hasBulk && (
                                   <span
-                                    className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-black uppercase tracking-wider px-7 py-0.5"
+                                    className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-medium uppercase tracking-wider px-7 py-0.5"
                                     style={{ backgroundColor: "var(--brand-orange)", color: "var(--on-brand-orange)" }}
                                     aria-hidden="true"
                                   >
@@ -366,7 +366,7 @@ export function HubBrowser({
                                   </span>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                  <p className="break-words text-[0.9rem] font-bold text-zinc-700 dark:text-zinc-300">
+                                  <p className="break-words text-[0.9rem] font-medium text-zinc-700 dark:text-zinc-300">
                                     {getDisplayName(section.title, item.name)}
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
@@ -375,7 +375,7 @@ export function HubBrowser({
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
                                     <span
-                                      className="flex items-center gap-0.5 pl-2 text-[0.6rem] font-black text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
+                                      className="flex items-center gap-0.5 pl-2 text-[0.6rem] font-medium text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                                       aria-label={`${itemQty} already in your quote`}
                                     >
                                       <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />

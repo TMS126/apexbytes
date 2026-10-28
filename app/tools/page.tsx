@@ -64,7 +64,7 @@ export default function ToolsPage() {
                       <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                         <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
                       </span>
-                      <span className="text-sm font-bold text-foreground">{tool.name}</span>
+                      <span className="text-sm font-medium text-foreground">{tool.name}</span>
                     </span>
                   </Link>
                 )}

@@ -11,7 +11,7 @@ export function TipsPanel({ tips, isGeneric, accent, copied, onCopy }: {
     <div className="text-left">
       <div className="mb-3 flex items-center justify-between gap-2">
         {isGeneric ? (
-          <span className="text-[0.7rem] font-bold uppercase tracking-wide text-muted-foreground dark:text-muted-foreground">
+          <span className="text-[0.7rem] font-medium uppercase tracking-wide text-muted-foreground dark:text-muted-foreground">
             General tips for this hub
           </span>
         ) : <span />}
@@ -24,7 +24,7 @@ export function TipsPanel({ tips, isGeneric, accent, copied, onCopy }: {
           style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: copied ? "#16a34a" : accent }}
         >
           {copied ? (
-            <span key="copied" className="flex items-center gap-1.5 text-[0.74rem] font-black uppercase tracking-wider animate-in fade-in zoom-in-95 duration-150">
+            <span key="copied" className="flex items-center gap-1.5 text-[0.74rem] font-medium uppercase tracking-wider animate-in fade-in zoom-in-95 duration-150">
               <CheckCircle size={14} weight="fill" aria-hidden="true" />
               Copied
             </span>
@@ -50,7 +50,7 @@ export function TipsPanel({ tips, isGeneric, accent, copied, onCopy }: {
               <span className="shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ backgroundColor: accent }} aria-hidden="true" />
               <span className="abh-body text-base">
                 {heading && (
-                  <strong className="font-black text-zinc-800 dark:text-zinc-100">{heading}: </strong>
+                  <strong className="font-medium text-zinc-800 dark:text-zinc-100">{heading}: </strong>
                 )}
                 {rest}
               </span>

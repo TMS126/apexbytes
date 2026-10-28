@@ -59,13 +59,13 @@ export function PricingSearchResults({
           <div key={i} className="abh-card flex items-center gap-3 px-4 py-4 transition-shadow duration-200 hover:shadow-md">
             <HubIcon id={r.hubId} size={20} color={r.accent} />
             <div className="min-w-0 flex-1">
-              <p className="text-[1.05rem] font-semibold text-zinc-900 dark:text-white truncate flex items-center gap-1.5">
+              <p className="text-[1.05rem] font-medium text-zinc-900 dark:text-white truncate flex items-center gap-1.5">
                 <span className="truncate">{r.name}</span>
               </p>
               <p className="text-[0.9rem] text-muted-foreground mt-0.5">{r.hubTitle} · {r.section}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-black" style={{ backgroundColor: `color-mix(in srgb, ${r.accent} 12%, transparent)`, color: r.accent }}>{r.price}</span>
+              <span className="inline-flex items-center rounded-full px-2.5 py-1 text-sm font-medium" style={{ backgroundColor: `color-mix(in srgb, ${r.accent} 12%, transparent)`, color: r.accent }}>{r.price}</span>
               <button
                 onClick={() => onAdd(r.hubId, r.section, r.name, r.price)}
                 aria-label={`Add ${r.name} to quote`}

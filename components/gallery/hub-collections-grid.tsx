@@ -116,7 +116,7 @@ function HubCollectionCard({
 
         {projects.length > 1 && (
           <>
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[0.78rem] font-bold">
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[0.78rem] font-medium">
               <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
               Swipe for projects
             </div>
@@ -149,7 +149,7 @@ function HubCollectionCard({
           <div className="w-8 h-8 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-sm shadow-lg flex items-center justify-center transition-colors shrink-0 [&_svg]:text-white" onClick={(e) => e.stopPropagation()}>
             <LikeButton liked={likedIds.has(project.id)} onToggle={(e) => { e.stopPropagation(); onToggleLike(project.id) }} context="card" />
           </div>
-          <p className="flex-1 min-w-0 text-center text-white text-base font-black truncate px-1">{project.title}</p>
+          <p className="flex-1 min-w-0 text-center text-white text-base font-medium truncate px-1">{project.title}</p>
           {/* ---- Share button: distinct accent-tinted background so it
               reads clearly and doesn't blend/get lost near other fixed
               UI (e.g. the calculator FAB) that can sit nearby. ---- */}
@@ -176,8 +176,8 @@ function HubCollectionCard({
 
       {/* Footer — hub name + project count (projects icon, in hub color — not a gallery/image icon) */}
       <button onClick={() => onSelectHub(hubId)} className="w-full flex items-center justify-between pt-2 pb-1 text-left">
-        <h3 className="font-sans font-black text-xl text-zinc-900 dark:text-zinc-50">{HUBS[hubId].title}</h3>
-        <span className="flex items-center gap-1 text-sm font-semibold" style={{ color: accent }}>
+        <h3 className="font-sans font-medium text-xl text-zinc-900 dark:text-zinc-50">{HUBS[hubId].title}</h3>
+        <span className="flex items-center gap-1 text-sm font-medium" style={{ color: accent }}>
           <Stack size={14} weight="fill" aria-hidden="true" />
           {projects.length}
         </span>
@@ -226,7 +226,7 @@ export function HubCollectionsGrid({
 
       {!expanded && remaining > 0 && (
         <div className="flex justify-center mt-6">
-          <button onClick={() => setExpanded(true)} className="px-5 py-2.5 rounded-full text-base font-bold bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+          <button onClick={() => setExpanded(true)} className="px-5 py-2.5 rounded-full text-base font-medium bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
             {remaining}+ more
           </button>
         </div>

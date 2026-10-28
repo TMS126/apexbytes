@@ -71,17 +71,17 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
                   <button key={`${s.hubId}-${s.name}-${idx}`} onClick={() => pick(s)} className="w-full flex items-center gap-3 p-3 rounded-[10px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-left">
                     <HubIcon id={s.hubId} size={20} color={accent} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-black text-zinc-800 dark:text-zinc-200 truncate">{s.name}</p>
-                      <p className="text-[0.78rem] font-bold uppercase tracking-wider text-muted-foreground truncate">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
+                      <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{s.name}</p>
+                      <p className="text-[0.78rem] font-medium uppercase tracking-wider text-muted-foreground truncate">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
                     </div>
-                    <span className="text-sm font-black shrink-0" style={{ color: accent }}>{s.price}</span>
+                    <span className="text-sm font-medium shrink-0" style={{ color: accent }}>{s.price}</span>
                   </button>
                 )
               })}
             </div>
           ) : (
             <div className="p-5 text-center">
-              <p className="text-base font-bold text-muted-foreground dark:text-muted-foreground">No services found</p>
+              <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">No services found</p>
               <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mt-1">Try a different word, or WhatsApp us directly.</p>
             </div>
           )}

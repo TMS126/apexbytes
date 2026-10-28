@@ -23,11 +23,11 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
       <div className="flex items-center justify-between px-5 pb-2 shrink-0" style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}>
         <div className="flex items-center gap-2">
           <Image src="/logo.png" alt="" width={32} height={32} className="size-8 object-contain dark:invert" />
-          <span className="font-sans font-black text-lg tracking-tight" style={{ color: titleAccent }}>{BIZ.name}</span>
+          <span className="font-sans font-medium text-lg tracking-tight" style={{ color: titleAccent }}>{BIZ.name}</span>
         </div>
         <div className="flex items-center gap-2">
           {clockLabel && (
-            <span className="text-[0.78rem] font-bold uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
+            <span className="text-[0.78rem] font-medium uppercase tracking-widest text-muted-foreground tabular-nums" aria-label="Current time">
               {clockLabel}
             </span>
           )}
@@ -43,7 +43,7 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
       </div>
 
       <div className="px-5 pb-3 text-center shrink-0 border-b border-zinc-100 dark:border-white/10">
-        <h3 className="font-sans font-black text-xl leading-snug" style={{ color: titleAccent }}>
+        <h3 className="font-sans font-medium text-xl leading-snug" style={{ color: titleAccent }}>
           {hasItems ? "Looking good so far" : "What can we help you with today?"}
         </h3>
         <p className="text-[0.78rem] font-medium text-muted-foreground mt-1">

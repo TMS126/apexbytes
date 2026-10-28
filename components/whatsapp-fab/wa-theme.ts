@@ -36,7 +36,7 @@ export const WA = {
 
 export const TXT = {
   body: "text-[0.86rem]",
-  label: "text-[0.66rem] uppercase tracking-widest font-black",
+  label: "text-[0.66rem] uppercase tracking-widest font-medium",
   hint: "text-[0.72rem]",
   time: "text-[0.6rem]",
 } as const

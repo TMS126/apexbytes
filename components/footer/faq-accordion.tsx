@@ -34,7 +34,7 @@ export function FaqAccordion({
           onClick={onToggle}
           aria-expanded={isOpen}
           aria-controls="faq-accordion-panel"
-          className="w-full flex items-center justify-between gap-2 px-6 py-4 text-[0.9rem] font-semibold text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-150"
+          className="w-full flex items-center justify-between gap-2 px-6 py-4 text-[0.9rem] font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors duration-150"
         >
           <span>Frequently Asked Questions</span>
           <CaretDown
@@ -76,12 +76,12 @@ export function FaqAccordion({
                     >
                       <span className="flex items-start gap-2.5 min-w-0">
                         <span
-                          className="text-[0.78rem] font-black text-brand-blue dark:text-brand-light-blue shrink-0 mt-1"
+                          className="text-[0.78rem] font-medium text-brand-blue dark:text-brand-light-blue shrink-0 mt-1"
                           aria-hidden="true"
                         >
                           Q
                         </span>
-                        <h4 className="text-[1.2rem] font-black text-zinc-800 dark:text-zinc-100 leading-snug">
+                        <h4 className="text-[1.2rem] font-medium text-zinc-800 dark:text-zinc-100 leading-snug">
                           {faq.question}
                         </h4>
                       </span>
@@ -106,7 +106,7 @@ export function FaqAccordion({
                         <div className="pl-5 pr-5 pb-5 pt-1">
                           <div className="flex items-start gap-2.5 border-l-2 border-zinc-200 dark:border-zinc-700 pl-3.5 ml-[3px]">
                             <span
-                              className="text-[0.78rem] font-black text-muted-foreground dark:text-muted-foreground shrink-0 mt-1"
+                              className="text-[0.78rem] font-medium text-muted-foreground dark:text-muted-foreground shrink-0 mt-1"
                               aria-hidden="true"
                             >
                               A

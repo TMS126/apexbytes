@@ -81,7 +81,7 @@ export default async function MaintenancePage() {
         }
 
         .logo {
-          font-weight: 900;
+          font-weight: 500;
           font-size: 1.35rem;
           letter-spacing: -0.02em;
           margin-bottom: 36px;
@@ -109,7 +109,7 @@ export default async function MaintenancePage() {
         .badge-text {
           color: #A9D6F2;
           font-size: 0.72rem;
-          font-weight: 700;
+          font-weight: 500;
           letter-spacing: 0.12em;
           text-transform: uppercase;
         }
@@ -120,7 +120,7 @@ export default async function MaintenancePage() {
         }
 
         h1 {
-          font-weight: 900;
+          font-weight: 500;
           font-size: clamp(2rem, 6vw, 2.8rem);
           color: #FFFFFF;
           letter-spacing: -0.03em;
@@ -138,7 +138,7 @@ export default async function MaintenancePage() {
         .location {
           color: #4A6785;
           font-size: 0.78rem;
-          font-weight: 600;
+          font-weight: 500;
           margin-bottom: 32px;
           letter-spacing: 0.04em;
         }
@@ -172,7 +172,7 @@ export default async function MaintenancePage() {
         .card-label {
           color: #4A6785;
           font-size: 0.6rem;
-          font-weight: 700;
+          font-weight: 500;
           text-transform: uppercase;
           letter-spacing: 0.1em;
           margin-bottom: 3px;
@@ -180,7 +180,7 @@ export default async function MaintenancePage() {
         .card-value {
           color: #A9D6F2;
           font-size: 0.75rem;
-          font-weight: 700;
+          font-weight: 500;
         }
 
         .wa-prompt {
@@ -196,7 +196,7 @@ export default async function MaintenancePage() {
           gap: 10px;
           background: #25D366;
           color: #FFFFFF;
-          font-weight: 800;
+          font-weight: 500;
           font-size: 0.9rem;
           padding: 13px 28px;
           border-radius: 999px;
@@ -240,7 +240,7 @@ export default async function MaintenancePage() {
         .footer {
           color: #243648;
           font-size: 0.65rem;
-          font-weight: 600;
+          font-weight: 500;
           letter-spacing: 0.08em;
         }
       `}</style>

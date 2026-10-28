@@ -49,7 +49,7 @@ export function HubPickerPills({ selected, onSelect, textColor }: HubPickerPills
               borderColor: isSelected ? HUB_PILL_COLOR[h.id] : "transparent",
               ["--pill-hover-color" as string]: HUB_PILL_COLOR[h.id],
             }}
-            className="abh-hub-pill abh-press px-3.5 py-2 rounded-full text-xs font-bold border transition-transform duration-150 ease-out hover:!scale-105 whitespace-nowrap"
+            className="abh-hub-pill abh-press px-3.5 py-2 rounded-full text-xs font-medium border transition-transform duration-150 ease-out hover:!scale-105 whitespace-nowrap"
           >
             {h.label}
           </button>

@@ -54,7 +54,7 @@ export function HowItWorks() {
                       <StepIcon size={28} weight="regular" aria-hidden="true" />
                     </div>
                     <span
-                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-[0.72rem] font-black border-2 border-background"
+                      className="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-[0.72rem] font-medium border-2 border-background"
                       style={{ backgroundColor: `${TOKEN.orangeText}18`, color: TOKEN.orangeText }}
                       aria-hidden="true"
                     >

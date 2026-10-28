@@ -83,7 +83,7 @@ export function MobileHubCard({
         )}
       </div>
 
-      <h3 className="font-sans font-black text-foreground mb-1.5 break-words text-[1.05rem]">{hub.title}</h3>
+      <h3 className="font-sans font-medium text-foreground mb-1.5 break-words text-[1.05rem]">{hub.title}</h3>
       <p className="text-muted-foreground leading-snug text-[0.82rem] flex-1">{hub.desc}</p>
 
       <div className="flex items-center justify-between mt-3">

@@ -86,11 +86,11 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
 
       {/* ── Copy ─────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-[62%]">
-        <h3 className="mb-1.5 break-words font-sans text-[1.3rem] font-black leading-tight">{hub.title}</h3>
+        <h3 className="mb-1.5 break-words font-sans text-[1.3rem] font-medium leading-tight">{hub.title}</h3>
         <p className="mb-4 text-[0.85rem] leading-snug text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-on)] group-focus-visible:text-[var(--hub-on)] motion-reduce:transition-none">
           {hub.desc}
         </p>
-        <span className="abh-link-underline inline-flex items-center gap-1 text-[0.82rem] font-black">
+        <span className="abh-link-underline inline-flex items-center gap-1 text-[0.82rem] font-medium">
           Explore
           <ArrowUpRight
             size={14}

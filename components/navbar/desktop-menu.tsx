@@ -112,7 +112,7 @@ export function DesktopMenu({
                   aria-current={isActive ? "page" : undefined}
                   style={{ backgroundColor: contactHovered ? HOVER_FILL : BRAND.blue }}
                   className={cn(
-                    "w-full text-left px-4 py-2.5 rounded-[14px] text-base font-black text-white transition-colors duration-200",
+                    "w-full text-left px-4 py-2.5 rounded-[14px] text-base font-medium text-white transition-colors duration-200",
                     ctaPulse && "abh-cta-pulse"
                   )}
                 >
@@ -141,7 +141,7 @@ export function DesktopMenu({
                 style={{ color: isActive ? HOVER_TEXT : neutralColor }}
                 className={cn(
                   "relative w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150 after:absolute after:left-4 after:right-4 after:bottom-1 after:h-px after:origin-left after:bg-current after:transition-transform",
-                  isActive ? "font-black after:scale-x-100" : "font-medium after:scale-x-0 hover:after:scale-x-100"
+                  isActive ? "font-semibold after:scale-x-100" : "font-semibold after:scale-x-0 hover:after:scale-x-100"
                 )}
                 onMouseEnter={(e) => {
                   if (!isActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT
@@ -177,7 +177,7 @@ export function DesktopMenu({
                         style={{ color: isHubActive ? HOVER_TEXT : neutralColor }}
                         className={cn(
                           "w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150",
-                          isHubActive ? "font-black" : "font-medium"
+                          isHubActive ? "font-semibold" : "font-semibold"
                         )}
                         onMouseEnter={(e) => {
                           if (!isHubActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT

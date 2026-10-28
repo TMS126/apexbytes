@@ -68,12 +68,12 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
       {/* ── Copy ─────────────────────────────────────────────── */}
       <div className="relative z-10">
         <p className="mb-1 flex items-baseline gap-1.5">
-          <span className="font-sans text-[1.9rem] font-black leading-none md:text-[2.4rem]">{serviceCount}</span>
-          <span className={cn("text-[0.78rem] font-bold text-muted-foreground md:text-[0.85rem]", TEXT_HOVER)}>
+          <span className="font-sans text-[1.9rem] font-medium leading-none md:text-[2.4rem]">{serviceCount}</span>
+          <span className={cn("text-[0.78rem] font-medium text-muted-foreground md:text-[0.85rem]", TEXT_HOVER)}>
             services
           </span>
         </p>
-        <h3 className="break-words font-sans text-[1.3rem] font-black leading-tight md:text-[1.6rem]">{hub.title}</h3>
+        <h3 className="break-words font-sans text-[1.3rem] font-medium leading-tight md:text-[1.6rem]">{hub.title}</h3>
         <p className={cn("mt-1 text-[0.82rem] leading-snug text-muted-foreground md:text-[0.95rem]", TEXT_HOVER)}>
           {BLURB[hubId]}
         </p>
