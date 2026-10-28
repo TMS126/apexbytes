@@ -155,19 +155,19 @@ accept="image/jpeg,image/png,image/webp"
                 <div className="grid grid-cols-3 gap-4 mt-12">
                   <ScrollBounce delay={0.1}>
                     <div className="text-center">
-                      <div className="text-sm font-semibold text-foreground mb-1">No Upload</div>
+                      <div className="text-sm font-medium text-foreground mb-1">No Upload</div>
                       <div className="text-xs text-muted-foreground">Process locally</div>
                     </div>
                   </ScrollBounce>
                   <ScrollBounce delay={0.15}>
                     <div className="text-center">
-                      <div className="text-sm font-semibold text-foreground mb-1">Secure</div>
+                      <div className="text-sm font-medium text-foreground mb-1">Secure</div>
                       <div className="text-xs text-muted-foreground">Files stay private</div>
                     </div>
                   </ScrollBounce>
                   <ScrollBounce delay={0.2}>
                     <div className="text-center">
-                      <div className="text-sm font-semibold text-foreground mb-1">Fast</div>
+                      <div className="text-sm font-medium text-foreground mb-1">Fast</div>
                       <div className="text-xs text-muted-foreground">Instant results</div>
                     </div>
                   </ScrollBounce>

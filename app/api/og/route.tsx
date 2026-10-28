@@ -46,7 +46,7 @@ export async function GET() {
           <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: OG_COLORS.orange }} />
           <div style={{ width: '18px', height: '18px', borderRadius: '5px', backgroundColor: OG_COLORS.white }} />
         </div>
-        <div style={{ display: 'flex', fontSize: '76px', fontWeight: 800, color: OG_COLORS.white, letterSpacing: '-0.02em', lineHeight: 1.05 }}>
+        <div style={{ display: 'flex', fontSize: '76px', fontWeight: 500, color: OG_COLORS.white, letterSpacing: '-0.02em', lineHeight: 1.05 }}>
           {BIZ.name}
         </div>
         <div style={{ display: 'flex', fontSize: '32px', fontWeight: 500, color: OG_COLORS.muted, marginTop: '20px' }}>

@@ -45,9 +45,9 @@ export function QuoteControl({
         <Minus size={14} weight="bold" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />
       </button>
 
-      <span className="flex items-center gap-1.5 text-[0.94rem] font-black text-green-600 dark:text-green-400">
+      <span className="flex items-center gap-1.5 text-[0.94rem] font-medium text-green-600 dark:text-green-400">
         Added
-        <span className="text-[0.78rem] font-black px-2 py-0.5 rounded-full bg-green-500/15">{quoteQty}</span>
+        <span className="text-[0.78rem] font-medium px-2 py-0.5 rounded-full bg-green-500/15">{quoteQty}</span>
       </span>
 
       <button

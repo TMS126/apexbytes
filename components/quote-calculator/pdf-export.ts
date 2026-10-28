@@ -19,7 +19,7 @@ export function exportQuotePdf(cart: CartItem[]) {
       </td>
       <td style="padding:8px 10px;border-bottom:1px solid #eee;text-align:center;">${qtyLabel}</td>
       <td style="padding:8px 10px;border-bottom:1px solid #eee;text-align:right;">R${effRate}</td>
-      <td style="padding:8px 10px;border-bottom:1px solid #eee;text-align:right;font-weight:700;">R${effRate * qty}</td>
+      <td style="padding:8px 10px;border-bottom:1px solid #eee;text-align:right;font-weight:500;">R${effRate * qty}</td>
     </tr>`
   }).join("")
 
@@ -31,7 +31,7 @@ export function exportQuotePdf(cart: CartItem[]) {
       p.sub{color:#71717a;font-size:13px;margin:0 0 24px;}
       table{width:100%;border-collapse:collapse;font-size:13px;}
       th{text-align:left;padding:8px 10px;border-bottom:2px solid #18181b;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;}
-      tfoot td{padding:12px 10px;font-weight:800;font-size:15px;border-top:2px solid #18181b;}
+      tfoot td{padding:12px 10px;font-weight:500;font-size:15px;border-top:2px solid #18181b;}
       .savings{color:#059669;font-size:12px;margin-top:6px;}
       .footer{margin-top:32px;font-size:11px;color:#a1a1aa;}
     </style></head><body>

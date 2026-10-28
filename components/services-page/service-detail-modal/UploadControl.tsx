@@ -59,9 +59,9 @@ export function UploadStatus({
   if (phase === "uploading") {
     return (
       <div className="flex flex-col gap-2 w-full px-4 py-3 rounded-[14px] bg-zinc-50 dark:bg-zinc-900">
-        <div className="flex items-center justify-between text-base font-bold text-muted-foreground dark:text-muted-foreground">
+        <div className="flex items-center justify-between text-base font-medium text-muted-foreground dark:text-muted-foreground">
           <span className="truncate">Uploading {file?.name}…</span>
-          <span className="font-black tabular-nums shrink-0 ml-2 text-zinc-700 dark:text-zinc-200">{uploadProgress}%</span>
+          <span className="font-medium tabular-nums shrink-0 ml-2 text-zinc-700 dark:text-zinc-200">{uploadProgress}%</span>
         </div>
         <div className="relative w-full h-2 rounded-full overflow-hidden bg-zinc-200 dark:bg-zinc-800">
           <div
@@ -78,7 +78,7 @@ export function UploadStatus({
 
   if (phase === "done" && file) {
     return (
-      <div className="flex items-center justify-between gap-2 w-full px-4 py-2.5 rounded-[14px] text-base font-bold" style={{ backgroundColor: `color-mix(in srgb, ${accent} 6%, transparent)`, boxShadow: "0 2px 10px -2px rgba(0,0,0,0.10), 0 1px 4px -1px rgba(0,0,0,0.06)" }}>
+      <div className="flex items-center justify-between gap-2 w-full px-4 py-2.5 rounded-[14px] text-base font-medium" style={{ backgroundColor: `color-mix(in srgb, ${accent} 6%, transparent)`, boxShadow: "0 2px 10px -2px rgba(0,0,0,0.10), 0 1px 4px -1px rgba(0,0,0,0.06)" }}>
         <span className="flex items-center gap-2.5 min-w-0">
           <span className="relative shrink-0">
             {previewUrl ? (
@@ -104,14 +104,14 @@ export function UploadStatus({
   if (phase === "error") {
     return (
       <div className="space-y-2">
-        <div className="flex items-start gap-2 w-full px-4 py-3 rounded-[14px] text-base font-bold bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400">
+        <div className="flex items-start gap-2 w-full px-4 py-3 rounded-[14px] text-base font-medium bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400">
           <WarningCircle size={17} weight="fill" aria-hidden="true" className="shrink-0 mt-0.5" />
           <span className="leading-snug font-medium">{uploadErr}</span>
         </div>
         <button
           type="button"
           onClick={onRetry}
-          className="abh-line-cta flex min-h-10 w-full items-center justify-center gap-1.5 py-2 text-sm font-black"
+          className="abh-line-cta flex min-h-10 w-full items-center justify-center gap-1.5 py-2 text-sm font-medium"
           style={{ color: accent }}
         >
           <ArrowClockwise size={14} weight="bold" aria-hidden="true" />

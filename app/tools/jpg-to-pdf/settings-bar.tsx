@@ -138,10 +138,10 @@ export function SettingsBar({
       <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">Quality</span>
+            <span className="text-sm font-medium text-zinc-600 dark:text-zinc-300">Quality</span>
             <p className="mt-0.5 text-[0.68rem] text-muted-foreground">Higher keeps more detail; lower makes a smaller PDF.</p>
           </div>
-          <span className="text-sm font-bold" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
+          <span className="text-sm font-medium" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
         </div>
 
         <QualitySlider quality={quality} setQuality={setQuality} />

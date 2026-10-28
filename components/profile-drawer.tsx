@@ -152,10 +152,10 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
               />
 
               <div className="relative z-10 px-7 pb-5">
-                <p className="text-xl font-black text-white tracking-tight leading-tight drop-shadow-sm">
+                <p className="text-xl font-medium text-white tracking-tight leading-tight drop-shadow-sm">
                   Theji Meje
                 </p>
-                <p className="text-[0.65rem] font-black text-white/80 uppercase tracking-widest mt-0.5">
+                <p className="text-[0.65rem] font-medium text-white/80 uppercase tracking-widest mt-0.5">
                   {FOUNDER_ROLE}
                 </p>
               </div>
@@ -171,7 +171,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
             </div>
 
             <div className="px-7 pb-8 pt-6 flex flex-col items-center text-center">
-              <p className="text-[0.65rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-5">
+              <p className="text-[0.65rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-5">
                 {BIZ.address.replace(/^5878\s*/, "")}
               </p>
 
@@ -184,7 +184,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   href={FOUNDER_WA_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
                   style={{
                     backgroundColor: BRAND.whatsappAccessible,
                     color: TOKEN.onWhatsappAccessible,
@@ -194,12 +194,12 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = BRAND.whatsappAccessible }}
                 >
                   <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
-                  <span className="text-sm font-black leading-tight">WhatsApp</span>
+                  <span className="text-sm font-medium leading-tight">WhatsApp</span>
                 </a>
 
                 <button
                   onClick={handleVCard}
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-black text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
                   style={{
                     backgroundColor: vcardDone ? BRAND.green : BRAND.blue,
                     color: vcardDone ? TOKEN.onBrandGreen : TOKEN.onBrandBlue,
@@ -209,12 +209,12 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   {vcardDone ? (
                     <>
                       <AddressBook size={18} weight="fill" aria-hidden="true" />
-                      <span className="text-sm font-black leading-tight">Saved!</span>
+                      <span className="text-sm font-medium leading-tight">Saved!</span>
                     </>
                   ) : (
                     <>
                       <DownloadSimple size={18} weight="fill" aria-hidden="true" />
-                      <span className="text-sm font-black leading-tight">Save Contact</span>
+                      <span className="text-sm font-medium leading-tight">Save Contact</span>
                     </>
                   )}
                 </button>

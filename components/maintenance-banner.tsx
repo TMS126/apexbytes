@@ -63,7 +63,7 @@ export function MaintenanceBanner() {
           href={MAINTENANCE_BANNER.linkHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 font-bold whitespace-nowrap transition-colors"
+          className="underline underline-offset-2 font-medium whitespace-nowrap transition-colors"
           style={{ color: "var(--maintenance-text)" }}
         >
           {MAINTENANCE_BANNER.linkText}

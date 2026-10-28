@@ -36,7 +36,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
     <div className="relative flex h-full min-h-[240px] w-full flex-col overflow-hidden rounded-[14px] bg-card p-6 text-foreground">
       <div className="mb-1 flex items-center gap-2">
         <Compass size={22} weight="bold" aria-hidden="true" className="text-muted-foreground" />
-        <h3 className="font-sans text-[1.15rem] font-black leading-tight">Not sure where to start?</h3>
+        <h3 className="font-sans text-[1.15rem] font-medium leading-tight">Not sure where to start?</h3>
       </div>
       <p className="mb-3 text-[0.82rem] leading-snug text-muted-foreground">
         Tell us what you need and we&apos;ll point you to the right hub.
@@ -52,7 +52,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
               aria-pressed={isOn}
               onClick={() => setPicked(isOn ? null : need.hubId)}
               className={cn(
-                "rounded-full border px-3 py-1.5 text-[0.78rem] font-bold transition-colors duration-150 active:scale-95 motion-reduce:transition-none",
+                "rounded-full border px-3 py-1.5 text-[0.78rem] font-medium transition-colors duration-150 active:scale-95 motion-reduce:transition-none",
                 !isOn && "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
               style={
@@ -72,7 +72,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
         {picked && hub ? (
           <div className="flex items-end justify-between gap-3">
             <div className="min-w-0">
-              <p className="flex items-center gap-1.5 text-[0.95rem] font-black" style={{ color: HUB_COLORS[picked].primary }}>
+              <p className="flex items-center gap-1.5 text-[0.95rem] font-medium" style={{ color: HUB_COLORS[picked].primary }}>
                 <Icon size={18} weight="fill" aria-hidden="true" />
                 {hub.title}
               </p>
@@ -81,7 +81,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
             <button
               type="button"
               onClick={() => onSelectHub(picked)}
-              className="inline-flex shrink-0 items-center gap-1 rounded-[10px] px-3.5 py-2 text-[0.8rem] font-black transition-transform duration-150 active:scale-95"
+              className="inline-flex shrink-0 items-center gap-1 rounded-[10px] px-3.5 py-2 text-[0.8rem] font-medium transition-transform duration-150 active:scale-95"
               style={{ backgroundColor: HUB_COLORS[picked].primary, color: HUB_ON_COLOR[picked] }}
             >
               Open

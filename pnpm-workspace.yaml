@@ -9,6 +9,17 @@ allowBuilds:
   core-js: true
   unrs-resolver: true
 
+# Keep transitive packages on patched security releases until their
+# upstream parents publish compatible ranges.
+overrides:
+  source-map-js: 1.2.2
+  dompurify: 3.4.17
+  js-yaml: 4.3.2
+  vite: 8.2.4
+  zod: 4.6.7
+  'brace-expansion@1.1.18': 1.1.21
+  'brace-expansion@5.0.9': 5.0.12
+
 minimumReleaseAgeExclude:
   - '@next/env@16.3.3'
   - '@next/swc-darwin-arm64@16.3.3'

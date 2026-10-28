@@ -52,12 +52,12 @@ export function CartSummaryBar({
       {undoStack && (
         <div className="sticky top-0 z-20 p-3 border-b border-zinc-100 dark:border-white/10 bg-white/95 dark:bg-zinc-900/95 backdrop-blur">
           <div className="flex items-center justify-between gap-3 p-2.5 rounded-[12px] bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-lg animate-in fade-in slide-in-from-top-1 duration-200">
-            <span className="text-[0.7rem] font-bold truncate">
+            <span className="text-[0.7rem] font-medium truncate">
               {getDisplayName(undoStack.item.sectionTitle, undoStack.item.name)} removed
             </span>
             <button
               onClick={undoRemove}
-              className="abh-press shrink-0 flex items-center gap-1.5 text-[0.65rem] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 dark:bg-black/10 hover:bg-white/25 dark:hover:bg-black/20 transition-colors"
+              className="abh-press shrink-0 flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 dark:bg-black/10 hover:bg-white/25 dark:hover:bg-black/20 transition-colors"
             >
               <ArrowCounterClockwise size={12} weight="bold" aria-hidden="true" /> Undo
             </button>
@@ -77,7 +77,7 @@ export function CartSummaryBar({
         >
           <div className="p-4 space-y-2.5">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[0.72rem] font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
+              <span className="text-[0.72rem] font-medium uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
                 Your Quote · {itemCount} item{itemCount === 1 ? "" : "s"} · R{total}
               </span>
               <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-100/80 dark:bg-white/5 shrink-0">
@@ -123,7 +123,7 @@ export function CartSummaryBar({
                 />
                 <button
                   onClick={confirmSaveQuote}
-                  className="abh-press shrink-0 px-3 py-1.5 rounded-[8px] text-xs font-black"
+                  className="abh-press shrink-0 px-3 py-1.5 rounded-[8px] text-xs font-medium"
                   style={{ backgroundColor: fabColor, color: fabTextColor }}
                 >
                   Save

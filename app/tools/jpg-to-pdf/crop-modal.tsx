@@ -316,7 +316,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
       <div className="absolute inset-0" onClick={requestClose} aria-hidden="true" />
 
       <div className="relative flex items-center justify-between px-4 py-3 text-white shrink-0">
-        <span className="text-sm font-semibold truncate">{fileName}</span>
+        <span className="text-sm font-medium truncate">{fileName}</span>
         <button type="button" onClick={requestClose} aria-label="Cancel crop" className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10">
           <X size={18} weight="bold" aria-hidden="true" />
         </button>
@@ -332,7 +332,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
         <button
           type="button" role="tab" aria-selected={mode === "rect"}
           onClick={() => switchMode("rect")}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-colors border"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors border"
           style={
             mode === "rect"
               ? { backgroundColor: "#ffffff", borderColor: "#ffffff", color: "#18181b" }
@@ -345,7 +345,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
         <button
           type="button" role="tab" aria-selected={mode === "quad"}
           onClick={() => switchMode("quad")}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-colors border"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors border"
           style={
             mode === "quad"
               ? { backgroundColor: "#ffffff", borderColor: "#ffffff", color: "#18181b" }
@@ -368,7 +368,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
                 type="button"
                 aria-pressed={selected}
                 onClick={() => applyAspect(preset.ratio)}
-                className="px-3 py-1 rounded-full text-xs font-semibold text-white transition-colors border"
+                className="px-3 py-1 rounded-full text-xs font-medium text-white transition-colors border"
                 style={{
                   backgroundColor: selected ? BRAND.orange : "rgba(255,255,255,0.14)",
                   borderColor: selected ? BRAND.orange : "rgba(255,255,255,0.32)",
@@ -499,11 +499,11 @@ const onDragRect = useCallback((e: PointerEvent) => {
       )}
 
       <div className="relative flex items-center justify-center gap-3 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] shrink-0">
-        <button type="button" onClick={handleReset} className="flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-sm font-semibold text-white/80 hover:text-white transition-colors">
+        <button type="button" onClick={handleReset} className="flex items-center gap-1.5 px-4 py-2.5 rounded-[10px] text-sm font-medium text-white/80 hover:text-white transition-colors">
           <ArrowCounterClockwise size={16} weight="bold" aria-hidden="true" />
           Reset
         </button>
-        <button type="button" onClick={handleApply} className="flex items-center gap-2 px-6 py-2.5 rounded-[10px] text-sm font-black bg-white text-zinc-900">
+        <button type="button" onClick={handleApply} className="flex items-center gap-2 px-6 py-2.5 rounded-[10px] text-sm font-medium bg-white text-zinc-900">
           <Check size={16} weight="bold" aria-hidden="true" />
           Apply Crop
         </button>

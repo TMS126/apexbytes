@@ -12,7 +12,7 @@ export function HistoryPanel({ history, onClear }: { history: HistoryEntry[]; on
       {history.length > 0 && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-6 abh-card p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-[0.78rem] font-black uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
+            <span className="text-[0.78rem] font-medium uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
               <ClockCounterClockwise weight="fill" size={14} aria-hidden="true" />
               Recent
             </span>
