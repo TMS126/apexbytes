@@ -162,8 +162,8 @@ export function HubBrowser({
                   )}
                   style={{
                     ["--hub-accent" as unknown as string]: accent,
-                    boxShadow: isSelected ? `0 0 0 2px ${accent}` : undefined,
-                    backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
+                    boxShadow: isSelected ? `0 10px 24px -10px ${accent}` : undefined,
+                     backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
                   }}
                 >
                   {hubSub && (
