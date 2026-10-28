@@ -13,6 +13,7 @@ import { WhatsAppFAB } from '@/components/whatsapp-fab'
 import { MaintenanceBanner } from '@/components/maintenance-banner'
 import { headers } from 'next/headers'
 import './globals.css'
+import './no-borders.css'
 
 // The middleware generates a per-request CSP nonce and forwards it to Next.js.
 // Request-time rendering is required so inline bootstrap/flight scripts receive that nonce.
@@ -96,4 +97,4 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </body>
     </html>
   )
-}
+      }
