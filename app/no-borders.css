@@ -1,10 +1,45 @@
-/* app/no-borders.css (same file as before, replace everything in it) */
+/* app/no-borders.css (same file, replace everything in it) */
 @layer theme, base, components, utilities;
 
-/* Layered !important beats unlayered !important, and an EARLIER layer beats a later one.
-   Old rules in "components" are !important, so these rules live in "base" to beat them. */
+/* ============================================================
+   TOKENS: 14px radii everywhere, shadows fall UNDERNEATH,
+   dark mode uses BLACK shadows (old ones used --foreground = white mist)
+   ============================================================ */
+:root {
+  --ui-radius-xs: 14px;
+  --ui-radius-sm: 14px;
+  --ui-radius-md: 14px;
+  --ui-radius-lg: 14px;
+  --ui-shadow-soft: 0 12px 16px -12px rgba(15, 63, 102, 0.30), 0 2px 4px -2px rgba(15, 63, 102, 0.10);
+  --ui-shadow-hover: 0 18px 24px -14px rgba(15, 63, 102, 0.38), 0 3px 6px -3px rgba(15, 63, 102, 0.12);
+  --ui-shadow-float: 0 26px 38px -18px rgba(15, 63, 102, 0.42), 0 4px 8px -4px rgba(15, 63, 102, 0.14);
+  --glass-shadow: 0 12px 18px -12px rgba(15, 63, 102, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+}
+:root.dark {
+  --ui-highlight: rgba(255, 255, 255, 0.02);
+  --ui-shadow-soft: 0 12px 16px -12px rgba(0, 0, 0, 0.65), 0 2px 4px -2px rgba(0, 0, 0, 0.40);
+  --ui-shadow-hover: 0 18px 24px -14px rgba(0, 0, 0, 0.72), 0 3px 6px -3px rgba(0, 0, 0, 0.45);
+  --ui-shadow-float: 0 26px 38px -18px rgba(0, 0, 0, 0.80), 0 4px 8px -4px rgba(0, 0, 0, 0.50);
+  --glass-shadow: 0 14px 20px -12px rgba(0, 0, 0, 0.70), 0 2px 4px -2px rgba(0, 0, 0, 0.40);
+  --shadow-action-brand: 0 8px 14px -8px rgba(0, 0, 0, 0.60);
+  --shadow-action-whatsapp: 0 8px 14px -8px rgba(0, 0, 0, 0.60);
+}
+
+/* Dark mode: kill the remaining white-ish shadows (pills, chips, fields). */
+:root.dark :is(.abh-pill, .abh-hub-pill, .abh-badge, .abh-badge-circle, [class*="rounded-full"]) {
+  box-shadow: 0 8px 14px -12px rgba(0, 0, 0, 0.60);
+}
+:root.dark .abh-icon-chip {
+  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.50);
+}
+
+/* ============================================================
+   RULES: live in "base" so their !important beats the older
+   !important rules that sit in the "components" layer.
+   ============================================================ */
 @layer base {
-  /* 1. No borders anywhere. Only exceptions: loading spinner, and elements marked data-hover-border. */
+  /* 1. No borders anywhere. Only exceptions: loading spinner, and the
+        "What we bring to the table" cards (data-hover-border). */
   :root:root:root *:not(.animate-spin):not([data-hover-border]),
   :root:root:root *:not(.animate-spin):not([data-hover-border])::before,
   :root:root:root *:not(.animate-spin):not([data-hover-border])::after {
@@ -12,57 +47,74 @@
     border-color: transparent !important;
   }
 
-  /* 2. No ring "borders". Keyboard focus rings stay. */
+  /* 2. Search: slight border around the search BAR and the RESULTS card only.
+        Nothing around the input text itself. */
+  :root:root:root:root [role="dialog"][aria-label="Search services"] > div {
+    border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent) !important;
+  }
+
+  /* 3. No rings. Keyboard focus rings stay on buttons/links, but never inside fields or search. */
   :root:root:root *:not(:focus-visible) {
     --tw-ring-shadow: 0 0 #0000 !important;
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
   }
+  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]),
+  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus,
+  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible,
+  :root:root:root [role="dialog"][aria-label="Search services"] *:focus-visible {
+    outline: none !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    --tw-inset-ring-shadow: 0 0 #0000 !important;
+  }
 
-  /* 3. No stray outlines unless focused. */
+  /* 4. No stray outlines unless focused. */
   :root:root:root *:not(:focus):not(:focus-visible) {
     outline-style: none !important;
   }
 
-  /* 4. About-page cards: real card look (surface + radius + shadow), no left rule. */
+  /* 5. Dark mode fields: black inner shadow only (no white glow, no blue glow). */
+  :root:root.dark :is(input, textarea, select),
+  :root:root.dark :is(input, textarea, select):focus,
+  :root:root.dark :is(input, textarea, select):focus-visible {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  /* 6. About-page style card: surface + radius + shadow, no left rule. */
   :root:root:root .abh-card-rule {
     background: var(--card) !important;
-    border-radius: var(--ui-radius-md) !important;
+    border-radius: 14px !important;
     box-shadow: var(--ui-shadow-soft) !important;
   }
 
-  /* 5. Eyebrows: one strong colour everywhere (dark blue in light mode, near-white in dark mode). */
+  /* 7. 14px radii for old hard-coded big radii (rounded-full pills are untouched). */
+  :root:root:root :is(
+    [class*="rounded-[20px]"],
+    [class*="rounded-[24px]"],
+    [class*="rounded-[26px]"],
+    [class*="rounded-[28px]"],
+    [class*="rounded-2xl"],
+    [class*="rounded-3xl"]
+  ) {
+    border-radius: 14px !important;
+  }
+
+  /* 8. Eyebrows: one strong colour everywhere. */
   :root:root:root .abh-eyebrow,
   :root:root:root [class*="uppercase"][class*="tracking-[0.2em]"] {
     color: var(--foreground) !important;
     opacity: 1 !important;
   }
 
-  /* 6. Main buttons are pills. */
-  :root:root:root .abh-line-cta,
-  :root:root:root .abh-btn-primary,
-  :root:root:root .abh-btn-cta,
-  :root:root:root .abh-wa-btn {
-    border-radius: 9999px !important;
+  /* 9. Dropdown lists: always on top, and SOLID in dark mode (fixes the contact hub list). */
+  :root:root:root [role="listbox"] {
+    z-index: 90 !important;
   }
-}
-
-/* 7. Pill background BEFORE hover (home hero buttons + WhatsApp CTA). */
-.abh-line-cta,
-.abh-btn-primary,
-.abh-btn-cta,
-.abh-wa-btn {
-  background-color: color-mix(in srgb, currentColor 12%, transparent);
-  box-shadow: var(--ui-shadow-soft);
-}
-.abh-line-cta:hover,
-.abh-line-cta:focus-visible,
-.abh-btn-primary:hover,
-.abh-btn-primary:focus-visible,
-.abh-btn-cta:hover,
-.abh-btn-cta:focus-visible,
-.abh-wa-btn:hover,
-.abh-wa-btn:focus-visible {
-  background-color: color-mix(in srgb, currentColor 22%, transparent);
-  box-shadow: var(--ui-shadow-hover);
-        }
+  :root:root.dark [role="listbox"] {
+    background-color: #1f2937 !important;
+  }
+  :root:root:root .relative:has(> [role="listbox"]) {
+    z-index: 90 !important;
+  }
+     }
