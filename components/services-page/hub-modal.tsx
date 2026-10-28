@@ -118,10 +118,10 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             <div className="flex items-center gap-4 min-w-0">
               <HubIcon id={hubId} size={28} color={accent} />
               <div className="min-w-0">
-                <h2 className="font-sans font-black text-2xl text-zinc-900 dark:text-zinc-50 break-words">
+                <h2 className="font-sans font-medium text-2xl text-zinc-900 dark:text-zinc-50 break-words">
                   {hub.title}
                 </h2>
-                <p className="text-[0.82rem] font-semibold text-muted-foreground dark:text-muted-foreground mt-0.5">
+                <p className="text-[0.82rem] font-medium text-muted-foreground dark:text-muted-foreground mt-0.5">
                   {hub.sections.reduce((sum, s) => sum + s.items.length, 0)} services available
                 </p>
               </div>
@@ -130,7 +130,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 href={`/gallery?hub=${hubId}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[0.8rem] font-bold text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 whitespace-nowrap"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[0.8rem] font-medium text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 whitespace-nowrap"
               >
                 Gallery
                 <ArrowSquareOut size={11} weight="bold" aria-hidden="true" />
@@ -169,13 +169,13 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     onClick={() => setOpenSectionIdx(isOpen ? null : sIdx)}
                   >
                     <span
-                      className="relative pb-1.5 text-[1.05rem] font-black tracking-tight whitespace-nowrap transition-colors duration-200 border-b-2 -mb-[17px]"
+                      className="relative pb-1.5 text-[1.05rem] font-medium tracking-tight whitespace-nowrap transition-colors duration-200 border-b-2 -mb-[17px]"
                       style={{ borderColor: isOpen ? accent : "transparent", color: isOpen ? accent : (isDark ? "#a1a1aa" : "#71717a") }}
                     >
                       {section.title}
 
                       {hasBulk && (
-                        <span aria-label="Bulk pricing available" className="ml-1.5 text-[0.6rem] font-black uppercase tracking-wide opacity-60">
+                        <span aria-label="Bulk pricing available" className="ml-1.5 text-[0.6rem] font-medium uppercase tracking-wide opacity-60">
                           · Bulk
                         </span>
                       )}
@@ -224,9 +224,9 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     }
                     className="flex items-center justify-between px-4 py-3.5 rounded-[10px] bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/70 transition-colors duration-150 active:scale-[0.99] w-full"
                   >
-                    <span className="text-[1.02rem] font-semibold text-zinc-700 dark:text-zinc-200 text-left flex items-center gap-2">
+                    <span className="text-[1.02rem] font-medium text-zinc-700 dark:text-zinc-200 text-left flex items-center gap-2">
                       {itemHasBulk(hubId, activeSection.title, item.name) && (
-                        <span className="shrink-0 text-[0.58rem] font-black uppercase tracking-wide text-muted-foreground">
+                        <span className="shrink-0 text-[0.58rem] font-medium uppercase tracking-wide text-muted-foreground">
                           Bulk ·
                         </span>
                       )}
@@ -245,11 +245,11 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                         }
                       }}
                       aria-label={isRevealed ? `Hide price for ${item.name}` : `View pricing for ${item.name}`}
-                      className="shrink-0 ml-3 text-[1.02rem] font-black transition-colors duration-150"
+                      className="shrink-0 ml-3 text-[1.02rem] font-medium transition-colors duration-150"
                       style={{ color: accent }}
                     >
                       {isRevealed ? item.price : (
-                        <span className="text-[0.86rem] font-black uppercase tracking-wide underline decoration-dotted underline-offset-4">
+                        <span className="text-[0.86rem] font-medium uppercase tracking-wide underline decoration-dotted underline-offset-4">
                           View Pricing
                         </span>
                       )}
@@ -313,7 +313,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   >
                     <XIcon size={15} weight="bold" aria-hidden="true" />
                   </motion.button>
-                  <p className="text-[0.86rem] font-black text-muted-foreground dark:text-muted-foreground mb-1 pr-8">
+                  <p className="text-[0.86rem] font-medium text-muted-foreground dark:text-muted-foreground mb-1 pr-8">
                     Please Note
                   </p>
                   <p className="text-[0.86rem] font-medium text-muted-foreground dark:text-muted-foreground leading-relaxed pr-8">
@@ -334,7 +334,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           transition={{ duration: 0.2, delay: 0.1 }}
           className="relative z-10 w-full max-w-2xl mt-5 flex flex-col items-center"
         >
-          <p className="text-[0.72rem] font-black uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-2.5">
+          <p className="text-[0.72rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-2.5">
             More Hubs
           </p>
           <div className="abh-shadow-popover flex flex-wrap justify-center gap-2 p-3 rounded-[16px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm">

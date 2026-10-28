@@ -55,7 +55,7 @@ export function FilterDropdown({
               onClick={() => handleSelect(opt.id)}
               aria-pressed={isActive}
               className={cn(
-                "px-4 py-2 rounded-full text-base font-semibold whitespace-nowrap transition-all duration-150 active:scale-95",
+                "px-4 py-2 rounded-full text-base font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
                 "shadow-[0_2px_8px_-2px_rgba(0,0,0,0.15)] hover:shadow-[0_4px_12px_-2px_rgba(0,0,0,0.2)]",
                 "outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               )}
@@ -83,7 +83,7 @@ export function FilterDropdown({
             aria-haspopup="listbox"
             className={cn(
               "flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full border-2 bg-transparent",
-              "text-[0.94rem] font-black whitespace-nowrap transition-all duration-150 active:scale-95",
+              "text-[0.94rem] font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
               "shadow-[0_2px_10px_-2px_rgba(0,0,0,0.14)] dark:shadow-[0_4px_18px_-3px_rgba(0,0,0,0.55)]",
               "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
               "border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200"
@@ -127,7 +127,7 @@ export function FilterDropdown({
                         onClick={() => handleSelect(opt.id)}
                         className={cn(
                           "w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full",
-                          "text-sm font-bold whitespace-nowrap transition-all duration-150 active:scale-95",
+                          "text-sm font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
                           "shadow-[0_2px_10px_-2px_rgba(0,0,0,0.18)] dark:shadow-[0_2px_10px_-2px_rgba(0,0,0,0.5)]",
                           "hover:shadow-[0_4px_14px_-2px_rgba(0,0,0,0.24)] dark:hover:shadow-[0_4px_14px_-2px_rgba(0,0,0,0.6)]",
                           "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"

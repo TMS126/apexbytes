@@ -12,10 +12,10 @@ export function StripSection() {
       <div className="max-w-[1080px] mx-auto">
         <ScrollBounce>
           <div className="text-center mb-10">
-            <p className="text-[0.78rem] font-black uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">
+            <p className="text-[0.78rem] font-medium uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">
               Why ApexbytesHub
             </p>
-            <h2 className="font-sans font-black text-2xl md:text-3xl text-foreground">
+            <h2 className="font-sans font-medium text-2xl md:text-3xl text-foreground">
               Fast, Friendly &amp; Local
             </h2>
           </div>
@@ -47,7 +47,7 @@ function StripCard({ item }: { item: (typeof STRIP_ITEMS)[number] }) {
           {item.iconName === "MapPin" && <MapPin weight="regular" className="w-6 h-6" aria-hidden="true" />}
         </div>
         <div>
-          <h3 className="font-sans font-semibold text-base mb-1 text-foreground">
+          <h3 className="font-sans font-medium text-base mb-1 text-foreground">
             {item.title}
           </h3>
           <p className="text-base leading-relaxed text-muted-foreground">

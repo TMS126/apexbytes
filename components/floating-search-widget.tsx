@@ -70,7 +70,7 @@ function HighlightMatch({ text, query, color }: { text: string; query: string; c
   return (
     <>
       {text.slice(0, idx)}
-      <span style={{ color, fontWeight: 900 }}>{text.slice(idx, idx + q.length)}</span>
+      <span style={{ color, fontWeight: 500 }}>{text.slice(idx, idx + q.length)}</span>
       {text.slice(idx + q.length)}
     </>
   )
@@ -273,7 +273,7 @@ export function FloatingSearchWidget() {
       >
         <div className="relative flex items-center justify-end gap-2">
           <span
-            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full border border-zinc-100 bg-white px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-widest text-brand-blue opacity-0 shadow-md transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100 dark:border-zinc-800 dark:bg-zinc-900"
+            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full border border-zinc-100 bg-white px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-brand-blue opacity-0 shadow-md transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100 dark:border-zinc-800 dark:bg-zinc-900"
           >
             Search
           </span>
@@ -367,12 +367,12 @@ onClick={isOpen ? handleClose : handleOpen}
                             <HubIcon id={s.hubId} size={20} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-black text-zinc-800 dark:text-zinc-200 truncate">
+                            <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">
                               {s.matchField === "name"
                                 ? <HighlightMatch text={s.name} query={query} color={accentColor} />
                                 : s.name}
                             </p>
-                            <p className="text-[0.72rem] font-bold uppercase tracking-wider text-muted-foreground truncate">
+                            <p className="text-[0.72rem] font-medium uppercase tracking-wider text-muted-foreground truncate">
                               {s.matchField === "section"
                                 ? <HighlightMatch text={s.sectionTitle} query={query} color={accentColor} />
                                 : s.sectionTitle} · {HUBS[s.hubId].title}
@@ -383,13 +383,13 @@ onClick={isOpen ? handleClose : handleOpen}
                               </p>
                             )}
                           </div>
-                          <span className="text-sm font-black shrink-0" style={{ color: accentColor }}>{s.price}</span>
+                          <span className="text-sm font-medium shrink-0" style={{ color: accentColor }}>{s.price}</span>
                         </button>
                       ))}
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-base font-bold text-muted-foreground dark:text-muted-foreground">No services found</p>
+                      <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">No services found</p>
                       <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mt-1">Try a different word.</p>
                     </div>
                   )}

@@ -64,7 +64,7 @@ export default function JpgToPdfPage() {
           <div className="max-w-[720px] mx-auto text-center">
             <ScrollBounce>
               <Link href="/tools"
-                className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary/70 px-3 py-1.5 text-[0.8rem] font-bold text-muted-foreground shadow-sm transition-colors hover:bg-secondary hover:text-foreground mb-4">
+                className="inline-flex items-center gap-1 rounded-full border border-border bg-secondary/70 px-3 py-1.5 text-[0.8rem] font-medium text-muted-foreground shadow-sm transition-colors hover:bg-secondary hover:text-foreground mb-4">
                 <CaretLeft size={12} weight="bold" aria-hidden="true" />
                 All Tools
               </Link>
@@ -130,11 +130,11 @@ export default function JpgToPdfPage() {
               {t.images.length > 0 && (
                 <>
                   <div className="flex items-center justify-between mb-3">
-                    <button type="button" onClick={() => t.selectAll(!allSelected)} className="text-sm font-black" style={{ color: accentColor }}>
+                    <button type="button" onClick={() => t.selectAll(!allSelected)} className="text-sm font-medium" style={{ color: accentColor }}>
                       {allSelected ? "Deselect all" : "Select all"}
                     </button>
-                    <span className="text-sm font-semibold text-muted-foreground">{t.selectedCount} of {t.images.length} selected</span>
-                    <button type="button" onClick={t.clearAll} className="text-sm font-semibold text-muted-foreground hover:text-red-500 transition-colors">
+                    <span className="text-sm font-medium text-muted-foreground">{t.selectedCount} of {t.images.length} selected</span>
+                    <button type="button" onClick={t.clearAll} className="text-sm font-medium text-muted-foreground hover:text-red-500 transition-colors">
                       Clear
                     </button>
                   </div>
@@ -166,7 +166,7 @@ export default function JpgToPdfPage() {
                       onClick={t.requestConvert}
                       disabled={t.isConverting || t.selectedCount === 0}
                       aria-busy={t.isConverting}
-                      className="rounded-[14px] font-black py-3 px-8 text-white transition-transform active:scale-[0.98] disabled:opacity-60"
+                      className="rounded-[14px] font-medium py-3 px-8 text-white transition-transform active:scale-[0.98] disabled:opacity-60"
                       style={{ backgroundColor: accentColor }}
                     >
                       {t.isConverting ? `Converting… ${t.progress}%` : "Convert to PDF"}

@@ -108,7 +108,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                     color: "var(--text-on-accent)",
                   }}
                   className={cn(
-                    "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] font-semibold transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",
+                    "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] font-medium transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",
                     menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   )}
                 >
@@ -130,7 +130,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, navigate, neutralC
                 }}
                 className={cn(
                   "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] border-2 bg-transparent transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",
-                  isActive ? "font-semibold" : "font-medium",
+                  isActive ? "font-medium" : "font-medium",
                   menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                 )}
               >

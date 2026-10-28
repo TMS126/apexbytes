@@ -37,10 +37,10 @@ function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techE
 function StatusLine({ status }: { status: HubStatus }) {
   const dotColor = status.open ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"
   return (
-    <div className="flex flex-col gap-1 text-[0.74rem] font-bold tracking-wide text-muted-foreground dark:text-muted-foreground">
+    <div className="flex flex-col gap-1 text-[0.74rem] font-medium tracking-wide text-muted-foreground dark:text-muted-foreground">
       <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
         <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", dotColor)} />
-        <span className="font-black">{status.label}</span>
+        <span className="font-medium">{status.label}</span>
         <span className="font-normal opacity-70">{status.open ? "Open" : "Closed"}</span>
         <span className="opacity-40">·</span>
         <span>{status.nextEvent}</span>
@@ -106,34 +106,34 @@ export function BusinessStatusNavbar() {
         }}
       >
         {printDoc.open ? (
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[0.74rem] font-bold whitespace-nowrap bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[0.74rem] font-medium whitespace-nowrap bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-green-500 animate-pulse" />
-            <span className="font-black">{printDoc.label}</span>
+            <span className="font-medium">{printDoc.label}</span>
             <span className="opacity-70 font-normal">Open</span>
             <span className="opacity-40">·</span>
             <span>{printDoc.nextEvent}</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-[0.74rem] font-bold whitespace-nowrap text-muted-foreground dark:text-muted-foreground">
+          <div className="flex items-center gap-1 text-[0.74rem] font-medium whitespace-nowrap text-muted-foreground dark:text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 invisible" />
-            <span className="font-black">{printDoc.label}</span>
+            <span className="font-medium">{printDoc.label}</span>
             <span className="opacity-70 font-normal">Closed</span>
             <span className="opacity-40">·</span>
             <span>{printDoc.nextEvent}</span>
           </div>
         )}
         {techEtc.open ? (
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[0.74rem] font-bold whitespace-nowrap bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-[0.74rem] font-medium whitespace-nowrap bg-green-50 dark:bg-green-950/40 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 bg-green-500 animate-pulse" />
-            <span className="font-black">{techEtc.label}</span>
+            <span className="font-medium">{techEtc.label}</span>
             <span className="opacity-70 font-normal">Open</span>
             <span className="opacity-40">·</span>
             <span>{techEtc.nextEvent}</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-[0.74rem] font-bold whitespace-nowrap text-muted-foreground dark:text-muted-foreground">
+          <div className="flex items-center gap-1 text-[0.74rem] font-medium whitespace-nowrap text-muted-foreground dark:text-muted-foreground">
             <span className="w-1.5 h-1.5 rounded-full shrink-0 invisible" />
-            <span className="font-black">{techEtc.label}</span>
+            <span className="font-medium">{techEtc.label}</span>
             <span className="opacity-70 font-normal">Closed</span>
             <span className="opacity-40">·</span>
             <span>{techEtc.nextEvent}</span>

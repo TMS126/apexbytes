@@ -50,8 +50,8 @@ export function CartItemCard({
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-sm font-black text-zinc-800 dark:text-zinc-200 leading-tight">{displayName}</p>
-          <p className="text-[0.68rem] font-bold mt-0.5" style={{ color: accent }}>{hubLabel}</p>
+          <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 leading-tight">{displayName}</p>
+          <p className="text-[0.68rem] font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
         <button
           onClick={() => onRemove(item.id)}
@@ -64,7 +64,7 @@ export function CartItemCard({
 
       <div className="flex items-center gap-2 text-sm">
         {discounted && <span className="text-red-400 line-through">R{item.unitPrice}{item.unit ? `/${item.unit}` : ""}</span>}
-        <span className="font-bold text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
+        <span className="font-medium text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
       </div>
 
       <div className="flex items-center justify-between gap-3">
@@ -80,7 +80,7 @@ export function CartItemCard({
           >
             <Minus size={13} weight="bold" aria-hidden="true" />
           </button>
-          <span className="text-sm font-black w-6 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
+          <span className="text-sm font-medium w-6 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
           <button
             onClick={() => onClickStep(item.id, 1)}
             onPointerDown={() => onPressStart(item.id, 1)}
@@ -93,7 +93,7 @@ export function CartItemCard({
             <Plus size={13} weight="bold" aria-hidden="true" />
           </button>
         </div>
-        <span className="text-base font-black text-zinc-900 dark:text-zinc-50">R{lineTotal}</span>
+        <span className="text-base font-medium text-zinc-900 dark:text-zinc-50">R{lineTotal}</span>
       </div>
 
       {progress?.showDots && (
@@ -105,14 +105,14 @@ export function CartItemCard({
               style={{ backgroundColor: i < progress.current ? accent : `color-mix(in srgb, ${accent} 19%, transparent)` }}
             />
           ))}
-          <span className="text-[0.68rem] font-black ml-1" style={{ color: accent }}>
+          <span className="text-[0.68rem] font-medium ml-1" style={{ color: accent }}>
             {progress.current}/{progress.target}
           </span>
         </div>
       )}
 
       {hint && (
-        <p className={cn("text-[0.68rem] font-bold leading-snug", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")} role="status">
+        <p className={cn("text-[0.68rem] font-medium leading-snug", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")} role="status">
           {hint}
         </p>
       )}

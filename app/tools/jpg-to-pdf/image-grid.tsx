@@ -68,7 +68,7 @@ function GridItem({
           unoptimized
         />
         {img.crop && (
-          <span className="absolute top-2 left-1/2 -translate-x-1/2 text-[0.62rem] font-black uppercase tracking-widest text-white bg-black/50 px-2 py-0.5 rounded-full">
+          <span className="absolute top-2 left-1/2 -translate-x-1/2 text-[0.62rem] font-medium uppercase tracking-widest text-white bg-black/50 px-2 py-0.5 rounded-full">
             {img.crop.corners ? "Shaped" : "Cropped"}
           </span>
         )}
@@ -107,14 +107,14 @@ function GridItem({
           role="alert"
         >
           <WarningCircle weight="fill" className="w-6 h-6 text-white shrink-0" aria-hidden="true" />
-          <p className="text-[0.68rem] font-semibold text-white leading-tight">{err.reason}</p>
+          <p className="text-[0.68rem] font-medium text-white leading-tight">{err.reason}</p>
           <button
             type="button"
             onClick={() => onRetry(img.id)}
             disabled={isRetrying}
             aria-label={`Retry ${img.file.name}`}
             aria-busy={isRetrying}
-            className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-bold px-3 py-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-medium px-3 py-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
             {isRetrying ? (
               <CircleNotch size={12} weight="bold" className="animate-spin" aria-hidden="true" />
@@ -128,13 +128,13 @@ function GridItem({
 
       {/* ─── BOTTOM OVERLAY: NAME, SIZE, ACTIONS ─────────────────────── */}
       <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/75 to-transparent px-2 pt-7 pb-1.5">
-        <p className="text-[0.68rem] font-semibold text-white truncate mb-1">{img.file.name}</p>
+        <p className="text-[0.68rem] font-medium text-white truncate mb-1">{img.file.name}</p>
         <p className="text-[0.6rem] text-white/80 mb-1">
           {formatBytes(img.file.size)}
           {filter !== "none" && <span className="text-white/85"> · {FILTER_LABELS[filter]}</span>}
         </p>
         <div className="flex items-center justify-between">
-          {wasConverted ? <span className="text-[0.62rem] font-bold uppercase tracking-wide text-white/80">Converted</span> : <span />}
+          {wasConverted ? <span className="text-[0.62rem] font-medium uppercase tracking-wide text-white/80">Converted</span> : <span />}
           <div className="flex items-center gap-0.5">
             <button
               type="button"

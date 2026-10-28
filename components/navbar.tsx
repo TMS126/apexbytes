@@ -127,7 +127,7 @@ export function Navbar() {
                 style={{ filter: useLightLogoIcon ? "brightness(0) invert(1)" : "brightness(0)" }}
               />
               <div
-                className="font-sans font-black text-[1.32rem] leading-none tracking-tight transition-all duration-500 overflow-hidden flex items-center"
+                className="font-sans font-medium text-[1.32rem] leading-none tracking-tight transition-all duration-500 overflow-hidden flex items-center"
                 style={{ maxWidth: isTextExpanded ? "180px" : "0px" }}
               >
                 <span className="whitespace-nowrap transition-colors duration-300 abh-logo-primary">

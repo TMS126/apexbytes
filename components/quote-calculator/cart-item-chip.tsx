@@ -44,8 +44,8 @@ export function CartItemChip({
       }}
     >
       <div className="flex flex-col leading-tight min-w-0 max-w-[104px]">
-        <span className="text-[0.7rem] font-black text-zinc-800 dark:text-zinc-200 truncate">{displayName}</span>
-        <span className="text-[0.64rem] font-bold" style={{ color: accent }}>R{lineTotal}</span>
+        <span className="text-[0.7rem] font-medium text-zinc-800 dark:text-zinc-200 truncate">{displayName}</span>
+        <span className="text-[0.64rem] font-medium" style={{ color: accent }}>R{lineTotal}</span>
       </div>
 
       <div className="flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10 shrink-0">
@@ -60,7 +60,7 @@ export function CartItemChip({
         >
           <Minus size={11} weight="bold" aria-hidden="true" />
         </button>
-        <span className="text-[0.68rem] font-black w-4 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
+        <span className="text-[0.68rem] font-medium w-4 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
         <button
           onClick={() => onClickStep(item.id, 1)}
           onPointerDown={() => onPressStart(item.id, 1)}

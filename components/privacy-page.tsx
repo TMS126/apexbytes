@@ -15,10 +15,10 @@ export function PrivacyPage() {
       <div className="max-w-3xl mx-auto px-6 md:px-8 py-16 md:py-24">
         {/* Header */}
         <div className="mb-12">
-          <span className="text-[0.84rem] font-black uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full">
+          <span className="text-[0.84rem] font-medium uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full">
             Legal
           </span>
-          <h1 className="mt-4 font-sans font-black text-4xl md:text-5xl text-zinc-900 dark:text-zinc-50 leading-tight">
+          <h1 className="mt-4 font-sans font-medium text-4xl md:text-5xl text-zinc-900 dark:text-zinc-50 leading-tight">
             Privacy Policy
           </h1>
           <p className="mt-3 text-base text-muted-foreground dark:text-muted-foreground">
@@ -35,7 +35,7 @@ export function PrivacyPage() {
 
         <div className="space-y-10 text-[1.08rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">1. Who We Are</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">1. Who We Are</h2>
             <p>
               <strong className="text-zinc-700 dark:text-zinc-300">{BIZ.name}</strong> is a local technology and
               print services business based at {BIZ.addressFull}. We provide printing, document services, graphic
@@ -55,7 +55,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">2. What Information We Collect</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">2. What Information We Collect</h2>
             <p>We may collect the following personal information when you use our services:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li>
@@ -95,7 +95,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">3. How We Use Your Information</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">3. How We Use Your Information</h2>
             <p>We use your personal information only to:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li>Provide the specific service you requested (printing, CV creation, government application, etc.).</li>
@@ -110,7 +110,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">4. Third-Party Services</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">4. Third-Party Services</h2>
             <p>We use the following third-party services that may process your data:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li>
@@ -146,7 +146,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">5. How Long We Keep Your Information</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">5. How Long We Keep Your Information</h2>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               {/* FIX: this previously promised uploaded files are
                   "removed as part of our regular account cleanup" — but
@@ -166,7 +166,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">6. Your Rights Under POPIA</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">6. Your Rights Under POPIA</h2>
             <p>As a data subject under POPIA, you have the right to:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li><strong className="text-zinc-700 dark:text-zinc-300">Access:</strong> Request a copy of any personal information we hold about you.</li>
@@ -190,7 +190,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">7. Security</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">7. Security</h2>
             <p>
               We take reasonable precautions to protect your information. Our website uses HTTPS, security headers,
               and rate limiting. Sensitive documents handled in-store are treated with strict confidentiality and are
@@ -203,7 +203,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">8. Children&apos;s Privacy</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">8. Children&apos;s Privacy</h2>
             <p>
               We do not knowingly collect personal information from children under the age of 18 without parental
               consent. If a parent or guardian brings a child in for services, we process only the minimum
@@ -212,7 +212,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">9. Changes to This Policy</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">9. Changes to This Policy</h2>
             <p>
               We may update this Privacy Policy from time to time. When we do, we will update the &quot;Last
               updated&quot; date at the top of this page. Continued use of our services after any changes means you
@@ -221,7 +221,7 @@ export function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-black text-xl text-zinc-900 dark:text-zinc-50 mb-3">10. Contact Us</h2>
+            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">10. Contact Us</h2>
             <p>For any privacy-related questions or requests:</p>
             <div className="mt-3 p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 space-y-1">
               <p><strong className="text-zinc-700 dark:text-zinc-300">{BIZ.name}</strong></p>

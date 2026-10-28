@@ -46,12 +46,12 @@ function ProjectCard({
 
         {/* ---- Header bar: hub label + before/after badge ---- */}
         <div className="absolute top-0 inset-x-0 flex items-center gap-2 px-3 py-2.5 bg-zinc-950/90 z-20">
-          <span className="flex-1 min-w-0 text-[0.9rem] font-black truncate" style={{ color: labelColor }}>
+          <span className="flex-1 min-w-0 text-[0.9rem] font-medium truncate" style={{ color: labelColor }}>
             {hubLabelFor(project.hub)}
           </span>
           {hasBA && (
             <span
-              className="shrink-0 flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.66rem] font-black uppercase tracking-wider text-white"
+              className="shrink-0 flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.66rem] font-medium uppercase tracking-wider text-white"
               style={{ backgroundColor: badgeBg }}
             >
               <ArrowsLeftRight size={9} weight="bold" />
@@ -62,7 +62,7 @@ function ProjectCard({
 
         {/* ---- Position indicator (e.g. "2/5") ---- */}
         {position && (
-          <div className="absolute top-2.5 right-2.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md text-white/85 text-[0.74rem] font-bold z-20">
+          <div className="absolute top-2.5 right-2.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md text-white/85 text-[0.74rem] font-medium z-20">
             {position}
           </div>
         )}
@@ -82,7 +82,7 @@ function ProjectCard({
 
         {/* ---- Footer: title + client type ---- */}
         <div className="absolute bottom-0 inset-x-0 px-3 py-3 bg-zinc-950/90 z-10">
-          <h3 className="text-white font-black text-[1.14rem] leading-snug">{project.title}</h3>
+          <h3 className="text-white font-medium text-[1.14rem] leading-snug">{project.title}</h3>
           {project.clientType && (
             <p className="text-white/80 text-[0.82rem] italic mt-1">
               {CLIENT_TYPE_LABEL[project.clientType]}

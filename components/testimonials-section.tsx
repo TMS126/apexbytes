@@ -194,10 +194,10 @@ export function TestimonialsSection({
       <div className="max-w-[1300px] mx-auto">
         <ScrollBounce>
           <div className="text-center mb-12">
-            <p className="text-[0.78rem] font-black uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">
+            <p className="text-[0.78rem] font-medium uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">
               Testimonials
             </p>
-            <h2 className="font-sans font-black text-[1.8rem] md:text-[2.25rem] text-zinc-900 dark:text-zinc-50 mb-3">{title}</h2>
+            <h2 className="font-sans font-medium text-[1.8rem] md:text-[2.25rem] text-zinc-900 dark:text-zinc-50 mb-3">{title}</h2>
             <p className="text-[1.05rem] md:text-[1.2rem] font-medium text-muted-foreground dark:text-muted-foreground max-w-xl mx-auto mb-5">{subtitle}</p>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card text-[0.78rem] font-medium text-muted-foreground">
               <span className="w-2 h-2 rounded-full bg-brand-green shrink-0" aria-hidden="true" />
@@ -259,13 +259,13 @@ export function TestimonialsSection({
                     </p>
 
                     <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-[0.9rem] font-black text-white mb-1.5 shrink-0"
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-[0.9rem] font-medium text-white mb-1.5 shrink-0"
                       style={{ backgroundColor: solid }}
                     >
                       {r.initials}
                     </div>
 
-                    <p className="text-[1.05rem] font-black text-zinc-800 dark:text-zinc-200">{r.name}</p>
+                    <p className="text-[1.05rem] font-medium text-zinc-800 dark:text-zinc-200">{r.name}</p>
 
                     {/* Solid colored pill, white text, hub name only — matches the reference image, same treatment in every state */}
                     <span

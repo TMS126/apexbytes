@@ -148,7 +148,7 @@ export function LogoMarquee() {
       onMouseLeave={() => { if (!isDragging.current) { isInteracting.current = false; setPaused(false) } }}
       className="relative w-full max-w-[1400px] mx-auto mt-4 py-3 overflow-hidden select-none group/logo-marquee bg-transparent"
     >
-      <p className="text-center text-[0.65rem] font-black uppercase tracking-widest text-muted-foreground mb-2">
+      <p className="text-center text-[0.65rem] font-medium uppercase tracking-widest text-muted-foreground mb-2">
         Trusted by
       </p>
 
@@ -202,7 +202,7 @@ export function LogoMarquee() {
                       title={`${logo.name} — placeholder, swap src in PARTNER_LOGOS`}
                     >
                       <Mark />
-                      <span className="text-[0.6rem] font-bold uppercase tracking-wide leading-none opacity-80">
+                      <span className="text-[0.6rem] font-medium uppercase tracking-wide leading-none opacity-80">
                         {logo.name}
                       </span>
                     </div>

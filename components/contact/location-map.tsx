@@ -17,7 +17,7 @@ export function LocationMap() {
         href={BIZ.mapsUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="abh-google-action absolute bottom-4 right-4 flex items-center gap-1.5 rounded-[14px] px-3 py-2 text-xs font-bold transition-all active:scale-95"
+        className="abh-google-action absolute bottom-4 right-4 flex items-center gap-1.5 rounded-[14px] px-3 py-2 text-xs font-medium transition-all active:scale-95"
       >
         <GoogleLogo size={15} weight="bold" aria-hidden="true" />
         Open in Google Maps

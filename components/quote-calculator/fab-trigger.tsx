@@ -45,14 +45,14 @@ export function FabTrigger({
             ))}
           </span>
         )}
-        <span className="text-xs font-black text-zinc-700 dark:text-zinc-200">R{total}</span>
-        <span className="text-[0.6rem] font-bold uppercase tracking-widest text-muted-foreground">View quote</span>
+        <span className="text-xs font-medium text-zinc-700 dark:text-zinc-200">R{total}</span>
+        <span className="text-[0.6rem] font-medium uppercase tracking-widest text-muted-foreground">View quote</span>
       </button>
 
       <div className="relative flex items-center justify-end gap-2">
         <span
           className={cn(
-            "text-[0.65rem] font-black uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
+            "text-[0.65rem] font-medium uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
             "bg-white dark:bg-zinc-900 px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
             "max-w-0 opacity-0 scale-x-0 group-hover/calc:max-w-[100px] group-hover/calc:opacity-100 group-hover/calc:scale-x-100 group-focus-within/calc:max-w-[100px] group-focus-within/calc:opacity-100 group-focus-within/calc:scale-x-100"
@@ -79,7 +79,7 @@ export function FabTrigger({
           <button
             onClick={(e) => { e.stopPropagation(); onToggleMini() }}
             aria-label={miniExpanded ? "Hide quote total" : "Show quote total"}
-            className="abh-press abh-badge-circle abh-on-orange absolute -top-0.5 -right-0.5 min-w-[22px] h-[22px] bg-brand-orange text-[0.65rem] font-black border-2 border-white dark:border-zinc-950 shadow-md"
+            className="abh-press abh-badge-circle abh-on-orange absolute -top-0.5 -right-0.5 min-w-[22px] h-[22px] bg-brand-orange text-[0.65rem] font-medium border-2 border-white dark:border-zinc-950 shadow-md"
           >
             {itemCount}
           </button>

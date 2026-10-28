@@ -114,17 +114,17 @@ export function HeroSection() {
           <div className="text-center md:text-left">
 
             {showHolidayBanner && status && (
-              <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground dark:text-muted-foreground mb-3">
+              <p className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-3">
                 <WeatherIcon size={16} weight="regular" style={{ color: weatherIconColor }} aria-hidden="true" />
                 Tech, Design &amp; E-Service are closed today for {status.holidayName} — Print &amp; Docu is open as usual
               </p>
             )}
 
-            <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest mb-3 text-brand-orange-text">
+            <p className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest mb-3 text-brand-orange-text">
               <span aria-hidden="true">•</span> {BIZ.tagline.replace(/\.$/, "")}
             </p>
 
-            <h1 className="font-sans font-black text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4">
+            <h1 className="font-sans font-medium text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4">
               <span className="block text-foreground">Design.</span>
               <span className="block text-foreground">Print.</span>
               <span className="block text-foreground">Upgrade.</span>
@@ -138,7 +138,7 @@ export function HeroSection() {
               <ScrollBounce>
               <button
                 onClick={handleCtaClick}
-                className="abh-line-cta group/quote px-7 py-4 font-sans font-black text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
+                className="abh-line-cta group/quote px-7 py-4 font-sans font-medium text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
                 >
                   <span className="min-w-[10.5rem] md:max-lg:min-w-0 transition-opacity duration-150 group-active/quote:opacity-70"><span className="md:max-lg:hidden">{quoteLabel}</span><span className="hidden md:max-lg:inline">Quote</span></span>
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
@@ -147,7 +147,7 @@ export function HeroSection() {
 
               <button
                 onClick={handleServicesClick}
-                className="abh-line-cta group/services-cta px-6 py-4 font-sans font-black text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
+                className="abh-line-cta group/services-cta px-6 py-4 font-sans font-medium text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
               >
                 <span className="md:max-lg:hidden">See Our Services</span><span className="hidden md:max-lg:inline">Services</span>
                 <ArrowUpRight
@@ -160,7 +160,7 @@ export function HeroSection() {
 
             <div className="flex flex-wrap items-stretch justify-center md:justify-start">
               {TRUST_HINTS.map((hint, index) => (
-                <span key={hint} className={`px-4 text-sm font-semibold text-muted-foreground dark:text-muted-foreground first:pl-0 ${index > 0 ? "border-l abh-line-left" : ""}`}>
+                <span key={hint} className={`px-4 text-sm font-medium text-muted-foreground dark:text-muted-foreground first:pl-0 ${index > 0 ? "border-l abh-line-left" : ""}`}>
                   {hint}
                 </span>
               ))}
@@ -196,10 +196,10 @@ export function HeroSection() {
               <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1 ? "true" : undefined}>
                 {MARQUEE_ITEMS.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    <span className="inline-flex items-center px-5 font-semibold text-base text-zinc-600 dark:text-muted-foreground transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
+                    <span className="inline-flex items-center px-5 font-medium text-base text-zinc-600 dark:text-muted-foreground transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
                       {item}
                     </span>
-                    <span className="font-black text-lg leading-none shrink-0 text-zinc-300 dark:text-muted-foreground" aria-hidden="true">•</span>
+                    <span className="font-medium text-lg leading-none shrink-0 text-zinc-300 dark:text-muted-foreground" aria-hidden="true">•</span>
                   </React.Fragment>
                 ))}
               </div>

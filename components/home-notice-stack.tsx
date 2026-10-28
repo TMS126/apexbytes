@@ -34,13 +34,13 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
       <div className="flex items-start gap-3">
         <notice.Icon size={20} weight="bold" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
         <div className="flex flex-col gap-1 min-w-0">
-          <h3 className="text-[0.78rem] font-black uppercase tracking-widest" style={{ color }}>
+          <h3 className="text-[0.78rem] font-medium uppercase tracking-widest" style={{ color }}>
             {notice.header}
           </h3>
           {notice.date && (
-            <p className="text-[0.72rem] font-bold text-zinc-500 dark:text-zinc-400">{notice.date}</p>
+            <p className="text-[0.72rem] font-medium text-zinc-500 dark:text-zinc-400">{notice.date}</p>
           )}
-          <p className="text-[0.9rem] font-semibold leading-snug abh-body text-zinc-700 dark:text-zinc-200">
+          <p className="text-[0.9rem] font-medium leading-snug abh-body text-zinc-700 dark:text-zinc-200">
             {notice.body}
           </p>
           {notice.sourceUrl && notice.sourceLabel && (
@@ -136,7 +136,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
             <first.Icon size={16} weight="bold" style={{ color: collapsedColor }} aria-hidden="true" />
-            <span className="text-[0.92rem] font-bold whitespace-nowrap" style={{ color: collapsedColor }}>
+            <span className="text-[0.92rem] font-medium whitespace-nowrap" style={{ color: collapsedColor }}>
               {collapsedLabel}
             </span>
           </button>
@@ -178,7 +178,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <h2 id={titleId} className="text-[0.78rem] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+                  <h2 id={titleId} className="text-[0.78rem] font-medium uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
                     Updates ({notices.length})
                   </h2>
                   <button
@@ -198,7 +198,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                 <button
                   type="button"
                   onClick={() => { setModalOpen(false); setDismissed(true) }}
-                  className="mt-1 text-[0.8rem] font-bold text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors underline self-center"
+                  className="mt-1 text-[0.8rem] font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors underline self-center"
                 >
                   Dismiss all
                 </button>

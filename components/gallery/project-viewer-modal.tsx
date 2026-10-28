@@ -62,7 +62,7 @@ function ExpandableText({ text, accent }: { text: string; accent: string }) {
           type="button"
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
-          className="relative mt-1.5 text-[0.86rem] font-black focus-visible:outline-none focus-visible:underline"
+          className="relative mt-1.5 text-[0.86rem] font-medium focus-visible:outline-none focus-visible:underline"
           style={{ color: accent }}
         >
           {expanded ? "Show less" : "Read more…"}
@@ -76,11 +76,11 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
   return (
     <div className="space-y-5">
       <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
+        <h4 className="text-[0.74rem] font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
         <ExpandableText text={project.clientGoal} accent={accent} />
       </div>
       <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
+        <h4 className="text-[0.74rem] font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
         <ul className="space-y-2">
           {project.whatWeDid.map((item, i) => (
             <li key={i} className="flex items-start gap-2.5 text-base text-zinc-700 dark:text-zinc-200 font-medium">
@@ -90,7 +90,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
         </ul>
       </div>
       <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-[0.74rem] font-black uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
+        <h4 className="text-[0.74rem] font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
         <ExpandableText text={project.result} accent={accent} />
       </div>
     </div>
@@ -109,7 +109,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
           rel="noopener noreferrer"
           onClick={onClose}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
-          className="abh-wa-btn flex-1 py-2.5 text-[0.82rem] font-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="abh-wa-btn flex-1 py-2.5 text-[0.82rem] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
@@ -119,7 +119,7 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
         <Link
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
-          className="abh-line-cta flex-1 py-2.5 text-[0.82rem] font-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="abh-line-cta flex-1 py-2.5 text-[0.82rem] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
@@ -137,12 +137,12 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
   if (others.length === 0) return null
   return (
     <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "p-5" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
-      <h3 className="border-l-2 abh-line-left pl-3 text-xs font-black uppercase tracking-widest text-muted-foreground">Other projects</h3>
+      <h3 className="border-l-2 abh-line-left pl-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Other projects</h3>
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
           <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>
             <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover grayscale transition-[filter,transform] duration-300 group-hover:grayscale-0 group-hover:scale-105" /></span>
-            <span className="min-w-0 whitespace-normal break-words text-sm font-bold text-zinc-700 dark:text-zinc-200">{p.title}</span>
+            <span className="min-w-0 whitespace-normal break-words text-sm font-medium text-zinc-700 dark:text-zinc-200">{p.title}</span>
           </button>
         ))}
       </div>
@@ -172,7 +172,7 @@ function FloatingOtherProjectsWidget({ siblings, currentId, accent, onSelect }: 
             <span className="relative w-7 h-7 rounded-full overflow-hidden shrink-0">
               <SafeImage src={p.image} alt={p.title} accent={accent} fill sizes="28px" className="object-cover" />
             </span>
-            <span className="text-[0.78rem] font-bold text-zinc-700 dark:text-zinc-200 whitespace-nowrap whitespace-normal break-words">{p.title}</span>
+            <span className="text-[0.78rem] font-medium text-zinc-700 dark:text-zinc-200 whitespace-nowrap whitespace-normal break-words">{p.title}</span>
           </button>
         ))}
       </div>
@@ -214,7 +214,7 @@ function MobileImageViewer({
         />
 
         {hasMultiple && (
-          <div className="absolute top-2.5 left-2.5 z-20 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white text-[0.68rem] font-bold tracking-widest" aria-live="polite">
+          <div className="absolute top-2.5 left-2.5 z-20 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white text-[0.68rem] font-medium tracking-widest" aria-live="polite">
             {activeIdx + 1} / {images.length}
           </div>
         )}
@@ -318,9 +318,9 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
           <HubIcon id={project.hub as HubId} size={13} color={accent} />
-          <span className="text-[0.7rem] font-black uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
+          <span className="text-[0.7rem] font-medium uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
         </div>
-        <h2 id="project-viewer-title" className="font-black text-lg md:text-xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
+        <h2 id="project-viewer-title" className="font-medium text-lg md:text-xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
         {project.clientType && (
           <p className="text-[0.78rem] italic text-muted-foreground dark:text-muted-foreground mt-0.5">{CLIENT_TYPE_LABEL[project.clientType]}</p>
         )}
@@ -365,7 +365,7 @@ function DesktopActionRow({
             >
               <CaretLeft size={13} weight="bold" />
             </button>
-            <span className="text-[0.78rem] font-bold text-muted-foreground dark:text-muted-foreground whitespace-nowrap" aria-live="polite">
+            <span className="text-[0.78rem] font-medium text-muted-foreground dark:text-muted-foreground whitespace-nowrap" aria-live="polite">
               Project {currentIdx + 1} of {siblingCount}
             </span>
             <button
@@ -395,7 +395,7 @@ function MobileProjectNavPill({ currentIdx, siblingCount, onPrev, onNext }: {
         <button onClick={onPrev} aria-label="Previous project" className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground active:scale-90">
           <CaretLeft size={12} weight="bold" />
         </button>
-        <span className="text-[0.76rem] font-bold text-muted-foreground dark:text-muted-foreground whitespace-nowrap">
+        <span className="text-[0.76rem] font-medium text-muted-foreground dark:text-muted-foreground whitespace-nowrap">
           Project {currentIdx + 1} of {siblingCount}
         </span>
         <button onClick={onNext} aria-label="Next project" className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground active:scale-90">
@@ -481,7 +481,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
       onClick={() => setComparing((v) => !v)}
       aria-label={comparing ? "Show gallery view" : "Show before and after comparison"}
       aria-pressed={comparing}
-      className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-black uppercase tracking-wider bg-black/45 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-medium uppercase tracking-wider bg-black/45 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
     >
       <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
       {comparing ? "Gallery" : "Before/After"}

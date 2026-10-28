@@ -190,7 +190,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                     onDismiss={() => setRushNoticeDismissed(true)}
                   >
                     A{' '}
-                    <span className="font-black" style={{ color: TOKEN.orangeText }}>
+                    <span className="font-medium" style={{ color: TOKEN.orangeText }}>
                       50% surcharge
                     </span>{' '}
                     applies when same-session or urgent turnaround is required.
@@ -210,7 +210,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                   >
                     Look for the{' '}
                     <span
-                      className="inline-flex items-center gap-0.5 font-black"
+                      className="inline-flex items-center gap-0.5 font-medium"
                       style={{ color: accent }}
                     >
                       <SealPercent size={12} weight="fill" aria-hidden="true" /> Bulk
@@ -255,7 +255,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                   <div className="no-print flex justify-center">
                     <button
                       onClick={toggleAll}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-bold border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-medium border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
                     >
                       {allOpen ? 'Collapse all' : 'Expand all'}
                     </button>
@@ -271,7 +271,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                   <div className="text-center py-12">
                     <p className="abh-body mb-4">
                       No results for{' '}
-                      <span className="font-semibold text-zinc-700 dark:text-zinc-300">
+                      <span className="font-medium text-zinc-700 dark:text-zinc-300">
                         &quot;{query}&quot;
                       </span>
                     </p>

@@ -61,7 +61,7 @@ function FooterContent() {
                   className={`object-contain transition-[filter] duration-300 ${mounted && theme === "dark" ? "brightness-0 invert" : ""}`}
                 />
               </div>
-              <h2 className="font-sans font-black text-lg tracking-tight text-zinc-900 dark:text-white">
+              <h2 className="font-sans font-medium text-lg tracking-tight text-zinc-900 dark:text-white">
                 ApexbytesHub
               </h2>
             </div>
@@ -72,7 +72,7 @@ function FooterContent() {
           </div>
 
           <nav aria-label="Footer navigation">
-            <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
+            <h3 className="text-[0.84rem] font-medium uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
                 const isActive = page.path === "/tools" ? pathname.startsWith("/tools") : pathname === page.path
@@ -84,7 +84,7 @@ function FooterContent() {
                       aria-current={isActive ? "page" : undefined}
                       className={`text-base transition-all duration-200 inline-block hover:translate-x-1 hover:text-brand-blue ${
                         isActive
-                          ? "font-black text-zinc-900 dark:text-white"
+                          ? "font-medium text-zinc-900 dark:text-white"
                           : "font-medium text-zinc-600 dark:text-zinc-300"
                       }`}
                     >
@@ -97,7 +97,7 @@ function FooterContent() {
           </nav>
 
           <div>
-            <h3 className="text-[0.84rem] font-black uppercase tracking-widest mb-8 text-muted-foreground">Connect</h3>
+            <h3 className="text-[0.84rem] font-medium uppercase tracking-widest mb-8 text-muted-foreground">Connect</h3>
             <ul className="flex flex-col gap-5">
               <li className="relative">
                 <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ function FooterContent() {
                   </button>
                 </div>
                 {phoneCopied && (
-                  <span className="absolute -top-7 right-0 whitespace-nowrap text-[0.72rem] font-black uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-sm pointer-events-none animate-pulse">
+                  <span className="absolute -top-7 right-0 whitespace-nowrap text-[0.72rem] font-medium uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-sm pointer-events-none animate-pulse">
                     Copied!
                   </span>
                 )}
