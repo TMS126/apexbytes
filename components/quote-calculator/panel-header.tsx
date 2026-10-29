@@ -7,7 +7,6 @@
 
 import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
-import { BIZ } from "@/lib/brand"
 
 interface PanelHeaderProps {
   clockLabel: string
@@ -23,7 +22,7 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
       <div className="flex items-center justify-between px-5 pb-2 shrink-0" style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}>
         <div className="flex items-center gap-2">
           <Image src="/logo.png" alt="" width={32} height={32} className="size-8 object-contain dark:invert" />
-          <span className="font-sans font-medium text-lg tracking-tight" style={{ color: titleAccent }}>{BIZ.name}</span>
+          
         </div>
         <div className="flex items-center gap-2">
           {clockLabel && (

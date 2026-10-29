@@ -110,7 +110,7 @@ export function TheNakedTradersZAReveal({
             <h3 id="nt-modal-title" className="abh-card-heading text-lg mb-1">The Naked Traders ZA</h3>
             <p className="abh-muted mb-4">Market trading group — forex &amp; CFD trading (e.g. EUR/USD)</p>
 
-            <div className="relative w-full aspect-square overflow-hidden rounded-[28px] bg-zinc-50/95 shadow-2xl ring-1 ring-white/30 dark:bg-zinc-900/95">
+            <div className="relative w-full aspect-square overflow-hidden rounded-[28px] bg-black shadow-2xl ring-1 ring-black/15 dark:ring-white/15">
               <Image src="/nto.webp" alt="The Naked Traders ZA logo" fill sizes="288px" className="object-contain" />
             </div>
           </div>

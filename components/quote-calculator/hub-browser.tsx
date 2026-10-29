@@ -138,7 +138,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
         // Full grid, pre-selection — vertically centered in the remaining
         // scroll space (see note above on what "centered" means here).
         <div className="flex items-center justify-center min-h-[42vh]">
-          <div className="flex flex-wrap justify-center gap-3 max-w-[360px]">
+          <div className="flex w-full max-w-[420px] flex-col gap-2.5">
             {HUB_ORDER.map(hubId => {
               const hub = HUBS[hubId]
               const accent = getAccent(hubId)
@@ -156,7 +156,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                   aria-expanded={isSelected}
                   aria-controls={`hub-panel-${hubId}`}
                   className={cn(
-                    "group relative flex flex-col items-center justify-center gap-1.5 rounded-[26px] p-2 w-[30%] min-w-[96px] aspect-square abh-press",
+                    "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left abh-press",
                     "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
                     GLASS.item
                   )}
@@ -197,14 +197,17 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                     <HubIcon id={hubId} size={48} color="currentColor" />
                   </span>
 
-                  <span
+                  <span className="min-w-0 flex-1">
+                    <span
                     className={cn(
-                      "text-[0.7rem] font-medium text-center leading-tight transition-colors duration-150",
+                      "block text-[0.78rem] font-medium leading-tight transition-colors duration-150",
                       isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
                     {hub.title.replace(" Hub", "")}
+                    </span>
+                    <span className="mt-1 block text-[0.68rem] leading-snug text-muted-foreground">{hub.desc}</span>
                   </span>
                 </button>
               )
@@ -269,15 +272,16 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                       style={{ ["--hub-accent" as unknown as string]: accent }}
                       className="group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5"
                     >
-                      <span className="flex items-center gap-1.5">
+                      <span className="flex items-center gap-2">
+                        <span className={cn("h-2 w-2 shrink-0 rounded-full transition-all duration-200", isSectionOpen ? "scale-125 shadow-[0_0_0_4px_color-mix(in_srgb,var(--hub-accent)_18%,transparent)]" : "opacity-45")} style={{ backgroundColor: accent }} aria-hidden="true" />
                         <span
                           className={cn(
                             "text-[0.78rem] font-medium uppercase tracking-[0.15em] transition-colors duration-200",
                             isSectionOpen
-                              ? "abh-link-underline py-1 [color:var(--hub-accent)]"
-                              : "abh-link-underline px-0 py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                              ? "py-1 font-semibold [color:var(--hub-accent)]"
+                              : "py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
                           )}
-                          style={isSectionOpen ? { backgroundColor: solidAccent, color: onSolid } : undefined}
+                          style={isSectionOpen ? { color: solidAccent } : undefined}
                         >
                           {section.title}
                         </span>
