@@ -42,8 +42,8 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
             <button
               onClick={onExportPdf}
               className={cn("abh-press abh-icon-chip size-10 rounded-full flex items-center justify-center transition-all duration-150", GLASS.btn)}
-              aria-label="Download or print quote as PDF"
-              title="Download / print as PDF"
+              aria-label="Download quote as PDF"
+              title="Download quote as PDF"
             >
               <FilePdf size={20} weight="bold" className="text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
             </button>
