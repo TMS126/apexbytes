@@ -46,7 +46,7 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
       className={cn(
         "group relative flex w-full flex-col justify-center overflow-hidden rounded-[14px] bg-card text-foreground",
         "min-h-[140px] py-6 md:min-h-[200px]",
-        flip ? "pl-[40%] pr-6 md:pl-[45%] md:pr-10" : "pl-6 pr-[40%] md:pl-10 md:pr-[45%]",
+        "items-center px-6 text-center md:px-10",
         "transition-[background-color,color] duration-200 motion-reduce:transition-none",
         CARD_HOVER
       )}
@@ -55,9 +55,7 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
       <span
         aria-hidden="true"
         className={cn(
-          "pointer-events-none absolute top-1/2 -translate-y-1/2 leading-none",
-          flip ? "-left-8 md:-left-12" : "-right-8 md:-right-12",
-          "text-[150px] md:text-[240px] text-muted-foreground/20",
+          "pointer-events-none relative mb-3 leading-none text-[58px] text-muted-foreground/20",
           "transition-colors duration-300 motion-reduce:transition-none",
           ICON_HOVER
         )}

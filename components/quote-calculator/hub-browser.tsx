@@ -62,7 +62,7 @@ function CountBadge({
   return (
     <span
       className={cn(
-        "absolute flex items-center justify-center rounded-full font-black shadow-md border-2 border-white dark:border-zinc-900 leading-none",
+        "abh-number-pill absolute flex items-center justify-center rounded-full font-black shadow-md leading-none",
         big ? "-top-2 -right-2 min-w-[26px] h-[26px] px-1.5 text-[0.72rem]" : "-top-1.5 -right-1.5 min-w-[22px] h-[22px] px-1 text-[0.66rem]"
       )}
       style={{ backgroundColor: solidAccent, color: onSolid }}
@@ -110,7 +110,7 @@ export function HubBrowser({
                 style={{
                   ["--hub-accent" as unknown as string]: accent,
                     boxShadow: isSelected ? `0 10px 24px -10px ${accent}` : undefined,
-                   backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
+                   transform: isSelected ? "translateY(-2px)" : undefined,
                 }}
               >
                 {hubSub && (
@@ -163,7 +163,7 @@ export function HubBrowser({
                   style={{
                     ["--hub-accent" as unknown as string]: accent,
                     boxShadow: isSelected ? `0 10px 24px -10px ${accent}` : undefined,
-                     backgroundColor: isSelected ? `color-mix(in srgb, ${accent} 10%, transparent)` : undefined,
+                     transform: isSelected ? "translateY(-2px)" : undefined,
                   }}
                 >
                   {hubSub && (
@@ -284,7 +284,7 @@ export function HubBrowser({
 
                         {!isSectionOpen && sectionBulk && (
                           <span
-                            className="flex items-center gap-0.5 text-[0.58rem] font-black px-1.5 py-0.5 rounded-full"
+                            className="bulk-ribbon flex items-center gap-0.5 text-[0.58rem] font-black px-2 py-1 rounded-full"
                             style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 12%, transparent)", color: "var(--brand-orange-text)" }}
                             aria-label="Bulk pricing available in this section"
                           >
@@ -294,7 +294,7 @@ export function HubBrowser({
 
                         {!isSectionOpen && secSub && (
                           <span
-                            className="flex items-center gap-0.5 text-[0.6rem] font-black px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
+                            className="abh-number-pill flex items-center gap-0.5 text-[0.6rem] font-black bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                             aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
                           >
                             <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
@@ -358,7 +358,7 @@ export function HubBrowser({
                               >
                                 {hasBulk && (
                                   <span
-                                    className="absolute -right-7 top-1.5 rotate-45 text-[0.55rem] font-black uppercase tracking-wider px-7 py-0.5"
+                                    className="bulk-ribbon absolute right-1 top-1/2 -translate-y-1/2 text-[0.55rem] font-black uppercase tracking-wider px-2.5 py-1 rounded-full"
                                     style={{ backgroundColor: "var(--brand-orange)", color: "var(--on-brand-orange)" }}
                                     aria-hidden="true"
                                   >
@@ -375,7 +375,7 @@ export function HubBrowser({
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
                                     <span
-                                      className="flex items-center gap-0.5 pl-2 text-[0.6rem] font-black text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
+                                      className="abh-number-pill flex items-center gap-0.5 text-[0.6rem] font-black text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                                       aria-label={`${itemQty} already in your quote`}
                                     >
                                       <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />

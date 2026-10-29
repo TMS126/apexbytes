@@ -1298,6 +1298,23 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
   backdrop-filter: blur(28px) saturate(145%);
 }
 
+.abh-number-pill {
+  width: 1.5rem !important;
+  min-width: 1.5rem !important;
+  height: 1.5rem !important;
+  min-height: 1.5rem !important;
+  padding: 0 !important;
+  aspect-ratio: 1;
+  border-radius: 999px !important;
+}
+.bulk-ribbon {
+  background: var(--bulk-ribbon-bg) !important;
+  color: var(--bulk-ribbon-text) !important;
+  white-space: nowrap;
+  line-height: 1;
+  box-shadow: 0 8px 16px -10px color-mix(in srgb, currentColor 70%, transparent);
+}
+
 @media (max-width: 640px) {
   .glass, .abh-card, .abh-shadow-card, .abh-shadow-tile, [role="dialog"] { border-radius: var(--ui-radius-sm) !important; }
 }

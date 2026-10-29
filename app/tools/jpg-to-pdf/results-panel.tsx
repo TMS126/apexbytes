@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle, PaperPlaneTilt, DownloadSimple } from "@phosphor-icons/react"
+import { CheckCircle, PaperPlaneTilt, DownloadSimple, Eye } from "@phosphor-icons/react"
 import { SimpleDropdown } from "@/components/ui/simple-dropdown"
 import { formatBytes } from "./utils"
 import type { ConvertedFile } from "./types"
@@ -24,6 +24,11 @@ export function ResultsPanel({
   }, [convertedFiles])
 
   const totalActualBytes = convertedFiles.reduce((sum, f) => sum + f.blob.size, 0)
+  const viewPdf = (file: ConvertedFile) => {
+    const url = URL.createObjectURL(file.blob)
+    window.open(url, "_blank", "noopener,noreferrer")
+    window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+  }
 
   return (
     <AnimatePresence>
@@ -56,6 +61,14 @@ export function ResultsPanel({
           )}
 
           <div className="grid grid-cols-2 gap-2.5 max-w-[380px] mx-auto">
+            <button
+              type="button"
+              onClick={() => viewPdf(convertedFiles.find((f) => f.fileName === fileName) || convertedFiles[0])}
+              className="flex items-center justify-center gap-2 rounded-full bg-secondary py-3 px-4 text-sm font-black text-foreground shadow-md transition-transform active:scale-[0.98]"
+            >
+              <Eye weight="bold" className="w-4 h-4" aria-hidden="true" />
+              View PDF
+            </button>
             <button
               type="button"
               onClick={() => onSend(convertedFiles.find((f) => f.fileName === fileName) || convertedFiles[0])}
