@@ -6,7 +6,7 @@
    and the bottom close button
    ============================================================ */
 
-import { SealPercent, FilePdf, WhatsappLogo, X } from "@phosphor-icons/react"
+import { SealPercent, FilePdf, Eye, WhatsappLogo, X } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { GLASS } from "./shared"
 
@@ -16,11 +16,12 @@ interface FooterActionsProps {
   total: number
   fabColor: string
   onExportPdf: () => void
+  onViewQuote: () => void
   onSendQuote: () => void
   onClose: () => void
 }
 
-export function FooterActions({ hasItems, totalSavings, total, fabColor, onExportPdf, onSendQuote, onClose }: FooterActionsProps) {
+export function FooterActions({ hasItems, totalSavings, total, fabColor, onExportPdf, onViewQuote, onSendQuote, onClose }: FooterActionsProps) {
   return (
     <>
       {hasItems && (
@@ -39,6 +40,14 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
               )}
             </div>
             <div className="flex shrink-0 items-center gap-2">
+            <button
+              onClick={onViewQuote}
+              className={cn("abh-press abh-icon-chip size-10 rounded-full flex items-center justify-center transition-all duration-150", GLASS.btn)}
+              aria-label="View quote as PDF"
+              title="View quote as PDF"
+            >
+              <Eye size={20} weight="bold" className="text-zinc-600 dark:text-zinc-300" aria-hidden="true" />
+            </button>
             <button
               onClick={onExportPdf}
               className={cn("abh-press abh-icon-chip size-10 rounded-full flex items-center justify-center transition-all duration-150", GLASS.btn)}

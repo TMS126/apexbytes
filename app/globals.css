@@ -1139,8 +1139,20 @@ button:not(:hover):not(:focus-visible):not(:active),
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9999px;
-  padding: 0;
+  border-radius: 9999px !important;
+  padding: 0 !important;
+}
+.bulk-ribbon {
+  background: var(--brand-blue) !important;
+  color: var(--brand-white) !important;
+  white-space: nowrap;
+  line-height: 1;
+  box-shadow: 0 8px 16px -10px color-mix(in srgb, var(--brand-blue) 75%, transparent);
+}
+.dark .bulk-ribbon {
+  background: var(--brand-orange) !important;
+  color: var(--on-brand-orange) !important;
+  box-shadow: 0 8px 16px -10px color-mix(in srgb, var(--brand-orange) 75%, transparent);
 }
 
 .abh-press {

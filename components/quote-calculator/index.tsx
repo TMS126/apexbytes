@@ -409,6 +409,7 @@ export function QuoteCalculatorWidget() {
             total={total}
             fabColor={fabColor}
             onExportPdf={() => exportQuotePdf(cart)}
+            onViewQuote={() => exportQuotePdf(cart, "view")}
             onSendQuote={sendQuote}
             onClose={() => setIsOpen(false)}
           />

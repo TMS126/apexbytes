@@ -24,7 +24,6 @@ const GREEN_TEXT: RGB = [22, 101, 52]
 
 // Page geometry (mm)
 const PAGE_W = 210
-const PAGE_H = 297
 const M = 14
 const R = PAGE_W - M
 const QTY_X = 121.3
@@ -51,7 +50,7 @@ function nextQuoteNumber(now: Date): string {
   return `INV-ABH-${year}-${String(seq).padStart(3, "0")}`
 }
 
-export async function exportQuotePdf(cart: CartItem[]): Promise<void> {
+export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view" = "download"): Promise<void> {
   if (cart.length === 0) return
 
   try {
@@ -207,7 +206,13 @@ export async function exportQuotePdf(cart: CartItem[]): Promise<void> {
       doc.text(`Page ${i} of ${pages}`, R, 284.2, { align: "right" })
     }
 
-    doc.save(`${BIZ.name}-Quote-${quoteNo}.pdf`)
+    if (mode === "view") {
+      const url = URL.createObjectURL(doc.output("blob"))
+      window.open(url, "_blank", "noopener,noreferrer")
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+    } else {
+      doc.save(`${BIZ.name}-Quote-${quoteNo}.pdf`)
+    }
   } catch (err) {
     console.error("Quote PDF failed:", err)
   }
