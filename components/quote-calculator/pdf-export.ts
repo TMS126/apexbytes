@@ -1,7 +1,7 @@
 // components/quote-calculator/pdf-export.ts
 import { BIZ } from "@/lib/brand"
-import { CartItem, getDisplayName, getEffectiveRate, quoteTotals } from "./lib"
-
+import { CartItem, getEffectiveRate, quoteTotals } from "./lib"
+import { pdfServiceName } from "./pdf-names"
 /* ============================================================
    QUOTE PDF — real downloadable file (jsPDF), A4.
    Layout: brand + QUOTATION left, quote # / date / location right,
@@ -125,7 +125,7 @@ export async function exportQuotePdf(cart: CartItem[]): Promise<void> {
     for (const item of cart) {
       const qty = item.qty || 1
       const effRate = getEffectiveRate(item.id, item.name, qty, item.unitPrice)
-      const label = `${getDisplayName(item.sectionTitle, item.name)} - ${item.sectionTitle}`
+      const label = pdfServiceName(item)
       const qtyLabel = item.unit ? `${qty} ${item.unit}${qty > 1 ? "s" : ""}` : `x${qty}`
 
       doc.setFont("helvetica", "normal")
