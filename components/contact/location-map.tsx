@@ -5,14 +5,26 @@ import { ArrowSquareOut, GoogleLogo } from "@phosphor-icons/react"
 import { BIZ } from "@/lib/brand"
 
 export function LocationMap() {
+  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${BIZ.lng - 0.018}%2C${BIZ.lat - 0.014}%2C${BIZ.lng + 0.018}%2C${BIZ.lat + 0.014}&layer=mapnik&marker=${BIZ.lat}%2C${BIZ.lng}`
+
   return (
-    <div className="relative w-full min-h-[360px] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-      <div className="absolute inset-0 bg-[#dfe9e2] dark:bg-[#16231f]" role="img" aria-label={`Map area for ${BIZ.address}`}>
-        <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(28deg,transparent_47%,rgba(255,255,255,.8)_48%,rgba(255,255,255,.8)_52%,transparent_53%),linear-gradient(112deg,transparent_47%,rgba(255,255,255,.7)_48%,rgba(255,255,255,.7)_52%,transparent_53%)] [background-size:180px_150px,240px_190px]" />
-        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-orange text-2xl text-white shadow-xl ring-8 ring-brand-orange/20">+</span>
-        </div>
-      </div>
+    <div className="relative min-h-[360px] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+      <iframe
+        title={`Real map showing ${BIZ.address}`}
+        src={mapUrl}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="absolute inset-0 h-full w-full border-0"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" aria-hidden="true" />
+      <a
+        href="https://www.openstreetmap.org/copyright"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-2 left-2 rounded-full bg-white/85 px-2 py-1 text-[10px] text-zinc-700 shadow-sm backdrop-blur-sm dark:bg-zinc-900/85 dark:text-zinc-200"
+      >
+        © OpenStreetMap contributors
+      </a>
       <a
         href={BIZ.mapsUrl}
         target="_blank"
