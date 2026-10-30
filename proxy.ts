@@ -14,7 +14,7 @@ export function createContentSecurityPolicy(nonce: string) {
     "style-src-attr 'unsafe-inline'",
     "img-src 'self' blob: data: https://*.whatsapp.net https://res.cloudinary.com https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org",
     "font-src 'self'",
-    "connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://challenges.cloudflare.com",
+    "connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://challenges.cloudflare.com https://*.tile.openstreetmap.org",
     "frame-src 'self' https://challenges.cloudflare.com",
     "object-src 'none'",
     "base-uri 'self'",
