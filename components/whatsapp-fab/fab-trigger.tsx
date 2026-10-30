@@ -40,7 +40,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
           TXT.hint,
           "font-medium uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
           "bg-white dark:bg-zinc-900 text-[#25D366]",
-          "px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
+          "px-2.5 py-1 rounded-full shadow-md bg-card/72 border border-white/35 backdrop-blur-xl",
           "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
           "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100 group-focus-within/wa:max-w-[100px] group-focus-within/wa:opacity-100 group-focus-within/wa:scale-x-100"
         )}>
@@ -49,7 +49,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
         <button
           onClick={isOpen ? onClose : onOpen}
           aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
-          className="abh-press relative size-14 rounded-full bg-card border border-border shadow-md flex items-center justify-center hover:scale-105 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+          className="abh-press relative size-14 rounded-full bg-card/72 border border-white/35 shadow-[0_16px_32px_-18px_rgba(15,63,102,0.7)] backdrop-blur-xl flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
         >
           {isOpen ? (
             <X size={30} weight="bold" aria-hidden="true" />
