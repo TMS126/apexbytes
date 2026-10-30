@@ -5,7 +5,7 @@ import { ArrowSquareOut, GoogleLogo } from "@phosphor-icons/react"
 import { BIZ } from "@/lib/brand"
 
 export function LocationMap() {
-  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${BIZ.lng - 0.018}%2C${BIZ.lat - 0.014}%2C${BIZ.lng + 0.018}%2C${BIZ.lat + 0.014}&layer=mapnik&marker=${BIZ.lat}%2C${BIZ.lng}`
+  const mapUrl = `https://www.google.com/maps?q=${BIZ.lat},${BIZ.lng}&z=15&output=embed`
 
   return (
     <div className="relative min-h-[360px] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
@@ -17,14 +17,9 @@ export function LocationMap() {
         className="absolute inset-0 h-full w-full border-0"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" aria-hidden="true" />
-      <a
-        href="https://www.openstreetmap.org/copyright"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute bottom-2 left-2 rounded-full bg-white/85 px-2 py-1 text-[10px] text-zinc-700 shadow-sm backdrop-blur-sm dark:bg-zinc-900/85 dark:text-zinc-200"
-      >
-        © OpenStreetMap contributors
-      </a>
+      <span className="pointer-events-none absolute bottom-2 left-2 rounded-full bg-white/85 px-2 py-1 text-[10px] text-zinc-700 shadow-sm backdrop-blur-sm dark:bg-zinc-900/85 dark:text-zinc-200">
+        {BIZ.location}
+      </span>
       <a
         href={BIZ.mapsUrl}
         target="_blank"
