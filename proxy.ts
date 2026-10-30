@@ -12,7 +12,7 @@ export function createContentSecurityPolicy(nonce: string) {
     `script-src 'self' 'nonce-${nonce}' https://va.vercel-scripts.com https://www.googletagmanager.com https://challenges.cloudflare.com`,
     `style-src 'self' 'nonce-${nonce}'`,
     "style-src-attr 'unsafe-inline'",
-    "img-src 'self' blob: data: https://*.whatsapp.net https://res.cloudinary.com",
+    "img-src 'self' blob: data: https://*.whatsapp.net https://res.cloudinary.com https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org",
     "font-src 'self'",
     "connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://challenges.cloudflare.com",
     "frame-src 'self' https://challenges.cloudflare.com",
