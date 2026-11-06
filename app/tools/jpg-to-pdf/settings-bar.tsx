@@ -134,6 +134,30 @@ export function SettingsBar({
         />
       </div>
 
+      <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
+        <div className="mb-3">
+          <span className="text-sm font-medium text-foreground">Smart presets</span>
+          <p className="mt-0.5 text-[0.68rem] text-muted-foreground">Choose a ready-to-use setup, then fine-tune anything below.</p>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {[
+            { label: "Balanced", quality: 0.75, size: "a4" as PageSize, description: "Everyday sharing" },
+            { label: "Print-ready", quality: 0.95, size: "a4" as PageSize, description: "Sharpest detail" },
+            { label: "Small file", quality: 0.55, size: "letter" as PageSize, description: "Easy to send" },
+          ].map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              onClick={() => { setQuality(preset.quality); setPageSize(preset.size); setMode("merge") }}
+              className="rounded-xl border border-border/70 bg-background/60 px-2 py-2 text-left transition-colors hover:border-primary/50 hover:bg-primary/5"
+            >
+              <span className="block text-xs font-semibold text-foreground">{preset.label}</span>
+              <span className="mt-0.5 block text-[0.62rem] text-muted-foreground">{preset.description}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
       <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
         <div className="flex items-center justify-between mb-2">

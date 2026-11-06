@@ -66,8 +66,7 @@ function FooterContent() {
               </h2>
             </div>
             <p className="text-base leading-relaxed text-zinc-600 dark:text-muted-foreground max-w-xs">
-              Your local tech and print partner in Kgotsong. {BIZ.hubCount} hubs, {BIZ.serviceCount} services — all
-              in one friendly place.
+{BIZ.hubCount} hubs and {BIZ.serviceCount} services, all in one friendly place.
             </p>
           </div>
 

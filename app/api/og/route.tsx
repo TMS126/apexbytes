@@ -49,9 +49,7 @@ export async function GET() {
         <div style={{ display: 'flex', fontSize: '76px', fontWeight: 500, color: OG_COLORS.white, letterSpacing: '-0.02em', lineHeight: 1.05 }}>
           {BIZ.name}
         </div>
-        <div style={{ display: 'flex', fontSize: '32px', fontWeight: 500, color: OG_COLORS.muted, marginTop: '20px' }}>
-          {BIZ.tagline}
-        </div>
+
       </div>
     ),
     { width: 1200, height: 630 }

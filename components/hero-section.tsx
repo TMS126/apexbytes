@@ -9,7 +9,7 @@ import {
   ArrowUpRight, Play, Pause,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
-import { BIZ, MARQUEE_ITEMS, WEATHER_THEME } from "@/lib/brand"
+import { MARQUEE_ITEMS, WEATHER_THEME } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
@@ -125,9 +125,7 @@ export function HeroSection() {
               </p>
             )}
 
-            <p className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest mb-3 text-brand-orange-text">
-              <span aria-hidden="true">•</span> {BIZ.tagline.replace(/\.$/, "")}
-            </p>
+
 
             <h1 className="font-sans font-bold text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4">
               <span className="block text-foreground">Design.</span>

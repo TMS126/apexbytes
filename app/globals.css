@@ -1142,6 +1142,9 @@ button:not(:hover):not(:focus-visible):not(:active),
   border-radius: 9999px !important;
   padding: 0 !important;
 }
+.leaflet-control-attribution {
+  display: none !important;
+}
 .apexbytes-map-marker {
   display: grid;
   place-items: center;

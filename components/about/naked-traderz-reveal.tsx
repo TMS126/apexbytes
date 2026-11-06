@@ -78,7 +78,7 @@ export function TheNakedTradersZAReveal({
       {modalOpen && (
         <div role="dialog" aria-modal="true" aria-labelledby="nt-modal-title" className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/72 backdrop-blur-[2px] transition-opacity duration-500 ease-out"
+            className="absolute inset-0 bg-black/45 backdrop-blur-[1px] transition-opacity duration-500 ease-out"
             style={{ opacity: animateIn ? 1 : 0 }}
             onClick={() => closeModal()}
             aria-hidden="true"
@@ -103,7 +103,7 @@ export function TheNakedTradersZAReveal({
             </button>
 
             <div className="relative aspect-square w-full overflow-hidden rounded-[28px] bg-black shadow-2xl ring-1 ring-white/15">
-              <Image src="/nto.webp" alt="The Naked Traders ZA original logo" fill sizes="(max-width: 768px) 92vw, 560px" className="object-cover transition-transform duration-700 ease-out" />
+              <Image src="/nto.webp" alt="The Naked Traders ZA original logo" fill sizes="(max-width: 768px) 92vw, 560px" className="object-contain transition-transform duration-700 ease-out" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" aria-hidden="true" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                 <div className="mb-2 flex items-center gap-2">

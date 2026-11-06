@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const serviceParam = searchParams.get('service')
 
 let title: string = BIZ.name
-let subtitle: string = BIZ.tagline
+let subtitle: string = BIZ.name
 let price: string = ''
 let bg: string = `linear-gradient(135deg, ${OG_COLORS.background} 0%, ${OG_COLORS.backgroundMid} 55%, ${OG_COLORS.blue} 100%)`
   if (hubParam && HUB_ORDER.includes(hubParam as HubId) && sectionParam && serviceParam) {

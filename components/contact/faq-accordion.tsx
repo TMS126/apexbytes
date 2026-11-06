@@ -6,7 +6,6 @@ import { CaretDown } from "@phosphor-icons/react"
 import { FAQS } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { ScrollBounce } from "@/components/scroll-bounce"
-
 // Card minimization: each FAQ was its own bordered/tinted box. The
 // expand/collapse interaction already signals "this is interactive" — a
 // per-item card added nothing. Now one divided list.
@@ -17,21 +16,20 @@ export function FAQAccordion() {
     <section className="px-4 md:px-8 py-16 md:py-20">
       <div className="max-w-[980px] mx-auto">
         <ScrollBounce>
-          <div className="mb-8">
+            <div className="mb-8">
             <h2 className="abh-section-heading mb-3 text-center">Frequently Asked Questions</h2>
             <p className="abh-body text-center max-w-xl mx-auto">
               Everything you need to know about orders, processing, and timelines.
             </p>
             <div className="abh-divider" />
-          </div>
-        </ScrollBounce>
+            </div>
+          </ScrollBounce>
 
         <div className="divide-y divide-zinc-100 dark:divide-zinc-800 border-t border-b border-zinc-100 dark:border-zinc-800">
           {FAQS.map((faq, index) => {
             const isOpen = openIndex === index
             return (
-              <ScrollBounce key={index} delay={index * 0.05}>
-                <div>
+              <div key={index}>
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
@@ -59,8 +57,7 @@ export function FAQAccordion() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </ScrollBounce>
+              </div>
             )
           })}
         </div>

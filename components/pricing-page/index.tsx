@@ -216,13 +216,6 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
             </div>
           </div>
 
-          {/* ── New Add-Ons card — own card, not a dismissible notice ── */}
-          <div className="max-w-[980px] mx-auto px-4 pb-4">
-            <ScrollBounce delay={0.08}>
-              <AddOnsCard />
-            </ScrollBounce>
-          </div>
-
           <div className="max-w-[980px] mx-auto px-4 pb-16 space-y-8">
 
             {/* ── Sticky search bar ── */}
@@ -355,6 +348,10 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
               </div>
             </ScrollBounce>
 
+            {/* Add-ons come after the complete hub pricing catalogue. */}
+            <ScrollBounce delay={0.08}>
+              <AddOnsCard />
+            </ScrollBounce>
           </div>
 
           <CtaBar
