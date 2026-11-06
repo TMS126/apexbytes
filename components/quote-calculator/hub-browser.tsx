@@ -34,7 +34,7 @@
      hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
-import { CaretDown, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
+import { CaretDown, CheckCircle, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
@@ -209,6 +209,15 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                     </span>
                     <span className="mt-1 block text-[0.68rem] leading-snug text-muted-foreground">{hub.desc}</span>
                   </span>
+                  {isSelected && (
+                    <CheckCircle
+                      size={18}
+                      weight="fill"
+                      className="absolute right-2 top-2"
+                      style={{ color: solidAccent }}
+                      aria-label="Selected hub"
+                    />
+                  )}
                 </button>
               )
             })}
@@ -306,14 +315,17 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                           </span>
                         )}
                       </span>
-                      <CaretDown
-                        size={12}
-                        className={cn(
-                          "mr-1 transition-transform duration-200 ease-out motion-reduce:transition-none",
-                          isSectionOpen ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                        )}
-                        style={{ color: isSectionOpen ? accent : undefined, transform: isSectionOpen ? "rotate(180deg)" : "rotate(0deg)" }}
-                      />
+                      <span className="flex items-center gap-2">
+                        {isSectionOpen && <CheckCircle size={15} weight="fill" style={{ color: solidAccent }} aria-label="Selected section" />}
+                        <CaretDown
+                          size={14}
+                          className={cn(
+                            "shrink-0 text-muted-foreground transition-transform duration-200",
+                            isSectionOpen && "rotate-180 [color:var(--hub-accent)]"
+                          )}
+                          aria-hidden="true"
+                        />
+                      </span>
                     </button>
 
                     <span

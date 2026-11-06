@@ -1145,15 +1145,12 @@ button:not(:hover):not(:focus-visible):not(:active),
 .apexbytes-map-marker {
   display: grid;
   place-items: center;
-  border-radius: 999px;
-  background: var(--brand-orange);
-  box-shadow: 0 0 0 9px color-mix(in srgb, var(--brand-orange) 22%, transparent), 0 14px 24px -8px color-mix(in srgb, var(--brand-orange) 80%, transparent);
+  background: transparent;
 }
 .apexbytes-map-marker span {
-  color: white;
-  font-size: 1.65rem;
-  font-weight: 300;
+  font-size: 2rem;
   line-height: 1;
+  filter: drop-shadow(0 3px 4px rgb(0 0 0 / 0.32));
 }
 .bulk-ribbon {
   background: var(--brand-blue) !important;
