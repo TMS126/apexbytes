@@ -112,18 +112,16 @@ export function NoticePill({
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(event) => event.stopPropagation()}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 ring-1 ring-black/10 dark:ring-white/10"
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background/95 px-5 py-6 backdrop-blur-xl md:px-8 md:py-8"
                 style={{
                   boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}
               >
-                <div className="flex items-start gap-3 pr-8">
-                  <Icon size={20} weight="bold" style={{ color: iconColor }} className="mt-0.5 shrink-0" aria-hidden="true" />
-                  <h2 className="text-[0.78rem] font-medium uppercase tracking-widest" style={{ color: headerColor }}>
-                    {expandedLabel}
-                  </h2>
+                <div className="mb-6 border-b border-zinc-100 pb-5 dark:border-zinc-800">
+                  <h2 className="abh-section-heading mb-2 text-left">{expandedLabel}</h2>
+                  <div className="abh-divider !my-0" />
                 </div>
-                <div className="pl-[2rem] pt-3 text-[0.95rem] font-medium leading-snug abh-body text-zinc-700 dark:text-zinc-200">
+                <div className="abh-body max-w-2xl text-[1.05rem] leading-relaxed text-zinc-700 dark:text-zinc-200">
                   {children}
                 </div>
                 <button type="button" onClick={close} aria-label="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">

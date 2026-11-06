@@ -2,7 +2,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { CaretDown, CaretUp, Plus, Check, SealPercent, Clock } from '@phosphor-icons/react'
+import { CaretDown, CaretUp, Plus, Check, CheckCircle, SealPercent, Clock } from '@phosphor-icons/react'
 import { HUBS, type HubId } from '@/lib/data'
 import { HubIcon } from '@/components/services-page/shared'
 import { PdfPillButton } from './shared'
@@ -401,10 +401,13 @@ export function HubAccordionCard({
             </p>
           </div>
         </div>
-        {isOpen
-          ? <CaretUp size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
-          : <CaretDown size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
-        }
+  <span className="flex items-center gap-2 shrink-0">
+  {isOpen && <CheckCircle size={17} weight="fill" style={{ color: hubColor }} aria-label="Selected hub" />}
+  {isOpen
+  ? <CaretUp size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
+  : <CaretDown size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
+  }
+  </span>
       </button>
 
       <div

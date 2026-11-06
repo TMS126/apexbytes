@@ -3,7 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { X, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
+import { X, Info, MagnifyingGlass, Shuffle, CheckCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -87,6 +87,15 @@ export function HubFilterCircles({
                   here. */}
               <span className="relative">
                 <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
+                {isActive && (
+                  <CheckCircle
+                    size={17}
+                    weight="fill"
+                    className="absolute -right-3 -top-3"
+                    style={{ color: accent }}
+                    aria-label="Selected hub"
+                  />
+                )}
               </span>
             </span>
             <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>

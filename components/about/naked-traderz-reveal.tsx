@@ -84,7 +84,7 @@ export function TheNakedTradersZAReveal({
             aria-hidden="true"
           />
           <div
-            className="relative w-full max-w-sm p-4 sm:p-6 transition-all duration-500"
+            className="relative w-full max-w-sm md:max-w-xl p-2 sm:p-4 md:p-6 transition-all duration-500"
             style={{
               opacity: animateIn ? 1 : 0,
               transform: animateIn ? "translateY(0) scale(1)" : "translateY(8px) scale(0.94)",
@@ -102,16 +102,17 @@ export function TheNakedTradersZAReveal({
               <X size={16} weight="bold" aria-hidden="true" />
             </button>
 
-            <div className="flex items-center gap-2 mb-1">
-              <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
-              <span className="abh-eyebrow" style={{ color: accentOrange }}>1st Ever Logo</span>
-            </div>
-
-            <h3 id="nt-modal-title" className="abh-card-heading text-lg mb-1">The Naked Traders ZA</h3>
-            <p className="abh-muted mb-4">Market trading group — forex &amp; CFD trading (e.g. EUR/USD)</p>
-
-            <div className="relative w-full aspect-square overflow-hidden rounded-[28px] bg-black shadow-2xl ring-1 ring-black/15 dark:ring-white/15">
-              <Image src="/nto.webp" alt="The Naked Traders ZA logo" fill sizes="288px" className="object-contain" />
+            <div className="relative aspect-square w-full overflow-hidden rounded-[28px] bg-black shadow-2xl ring-1 ring-white/15">
+              <Image src="/nto.webp" alt="The Naked Traders ZA original logo" fill sizes="(max-width: 768px) 92vw, 560px" className="object-cover transition-transform duration-700 ease-out" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" aria-hidden="true" />
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                <div className="mb-2 flex items-center gap-2">
+                  <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
+                  <span className="abh-eyebrow text-white/80">1st Ever Logo</span>
+                </div>
+                <h3 id="nt-modal-title" className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">The Naked Traders ZA</h3>
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75 sm:text-base">The original market trading group identity, built for forex and CFD trading.</p>
+              </div>
             </div>
           </div>
         </div>
