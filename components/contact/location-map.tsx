@@ -13,9 +13,9 @@ const center: [number, number] = [BIZ.lat, BIZ.lng]
 
 const markerIcon = L.divIcon({
   className: "apexbytes-map-marker",
-  html: '<span aria-hidden="true">📍</span>',
-  iconSize: [46, 46],
-  iconAnchor: [23, 23],
+  html: '<span aria-hidden="true"><i></i></span>',
+  iconSize: [36, 44],
+  iconAnchor: [18, 40],
 })
 
 function RecenterButton() {

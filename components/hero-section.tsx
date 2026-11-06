@@ -143,7 +143,7 @@ export function HeroSection() {
               <ScrollBounce>
               <button
                 onClick={handleCtaClick}
-                className="abh-line-cta group/quote px-7 py-4 font-sans font-medium text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
+                className="abh-line-cta group/quote px-7 py-4 font-sans font-medium text-lg sm:text-xl shadow-[0_8px_14px_-10px_rgba(15,63,102,0.8)] active:brightness-95 hover:-translate-y-0.5"
                 >
                   <span className="min-w-[10.5rem] md:max-lg:min-w-0 transition-opacity duration-150 group-active/quote:opacity-70"><span className="md:max-lg:hidden">{quoteLabel}</span><span className="hidden md:max-lg:inline">Quote</span></span>
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
@@ -152,7 +152,7 @@ export function HeroSection() {
 
               <button
                 onClick={handleServicesClick}
-                className="abh-line-cta group/services-cta px-6 py-4 font-sans font-medium text-lg sm:text-xl active:brightness-95 hover:-translate-y-0.5"
+                className="abh-line-cta group/services-cta px-6 py-4 font-sans font-medium text-lg sm:text-xl shadow-[0_8px_14px_-10px_rgba(15,63,102,0.8)] active:brightness-95 hover:-translate-y-0.5"
               >
                 <span className="md:max-lg:hidden">See Our Services</span><span className="hidden md:max-lg:inline">Services</span>
                 <ArrowUpRight
