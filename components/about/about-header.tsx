@@ -9,7 +9,7 @@ export function AboutHeader({ blueColor }: { blueColor: string }) {
   const [statsHovered, setStatsHovered] = useState(false)
 
   return (
-    <section className="px-4 md:px-8 pt-[calc(var(--nav-h,74px)+2rem)] pb-8 text-center">
+    <section className="abh-editorial-hero">
       <div className="max-w-[1248px] mx-auto flex flex-col items-center">
         <ScrollBounce>
           <h1 className="abh-page-title mb-3">About Us</h1>

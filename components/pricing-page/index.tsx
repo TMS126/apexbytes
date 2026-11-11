@@ -158,7 +158,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
         <main className="flex-1">
 
           {/* ── Page header ── */}
-          <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
+          <section className="abh-editorial-hero">
             <div className="max-w-[980px] mx-auto">
               <ScrollBounce>
                 <h1 className="abh-page-title mb-3">Pricing</h1>

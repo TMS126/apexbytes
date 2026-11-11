@@ -94,8 +94,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
 
   const handleDesktopSelectHub = (hubId: HubId) => {
     trackEvent("view_hub", { hub_id: hubId, hub_name: HUBS[hubId].title })
-    setDesktopActiveHub(hubId)
-    setDesktopActiveSection(null)
+    router.push(hubRouteFor(hubId))
   }
 
   const handleDesktopSwitchHub = (hubId: HubId) => {
@@ -186,7 +185,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
       >
 
         <ScrollBounce className="w-full">
-          <div className="pt-[calc(var(--nav-h,74px)+2rem)] pb-8 text-center w-full">
+          <div className="abh-editorial-hero w-full">
             <h1 className="abh-page-title mb-3">Our Service Hubs</h1>
             <p className="abh-tagline max-w-xl mx-auto">
               Explore our ecosystem. Tap a hub to view all available services and instant pricing.

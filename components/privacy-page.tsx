@@ -11,10 +11,10 @@ export function PrivacyPage() {
     // is showing, so this page's content was starting underneath the
     // header/banner instead of below it during that state. Now tracks
     // the same live --nav-h variable every other route already uses.
-    <div className="min-h-screen bg-background pt-[var(--nav-h,74px)]">
-      <div className="max-w-3xl mx-auto px-6 md:px-8 py-16 md:py-24">
+    <div className="min-h-screen bg-background">
+      <div className="max-w-3xl mx-auto px-6 md:px-8 pb-24">
         {/* Header */}
-        <div className="mb-12">
+        <div className="abh-editorial-hero mb-12">
           <span className="text-[0.84rem] font-medium uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full">
             Legal
           </span>

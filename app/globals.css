@@ -112,8 +112,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-green-deep: #2F5E0B;
   --brand-orange-brown: #8D4D1F;
   --brand-white: #FFFFFF;
-  /* Decorative rules are blue in light mode and orange in dark mode. */
-  --line-rule: var(--brand-blue);
+  /* Neutral rules keep the editorial layout quiet; dark mode retains its warm accent. */
+  --line-rule: #D9D9D6;
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --card-rule: var(--line-rule);
   --brand-adobe-pdf-red: #EC1C24;
@@ -229,25 +229,25 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --footer-bg: var(--brand-blue-dark);
   --shadow: none;
   --card-border: transparent;
-  --background: #EAF4F8;
-  --foreground: var(--brand-blue-dark);
-  --card: rgba(255, 255, 255, 0.52);
-  --card-foreground: var(--brand-blue-dark);
-  --popover: rgba(255, 255, 255, 0.72);
-  --popover-foreground: var(--brand-blue-dark);
+  --background: #FFFFFF;
+  --foreground: #171717;
+  --card: rgba(246, 246, 245, 0.88);
+  --card-foreground: #171717;
+  --popover: rgba(255, 255, 255, 0.96);
+  --popover-foreground: #171717;
   --primary: var(--brand-blue);
   --primary-foreground: var(--brand-white);
-  --secondary: #E4E4DE;
-  --secondary-foreground: var(--brand-blue-dark);
-  --muted: #E4E4DE;
-  --muted-foreground: var(--brand-neutral-500);
+  --secondary: #F1F1F0;
+  --secondary-foreground: #171717;
+  --muted: #F3F3F2;
+  --muted-foreground: #6B6B6B;
   --accent: var(--brand-blue);
   --accent-foreground: var(--brand-white);
   --destructive: #B42318;
   --destructive-foreground: var(--brand-white);
-  --border: var(--brand-neutral-300);
-  --input: #E4E4DE;
-  --ring: var(--brand-blue);
+  --border: #E5E5E3;
+  --input: #F3F3F2;
+  --ring: #424242;
 
   --wa-header: #075E54;
   --wa-wallpaper: #E5DDD5;
@@ -822,6 +822,24 @@ button, a, [role="button"] {
     color: var(--title-color);
     font-size: clamp(2.75rem, 5.4vw, 5rem);
     letter-spacing: -0.065em;
+  }
+
+  .abh-editorial-hero {
+    min-height: clamp(30rem, 72svh, 48rem);
+    padding: calc(var(--nav-h, 74px) + 2rem) 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .abh-editorial-hero {
+      min-height: min(68svh, 38rem);
+      padding-inline: 1rem;
+      padding-bottom: 3rem;
+    }
   }
 
   .abh-section-heading {

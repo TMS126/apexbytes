@@ -35,7 +35,7 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <section className="px-4 md:px-8 pt-[calc(var(--nav-h)+2rem)] pb-6">
+      <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
             <h1 className="abh-page-title mb-3">Tools</h1>

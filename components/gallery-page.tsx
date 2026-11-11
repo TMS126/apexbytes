@@ -152,14 +152,14 @@ function ProjectCard({
       <button
         onClick={() => onSelect(p)}
         aria-label={`View ${p.title}`}
-        className="group relative aspect-square rounded-[10px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-lg active:scale-[0.97] active:translate-y-0"
+        className="group relative aspect-[4/3] rounded-[14px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-[0.99] active:translate-y-0"
       >
         <SafeImage
           src={p.image}
           alt={p.title}
           accent={TOKEN.orangeText}
           fill
-          sizes="(max-width: 640px) 33vw, 25vw"
+          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
           className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
         />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
@@ -172,8 +172,9 @@ function ProjectCard({
         </div>
       </button>
 
-      <button onClick={() => onSelect(p)} className="mt-1.5 min-w-0 text-left px-0.5 active:scale-[0.98] transition-transform duration-150">
-        <span className="block text-[0.72rem] font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
+      <button onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
+        <span className="block text-base md:text-lg font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
+        <span className="mt-1 block text-xs md:text-sm uppercase tracking-[0.14em] text-muted-foreground">{p.tag}</span>
       </button>
     </div>
   )
@@ -189,7 +190,7 @@ function ProjectGrid({
   pathname: string
 }) {
   return (
-    <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 md:gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-8">
       {projects.map((p) => (
         <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
       ))}
@@ -346,11 +347,11 @@ function GalleryPageInner() {
     // height on every filter click, not just the notice pill it was
     // originally added for. Reverted to a plain div — switching hubs is
     // now an instant re-render with no shared-layout tween to fight.
-    <section className="min-h-screen bg-background pt-[calc(var(--nav-h)+2rem)] pb-24 overflow-x-hidden">
+    <section className="min-h-screen bg-background pb-24 overflow-x-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8">
 
         <ScrollBounce>
-          <div className="text-center mb-12">
+          <div className="abh-editorial-hero mb-10">
             <h1 className="abh-page-title mb-4">Our Portfolio</h1>
             <p className="abh-tagline max-w-2xl mx-auto">Real results for real clients. Select a category to explore our work in depth.</p>
             <div className="abh-divider" />
@@ -475,7 +476,7 @@ function GalleryPageInner() {
 
 function GallerySkeleton() {
   return (
-    <section className="min-h-screen bg-background pt-[calc(var(--nav-h)+2rem)] pb-24">
+    <section className="min-h-screen bg-background pb-24">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8 text-center">
         <h1 className="abh-page-title mb-4">Our Portfolio</h1>
         <div className="abh-divider" />

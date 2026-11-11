@@ -6,8 +6,9 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { Sun, Moon, ArrowUpRight } from "@phosphor-icons/react"
-import { NAV_ITEMS } from "@/lib/brand"
+import { Sun, Moon, CaretDown, ArrowUpRight } from "@phosphor-icons/react"
+import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
+import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useNavContrast } from "@/hooks/use-navbar"
@@ -99,7 +100,7 @@ export function Navbar() {
         className="fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top] duration-300 ease-out dark:bg-background/88"
       >
         <div className="flex h-[var(--nav-h)] items-center justify-center px-5 md:px-10">
-          <div className="relative grid w-full max-w-[1160px] grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <div className="relative grid w-full max-w-[1320px] grid-cols-[1fr_auto_1fr] items-center gap-4">
             {/* Logo */}
             <button
               type="button"
@@ -134,21 +135,50 @@ export function Navbar() {
               </div>
             </button>
 
-            <nav aria-label="Primary navigation" className="hidden items-center gap-6 pointer-events-auto xl:flex">
+            <nav aria-label="Primary navigation" className="hidden items-center gap-5 pointer-events-auto xl:flex">
               {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
                 const active = pathname === item.path || (item.path !== "/" && pathname.startsWith(`${item.path}/`))
+                const submenu = item.id === "services"
+                  ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
+                  : item.id === "tools"
+                    ? [{ label: "All tools", path: "/tools" }, { label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                    : null
+
                 return (
-                  <Link
-                    key={item.id}
-                    href={item.path}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "whitespace-nowrap text-sm transition-colors hover:text-foreground",
-                      active ? "font-medium text-foreground" : "font-normal text-muted-foreground"
+                  <div key={item.id} className="group/nav relative flex items-center gap-1">
+                    <Link
+                      href={item.path}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "whitespace-nowrap text-[0.82rem] transition-colors hover:text-foreground",
+                        active ? "font-medium text-foreground" : "font-normal text-muted-foreground"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                    {submenu && (
+                      <details className="group/dropdown relative">
+                        <summary
+                          aria-label={`Open ${item.label} submenu`}
+                          className="flex size-7 cursor-pointer list-none items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground [&::-webkit-details-marker]:hidden"
+                        >
+                          <CaretDown size={12} weight="bold" aria-hidden="true" />
+                        </summary>
+                        <div className="invisible pointer-events-none absolute left-0 top-full z-50 mt-2 flex min-w-56 flex-col rounded-[14px] border border-border/50 bg-background/95 p-2 opacity-0 shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-all group-open/dropdown:visible group-open/dropdown:pointer-events-auto group-open/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:pointer-events-auto group-hover/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:pointer-events-auto group-focus-within/dropdown:opacity-100">
+                          {submenu.map((subitem) => (
+                            <Link
+                              key={subitem.path}
+                              href={subitem.path}
+                              aria-current={pathname === subitem.path ? "page" : undefined}
+                              className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            >
+                              {subitem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </details>
                     )}
-                  >
-                    {item.label}
-                  </Link>
+                  </div>
                 )
               })}
             </nav>
@@ -163,7 +193,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={handleThemeToggle}
-                className="abh-circle-button order-1 flex size-9 items-center justify-center text-muted-foreground transition-colors hover:bg-muted active:scale-95 xl:hidden"
+                className="abh-circle-button order-1 flex size-9 items-center justify-center text-muted-foreground transition-colors hover:bg-muted active:scale-95"
                 aria-label={mounted ? (theme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
               >
                 {mounted &&
@@ -216,8 +246,6 @@ export function Navbar() {
                 neutralColor={neutralColor}
                 triggerRef={menuToggleRef}
                 ctaPulse={ctaPulse}
-                theme={theme}
-                onThemeToggle={handleThemeToggle}
               />
 
               <Link

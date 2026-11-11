@@ -5,6 +5,7 @@ import { Suspense } from "react"
 import type { Metadata } from "next"
 import { ServicesPage } from "@/components/services-page"
 import { ServiceDetailPage } from "@/components/services-page/service-detail-page"
+import { ServiceHubRoutePage } from "@/components/services-page/hub-route-page"
 import { CtaBar } from "@/components/strip-section"
 import { Navbar } from "@/components/navbar"
 import { TestimonialsSection } from "@/components/testimonials-section"
@@ -138,7 +139,8 @@ export default async function ServicesRoute({
     <div className="min-h-screen bg-background">
       <Navbar />
       <div>
-        {!selectedService && (
+        {slug.length === 1 && <ServiceHubRoutePage hubId={hubSlugToId(slug[0])!} />}
+        {slug.length === 0 && (
           <Suspense fallback={null}>
             <ServicesPage />
           </Suspense>

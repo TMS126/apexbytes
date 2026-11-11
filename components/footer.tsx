@@ -32,7 +32,7 @@ function FooterContent() {
   const showFaq = pathname !== "/contact"
 
   return (
-    <div className="pt-16 pb-12">
+    <div className="border-t border-border/50 bg-background pt-16 pb-12">
       {showFaq && (
         <ScrollBounce>
           <div className="px-6 md:px-10 lg:px-12 xl:px-16 mb-14 flex justify-center">
@@ -47,7 +47,7 @@ function FooterContent() {
       )}
 
       <ScrollBounce>
-        <div className="max-w-[1920px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 px-6 md:px-10 lg:px-12 xl:px-16">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 px-6 md:px-10">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 select-none">
               <div
@@ -158,8 +158,8 @@ function FooterContent() {
       </ScrollBounce>
 
       <ScrollBounce>
-        <div className="mt-8 bg-transparent border-t border-transparent">
-          <div className="max-w-[1920px] mx-auto pt-8 pb-8 px-6 md:px-10 lg:px-12 xl:px-16 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
+        <div className="mt-8 border-t border-border/50">
+          <div className="max-w-[1280px] mx-auto pt-8 pb-8 px-6 md:px-10 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
             <p className="text-[0.78rem] font-medium text-muted-foreground md:text-left text-center">
               © {new Date().getFullYear()} {BIZ.name}. All rights reserved.
             </p>
@@ -197,7 +197,7 @@ function FooterContent() {
 
 export function Footer() {
   return (
-    <footer className="bg-transparent border-0">
+    <footer className="bg-background text-foreground">
       <FooterContent />
     </footer>
   )

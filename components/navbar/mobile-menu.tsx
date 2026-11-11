@@ -4,7 +4,9 @@
 import { useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { NAV_ITEMS, TOKEN } from "@/lib/brand"
+import { NAV_ITEMS, TOKEN, HUB_NAMES } from "@/lib/brand"
+import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
+import { CaretDown } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 
 // FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
@@ -37,9 +39,9 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
         return
       }
       if (e.key !== "Tab" || !containerRef.current) return
-      const focusable = containerRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
+      const focusable = Array.from(containerRef.current.querySelectorAll<HTMLElement>(
+        'button, summary, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )).filter((element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden")
       if (focusable.length === 0) return
       const first = focusable[0]
       const last = focusable[focusable.length - 1]
@@ -92,7 +94,12 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
         <nav className="w-full max-w-[320px] flex flex-col items-center gap-2.5" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
             const isActive =
-              pathname === item.path || (item.path === "/tools" && pathname.startsWith("/tools"))
+              pathname === item.path || (item.path === "/services" && pathname.startsWith("/services")) || (item.path === "/tools" && pathname.startsWith("/tools"))
+            const submenu = item.id === "services"
+              ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
+              : item.id === "tools"
+                ? [{ label: "All tools", path: "/tools" }, { label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                : null
 
             if (item.isCta) {
               return (
@@ -112,30 +119,51 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   )}
                 >
                   {item.label}
-</Link>
-                )
-              }
+                </Link>
+              )
+            }
 
             return (
-              <Link
+              <div
                 key={item.id}
-                href={item.path}
-                aria-current={isActive ? "page" : undefined}
-                tabIndex={menuOpen ? 0 : -1}
-                style={{
-                  transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                  color: isActive ? HOVER_TEXT : neutralColor,
-                  borderColor: isActive ? HOVER_TEXT : "transparent",
-                }}
-                className={cn(
-                  "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] border-2 bg-transparent transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",
-                  isActive ? "font-semibold" : "font-semibold",
-                  menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                )}
+                className={cn("flex w-full flex-col items-center gap-1 transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
+                style={{ transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms" }}
               >
-                {item.label}
-</Link>
-              )
+                <Link
+                  href={item.path}
+                  aria-current={isActive ? "page" : undefined}
+                  tabIndex={menuOpen ? 0 : -1}
+                  style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
+                  className="w-[180px] rounded-[14px] border-2 bg-transparent px-8 py-3 text-center font-sans text-[1.2rem] font-semibold transition-colors active:scale-95"
+                >
+                  {item.label}
+                </Link>
+                {submenu && (
+                  <details className="w-[180px]">
+                    <summary
+                      tabIndex={menuOpen ? 0 : -1}
+                      className="flex cursor-pointer list-none items-center justify-center gap-2 py-1.5 text-xs font-medium text-muted-foreground [&::-webkit-details-marker]:hidden"
+                    >
+                      Browse {item.label.toLowerCase()}
+                      <CaretDown size={12} aria-hidden="true" />
+                    </summary>
+                    <div className="flex flex-col items-center gap-1 border-t border-border/50 pt-2">
+                      {submenu.map((subitem) => (
+                        <Link
+                          key={subitem.path}
+                          href={subitem.path}
+                          tabIndex={menuOpen ? 0 : -1}
+                          aria-current={pathname === subitem.path ? "page" : undefined}
+                          className="w-full rounded-lg px-3 py-2 text-center text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        >
+                          {subitem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                )}
+              </div>
+            )
           })}
         </nav>
       </div>

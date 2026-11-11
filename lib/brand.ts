@@ -52,7 +52,7 @@ export const TOKEN = {
 // ============================================================
 export const HEX = {
   light: {
-    page: "#F1F1EC", card: "#E8E8E2",
+    page: "#FFFFFF", card: "#F4F4F2",
     blue: "#1E6FA8", blueMid: "#15537D", blueDark: "#0F3F66",
     green: "#4A8011", greenDeep: "#2F5E0B",
     orange: "#FA5215", orangeDark: "#B06225", orangeBrown: "#8D4D1F",
