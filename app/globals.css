@@ -802,6 +802,37 @@ button, a, [role="button"] {
     box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
   }
 
+  .abh-nav-control {
+    border: 0 !important;
+    border-radius: 9999px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .abh-service-info-card {
+    min-height: 100%;
+    border-left-width: 2px !important;
+  }
+
+  .abh-service-request-cta {
+    background: var(--foreground);
+    color: var(--background);
+  }
+
+  .abh-scroll-cue {
+    border: 1px solid var(--border) !important;
+    background: color-mix(in srgb, var(--background) 76%, transparent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .abh-scroll-cue svg { animation: abh-scroll-cue 1.8s ease-in-out infinite; }
+  }
+
+  @keyframes abh-scroll-cue {
+    0%, 100% { transform: translateY(-2px); }
+    50% { transform: translateY(3px); }
+  }
+
   .abh-home-title {
   font-family: var(--font-poppins), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(2.15rem, 4vw, 3.65rem);
@@ -825,7 +856,7 @@ button, a, [role="button"] {
   }
 
   .abh-editorial-hero {
-    min-height: clamp(30rem, 72svh, 48rem);
+    min-height: clamp(34rem, 82svh, 54rem);
     padding: calc(var(--nav-h, 74px) + 2rem) 1.5rem 4rem;
     display: flex;
     flex-direction: column;
@@ -836,7 +867,7 @@ button, a, [role="button"] {
 
   @media (max-width: 640px) {
     .abh-editorial-hero {
-      min-height: min(68svh, 38rem);
+      min-height: min(76svh, 42rem);
       padding-inline: 1rem;
       padding-bottom: 3rem;
     }

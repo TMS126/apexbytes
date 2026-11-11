@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
+import { ArrowDown, ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
@@ -38,16 +38,24 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
           <button
             type="button"
             onClick={() => setRequestOpen(true)}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="abh-service-request-cta inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Request this service
             <ArrowUpRight size={15} aria-hidden="true" />
           </button>
         </div>
+
+        <a
+          href="#service-details"
+          aria-label="Scroll to service details"
+          className="abh-scroll-cue mt-14 inline-flex size-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <ArrowDown size={18} aria-hidden="true" />
+        </a>
       </header>
 
-      <div className="mx-auto grid max-w-[1080px] gap-5 px-4 md:grid-cols-2 md:px-8">
-        <section className="rounded-[14px] border border-border/50 bg-card/60 p-6 md:p-8" aria-labelledby="service-requirements">
+      <div id="service-details" className="mx-auto grid max-w-[1080px] scroll-mt-24 gap-5 px-4 md:grid-cols-2 md:px-8">
+        <section className="abh-service-info-card abh-card-rule p-6 md:p-8" aria-labelledby="service-requirements">
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Before you visit</p>
           <h2 id="service-requirements" className="font-heading text-2xl font-medium tracking-tight text-foreground">What to bring</h2>
           <ul className="mt-6 flex flex-col gap-3">
@@ -60,7 +68,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
           </ul>
         </section>
 
-        <section className="rounded-[14px] border border-border/50 bg-card/60 p-6 md:p-8" aria-labelledby="service-overview">
+        <section className="abh-service-info-card abh-card-rule p-6 md:p-8" aria-labelledby="service-overview">
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Service overview</p>
           <h2 id="service-overview" className="font-heading text-2xl font-medium tracking-tight text-foreground">How it works</h2>
           <p className="mt-6 text-sm leading-relaxed text-muted-foreground">{service.desc || `Visit ApexbytesHub in ${hub.title} to get help with ${service.name.toLowerCase()}. We’ll confirm your requirements and price before getting started.`}</p>

@@ -150,8 +150,8 @@ export function Navbar() {
                       href={item.path}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "whitespace-nowrap text-[0.82rem] transition-colors hover:text-foreground",
-                        active ? "font-medium text-foreground" : "font-normal text-muted-foreground"
+                        "whitespace-nowrap text-[0.9rem] transition-colors hover:text-foreground",
+                        active ? "font-semibold text-foreground" : "font-semibold text-muted-foreground"
                       )}
                     >
                       {item.label}
@@ -193,7 +193,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={handleThemeToggle}
-                className="abh-circle-button order-1 flex size-9 items-center justify-center text-muted-foreground transition-colors hover:bg-muted active:scale-95"
+                className="abh-nav-control order-1 flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground active:scale-95"
                 aria-label={mounted ? (theme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
               >
                 {mounted &&
@@ -210,7 +210,7 @@ export function Navbar() {
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
-                className="abh-circle-button order-2 flex size-10 items-center justify-center transition-colors hover:bg-muted active:scale-95"
+                className="abh-nav-control order-2 flex size-10 items-center justify-center transition-colors hover:text-foreground active:scale-95"
               >
                 <span className="relative w-4 h-[12px] flex flex-col justify-between items-center" aria-hidden="true">
                   <span
