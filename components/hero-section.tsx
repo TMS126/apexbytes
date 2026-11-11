@@ -34,7 +34,7 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
 
 function HubIconField({ isDark }: { isDark: boolean }) {
   return (
-    <div className="relative mx-auto w-full max-w-[560px] aspect-square overflow-hidden rounded-[28px]">
+    <div className="relative mx-auto w-full max-w-[620px] aspect-square overflow-hidden rounded-[28px]">
       <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[28px]" aria-hidden="true">
         <div className="absolute -inset-x-1/4 top-1/4 h-1/2 -rotate-[24deg] bg-gradient-to-r from-transparent via-blue-300/20 to-transparent blur-[70px] [mask-image:radial-gradient(ellipse_at_center,black_0%,transparent_76%)] dark:via-orange-500/15" />
       </div>
@@ -50,7 +50,7 @@ function HubIconField({ isDark }: { isDark: boolean }) {
   )
 }
 
-const HERO_SUBHEAD = "Everyday digital and print work, handled with clarity, care and a little more confidence."
+const HERO_SUBHEAD = "Digital, print and everyday services—thoughtfully brought together, right here in Bothaville."
 const TRUST_HINTS = ["Local & human", "Clear pricing", "Fast turnaround"]
 
 export function HeroSection() {
@@ -94,7 +94,7 @@ export function HeroSection() {
   return (
     <section
       aria-label="Hero"
-      className="relative min-h-[calc(100vh-var(--nav-h))] w-full flex flex-col items-center justify-center px-4 md:px-8 pt-[calc(var(--nav-h)+56px)] md:pt-[104px] pb-10 md:pb-16 overflow-hidden"
+      className="abh-home-hero relative min-h-[calc(100vh-var(--nav-h))] w-full flex flex-col items-center justify-center px-4 md:px-8 pt-[calc(var(--nav-h)+56px)] md:pt-[104px] pb-10 md:pb-16 overflow-hidden"
     >
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
         <div
@@ -114,7 +114,7 @@ export function HeroSection() {
           <HomeNoticeStack notices={HOME_NOTICES} />
         </div>
 
-        <div className="w-full max-w-[1280px] mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center mb-10 md:mb-14">
+        <div className="w-full max-w-[1320px] mx-auto grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-12 lg:gap-16 items-center mb-12 md:mb-16">
 
           <div className="text-center md:text-left">
 
@@ -127,13 +127,18 @@ export function HeroSection() {
 
 
 
-            <h1 className="font-sans font-bold text-5xl sm:text-6xl md:text-7xl tracking-tight leading-[0.95] mb-4">
-              <span className="block text-foreground">Design.</span>
-              <span className="block text-foreground">Print.</span>
-              <span className="block text-foreground">Upgrade.</span>
+            <div className="mb-5 flex items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="h-px w-8 bg-brand-orange" aria-hidden="true" />
+              <span>Everyday services, considered</span>
+            </div>
+
+            <h1 className="abh-home-title mb-6 text-foreground">
+              <span className="block">Design.</span>
+              <span className="block">Print.</span>
+              <span className="block text-brand-blue">Upgrade.</span>
             </h1>
 
-            <p className="text-lg md:text-xl font-medium text-muted-foreground max-w-[480px] md:max-w-none mx-auto md:mx-0 leading-relaxed mb-8">
+            <p className="max-w-[470px] text-lg font-normal leading-relaxed text-muted-foreground md:text-xl">
               {HERO_SUBHEAD}
             </p>
 

@@ -82,7 +82,7 @@ export function Navbar() {
 
   const handleThemeToggle = () => setTheme(theme === "dark" ? "light" : "dark")
 
-  const glassPillClass = "py-2 rounded-[14px] pointer-events-auto"
+  const glassPillClass = "py-2 pointer-events-auto"
 
   const neutralColor = useMemo(
     () => resolveNeutralColor(mounted, theme, isDarkBehind),
@@ -96,7 +96,7 @@ export function Navbar() {
   return (
     <>
       <header
-        className="fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col pointer-events-none transition-[top] duration-300 ease-out"
+        className="fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/60 bg-background/88 shadow-[0_8px_18px_-20px_rgba(15,63,102,0.65)] backdrop-blur-xl pointer-events-none transition-[top] duration-300 ease-out"
       >
         <div className="flex justify-center px-6 md:px-10 lg:px-12 xl:px-16 pt-5 h-[--nav-h] items-center">
           <div className="relative flex items-center justify-between w-full max-w-[1920px]">

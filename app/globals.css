@@ -799,14 +799,33 @@ button, a, [role="button"] {
     box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
   }
 
+  .abh-home-title {
+    font-family: Poppins, "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(4rem, 7.2vw, 7rem);
+    font-weight: 600;
+    letter-spacing: -0.075em;
+    line-height: 0.91;
+  }
+
+  .abh-home-hero {
+    background: radial-gradient(ellipse at 76% 48%, color-mix(in srgb, var(--brand-light-blue) 18%, transparent), transparent 38%);
+  }
+  .dark .abh-home-hero {
+    background: radial-gradient(ellipse at 76% 48%, color-mix(in srgb, var(--brand-blue) 12%, transparent), transparent 40%);
+  }
+
   .abh-page-title {
-    @apply font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight text-center;
+    @apply font-heading font-medium tracking-tight leading-tight text-center;
     color: var(--title-color);
+    font-size: clamp(2.75rem, 5.4vw, 5rem);
+    letter-spacing: -0.065em;
   }
 
   .abh-section-heading {
-    @apply font-heading font-medium text-2xl md:text-3xl tracking-tight leading-snug;
+    @apply font-heading font-medium leading-tight;
     color: var(--title-color);
+    font-size: clamp(2rem, 3.4vw, 3.25rem);
+    letter-spacing: -0.055em;
     margin-top: 4rem;
   }
 

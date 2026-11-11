@@ -16,12 +16,13 @@ export function CoreHubGrid() {
     <section className="px-4 md:px-8 py-14 md:py-20" aria-labelledby="core-hubs-title">
       <div className="max-w-[1240px] mx-auto">
         <ScrollBounce>
-          <div className="text-center mb-10 md:mb-12">
-            <h2 id="core-hubs-title" className="abh-section-heading text-center mt-0">
-              What We Can Help With
+          <div className="mb-10 max-w-2xl text-left md:mb-12">
+            <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">A clear place to start</p>
+            <h2 id="core-hubs-title" className="abh-section-heading mt-0 text-left">
+              What we can help with
             </h2>
-            <p className="abh-tagline max-w-lg mx-auto mt-3">
-              Five hubs, one place to sort it all out.
+            <p className="abh-tagline mt-3 max-w-lg">
+              Five focused hubs, one friendly place to get things done.
             </p>
           </div>
         </ScrollBounce>
