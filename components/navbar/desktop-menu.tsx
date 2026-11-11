@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { NAV_ITEMS, BRAND, TOKEN, HUB_NAMES } from "@/lib/brand"
+import { Moon, Sun } from "@phosphor-icons/react"
 import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
 
@@ -23,6 +24,8 @@ interface DesktopMenuProps {
   neutralColor: string
   triggerRef: React.RefObject<HTMLButtonElement | null>
   ctaPulse: boolean
+  theme: string | undefined
+  onThemeToggle: () => void
 }
 
 // ============================================================
@@ -42,6 +45,8 @@ export function DesktopMenu({
   neutralColor,
   triggerRef,
   ctaPulse,
+  theme,
+  onThemeToggle,
 }: DesktopMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [hubsOpen, setHubsOpen] = useState(false)
@@ -196,6 +201,18 @@ export function DesktopMenu({
           )
         })}
       </nav>
+      <div className="mt-2 border-t border-border/70 px-2 pt-2">
+        <button
+          type="button"
+          role="menuitem"
+          tabIndex={menuOpen ? 0 : -1}
+          onClick={onThemeToggle}
+          className="flex w-full items-center gap-2 px-4 py-2.5 text-left text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
+          {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
+          {theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+        </button>
+      </div>
     </div>
   )
 }

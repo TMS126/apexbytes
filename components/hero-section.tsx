@@ -2,11 +2,8 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useTheme } from "next-themes"
 import {
-  ArrowUpRight, Play, Pause,
+  ArrowUpRight, ArrowDown, Play, Pause,
   Sun, Moon, CloudSun, CloudMoon, Cloud, CloudFog, CloudRain, CloudLightning, Snowflake,
 } from "@phosphor-icons/react"
 import { MARQUEE_ITEMS, WEATHER_THEME } from "@/lib/brand"
@@ -32,30 +29,9 @@ function fallbackCategory(greeting: BusinessStatus["greeting"]): WeatherCategory
   return greeting === "morning" || greeting === "afternoon" ? "clear-day" : "clear-night"
 }
 
-function HubIconField({ isDark }: { isDark: boolean }) {
-  return (
-    <div className="relative mx-auto w-full max-w-[620px] aspect-square overflow-hidden rounded-[28px]">
-      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-[28px]" aria-hidden="true">
-        <div className="absolute -inset-x-1/4 top-1/4 h-1/2 -rotate-[24deg] bg-gradient-to-r from-transparent via-blue-300/20 to-transparent blur-[70px] [mask-image:radial-gradient(ellipse_at_center,black_0%,transparent_76%)] dark:via-orange-500/15" />
-      </div>
-      <Image
-        src={isDark ? "/Hpl-transparent.png" : "/Hpd-transparent.png"}
-        alt="Isometric printer, CV clipboard, design tools, globe with shield, laptop, and PC representing ApexbytesHub services"
-        fill
-        priority
-        sizes="(max-width: 767px) 90vw, 560px"
-        className="object-contain"
-      />
-    </div>
-  )
-}
-
-const HERO_SUBHEAD = "Digital, print and everyday services—thoughtfully brought together, right here in Bothaville."
-const TRUST_HINTS = ["Local & human", "Clear pricing", "Fast turnaround"]
+const HERO_SUBHEAD = "Friendly print, design and tech support in Bothaville."
 
 export function HeroSection() {
-  const router = useRouter()
-  const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [marqueePaused, setMarqueePaused] = useState(false)
   const [status, setStatus] = useState<BusinessStatus | null>(null)
@@ -89,34 +65,20 @@ export function HeroSection() {
     window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))
     window.setTimeout(() => setQuoteLabel("Start with a Quote"), 900)
   }
-  const handleServicesClick = () => router.push("/services")
-
   return (
     <section
       aria-label="Hero"
-      className="abh-home-hero relative min-h-[calc(100vh-var(--nav-h))] w-full flex flex-col items-center justify-center px-4 md:px-8 pt-[calc(var(--nav-h)+56px)] md:pt-[104px] pb-10 md:pb-16 overflow-hidden"
+      className="abh-home-hero relative min-h-[100svh] w-full flex flex-col items-center justify-center px-4 md:px-8 pt-[calc(var(--nav-h)+24px)] pb-20 md:pb-24 overflow-hidden"
     >
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23000' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
-            backgroundSize: "128px 128px",
-          }}
-        />
-      </div>
-
-      <div className="max-w-[1400px] mx-auto flex flex-col items-center relative z-10 w-full mb-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center">
 
         {/* Homepage-only update notices — single notice expands inline,
             more than one opens a modal with one card per notice. */}
-        <div className="w-full flex justify-center mb-6">
+        <div className="mb-3 flex w-full justify-center">
           <HomeNoticeStack notices={HOME_NOTICES} />
         </div>
 
-        <div className="w-full max-w-[1320px] mx-auto grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-12 lg:gap-16 items-center mb-12 md:mb-16">
-
-          <div className="text-center md:text-left">
+        <div className="mb-6 flex w-full max-w-[980px] flex-col items-center text-center md:mb-8">
 
             {showHolidayBanner && status && (
               <p className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground dark:text-muted-foreground mb-3">
@@ -127,57 +89,36 @@ export function HeroSection() {
 
 
 
-            <div className="mb-5 flex items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-              <span className="h-px w-8 bg-brand-orange" aria-hidden="true" />
-              <span>Everyday services, considered</span>
-            </div>
-
-            <h1 className="abh-home-title mb-6 text-foreground">
-              <span className="block">Design.</span>
-              <span className="block">Print.</span>
-              <span className="block text-brand-blue">Upgrade.</span>
-            </h1>
-
-            <p className="max-w-[470px] text-lg font-normal leading-relaxed text-muted-foreground md:text-xl">
+            <p className="mb-3 text-sm font-medium text-muted-foreground md:text-base">
               {HERO_SUBHEAD}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 sm:gap-6 mb-8 md:mb-9">
+            <h1 className="abh-home-title mb-5 text-foreground">
+              <span className="block">Design, print &amp; tech,</span>
+              <span className="block">without the hassle.</span>
+            </h1>
+
+
+            <div className="mb-7 mt-7 flex flex-col items-center gap-3">
               <ScrollBounce>
-              <button
-                onClick={handleCtaClick}
-                className="abh-line-cta group/quote px-7 py-4 font-sans font-medium text-lg sm:text-xl shadow-[0_8px_14px_-10px_rgba(15,63,102,0.8)] active:brightness-95 hover:-translate-y-0.5"
+                <button
+                  onClick={handleCtaClick}
+                  className="abh-pill-action group/quote inline-flex items-center gap-2 bg-muted/80 px-5 py-2.5 font-sans text-sm font-medium text-foreground transition-colors hover:bg-muted active:brightness-95"
                 >
-                  <span className="min-w-[10.5rem] md:max-lg:min-w-0 transition-opacity duration-150 group-active/quote:opacity-70"><span className="md:max-lg:hidden">{quoteLabel}</span><span className="hidden md:max-lg:inline">Quote</span></span>
+                  <span className="transition-opacity duration-150 group-active/quote:opacity-70">{quoteLabel}</span>
                   <ArrowUpRight weight="bold" className="w-4 h-4" aria-hidden="true" />
                 </button>
               </ScrollBounce>
 
-              <button
-                onClick={handleServicesClick}
-                className="abh-line-cta group/services-cta px-6 py-4 font-sans font-medium text-lg sm:text-xl shadow-[0_8px_14px_-10px_rgba(15,63,102,0.8)] active:brightness-95 hover:-translate-y-0.5"
+              <a
+                href="#core-hubs-title"
+                aria-label="Explore our services"
+                className="flex size-10 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
-                <span className="md:max-lg:hidden">See Our Services</span><span className="hidden md:max-lg:inline">Services</span>
-                <ArrowUpRight
-                  weight="bold"
-                  className="w-4 h-4 transition-transform duration-200 group-hover/services-cta:translate-x-0.5 group-hover/services-cta:-translate-y-0.5"
-                  aria-hidden="true"
-                />
-              </button>
+                <ArrowDown size={17} aria-hidden="true" />
+              </a>
             </div>
 
-            <div className="flex flex-wrap items-stretch justify-center md:justify-start">
-              {TRUST_HINTS.map((hint, index) => (
-                <span key={hint} className={`px-4 text-sm font-medium text-muted-foreground dark:text-muted-foreground first:pl-0 ${index > 0 ? "border-l abh-line-left" : ""}`}>
-                  {hint}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <ScrollBounce delay={0.1} className="w-full">
-            <HubIconField isDark={mounted && resolvedTheme === "dark"} />
-          </ScrollBounce>
         </div>
 
         <div
@@ -186,7 +127,7 @@ export function HeroSection() {
           onMouseEnter={() => setMarqueePaused(true)}
           onMouseLeave={() => setMarqueePaused(false)}
           onTouchStart={(e) => { e.stopPropagation(); setMarqueePaused((p) => !p) }}
-          className="relative w-full max-w-[1400px] py-4 overflow-hidden select-none group/marquee bg-transparent [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
+          className="relative w-full max-w-[1400px] overflow-hidden select-none group/marquee bg-transparent py-4 [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
         >
           <button
             onClick={() => setMarqueePaused((p) => !p)}
@@ -204,10 +145,10 @@ export function HeroSection() {
               <div key={copy} className="flex items-center shrink-0" aria-hidden={copy === 1 ? "true" : undefined}>
                 {MARQUEE_ITEMS.map((item, idx) => (
                   <React.Fragment key={idx}>
-                    <span className="inline-flex items-center px-5 font-medium text-base text-zinc-600 dark:text-muted-foreground transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100">
+                    <span className="inline-flex items-center px-5 font-heading text-lg font-medium uppercase tracking-tight text-foreground transition-opacity duration-300 group-hover/marquee:opacity-70 hover:!opacity-100 md:text-2xl">
                       {item}
                     </span>
-                    <span className="font-medium text-lg leading-none shrink-0 text-zinc-300 dark:text-muted-foreground" aria-hidden="true">•</span>
+                    <span className="shrink-0 font-heading text-lg leading-none text-muted-foreground md:text-2xl" aria-hidden="true">/</span>
                   </React.Fragment>
                 ))}
               </div>

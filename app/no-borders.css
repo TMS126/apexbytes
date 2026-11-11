@@ -47,6 +47,14 @@
     border-color: transparent !important;
   }
 
+  :root:root:root button.abh-pill-action:not(:hover):not(:focus-visible):not(:active) {
+    border-radius: 9999px !important;
+  }
+  :root:root:root button.abh-circle-button:not([data-hover-border]) {
+    border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent) !important;
+    border-radius: 9999px !important;
+  }
+
   /* 2. Search: slight border around the search BAR and the RESULTS card only.
         Nothing around the input text itself. */
   :root:root:root:root [role="dialog"][aria-label="Search services"] > div {
