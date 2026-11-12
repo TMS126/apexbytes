@@ -31,22 +31,22 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
   const card = (
     <Link
       href={hubRouteFor(hubId)}
-      className="group flex aspect-square min-h-[180px] w-full flex-col items-center justify-center rounded-[14px] p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none"
+      className="group flex aspect-square min-h-[150px] w-full flex-col items-center justify-center rounded-[14px] p-4 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none sm:min-h-[180px] sm:p-6"
       style={{ backgroundColor: "var(--hub-fill)", color: "var(--hub-on)" }}
       aria-label={`Explore ${hub.title}`}
     >
-      <Icon size={54} weight="fill" aria-hidden="true" className="mb-4 transition-transform duration-200 group-hover:scale-105" />
-      <span className="font-heading text-xl font-semibold leading-tight md:text-2xl">{hub.title}</span>
-      <span className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] opacity-80">{serviceCount} services</span>
+      <Icon size={42} weight="fill" aria-hidden="true" className="mb-3 transition-transform duration-200 group-hover:scale-105 sm:mb-4 sm:size-[54px]" />
+      <span className="font-heading text-lg font-semibold leading-tight sm:text-xl md:text-2xl">{hub.title}</span>
+      <span className="mt-2 text-[0.62rem] font-semibold uppercase tracking-[0.12em] opacity-80 sm:text-xs sm:tracking-[0.14em]">{serviceCount} services</span>
     </Link>
   )
 
   const description = (
-    <div className="flex min-h-[180px] flex-col justify-center rounded-[14px] border border-border bg-card px-6 py-7 md:px-10">
+    <div className="flex min-h-[150px] flex-col justify-center rounded-[14px] border border-border bg-card px-4 py-5 sm:min-h-[180px] sm:px-6 sm:py-7 md:px-10">
       <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{CLIENT_TITLE[hubId]}</p>
-      <h3 className="font-heading text-xl font-semibold leading-tight text-card-foreground md:text-2xl">{hub.title}</h3>
-      <p className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-muted-foreground md:text-base">{BLURB[hubId]}</p>
-      <Link href={hubRouteFor(hubId)} className="abh-line-cta mt-5 w-fit px-1 py-2 text-sm font-semibold">Explore {hub.title}</Link>
+      <h3 className="font-heading text-lg font-semibold leading-tight text-card-foreground sm:text-xl md:text-2xl">{hub.title}</h3>
+      <p className="mt-2 max-w-xl text-[0.82rem] leading-relaxed text-muted-foreground sm:mt-3 sm:text-[0.95rem] md:text-base">{BLURB[hubId]}</p>
+      <Link href={hubRouteFor(hubId)} className="abh-line-cta mt-3 w-fit px-1 py-1.5 text-xs font-semibold sm:mt-5 sm:py-2 sm:text-sm">Explore {hub.title}</Link>
     </div>
   )
 
@@ -56,7 +56,7 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
         ["--hub-fill" as string]: HUB_COLORS[hubId].primary,
         ["--hub-on" as string]: HUB_ON_COLOR[hubId],
       }}
-      className={cn("grid gap-4 md:grid-cols-[minmax(180px,260px)_1fr] md:items-stretch", flip && "md:grid-cols-[1fr_minmax(180px,260px)]")}
+      className={cn("grid grid-cols-[minmax(120px,42%)_1fr] gap-3 md:grid-cols-[minmax(180px,260px)_1fr] md:items-stretch md:gap-4", flip && "grid-cols-[1fr_minmax(120px,42%)] md:grid-cols-[1fr_minmax(180px,260px)]")}
     >
       {flip ? <>{description}{card}</> : <>{card}{description}</>}
     </div>
