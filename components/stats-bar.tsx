@@ -33,14 +33,14 @@ export function StatsBar() {
               {/* data-hover-border = the ONLY element on the site allowed to show a border (hover only). */}
               <div
                 role="listitem"
-                data-hover-border
                 aria-label={`${stat.value} ${stat.label}`}
-                className="group relative flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center"
+                style={{ ["--stat-color" as string]: stat.color }}
+                className="group relative flex min-h-[150px] flex-col items-center justify-center gap-2 border border-transparent px-3 py-6 text-center transition-[border-color,transform] duration-250 ease-out hover:-translate-y-1 hover:border-[var(--stat-color)]"
               >
-                <Icon size={24} weight="regular" color={stat.color} aria-hidden="true" className="mb-0.5" />
-                <div className="text-2xl font-medium">{stat.value}</div>
-                <div className="text-[0.72rem] font-medium uppercase tracking-widest">{stat.label}</div>
-                <span className="absolute bottom-2 left-1/2 h-0.5 w-10 -translate-x-1/2 origin-center scale-x-50 rounded-full transition-transform duration-300 group-hover:w-16 group-hover:scale-x-100" style={{ backgroundColor: stat.color }} aria-hidden="true" />
+                <Icon size={24} weight="regular" aria-hidden="true" className="mb-0.5 text-muted-foreground transition-[color,transform] duration-250 ease-out group-hover:scale-110 group-hover:-translate-y-1 group-hover:rotate-[-8deg] group-hover:text-[var(--stat-color)]" />
+                <div className="text-2xl font-medium text-foreground">{stat.value}</div>
+                <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground sm:text-sm">{stat.label}</div>
+                <span className="absolute bottom-2 left-1/2 h-0.5 w-10 -translate-x-1/2 origin-left scale-x-0 rounded-full bg-[var(--stat-color)] opacity-0 transition-[transform,opacity,width] duration-250 ease-out group-hover:w-16 group-hover:scale-x-100 group-hover:opacity-100" aria-hidden="true" />
               </div>
             </ScrollBounce>
           )
