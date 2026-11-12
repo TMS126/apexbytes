@@ -13,13 +13,13 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
   return (
     <main className="min-h-screen bg-background pb-24">
       <header className="abh-editorial-hero">
-        <Link href="/services" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+        <Link href="/services" aria-label="Back to all services" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+          <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
           <ArrowLeft size={15} aria-hidden="true" />
-          All services
         </Link>
         <span className="mb-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
           <HubIcon id={hubId} size={18} color={accent} />
-          ApexbytesHub services
+          {hub.title}
         </span>
         <h1 className="abh-page-title mb-5">{hub.title}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{hub.desc}</p>
@@ -33,7 +33,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
           <section key={section.title} aria-labelledby={`section-${sectionIndex}`}>
             <div className="mb-6 flex items-end justify-between gap-4 border-b border-border/60 pb-4">
               <div>
-                <p className="mb-2 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Category {String(sectionIndex + 1).padStart(2, "0")}</p>
+                <p className="mb-2 text-xs font-medium uppercase tracking-[0.16em]" style={{ color: accent }}>{hub.title}</p>
                 <h2 id={`section-${sectionIndex}`} className="font-heading text-2xl font-medium tracking-tight text-foreground md:text-3xl">{section.title}</h2>
                 {section.desc && <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">{section.desc}</p>}
               </div>

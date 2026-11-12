@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { X, Info, MagnifyingGlass, Shuffle, CheckCircle } from "@phosphor-icons/react"
+import { X, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -88,15 +88,6 @@ export function HubFilterCircles({
                   here. */}
               <span className="relative">
                 <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
-                {isActive && (
-                  <CheckCircle
-                    size={17}
-                    weight="fill"
-                    className="absolute -right-3 -top-3"
-                    style={{ color: accent }}
-                    aria-label="Selected hub"
-                  />
-                )}
               </span>
             </span>
             <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
@@ -115,7 +106,9 @@ export function HubFilterCircles({
 // header and grid, instead of a floating pill over a horizontal rule.
 function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: string; children: React.ReactNode }) {
   return (
-    <div className="abh-card p-4 md:p-6 mb-6">
+    <div className="relative mb-6">
+      <div className="pointer-events-none absolute inset-x-2 -bottom-2 top-2 rounded-[14px] bg-card/55 shadow-[var(--shadow-card-lift)]" aria-hidden="true" />
+      <div className="relative abh-card p-4 md:p-6 transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)]">
       <div className="flex items-center gap-2.5 mb-4 pb-3.5 border-b border-zinc-100 dark:border-zinc-800">
         <span
           className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
@@ -127,7 +120,8 @@ function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: strin
           {hubLabelFor(hubId)}
         </h2>
       </div>
-      {children}
+        {children}
+      </div>
     </div>
   )
 }

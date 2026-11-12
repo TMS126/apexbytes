@@ -2,7 +2,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { CaretDown, CaretUp, Plus, Check, CheckCircle, SealPercent, Clock } from '@phosphor-icons/react'
+import { CaretDown, CaretUp, Plus, Check, SealPercent, Clock } from '@phosphor-icons/react'
 import { HUBS, type HubId } from '@/lib/data'
 import { HubIcon } from '@/components/services-page/shared'
 import { PdfPillButton } from './shared'
@@ -156,10 +156,10 @@ export function HubCompactCard({
         onClick={onSelect}
         onMouseEnter={onHover}
         aria-pressed
-        className="h-full w-full rounded-[14px] bg-white dark:bg-zinc-900 shadow-lg shadow-black/10 transition-all duration-200 active:scale-[0.98] flex items-center justify-center"
+        className="h-full w-full rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.98] flex flex-col items-center justify-center gap-2"
       >
-        <HubIcon id={hubId} size={40} weight="fill" color={hubColor} />
-        <span className="sr-only">{hub.title} — selected</span>
+        <HubIcon id={hubId} size={34} weight="fill" color={hubColor} />
+        <span className="text-base font-medium" style={{ color: hubColor }}>{hub.title}</span>
       </button>
     )
   }
@@ -169,7 +169,7 @@ export function HubCompactCard({
       onClick={onSelect}
       onMouseEnter={onHover}
       aria-pressed={false}
-      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-all duration-200 active:scale-[0.98] bg-white/60 dark:bg-zinc-900/40 hover:bg-white dark:hover:bg-zinc-900 hover:shadow-lg flex flex-col"
+      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-[transform,background-color,box-shadow] duration-200 active:scale-[0.98] bg-card/70 hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)] flex flex-col"
     >
       {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
@@ -254,7 +254,7 @@ export function HubExpandedPanel({
 
   return (
     <div
-      className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 overflow-hidden shadow-sm"
+      className="mt-3 rounded-[14px] bg-card overflow-hidden shadow-[var(--shadow-card-lift)]"
       style={{ border: `1.5px solid ${hubColor}` }}
     >
       <div
@@ -381,7 +381,7 @@ export function HubAccordionCard({
   return (
     <div
       ref={cardRef}
-      className="rounded-[14px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden transition-shadow duration-200"
+      className="rounded-[14px] bg-card overflow-hidden shadow-[var(--shadow-card-lift)] transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5"
       style={isOpen ? { borderColor: hubColor } : undefined}
     >
       <button
@@ -402,7 +402,6 @@ export function HubAccordionCard({
           </div>
         </div>
   <span className="flex items-center gap-2 shrink-0">
-  {isOpen && <CheckCircle size={17} weight="fill" style={{ color: hubColor }} aria-label="Selected hub" />}
   {isOpen
   ? <CaretUp size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />
   : <CaretDown size={14} className="text-muted-foreground shrink-0 transition-transform duration-200" aria-hidden="true" />

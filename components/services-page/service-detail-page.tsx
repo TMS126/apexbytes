@@ -22,13 +22,17 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
   return (
     <main className="min-h-screen bg-background pb-24">
       <header className="abh-editorial-hero">
-        <Link href={`/services/${service.hubId}`} className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-          <ArrowLeft size={15} aria-hidden="true" />
-          Back to {hub.title}
+        <Link href={`/services/${service.hubId}`} aria-label={`Back to ${hub.title}`} className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+          <span className="group inline-flex size-10 items-center justify-center rounded-full bg-secondary text-muted-foreground shadow-sm transition-[background-color,box-shadow,transform,color] hover:-translate-y-0.5 hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)] hover:shadow-[var(--shadow-card-lift)]" style={{ ["--hub-fill" as string]: colors.primary, ["--hub-on" as string]: "var(--background)" }}>
+            <HubIcon id={service.hubId} size={20} color="currentColor" />
+          </span>
+          <ArrowLeft size={15} aria-hidden="true" style={{ color: accent }} />
         </Link>
-        <span className="mb-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-          <HubIcon id={service.hubId} size={18} color={accent} />
-          {hub.title} <span aria-hidden="true">/</span> {service.sectionTitle}
+        <span className="mb-2 inline-flex items-center text-xs font-medium uppercase tracking-[0.18em]" style={{ color: accent }}>
+          {hub.title}
+        </span>
+        <span className="mb-5 block text-sm font-medium text-muted-foreground">
+          {service.sectionTitle}
         </span>
         <h1 className="abh-page-title mb-5">{service.name}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{service.desc || `Professional ${service.name.toLowerCase()} from the ${hub.title}.`}</p>

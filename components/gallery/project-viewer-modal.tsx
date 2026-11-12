@@ -97,19 +97,20 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
   )
 }
 
-function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; onClose: () => void; accent: string }) {
+function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = false }: { project: ProjectData; onClose: () => void; accent: string; visible?: boolean; desktop?: boolean }) {
   return (
-    <div className="fixed inset-x-0 bottom-6 z-30 flex justify-center px-6 pointer-events-none">
+    <div className={cn(desktop ? "relative flex justify-center px-6 py-4" : "fixed inset-x-0 bottom-6 z-30 flex justify-center px-6", "pointer-events-none transition-all duration-200", visible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-3")} aria-hidden={!visible}>
       <div
-        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-[14px] overflow-hidden bg-white shadow-lg shadow-black/10 transition-shadow duration-200 hover:shadow-xl dark:bg-zinc-900"
+        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-[14px] overflow-hidden bg-card shadow-[0_12px_26px_-16px_rgba(0,0,0,0.5)] transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.6)]"
       >
         <a
           href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I saw "${project.title}" in your gallery and I'd like something similar.`)}`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={onClose}
+          tabIndex={visible ? 0 : -1}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
-          className="abh-wa-btn flex-1 py-2.5 text-[0.82rem] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="flex-1 py-2.5 text-[0.82rem] font-medium text-foreground transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[inset_0_-2px_0_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
@@ -119,8 +120,9 @@ function FloatingCTAPill({ project, onClose, accent }: { project: ProjectData; o
         <Link
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
-          className="abh-line-cta flex-1 py-2.5 text-[0.82rem] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
-          style={{ color: accent, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
+          tabIndex={visible ? 0 : -1}
+          className="flex-1 py-2.5 text-[0.82rem] font-medium text-foreground transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[inset_0_-2px_0_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
           Ask
@@ -393,15 +395,23 @@ export function ProjectViewerModal({
   const isMobile = useIsMobile()
   const [activeImg, setActiveImg] = useState(0)
   const [comparing, setComparing] = useState(false)
+  const [actionsVisible, setActionsVisible] = useState(true)
+  const scrollResetRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       setActiveImg(0)
       setComparing(false)
+      setActionsVisible(true)
     })
     return () => cancelAnimationFrame(frame)
   }, [project?.id])
+  const handleDetailsScroll = () => {
+    setActionsVisible(false)
+    if (scrollResetRef.current) clearTimeout(scrollResetRef.current)
+    scrollResetRef.current = setTimeout(() => setActionsVisible(true), 220)
+  }
 
   const currentIdx = project ? siblings.findIndex((p) => p.id === project.id) : -1
   const hasSiblings = siblings.length > 1 && currentIdx !== -1
@@ -497,7 +507,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
 
           {/* Text starts directly below — no fade/shadow divider, since
               that was rendering as a visible seam in dark mode. */}
-          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain" onScroll={handleDetailsScroll}>
             <div className="px-6 pt-4 pb-4">
               <ProjectDetailsBody project={project} accent={accent} />
             </div>
@@ -540,18 +550,19 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
                 onNextProject={goNextProject}
               />
             </div>
-            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
+            <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain" onScroll={handleDetailsScroll}>
               <div className="w-full max-w-2xl px-6 md:px-8 pt-5 pb-6">
                 <ProjectDetailsBody project={project} accent={accent} />
               </div>
               <div className="h-28" aria-hidden="true" />
             </div>
+            <FloatingCTAPill project={project} onClose={onClose} accent={accent} visible={actionsVisible} desktop />
           </div>
           <OtherProjectsPanel siblings={siblings} currentId={project.id} accent={accent} onSelect={onNavigate} compact />
         </>
       )}
 
-      <FloatingCTAPill project={project} onClose={onClose} accent={accent} />
+      <div className="md:hidden"><FloatingCTAPill project={project} onClose={onClose} accent={accent} visible={actionsVisible} /></div>
 
       {zoomIndex !== null && (
         <ZoomOverlay images={allImages} startIndex={zoomIndex} onClose={onCloseZoom} title={project.title} />
