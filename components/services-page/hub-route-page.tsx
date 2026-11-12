@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
@@ -23,6 +24,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
         <h1 className="abh-page-title mb-5">{hub.title}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{hub.desc}</p>
         <div className="abh-divider" />
+        <EditorialScrollCue />
       </header>
 
       <div className="mx-auto flex max-w-[1248px] flex-col gap-14 px-4 md:px-8">

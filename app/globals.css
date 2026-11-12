@@ -867,26 +867,17 @@ button, a, [role="button"] {
   }
 
   .abh-editorial-hero::after {
-    content: "↓";
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    display: inline-flex;
-    width: 2.75rem;
-    height: 2.75rem;
-    align-items: center;
-    justify-content: center;
-    transform: translateX(-50%);
-    border: 1px solid var(--border);
-    border-radius: 9999px;
-    color: var(--muted-foreground);
-    font-size: 1.15rem;
-    line-height: 1;
-    pointer-events: none;
+    content: none;
+  }
+
+  .abh-editorial-scroll-cue {
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.62;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .abh-editorial-hero::after { animation: abh-scroll-cue 1.8s ease-in-out infinite; }
+    .abh-editorial-scroll-cue svg { animation: abh-scroll-cue 1.8s ease-in-out infinite; }
   }
 
   @media (max-width: 640px) {

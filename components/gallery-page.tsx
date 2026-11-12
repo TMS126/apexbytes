@@ -1,6 +1,7 @@
 // components/gallery/gallery-page.tsx — full file, paste over the current one
 "use client"
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
 import { X, Info, MagnifyingGlass, Shuffle, CheckCircle } from "@phosphor-icons/react"
@@ -152,7 +153,7 @@ function ProjectCard({
       <button
         onClick={() => onSelect(p)}
         aria-label={`View ${p.title}`}
-        className="group relative aspect-[4/3] rounded-[14px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl active:scale-[0.99] active:translate-y-0"
+        className="group relative aspect-[4/3] rounded-[14px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.99] active:translate-y-0"
       >
         <SafeImage
           src={p.image}
@@ -160,7 +161,7 @@ function ProjectCard({
           accent={TOKEN.orangeText}
           fill
           sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
-          className="object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+          className="object-cover"
         />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
           <div onClick={(e) => e.stopPropagation()}>
@@ -190,7 +191,7 @@ function ProjectGrid({
   pathname: string
 }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-8">
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
       {projects.map((p) => (
         <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
       ))}
@@ -355,6 +356,7 @@ function GalleryPageInner() {
             <h1 className="abh-page-title mb-4">Our Portfolio</h1>
             <p className="abh-tagline max-w-2xl mx-auto">Real results for real clients. Select a category to explore our work in depth.</p>
             <div className="abh-divider" />
+            <EditorialScrollCue />
           </div>
         </ScrollBounce>
 

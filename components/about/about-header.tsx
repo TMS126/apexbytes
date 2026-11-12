@@ -1,6 +1,7 @@
 // components/about/about-header.tsx
 "use client"
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { BIZ } from "@/lib/brand"
 
@@ -18,6 +19,7 @@ export function AboutHeader() {
           </p>
 
           <div className="abh-divider" />
+          <EditorialScrollCue />
         </div>
       </section>
 

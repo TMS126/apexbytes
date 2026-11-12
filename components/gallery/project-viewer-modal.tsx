@@ -141,7 +141,7 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
           <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>
-            <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover grayscale transition-[filter,transform] duration-300 group-hover:grayscale-0 group-hover:scale-105" /></span>
+            <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover" /></span>
             <span className="min-w-0 whitespace-normal break-words text-sm font-medium text-zinc-700 dark:text-zinc-200">{p.title}</span>
           </button>
         ))}
@@ -262,17 +262,14 @@ function DesktopImageStack({
                 : isDark ? "none" : "0 4px 12px -6px rgba(0,0,0,0.12)",
             }}
           >
-            <SafeImage
-              src={img}
-              alt={`Image ${idx + 1} of ${images.length}`}
-              accent={accent}
-              fill
-              sizes="34vw"
-              className={cn(
-"object-cover grayscale transition-[filter,transform] duration-300 md:group-hover/stackimg:grayscale-0 md:group-hover/stackimg:scale-105",
-              isActive ? "grayscale-0" : "opacity-70"
-              )}
-            />
+              <SafeImage
+                src={img}
+                alt={`Image ${idx + 1} of ${images.length}`}
+                accent={accent}
+                fill
+                sizes="34vw"
+                className={cn("object-cover", !isActive && "opacity-70")}
+              />
             {isActive && (
               <div className="absolute inset-0 rounded-[14px] pointer-events-none" style={{ boxShadow: `inset 0 0 36px -14px ${accent}` }} />
           )}

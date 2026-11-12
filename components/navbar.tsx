@@ -167,13 +167,13 @@ export function Navbar() {
                         >
                           <CaretDown size={12} weight="bold" aria-hidden="true" />
                         </summary>
-                        <div className="invisible pointer-events-none absolute left-0 top-full z-50 mt-4 flex min-w-56 flex-col gap-1.5 rounded-[18px] border border-border/50 bg-background/95 p-3 opacity-0 shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-all group-open/dropdown:visible group-open/dropdown:pointer-events-auto group-open/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:pointer-events-auto group-hover/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:pointer-events-auto group-focus-within/dropdown:opacity-100">
+                        <div className="invisible pointer-events-none absolute left-1/2 top-full z-50 mt-4 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap p-2 opacity-0 transition-all group-open/dropdown:visible group-open/dropdown:pointer-events-auto group-open/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:pointer-events-auto group-hover/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:pointer-events-auto group-focus-within/dropdown:opacity-100">
                           {submenu.map((subitem) => (
                             <Link
                               key={subitem.path}
                               href={subitem.path}
                               aria-current={pathname === subitem.path ? "page" : undefined}
-                              className="rounded-full bg-card/80 px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                              className="rounded-full bg-background/95 px-4 py-2.5 text-sm text-muted-foreground shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                             >
                               {subitem.label}
                             </Link>

@@ -1,4 +1,5 @@
 // app/tools/page.tsx
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FilePdf, Wrench } from "@phosphor-icons/react/dist/ssr"
@@ -44,6 +45,7 @@ export default function ToolsPage() {
             Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
           </p>
           <div className="abh-divider mx-auto" />
+          <EditorialScrollCue />
         </div>
       </section>
 

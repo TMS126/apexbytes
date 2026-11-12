@@ -1,6 +1,7 @@
 // components/contact-page.tsx
 "use client"
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState, useEffect, useRef, Suspense } from "react"
 import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
@@ -131,6 +132,7 @@ function ContactPageInner() {
           </ScrollBounce>
           <p className="abh-tagline max-w-xl mx-auto text-center">We&apos;re here and ready to help — reach out any way you prefer.</p>
           <div className="abh-divider" />
+          <EditorialScrollCue />
         </div>
       </section>
 

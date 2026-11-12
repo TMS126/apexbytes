@@ -1,6 +1,7 @@
 // components/pricing-page/index.tsx
 'use client'
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { Lightning, SealPercent, WhatsappLogo } from '@phosphor-icons/react'
@@ -167,6 +168,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                 All services across all hubs — clear prices, no surprises.
               </p>
               <div className="abh-divider" />
+              <EditorialScrollCue />
             </div>
           </section>
 

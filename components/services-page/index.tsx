@@ -1,6 +1,7 @@
 // components/services-page/index.tsx
 "use client"
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
@@ -191,6 +192,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
               Explore our ecosystem. Tap a hub to view all available services and instant pricing.
             </p>
             <div className="abh-divider mx-auto" />
+            <EditorialScrollCue />
           </div>
         </ScrollBounce>
 

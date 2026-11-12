@@ -1,6 +1,7 @@
 // app/tools/jpg-to-pdf/page.tsx
 "use client"
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, Plus } from "@phosphor-icons/react"
@@ -86,6 +87,7 @@ export default function JpgToPdfPage() {
             <p className="text-sm text-muted-foreground">
               No upload • No registration • 100% secure
             </p>
+            <EditorialScrollCue />
           </div>
         </section>
 

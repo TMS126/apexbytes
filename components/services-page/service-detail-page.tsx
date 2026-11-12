@@ -1,5 +1,6 @@
 "use client"
 
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
@@ -32,6 +33,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         <h1 className="abh-page-title mb-5">{service.name}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{service.desc || `Professional ${service.name.toLowerCase()} from the ${hub.title}.`}</p>
         <div className="abh-divider" />
+        <EditorialScrollCue />
       </header>
 
       <div id="service-actions" className="mx-auto flex max-w-[1080px] flex-wrap items-center justify-center gap-x-7 gap-y-3 px-4 py-12 md:px-8">

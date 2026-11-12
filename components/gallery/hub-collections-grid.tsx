@@ -111,7 +111,7 @@ function HubCollectionCard({
           aria-hidden="true"
         />
 
-        <SafeImage src={images[bigIdx]} alt={project.title} accent={accent} fill sizes="(max-width: 1024px) 33vw, 400px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+        <SafeImage src={images[bigIdx]} alt={project.title} accent={accent} fill sizes="(max-width: 1024px) 33vw, 400px" className="object-cover" />
         <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 30%, rgba(0,0,0,0) 60%)" }} />
 
         {projects.length > 1 && (
