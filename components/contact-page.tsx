@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useEffect, useRef, Suspense } from "react"
+import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
@@ -10,7 +11,6 @@ import { cn } from "@/lib/utils"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { FORM_HUB_KEYS, getFormHubColor, CONTACT_GREY, downloadBusinessVCard } from "@/lib/contact-data"
-import { LocationMap } from "@/components/contact/location-map"
 import { FAQAccordion } from "@/components/contact/faq-accordion"
 import { HubSelect } from "@/components/contact/hub-select"
 import { FieldErrorTooltip } from "@/components/contact/field-error-tooltip"
@@ -26,6 +26,11 @@ const CONTACT_ICONS: Record<string, React.ElementType> = {
 const COPYABLE_TITLES = new Set(["Call Us", "Email Us"])
 const GRID_CONTACT_LINKS = CONTACT_LINKS.filter((c) => c.title !== "Visit Us")
 const SCROLL_MARGIN = { scrollMarginTop: "calc(var(--nav-h, 74px) + 1rem)" }
+
+const LocationMap = dynamic(
+  () => import("@/components/contact/location-map").then((module) => module.LocationMap),
+  { ssr: false },
+)
 
 const QUICK_LINKS = [
   { id: "contact-hours", label: "Hours" },
