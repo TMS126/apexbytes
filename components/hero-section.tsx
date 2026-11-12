@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { ArrowDown, ArrowUpRight, Cloud, CloudFog, CloudLightning, CloudMoon, CloudRain, CloudSun, Moon, Snowflake, Sun } from "@phosphor-icons/react"
+import { ArrowDown, Cloud, CloudFog, CloudLightning, CloudMoon, CloudRain, CloudSun, Moon, Snowflake, Sun } from "@phosphor-icons/react"
 import { WEATHER_THEME } from "@/lib/brand"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
@@ -55,6 +55,7 @@ export function HeroSection() {
   const showHolidayBanner = mounted && status?.isHoliday
   const displayCategory = weatherCategory ?? (status ? fallbackCategory(status.greeting) : "clear-day")
   const { Icon: WeatherIcon, color: weatherIconColor } = WEATHER_ICON_MAP[displayCategory]
+  const heroCtaClass = "inline-flex h-12 w-full items-center justify-center rounded-[14px] px-6 text-base font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none sm:w-[170px]"
 
   return (
     <section
@@ -78,15 +79,15 @@ export function HeroSection() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))}
-              className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-[14px] bg-[var(--brand-orange)] px-6 py-3.5 text-base font-bold text-[var(--on-brand-orange)] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none"
+              className={`${heroCtaClass} bg-[var(--brand-orange)] text-[var(--on-brand-orange)]`}
             >
-              Quote <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
+              Quote
             </button>
             <Link
               href="/services"
-              className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-[14px] bg-[var(--brand-blue)] px-6 py-3.5 text-base font-bold text-[var(--on-brand-blue)] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none"
+              className={`${heroCtaClass} bg-[var(--brand-blue)] text-[var(--on-brand-blue)]`}
             >
-              Services <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
+              Services
             </Link>
           </div>
           <a
