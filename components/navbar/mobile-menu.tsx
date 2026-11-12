@@ -91,7 +91,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       />
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
-        <nav className="w-full max-w-[320px] flex flex-col items-center gap-2.5" aria-label="Mobile navigation">
+        <nav className="flex w-full max-w-[380px] flex-col items-center gap-4" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
             const isActive =
               pathname === item.path || (item.path === "/services" && pathname.startsWith("/services")) || (item.path === "/tools" && pathname.startsWith("/tools"))
@@ -114,7 +114,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                     color: "var(--text-on-accent)",
                   }}
                   className={cn(
-                    "py-3 px-8 rounded-[14px] font-sans text-[1.2rem] font-semibold transition-all duration-300 active:scale-95 text-center w-[180px] shadow-sm",
+                    "w-full rounded-full px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-all duration-300 active:scale-95",
                     menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   )}
                 >
@@ -134,12 +134,12 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   aria-current={isActive ? "page" : undefined}
                   tabIndex={menuOpen ? 0 : -1}
                   style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
-                  className="w-[180px] rounded-[14px] border-2 bg-transparent px-8 py-3 text-center font-sans text-[1.2rem] font-semibold transition-colors active:scale-95"
+                  className="w-full rounded-full border-2 bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
                 >
                   {item.label}
                 </Link>
                 {submenu && (
-                  <details className="w-[180px]">
+                  <details className="w-full">
                     <summary
                       tabIndex={menuOpen ? 0 : -1}
                       className="flex cursor-pointer list-none items-center justify-center gap-2 py-1.5 text-xs font-medium text-muted-foreground [&::-webkit-details-marker]:hidden"

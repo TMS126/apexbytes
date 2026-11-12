@@ -49,15 +49,15 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
         <button
           onClick={isOpen ? onClose : onOpen}
           aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
-          className="abh-press relative size-14 rounded-full border border-white/20 bg-background text-foreground shadow-md flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+          className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
         >
           {isOpen ? (
-            <X size={30} weight="bold" aria-hidden="true" />
+            <X size={24} weight="regular" aria-hidden="true" />
           ) : (
             <WhatsappLogo
-              size={32}
-              weight="fill"
-              style={{ color: WA.accent, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${WA.accent} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
+              size={25}
+              weight="regular"
+              style={{ color: WA.accent }}
             />
           )}
         </button>

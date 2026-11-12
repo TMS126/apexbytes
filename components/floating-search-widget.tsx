@@ -108,7 +108,6 @@ export function FloatingSearchWidget() {
   const pendingFabRect = useRef<DOMRect | null>(null)
 
   const accentColor = isDark ? SEARCH_ORANGE.dark : SEARCH_ORANGE.light
-  const iconGlow = `drop-shadow(0 4px 10px color-mix(in srgb, ${accentColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))`
 
   const hasQuery = query.trim().length > 0
   const isServicesPage = pathname === "/services"
@@ -279,17 +278,17 @@ export function FloatingSearchWidget() {
             ref={fabRef}
 onClick={isOpen ? handleClose : handleOpen}
   aria-label={isOpen ? "Close search" : "Search services"}
-            className="abh-press relative size-14 rounded-full border border-white/20 bg-background text-foreground shadow-md flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none"
+            className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
           >
   {isOpen ? (
-  <X size={28} weight="bold" aria-hidden="true" />
+  <X size={24} weight="regular" aria-hidden="true" />
   ) : (
   <MagnifyingGlass
-  size={22}
-  weight="bold"
+  size={21}
+  weight="regular"
   aria-hidden="true"
   className="transition-all duration-200 ease-out motion-reduce:transition-none"
-  style={{ color: accentColor, filter: iconGlow }}
+  style={{ color: accentColor }}
   />
   )}
           </button>

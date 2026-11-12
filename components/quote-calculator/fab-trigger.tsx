@@ -66,12 +66,12 @@ export function FabTrigger({
           onClick={onOpen}
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
-          className="abh-press relative size-14 rounded-full border border-white/20 bg-background text-foreground shadow-md flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+          className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
         >
           <Calculator
-            size={34}
-            weight="fill"
-            style={{ color: fabColor, filter: `drop-shadow(0 4px 10px color-mix(in srgb, ${fabColor} 12%, transparent)) drop-shadow(0 2px 4px rgba(0,0,0,0.3))` }}
+            size={25}
+            weight="regular"
+            style={{ color: fabColor }}
           />
         </button>
 

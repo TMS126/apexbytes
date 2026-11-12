@@ -245,6 +245,10 @@ export function Navbar() {
                 ctaPulse={ctaPulse}
               />
 
+              <button type="button" onClick={handleThemeToggle} className="order-1 flex size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-foreground sm:hidden" aria-label="Toggle theme">
+                {mounted && (theme === "dark" ? <Moon size={19} weight="regular" /> : <Sun size={19} weight="regular" />)}
+              </button>
+
               <div className="order-3 hidden items-center gap-1 rounded-full bg-muted/80 p-1 sm:flex">
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}

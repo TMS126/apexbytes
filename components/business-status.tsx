@@ -37,15 +37,15 @@ function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techE
 function StatusLine({ status }: { status: HubStatus }) {
   const dotColor = status.open ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"
   return (
-    <div className="flex flex-col gap-1 text-[0.74rem] font-medium tracking-wide text-muted-foreground dark:text-muted-foreground">
-      <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+    <div className="flex flex-col gap-1.5 text-sm font-medium tracking-normal text-muted-foreground dark:text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", dotColor)} />
         <span className="font-medium">{status.label}</span>
         <span className="font-normal opacity-70">{status.open ? "Open" : "Closed"}</span>
-        <span className="opacity-40">·</span>
+        <span className="opacity-40" aria-hidden="true">·</span>
         <span>{status.nextEvent}</span>
       </div>
-      {status.holidayNote && <p className="text-[0.68rem] font-medium opacity-70 ml-3">{status.holidayNote}</p>}
+      {status.holidayNote && <p className="ml-3 text-xs font-medium leading-relaxed opacity-70">{status.holidayNote}</p>}
     </div>
   )
 }
@@ -160,10 +160,18 @@ export function BusinessStatusFull() {
   const { printDoc, techEtc } = deriveHubStatuses(status)
 
   return (
-    <div className="flex flex-col gap-2.5">
-      <StatusLine status={printDoc} />
-      <div className="border-t border-zinc-100 dark:border-zinc-800" aria-hidden="true" />
-      <StatusLine status={techEtc} />
+    <div className="rounded-[18px] border border-border/70 bg-card/35 p-4 sm:p-5">
+      <div className="flex items-start gap-3">
+        <Clock size={22} weight="regular" className="mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+        <div>
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Current hours</p>
+          <h3 className="mt-1 text-lg font-semibold tracking-tight text-foreground">Business hours</h3>
+        </div>
+      </div>
+      <div className="mt-4 divide-y divide-border/70">
+        <div className="py-3 first:pt-0"><StatusLine status={printDoc} /></div>
+        <div className="py-3 last:pb-0"><StatusLine status={techEtc} /></div>
+      </div>
     </div>
   )
-} 
+}
