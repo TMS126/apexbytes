@@ -1,13 +1,9 @@
 // components/about/about-header.tsx
 "use client"
 
-import { useState } from "react"
-import { BIZ } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
-export function AboutHeader({ blueColor }: { blueColor: string }) {
-  const [statsHovered, setStatsHovered] = useState(false)
-
+export function AboutHeader() {
   return (
     <section className="abh-editorial-hero">
       <div className="max-w-[1248px] mx-auto flex flex-col items-center">
@@ -21,24 +17,6 @@ export function AboutHeader({ blueColor }: { blueColor: string }) {
 
         <div className="abh-divider" />
 
-        <ScrollBounce delay={0.1}>
-          <div
-            className="mt-8 w-full max-w-[560px] mx-auto grid grid-cols-3 divide-x divide-zinc-200 dark:divide-zinc-700 rounded-[14px] overflow-hidden shadow-lg transition-colors duration-300"
-            onMouseEnter={() => setStatsHovered(true)}
-            onMouseLeave={() => setStatsHovered(false)}
-          >
-            {[
-              { value: BIZ.hubCount, label: "Service Hubs" },
-              { value: BIZ.serviceCount, label: "Services" },
-              { value: "Since 2023", label: "Est. Kgotsong" },
-            ].map((s, i) => (
-              <div key={i} className="flex flex-col items-center justify-center py-5 px-3 transition-colors duration-300 cursor-default" style={{ backgroundColor: statsHovered ? `color-mix(in srgb, ${blueColor} 7%, transparent)` : "transparent" }}>
-                <p className="abh-stat-value transition-colors duration-300" style={{ color: "var(--foreground)" }}>{s.value}</p>
-                <p className="abh-eyebrow mt-1.5 text-center transition-colors duration-300 text-muted-foreground">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </ScrollBounce>
       </div>
     </section>
   )

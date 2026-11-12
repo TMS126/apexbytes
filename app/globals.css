@@ -856,7 +856,8 @@ button, a, [role="button"] {
   }
 
   .abh-editorial-hero {
-    min-height: clamp(34rem, 82svh, 54rem);
+    position: relative;
+    min-height: 100svh;
     padding: calc(var(--nav-h, 74px) + 2rem) 1.5rem 4rem;
     display: flex;
     flex-direction: column;
@@ -865,9 +866,31 @@ button, a, [role="button"] {
     text-align: center;
   }
 
+  .abh-editorial-hero::after {
+    content: "↓";
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    color: var(--muted-foreground);
+    font-size: 1.15rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .abh-editorial-hero::after { animation: abh-scroll-cue 1.8s ease-in-out infinite; }
+  }
+
   @media (max-width: 640px) {
     .abh-editorial-hero {
-      min-height: min(76svh, 42rem);
       padding-inline: 1rem;
       padding-bottom: 3rem;
     }

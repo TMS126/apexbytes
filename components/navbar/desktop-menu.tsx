@@ -83,11 +83,11 @@ export function DesktopMenu({
       aria-label="Main navigation"
       aria-hidden={!menuOpen}
       className={cn(
-        "hidden md:block absolute right-0 top-full mt-2 min-w-[210px] rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] py-2 transition-all duration-200 ease-out origin-top-right",
+        "hidden md:block absolute right-0 top-full mt-4 min-w-[230px] rounded-[20px] border border-border/60 bg-background/95 p-3 shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-all duration-200 ease-out origin-top-right",
         menuOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
       )}
     >
-      <nav className="flex flex-col" aria-label="Primary">
+      <nav className="flex flex-col gap-1.5" aria-label="Primary">
         {NAV_ITEMS.map((item) => {
           // FIX (carried from the old desktop pill in navbar.tsx): exact-path
           // matching meant a hub page like /services/print never marked
@@ -101,7 +101,7 @@ export function DesktopMenu({
 
           if (item.isCta) {
             return (
-              <div key={item.id} className="px-2 pt-1 pb-1">
+              <div key={item.id} className="pt-1 pb-1">
                 <button
                   type="button"
                   role="menuitem"
@@ -112,7 +112,7 @@ export function DesktopMenu({
                   aria-current={isActive ? "page" : undefined}
                   style={{ backgroundColor: contactHovered ? HOVER_FILL : BRAND.blue }}
                   className={cn(
-                    "w-full text-left px-4 py-2.5 rounded-[14px] text-base font-medium text-white transition-colors duration-200",
+                    "w-full rounded-full px-4 py-3 text-left text-base font-medium text-white transition-colors duration-200",
                     ctaPulse && "abh-cta-pulse"
                   )}
                 >
@@ -159,7 +159,7 @@ export function DesktopMenu({
                   aria-label="Hubs"
                   aria-hidden={!hubsOpen}
                   className={cn(
-                    "absolute right-full top-0 mr-1.5 min-w-[190px] rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] py-2 flex flex-col transition-all duration-150 ease-out origin-top-right",
+                    "absolute right-full top-0 mr-3 flex min-w-[210px] flex-col gap-1.5 rounded-[18px] border border-border/60 bg-background/95 p-3 shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-all duration-150 ease-out origin-top-right",
                     hubsOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-1 pointer-events-none"
                   )}
                 >
@@ -176,7 +176,7 @@ export function DesktopMenu({
                         aria-current={isHubActive ? "page" : undefined}
                         style={{ color: isHubActive ? HOVER_TEXT : neutralColor }}
                         className={cn(
-                          "w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150",
+                          "w-full rounded-full bg-card/80 px-4 py-3 text-left text-base whitespace-nowrap transition-colors duration-150 hover:bg-muted",
                           isHubActive ? "font-semibold" : "font-semibold"
                         )}
                         onMouseEnter={(e) => {

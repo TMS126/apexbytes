@@ -23,10 +23,10 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
         <h1 className="abh-page-title mb-5">{hub.title}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{hub.desc}</p>
         <div className="abh-divider" />
-        <p className="mt-6 text-sm text-muted-foreground">{hub.sections.length} service categories · {hub.turnaround}</p>
       </header>
 
       <div className="mx-auto flex max-w-[1248px] flex-col gap-14 px-4 md:px-8">
+        <p className="text-center text-sm text-muted-foreground">{hub.sections.length} service categories · {hub.turnaround}</p>
         {hub.sections.map((section, sectionIndex) => (
           <section key={section.title} aria-labelledby={`section-${sectionIndex}`}>
             <div className="mb-6 flex items-end justify-between gap-4 border-b border-border/60 pb-4">

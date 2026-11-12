@@ -135,7 +135,7 @@ export function Navbar() {
               </div>
             </button>
 
-            <nav aria-label="Primary navigation" className="hidden items-center gap-5 pointer-events-auto xl:flex">
+            <nav aria-label="Primary navigation" className="hidden items-center gap-8 pointer-events-auto xl:flex">
               {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
                 const active = pathname === item.path || (item.path !== "/" && pathname.startsWith(`${item.path}/`))
                 const submenu = item.id === "services"
@@ -164,13 +164,13 @@ export function Navbar() {
                         >
                           <CaretDown size={12} weight="bold" aria-hidden="true" />
                         </summary>
-                        <div className="invisible pointer-events-none absolute left-0 top-full z-50 mt-2 flex min-w-56 flex-col rounded-[14px] border border-border/50 bg-background/95 p-2 opacity-0 shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-all group-open/dropdown:visible group-open/dropdown:pointer-events-auto group-open/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:pointer-events-auto group-hover/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:pointer-events-auto group-focus-within/dropdown:opacity-100">
+                        <div className="invisible pointer-events-none absolute left-0 top-full z-50 mt-4 flex min-w-56 flex-col gap-1.5 rounded-[18px] border border-border/50 bg-background/95 p-3 opacity-0 shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-all group-open/dropdown:visible group-open/dropdown:pointer-events-auto group-open/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:pointer-events-auto group-hover/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:pointer-events-auto group-focus-within/dropdown:opacity-100">
                           {submenu.map((subitem) => (
                             <Link
                               key={subitem.path}
                               href={subitem.path}
                               aria-current={pathname === subitem.path ? "page" : undefined}
-                              className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                              className="rounded-full bg-card/80 px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                             >
                               {subitem.label}
                             </Link>
@@ -210,7 +210,7 @@ export function Navbar() {
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
-                className="abh-nav-control order-2 flex size-10 items-center justify-center transition-colors hover:text-foreground active:scale-95"
+                className="abh-nav-control order-2 flex size-10 items-center justify-center transition-colors hover:text-foreground active:scale-95 xl:hidden"
               >
                 <span className="relative w-4 h-[12px] flex flex-col justify-between items-center" aria-hidden="true">
                   <span

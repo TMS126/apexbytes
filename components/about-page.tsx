@@ -35,7 +35,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <AboutHeader blueColor={blueColor} />
+      <AboutHeader />
       <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
       <AboutTeam blueColor={blueColor} />
       <AboutStandards neutralColor={neutralColor} />
