@@ -55,7 +55,7 @@ export function HeroSection() {
   const showHolidayBanner = mounted && status?.isHoliday
   const displayCategory = weatherCategory ?? (status ? fallbackCategory(status.greeting) : "clear-day")
   const { Icon: WeatherIcon, color: weatherIconColor } = WEATHER_ICON_MAP[displayCategory]
-  const heroCtaClass = "inline-flex h-12 w-full items-center justify-center rounded-[14px] px-6 text-base font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none sm:w-[170px]"
+  const heroCtaClass = "inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-base font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none sm:w-[170px]"
 
   return (
     <section

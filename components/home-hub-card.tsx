@@ -47,10 +47,13 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
       <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-sm">{CLIENT_TITLE[hubId]}</p>
       <h3 className="font-heading text-lg font-semibold leading-tight text-card-foreground sm:text-xl md:text-2xl">{hub.title}</h3>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:mt-4 sm:text-base sm:leading-8 md:text-[1.05rem]">{BLURB[hubId]}</p>
-      <Link href={hubRouteFor(hubId)} className="group/cta relative mt-5 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:mt-6 sm:text-base">
-        Explore {hub.title}
-        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--hub-primary)] transition-transform duration-250 ease-out group-hover/cta:scale-x-100 group-focus-visible/cta:scale-x-100" />
-      </Link>
+      <div className="mt-7 flex flex-col gap-3 rounded-[18px] border border-border/70 bg-card/35 px-4 py-3.5 transition-[border-color,background-color] duration-250 ease-out sm:flex-row sm:items-center sm:justify-between sm:gap-5 sm:px-5">
+        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground sm:text-sm">Hub division · {serviceCount} services</span>
+        <Link href={hubRouteFor(hubId)} className="group/cta relative w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
+          Explore {hub.title}
+          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--hub-primary)] transition-transform duration-250 ease-out group-hover/cta:scale-x-100 group-focus-visible/cta:scale-x-100" />
+        </Link>
+      </div>
     </div>
   )
 
