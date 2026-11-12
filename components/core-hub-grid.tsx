@@ -31,7 +31,7 @@ export function CoreHubGrid() {
           {HUB_ORDER.map((hubId, index) => (
             <li key={hubId} className="border-b border-border/65 pb-12 last:border-b-0 md:pb-20">
               <ScrollBounce delay={index * 0.06}>
-                <HomeHubCard hubId={hubId} flip={index % 2 === 1} />
+                <HomeHubCard hubId={hubId} />
               </ScrollBounce>
             </li>
           ))}

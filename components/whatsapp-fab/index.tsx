@@ -202,13 +202,13 @@ export function WhatsAppFAB() {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
+        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
       )}
 
       {isOpen && (
         <div
           className={cn(
-            "fixed bottom-24 right-4 left-4 md:left-auto md:right-6 z-[9991] md:w-[400px] max-h-[75vh]",
+            "pointer-events-auto fixed bottom-4 right-4 left-4 z-[9995] max-h-[75vh] md:bottom-24 md:left-auto md:right-6 md:w-[400px]",
             "rounded-[20px] shadow-2xl flex flex-col overflow-hidden bg-white dark:bg-zinc-950",
             "animate-in slide-in-from-bottom-4 fade-in duration-200 ease-out motion-reduce:animate-none transform-gpu"
           )}

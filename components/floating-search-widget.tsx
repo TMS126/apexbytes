@@ -256,7 +256,7 @@ export function FloatingSearchWidget() {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none"
+          className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none"
           onClick={handleClose}
           aria-hidden="true"
         />
@@ -296,7 +296,7 @@ onClick={isOpen ? handleClose : handleOpen}
       </div>
 
       {isOpen && (
-        <div className="fixed inset-x-0 top-[12vh] z-[9994] flex justify-center px-4 pointer-events-none">
+        <div className="pointer-events-none fixed inset-x-0 top-[12vh] z-[9995] flex justify-center px-4">
           <div
             ref={modalRef}
             role="dialog"

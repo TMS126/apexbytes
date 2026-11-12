@@ -2,7 +2,6 @@
 "use client"
 
 import Link from "next/link"
-import { cn } from "@/lib/utils"
 import { HUB_COLORS } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { HUB_ICON } from "@/components/services-page/mobile-hub-card"
@@ -24,7 +23,7 @@ const BLURB: Record<HubId, string> = {
   tech: "PC setup, virus removal and Windows installs — sorted properly. Practical help for the everyday tech problems that slow you down.",
 }
 
-export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: boolean }) {
+export function HomeHubCard({ hubId }: { hubId: HubId }) {
   const hub = HUBS[hubId]
   const Icon = HUB_ICON[hubId]
   const serviceCount = hub.sections.reduce((total, section) => total + section.items.length, 0)
@@ -45,15 +44,11 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
   const description = (
     <div className="flex min-h-[176px] flex-col justify-center px-1 py-8 sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8">
       <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-sm">{CLIENT_TITLE[hubId]}</p>
-      <h3 className="font-heading text-lg font-semibold leading-tight text-card-foreground sm:text-xl md:text-2xl">{hub.title}</h3>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:mt-4 sm:text-base sm:leading-8 md:text-[1.05rem]">{BLURB[hubId]}</p>
-      <div className="mt-7 flex flex-col gap-3 rounded-[18px] border border-border/70 bg-card/35 px-4 py-3.5 transition-[border-color,background-color] duration-250 ease-out sm:flex-row sm:items-center sm:justify-between sm:gap-5 sm:px-5">
-        <span className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground sm:text-sm">Explore the hub</span>
-        <Link href={hubRouteFor(hubId)} className="group/cta relative w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
-          Explore {hub.title}
-          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--hub-primary)] transition-transform duration-250 ease-out group-hover/cta:scale-x-100 group-focus-visible/cta:scale-x-100" />
-        </Link>
-      </div>
+      <Link href={hubRouteFor(hubId)} className="group/cta relative mt-7 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
+        Explore hub
+        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--hub-primary)] transition-transform duration-250 ease-out group-hover/cta:scale-x-100 group-focus-visible/cta:scale-x-100" />
+      </Link>
     </div>
   )
 
@@ -62,9 +57,9 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
       style={{
         ["--hub-primary" as string]: HUB_COLORS[hubId].primary,
       }}
-      className={cn("grid grid-cols-[minmax(116px,34%)_1fr] gap-4 md:grid-cols-[minmax(190px,260px)_1fr] md:items-stretch md:gap-8", flip && "grid-cols-[1fr_minmax(116px,34%)] md:grid-cols-[1fr_minmax(190px,260px)]")}
+      className="grid grid-cols-[minmax(116px,34%)_1fr] gap-4 md:grid-cols-[minmax(190px,260px)_1fr] md:items-stretch md:gap-8"
     >
-      {flip ? <>{description}{card}</> : <>{card}{description}</>}
+      {card}{description}
     </div>
   )
 }

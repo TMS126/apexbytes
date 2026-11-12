@@ -310,7 +310,7 @@ export function QuoteCalculatorWidget() {
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
       {isOpen && (
-        <div className="fixed inset-0 z-[9989] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none md:backdrop-blur-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
+        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none md:backdrop-blur-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
       )}
 
       <FabTrigger
@@ -332,7 +332,7 @@ export function QuoteCalculatorWidget() {
           aria-modal="true"
           aria-label="Quotation Calculator"
           className={cn(
-            "fixed inset-0 md:inset-auto md:bottom-24 md:right-5 left-auto z-[9991]",
+            "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5",
             "w-full h-full md:h-auto md:w-[min(820px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
             "rounded-none md:rounded-[14px] shadow-2xl flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
