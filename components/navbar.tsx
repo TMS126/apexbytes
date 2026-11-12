@@ -97,7 +97,10 @@ export function Navbar() {
   return (
     <>
       <header
-        className="fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top] duration-300 ease-out dark:bg-background/88"
+        className={cn(
+          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top,transform,opacity] duration-300 ease-out dark:bg-background/88",
+          !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",
+        )}
       >
         <div className="flex h-[var(--nav-h)] items-center justify-center px-5 md:px-10">
           <div className="relative grid w-full max-w-[1320px] grid-cols-[1fr_auto_1fr] items-center gap-4">
