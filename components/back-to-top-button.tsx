@@ -31,29 +31,23 @@ export function BackToTopButton({
   className?: string
 }) {
   const showScrollToBottom = useScrollToBottom()
-  const controlClass = cn(
-    "fixed left-1/2 -translate-x-1/2 z-[9990] size-11 rounded-[14px] bg-secondary/90 text-muted-foreground border border-border shadow-md backdrop-blur-sm flex items-center justify-center transition-all duration-300 active:scale-95 hover:scale-105 hover:bg-card",
-    bottomClass,
-    className
-  )
-
   return (
-    <>
+    <div className={cn("fixed right-4 z-[9990] flex items-center gap-1 rounded-full bg-[var(--brand-dark-100)] p-1 text-white shadow-lg", bottomClass, className)}>
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Back to top"
-        className={cn(controlClass, visible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none")}
+        className={cn("flex size-9 items-center justify-center rounded-full transition-colors hover:bg-white/15", visible ? "opacity-100" : "opacity-45")}
       >
         <ArrowUp size={20} weight="regular" aria-hidden="true" />
       </button>
       <button
         onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
         aria-label="Scroll to bottom"
-        className={cn(controlClass, showScrollToBottom && !visible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none")}
+        className={cn("flex size-9 items-center justify-center rounded-full transition-colors hover:bg-white/15", showScrollToBottom && !visible ? "opacity-100" : "opacity-45")}
       >
         <ArrowDown size={20} weight="regular" aria-hidden="true" />
       </button>
-    </>
+    </div>
   )
 }
 

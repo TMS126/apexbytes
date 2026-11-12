@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { Sun, Moon, CaretDown, ArrowUpRight } from "@phosphor-icons/react"
+import { Sun, Moon, CaretDown } from "@phosphor-icons/react"
 import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
 import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
@@ -35,6 +35,8 @@ export function Navbar() {
   // render. next-themes resolves the stored theme only after hydration.
   const [mounted, setMounted] = useState(false)
   const [ctaPulse, setCtaPulse] = useState(false)
+  const [activeSubmenu, setActiveSubmenu] = useState<"services" | "tools" | null>(null)
+  const submenuTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const navVisible = useNavVisibility()
   const { menuOpen, setMenuOpen } = useMobileMenu()
@@ -82,6 +84,14 @@ export function Navbar() {
   )
 
   const handleThemeToggle = () => setTheme(theme === "dark" ? "light" : "dark")
+  const openSubmenu = (id: "services" | "tools") => {
+    if (submenuTimer.current) clearTimeout(submenuTimer.current)
+    setActiveSubmenu(id)
+  }
+  const closeSubmenuSoon = () => {
+    if (submenuTimer.current) clearTimeout(submenuTimer.current)
+    submenuTimer.current = setTimeout(() => setActiveSubmenu(null), 140)
+  }
 
   const glassPillClass = "py-2 pointer-events-auto"
 
@@ -148,7 +158,13 @@ export function Navbar() {
                     : null
 
                 return (
-                  <div key={item.id} className="group/nav relative flex items-center gap-1">
+                  <div
+                    key={item.id}
+                    className="group/nav relative flex items-center gap-1"
+                    onMouseEnter={() => submenu && openSubmenu(item.id as "services" | "tools")}
+                    onMouseLeave={submenu ? closeSubmenuSoon : undefined}
+                    onFocus={() => submenu && openSubmenu(item.id as "services" | "tools")}
+                  >
                     <Link
                       href={item.path}
                       aria-current={active ? "page" : undefined}
@@ -159,27 +175,19 @@ export function Navbar() {
                     >
                       {item.label}
                     </Link>
-                    {submenu && (
-                      <details className="group/dropdown relative">
-                        <summary
-                          aria-label={`Open ${item.label} submenu`}
-                          className="flex size-7 cursor-pointer list-none items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground [&::-webkit-details-marker]:hidden"
-                        >
-                          <CaretDown size={12} weight="bold" aria-hidden="true" />
-                        </summary>
-                        <div className="invisible pointer-events-none absolute left-1/2 top-full z-50 mt-4 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap p-2 opacity-0 transition-all group-open/dropdown:visible group-open/dropdown:pointer-events-auto group-open/dropdown:opacity-100 group-hover/dropdown:visible group-hover/dropdown:pointer-events-auto group-hover/dropdown:opacity-100 group-focus-within/dropdown:visible group-focus-within/dropdown:pointer-events-auto group-focus-within/dropdown:opacity-100">
-                          {submenu.map((subitem) => (
-                            <Link
-                              key={subitem.path}
-                              href={subitem.path}
-                              aria-current={pathname === subitem.path ? "page" : undefined}
-                              className="rounded-full bg-background/95 px-4 py-2.5 text-sm text-muted-foreground shadow-[var(--shadow-card-lift)] backdrop-blur-xl transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                            >
-                              {subitem.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </details>
+                    {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
+                    {submenu && activeSubmenu === item.id && (
+                      <div
+                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-3 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background/92 p-2 shadow-lg backdrop-blur-xl"
+                        onMouseEnter={() => openSubmenu(item.id as "services" | "tools")}
+                        onMouseLeave={closeSubmenuSoon}
+                      >
+                        {submenu.map((subitem) => (
+                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path ? "page" : undefined} className="rounded-[14px] px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                            {subitem.label}
+                          </Link>
+                        ))}
+                      </div>
                     )}
                   </div>
                 )
@@ -193,20 +201,6 @@ export function Navbar() {
               )}
               style={{ transition: "opacity 300ms, transform 300ms" }}
             >
-              <button
-                type="button"
-                onClick={handleThemeToggle}
-                className="abh-nav-control order-1 flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground active:scale-95"
-                aria-label={mounted ? (theme === "dark" ? "Switch to light mode" : "Switch to dark mode") : "Toggle theme"}
-              >
-                {mounted &&
-                  (theme === "dark" ? (
-                    <Moon size={20} weight="fill" style={{ color: neutralColor }} className="transition-colors duration-300" />
-                  ) : (
-                    <Sun size={20} weight="fill" style={{ color: neutralColor }} className="transition-colors duration-300" />
-                  ))}
-              </button>
-
               <button
                 ref={menuToggleRef}
                 type="button"
@@ -251,13 +245,12 @@ export function Navbar() {
                 ctaPulse={ctaPulse}
               />
 
-              <Link
-                href="/contact"
-                className="order-3 hidden items-center gap-2 rounded-full bg-muted/80 px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted sm:inline-flex"
-              >
-                Let&apos;s talk
-                <ArrowUpRight size={15} weight="bold" aria-hidden="true" />
-              </Link>
+              <div className="order-3 hidden items-center gap-1 rounded-full bg-muted/80 p-1 sm:flex">
+                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
+                  {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
+                </button>
+                <Link href="/contact" className="rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-background">Let&apos;s Talk</Link>
+              </div>
             </div>
           </div>
         </div>

@@ -638,8 +638,7 @@ code, pre, kbd, samp, .abh-mono {
 }
 .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
-/* Site-wide glassmorphism system: every reusable surface shares one translucent,
-   blurred treatment while preserving semantic tokens and readable contrast. */
+/* Acrylic is deliberately limited to the desktop submenu and grouped FABs. */
 :root {
   --glass-tint: rgba(255, 255, 255, 0.42);
   --glass-tint-strong: rgba(255, 255, 255, 0.94);
@@ -661,24 +660,14 @@ body {
 }
 .glass,
 .glass-strong,
-.abh-card,
-.abh-shadow-card,
-.abh-shadow-nested-group,
-.abh-shadow-nested-item,
-.abh-shadow-tile,
-.abh-shadow-contact-card,
-.abh-shadow-elevated,
-.abh-shadow-popover,
-[data-radix-popper-content-wrapper],
-[role="dialog"] {
+.abh-navbar-submenu {
   background-color: var(--glass-tint) !important;
   border: 0 !important;
   border-color: transparent !important;
   box-shadow: var(--glass-shadow);
 }
 .glass-strong,
-[data-radix-popper-content-wrapper],
-[role="dialog"] {
+.abh-navbar-submenu {
   background-color: var(--glass-tint-strong) !important;
   -webkit-backdrop-filter: blur(24px) saturate(150%);
   backdrop-filter: blur(24px) saturate(150%);
@@ -686,22 +675,13 @@ body {
 }
 
 input, textarea, select {
-  background-color: color-mix(in srgb, var(--glass-tint-strong) 78%, transparent) !important;
-  border-color: var(--glass-border) !important;
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .glass,
   .glass-strong,
-  .abh-card,
-  .abh-shadow-card,
-  .abh-shadow-nested-group,
-  .abh-shadow-nested-item,
-  .abh-shadow-tile,
-  .abh-shadow-contact-card,
-  .abh-shadow-elevated,
-  .abh-shadow-popover,
-  [data-radix-popper-content-wrapper],
-  [role="dialog"] {
+  .abh-navbar-submenu {
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
     backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   }
@@ -771,12 +751,12 @@ button, a, [role="button"] {
 }
 @media (max-width: 640px) {
   :root { --glass-blur: 8px; }
-  .abh-card, .glass, .glass-strong { box-shadow: 0 12px 28px -22px rgba(15, 63, 102, 0.34), inset 0 1px 0 rgba(255,255,255,0.42); }
+  .glass, .glass-strong { box-shadow: 0 12px 28px -22px rgba(15, 63, 102, 0.34), inset 0 1px 0 rgba(255,255,255,0.42); }
 }
 @media (prefers-reduced-transparency: reduce) {
   :root { --glass-tint: rgba(255,255,255,0.94); --glass-tint-strong: rgba(255,255,255,0.98); }
   .dark { --glass-tint: rgba(31,41,55,0.96); --glass-tint-strong: rgba(31,41,55,0.99); }
-  .glass, .glass-strong, .abh-card, [role="dialog"] { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass, .glass-strong, .abh-navbar-submenu, .abh-fab-group { -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
 @layer components {
@@ -1338,17 +1318,8 @@ body::before {
 /* Shared surfaces */
 .glass,
 .glass-strong,
-.abh-card,
-.abh-shadow-card,
-.abh-shadow-nested-group,
-.abh-shadow-nested-item,
-.abh-shadow-tile,
-.abh-shadow-contact-card,
-.abh-shadow-elevated,
-.abh-shadow-project-card,
-.abh-shadow-popover,
-[data-radix-popper-content-wrapper],
-[role="dialog"] {
+.abh-navbar-submenu,
+.abh-fab-group {
   border: 0 !important;
   border-color: transparent !important;
   border-radius: var(--ui-radius-md) !important;
@@ -1357,15 +1328,11 @@ body::before {
   transition: box-shadow 240ms ease, transform 240ms ease, background-color 240ms ease;
 }
 .glass:hover,
-.abh-card:hover,
-.abh-shadow-card:hover,
-.abh-shadow-tile:hover,
-.abh-shadow-contact-card:hover,
-.abh-shadow-project-card:hover {
+.abh-navbar-submenu:hover,
+.abh-fab-group:hover {
   box-shadow: var(--ui-shadow-hover) !important;
 }
-.abh-shadow-popover,
-[data-radix-popper-content-wrapper] { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
+.abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
 
 /* Buttons feel like physical controls rather than flat links. */
 button,
@@ -1414,16 +1381,8 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
   box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 8px 22px -16px color-mix(in srgb, var(--ring) 60%, transparent) !important;
 }
 
-/* Dialogs and popovers float above the page with a calm acrylic veil. */
-[role="dialog"] {
-  border-radius: var(--ui-radius-lg) !important;
-  box-shadow: var(--ui-shadow-float) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(145%);
-  backdrop-filter: blur(28px) saturate(145%);
-}
-
 @media (max-width: 640px) {
-  .glass, .abh-card, .abh-shadow-card, .abh-shadow-tile, [role="dialog"] { border-radius: var(--ui-radius-sm) !important; }
+  .glass, .abh-navbar-submenu, .abh-fab-group { border-radius: var(--ui-radius-sm) !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   button:hover:not(:disabled), [role="button"]:hover, .abh-btn-primary:hover, .abh-btn-cta:hover, .abh-line-cta:hover, .abh-wa-btn:hover { transform: none; }

@@ -4,14 +4,12 @@
 import { useState } from "react"
 import { useTheme } from "next-themes"
 import { PlusCircle, Gear, Wrench, CalendarCheck } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
 import { BIZ, pickHex } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
 export function StatsBar() {
   const { resolvedTheme } = useTheme()
   const [mounted] = useState(() => typeof window !== "undefined")
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const isDark = mounted && resolvedTheme === "dark"
 
   const stats = [
@@ -29,7 +27,6 @@ export function StatsBar() {
       </ScrollBounce>
       <div className="grid grid-cols-2 sm:grid-cols-4 w-full max-w-[900px] mx-auto" role="list" aria-label="Key stats">
         {stats.map((stat, i) => {
-          const isHov = hoveredCard === i
           const Icon = stat.icon
           return (
             <ScrollBounce key={stat.label} delay={i * 0.08} className="h-full">
@@ -37,19 +34,13 @@ export function StatsBar() {
               <div
                 role="listitem"
                 data-hover-border
-                onMouseEnter={() => setHoveredCard(i)}
-                onMouseLeave={() => setHoveredCard(null)}
-                onClick={() => setHoveredCard(isHov ? null : i)}
                 aria-label={`${stat.value} ${stat.label}`}
-                className={cn(
-                  "flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center",
-                  "rounded-[14px] transition-[border-color] duration-300"
-                )}
-                style={{ border: `2px solid ${isHov ? stat.color : "transparent"}` }}
+                className="group relative flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center"
               >
-                <Icon size={24} weight="regular" aria-hidden="true" className="mb-0.5" />
+                <Icon size={24} weight="regular" color={stat.color} aria-hidden="true" className="mb-0.5" />
                 <div className="text-2xl font-medium">{stat.value}</div>
                 <div className="text-[0.72rem] font-medium uppercase tracking-widest">{stat.label}</div>
+                <span className="absolute bottom-2 left-1/2 h-0.5 w-10 -translate-x-1/2 origin-center scale-x-50 rounded-full transition-transform duration-300 group-hover:w-16 group-hover:scale-x-100" style={{ backgroundColor: stat.color }} aria-hidden="true" />
               </div>
             </ScrollBounce>
           )

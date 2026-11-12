@@ -1,41 +1,54 @@
 // components/home-hub-card.tsx
 "use client"
 
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HUB_ON_COLOR } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { HUB_ICON } from "@/components/services-page/mobile-hub-card"
+import { hubRouteFor } from "@/components/services-page/lib"
 
-// ============================================================
-// COPY — one-line pitch per hub. No prices on the home page.
-// ============================================================
-const BLURB: Record<HubId, string> = {
-  print: "Fast printing, copying and photo prints — ready while you wait.",
-  doc: "CVs, typing, scanning and laminating — sorted the same day.",
-  design: "Logos, business cards, flyers and social media — custom-made.",
-  eservice: "SASSA, SARS, NSFAS and other official applications — done for you.",
-  tech: "PC setup, virus removal and Windows installs — sorted properly.",
+const CLIENT_TITLE: Record<HubId, string> = {
+  print: "Print what matters",
+  doc: "Get your documents sorted",
+  design: "Make your idea look the part",
+  eservice: "Get official tasks done",
+  tech: "Get your tech working again",
 }
 
-// ============================================================
-// HOVER CLASSES — colour only. No movement, no shadow, no scale.
-// ============================================================
-const CARD_HOVER = "hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)]"
+const BLURB: Record<HubId, string> = {
+  print: "Fast printing, copying and photo prints — ready while you wait. Bring us a page, a project or a full batch and leave with something you can use.",
+  doc: "CVs, typing, scanning and laminating — sorted the same day. We make the admin side feel simple, clear and ready to submit.",
+  design: "Logos, business cards, flyers and social media — custom-made. Start with a rough idea and we will help turn it into something people notice.",
+  eservice: "SASSA, SARS, NSFAS and other official applications — done for you. We help you navigate the details, upload the right documents and move forward.",
+  tech: "PC setup, virus removal and Windows installs — sorted properly. Practical help for the everyday tech problems that slow you down.",
+}
 
-const TEXT_HOVER = "group-hover:text-[var(--hub-on)]"
-
-const ICON_HOVER =
-  "group-hover:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)]"
-
-// ============================================================
-// HOME HUB CARD — display only, not clickable.
-// flip = false → text left, icon right
-// flip = true  → icon left, text right
-// ============================================================
 export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: boolean }) {
   const hub = HUBS[hubId]
   const Icon = HUB_ICON[hubId]
   const serviceCount = hub.sections.reduce((total, section) => total + section.items.length, 0)
+  const card = (
+    <Link
+      href={hubRouteFor(hubId)}
+      className="group flex aspect-square min-h-[180px] w-full flex-col items-center justify-center rounded-[14px] p-6 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none"
+      style={{ backgroundColor: "var(--hub-fill)", color: "var(--hub-on)" }}
+      aria-label={`Explore ${hub.title}`}
+    >
+      <Icon size={54} weight="fill" aria-hidden="true" className="mb-4 transition-transform duration-200 group-hover:scale-105" />
+      <span className="font-heading text-xl font-semibold leading-tight md:text-2xl">{hub.title}</span>
+      <span className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] opacity-80">{serviceCount} services</span>
+    </Link>
+  )
+
+  const description = (
+    <div className="flex min-h-[180px] flex-col justify-center rounded-[14px] border border-border bg-card px-6 py-7 md:px-10">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">{CLIENT_TITLE[hubId]}</p>
+      <h3 className="font-heading text-xl font-semibold leading-tight text-card-foreground md:text-2xl">{hub.title}</h3>
+      <p className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-muted-foreground md:text-base">{BLURB[hubId]}</p>
+      <Link href={hubRouteFor(hubId)} className="abh-line-cta mt-5 w-fit px-1 py-2 text-sm font-semibold">Explore {hub.title}</Link>
+    </div>
+  )
 
   return (
     <div
@@ -43,41 +56,9 @@ export function HomeHubCard({ hubId, flip = false }: { hubId: HubId; flip?: bool
         ["--hub-fill" as string]: HUB_COLORS[hubId].primary,
         ["--hub-on" as string]: HUB_ON_COLOR[hubId],
       }}
-      className={cn(
-        "group relative flex w-full flex-col justify-center overflow-hidden rounded-[14px] bg-card text-foreground",
-        "min-h-[140px] py-6 md:min-h-[200px]",
-        flip ? "pl-[40%] pr-6 md:pl-[45%] md:pr-10" : "pl-6 pr-[40%] md:pl-10 md:pr-[45%]",
-        "transition-[background-color,color] duration-200 motion-reduce:transition-none",
-        CARD_HOVER
-      )}
+      className={cn("grid gap-4 md:grid-cols-[minmax(180px,260px)_1fr] md:items-stretch", flip && "md:grid-cols-[1fr_minmax(180px,260px)]")}
     >
-      {/* ── Icon, cropped by the card edge ──────────────────── */}
-      <span
-        aria-hidden="true"
-        className={cn(
-          "pointer-events-none absolute top-1/2 -translate-y-1/2 leading-none",
-          flip ? "-left-8 md:-left-12" : "-right-8 md:-right-12",
-          "text-[150px] md:text-[240px] text-muted-foreground/20",
-          "transition-colors duration-300 motion-reduce:transition-none",
-          ICON_HOVER
-        )}
-      >
-        <Icon size="1em" weight="fill" />
-      </span>
-
-      {/* ── Copy ─────────────────────────────────────────────── */}
-      <div className="relative z-10">
-        <p className="mb-1 flex items-baseline gap-1.5">
-          <span className="font-sans text-[1.9rem] font-medium leading-none md:text-[2.4rem]">{serviceCount}</span>
-          <span className={cn("text-[0.78rem] font-medium text-muted-foreground md:text-[0.85rem]", TEXT_HOVER)}>
-            services
-          </span>
-        </p>
-        <h3 className="break-words font-sans text-[1.3rem] font-medium leading-tight md:text-[1.6rem]">{hub.title}</h3>
-        <p className={cn("mt-1 text-[0.82rem] leading-snug text-muted-foreground md:text-[0.95rem]", TEXT_HOVER)}>
-          {BLURB[hubId]}
-        </p>
-      </div>
+      {flip ? <>{description}{card}</> : <>{card}{description}</>}
     </div>
   )
 }

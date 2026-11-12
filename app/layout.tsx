@@ -84,9 +84,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
-          <FloatingSearchWidget />
-          <QuoteCalculatorWidget />
-          <WhatsAppFAB />
+          <div className="abh-fab-group fixed bottom-6 right-4 z-[9992] flex flex-col items-end gap-3 rounded-[24px] bg-zinc-950/95 p-2 shadow-xl dark:bg-zinc-900/95 md:right-6">
+            <FloatingSearchWidget />
+            <QuoteCalculatorWidget />
+            <WhatsAppFAB />
+          </div>
         </ThemeProvider>
 
         {isProd && (

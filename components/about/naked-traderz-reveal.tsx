@@ -76,36 +76,37 @@ export function TheNakedTradersZAReveal({
       </button>
 
       {modalOpen && (
-        <div role="dialog" aria-modal="true" aria-labelledby="nt-modal-title" className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div role="dialog" aria-modal="true" aria-labelledby="nt-modal-title" className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/45 backdrop-blur-[1px] transition-opacity duration-500 ease-out"
+            className="absolute inset-0 bg-black/20 transition-opacity duration-500 ease-out"
             style={{ opacity: animateIn ? 1 : 0 }}
             onClick={() => closeModal()}
             aria-hidden="true"
           />
           <div
-            className="relative w-full max-w-sm md:max-w-xl p-2 sm:p-4 md:p-6 transition-all duration-500"
+            className="relative w-full max-w-sm rounded-[14px] bg-[var(--surface-modal)] p-3 shadow-2xl sm:max-w-xl sm:p-5 transition-all duration-500"
             style={{
               opacity: animateIn ? 1 : 0,
               transform: animateIn ? "translateY(0) scale(1)" : "translateY(8px) scale(0.94)",
               transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
-            <button
+            <div className="mb-3 flex items-center justify-end">
+              <button
               ref={closeBtnRef}
               type="button"
               onClick={() => closeModal()}
               aria-label="Close logo preview"
-              className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors outline-none focus-visible:ring-2"
+              className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground outline-none focus-visible:ring-2"
               style={{ ["--tw-ring-color" as string]: accentColor }}
             >
-              <X size={16} weight="bold" aria-hidden="true" />
-            </button>
+                <X size={16} weight="bold" aria-hidden="true" />
+              </button>
+            </div>
 
-            <div className="relative aspect-square w-full overflow-hidden rounded-[28px] bg-black shadow-2xl ring-1 ring-white/15">
-              <Image src="/nto.webp" alt="The Naked Traders ZA original logo" fill sizes="(max-width: 768px) 92vw, 560px" className="object-contain transition-transform duration-700 ease-out" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/5" aria-hidden="true" />
-              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+            <div className="relative aspect-square w-full overflow-hidden rounded-[14px] bg-black p-5 shadow-xl ring-1 ring-white/15 sm:p-8">
+              <Image src="/nto.webp" alt="The Naked Traders ZA original logo" fill sizes="(max-width: 768px) 92vw, 560px" className="object-contain p-5 transition-transform duration-700 ease-out sm:p-8" />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-5 pb-5 pt-16 sm:px-8 sm:pb-7">
                 <div className="mb-2 flex items-center gap-2">
                   <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
                   <span className="abh-eyebrow text-white/80">1st Ever Logo</span>

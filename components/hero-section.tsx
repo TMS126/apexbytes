@@ -2,7 +2,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowDown, Cloud, CloudFog, CloudLightning, CloudMoon, CloudRain, CloudSun, Moon, Snowflake, Sun } from "@phosphor-icons/react"
+import Link from "next/link"
+import { ArrowDown, ArrowUpRight, Cloud, CloudFog, CloudLightning, CloudMoon, CloudRain, CloudSun, Moon, Snowflake, Sun } from "@phosphor-icons/react"
 import { WEATHER_THEME } from "@/lib/brand"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
@@ -70,9 +71,24 @@ export function HeroSection() {
           )}
           <p className="mb-4 text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
           <h1 className="abh-home-title text-foreground">
-            <span className="block">Design, print &amp; tech,</span>
-            <span className="block">without the hassle.</span>
+            <span className="block">Design. Print. Upgrade.</span>
           </h1>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))}
+              className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-[14px] bg-[var(--brand-orange)] px-6 py-3.5 text-base font-bold text-[var(--on-brand-orange)] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none"
+            >
+              Quote <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
+            </button>
+            <Link
+              href="/services"
+              className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-[14px] bg-[var(--brand-blue)] px-6 py-3.5 text-base font-bold text-[var(--on-brand-blue)] shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none"
+            >
+              Services <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
+            </Link>
+          </div>
           <a
             href="#core-hubs-title"
             aria-label="Explore our services"

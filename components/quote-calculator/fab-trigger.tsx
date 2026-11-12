@@ -26,7 +26,7 @@ export function FabTrigger({
   return (
     <div
       className={cn(
-        "fixed z-[9992] right-5 md:right-7 bottom-24 flex items-center justify-end group/calc",
+        "relative flex items-center justify-end group/calc pointer-events-auto",
         "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
         !visible ? "hidden" : dimmed ? "opacity-30 scale-100 pointer-events-auto" : "opacity-100 scale-100 pointer-events-auto"
       )}
@@ -34,7 +34,7 @@ export function FabTrigger({
       <button
         onClick={onOpen}
         className={cn(
-          "-mr-3 flex items-center gap-2 pl-3 pr-3.5 py-2 rounded-full shadow-lg bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 active:scale-95 transition-all duration-250 ease-out origin-right motion-reduce:transition-none transform-gpu overflow-hidden whitespace-nowrap",
+            "-mr-3 flex items-center gap-2 pl-3 pr-3.5 py-2 rounded-full shadow-lg bg-background border border-border active:scale-95 transition-all duration-250 ease-out origin-right motion-reduce:transition-none transform-gpu overflow-hidden whitespace-nowrap",
           showMiniBar && miniExpanded ? "opacity-100 max-w-[220px] scale-100" : "opacity-0 max-w-0 scale-95 pl-0 pr-0 pointer-events-none"
         )}
       >
@@ -53,7 +53,7 @@ export function FabTrigger({
         <span
           className={cn(
             "text-[0.65rem] font-medium uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
-            "bg-white dark:bg-zinc-900 px-2.5 py-1 rounded-full shadow-md border border-zinc-100 dark:border-zinc-800",
+            "bg-[var(--brand-dark-100)] px-2.5 py-1 rounded-full shadow-md",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
             "max-w-0 opacity-0 scale-x-0 group-hover/calc:max-w-[100px] group-hover/calc:opacity-100 group-hover/calc:scale-x-100 group-focus-within/calc:max-w-[100px] group-focus-within/calc:opacity-100 group-focus-within/calc:scale-x-100"
           )}
@@ -66,7 +66,7 @@ export function FabTrigger({
           onClick={onOpen}
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
-          className="abh-press relative size-14 rounded-full bg-card/72 border border-white/35 shadow-[0_16px_32px_-18px_rgba(15,63,102,0.7)] backdrop-blur-xl flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
+          className="abh-press relative size-14 rounded-full border border-white/20 bg-background text-foreground shadow-md flex items-center justify-center hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none transform-gpu"
         >
           <Calculator
             size={34}

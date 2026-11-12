@@ -27,15 +27,17 @@ export function CoreHubGrid() {
           </div>
         </ScrollBounce>
 
-        <ul className="flex flex-col gap-4 md:gap-6">
-          {HUB_ORDER.map((hubId, index) => (
-            <li key={hubId}>
-              <ScrollBounce delay={index * 0.06}>
-                <HomeHubCard hubId={hubId} flip={index % 2 === 1} />
-              </ScrollBounce>
-            </li>
-          ))}
-        </ul>
+        <div className="rounded-[14px] border border-border bg-card p-4 md:p-6">
+          <ul className="flex flex-col gap-4 md:gap-6">
+            {HUB_ORDER.map((hubId, index) => (
+              <li key={hubId}>
+                <ScrollBounce delay={index * 0.06}>
+                  <HomeHubCard hubId={hubId} flip={index % 2 === 1} />
+                </ScrollBounce>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   )
