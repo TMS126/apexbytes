@@ -38,9 +38,9 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
   }
 
   return (
-    <div ref={wrapRef} className="relative mx-auto w-full max-w-md">
-      <div className="flex min-h-12 items-center gap-3 rounded-[14px] bg-card px-4 py-2.5 shadow-[var(--shadow-card-lift)] transition-shadow duration-200 focus-within:shadow-lg">
-        <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
+    <div ref={wrapRef} className="relative mx-auto w-full max-w-[300px]">
+      <div className="abh-reference-search">
+        <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
         <label htmlFor="inline-search-input" className="sr-only">Find a service</label>
         <input
           id="inline-search-input"
@@ -49,7 +49,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           placeholder="Find a service…"
-          className="min-w-0 flex-1 bg-transparent py-0 pr-10 text-base font-medium leading-6 text-zinc-800 outline-none placeholder:text-muted-foreground focus:outline-none focus:ring-0 dark:text-zinc-200"
+          className="pr-8"
         />
       </div>
       {query && (
@@ -58,18 +58,20 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
         </button>
       )}
       {focused && query.trim().length > 0 && (
-        <div className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] animate-in fade-in zoom-in-95 duration-150">
+        <div className="abh-reference-search-results absolute left-0 right-0 top-full z-30 animate-in fade-in zoom-in-95 duration-150">
           {results.length > 0 ? (
             <div className="max-h-[320px] overflow-y-auto p-2">
               {results.map((s, idx) => {
                 const colors = HUB_COLORS[s.hubId as HubKey]
                 const accent = isDark ? colors.accentDark : colors.accentLight
                 return (
-                  <button key={`${s.hubId}-${s.name}-${idx}`} onClick={() => pick(s)} className="w-full flex items-center gap-3 p-3 rounded-[10px] hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors text-left">
-                    <HubIcon id={s.hubId} size={20} color={accent} />
+                  <button key={`${s.hubId}-${s.name}-${idx}`} onClick={() => pick(s)} className="abh-reference-search-row">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, #fff)`, color: accent }}>
+                      <HubIcon id={s.hubId} size={17} color="currentColor" />
+                    </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{s.name}</p>
-                      <p className="text-[0.78rem] font-medium uppercase tracking-wider text-muted-foreground truncate">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
+                      <p className="truncate text-sm font-medium text-[#111]">{s.name}</p>
+                      <p className="abh-search-muted truncate text-xs">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
                     </div>
                     <span className="text-sm font-medium shrink-0" style={{ color: accent }}>{s.price}</span>
                   </button>

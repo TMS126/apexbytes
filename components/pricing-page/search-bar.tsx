@@ -10,9 +10,9 @@ import { Result } from './lib'
 
 export function PricingSearchInput({ query, setQuery }: { query: string; setQuery: (v: string) => void }) {
   return (
-    <div className="relative mx-auto w-full max-w-md">
-      <div className="flex min-h-12 items-center gap-3 rounded-[14px] bg-card px-4 py-2.5 shadow-[var(--shadow-card-lift)] transition-shadow duration-200 focus-within:shadow-lg">
-        <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
+    <div className="relative mx-auto w-full max-w-[300px]">
+      <div className="abh-reference-search">
+        <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
         <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
         <input
           id="pricing-search"
@@ -20,7 +20,7 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
           placeholder="Search any service or price…"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          className="min-w-0 flex-1 bg-transparent py-0 pr-10 text-base font-medium leading-6 text-zinc-800 outline-none placeholder:text-muted-foreground focus:outline-none focus:ring-0 dark:text-zinc-200"
+          className="pr-8"
         />
       </div>
       {query && (

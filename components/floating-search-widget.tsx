@@ -96,7 +96,6 @@ export function FloatingSearchWidget() {
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const calculatorOpen = useCalculatorOpen()
   const [query, setQuery]         = useState("")
-  const [inputFocused, setInputFocused] = useState(false)
   const [inlineSearchVisible, setInlineSearchVisible] = useState(true)
 
   const inputRef     = useRef<HTMLInputElement>(null)
@@ -302,13 +301,12 @@ onClick={isOpen ? handleClose : handleOpen}
             role="dialog"
             aria-modal="true"
             aria-label="Search services"
-            className="w-full max-w-[480px] pointer-events-auto"
+            className="w-full max-w-[300px] pointer-events-auto"
           >
             <div
-              className="flex min-h-14 items-center gap-3 rounded-[14px] border bg-white px-4 py-2.5 shadow-xl transition-colors duration-150 ease-out dark:bg-zinc-900 motion-reduce:transition-none"
-              style={{ borderColor: inputFocused ? accentColor : undefined }}
+              className="abh-reference-search"
             >
-              <MagnifyingGlass size={20} weight="regular" className="shrink-0" aria-hidden="true" style={{ color: accentColor }} />
+              <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
               <label htmlFor="floating-search-input" className="sr-only">Search a service</label>
               <input
                 id="floating-search-input"
@@ -316,8 +314,6 @@ onClick={isOpen ? handleClose : handleOpen}
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                onFocus={() => setInputFocused(true)}
-                onBlur={() => setInputFocused(false)}
                 placeholder="Search a service..."
                 /* AUDIT FIX: the border-color swap on the pill container above
                    is meant to be the ONLY focus indicator here — added
@@ -326,7 +322,7 @@ onClick={isOpen ? handleClose : handleOpen}
                    the app can reintroduce the escaping ring on top of it
                    (the global input:focus override in globals.css also
                    covers this, this is belt-and-braces on the element itself). */
-                className="min-w-0 flex-1 bg-transparent py-0 text-base font-medium leading-6 text-zinc-700 outline-none placeholder:text-muted-foreground/70 focus:outline-none focus:ring-0 focus-visible:outline-none dark:text-zinc-200 dark:placeholder:text-muted-foreground/70"
+                className="pr-8"
               />
               {query && (
                 <button
@@ -347,7 +343,7 @@ onClick={isOpen ? handleClose : handleOpen}
             </div>
 
             {hasQuery && (
-              <div className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
+              <div className="abh-reference-search-results animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
                 <div className="max-h-[55vh] overflow-y-auto p-2">
                   {results.length > 0 ? (
                     <div className="divide-y divide-zinc-100 dark:divide-white/10">
@@ -355,27 +351,27 @@ onClick={isOpen ? handleClose : handleOpen}
                         <button
                           key={`${s.hubId}-${s.name}-${idx}`}
                           onClick={() => pick(s)}
-                          className="w-full flex items-center gap-3 py-3 px-2 text-left hover:bg-zinc-50 dark:hover:bg-white/[0.05] transition-colors duration-150"
+                          className="abh-reference-search-row"
                         >
                           <div
-                            className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                            className="flex size-8 shrink-0 items-center justify-center rounded-full"
                             style={{ backgroundColor: `color-mix(in srgb, ${accentColor} 12%, transparent)`, color: accentColor }}
                           >
                             <HubIcon id={s.hubId} size={20} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">
+                            <p className="truncate text-sm font-medium text-[#111]">
                               {s.matchField === "name"
                                 ? <HighlightMatch text={s.name} query={query} color={accentColor} />
                                 : s.name}
                             </p>
-                            <p className="text-[0.72rem] font-medium uppercase tracking-wider text-muted-foreground truncate">
+                            <p className="abh-search-muted truncate text-xs">
                               {s.matchField === "section"
                                 ? <HighlightMatch text={s.sectionTitle} query={query} color={accentColor} />
                                 : s.sectionTitle} · {HUBS[s.hubId].title}
                             </p>
                             {s.matchField === "description" && (
-                              <p className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground truncate mt-0.5 normal-case">
+                              <p className="abh-search-muted mt-0.5 truncate text-xs normal-case">
                                 <HighlightMatch text={matchSnippet(s.description, query)} query={query} color={accentColor} />
                               </p>
                             )}
@@ -386,8 +382,8 @@ onClick={isOpen ? handleClose : handleOpen}
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">No services found</p>
-                      <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mt-1">Try a different word.</p>
+                      <p className="text-base font-medium text-[#111]">No services found</p>
+                      <p className="abh-search-muted mt-1 text-sm">Try a different word.</p>
                     </div>
                   )}
                 </div>
