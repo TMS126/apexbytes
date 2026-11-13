@@ -72,7 +72,7 @@ export function HeroSection() {
             </span>
           )}
           <p className="mb-4 text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
-          <h1 className="abh-home-title text-foreground">
+          <h1 className="abh-home-title font-extrabold text-foreground">
             <span className="block">Design. Print. Upgrade.</span>
           </h1>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>

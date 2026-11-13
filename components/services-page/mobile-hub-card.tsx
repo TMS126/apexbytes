@@ -63,11 +63,11 @@ export function MobileHubCard({
       onPointerCancel={release}
       aria-label={`Open ${hub.title}`}
       style={{ ["--hub-accent" as string]: accent } as CSSProperties}
-      className="group relative w-full text-left rounded-[14px] bg-card overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col hover:shadow-[var(--shadow-card-lift)] min-h-[152px] p-4 sm:min-h-[164px] sm:p-5"
+      className="group relative w-full text-left border-y border-border/70 bg-transparent overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col min-h-[170px] p-5 sm:min-h-[184px] sm:p-6 hover:bg-card/35"
     >
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between mb-5">
         <Icon
-          size={30}
+          size={36}
           weight={pressed ? "fill" : "regular"}
           className="transition-colors duration-150"
           style={{ color: pressed ? accent : "var(--muted-foreground)" }}
@@ -83,8 +83,8 @@ export function MobileHubCard({
         )}
       </div>
 
-      <h3 className="font-sans font-medium text-foreground mb-1.5 break-words text-[1.05rem]">{hub.title}</h3>
-      <p className="text-muted-foreground leading-snug text-[0.82rem] flex-1">{hub.desc}</p>
+      <h3 className="font-heading font-semibold text-foreground mb-2 break-words text-[1.2rem] leading-tight">{hub.title}</h3>
+      <p className="text-muted-foreground leading-7 text-[0.98rem] flex-1">{hub.desc}</p>
 
       <div className="flex items-center justify-between mt-3">
         {hubHasBulk ? <BulkPill /> : <span aria-hidden="true" />}

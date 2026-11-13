@@ -87,14 +87,14 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
       role="dialog"
       aria-modal="true"
       aria-label="Terms & Service Policies"
-      className="fixed inset-0 z-[99999] flex items-center justify-center md:p-8 bg-white dark:bg-zinc-950 md:bg-black/50 md:dark:bg-black/70 md:backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-white dark:bg-zinc-950 md:bg-black/55 md:dark:bg-black/70 md:p-8 md:backdrop-blur-sm animate-in fade-in duration-200"
     >
-      <div className="relative w-full h-full md:h-[85vh] md:max-w-3xl bg-white dark:bg-zinc-950 md:rounded-[20px] md:shadow-2xl overflow-hidden flex flex-col animate-in md:zoom-in-95 duration-300">
+      <div className="relative flex h-full w-full flex-col overflow-hidden bg-background md:h-[85vh] md:max-w-4xl md:shadow-2xl animate-in md:zoom-in-95 duration-300">
 
-        <div className="px-6 md:px-10 pt-8 pb-5 border-b border-zinc-100 dark:border-zinc-800 shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)] relative z-10 flex items-start justify-between gap-4">
+        <div className="relative z-10 flex shrink-0 items-start justify-between gap-4 border-b border-border px-6 pb-5 pt-8 md:px-10">
           <div>
-            <h2 className="font-sans font-medium text-[1.8rem] text-brand-blue dark:text-brand-light-blue">Terms & Service Policies</h2>
-            <p className="text-[0.78rem] font-medium text-muted-foreground mt-1">
+            <h2 className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">Terms &amp; Service Policies</h2>
+            <p className="mt-2 text-sm font-medium text-muted-foreground">
               {BIZ.name} · Updated {BIZ.year}
             </p>
           </div>
@@ -109,12 +109,12 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
         </div>
 
         <div className="flex-1 overflow-y-auto overscroll-contain px-6 md:px-10 py-6 md:py-10">
-          <div className="max-w-2xl mx-auto space-y-8">
-            <div className="p-5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shadow-[0_2px_10px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.25)]">
-              <h3 className="font-medium flex items-center gap-2 mb-2 text-[0.98rem] text-zinc-900 dark:text-zinc-50">
+          <div className="mx-auto max-w-3xl space-y-9">
+            <div className="border-y border-border bg-card/35 px-5 py-5">
+              <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-foreground">
                 <Info weight="fill" className="w-4 h-4" aria-hidden="true" /> Operational Rule
               </h3>
-              <p className="text-[0.98rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
+              <p className="text-base leading-7 text-muted-foreground">
                 By tapping &ldquo;I Agree&rdquo; below, you confirm full agreement with all operational rules and terms listed here.
               </p>
             </div>
@@ -124,13 +124,13 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
               const color = resolveColor(s)
               return (
                 <div key={i} className="space-y-3">
-                  <h3 className="font-medium flex items-center gap-2 text-[0.98rem]" style={{ color }}>
+                  <h3 className="flex items-center gap-2 text-base font-semibold" style={{ color }}>
                     <IconComp weight="fill" className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color }} />
                     {s.title}
                   </h3>
                   <ul className="space-y-2 list-disc list-inside pl-1">
                     {s.points.map((p, j) => (
-                      <li key={j} className="text-[0.98rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
+                      <li key={j} className="text-base leading-7 text-muted-foreground">
                         <strong className="text-zinc-700 dark:text-zinc-300">{p.label}:</strong> {p.text}
                       </li>
                     ))}
@@ -141,10 +141,10 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
           </div>
         </div>
 
-        <div className="px-6 md:px-10 py-6 border-t border-zinc-100 dark:border-zinc-800 shrink-0 bg-white dark:bg-zinc-950 flex justify-center">
+        <div className="flex shrink-0 justify-center border-t border-border bg-background px-6 py-6 md:px-10">
           <button
             onClick={handleClose}
-            className="px-10 py-3 rounded-[14px] bg-[var(--brand-blue-dark)] text-[var(--background)] font-medium text-[1.08rem] shadow-sm active:scale-[0.98] transition-transform"
+            className="rounded-full bg-[var(--brand-blue-dark)] px-10 py-3 text-base font-semibold text-[var(--background)] shadow-sm transition-transform active:scale-[0.98]"
           >
             I Agree
           </button>

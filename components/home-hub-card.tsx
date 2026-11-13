@@ -36,14 +36,13 @@ export function HomeHubCard({ hubId }: { hubId: HubId }) {
       <span className="flex h-16 w-16 items-center justify-center border border-transparent transition-[border-color,transform] duration-250 ease-out group-hover/hub-icon:border-[var(--hub-primary)] group-hover/hub-icon:-translate-y-1 group-hover/hub-icon:rotate-[-5deg] sm:h-20 sm:w-20">
         <Icon size={42} weight="regular" aria-hidden="true" className="text-muted-foreground transition-[color,transform] duration-250 ease-out group-hover/hub-icon:scale-110 group-hover/hub-icon:text-[var(--hub-primary)] sm:size-[52px]" />
       </span>
-      <span className="font-heading text-lg font-semibold leading-tight text-foreground sm:text-xl md:text-2xl">{hub.title}</span>
+      <span className="font-heading text-lg font-semibold leading-tight text-foreground sm:text-xl md:text-2xl">{CLIENT_TITLE[hubId]}</span>
       <span className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:text-sm sm:tracking-[0.14em]">{serviceCount} services</span>
     </Link>
   )
 
   const description = (
     <div className="flex min-h-[176px] flex-col justify-center px-1 py-8 sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8">
-      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-sm">{CLIENT_TITLE[hubId]}</p>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:mt-4 sm:text-base sm:leading-8 md:text-[1.05rem]">{BLURB[hubId]}</p>
       <Link href={hubRouteFor(hubId)} className="group/cta relative mt-7 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
         Explore hub

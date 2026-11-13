@@ -205,8 +205,8 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
               expandedLabel="Notice to Clients"
               onDismiss={() => setClientNoticeDismissed(true)}
             >
-              <p className="mb-3 text-[0.92rem] leading-relaxed text-zinc-600 dark:text-zinc-300 md:text-[0.8rem]">{NOTICE.intro}</p>
-              <p className="mt-3 text-[0.78rem] font-medium italic text-zinc-500 dark:text-zinc-400">{NOTICE.footer}</p>
+              <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">{NOTICE.intro}</p>
+              <p className="mt-3 text-[0.92rem] font-medium italic leading-6 text-zinc-500 dark:text-zinc-400">{NOTICE.footer}</p>
             </NoticePill>
           </ScrollBounce>
         )}

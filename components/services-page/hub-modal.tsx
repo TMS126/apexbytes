@@ -107,27 +107,22 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.96, opacity: 0 }}
         transition={{ type: "tween", duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-        className="relative z-10 w-full max-w-2xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[76vh] flex flex-col outline-none rounded-[14px] overflow-hidden"
+        className="relative z-10 w-full max-w-2xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[76vh] flex flex-col outline-none overflow-hidden"
         style={{ boxShadow: "0 45px 100px -20px rgba(0,0,0,0.55), 0 20px 48px -14px rgba(0,0,0,0.4)" }}
       >
         <div
           className="relative z-10 shrink-0 bg-[var(--surface-modal)] transition-shadow duration-200"
           style={{ boxShadow: isScrolled ? "0 10px 20px -14px rgba(0,0,0,0.35)" : "none" }}
         >
-          <div className="px-6 md:px-8 pt-6 pb-5 flex justify-between items-center gap-3">
-            <div className="flex items-center gap-4 min-w-0">
-              <HubIcon id={hubId} size={28} color={accent} />
-              <div className="min-w-0">
-                <h2 className="font-sans font-medium text-2xl text-zinc-900 dark:text-zinc-50 break-words">
-                  {hub.title}
-                </h2>
-                <p className="text-[0.82rem] font-medium text-muted-foreground dark:text-muted-foreground mt-0.5">
-                  {hub.sections.reduce((sum, s) => sum + s.items.length, 0)} services available
-                </p>
-              </div>
+          <div className="relative px-6 pb-5 pt-7 text-center md:px-8 md:pt-8">
+            <div className="flex min-w-0 flex-col items-center gap-3">
+              <HubIcon id={hubId} size={42} color={accent} />
+              <h2 className="font-heading text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl">
+                {hub.title}
+              </h2>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="absolute right-4 top-4 flex items-center gap-2">
               <Link
                 href={`/gallery?hub=${hubId}`}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[0.8rem] font-medium text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 whitespace-nowrap"

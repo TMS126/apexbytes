@@ -32,7 +32,7 @@ export function BackToTopButton({
 }) {
   const showScrollToBottom = useScrollToBottom()
   return (
-    <div className={cn("fixed right-4 z-[9990] flex items-center gap-2 text-foreground", bottomClass, className)}>
+    <div className={cn("fixed right-4 z-[9990] flex flex-col items-center gap-2 text-foreground", bottomClass, className)}>
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Back to top"

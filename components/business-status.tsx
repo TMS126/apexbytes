@@ -168,7 +168,7 @@ export function BusinessStatusFull() {
       Icon={Clock}
       collapsedLabel="Business Hours"
       expandedLabel="Business Hours"
-      className="justify-start"
+      className="justify-center"
     >
       <div className="mx-auto grid w-full max-w-[720px] gap-5 text-left">
         <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">

@@ -26,7 +26,7 @@ function RecenterButton() {
     <button
       type="button"
       onClick={() => map.flyTo(center, 15, { duration: 0.65 })}
-      className="absolute bottom-4 right-4 z-[1000] flex items-center gap-2 rounded-full bg-card/88 px-3.5 py-2.5 text-xs font-bold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95"
+      className="absolute bottom-[4.9rem] right-4 z-[1000] flex items-center gap-2 rounded-full bg-card/90 px-4 py-3 text-sm font-semibold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95"
       aria-label="Reset map to ApexbytesHub"
     >
       <NavigationArrow size={15} weight="bold" aria-hidden="true" />
@@ -49,30 +49,34 @@ function DirectionsButton() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const origin = `${coords.latitude},${coords.longitude}`
-        const destination = `${BIZ.lat},${BIZ.lng}`
-        window.open(`https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=driving`, "_blank", "noopener,noreferrer")
+        const routeUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(BIZ.address)}&travelmode=driving`
+        // Navigate in the same tab so mobile browsers cannot block the route
+        // after the asynchronous location permission callback resolves.
+        window.location.assign(routeUrl)
         setLoading(false)
       },
       () => {
         setLoading(false)
-        setMessage("Allow location access to calculate your route.")
+        // If permission is denied, still take the user directly to the route
+        // planner with ApexbytesHub pre-filled as the destination.
+        window.location.assign(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(BIZ.address)}&travelmode=driving`)
       },
       { enableHighAccuracy: true, timeout: 10_000, maximumAge: 60_000 },
     )
   }
 
   return (
-    <div className="absolute bottom-4 left-12 z-[1000] flex max-w-[calc(100%-7rem)] flex-col items-start gap-1">
+    <div className="absolute bottom-4 right-4 z-[1000] flex max-w-[calc(100%-2rem)] flex-col items-end gap-1">
       <button
         type="button"
         onClick={openDirections}
         disabled={loading}
-        className="flex items-center gap-2 rounded-full bg-card/90 px-3.5 py-2.5 text-xs font-bold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-60"
+        className="flex items-center gap-2 rounded-full bg-card/90 px-4 py-3 text-sm font-semibold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95 disabled:opacity-60"
       >
         <MapPinLine size={15} weight="regular" aria-hidden="true" />
         {loading ? "Finding you…" : "Get directions"}
       </button>
-      {message && <p role="status" className="rounded-lg bg-card/95 px-2.5 py-1 text-[0.7rem] font-medium text-muted-foreground shadow-md">{message}</p>}
+      {message && <p role="status" className="rounded-lg bg-card/95 px-2.5 py-1 text-xs font-medium text-muted-foreground shadow-md">{message}</p>}
     </div>
   )
 }

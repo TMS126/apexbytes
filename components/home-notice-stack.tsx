@@ -135,8 +135,8 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
             className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
-            <first.Icon size={16} weight="bold" style={{ color: collapsedColor }} aria-hidden="true" />
-            <span className="text-[0.92rem] font-medium whitespace-nowrap" style={{ color: collapsedColor }}>
+            <first.Icon size={17} weight="regular" style={{ color: collapsedColor }} aria-hidden="true" />
+            <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: collapsedColor }}>
               {collapsedLabel}
             </span>
           </button>
