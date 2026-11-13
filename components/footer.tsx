@@ -17,8 +17,6 @@ function FooterContent() {
   const { theme } = useTheme()
   const [mounted] = useState(() => typeof window !== "undefined")
   const [isTermsOpen, setIsTermsOpen] = useState(false)
-  const [isFaqAccordionOpen, setIsFaqAccordionOpen] = useState(false)
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [phoneCopied, setPhoneCopied] = useState(false)
 
   const handleCopyPhone = async () => {
@@ -28,7 +26,6 @@ function FooterContent() {
     setTimeout(() => setPhoneCopied(false), 2000)
   }
 
-  const toggleFaqIndex = (i: number) => setOpenFaqIndex((prev) => (prev === i ? null : i))
   const showFaq = pathname !== "/contact"
 
   return (
@@ -36,12 +33,7 @@ function FooterContent() {
       {showFaq && (
         <ScrollBounce>
           <div className="px-6 md:px-10 lg:px-12 xl:px-16 mb-14 flex justify-center">
-            <FaqAccordion
-              isOpen={isFaqAccordionOpen}
-              onToggle={() => setIsFaqAccordionOpen((v) => !v)}
-              openIndex={openFaqIndex}
-              onToggleIndex={toggleFaqIndex}
-            />
+            <FaqAccordion />
           </div>
         </ScrollBounce>
       )}
