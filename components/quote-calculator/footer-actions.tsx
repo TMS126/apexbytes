@@ -72,6 +72,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
         <button
           onClick={onClose}
           aria-label="Close quotation calculator"
+          title="Close quotation calculator"
           className={cn("abh-press abh-icon-chip size-9 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-150", GLASS.btn)}
         >
           <X size={18} weight="bold" aria-hidden="true" />

@@ -52,7 +52,7 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
 
   return (
     <div
-      className="fixed inset-0 z-[10300] bg-black/97 flex items-center justify-center animate-in fade-in duration-200"
+      className="fixed inset-0 z-[10300] flex items-center justify-center bg-black"
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
@@ -112,4 +112,4 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
       )}
     </div>
   )
-} 
+}

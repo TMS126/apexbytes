@@ -84,6 +84,7 @@ export function NoticePill({
             type="button"
             onClick={onDismiss}
             aria-label={`Dismiss: ${collapsedLabel}`}
+            title={`Dismiss: ${collapsedLabel}`}
             className="w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
             <X size={13} weight="bold" aria-hidden="true" />
@@ -112,7 +113,7 @@ export function NoticePill({
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(event) => event.stopPropagation()}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background/95 px-5 py-6 backdrop-blur-xl md:px-8 md:py-8"
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background px-5 py-6 md:px-8 md:py-8"
                 style={{
                   boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}
@@ -124,7 +125,7 @@ export function NoticePill({
                 <div className="abh-body mx-auto w-full max-w-[720px] text-[1.12rem] leading-8 text-zinc-700 dark:text-zinc-200">
                   {children}
                 </div>
-                <button type="button" onClick={close} aria-label="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <button type="button" onClick={close} aria-label="Close notice" title="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   <X size={14} weight="bold" aria-hidden="true" />
                 </button>
               </motion.div>

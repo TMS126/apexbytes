@@ -31,6 +31,7 @@ export function FAQAccordion() {
             return (
               <div key={index}>
                   <button
+                    type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={`contact-faq-${index}`}
@@ -49,7 +50,8 @@ export function FAQAccordion() {
                     id={`contact-faq-${index}`}
                     role="region"
                     aria-label={faq.question}
-                    className={cn("grid transition-all duration-300 ease-in-out", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
+                    aria-hidden={!isOpen}
+                    className={cn("grid transition-none sm:transition-[grid-template-rows,opacity] sm:duration-200 sm:ease-out motion-reduce:transition-none", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
                   >
                     <div className="overflow-hidden">
                       <div className="pb-5 text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">

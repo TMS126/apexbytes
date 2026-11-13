@@ -20,6 +20,7 @@ export function TipsPanel({ tips, isGeneric, accent, copied, onCopy }: {
           type="button"
           onClick={onCopy}
           aria-label={copied ? "Tips copied" : "Copy tips"}
+          title={copied ? "Tips copied" : "Copy tips"}
           className="ml-auto flex items-center gap-1.5 px-2.5 py-1.5 rounded-full transition-all active:scale-90"
           style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: copied ? "#16a34a" : accent }}
         >

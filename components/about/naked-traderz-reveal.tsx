@@ -106,14 +106,14 @@ export function TheNakedTradersZAReveal({
 
             <div className="relative aspect-square w-full overflow-hidden rounded-[14px] bg-black p-5 shadow-xl ring-1 ring-white/15 sm:p-8">
               <Image src="/nto.webp" alt="The Naked Traders ZA original logo" fill sizes="(max-width: 768px) 92vw, 560px" className="object-contain p-5 transition-transform duration-700 ease-out sm:p-8" />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent px-5 pb-5 pt-16 sm:px-8 sm:pb-7">
-                <div className="mb-2 flex items-center gap-2">
-                  <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
-                  <span className="abh-eyebrow text-white/80">1st Ever Logo</span>
-                </div>
-                <h3 id="nt-modal-title" className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">The Naked Traders ZA</h3>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75 sm:text-base">The original market trading group identity, built for forex and CFD trading.</p>
+            </div>
+            <div className="px-1 pb-1 pt-5 sm:px-2 sm:pt-6">
+              <div className="mb-2 flex items-center gap-2">
+                <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
+                <span className="abh-eyebrow">1st Ever Logo</span>
               </div>
+              <h3 id="nt-modal-title" className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">The Naked Traders ZA</h3>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">The original market trading group identity, built for forex and CFD trading.</p>
             </div>
           </div>
         </div>

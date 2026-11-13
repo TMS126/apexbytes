@@ -96,7 +96,6 @@ export function FloatingSearchWidget() {
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const calculatorOpen = useCalculatorOpen()
   const [query, setQuery]         = useState("")
-  const [inputFocused, setInputFocused] = useState(false)
   const [inlineSearchVisible, setInlineSearchVisible] = useState(true)
 
   const inputRef     = useRef<HTMLInputElement>(null)
@@ -270,7 +269,7 @@ export function FloatingSearchWidget() {
       >
         <div className="relative flex items-center justify-end gap-2">
           <span
-            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-[var(--brand-dark-100)] px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-white opacity-0 shadow-md transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
+            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-transparent px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-foreground opacity-0 shadow-none transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
           >
             Search
           </span>
@@ -278,7 +277,7 @@ export function FloatingSearchWidget() {
             ref={fabRef}
 onClick={isOpen ? handleClose : handleOpen}
   aria-label={isOpen ? "Close search" : "Search services"}
-            className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+            className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
           >
   {isOpen ? (
   <X size={24} weight="regular" aria-hidden="true" />
@@ -302,13 +301,13 @@ onClick={isOpen ? handleClose : handleOpen}
             role="dialog"
             aria-modal="true"
             aria-label="Search services"
-            className="w-full max-w-[480px] pointer-events-auto"
+            className="w-full max-w-[300px] pointer-events-auto"
           >
             <div
-              className="flex items-center gap-2 rounded-[14px] bg-white dark:bg-zinc-900 border shadow-xl px-4 h-14 transition-colors duration-150 ease-out motion-reduce:transition-none"
-              style={{ borderColor: inputFocused ? accentColor : undefined }}
+              data-hover-border=""
+              className="abh-reference-search"
             >
-              <MagnifyingGlass size={20} weight="bold" aria-hidden="true" style={{ color: accentColor }} />
+              <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
               <label htmlFor="floating-search-input" className="sr-only">Search a service</label>
               <input
                 id="floating-search-input"
@@ -316,8 +315,6 @@ onClick={isOpen ? handleClose : handleOpen}
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                onFocus={() => setInputFocused(true)}
-                onBlur={() => setInputFocused(false)}
                 placeholder="Search a service..."
                 /* AUDIT FIX: the border-color swap on the pill container above
                    is meant to be the ONLY focus indicator here — added
@@ -326,12 +323,12 @@ onClick={isOpen ? handleClose : handleOpen}
                    the app can reintroduce the escaping ring on top of it
                    (the global input:focus override in globals.css also
                    covers this, this is belt-and-braces on the element itself). */
-                className="flex-1 bg-transparent text-base font-medium text-zinc-700 dark:text-zinc-200 placeholder:text-muted-foreground/70 dark:placeholder:text-muted-foreground/70 min-w-0 outline-none border-none appearance-none focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:outline-none"
+                className="abh-search-input"
               />
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="abh-press shrink-0 w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-muted-foreground hover:text-zinc-700 transition-colors duration-150"
+                  className="abh-press flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-muted-foreground transition-colors duration-150 hover:text-zinc-700 dark:bg-zinc-700"
                   aria-label="Clear search"
                 >
                   <X size={12} weight="bold" />
@@ -339,7 +336,7 @@ onClick={isOpen ? handleClose : handleOpen}
               )}
               <button
                 onClick={handleClose}
-                className="abh-press shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors duration-150"
+                className="abh-press flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors duration-150 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-white/10 dark:hover:text-zinc-200"
                 aria-label="Close search"
               >
                 <X size={16} weight="bold" />
@@ -347,7 +344,7 @@ onClick={isOpen ? handleClose : handleOpen}
             </div>
 
             {hasQuery && (
-              <div className="mt-3 rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
+              <div className="abh-reference-search-results animate-in fade-in slide-in-from-top-1 duration-150 ease-out motion-reduce:animate-none">
                 <div className="max-h-[55vh] overflow-y-auto p-2">
                   {results.length > 0 ? (
                     <div className="divide-y divide-zinc-100 dark:divide-white/10">
@@ -355,27 +352,27 @@ onClick={isOpen ? handleClose : handleOpen}
                         <button
                           key={`${s.hubId}-${s.name}-${idx}`}
                           onClick={() => pick(s)}
-                          className="w-full flex items-center gap-3 py-3 px-2 text-left hover:bg-zinc-50 dark:hover:bg-white/[0.05] transition-colors duration-150"
+                          className="abh-reference-search-row"
                         >
                           <div
-                            className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                            className="flex size-8 shrink-0 items-center justify-center rounded-full"
                             style={{ backgroundColor: `color-mix(in srgb, ${accentColor} 12%, transparent)`, color: accentColor }}
                           >
                             <HubIcon id={s.hubId} size={20} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">
+                            <p className="truncate text-sm font-medium text-[#111]">
                               {s.matchField === "name"
                                 ? <HighlightMatch text={s.name} query={query} color={accentColor} />
                                 : s.name}
                             </p>
-                            <p className="text-[0.72rem] font-medium uppercase tracking-wider text-muted-foreground truncate">
+                            <p className="abh-search-muted truncate text-xs">
                               {s.matchField === "section"
                                 ? <HighlightMatch text={s.sectionTitle} query={query} color={accentColor} />
                                 : s.sectionTitle} · {HUBS[s.hubId].title}
                             </p>
                             {s.matchField === "description" && (
-                              <p className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground truncate mt-0.5 normal-case">
+                              <p className="abh-search-muted mt-0.5 truncate text-xs normal-case">
                                 <HighlightMatch text={matchSnippet(s.description, query)} query={query} color={accentColor} />
                               </p>
                             )}
@@ -386,8 +383,8 @@ onClick={isOpen ? handleClose : handleOpen}
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">No services found</p>
-                      <p className="text-sm font-medium text-muted-foreground dark:text-muted-foreground mt-1">Try a different word.</p>
+                      <p className="text-base font-medium text-[#111]">No services found</p>
+                      <p className="abh-search-muted mt-1 text-sm">Try a different word.</p>
                     </div>
                   )}
                 </div>

@@ -8,15 +8,11 @@ import { Check, PlusCircle } from '@phosphor-icons/react'
 import { HubIcon } from '@/components/services-page/shared'
 import { Result } from './lib'
 
-// ===== SEARCH INPUT — now matches the Services page's InlineSearchBar
-// exactly: rounded-[14px] boxed container, solid neutral border,
-// brand-blue focus border, white/zinc-900 fill, left-aligned text (not
-// centered), plus the same clear (X) button when there's a query. =====
 export function PricingSearchInput({ query, setQuery }: { query: string; setQuery: (v: string) => void }) {
   return (
-    <div className="relative mx-auto w-full max-w-md">
-      <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
-        <MagnifyingGlass size={16} weight="bold" className="text-muted-foreground pointer-events-none shrink-0" aria-hidden="true" />
+    <div className="relative mx-auto w-full max-w-[300px]">
+      <div data-hover-border="" className="abh-reference-search">
+        <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
         <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
         <input
           id="pricing-search"
@@ -24,18 +20,18 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
           placeholder="Search any service or price…"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          className="min-w-0 flex-1 py-3 pr-8 bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-muted-foreground outline-none appearance-none [-webkit-appearance:none]"
+          className="abh-search-input"
         />
+        {query && (
+          <button
+            onClick={() => setQuery("")}
+            aria-label="Clear search"
+            className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10"
+          >
+            <X size={12} weight="bold" aria-hidden="true" />
+          </button>
+        )}
       </div>
-      {query && (
-        <button
-          onClick={() => setQuery("")}
-          aria-label="Clear search"
-          className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600"
-        >
-          <X size={12} weight="bold" aria-hidden="true" />
-        </button>
-      )}
     </div>
   )
 }

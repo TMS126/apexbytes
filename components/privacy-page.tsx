@@ -18,10 +18,10 @@ export function PrivacyPage() {
           <span className="text-[0.84rem] font-medium uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full">
             Legal
           </span>
-          <h1 className="mt-4 font-sans font-medium text-4xl md:text-5xl text-zinc-900 dark:text-zinc-50 leading-tight">
+          <h1 className="abh-page-title mt-4">
             Privacy Policy
           </h1>
-          <p className="mt-3 text-base text-muted-foreground dark:text-muted-foreground">
+          <p className="abh-tagline mt-3 max-w-xl">
             {BIZ.name} &mdash; Last updated {LAST_UPDATED}
           </p>
           <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">

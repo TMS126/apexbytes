@@ -142,19 +142,19 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   <details className="w-full">
                     <summary
                       tabIndex={menuOpen ? 0 : -1}
-                      className="flex cursor-pointer list-none items-center justify-center gap-2 py-1.5 text-xs font-medium text-muted-foreground [&::-webkit-details-marker]:hidden"
+                      className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] border border-border/60 bg-card/60 px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
                     >
                       Browse {item.label.toLowerCase()}
-                      <CaretDown size={12} aria-hidden="true" />
+                      <CaretDown size={16} aria-hidden="true" />
                     </summary>
-                    <div className="flex flex-col items-center gap-1 border-t border-border/50 pt-2">
+                    <div className="mt-2 flex flex-col items-stretch gap-1 border-t border-border/60 bg-card/50 p-2 pt-3">
                       {submenu.map((subitem) => (
                         <Link
                           key={subitem.path}
                           href={subitem.path}
                           tabIndex={menuOpen ? 0 : -1}
                           aria-current={pathname === subitem.path ? "page" : undefined}
-                          className="w-full rounded-lg px-3 py-2 text-center text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                          className="w-full rounded-[14px] px-5 py-3 text-left text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground"
                         >
                           {subitem.label}
                         </Link>

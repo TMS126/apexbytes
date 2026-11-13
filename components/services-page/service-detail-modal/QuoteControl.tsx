@@ -22,6 +22,7 @@ export function QuoteControl({
         onPointerLeave={() => setPressed(false)}
         onPointerCancel={() => setPressed(false)}
         aria-label="Add to quote"
+        title="Add to quote"
         className="abh-line-cta flex min-h-11 items-center justify-center py-2.5 transition-all duration-150"
         style={{
           backgroundColor: "transparent",
@@ -40,6 +41,7 @@ export function QuoteControl({
         type="button"
         onClick={() => onStep(-1)}
         aria-label="Remove one from quote"
+        title="Remove one from quote"
         className="group w-8 h-8 rounded-full border-2 border-red-500 flex items-center justify-center shrink-0 transition-colors duration-150 hover:bg-red-500 active:scale-90"
       >
         <Minus size={14} weight="bold" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />
@@ -54,6 +56,7 @@ export function QuoteControl({
         type="button"
         onClick={() => onStep(1)}
         aria-label="Add one more to quote"
+        title="Add one more to quote"
         className="group w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center shrink-0 transition-colors duration-150 hover:bg-green-500 active:scale-90"
       >
         <Plus size={14} weight="bold" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />

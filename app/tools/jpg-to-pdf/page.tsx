@@ -76,17 +76,19 @@ export default function JpgToPdfPage() {
               <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground mb-3 tracking-tight">
+            <h1 className="abh-page-title mb-3">
               JPG to PDF
             </h1>
             
-            <p className="text-lg text-muted-foreground mb-1">
-              Convert your images into PDF in seconds
-            </p>
-            
-            <p className="text-sm text-muted-foreground">
-              No upload • No registration • 100% secure
-            </p>
+            <div className="abh-editorial-subtitle">
+              <p className="text-lg text-muted-foreground mb-1">
+                Convert your images into PDF in seconds
+              </p>
+
+              <p className="text-sm text-muted-foreground">
+                No upload • No registration • 100% secure
+              </p>
+            </div>
             <EditorialScrollCue />
           </div>
         </section>
