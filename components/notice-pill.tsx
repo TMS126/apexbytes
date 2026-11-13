@@ -118,10 +118,10 @@ export function NoticePill({
                 }}
               >
                 <div className="mb-6 border-b border-zinc-100 pb-5 dark:border-zinc-800">
-                  <h2 className="abh-section-heading mb-2 text-left">{expandedLabel}</h2>
+                  <h2 className="abh-section-heading mb-2 text-left text-2xl sm:text-3xl">{expandedLabel}</h2>
                   <div className="abh-divider !my-0" />
                 </div>
-                <div className="abh-body max-w-2xl text-[1.05rem] leading-relaxed text-zinc-700 dark:text-zinc-200">
+                <div className="abh-body mx-auto w-full max-w-[720px] text-[1.12rem] leading-8 text-zinc-700 dark:text-zinc-200">
                   {children}
                 </div>
                 <button type="button" onClick={close} aria-label="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">

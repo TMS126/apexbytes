@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from "react"
 import { Clock } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
+import { HOURS } from "@/lib/brand"
+import { NoticePill } from "@/components/notice-pill"
 
 interface HubStatus {
   open: boolean
@@ -161,18 +163,34 @@ export function BusinessStatusFull() {
   const { printDoc, techEtc } = deriveHubStatuses(status)
 
   return (
-    <div className="rounded-[18px] border border-border/70 bg-card/35 p-4 sm:p-5">
-      <div className="flex items-center justify-between gap-4 border-b border-border/70 pb-3">
-        <div>
-          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.17em] text-muted-foreground">Current hours</p>
-          <h3 className="mt-0.5 text-base font-semibold tracking-tight text-foreground sm:text-lg">Business hours</h3>
+    <NoticePill
+      variant={printDoc.open || techEtc.open ? "success" : "info"}
+      Icon={Clock}
+      collapsedLabel="Business Hours"
+      expandedLabel="Business Hours"
+      className="justify-start"
+    >
+      <div className="mx-auto grid w-full max-w-[720px] gap-5 text-left">
+        <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
+          <div className="rounded-[14px] border border-border/70 bg-card/35 p-4">
+            <p className="text-sm font-semibold text-foreground">{HOURS.printAndDoc.label}</p>
+            <p className="mt-1 text-base leading-relaxed text-muted-foreground">{HOURS.printAndDoc.hours}</p>
+          </div>
+          <div className="rounded-[14px] border border-border/70 bg-card/35 p-4">
+            <p className="text-sm font-semibold text-foreground">{HOURS.techDesignEservice.label}</p>
+            <div className="mt-1 space-y-1 text-base leading-relaxed text-muted-foreground">
+              {HOURS.techDesignEservice.lines.map((line) => <p key={line}>{line}</p>)}
+            </div>
+          </div>
         </div>
-        <Clock size={21} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
+        <div className="border-t border-border/70 pt-4">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Current status</p>
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
+            <StatusLine status={printDoc} />
+            <StatusLine status={techEtc} />
+          </div>
+        </div>
       </div>
-      <div className="divide-y divide-border/70">
-        <div className="py-3"><StatusLine status={printDoc} /></div>
-        <div className="pt-3"><StatusLine status={techEtc} /></div>
-      </div>
-    </div>
+    </NoticePill>
   )
 }

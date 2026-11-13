@@ -30,17 +30,17 @@ const VARIANT_TEXT: Record<NoticeVariant, string> = {
 function NoticeCard({ notice }: { notice: HomeNotice }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
-    <div className="rounded-[14px] bg-secondary px-4 py-4">
+    <div className="rounded-[14px] bg-secondary px-5 py-5">
       <div className="flex items-start gap-3">
         <notice.Icon size={20} weight="bold" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
         <div className="flex flex-col gap-1 min-w-0">
-          <h3 className="text-[0.78rem] font-medium uppercase tracking-widest" style={{ color }}>
+          <h3 className="text-[0.86rem] font-semibold uppercase tracking-[0.14em]" style={{ color }}>
             {notice.header}
           </h3>
           {notice.date && (
-            <p className="text-[0.72rem] font-medium text-zinc-500 dark:text-zinc-400">{notice.date}</p>
+            <p className="text-[0.82rem] font-medium text-zinc-500 dark:text-zinc-400">{notice.date}</p>
           )}
-          <p className="text-[0.9rem] font-medium leading-snug abh-body text-zinc-700 dark:text-zinc-200">
+          <p className="text-[1.05rem] font-medium leading-7 abh-body text-zinc-700 dark:text-zinc-200">
             {notice.body}
           </p>
           {notice.sourceUrl && notice.sourceLabel && (
@@ -174,7 +174,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
-                className="transform-gpu will-change-transform relative w-full max-w-md max-h-[80vh] overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 flex flex-col gap-3 ring-1 ring-black/10 dark:ring-white/10"
+                className="transform-gpu will-change-transform relative w-full max-w-[620px] max-h-[80vh] overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 flex flex-col gap-4 ring-1 ring-black/10 dark:ring-white/10 sm:p-6"
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}
               >
                 <div className="flex items-center justify-between mb-1">
