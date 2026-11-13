@@ -82,6 +82,18 @@
     outline-style: none !important;
   }
 
+  :root:root:root .abh-map-zoom-control {
+    border: 1px solid var(--border) !important;
+    background: var(--card) !important;
+  }
+  :root:root:root .abh-map-zoom-control button + button {
+    border-top: 1px solid var(--border) !important;
+  }
+  :root:root:root .abh-map-zoom-control button:focus-visible {
+    outline: 2px solid var(--ring) !important;
+    outline-offset: -2px;
+  }
+
   /* 5. Dark mode fields: black inner shadow only (no white glow, no blue glow). */
   :root:root.dark :is(input, textarea, select),
   :root:root.dark :is(input, textarea, select):focus,

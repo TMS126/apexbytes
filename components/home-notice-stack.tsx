@@ -145,6 +145,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             type="button"
             onClick={() => setDismissed(true)}
             aria-label="Dismiss notices"
+            title="Dismiss notices"
             className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
             <X size={13} weight="bold" aria-hidden="true" />
@@ -174,7 +175,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background/95 px-5 py-6 backdrop-blur-xl sm:px-8 sm:py-8"
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background px-5 py-6 sm:px-8 sm:py-8"
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}
               >
                 <div className="mb-6 border-b border-zinc-100 pb-5 dark:border-zinc-800">
@@ -186,6 +187,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                     type="button"
                     onClick={() => setModalOpen(false)}
                     aria-label="Close updates"
+                    title="Close updates"
                     className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400 dark:text-zinc-400"
                   >
                     <X size={14} weight="bold" aria-hidden="true" />

@@ -96,13 +96,9 @@ export function AboutStory({
             ))}
           </ul>
 
-          {/* Card minimization: DROPPED. Was a singleton panel in
-              abh-shadow-elevated + bg-card. Now plain spacing + a
-              divider. The 2-item stat grid inside is a stats bar — now
-              one divided row instead of two separate boxes. */}
           <ScrollBounce delay={0.2}>
-            <div className="flex flex-col h-full" aria-label="Business overview">
-              <div className="flex flex-col items-center text-center gap-2 mb-7 pb-6 border-b border-zinc-100 dark:border-zinc-800">
+            <div className="abh-card flex h-full flex-col rounded-[14px] border border-border p-5 shadow-sm md:p-6" aria-label="Business overview">
+              <div className="flex flex-col items-center gap-2 border-b border-border pb-6 text-center">
                 <div className="abh-icon-chip flex h-10 w-10 items-center justify-center shrink-0 bg-background" style={{ color: blueColor }}>
                   <UsersThree size={20} weight="fill" />
                 </div>
@@ -112,19 +108,19 @@ export function AboutStory({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 divide-x divide-zinc-100 dark:divide-zinc-800 flex-1 rounded-[12px] bg-zinc-50 dark:bg-zinc-900/50">
+              <div className="mt-6 grid flex-1 grid-cols-2 gap-3">
                 {[
                   { value: <WhatsappLogo weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "WhatsApp Ready" },
                   { value: <ShieldCheck weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "Community Trusted" },
                 ].map((stat, index) => (
-                    <div key={index} className="p-5 flex flex-col justify-center items-center">
+                    <div key={index} className="flex flex-col items-center justify-center rounded-[14px] border border-border bg-background p-5 text-center shadow-sm">
                     <div className="abh-icon-chip mb-1 flex h-9 w-9 items-center justify-center bg-background text-zinc-700 dark:text-zinc-300">{stat.value}</div>
                     <p className="abh-eyebrow text-center">{stat.label}</p>
                   </div>
                 ))}
               </div>
 
-              <p className="abh-muted mt-6 text-center">
+              <p className="abh-muted mt-6 text-center text-base">
                 Walk-ins welcome · WhatsApp orders accepted · Same-day service on most requests
               </p>
             </div>

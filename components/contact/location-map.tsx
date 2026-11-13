@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css"
 
 import { MapPinLine, Target } from "@phosphor-icons/react"
 import { useState } from "react"
-import { LayersControl, MapContainer, Marker, TileLayer, ZoomControl, useMap } from "react-leaflet"
+import { LayersControl, MapContainer, Marker, TileLayer, useMap } from "react-leaflet"
 import L from "leaflet"
 import { BIZ } from "@/lib/brand"
 
@@ -70,6 +70,16 @@ function DirectionsButton() {
   )
 }
 
+function MapZoomControls() {
+  const map = useMap()
+  return (
+    <div className="abh-map-zoom-control absolute right-3 top-1/2 z-[1000] -translate-y-1/2 overflow-hidden rounded-[14px] bg-card shadow-lg" role="group" aria-label="Map zoom controls">
+      <button type="button" onClick={() => map.zoomIn()} title="Zoom in" aria-label="Zoom in" className="flex size-11 items-center justify-center text-xl font-medium text-foreground transition-colors hover:bg-muted">+</button>
+      <button type="button" onClick={() => map.zoomOut()} title="Zoom out" aria-label="Zoom out" className="flex size-11 items-center justify-center text-xl font-medium text-foreground transition-colors hover:bg-muted">−</button>
+    </div>
+  )
+}
+
 export function LocationMap() {
   return (
     <div className="relative min-h-[360px] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
@@ -96,7 +106,7 @@ export function LocationMap() {
             />
           </LayersControl.BaseLayer>
         </LayersControl>
-        <ZoomControl position="bottomleft" />
+        <MapZoomControls />
         <Marker position={center} icon={markerIcon} alt={`${BIZ.name} at ${BIZ.address}`} />
         <DirectionsButton />
       </MapContainer>

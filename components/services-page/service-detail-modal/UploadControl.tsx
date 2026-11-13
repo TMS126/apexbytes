@@ -25,6 +25,7 @@ export function UploadButton({ phase, accent, onClick }: { phase: UploadPhase; a
       onPointerLeave={() => setPressed(false)}
       onPointerCancel={() => setPressed(false)}
       aria-label={isDone ? "File attached" : "Attach file"}
+      title={isDone ? "File attached — select another file to replace it" : "Attach file"}
       className="abh-line-cta flex min-h-11 items-center justify-center py-2.5 transition-all duration-150"
       style={{
         backgroundColor: "transparent",
@@ -94,7 +95,7 @@ export function UploadStatus({
           </span>
           <span className="truncate text-zinc-700 dark:text-zinc-300 text-[0.94rem]">{file.name}</span>
         </span>
-        <button type="button" onClick={onClear} aria-label="Remove file" className="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
+        <button type="button" onClick={onClear} aria-label="Remove file" title="Remove file" className="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
           <X size={14} weight="bold" aria-hidden="true" />
         </button>
       </div>
@@ -111,6 +112,7 @@ export function UploadStatus({
         <button
           type="button"
           onClick={onRetry}
+          title="Choose a different file"
           className="abh-line-cta flex min-h-10 w-full items-center justify-center gap-1.5 py-2 text-sm font-medium"
           style={{ color: accent }}
         >

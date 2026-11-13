@@ -344,6 +344,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             type="button"
             onClick={() => setTipsOpen(true)}
             aria-label="View helpful tips"
+            title="View helpful tips"
             className={cn(
               "w-9 h-9 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 active:scale-95",
               ICON_BTN_FOCUS
@@ -357,6 +358,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               type="button"
               onClick={handleShare}
               aria-label="Share this service"
+              title="Share this service"
               className={cn(
                 "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
                 ICON_BTN_FOCUS
@@ -379,6 +381,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
             type="button"
             onClick={onClose}
             aria-label="Close"
+            title="Close service details"
             className={cn(
               "w-9 h-9 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 active:scale-95",
               ICON_BTN_FOCUS

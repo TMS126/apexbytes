@@ -101,7 +101,7 @@ function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = f
   return (
     <div className={cn(desktop ? "relative flex justify-center px-6 py-4" : "fixed inset-x-0 bottom-6 z-30 flex justify-center px-6", "pointer-events-none transition-all duration-200", visible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-3")} aria-hidden={!visible}>
       <div
-        className="pointer-events-auto flex items-stretch w-full max-w-sm rounded-[14px] overflow-hidden bg-card shadow-[0_12px_26px_-16px_rgba(0,0,0,0.5)] transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.6)]"
+        className="pointer-events-auto flex w-full max-w-sm items-stretch overflow-hidden rounded-[14px] border border-border bg-card shadow-lg"
       >
         <a
           href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I saw "${project.title}" in your gallery and I'd like something similar.`)}`}
@@ -110,7 +110,7 @@ function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = f
           onClick={onClose}
           tabIndex={visible ? 0 : -1}
           aria-label={`Order a project like ${project.title} via WhatsApp`}
-          className="flex-1 py-2.5 text-[0.82rem] font-medium text-foreground transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[inset_0_-2px_0_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 py-2.5 text-[0.9rem] font-semibold text-foreground transition-colors hover:bg-[color-mix(in_srgb,var(--brand-whatsapp)_12%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
@@ -121,7 +121,7 @@ function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = f
           href={buildInquireHref(project)}
           aria-label={`Ask a question about ${project.title}`}
           tabIndex={visible ? 0 : -1}
-          className="flex-1 py-2.5 text-[0.82rem] font-medium text-foreground transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[inset_0_-2px_0_rgba(0,0,0,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
+          className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 py-2.5 text-[0.9rem] font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
           <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
@@ -516,7 +516,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
         </div>
       ) : (
         <>
-          <div className="hidden md:flex md:w-[42%] md:h-full md:shrink-0 md:flex-col md:min-h-0 bg-zinc-50/70 dark:bg-zinc-900/30">
+          <div className="hidden bg-card md:flex md:w-[42%] md:h-full md:shrink-0 md:flex-col md:min-h-0">
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
@@ -536,7 +536,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             </div>
           </div>
 
-          <div className="hidden md:flex md:w-[33%] md:h-full md:flex-col md:min-h-0 border-l border-zinc-200/80 dark:border-zinc-800/80">
+          <div className="hidden border-l border-border bg-background md:flex md:w-[33%] md:h-full md:flex-col md:min-h-0">
             <div className="shrink-0 w-full max-w-2xl px-6 md:px-8 pt-6">
               <ProjectHeader project={project} accent={accent} onClose={onClose} />
               <DesktopActionRow
