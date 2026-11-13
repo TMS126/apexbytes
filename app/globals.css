@@ -880,7 +880,6 @@ button, a, [role="button"] {
 
   /* Eloqwnt-style non-home hero composition: keep the title visually central,
      then anchor the supporting copy and scroll cue to the lower viewport. */
-  .abh-editorial-hero:not(.abh-home-hero) .abh-page-title { font-size: clamp(3.25rem, 8vw, 6.5rem); }
   .abh-editorial-hero:not(.abh-home-hero) .abh-tagline,
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-subtitle {
     position: absolute;
@@ -888,6 +887,9 @@ button, a, [role="button"] {
     bottom: 5.75rem;
     max-width: 46rem;
     margin-inline: auto;
+    color: var(--foreground);
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    line-height: 1.45;
   }
   .abh-editorial-hero:not(.abh-home-hero) .abh-divider { display: none; }
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-scroll-cue {
