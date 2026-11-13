@@ -28,7 +28,7 @@ export function ScrollToBottomButton({
       }
       aria-label="Scroll to bottom"
       className={cn(
-        "fixed right-4 md:right-6 left-auto z-[9990] flex size-10 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-zinc-800 active:scale-95",
+        "fixed right-4 md:right-6 left-auto z-[9990] flex size-10 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-all duration-300 hover:scale-105 hover:text-muted-foreground active:scale-95",
         bottomClass,
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -36,7 +36,7 @@ export function ScrollToBottomButton({
         className
       )}
     >
-      <ArrowDown size={19} weight="regular" className="text-white" />
+      <ArrowDown size={19} weight="regular" className="text-foreground" />
     </button>
   )
 }

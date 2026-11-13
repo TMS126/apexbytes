@@ -39,8 +39,8 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
         <span className={cn(
           TXT.hint,
           "font-medium uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
-          "bg-[var(--brand-dark-100)] text-[#25D366]",
-          "px-2.5 py-1 rounded-full shadow-md",
+          "bg-transparent text-foreground",
+          "px-2.5 py-1 rounded-full shadow-none",
           "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
           "max-w-0 group-hover/wa:max-w-[100px] opacity-0 scale-x-0 group-hover/wa:opacity-100 group-hover/wa:scale-x-100 group-focus-within/wa:max-w-[100px] group-focus-within/wa:opacity-100 group-focus-within/wa:scale-x-100"
         )}>
@@ -49,7 +49,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
         <button
           onClick={isOpen ? onClose : onOpen}
           aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
-          className="abh-press relative flex size-11 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+          className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none hover:-translate-y-0.5 transition-transform duration-150 ease-out motion-reduce:transition-none"
         >
           {isOpen ? (
             <X size={24} weight="regular" aria-hidden="true" />

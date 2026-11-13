@@ -269,7 +269,7 @@ export function FloatingSearchWidget() {
       >
         <div className="relative flex items-center justify-end gap-2">
           <span
-            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-[var(--brand-dark-100)] px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-white opacity-0 shadow-md transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
+            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-transparent px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-foreground opacity-0 shadow-none transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
           >
             Search
           </span>
@@ -277,7 +277,7 @@ export function FloatingSearchWidget() {
             ref={fabRef}
 onClick={isOpen ? handleClose : handleOpen}
   aria-label={isOpen ? "Close search" : "Search services"}
-            className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+            className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
           >
   {isOpen ? (
   <X size={24} weight="regular" aria-hidden="true" />
