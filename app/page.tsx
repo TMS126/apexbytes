@@ -3,7 +3,6 @@
 
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
-import { HomeServiceMarquee } from "@/components/home-service-marquee"
 import { HomeNoticeStack } from "@/components/home-notice-stack"
 import { CoreHubGrid } from "@/components/core-hub-grid"
 import { HowItWorks } from "@/components/how-it-works"
@@ -21,7 +20,6 @@ export default function HomeRoute() {
       <div>
         <div className="animate-fade-up">
           <HeroSection />
-          <HomeServiceMarquee />
           <div className="flex w-full justify-center px-4 py-4 md:px-8">
             <HomeNoticeStack notices={HOME_NOTICES} />
           </div>

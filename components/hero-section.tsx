@@ -8,6 +8,7 @@ import { WEATHER_THEME } from "@/lib/brand"
 import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
+import { HomeServiceMarquee } from "@/components/home-service-marquee"
 
 const HERO_SUBHEAD = "Friendly print, design and tech support in Bothaville."
 
@@ -100,6 +101,9 @@ export function HeroSection() {
             <ArrowDown size={18} aria-hidden="true" />
           </a>
         </div>
+      </div>
+      <div className="absolute inset-x-0 bottom-5 md:bottom-8">
+        <HomeServiceMarquee />
       </div>
       <BackToTopButton visible={showBackToTop} />
     </section>

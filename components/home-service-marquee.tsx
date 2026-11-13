@@ -18,7 +18,7 @@ export function HomeServiceMarquee() {
         event.stopPropagation()
         setPaused((value) => !value)
       }}
-      className="relative w-full overflow-hidden bg-transparent py-4 select-none group/marquee [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
+      className="relative w-full overflow-hidden bg-transparent py-5 select-none group/marquee [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]"
     >
       <button
         type="button"
