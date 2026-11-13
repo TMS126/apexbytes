@@ -120,12 +120,14 @@ export default async function MaintenancePage() {
         }
 
         h1 {
+          max-width: 16ch;
+          margin: 0 auto 14px;
           font-weight: 500;
           font-size: clamp(2rem, 6vw, 2.8rem);
           color: #FFFFFF;
           letter-spacing: -0.03em;
           line-height: 1.15;
-          margin-bottom: 14px;
+          text-wrap: balance;
         }
 
         .sub {

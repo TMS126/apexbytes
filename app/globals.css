@@ -903,10 +903,15 @@ button, a, [role="button"] {
   }
 
   .abh-page-title {
-    @apply font-heading font-medium tracking-tight leading-tight text-center;
+    @apply font-heading font-medium tracking-tight text-center;
     color: var(--title-color);
-    font-size: clamp(2.75rem, 5.4vw, 5rem);
-    letter-spacing: -0.065em;
+    width: 100%;
+    max-width: 20ch;
+    margin-inline: auto;
+    font-size: clamp(2.5rem, 5.6vw, 4.75rem);
+    letter-spacing: -0.06em;
+    line-height: 1.08;
+    text-wrap: balance;
   }
 
   .abh-editorial-hero {
@@ -920,18 +925,19 @@ button, a, [role="button"] {
     text-align: center;
   }
 
-  /* Eloqwnt-style non-home hero composition: keep the title visually central,
-     then anchor the supporting copy and scroll cue to the lower viewport. */
+  /* Keep each page title and its supporting copy together as a balanced hero group. */
   .abh-editorial-hero:not(.abh-home-hero) .abh-tagline,
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-subtitle {
-    position: absolute;
-    inset-inline: 1rem;
-    bottom: 5.75rem;
-    max-width: 46rem;
-    margin-inline: auto;
+    position: static;
+    inset-inline: auto;
+    bottom: auto;
+    width: min(100%, 46rem);
+    margin: 0 auto;
     color: var(--foreground);
+    font-family: var(--font-heading);
     font-size: clamp(1.15rem, 2.4vw, 1.5rem);
     line-height: 1.45;
+    text-wrap: balance;
   }
   .abh-editorial-hero:not(.abh-home-hero) .abh-divider { display: none; }
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-scroll-cue {
@@ -1003,10 +1009,15 @@ button, a, [role="button"] {
     color: var(--foreground);
   }
 
-  .abh-muted,
-  .abh-tagline {
+  .abh-muted {
     @apply font-sans font-normal text-sm md:text-base leading-relaxed;
     color: var(--muted-foreground);
+  }
+
+  .abh-tagline {
+    @apply font-heading font-normal text-sm md:text-base leading-relaxed;
+    color: var(--muted-foreground);
+    text-wrap: balance;
   }
 
   .abh-price {

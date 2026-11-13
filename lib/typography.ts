@@ -4,7 +4,7 @@
 // globals.css instead of raw Tailwind text-*/font-* utilities.
 
 export const TYPE_SCALE = {
-  pageTitle:     { class: "abh-page-title",     css: "font-heading font-medium text-4xl md:text-5xl tracking-tight leading-tight" },
+  pageTitle:     { class: "abh-page-title",     css: "font-heading font-medium text-center tracking-tight leading-[1.08] text-[clamp(2.5rem,5.6vw,4.75rem)] [text-wrap:balance]" },
   sectionHeading:{ class: "abh-section-heading", css: "font-heading font-medium text-2xl md:text-3xl tracking-tight leading-snug" },
   cardHeading:   { class: "abh-card-heading",    css: "font-heading font-medium text-base md:text-lg tracking-tight leading-snug" },
   eyebrow:       { class: "abh-eyebrow",         css: "font-sans font-medium text-xs uppercase tracking-[0.2em]" },

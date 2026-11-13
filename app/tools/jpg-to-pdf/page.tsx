@@ -76,7 +76,7 @@ export default function JpgToPdfPage() {
               <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-heading font-semibold text-foreground mb-3 tracking-tight">
+            <h1 className="abh-page-title mb-3">
               JPG to PDF
             </h1>
             

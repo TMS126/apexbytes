@@ -71,11 +71,11 @@ export function HeroSection() {
               Tech, Design &amp; E-Service are closed today for {status.holidayName} — Print &amp; Docu is open as usual
             </span>
           )}
-          <p className="mb-4 text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
+          <p className="mb-4 font-heading text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
           <h1 className="abh-home-title font-extrabold text-foreground">
             <span className="block">Design. Print. Upgrade.</span>
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>
+          <p className="mt-5 max-w-xl font-heading text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <button
               type="button"
