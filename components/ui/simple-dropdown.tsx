@@ -38,8 +38,9 @@ export function SimpleDropdown({
     const frame = requestAnimationFrame(() => {
       if (!btnRef.current) return
       const r = btnRef.current.getBoundingClientRect()
-      const left = Math.min(Math.max(8, r.left), window.innerWidth - 232)
-      setRect({ top: r.bottom + 6, left, width: r.width })
+      const menuWidth = 220
+      const left = Math.min(Math.max(8, r.left), Math.max(8, window.innerWidth - menuWidth - 8))
+      setRect({ top: r.bottom + 8, left, width: Math.max(r.width, menuWidth) })
     })
     return () => cancelAnimationFrame(frame)
   }, [open])
@@ -67,11 +68,11 @@ export function SimpleDropdown({
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-[10px] border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-sm font-medium text-zinc-700 dark:text-zinc-300"
+        className="flex min-h-12 max-w-full items-center gap-3 rounded-[14px] border border-zinc-200 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-700"
       >
-        <span className="text-muted-foreground font-medium">{label}:</span>
-        {current?.label}
-        <CaretDown weight="bold" className={`w-3.5 h-3.5 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
+        <span className="shrink-0 font-medium text-muted-foreground">{label}:</span>
+        <span className="min-w-0 truncate">{current?.label}</span>
+        <CaretDown weight="regular" className={`size-4 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
       </button>
 
       {open && rect && mounted && createPortal(
@@ -80,7 +81,7 @@ export function SimpleDropdown({
           <ul
             role="listbox"
             style={{ position: "fixed", top: rect.top, left: rect.left, minWidth: rect.width }}
-            className="z-[9999] w-max max-w-[220px] rounded-[12px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl p-1.5"
+            className="z-[9999] w-max max-w-[min(220px,calc(100vw-1rem))] rounded-[14px] border border-zinc-100 bg-white p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-950"
           >
             {options.map((opt) => (
               <li key={opt.value}>
@@ -89,7 +90,7 @@ export function SimpleDropdown({
                   role="option"
                   aria-selected={opt.value === value}
                   onClick={() => { onChange(opt.value); setOpen(false) }}
-                  className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-[8px] text-sm font-medium text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                  className="flex min-h-10 w-full items-center justify-between gap-3 rounded-[10px] px-3.5 py-2.5 text-left text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900"
                 >
                   {opt.label}
                   {opt.value === value && <Check weight="bold" className="w-4 h-4" style={{ color: accentColor }} aria-hidden="true" />}
