@@ -37,15 +37,16 @@ function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techE
 function StatusLine({ status }: { status: HubStatus }) {
   const dotColor = status.open ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"
   return (
-    <div className="flex flex-col gap-1.5 text-sm font-medium tracking-normal text-muted-foreground dark:text-muted-foreground">
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", dotColor)} />
-        <span className="font-medium">{status.label}</span>
-        <span className="font-normal opacity-70">{status.open ? "Open" : "Closed"}</span>
-        <span className="opacity-40" aria-hidden="true">·</span>
-        <span>{status.nextEvent}</span>
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 text-sm text-muted-foreground dark:text-muted-foreground">
+      <div className="flex min-w-0 items-center gap-2">
+        <span className={cn("size-1.5 shrink-0 rounded-full", dotColor)} />
+        <span className="truncate font-medium text-foreground">{status.label}</span>
       </div>
-      {status.holidayNote && <p className="ml-3 text-xs font-medium leading-relaxed opacity-70">{status.holidayNote}</p>}
+      <span className={cn("text-xs font-medium", status.open ? "text-green-600 dark:text-green-400" : "text-muted-foreground")}>
+        {status.open ? "Open" : "Closed"}
+      </span>
+      <span className="col-span-2 pl-3.5 text-xs leading-relaxed text-muted-foreground/80">{status.nextEvent}</span>
+      {status.holidayNote && <p className="col-span-2 pl-3.5 text-xs leading-relaxed text-muted-foreground/70">{status.holidayNote}</p>}
     </div>
   )
 }
@@ -161,16 +162,16 @@ export function BusinessStatusFull() {
 
   return (
     <div className="rounded-[18px] border border-border/70 bg-card/35 p-4 sm:p-5">
-      <div className="flex items-start gap-3">
-        <Clock size={22} weight="regular" className="mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+      <div className="flex items-center justify-between gap-4 border-b border-border/70 pb-3">
         <div>
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Current hours</p>
-          <h3 className="mt-1 text-lg font-semibold tracking-tight text-foreground">Business hours</h3>
+          <p className="text-[0.65rem] font-semibold uppercase tracking-[0.17em] text-muted-foreground">Current hours</p>
+          <h3 className="mt-0.5 text-base font-semibold tracking-tight text-foreground sm:text-lg">Business hours</h3>
         </div>
+        <Clock size={21} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
       </div>
-      <div className="mt-4 divide-y divide-border/70">
-        <div className="py-3 first:pt-0"><StatusLine status={printDoc} /></div>
-        <div className="py-3 last:pb-0"><StatusLine status={techEtc} /></div>
+      <div className="divide-y divide-border/70">
+        <div className="py-3"><StatusLine status={printDoc} /></div>
+        <div className="pt-3"><StatusLine status={techEtc} /></div>
       </div>
     </div>
   )
