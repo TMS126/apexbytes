@@ -16,7 +16,7 @@ import { type HubKey } from '@/lib/brand'
 // the data layer and the brand/color layer always stay in sync.
 export type HubId = HubKey
 
-// ── A single sellable service (e.g. "NSFAS Status Check") ──
+// ── A single sellable service (e.g. "NSFAS Funding Status Check") ──
 export interface ServiceItem {
   name: string                // Display name shown on the item row and modal title
   price: string                // Display price string, e.g. "R20"
