@@ -30,7 +30,7 @@ const VARIANT_TEXT: Record<NoticeVariant, string> = {
 function NoticeCard({ notice }: { notice: HomeNotice }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
-    <div className="rounded-[14px] bg-secondary px-5 py-5">
+    <div className="rounded-[14px] border border-border/70 bg-card/35 px-5 py-5">
       <div className="flex items-start gap-3">
         <notice.Icon size={20} weight="bold" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
         <div className="flex flex-col gap-1 min-w-0">
@@ -125,7 +125,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full bg-background shadow-[0_4px_12px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
+          className="abh-shadow-badge inline-flex items-center gap-2 rounded-full border border-border bg-[var(--notice-surface)] py-1.5 pl-2.5 pr-1.5"
         >
           <button
             type="button"
@@ -174,26 +174,29 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
-                className="transform-gpu will-change-transform relative w-full max-w-[620px] max-h-[80vh] overflow-y-auto rounded-[18px] border border-white/20 bg-background p-5 flex flex-col gap-4 ring-1 ring-black/10 dark:ring-white/10 sm:p-6"
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background/95 px-5 py-6 backdrop-blur-xl sm:px-8 sm:py-8"
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <h2 id={titleId} className="text-[0.78rem] font-medium uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
-                    Updates ({notices.length})
+                <div className="mb-6 border-b border-zinc-100 pb-5 dark:border-zinc-800">
+                  <h2 id={titleId} className="mb-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                    {isMulti ? `Updates (${notices.length})` : first.header}
                   </h2>
+                  <div className="abh-divider !my-0" />
                   <button
                     type="button"
                     onClick={() => setModalOpen(false)}
                     aria-label="Close updates"
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-400 hover:opacity-70 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+                    className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400 dark:text-zinc-400"
                   >
                     <X size={14} weight="bold" aria-hidden="true" />
                   </button>
                 </div>
 
-                {notices.map((notice) => (
-                  <NoticeCard key={notice.id} notice={notice} />
-                ))}
+                <div className="mx-auto w-full max-w-[720px] space-y-4">
+                  {notices.map((notice) => (
+                    <NoticeCard key={notice.id} notice={notice} />
+                  ))}
+                </div>
 
                 <button
                   type="button"
