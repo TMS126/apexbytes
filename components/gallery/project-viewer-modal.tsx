@@ -470,7 +470,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
     <div
       ref={containerRef}
       tabIndex={-1}
-      className="fixed inset-0 z-[10200] bg-white dark:bg-zinc-950 flex flex-col md:flex-row animate-in fade-in duration-200"
+      className="abh-gallery-viewer fixed inset-0 z-[10200] flex flex-col md:flex-row"
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-viewer-title"

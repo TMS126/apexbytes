@@ -37,6 +37,20 @@ html[data-scroll-locked] body { overflow: hidden; }
   .abh-link-underline::after { transition: none; }
 }
 
+.abh-gallery-viewer[role="dialog"] {
+  isolation: isolate;
+  border-radius: 0 !important;
+  background-color: #fff !important;
+  opacity: 1 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.dark .abh-gallery-viewer[role="dialog"] {
+  background-color: #09090b !important;
+}
+
+
 .abh-underline-button {
   position: relative;
   display: inline-flex;
@@ -64,25 +78,53 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-underline-button:focus-visible::after,
 .abh-underline-button[aria-current="page"]::after { right: 0; }
 
-/* Reference search treatment: compact white field, crisp dark outline,
-   black search glyph, and a quiet white results panel. */
+/* Search fields use one crisp outer border; native inputs stay visually unboxed. */
 .abh-reference-search {
   display: flex;
-  min-height: 42px;
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
   align-items: center;
-  gap: .7rem;
-  border: 1px solid #171717;
-  border-radius: 12px;
-  background: #fff;
-  color: #111;
-  padding: .55rem .75rem;
+  gap: .75rem;
+  border: 1px solid currentColor;
+  border-radius: 14px;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 0 .875rem;
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
-.abh-reference-search:focus-within { border-color: #111; box-shadow: 0 0 0 1px #111; }
-.abh-reference-search input { min-width: 0; flex: 1; background: transparent; color: #111; font-size: .875rem; font-weight: 400; line-height: 1.5; outline: none; }
-.abh-reference-search input::placeholder { color: #111; opacity: .8; }
-.abh-reference-search svg { color: #111; }
+.abh-reference-search:focus-within { border-color: currentColor; box-shadow: 0 0 0 1px currentColor; }
+.abh-reference-search input,
+.abh-search-input {
+  min-width: 0;
+  width: 0;
+  flex: 1 1 auto;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--foreground);
+  font-size: .9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.abh-reference-search input:focus,
+.abh-reference-search input:focus-visible,
+.abh-search-input:focus,
+.abh-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
+@layer base {
+  /* Search fields opt out of the important dark-mode inset shadow preset. */
+  :root:root:root.dark .abh-search-input,
+  :root:root:root.dark .abh-search-input:focus,
+  :root:root:root.dark .abh-search-input:focus-visible { box-shadow: none !important; }
+}
+.abh-reference-search input::placeholder,
+.abh-search-input::placeholder { color: var(--muted-foreground); opacity: 1; }
+.abh-reference-search svg { color: currentColor; }
 .abh-reference-search-results { margin-top: .5rem; overflow: hidden; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; color: #111; box-shadow: 0 2px 5px rgba(0, 0, 0, .06); }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: #111; transition: background-color 140ms ease; }
 .abh-reference-search-row:hover, .abh-reference-search-row:focus-visible { background: #f6f6f6; }

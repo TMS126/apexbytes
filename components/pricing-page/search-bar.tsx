@@ -11,7 +11,7 @@ import { Result } from './lib'
 export function PricingSearchInput({ query, setQuery }: { query: string; setQuery: (v: string) => void }) {
   return (
     <div className="relative mx-auto w-full max-w-[300px]">
-      <div className="abh-reference-search">
+      <div data-hover-border="" className="abh-reference-search">
         <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
         <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
         <input
@@ -20,18 +20,18 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
           placeholder="Search any service or price…"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          className="pr-8"
+          className="abh-search-input"
         />
+        {query && (
+          <button
+            onClick={() => setQuery("")}
+            aria-label="Clear search"
+            className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10"
+          >
+            <X size={12} weight="bold" aria-hidden="true" />
+          </button>
+        )}
       </div>
-      {query && (
-        <button
-          onClick={() => setQuery("")}
-          aria-label="Clear search"
-          className="absolute right-2 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10"
-        >
-          <X size={12} weight="bold" aria-hidden="true" />
-        </button>
-      )}
     </div>
   )
 }
