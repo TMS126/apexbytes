@@ -42,8 +42,8 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
       {/* ===== INPUT — matches the Contact page's field styling:
           rounded-[14px], solid neutral border, brand-blue focus border,
           white/zinc-900 fill instead of the old zinc-50/underline look ===== */}
-      <div className="flex items-center gap-2.5 px-4 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus-within:border-brand-blue transition-all duration-200">
-        <MagnifyingGlass size={16} weight="bold" className="text-muted-foreground pointer-events-none shrink-0" aria-hidden="true" />
+      <div className="flex min-h-12 items-center gap-3 rounded-[14px] border border-zinc-100 bg-white px-4 py-2.5 transition-all duration-200 focus-within:border-brand-blue dark:border-zinc-800 dark:bg-zinc-900">
+        <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
         <label htmlFor="inline-search-input" className="sr-only">Find a service</label>
         <input
           id="inline-search-input"
@@ -52,11 +52,11 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           placeholder="Find a service…"
-          className="min-w-0 flex-1 py-3 pr-8 bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-muted-foreground outline-none appearance-none [-webkit-appearance:none]"
+          className="min-w-0 flex-1 bg-transparent py-0 pr-10 text-base font-medium leading-6 text-zinc-800 outline-none placeholder:text-muted-foreground focus:outline-none focus:ring-0 dark:text-zinc-200"
         />
       </div>
       {query && (
-        <button onClick={() => setQuery("")} aria-label="Clear search" className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600">
+        <button onClick={() => setQuery("")} aria-label="Clear search" className="absolute right-2 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10">
           <X size={12} weight="bold" aria-hidden="true" />
         </button>
       )}

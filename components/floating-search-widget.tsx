@@ -305,10 +305,10 @@ onClick={isOpen ? handleClose : handleOpen}
             className="w-full max-w-[480px] pointer-events-auto"
           >
             <div
-              className="flex items-center gap-2 rounded-[14px] bg-white dark:bg-zinc-900 border shadow-xl px-4 h-14 transition-colors duration-150 ease-out motion-reduce:transition-none"
+              className="flex min-h-14 items-center gap-3 rounded-[14px] border bg-white px-4 py-2.5 shadow-xl transition-colors duration-150 ease-out dark:bg-zinc-900 motion-reduce:transition-none"
               style={{ borderColor: inputFocused ? accentColor : undefined }}
             >
-              <MagnifyingGlass size={20} weight="bold" aria-hidden="true" style={{ color: accentColor }} />
+              <MagnifyingGlass size={20} weight="regular" className="shrink-0" aria-hidden="true" style={{ color: accentColor }} />
               <label htmlFor="floating-search-input" className="sr-only">Search a service</label>
               <input
                 id="floating-search-input"
@@ -326,12 +326,12 @@ onClick={isOpen ? handleClose : handleOpen}
                    the app can reintroduce the escaping ring on top of it
                    (the global input:focus override in globals.css also
                    covers this, this is belt-and-braces on the element itself). */
-                className="flex-1 bg-transparent text-base font-medium text-zinc-700 dark:text-zinc-200 placeholder:text-muted-foreground/70 dark:placeholder:text-muted-foreground/70 min-w-0 outline-none border-none appearance-none focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:outline-none"
+                className="min-w-0 flex-1 bg-transparent py-0 text-base font-medium leading-6 text-zinc-700 outline-none placeholder:text-muted-foreground/70 focus:outline-none focus:ring-0 focus-visible:outline-none dark:text-zinc-200 dark:placeholder:text-muted-foreground/70"
               />
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="abh-press shrink-0 w-6 h-6 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-muted-foreground hover:text-zinc-700 transition-colors duration-150"
+                  className="abh-press flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-muted-foreground transition-colors duration-150 hover:text-zinc-700 dark:bg-zinc-700"
                   aria-label="Clear search"
                 >
                   <X size={12} weight="bold" />
@@ -339,7 +339,7 @@ onClick={isOpen ? handleClose : handleOpen}
               )}
               <button
                 onClick={handleClose}
-                className="abh-press shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors duration-150"
+                className="abh-press flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors duration-150 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-white/10 dark:hover:text-zinc-200"
                 aria-label="Close search"
               >
                 <X size={16} weight="bold" />

@@ -373,21 +373,21 @@ function GalleryPageInner() {
 
         <ScrollBounce delay={0.1}>
           <div className="max-w-md mx-auto mb-8">
-            <div className="abh-line-focus flex items-center gap-2 pl-4 pr-1.5 py-1.5 rounded-[14px] border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 transition-all duration-200">
-              <MagnifyingGlass size={16} weight="bold" className="shrink-0 text-muted-foreground" aria-hidden="true" />
+            <div className="abh-line-focus flex min-h-12 items-center gap-3 rounded-[14px] border border-zinc-100 bg-white px-4 py-2.5 transition-all duration-200 dark:border-zinc-800 dark:bg-zinc-900">
+              <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search..."
                 aria-label="Search projects"
-                className="min-w-0 flex-1 py-2.5 bg-transparent text-base font-medium text-zinc-800 dark:text-zinc-200 placeholder:text-muted-foreground outline-none"
+                className="min-w-0 flex-1 bg-transparent py-0 text-base font-medium leading-6 text-zinc-800 outline-none placeholder:text-muted-foreground dark:text-zinc-200"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
                   aria-label="Clear search"
-                  className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-all active:scale-90"
+                  className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-all hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:hover:bg-white/10 dark:hover:text-zinc-300"
                 >
                   <X size={11} weight="bold" />
                 </button>
@@ -397,7 +397,7 @@ function GalleryPageInner() {
                 onClick={handleSurprise}
                 aria-label="Surprise me with a random project"
                 className={cn(
-                  "shrink-0 flex items-center gap-1.5 pl-3 pr-3.5 py-2 rounded-full bg-zinc-100 dark:bg-zinc-800 text-[0.82rem] font-medium text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-all duration-200 active:scale-95 group/surprise whitespace-nowrap",
+                  "flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-all duration-200 hover:text-zinc-800 active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-zinc-200",
                   surpriseFlash && "scale-90 opacity-60"
                 )}
               >
