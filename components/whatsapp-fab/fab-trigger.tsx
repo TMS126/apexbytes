@@ -49,7 +49,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
         <button
           onClick={isOpen ? onClose : onOpen}
           aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
-          className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+          className="abh-press relative flex size-11 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
         >
           {isOpen ? (
             <X size={24} weight="regular" aria-hidden="true" />

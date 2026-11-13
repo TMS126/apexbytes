@@ -39,10 +39,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
 
   return (
     <div ref={wrapRef} className="relative mx-auto w-full max-w-md">
-      {/* ===== INPUT — matches the Contact page's field styling:
-          rounded-[14px], solid neutral border, brand-blue focus border,
-          white/zinc-900 fill instead of the old zinc-50/underline look ===== */}
-      <div className="flex min-h-12 items-center gap-3 rounded-[14px] border border-zinc-100 bg-white px-4 py-2.5 transition-all duration-200 focus-within:border-brand-blue dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex min-h-12 items-center gap-3 rounded-[14px] bg-card px-4 py-2.5 shadow-[var(--shadow-card-lift)] transition-shadow duration-200 focus-within:shadow-lg">
         <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
         <label htmlFor="inline-search-input" className="sr-only">Find a service</label>
         <input
@@ -61,7 +58,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
         </button>
       )}
       {focused && query.trim().length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-zinc-950 rounded-[14px] border border-zinc-100 dark:border-zinc-800 shadow-xl overflow-hidden z-30 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute left-0 right-0 top-full z-30 mt-2 overflow-hidden rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] animate-in fade-in zoom-in-95 duration-150">
           {results.length > 0 ? (
             <div className="max-h-[320px] overflow-y-auto p-2">
               {results.map((s, idx) => {

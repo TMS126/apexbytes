@@ -8,14 +8,10 @@ import { Check, PlusCircle } from '@phosphor-icons/react'
 import { HubIcon } from '@/components/services-page/shared'
 import { Result } from './lib'
 
-// ===== SEARCH INPUT — now matches the Services page's InlineSearchBar
-// exactly: rounded-[14px] boxed container, solid neutral border,
-// brand-blue focus border, white/zinc-900 fill, left-aligned text (not
-// centered), plus the same clear (X) button when there's a query. =====
 export function PricingSearchInput({ query, setQuery }: { query: string; setQuery: (v: string) => void }) {
   return (
     <div className="relative mx-auto w-full max-w-md">
-      <div className="flex min-h-12 items-center gap-3 rounded-[14px] border border-zinc-100 bg-white px-4 py-2.5 transition-all duration-200 focus-within:border-brand-blue dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex min-h-12 items-center gap-3 rounded-[14px] bg-card px-4 py-2.5 shadow-[var(--shadow-card-lift)] transition-shadow duration-200 focus-within:shadow-lg">
         <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
         <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
         <input

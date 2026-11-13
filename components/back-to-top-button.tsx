@@ -36,14 +36,14 @@ export function BackToTopButton({
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Back to top"
-        className={cn("flex size-10 items-center justify-center rounded-full border border-border/80 bg-background/75 shadow-md backdrop-blur-sm transition-colors hover:bg-muted", visible ? "opacity-100" : "opacity-45")}
+        className={cn("flex size-10 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-zinc-800 active:scale-95", visible ? "opacity-100" : "opacity-45")}
       >
         <ArrowUp size={20} weight="regular" aria-hidden="true" />
       </button>
       <button
         onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
         aria-label="Scroll to bottom"
-        className={cn("flex size-10 items-center justify-center rounded-full border border-border/80 bg-background/75 shadow-md backdrop-blur-sm transition-colors hover:bg-muted", showScrollToBottom && !visible ? "opacity-100" : "opacity-45")}
+        className={cn("flex size-10 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-zinc-800 active:scale-95", showScrollToBottom && !visible ? "opacity-100" : "opacity-45")}
       >
         <ArrowDown size={20} weight="regular" aria-hidden="true" />
       </button>

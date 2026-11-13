@@ -66,7 +66,7 @@ export function FabTrigger({
           onClick={onOpen}
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
-          className="abh-press relative flex size-11 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+          className="abh-press relative flex size-11 items-center justify-center rounded-full bg-zinc-900 text-white shadow-lg transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
         >
           <Calculator
             size={25}
