@@ -1,3 +1,4 @@
+// proxy.ts
 import { NextRequest, NextResponse } from "next/server"
 
 // This broad, in-memory guard is intentionally only a lightweight backstop.
@@ -14,7 +15,7 @@ export function createContentSecurityPolicy(nonce: string) {
     "style-src-attr 'unsafe-inline'",
     "img-src 'self' blob: data: https://*.whatsapp.net https://res.cloudinary.com https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org https://server.arcgisonline.com",
     "font-src 'self'",
-    "connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://challenges.cloudflare.com https://*.tile.openstreetmap.org https://server.arcgisonline.com",
+    "connect-src 'self' https://va.vercel-scripts.com https://api.cloudinary.com https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://challenges.cloudflare.com https://api.vercel.com",
     "frame-src 'self' https://challenges.cloudflare.com",
     "object-src 'none'",
     "base-uri 'self'",
@@ -25,7 +26,14 @@ export function createContentSecurityPolicy(nonce: string) {
 }
 
 export function proxy(request: NextRequest) {
-  const isMaintenanceMode = false
+  const pathname = request.nextUrl.pathname
+  const isMaintenancePath = pathname === "/maintenance" || pathname === "/maintenance/"
+  const isMaintenanceMode = process.env.MAINTENANCE_MODE === "true"
+
+  if (isMaintenancePath) {
+    return NextResponse.next()
+  }
+
   if (isMaintenanceMode) {
     return NextResponse.rewrite(new URL("/maintenance", request.url))
   }
