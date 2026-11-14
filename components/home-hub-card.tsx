@@ -6,6 +6,7 @@ import { HUB_COLORS } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { HUB_ICON } from "@/components/services-page/mobile-hub-card"
 import { hubRouteFor } from "@/components/services-page/lib"
+import { cn } from "@/lib/utils"
 
 const CLIENT_TITLE: Record<HubId, string> = {
   print: "Print what matters",
@@ -23,14 +24,14 @@ const BLURB: Record<HubId, string> = {
   tech: "PC setup, virus removal and Windows installs — sorted properly. Practical help for the everyday tech problems that slow you down.",
 }
 
-export function HomeHubCard({ hubId }: { hubId: HubId }) {
+export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?: boolean }) {
   const hub = HUBS[hubId]
   const Icon = HUB_ICON[hubId]
   const serviceCount = hub.sections.reduce((total, section) => total + section.items.length, 0)
   const card = (
     <Link
       href={hubRouteFor(hubId)}
-      className="group/hub-icon relative flex min-h-[176px] w-full flex-col items-center justify-center gap-4 px-3 py-6 text-center transition-[background-color,transform] duration-250 ease-out hover:-translate-y-1 hover:bg-[color-mix(in_srgb,var(--hub-primary)_6%,transparent)] focus-visible:outline-none sm:min-h-[204px] sm:px-5 sm:py-8"
+      className={cn("group/hub-icon relative flex min-h-[176px] w-full flex-col items-center justify-center gap-4 px-3 py-6 text-center transition-[background-color,transform] duration-250 ease-out hover:-translate-y-1 hover:bg-[color-mix(in_srgb,var(--hub-primary)_6%,transparent)] focus-visible:outline-none sm:min-h-[204px] sm:px-5 sm:py-8", reverse ? "md:order-2" : "md:order-1")}
       aria-label={`Explore ${hub.title}`}
     >
         <span className="flex h-16 w-16 items-center justify-center transition-transform duration-250 ease-out group-hover/hub-icon:-translate-y-1 group-hover/hub-icon:rotate-[-5deg] sm:h-20 sm:w-20">
@@ -43,7 +44,7 @@ export function HomeHubCard({ hubId }: { hubId: HubId }) {
   )
 
   const description = (
-    <div className="flex min-h-[176px] flex-col justify-center px-1 py-8 sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8">
+    <div className={cn("flex min-h-[176px] flex-col items-start justify-center px-1 py-8 text-left sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8", reverse ? "md:order-1" : "md:order-2")}>
       <p className="mt-3 max-w-2xl text-[1.125rem] leading-7 text-muted-foreground sm:mt-4 sm:leading-8">{BLURB[hubId]}</p>
       <Link href={hubRouteFor(hubId)} className="group/cta relative mt-7 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
         Explore hub
@@ -57,7 +58,7 @@ export function HomeHubCard({ hubId }: { hubId: HubId }) {
       style={{
         ["--hub-primary" as string]: HUB_COLORS[hubId].primary,
       }}
-      className="grid grid-cols-[minmax(116px,34%)_1fr] gap-4 md:grid-cols-[minmax(190px,260px)_1fr] md:items-stretch md:gap-8"
+        className="grid grid-cols-[minmax(116px,34%)_1fr] gap-4 md:grid-cols-[minmax(190px,260px)_1fr] md:items-stretch md:gap-8"
     >
       {card}{description}
     </div>

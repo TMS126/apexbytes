@@ -12,8 +12,8 @@ export function FaqAccordion() {
     <section className="w-full px-4 py-2 md:px-8">
       <div className="mx-auto max-w-[980px]">
         <div className="mb-8">
-          <h2 className="abh-section-heading mb-3 text-center">Frequently Asked Questions</h2>
-          <div className="abh-divider" />
+          <h2 className="abh-section-heading mb-3 text-left">Frequently Asked Questions</h2>
+          <div className="abh-divider !mx-0" />
         </div>
         <div className="divide-y divide-zinc-100 border-y border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800">
           {FAQS.map((faq, index) => {
@@ -25,9 +25,9 @@ export function FaqAccordion() {
                   onClick={() => setOpenIndex((current) => (current === index ? null : index))}
                   aria-expanded={itemOpen}
                   aria-controls={`footer-faq-${index}`}
-                  className="flex w-full items-center justify-between gap-4 py-4 text-left transition-colors"
+                    className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors"
                 >
-                  <h4 className="abh-card-heading text-[1.2rem] leading-snug text-zinc-800 dark:text-zinc-100">
+                  <h4 className="abh-card-heading text-[1.28rem] leading-snug text-zinc-800 dark:text-zinc-100">
                     {faq.question}
                   </h4>
                   <CaretDown
@@ -44,7 +44,7 @@ export function FaqAccordion() {
                   className={cn("grid transition-none sm:transition-[grid-template-rows,opacity] sm:duration-200 sm:ease-out motion-reduce:transition-none", itemOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
                 >
                   <div className="overflow-hidden">
-                    <div className="pb-5 text-[1.1rem] leading-relaxed text-muted-foreground whitespace-pre-wrap">{faq.answer}</div>
+                    <div className="pb-6 text-[1.12rem] leading-relaxed text-muted-foreground whitespace-pre-wrap">{faq.answer}</div>
                   </div>
                 </div>
               </div>

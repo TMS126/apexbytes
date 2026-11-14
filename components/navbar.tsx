@@ -178,12 +178,12 @@ export function Navbar() {
                     {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
                     {submenu && activeSubmenu === item.id && (
                       <div
-                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-3 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background/92 p-2 shadow-lg backdrop-blur-xl"
+                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-3 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background/92 p-2.5 shadow-lg backdrop-blur-xl"
                         onMouseEnter={() => openSubmenu(item.id as "services" | "tools")}
                         onMouseLeave={closeSubmenuSoon}
                       >
                         {submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path ? "page" : undefined} className="rounded-[14px] px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path ? "page" : undefined} className="rounded-[14px] px-4 py-3 text-[0.95rem] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                             {subitem.label}
                           </Link>
                         ))}

@@ -36,13 +36,13 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
       <div className="flex items-start gap-3">
         <notice.Icon size={20} weight="bold" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
         <div className="flex flex-col gap-1 min-w-0">
-          <h3 className="text-[0.86rem] font-semibold uppercase tracking-[0.14em]" style={{ color }}>
+          <h3 className="text-sm font-semibold uppercase tracking-[0.14em]" style={{ color }}>
             {notice.header}
           </h3>
           {notice.date && (
-            <p className="text-[0.82rem] font-medium text-zinc-500 dark:text-zinc-400">{notice.date}</p>
+            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{notice.date}</p>
           )}
-          <p className="text-[1.05rem] font-medium leading-7 abh-body text-zinc-700 dark:text-zinc-200">
+          <p className="text-[1.1rem] font-medium leading-7 abh-body text-zinc-700 dark:text-zinc-200">
             {notice.body}
           </p>
           {notice.sourceUrl && notice.sourceLabel && (
@@ -50,7 +50,7 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
               href={notice.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-2 w-fit text-[0.72rem] italic font-medium text-zinc-500 underline decoration-dotted underline-offset-2 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="mt-2 w-fit text-xs italic font-medium text-zinc-500 underline decoration-dotted underline-offset-2 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Source: {notice.sourceLabel}
             </a>
