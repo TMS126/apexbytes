@@ -2,7 +2,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef } from "react"
-import { MagnifyingGlass, X } from "@phosphor-icons/react"
+import { Broom, MagnifyingGlass } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
@@ -53,7 +53,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
         />
         {query && (
           <button onClick={() => setQuery("")} aria-label="Clear search" className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10">
-            <X size={12} weight="bold" aria-hidden="true" />
+            <Broom size={15} weight="regular" aria-hidden="true" />
           </button>
         )}
       </div>

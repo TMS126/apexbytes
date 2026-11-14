@@ -2,7 +2,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef, useCallback, useLayoutEffect } from "react"
-import { MagnifyingGlass, X, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
+import { Broom, MagnifyingGlass, X, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -331,16 +331,9 @@ onClick={isOpen ? handleClose : handleOpen}
                   className="abh-press flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-muted-foreground transition-colors duration-150 hover:text-zinc-700 dark:bg-zinc-700"
                   aria-label="Clear search"
                 >
-                  <X size={12} weight="bold" />
+                  <Broom size={15} weight="regular" aria-hidden="true" />
                 </button>
               )}
-              <button
-                onClick={handleClose}
-                className="abh-press flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors duration-150 hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-white/10 dark:hover:text-zinc-200"
-                aria-label="Close search"
-              >
-                <X size={16} weight="bold" />
-              </button>
             </div>
 
             {hasQuery && (

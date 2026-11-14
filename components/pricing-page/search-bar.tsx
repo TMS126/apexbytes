@@ -3,7 +3,7 @@
 // flag me if the actual file lives elsewhere and I'll re-anchor.)
 "use client"
 
-import { MagnifyingGlass, X } from '@phosphor-icons/react'
+import { Broom, MagnifyingGlass } from '@phosphor-icons/react'
 import { Check, PlusCircle } from '@phosphor-icons/react'
 import { HubIcon } from '@/components/services-page/shared'
 import { Result } from './lib'
@@ -28,7 +28,7 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
             aria-label="Clear search"
             className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10"
           >
-            <X size={12} weight="bold" aria-hidden="true" />
+            <Broom size={15} weight="regular" aria-hidden="true" />
           </button>
         )}
       </div>

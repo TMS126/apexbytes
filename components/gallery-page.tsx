@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { X, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
+import { Broom, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -389,7 +389,7 @@ function GalleryPageInner() {
                   aria-label="Clear search"
                   className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-all hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:hover:bg-white/10 dark:hover:text-zinc-300"
                 >
-                  <X size={11} weight="bold" />
+                  <Broom size={15} weight="regular" aria-hidden="true" />
                 </button>
               )}
 
