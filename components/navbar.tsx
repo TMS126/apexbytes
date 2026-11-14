@@ -169,7 +169,7 @@ export function Navbar() {
                       href={item.path}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "whitespace-nowrap text-[0.9rem] transition-colors hover:text-foreground",
+                        "whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors hover:bg-muted hover:text-foreground",
                         active ? "font-semibold text-foreground" : "font-semibold text-muted-foreground"
                       )}
                     >
@@ -249,11 +249,11 @@ export function Navbar() {
                 {mounted && (theme === "dark" ? <Moon size={19} weight="regular" /> : <Sun size={19} weight="regular" />)}
               </button>
 
-              <div className="order-3 hidden items-center gap-1 rounded-full bg-muted/80 p-1 sm:flex">
-                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
+              <div className="order-3 hidden items-center gap-1 rounded-[14px] bg-muted/80 p-1 sm:flex">
+                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
                 </button>
-                <Link href="/contact" className="rounded-full px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-background">Let&apos;s Talk</Link>
+                <Link href="/contact" className="rounded-[14px] px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-background">Let&apos;s Talk</Link>
               </div>
             </div>
           </div>

@@ -74,18 +74,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       )}
     >
       <div
-        className={cn(
-          "absolute -inset-[50%] transition-opacity duration-700",
-          menuOpen ? "opacity-100 animate-[spin_16s_linear_infinite]" : "opacity-0"
-        )}
-        style={{
-          background:
-            "conic-gradient(from 0deg, rgba(30,111,168,0.18), rgba(111,191,26,0.16), rgba(244,162,97,0.16), rgba(30,111,168,0.18))",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-white/70 dark:bg-zinc-950/80 backdrop-blur-xl"
+        className="absolute inset-0 bg-background/95 backdrop-blur-xl"
         onClick={() => setMenuOpen(false)}
         aria-hidden="true"
       />
@@ -114,7 +103,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                     color: "var(--text-on-accent)",
                   }}
                   className={cn(
-                    "w-full rounded-full px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-all duration-300 active:scale-95",
+                    "w-full rounded-[14px] px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-all duration-300 active:scale-95",
                     menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                   )}
                 >
@@ -134,7 +123,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   aria-current={isActive ? "page" : undefined}
                   tabIndex={menuOpen ? 0 : -1}
                   style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
-                  className="w-full rounded-full border-2 bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
+                  className="w-full rounded-[14px] border-2 bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
                 >
                   {item.label}
                 </Link>
