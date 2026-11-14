@@ -132,7 +132,7 @@ function ContactPageInner() {
           </ScrollBounce>
           <p className="abh-tagline max-w-xl mx-auto text-center">We&apos;re here and ready to help — reach out any way you prefer.</p>
           <div className="abh-divider" />
-          <EditorialScrollCue />
+            <EditorialScrollCue className="contact-editorial-scroll-cue" />
         </div>
       </section>
 
@@ -311,7 +311,7 @@ function ContactPageInner() {
         </a>
       </div>
 
-      <BackToTopButton visible={showBackToTop} bottomClass="bottom-32 md:bottom-6" />
+      <BackToTopButton visible={showBackToTop} bottomClass="bottom-24 md:bottom-6" />
     </div>
   )
 }

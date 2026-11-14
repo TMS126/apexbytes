@@ -950,6 +950,10 @@ button, a, [role="button"] {
     opacity: 0.62;
   }
 
+  @media (max-width: 767px) {
+    .contact-editorial-scroll-cue { bottom: 6rem !important; }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .abh-editorial-scroll-cue svg { animation: abh-scroll-cue 1.8s ease-in-out infinite; }
   }
