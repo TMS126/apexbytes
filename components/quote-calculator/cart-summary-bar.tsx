@@ -107,7 +107,7 @@ export function CartSummaryBar({
             </div>
 
             {showSaveForm && (
-              <div className="flex items-center gap-2 p-2 rounded-[12px] bg-zinc-50 dark:bg-white/5 border border-zinc-100 dark:border-white/10 animate-in fade-in slide-in-from-top-1 duration-150">
+              <div className="flex items-center gap-2 rounded-[14px] border border-border bg-muted/45 p-2 animate-in fade-in slide-in-from-top-1 duration-150">
                 <label htmlFor="save-quote-name" className="sr-only">Name this quote (optional)</label>
                 <input
                   id="save-quote-name"
@@ -116,7 +116,7 @@ export function CartSummaryBar({
                   onChange={e => setSaveNameDraft(e.target.value)}
                   onKeyDown={e => { if (e.key === "Enter") confirmSaveQuote() }}
                   placeholder="Name this quote (optional)"
-                  className="flex-1 min-w-0 px-2.5 py-1.5 rounded-[8px] bg-white dark:bg-zinc-900 text-xs font-medium text-zinc-800 dark:text-zinc-200 outline-none border border-zinc-100 dark:border-zinc-800"
+                  className="min-w-0 flex-1 rounded-[14px] border border-border bg-card px-2.5 py-1.5 text-xs font-medium text-foreground outline-none focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
                 />
                 <button
                   onClick={confirmSaveQuote}

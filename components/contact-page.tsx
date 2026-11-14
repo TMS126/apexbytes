@@ -143,7 +143,7 @@ function ContactPageInner() {
               <button
                 key={q.id}
                 onClick={() => scrollToSection(q.id)}
-                className="px-4 py-1.5 rounded-full text-sm font-medium text-muted-foreground dark:text-muted-foreground border border-zinc-200 dark:border-zinc-800 hover:border-brand-blue hover:text-brand-blue dark:hover:text-brand-light-blue dark:hover:border-brand-light-blue transition-colors duration-150 active:scale-95"
+                className="rounded-[14px] border border-border px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors duration-150 hover:border-brand-blue hover:text-brand-blue dark:hover:text-brand-light-blue dark:hover:border-brand-light-blue active:scale-95"
               >
                 {q.label}
               </button>
@@ -255,7 +255,7 @@ function ContactPageInner() {
                         value={rawValue}
                         aria-invalid={err}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className="w-full px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-normal text-zinc-800 dark:text-zinc-200 transition-all outline-none"
+                        className="w-full rounded-[14px] border border-border bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
                         style={{ borderColor: err ? TOKEN.errorBg : undefined }}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
@@ -277,7 +277,7 @@ function ContactPageInner() {
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       maxLength={1000}
-                      className="w-full flex-1 px-4 py-3 border rounded-[14px] bg-zinc-50 dark:bg-zinc-800/60 text-base font-normal text-zinc-800 dark:text-zinc-200 transition-all outline-none resize-none"
+                      className="w-full flex-1 rounded-[14px] border border-border bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
                       style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : undefined }}
                       rows={4}
                       value={formData.message}

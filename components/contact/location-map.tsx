@@ -25,7 +25,7 @@ function RecenterButton() {
     <button
       type="button"
       onClick={() => map.flyTo(center, 15, { duration: 0.65 })}
-      className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-full bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95"
+      className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95"
       aria-label="Show ApexbytesHub on the map"
     >
       <Target size={16} weight="bold" aria-hidden="true" />
@@ -52,13 +52,13 @@ function DirectionsButton() {
   return (
     <div className="absolute inset-x-4 bottom-4 z-[1000]">
       <div className="mb-2 flex justify-end">
-        {message && <p role="status" className="max-w-[min(100%,28rem)] rounded-xl bg-card/95 px-3 py-2 text-right text-xs font-medium leading-relaxed text-muted-foreground shadow-md backdrop-blur-xl">{message}</p>}
+        {message && <p role="status" className="max-w-[min(100%,28rem)] rounded-[14px] bg-card/95 px-3 py-2 text-right text-xs font-medium leading-relaxed text-muted-foreground shadow-md backdrop-blur-xl">{message}</p>}
       </div>
       <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={openDirections}
-          className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-full bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95"
+          className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 active:scale-95"
           aria-label={`Open driving directions to ${BIZ.name} in Google Maps`}
         >
           <MapPinLine size={16} weight="bold" aria-hidden="true" />

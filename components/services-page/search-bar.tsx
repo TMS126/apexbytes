@@ -66,11 +66,11 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
                 const accent = isDark ? colors.accentDark : colors.accentLight
                 return (
                   <button key={`${s.hubId}-${s.name}-${idx}`} onClick={() => pick(s)} className="abh-reference-search-row">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, #fff)`, color: accent }}>
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-[14px]" style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, var(--card))`, color: accent }}>
                       <HubIcon id={s.hubId} size={17} color="currentColor" />
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="truncate text-sm font-medium text-[#111]">{s.name}</p>
+                      <p className="truncate text-sm font-medium text-foreground">{s.name}</p>
                       <p className="abh-search-muted truncate text-xs">{s.sectionTitle} · {HUBS[s.hubId].title}</p>
                     </div>
                     <span className="text-sm font-medium shrink-0" style={{ color: accent }}>{s.price}</span>

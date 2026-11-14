@@ -26,7 +26,7 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
           <button
             onClick={() => setQuery("")}
             aria-label="Clear search"
-            className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10"
+            className="flex size-7 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >
             <Broom size={15} weight="regular" aria-hidden="true" />
           </button>
@@ -55,7 +55,7 @@ export function PricingSearchResults({
           <div key={i} className="abh-card flex items-center gap-3 px-4 py-4 transition-shadow duration-200 hover:shadow-md">
             <HubIcon id={r.hubId} size={20} color={r.accent} />
             <div className="min-w-0 flex-1">
-              <p className="text-[1.05rem] font-medium text-zinc-900 dark:text-white truncate flex items-center gap-1.5">
+              <p className="flex items-center gap-1.5 truncate text-[1.05rem] font-medium text-foreground">
                 <span className="truncate">{r.name}</span>
               </p>
               <p className="text-[0.9rem] text-muted-foreground mt-0.5">{r.hubTitle} · {r.section}</p>
@@ -65,7 +65,7 @@ export function PricingSearchResults({
               <button
                 onClick={() => onAdd(r.hubId, r.section, r.name, r.price)}
                 aria-label={`Add ${r.name} to quote`}
-                className="group w-7 h-7 rounded-full flex items-center justify-center transition-transform duration-150 active:scale-90 hover:scale-110"
+                className="group flex size-9 items-center justify-center rounded-[14px] transition-transform duration-150 active:scale-90 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
                 style={{ color: justAdded === key ? '#16a34a' : r.accent }}
               >
                 {justAdded === key ? <Check size={20} weight="bold" /> : <PlusCircle size={20} weight="regular" className="transition-all duration-150 group-hover:fill-current group-focus-visible:fill-current" />}

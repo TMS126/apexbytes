@@ -40,7 +40,7 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Select a service hub"
-        className="w-full px-4 py-3 border rounded-[14px] bg-white dark:bg-background text-[1rem] font-medium transition-all flex items-center justify-between gap-3 border-zinc-100 dark:border-zinc-800"
+        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-border bg-card px-4 py-3 text-[1rem] font-medium text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/30"
         style={{
           borderColor: value ? activeColor : (isOpen ? BRAND.blue : undefined),
           color: value ? activeColor : placeholderColor,
@@ -57,7 +57,7 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
         />
       </button>
       {isOpen && (
-        <div role="listbox" className="absolute z-50 mt-1.5 w-full bg-white dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-800 rounded-[14px] shadow-xl overflow-hidden">
+        <div role="listbox" className="absolute z-50 mt-1.5 w-full overflow-hidden rounded-[14px] border border-border bg-card shadow-xl">
           {options.map((opt) => {
             const color = getFormHubColor(opt, isDark)
             const isHovered = hoveredOption === opt
@@ -70,7 +70,7 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
                 onClick={() => { onChange(opt); setIsOpen(false) }}
                 onMouseEnter={() => setHoveredOption(opt)}
                 onMouseLeave={() => setHoveredOption(null)}
-                className="w-full px-4 py-3 text-left text-[1rem] font-medium flex items-center gap-3 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                className="flex w-full items-center gap-3 px-4 py-3 text-left text-[1rem] font-medium text-foreground transition-colors hover:bg-muted focus-visible:bg-muted focus-visible:outline-none"
                 style={{ color: isHovered ? color : undefined }}
               >
                 <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} aria-hidden="true" />

@@ -41,7 +41,7 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
         </div>
       </div>
 
-      <div className="px-5 pb-3 text-center shrink-0 border-b border-zinc-100 dark:border-white/10">
+      <div className="shrink-0 border-b border-border px-5 pb-3 text-center">
         <h3 className="font-sans font-medium text-xl leading-snug" style={{ color: titleAccent }}>
           {hasItems ? "Looking good so far" : "What can we help you with today?"}
         </h3>
