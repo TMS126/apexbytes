@@ -6,6 +6,7 @@ import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
+import { NoticeMarker } from "@/components/notice-marker"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -32,7 +33,7 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
   return (
     <div className="rounded-[14px] border border-border/70 bg-card/35 px-5 py-5">
       <div className="flex items-start gap-3">
-        <notice.Icon size={20} weight="bold" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
+        <NoticeMarker Icon={notice.Icon} variant={notice.variant} size={20} className="mt-0.5" />
         <div className="flex flex-col gap-1 min-w-0">
           <h3 className="text-[0.86rem] font-semibold uppercase tracking-[0.14em]" style={{ color }}>
             {notice.header}
@@ -135,7 +136,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
             className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
-            <first.Icon size={17} weight="regular" style={{ color: collapsedColor }} aria-hidden="true" />
+            <NoticeMarker Icon={first.Icon} variant={isMulti ? "warning" : first.variant} size={17} />
             <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: collapsedColor }}>
               {collapsedLabel}
             </span>

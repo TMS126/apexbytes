@@ -33,6 +33,7 @@ import { useEffect, useSyncExternalStore } from "react"
 import { createPortal } from "react-dom"
 import { X, WarningCircle } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
+import { NoticeMarker } from "@/components/notice-marker"
 
 export function NoticeModal({
   open, onClose, notice, hubTitle,
@@ -76,12 +77,7 @@ export function NoticeModal({
         {/* ── Header: warning icon + "Notice" title + close button ── */}
         <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
           <div className="flex items-center gap-2 min-w-0">
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-              style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 8%, transparent)`, color: TOKEN.orangeText }}
-            >
-              <WarningCircle size={16} weight="fill" aria-hidden="true" />
-            </div>
+            <NoticeMarker Icon={WarningCircle} variant="warning" size={18} />
             <h4 className="abh-card-heading text-base truncate">Notice</h4>
           </div>
           <button

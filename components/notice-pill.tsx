@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { TOKEN } from "@/lib/brand"
+import { NoticeMarker } from "@/components/notice-marker"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -49,7 +50,6 @@ export function NoticePill({
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
 
-  const iconColor = VARIANT_TEXT[variant]
   const headerColor = VARIANT_TEXT[variant]
 
   // Hydration-safe "are we in the browser yet" check.
@@ -73,7 +73,7 @@ export function NoticePill({
           aria-label={`Open: ${collapsedLabel}`}
           className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
         >
-          <Icon size={17} weight="regular" style={{ color: iconColor }} aria-hidden="true" />
+          <NoticeMarker Icon={Icon} variant={variant} size={17} />
           <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: headerColor }}>
             {collapsedLabel}
           </span>

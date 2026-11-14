@@ -3,9 +3,10 @@
 
 import { ArrowUpRight, WarningCircle } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { HUB_COLORS, HUB_ON_COLOR, TOKEN } from "@/lib/brand"
+import { HUB_COLORS, HUB_ON_COLOR } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { HUB_ICON } from "./mobile-hub-card"
+import { NoticeMarker } from "@/components/notice-marker"
 
 // ============================================================
 // TYPES
@@ -64,13 +65,8 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
       {(hubHasNotice || hubHasBulk) && (
         <div className="absolute left-5 top-5 z-10 flex items-center gap-2">
           {hubHasNotice && (
-            <span
-              className="flex h-7 w-7 items-center justify-center rounded-full"
-              style={{ backgroundColor: "var(--card)", color: TOKEN.warningBg }}
-              role="img"
-              aria-label="Notice for some services in this hub"
-            >
-              <WarningCircle size={16} weight="fill" aria-hidden="true" />
+            <span role="img" aria-label="Notice for some services in this hub">
+              <NoticeMarker Icon={WarningCircle} variant="warning" size={16} />
             </span>
           )}
           {hubHasBulk && (

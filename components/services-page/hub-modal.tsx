@@ -9,6 +9,7 @@ import { X as XIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId, HUB_DISCLAIMERS } from "@/lib/data"
+import { NoticeMarker } from "@/components/notice-marker"
 import { HubIcon, useFocusTrap } from "./shared"
 import { getTurnaround, HUB_ORDER, SelectedService } from "./lib"
 import { sectionHasBulk, itemHasBulk } from "../quote-calculator/lib"
@@ -285,7 +286,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     aria-expanded={false}
                     className="w-8 h-8 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:text-foreground transition-colors duration-150"
                   >
-                    <Info size={15} weight="bold" aria-hidden="true" />
+                    <NoticeMarker Icon={Info} variant="info" size={15} />
                   </motion.button>
                 </motion.div>
               ) : (

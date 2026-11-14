@@ -13,6 +13,7 @@ import {
   HUB_ACCEPT, MAX_UPLOAD_MB, ALLOWED_UPLOAD_MIME_TYPES, trackEvent,
 } from "../lib"
 import { getCartQtyForItem, getEffectiveRate, getBulkHint, parsePrice, itemHasBulk } from "@/components/quote-calculator/lib"
+import { NoticeMarker } from "@/components/notice-marker"
 import { UploadButton, UploadStatus } from "./UploadControl"
 import { QuoteControl } from "./QuoteControl"
 import { BulkHint } from "./BulkHint"
@@ -478,7 +479,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 {requirements.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-3 py-2 text-left">
                     <span className="shrink-0 mt-1 text-muted-foreground" aria-hidden="true">
-                      <WarningCircle size={13} weight="fill" />
+                      <NoticeMarker Icon={WarningCircle} variant="warning" size={13} />
                     </span>
                     <span className="abh-body text-[0.95rem] leading-relaxed">{req}</span>
                   </li>
@@ -583,7 +584,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
               style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 7%, transparent)` }}
             >
-              <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
+              <NoticeMarker Icon={WarningCircle} variant="warning" size={16} className="mt-0.5" />
               <p className="text-[0.82rem] leading-relaxed" style={{ color: BRAND.orange }}>{NSFAS_CLOSED_NOTICE_TEXT}</p>
             </div>
           )}

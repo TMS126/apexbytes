@@ -8,6 +8,7 @@ import {
 } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
+import { NoticeMarker } from "@/components/notice-marker"
 
 // ============================================================
 // SHARED HUB ICON MAP
@@ -74,12 +75,9 @@ export function MobileHubCard({
           aria-hidden="true"
         />
         {hubHasNotice && (
-          <WarningCircle
-            size={18}
-            weight="fill"
-            aria-label="Notice for some services in this hub"
-            style={{ color: TOKEN.warningBg }}
-          />
+          <span aria-label="Notice for some services in this hub">
+            <NoticeMarker Icon={WarningCircle} variant="warning" size={18} />
+          </span>
         )}
       </div>
 
