@@ -105,7 +105,7 @@ html[data-scroll-locked] body { overflow: hidden; }
   border-radius: 0 !important;
   background: transparent !important;
   color: #111;
-  font-size: .875rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   outline: none !important;
@@ -918,18 +918,19 @@ button, a, [role="button"] {
     text-align: center;
   }
 
-  /* Eloqwnt-style non-home hero composition: keep the title visually central,
-     then anchor the supporting copy and scroll cue to the lower viewport. */
+  /* Keep non-home titles and their supporting copy together as a centered,
+     balanced hero group while the scroll cue remains at the viewport edge. */
   .abh-editorial-hero:not(.abh-home-hero) .abh-tagline,
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-subtitle {
-    position: absolute;
-    inset-inline: 1rem;
-    bottom: 5.75rem;
-    max-width: 46rem;
-    margin-inline: auto;
+    position: static;
+    inset-inline: auto;
+    bottom: auto;
+    width: min(100%, 46rem);
+    margin: 0 auto;
     color: var(--foreground);
     font-size: clamp(1.15rem, 2.4vw, 1.5rem);
     line-height: 1.45;
+    text-wrap: balance;
   }
   .abh-editorial-hero:not(.abh-home-hero) .abh-divider { display: none; }
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-scroll-cue {
