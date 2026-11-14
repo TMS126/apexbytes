@@ -53,6 +53,7 @@ export function NoticePill({
 }) {
   const [open, setOpen] = useState(false)
   const [unread, setUnread] = useState(true)
+  const [dotVisible, setDotVisible] = useState(dot)
   const close = () => setOpen(false)
 
   const iconColor = VARIANT_TEXT[variant]
@@ -74,10 +75,10 @@ export function NoticePill({
         "relative abh-shadow-badge inline-flex items-center gap-2 border border-border bg-[var(--notice-surface)]",
         announcement ? "rounded-[14px] p-1.5" : "rounded-full py-1.5 pl-2.5 pr-1.5",
       )}>
-        {dot && <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-[var(--brand-orange)] ring-2 ring-background" aria-hidden="true" />}
+        {dotVisible && <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-[var(--brand-orange)] ring-2 ring-background" aria-hidden="true" />}
         <button
           type="button"
-          onClick={() => { setUnread(false); setOpen(true) }}
+          onClick={() => { setUnread(false); setDotVisible(false); setOpen(true) }}
           aria-expanded={open}
           aria-haspopup="dialog"
           aria-label={`Open: ${collapsedLabel}`}

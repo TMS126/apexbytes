@@ -5,7 +5,7 @@ import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence, motion } from "framer-motion"
-import { Megaphone, CaretLeft, CaretDown } from "@phosphor-icons/react"
+import { Megaphone, SealPercent, CaretLeft, CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
@@ -71,12 +71,14 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
 
   const [hubOriginSide, setHubOriginSide] = useState<"left" | "right">("right")
   const [clientNoticeDismissed, setClientNoticeDismissed] = useState(false)
+  const [bulkNoticeDismissed, setBulkNoticeDismissed] = useState(false)
   const showBackToTop = useBackToTop()
 
   const [desktopActiveHub, setDesktopActiveHub] = useState<HubId | null>(null)
   const [desktopActiveSection, setDesktopActiveSection] = useState<number | null>(null)
 
   const isModalOpen = !!(activeHub || selectedService)
+  const hasBulkDeals = HUB_ORDER.some((hubId) => HUBS[hubId].sections.some((section) => sectionHasBulk(hubId, section.title, section.items)))
 
   const handleSelectService = useCallback((svc: SelectedService) => {
     trackEvent("view_service", {
@@ -208,6 +210,22 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
             >
               <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">{NOTICE.intro}</p>
               <p className="mt-3 text-[0.92rem] font-medium italic leading-6 text-zinc-500 dark:text-zinc-400">{NOTICE.footer}</p>
+            </NoticePill>
+          </ScrollBounce>
+        )}
+
+        {hasBulkDeals && !bulkNoticeDismissed && (
+          <ScrollBounce delay={0.1} className="relative z-0 mb-6 w-full flex justify-center">
+            <NoticePill
+              variant="info"
+              Icon={SealPercent}
+              collapsedLabel="Bulk deals"
+              expandedLabel="Bulk Deals"
+              onDismiss={() => setBulkNoticeDismissed(true)}
+            >
+              <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">
+                Selected printing and service items have lower rates at qualifying quantities. Look for the Bulk deals marker on each relevant hub and service.
+              </p>
             </NoticePill>
           </ScrollBounce>
         )}

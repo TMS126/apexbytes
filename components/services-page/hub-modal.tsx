@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef, type TouchEvent } from "react"
 import Link from "next/link"
 import { AnimatePresence, motion } from "framer-motion"
-import { Info, ArrowSquareOut } from "@phosphor-icons/react"
+import { Info, ArrowSquareOut, CaretDown } from "@phosphor-icons/react"
 import { X as XIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
@@ -52,7 +52,6 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
 
   const hubDisclaimer = HUB_DISCLAIMERS[hubId]
   const activeSection = openSectionIdx !== null ? hub.sections[openSectionIdx] : null
-  const activeSectionDesc = activeSection?.desc
 
   const handleBodyScroll = () => {
     if (!bodyRef.current) return
@@ -141,53 +140,32 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             </div>
           </div>
 
-          {/* ── Section tabs, dot-separated ── */}
-          <div
-            role="tablist"
-            aria-label="Service categories"
-            className="flex flex-wrap justify-center items-center gap-x-3 gap-y-3 px-5 md:px-8 pb-4 border-b border-zinc-100 dark:border-zinc-800"
-          >
+          {/* ── Service sections as a compact accordion ── */}
+          <div aria-label="Service categories" className="space-y-1 border-b border-zinc-100 px-5 pb-3 dark:border-zinc-800 md:px-8">
             {hub.sections.map((section, sIdx) => {
               const isOpen = openSectionIdx === sIdx
               const hasBulk = sectionHasBulk(hubId, section.title, section.items)
 
               return (
-                <div key={sIdx} className="flex items-center gap-3">
-                  {sIdx > 0 && (
-                    <span className="text-zinc-300 dark:text-zinc-700 select-none" aria-hidden="true">
-                      •
-                    </span>
-                  )}
+                <div key={sIdx} className="overflow-hidden rounded-[12px] border border-border/60 bg-card/25">
                   <button
-                    role="tab"
-                    aria-selected={isOpen}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`hub-section-${sIdx}`}
                     onClick={() => setOpenSectionIdx(isOpen ? null : sIdx)}
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/50"
                   >
-                    <span
-                      className="relative pb-1.5 text-[1.05rem] font-medium tracking-tight whitespace-nowrap transition-colors duration-200 border-b-2 -mb-[17px]"
-                      style={{ borderColor: isOpen ? accent : "transparent", color: isOpen ? accent : (isDark ? "#a1a1aa" : "#71717a") }}
-                    >
+                    <span className="text-[0.98rem] font-semibold tracking-tight" style={{ color: isOpen ? accent : undefined }}>
                       {section.title}
-
-                      {hasBulk && (
-                        <span aria-label="Bulk pricing available" className="ml-1.5 text-[0.6rem] font-medium uppercase tracking-wide opacity-60">
-                          · Bulk
-                        </span>
-                      )}
+                      {hasBulk && <span className="ml-2 rounded-full border border-border/70 px-2 py-0.5 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-muted-foreground">Bulk deals</span>}
                     </span>
+                    <CaretDown size={16} weight="bold" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                   </button>
+                  {isOpen && <div id={`hub-section-${sIdx}`} className="border-t border-border/60 px-4 pb-3 pt-2 text-left text-[0.86rem] leading-relaxed text-muted-foreground">{section.desc}</div>}
                 </div>
               )
             })}
           </div>
-
-          {activeSectionDesc && (
-            <div key={openSectionIdx} className="px-5 md:px-8 py-4 border-b border-zinc-100 dark:border-zinc-800 animate-in fade-in duration-200">
-              <p className="text-[0.9rem] leading-relaxed text-zinc-600 dark:text-zinc-300">
-                {activeSectionDesc} — {activeSection.title}
-              </p>
-            </div>
-          )}
         </div>
 
         <div
