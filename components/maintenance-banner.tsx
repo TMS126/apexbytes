@@ -54,7 +54,7 @@ export function MaintenanceBanner() {
       // when deciding nav icon contrast.
       data-maintenance-banner="true"
       className="fixed inset-x-0 top-0 z-[10000] flex items-center justify-center gap-3 px-4 py-2.5 text-sm md:text-[0.92rem] font-medium shadow-md animate-in fade-in slide-in-from-top-2 duration-500"
-      style={{ color: "var(--maintenance-text)", background: "linear-gradient(90deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 100%)" }}
+      style={{ color: "var(--maintenance-text)", background: "linear-gradient(180deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 100%)" }}
     >
       <Wrench size={16} weight="fill" className="shrink-0 hidden sm:block opacity-90" aria-hidden="true" />
       <p className="flex-1 min-w-0 text-center leading-snug">

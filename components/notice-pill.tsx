@@ -37,6 +37,7 @@ export function NoticePill({
   children,
   onDismiss,
   announcement = false,
+  dot = false,
   className,
 }: {
   variant: NoticeVariant
@@ -47,6 +48,7 @@ export function NoticePill({
   onDismiss?: () => void
   isDark?: boolean
   announcement?: boolean
+  dot?: boolean
   className?: string
 }) {
   const [open, setOpen] = useState(false)
@@ -69,9 +71,10 @@ export function NoticePill({
   return (
     <div className={cn("w-full flex justify-center", className)}>
       <div className={cn(
-        "abh-shadow-badge inline-flex items-center gap-2 border border-border bg-[var(--notice-surface)]",
+        "relative abh-shadow-badge inline-flex items-center gap-2 border border-border bg-[var(--notice-surface)]",
         announcement ? "rounded-[14px] p-1.5" : "rounded-full py-1.5 pl-2.5 pr-1.5",
       )}>
+        {dot && <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-[var(--brand-orange)] ring-2 ring-background" aria-hidden="true" />}
         <button
           type="button"
           onClick={() => { setUnread(false); setOpen(true) }}
