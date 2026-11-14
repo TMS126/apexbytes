@@ -185,7 +185,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
                   <h2 id={titleId} className="mb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                     {isMulti ? `Updates (${notices.length})` : first.header}
                   </h2>
-                  <div className="abh-divider !my-0" />
+                  <div className="abh-divider !mx-0 !my-0" />
                   <button
                     type="button"
                     onClick={() => setModalOpen(false)}

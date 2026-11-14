@@ -94,7 +94,7 @@ export function NoticeModal({
               <X size={16} weight="bold" aria-hidden="true" />
             </button>
           </div>
-          <div className="abh-divider !my-0 mt-3" />
+          <div className="abh-divider !mx-0 !my-0 mt-3" />
         </div>
 
         {/* ── Body: the actual notice text, scrollable if it's long ── */}
