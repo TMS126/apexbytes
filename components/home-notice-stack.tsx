@@ -6,6 +6,7 @@ import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bell, X } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
+import { cn } from "@/lib/utils"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -73,9 +74,10 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
 // portal, the modal was clipped into whatever stacking context its
 // parent landed in and could render behind later page content (e.g.
 // the hub cards below it). Portaling sidesteps that entirely.
-export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
+export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[]; className?: string }) {
   const [dismissed, setDismissed] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [unread, setUnread] = useState(true)
   const titleId = useId()
 
   // Hydration-safe "are we in the browser yet" check — matches the
@@ -112,14 +114,17 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
 
   if (dismissed || notices.length === 0) return null
 
-  const handlePillClick = () => setModalOpen(true)
+  const handlePillClick = () => {
+    setUnread(false)
+    setModalOpen(true)
+  }
 
   const collapsedColor = isMulti ? TOKEN.orangeText : VARIANT_TEXT[first.variant]
   const collapsedLabel = isMulti ? `${notices.length} Updates` : first.header
 
   return (
     <>
-      <motion.div layout className="w-full flex justify-center" transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
+      <motion.div layout className={cn("w-full flex justify-center", className)} transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -136,7 +141,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             className="relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
           >
             <Bell size={22} weight="fill" style={{ color: collapsedColor }} aria-hidden="true" />
-            <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full bg-red-500 ring-2 ring-card" aria-hidden="true" />
+            {unread && <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full bg-red-500 ring-2 ring-card" aria-hidden="true" />}
             <span className="sr-only">{collapsedLabel}</span>
           </button>
 

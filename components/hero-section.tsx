@@ -73,7 +73,7 @@ export function HeroSection() {
               Tech, Design &amp; E-Service are closed today for {status.holidayName} — Print &amp; Docu is open as usual
             </span>
           )}
-          <HomeNoticeStack notices={HOME_NOTICES} />
+          <HomeNoticeStack notices={HOME_NOTICES} className="-translate-y-3 mb-8" />
           <p className="mb-4 font-heading text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
           <h1 className="abh-home-title font-extrabold text-foreground">
             <span className="block">Design. Print. Upgrade.</span>
