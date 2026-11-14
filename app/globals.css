@@ -78,22 +78,24 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-underline-button:focus-visible::after,
 .abh-underline-button[aria-current="page"]::after { right: 0; }
 
-/* Reference search treatment: compact white field, crisp dark outline,
-   black search glyph, and a quiet white results panel. */
+/* Main search treatment: one theme-aware outer field; the native input stays
+   visually unboxed so dark mode never produces a light inner rectangle. */
 .abh-reference-search {
   display: flex;
-  min-height: 42px;
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
   align-items: center;
-  gap: .7rem;
-  border: 1px solid #171717;
-  border-radius: 12px;
-  background: #fff;
-  color: #111;
-  padding: .55rem .75rem;
+  gap: .75rem;
+  border: 1px solid currentColor;
+  border-radius: 14px;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 0 .875rem;
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
-.abh-reference-search:focus-within { border-color: #111; box-shadow: 0 0 0 1px #111; }
+.abh-reference-search:focus-within { border-color: currentColor; box-shadow: 0 0 0 1px currentColor; }
 .abh-reference-search input,
 .abh-search-input {
   min-width: 0;
@@ -104,8 +106,8 @@ html[data-scroll-locked] body { overflow: hidden; }
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
-  color: #111;
-  font-size: 1.125rem;
+  color: var(--foreground);
+  font-size: 1.15rem;
   font-weight: 400;
   line-height: 1.5;
   outline: none !important;
@@ -116,8 +118,8 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-search-input:focus,
 .abh-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
 .abh-reference-search input::placeholder,
-.abh-search-input::placeholder { color: #111; opacity: .8; }
-.abh-reference-search svg { color: #111; }
+.abh-search-input::placeholder { color: var(--muted-foreground); opacity: 1; }
+.abh-reference-search svg { color: currentColor; }
 .abh-reference-search-results { margin-top: .5rem; overflow: hidden; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff; color: #111; box-shadow: 0 2px 5px rgba(0, 0, 0, .06); }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: #111; transition: background-color 140ms ease; }
 .abh-reference-search-row:hover, .abh-reference-search-row:focus-visible { background: #f6f6f6; }
