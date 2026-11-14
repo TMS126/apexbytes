@@ -8,6 +8,12 @@ export const BULK_TIERS: Record<string, { min: number; rate: number }[]> = {
   "print-Copying-Colour":               [{ min: 10, rate: 4 }, { min: 50,  rate: 3 }],
   "print-Printing-Black & White":       [{ min: 10, rate: 4 }, { min: 100, rate: 3 }],
   "print-Printing-Colour":              [{ min: 10, rate: 7 }, { min: 50,  rate: 5 }],
+  // Current PrintHub catalog names. Keep the legacy keys above so saved
+  // quotes and older links continue to resolve their bulk tiers.
+  "print-Copying-B&W Page Copying":     [{ min: 10, rate: 2 }, { min: 100, rate: 1 }],
+  "print-Copying-Colour Page Copying":  [{ min: 10, rate: 4 }, { min: 50,  rate: 3 }],
+  "print-Printing-B&W Page Printing":  [{ min: 10, rate: 4 }, { min: 100, rate: 3 }],
+  "print-Printing-Colour Page Printing": [{ min: 10, rate: 7 }, { min: 50, rate: 5 }],
   "doc-Typing + Printing-Black & White":[{ min: 10, rate: 10 }],
   "doc-Typing + Printing-Colour":       [{ min: 10, rate: 11 }],
 }
