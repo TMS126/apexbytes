@@ -4,9 +4,10 @@
 import { useEffect, useId, useState, useSyncExternalStore } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
-import { Bell, X } from "@phosphor-icons/react"
+import { X } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
+import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -119,7 +120,6 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
     setModalOpen(true)
   }
 
-  const collapsedColor = isMulti ? TOKEN.orangeText : VARIANT_TEXT[first.variant]
   const collapsedLabel = isMulti ? `${notices.length} Updates` : first.header
 
   return (
@@ -140,8 +140,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
             aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
             className="relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
           >
-            <Bell size={22} weight="fill" style={{ color: collapsedColor }} aria-hidden="true" />
-            {unread && <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full bg-red-500 ring-2 ring-card" aria-hidden="true" />}
+            <AnnouncementIconChip unread={unread} />
             <span className="sr-only">{collapsedLabel}</span>
           </button>
 

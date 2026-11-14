@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { TOKEN } from "@/lib/brand"
+import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -35,6 +36,8 @@ export function NoticePill({
   expandedLabel,
   children,
   onDismiss,
+  announcement = false,
+  dot = false,
   className,
 }: {
   variant: NoticeVariant
@@ -44,9 +47,12 @@ export function NoticePill({
   children: React.ReactNode
   onDismiss?: () => void
   isDark?: boolean
+  announcement?: boolean
+  dot?: boolean
   className?: string
 }) {
   const [open, setOpen] = useState(false)
+  const [unread, setUnread] = useState(true)
   const close = () => setOpen(false)
 
   const iconColor = VARIANT_TEXT[variant]
@@ -64,19 +70,37 @@ export function NoticePill({
 
   return (
     <div className={cn("w-full flex justify-center", className)}>
-      <div className="abh-shadow-badge inline-flex items-center gap-2 pl-2.5 pr-1.5 py-1.5 rounded-full border border-border bg-[var(--notice-surface)]">
+      <div className={cn(
+        "relative abh-shadow-badge inline-flex items-center gap-2 border border-border bg-[var(--notice-surface)]",
+        announcement ? "rounded-[14px] p-1.5" : "rounded-full py-1.5 pl-2.5 pr-1.5",
+      )}>
+        {dot && <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-[var(--brand-orange)] ring-2 ring-background" aria-hidden="true" />}
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() => { setUnread(false); setOpen(true) }}
           aria-expanded={open}
           aria-haspopup="dialog"
           aria-label={`Open: ${collapsedLabel}`}
-          className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+          className={cn(
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400",
+            announcement
+              ? "relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted"
+              : "flex items-center gap-2 rounded-full",
+          )}
         >
-          <Icon size={17} weight="regular" style={{ color: iconColor }} aria-hidden="true" />
-          <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: headerColor }}>
-            {collapsedLabel}
-          </span>
+          {announcement ? (
+            <>
+              <AnnouncementIconChip unread={unread} />
+              <span className="sr-only">{collapsedLabel}</span>
+            </>
+          ) : (
+            <>
+              <Icon size={17} weight="regular" style={{ color: iconColor }} aria-hidden="true" />
+              <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: headerColor }}>
+                {collapsedLabel}
+              </span>
+            </>
+          )}
         </button>
 
         {onDismiss && (

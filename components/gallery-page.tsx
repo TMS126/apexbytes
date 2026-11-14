@@ -362,6 +362,7 @@ function GalleryPageInner() {
                 Icon={Info}
                 collapsedLabel="Notice"
                 expandedLabel="A Note on Our Photos"
+                announcement
                 isDark={isDark}
                 onDismiss={() => setPhotoNoticeDismissed(true)}
               >
