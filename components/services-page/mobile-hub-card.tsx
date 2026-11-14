@@ -84,7 +84,7 @@ export function MobileHubCard({
       </div>
 
       <h3 className="font-heading font-semibold text-foreground mb-2 break-words text-[1.2rem] leading-tight">{hub.title}</h3>
-      <p className="text-muted-foreground leading-7 text-[0.98rem] flex-1">{hub.desc}</p>
+      <p className="text-muted-foreground flex-1 text-[1.125rem] leading-7">{hub.desc}</p>
 
       <div className="flex items-center justify-between mt-3">
         {hubHasBulk ? <BulkPill /> : <span aria-hidden="true" />}

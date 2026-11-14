@@ -3,7 +3,6 @@
 
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
-import { HomeNoticeStack } from "@/components/home-notice-stack"
 import { CoreHubGrid } from "@/components/core-hub-grid"
 import { HowItWorks } from "@/components/how-it-works"
 import { StatsBar } from "@/components/stats-bar"
@@ -11,7 +10,6 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { StripSection, CtaBar } from "@/components/strip-section"
 import { Footer } from "@/components/footer"
 import { BIZ } from "@/lib/brand"
-import { HOME_NOTICES } from "@/lib/home-notices"
 
 export default function HomeRoute() {
   return (
@@ -20,9 +18,6 @@ export default function HomeRoute() {
       <div>
         <div className="animate-fade-up">
           <HeroSection />
-          <div className="flex w-full justify-center px-4 py-4 md:px-8">
-            <HomeNoticeStack notices={HOME_NOTICES} />
-          </div>
           <CoreHubGrid />
           <HowItWorks />
           <StatsBar />

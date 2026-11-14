@@ -4,7 +4,7 @@
 import { useEffect, useId, useState, useSyncExternalStore } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
-import { X } from "@phosphor-icons/react"
+import { Bell, X } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
@@ -125,7 +125,7 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
-          className="abh-shadow-badge inline-flex items-center gap-2 rounded-full border border-border bg-[var(--notice-surface)] py-1.5 pl-2.5 pr-1.5"
+          className="inline-flex items-center gap-2 rounded-[14px] border border-border bg-card/90 p-1.5 shadow-sm"
         >
           <button
             type="button"
@@ -133,12 +133,11 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             aria-haspopup="dialog"
             aria-expanded={modalOpen}
             aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
-            className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+            className="relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
           >
-            <first.Icon size={17} weight="regular" style={{ color: collapsedColor }} aria-hidden="true" />
-            <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: collapsedColor }}>
-              {collapsedLabel}
-            </span>
+            <Bell size={22} weight="fill" style={{ color: collapsedColor }} aria-hidden="true" />
+            <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full bg-red-500 ring-2 ring-card" aria-hidden="true" />
+            <span className="sr-only">{collapsedLabel}</span>
           </button>
 
           <button

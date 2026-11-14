@@ -44,7 +44,7 @@ export function HomeHubCard({ hubId }: { hubId: HubId }) {
 
   const description = (
     <div className="flex min-h-[176px] flex-col justify-center px-1 py-8 sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8">
-      <p className="mt-3 max-w-2xl text-sm leading-7 text-muted-foreground sm:mt-4 sm:text-base sm:leading-8 md:text-[1.05rem]">{BLURB[hubId]}</p>
+      <p className="mt-3 max-w-2xl text-[1.125rem] leading-7 text-muted-foreground sm:mt-4 sm:leading-8">{BLURB[hubId]}</p>
       <Link href={hubRouteFor(hubId)} className="group/cta relative mt-7 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
         Explore hub
         <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[var(--hub-primary)] transition-transform duration-250 ease-out group-hover/cta:scale-x-100 group-focus-visible/cta:scale-x-100" />
