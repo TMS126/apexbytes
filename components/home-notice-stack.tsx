@@ -181,8 +181,8 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
                 className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background px-5 py-6 sm:px-8 sm:py-8"
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}
               >
-                <div className="mb-6 border-b border-zinc-100 pb-5 dark:border-zinc-800">
-                  <h2 id={titleId} className="mb-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                <div className="mb-6 pb-5">
+                  <h2 id={titleId} className="mb-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                     {isMulti ? `Updates (${notices.length})` : first.header}
                   </h2>
                   <div className="abh-divider !my-0" />

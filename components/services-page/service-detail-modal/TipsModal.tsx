@@ -40,21 +40,24 @@ export function TipsModal({
         className="relative w-full max-w-sm bg-[var(--surface-modal)] shadow-2xl border border-border rounded-[14px] max-h-[80vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
         style={{ boxShadow: "0 30px 70px -18px rgba(0,0,0,0.5), 0 10px 24px -8px rgba(0,0,0,0.3)" }}
       >
-        <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}>
-              <Lightbulb size={16} weight="fill" aria-hidden="true" />
+        <div className="shrink-0 px-5 pb-4 pt-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}>
+                <Lightbulb size={16} weight="fill" aria-hidden="true" />
+              </div>
+              <h4 className="abh-card-heading text-base truncate">Helpful Tips</h4>
             </div>
-            <h4 className="abh-card-heading text-base truncate">Helpful Tips</h4>
+            <button
+              onClick={onClose}
+              aria-label="Close tips"
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 shrink-0"
+              style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
+            >
+              <X size={16} weight="bold" aria-hidden="true" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            aria-label="Close tips"
-            className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 shrink-0"
-            style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
-          >
-            <X size={16} weight="bold" aria-hidden="true" />
-          </button>
+          <div className="abh-divider !my-0 mt-3" />
         </div>
 
         <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4 min-h-0">
