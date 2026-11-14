@@ -329,7 +329,7 @@ export function HubExpandedPanel({
         </div>
 
         {/* ── One shared footer, spanning both columns ── */}
-        <div className="flex items-center justify-between gap-4 px-6 py-3.5 bg-zinc-50/80 dark:bg-zinc-800/30">
+        <div className="flex items-center justify-between gap-4 border-t border-border bg-background/60 px-6 py-3.5">
           <div className="flex items-start gap-2 min-w-0">
             <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
             <div className="min-w-0">
@@ -442,7 +442,7 @@ export function HubAccordionCard({
               })}
             </div>
 
-            <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-800/30">
+            <div className="flex items-center justify-between border-t border-border bg-background/60 px-4 py-3">
               <p className="text-xs text-muted-foreground">No hidden fees.</p>
               <PdfPillButton label={hub.title} onClick={onDownload} size="sm" color={hubColor} />
             </div>

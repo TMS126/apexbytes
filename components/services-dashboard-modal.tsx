@@ -34,11 +34,11 @@ export function ServicesDashboardModal({ isOpen, onClose }: ServicesDashboardMod
         onClick={onClose}
       />
 
-      <div className="relative z-10 bg-background w-full h-full sm:h-[85vh] sm:max-w-[1140px] sm:rounded-[28px] shadow-[0_32px_80px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-10 duration-300 ease-out">
+      <div className="relative z-10 bg-background w-full h-full sm:h-[85vh] sm:max-w-[1140px] sm:rounded-[14px] shadow-[0_32px_80px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-10 duration-300 ease-out">
         
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-50 w-[36px] h-[36px] rounded-full bg-black/20 text-white backdrop-blur-sm flex items-center justify-center hover:bg-black/40 active:scale-90 transition-all duration-200 shadow-md"
+          className="absolute top-4 right-4 z-50 flex size-9 items-center justify-center rounded-[14px] bg-card text-foreground shadow-md transition-colors duration-200 hover:bg-muted active:scale-95"
           aria-label="Close Dashboard"
         >
           <X className="w-4 h-4" weight="bold" />

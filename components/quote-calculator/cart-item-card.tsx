@@ -40,7 +40,7 @@ export function CartItemCard({
       ref={cardRef}
       role="listitem"
       className={cn(
-        "shrink-0 w-[250px] p-3.5 rounded-[16px] snap-start bg-white dark:bg-zinc-800 space-y-2 transition-all duration-300 ease-out motion-reduce:transition-none",
+        "shrink-0 w-[250px] snap-start rounded-[14px] bg-card p-3.5 space-y-2 transition-all duration-300 ease-out motion-reduce:transition-none",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{

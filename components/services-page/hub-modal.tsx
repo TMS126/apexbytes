@@ -107,7 +107,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.96, opacity: 0 }}
         transition={{ type: "tween", duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
-        className="relative z-10 w-full max-w-2xl bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[76vh] flex flex-col outline-none overflow-hidden"
+        className="relative z-10 w-full max-w-2xl rounded-[14px] bg-[var(--surface-modal)] shadow-2xl border border-border max-h-[76vh] flex flex-col outline-none overflow-hidden"
         style={{ boxShadow: "0 45px 100px -20px rgba(0,0,0,0.55), 0 20px 48px -14px rgba(0,0,0,0.4)" }}
       >
         <div
@@ -125,7 +125,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
             <div className="absolute right-4 top-4 flex items-center gap-2">
               <Link
                 href={`/gallery?hub=${hubId}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[0.8rem] font-medium text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 whitespace-nowrap"
+                className="flex items-center gap-1.5 rounded-[14px] px-3 py-1.5 text-[0.8rem] font-medium text-muted-foreground transition-colors duration-150 whitespace-nowrap hover:bg-muted hover:text-foreground"
               >
                 Gallery
                 <ArrowSquareOut size={11} weight="bold" aria-hidden="true" />
@@ -134,7 +134,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
               <button
                 onClick={onClose}
                 aria-label="Close"
-                className="w-9 h-9 rounded-full flex items-center justify-center bg-muted text-muted-foreground dark:text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150 shrink-0"
+                className="flex size-9 items-center justify-center rounded-[14px] bg-muted text-muted-foreground transition-colors duration-150 hover:text-foreground shrink-0"
               >
                 <XIcon size={18} weight="bold" aria-hidden="true" />
               </button>
@@ -198,7 +198,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           className="flex-1 overflow-y-auto overscroll-contain p-5 md:p-8"
         >
           {activeSection && (
-            <div key={`items-${openSectionIdx}`} className="abh-shadow-nested-group rounded-[14px] bg-zinc-50 dark:bg-zinc-900/50 p-3 md:p-4 grid grid-cols-1 gap-2 animate-in fade-in duration-200">
+            <div key={`items-${openSectionIdx}`} className="abh-shadow-nested-group rounded-[14px] bg-muted/45 p-3 md:p-4 grid grid-cols-1 gap-2 animate-in fade-in duration-200">
               {activeSection.items.map((item, iIdx) => {
                 const priceKey = `${activeSection.title}|${item.name}`
                 const isRevealed = revealedPrices.has(priceKey)
@@ -217,7 +217,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                         tips: item.tips ? [...item.tips] : undefined,
                       })
                     }
-                    className="flex items-center justify-between px-4 py-3.5 rounded-[10px] bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/70 transition-colors duration-150 active:scale-[0.99] w-full"
+                    className="flex w-full items-center justify-between rounded-[14px] bg-card px-4 py-3.5 transition-colors duration-150 hover:bg-background active:scale-[0.99]"
                   >
                     <span className="text-[1.02rem] font-medium text-zinc-700 dark:text-zinc-200 text-left flex items-center gap-2">
                       {itemHasBulk(hubId, activeSection.title, item.name) && (
@@ -332,7 +332,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           <p className="text-[0.72rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-muted-foreground mb-2.5">
             More Hubs
           </p>
-          <div className="abh-shadow-popover flex flex-wrap justify-center gap-2 p-3 rounded-[16px] bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm">
+          <div className="abh-shadow-popover flex flex-wrap justify-center gap-2 rounded-[14px] bg-card p-3">
             {otherHubs.map((id) => {
               const otherColors = HUB_COLORS[id as HubKey]
               const otherAccent = isDark ? otherColors.accentDark : otherColors.accentLight

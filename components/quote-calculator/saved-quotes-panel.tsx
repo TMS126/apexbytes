@@ -42,13 +42,13 @@ export function SavedQuotesPanel({
             {savedQuotes.map(q => {
               const t = quoteTotals(q.items)
               return (
-                <div key={q.id} className={cn("flex items-center justify-between gap-2 p-2.5 rounded-[10px]", GLASS.item)}>
+                <div key={q.id} className={cn("flex items-center justify-between gap-2 rounded-[14px] border border-border/60 p-2.5", GLASS.item)}>
                   <div className="min-w-0">
                     <p className="text-xs font-medium text-zinc-700 dark:text-zinc-300 truncate">{q.name}</p>
                     <p className="text-[0.62rem] font-medium text-muted-foreground">{t.count} item{t.count === 1 ? "" : "s"} · R{t.total}</p>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
-                    <button onClick={() => onLoad(q)} className="abh-press px-2.5 py-1 rounded-[8px] text-[0.65rem] font-medium" style={{ backgroundColor: fabColor, color: fabTextColor }}>Load</button>
+                    <button onClick={() => onLoad(q)} className="abh-press rounded-[14px] px-2.5 py-1 text-[0.65rem] font-medium" style={{ backgroundColor: fabColor, color: fabTextColor }}>Load</button>
                     <button onClick={() => onDelete(q.id)} aria-label={`Delete saved quote ${q.name}`} className="abh-press w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"><Trash size={12} weight="bold" aria-hidden="true" /></button>
                   </div>
                 </div>

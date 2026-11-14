@@ -89,7 +89,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
       aria-label="Terms & Service Policies"
       className="fixed inset-0 z-[99999] flex items-center justify-center bg-white dark:bg-zinc-950 md:bg-black/55 md:dark:bg-black/70 md:p-8 md:backdrop-blur-sm animate-in fade-in duration-200"
     >
-      <div className="relative flex h-full w-full flex-col overflow-hidden bg-background md:h-[85vh] md:max-w-4xl md:shadow-2xl animate-in md:zoom-in-95 duration-300">
+      <div className="relative flex h-full w-full flex-col overflow-hidden bg-background md:h-[85vh] md:max-w-4xl md:rounded-[14px] md:shadow-2xl animate-in md:zoom-in-95 duration-300">
 
         <div className="relative z-10 flex shrink-0 items-start justify-between gap-4 border-b border-border px-6 pb-5 pt-8 md:px-10">
           <div>
@@ -102,7 +102,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
             ref={closeBtnRef}
             onClick={handleClose}
             aria-label="Close Terms & Service Policies"
-            className="w-8 h-8 shrink-0 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95"
+            className="flex size-8 shrink-0 items-center justify-center rounded-[14px] bg-muted text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground active:scale-95"
           >
             <X size={14} weight="bold" aria-hidden="true" />
           </button>
@@ -110,7 +110,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
 
         <div className="flex-1 overflow-y-auto overscroll-contain px-6 md:px-10 py-6 md:py-10">
           <div className="mx-auto max-w-3xl space-y-9">
-            <div className="border-y border-border bg-card/35 px-5 py-5">
+            <div className="rounded-[14px] border border-border bg-card px-5 py-5">
               <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-foreground">
                 <Info weight="fill" className="w-4 h-4" aria-hidden="true" /> Operational Rule
               </h3>
@@ -144,7 +144,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
         <div className="flex shrink-0 justify-center border-t border-border bg-background px-6 py-6 md:px-10">
           <button
             onClick={handleClose}
-            className="rounded-full bg-[var(--brand-blue-dark)] px-10 py-3 text-base font-semibold text-[var(--background)] shadow-sm transition-transform active:scale-[0.98]"
+            className="rounded-[14px] bg-[var(--brand-blue-dark)] px-10 py-3 text-base font-semibold text-[var(--background)] shadow-sm transition-transform active:scale-[0.98]"
           >
             I Agree
           </button>

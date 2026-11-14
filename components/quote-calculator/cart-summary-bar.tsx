@@ -42,7 +42,7 @@ interface CartSummaryBarProps {
 }
 
 export function CartSummaryBar({
-  isDark, fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
+  fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
   showSaveForm, setShowSaveForm, saveNameDraft, setSaveNameDraft, confirmSaveQuote, clearCart,
   undoStack, undoRemove, highlightId, chipRefs, getAccent,
   removeItem, handleClickStep, handlePressStart, handlePressEnd,
@@ -50,8 +50,8 @@ export function CartSummaryBar({
   return (
     <>
       {undoStack && (
-        <div className="sticky top-0 z-20 p-3 border-b border-zinc-100 dark:border-white/10 bg-white/95 dark:bg-zinc-900/95 backdrop-blur">
-          <div className="flex items-center justify-between gap-3 p-2.5 rounded-[12px] bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-lg animate-in fade-in slide-in-from-top-1 duration-200">
+        <div className="sticky top-0 z-20 border-b border-border bg-card p-3">
+          <div className="flex items-center justify-between gap-3 rounded-[14px] bg-foreground p-2.5 text-background shadow-lg animate-in fade-in slide-in-from-top-1 duration-200">
             <span className="text-[0.7rem] font-medium truncate">
               {getDisplayName(undoStack.item.sectionTitle, undoStack.item.name)} removed
             </span>
@@ -67,12 +67,9 @@ export function CartSummaryBar({
 
       {cart.length > 0 && (
         <div
-          className="sticky top-0 z-10 border-b border-zinc-100 dark:border-white/10 shadow-[0_4px_10px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_10px_-6px_rgba(0,0,0,0.4)]"
+          className="sticky top-0 z-10 border-b border-border bg-card shadow-[0_4px_10px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_10px_-6px_rgba(0,0,0,0.4)]"
           style={{
-            background: isDark
-              ? `linear-gradient(180deg, color-mix(in srgb, ${fabColor} 8%, transparent) 0%, rgba(24,24,27,0.97) 70%)`
-              : `linear-gradient(180deg, color-mix(in srgb, ${fabColor} 12%, transparent) 0%, rgba(255,255,255,0.97) 70%)`,
-            backdropFilter: "blur(6px)",
+            background: `color-mix(in srgb, ${fabColor} 6%, var(--card))`,
           }}
         >
           <div className="p-4 space-y-2.5">

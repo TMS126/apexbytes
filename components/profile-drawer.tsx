@@ -128,7 +128,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
           aria-label={`${BIZ.founder} — founder profile`}
           onClick={(e) => e.stopPropagation()}
           className={cn(
-            "relative w-full max-w-md bg-[var(--surface-modal)] rounded-t-[20px] shadow-2xl overflow-hidden flex flex-col max-h-[88vh] transition-transform duration-300 ease-out",
+            "relative w-full max-w-md bg-[var(--surface-modal)] rounded-t-[14px] shadow-2xl overflow-hidden flex flex-col max-h-[88vh] transition-transform duration-300 ease-out",
             open ? "translate-y-0 pointer-events-auto" : "translate-y-full pointer-events-none"
           )}
         >
@@ -164,7 +164,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                 ref={closeRef}
                 onClick={onClose}
                 aria-label="Close profile"
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/20 hover:bg-black/35 backdrop-blur-sm flex items-center justify-center text-white transition-colors z-10"
+                className="absolute top-4 right-4 flex size-8 items-center justify-center rounded-[14px] bg-black/20 text-white transition-colors hover:bg-black/35 z-10"
               >
                 <X size={15} weight="bold" aria-hidden="true" />
               </button>

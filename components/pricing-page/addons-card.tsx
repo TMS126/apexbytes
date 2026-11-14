@@ -6,7 +6,7 @@ import { ADD_ONS_EFFECTIVE_DATE, ADD_ONS_FOOTER, FREE_ADD_ONS, PAID_ADD_ONS } fr
 
 export function AddOnsCard() {
   return (
-    <section className="rounded-[14px] bg-white px-5 py-6 abh-shadow-card dark:bg-zinc-900 md:px-7 md:py-7" aria-labelledby="pricing-add-ons-title">
+    <section className="rounded-[14px] border border-border bg-card px-5 py-6 shadow-sm md:px-7 md:py-7" aria-labelledby="pricing-add-ons-title">
       <div className="mb-5 flex items-start gap-3">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: `${TOKEN.orangeText}1a` }} aria-hidden="true">
           <Sparkle size={18} weight="bold" style={{ color: TOKEN.orangeText }} aria-hidden="true" />
@@ -18,7 +18,7 @@ export function AddOnsCard() {
       </div>
       <ul className="mb-6 grid gap-3 sm:grid-cols-2">
         {PAID_ADD_ONS.map((addOn) => (
-          <li key={addOn.name} className="flex min-h-[88px] items-start justify-between gap-3 rounded-[10px] bg-zinc-50 px-3.5 py-3 dark:bg-zinc-950">
+          <li key={addOn.name} className="flex min-h-[88px] items-start justify-between gap-3 rounded-[14px] border border-border/60 bg-background px-3.5 py-3">
             <span className="min-w-0">
               <span className="block text-[0.86rem] font-medium text-zinc-800 dark:text-zinc-100">{addOn.name}</span>
               <span className="block text-[0.76rem] font-medium leading-snug text-muted-foreground">{addOn.desc}</span>
