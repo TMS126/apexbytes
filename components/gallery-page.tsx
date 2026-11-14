@@ -373,7 +373,7 @@ function GalleryPageInner() {
 
         <ScrollBounce delay={0.1}>
           <div className="max-w-md mx-auto mb-8">
-            <div className="abh-line-focus flex min-h-12 items-center gap-3 rounded-[14px] border border-zinc-100 bg-white px-4 py-2.5 transition-all duration-200 dark:border-zinc-800 dark:bg-zinc-900">
+            <div data-hover-border="" className="abh-reference-search">
               <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
               <input
                 type="text"
@@ -381,7 +381,7 @@ function GalleryPageInner() {
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search..."
                 aria-label="Search projects"
-                className="min-w-0 flex-1 bg-transparent py-0 text-base font-medium leading-6 text-zinc-800 outline-none placeholder:text-muted-foreground dark:text-zinc-200"
+                className="abh-search-input text-base font-medium leading-6"
               />
               {searchQuery && (
                 <button

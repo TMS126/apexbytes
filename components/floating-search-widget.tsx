@@ -304,6 +304,7 @@ onClick={isOpen ? handleClose : handleOpen}
             className="w-full max-w-[300px] pointer-events-auto"
           >
             <div
+              data-hover-border=""
               className="abh-reference-search"
             >
               <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
@@ -322,7 +323,7 @@ onClick={isOpen ? handleClose : handleOpen}
                    the app can reintroduce the escaping ring on top of it
                    (the global input:focus override in globals.css also
                    covers this, this is belt-and-braces on the element itself). */
-                className="pr-8"
+                className="abh-search-input"
               />
               {query && (
                 <button
