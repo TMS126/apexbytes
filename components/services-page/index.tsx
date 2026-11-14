@@ -203,6 +203,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
               Icon={Megaphone}
               collapsedLabel="Notice"
               expandedLabel="Notice to Clients"
+              announcement
               onDismiss={() => setClientNoticeDismissed(true)}
             >
               <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">{NOTICE.intro}</p>

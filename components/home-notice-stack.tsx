@@ -6,6 +6,8 @@ import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
+import { cn } from "@/lib/utils"
+import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -73,9 +75,10 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
 // portal, the modal was clipped into whatever stacking context its
 // parent landed in and could render behind later page content (e.g.
 // the hub cards below it). Portaling sidesteps that entirely.
-export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
+export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[]; className?: string }) {
   const [dismissed, setDismissed] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [unread, setUnread] = useState(true)
   const titleId = useId()
 
   // Hydration-safe "are we in the browser yet" check — matches the
@@ -112,20 +115,22 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
 
   if (dismissed || notices.length === 0) return null
 
-  const handlePillClick = () => setModalOpen(true)
+  const handlePillClick = () => {
+    setUnread(false)
+    setModalOpen(true)
+  }
 
-  const collapsedColor = isMulti ? TOKEN.orangeText : VARIANT_TEXT[first.variant]
   const collapsedLabel = isMulti ? `${notices.length} Updates` : first.header
 
   return (
     <>
-      <motion.div layout className="w-full flex justify-center" transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
+      <motion.div layout className={cn("w-full flex justify-center", className)} transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
-          className="abh-shadow-badge inline-flex items-center gap-2 rounded-full border border-border bg-[var(--notice-surface)] py-1.5 pl-2.5 pr-1.5"
+          className="inline-flex items-center gap-2 rounded-[14px] border border-border bg-card/90 p-1.5 shadow-sm"
         >
           <button
             type="button"
@@ -133,12 +138,10 @@ export function HomeNoticeStack({ notices }: { notices: HomeNotice[] }) {
             aria-haspopup="dialog"
             aria-expanded={modalOpen}
             aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
-            className="flex items-center gap-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
+            className="relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
           >
-            <first.Icon size={17} weight="regular" style={{ color: collapsedColor }} aria-hidden="true" />
-            <span className="text-[0.95rem] font-semibold whitespace-nowrap" style={{ color: collapsedColor }}>
-              {collapsedLabel}
-            </span>
+            <AnnouncementIconChip unread={unread} />
+            <span className="sr-only">{collapsedLabel}</span>
           </button>
 
           <button
