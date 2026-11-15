@@ -27,7 +27,36 @@ export function isScanItem(name: string) {
 export const SECTION_LABEL: Record<string, string> = {
   "Printing": "Print", "Copying": "Copy", "Typing + Printing": "Typing",
 }
+
+const SERVICE_LABELS: Record<string, string> = {
+  "B&W Page Printing": "Black & White Printing",
+  "Colour Page Printing": "Colour Printing",
+  "B&W Page Copying": "Black & White Copying",
+  "Colour Page Copying": "Colour Copying",
+  "4 × 6 Glossy Photo Print": "4×6 Photo Prints",
+  "A4 Glossy Photo Print": "A4 Photo Prints",
+  "B&W Typing & Printing": "Black & White Typing",
+  "Colour Typing & Printing": "Colour Typing",
+  "CV Creation": "CV Writing",
+  "CV Refresh & Editing": "CV Editing",
+  "A5 Document Laminating": "A5 Lamination",
+  "A4 Document Laminating": "A4 Lamination",
+  "A3 Document Laminating": "A3 Lamination",
+  "Premium Logo & Brand Identity": "Premium Logo & Brand Kit",
+  "Single-Sided Business Card Design": "Single-Sided Business Cards",
+  "Double-Sided Business Card Design": "Double-Sided Business Cards",
+  "Social Media Post + Story Package": "Social Post + Story Set",
+  "In-Progress Design Revision": "Design Revision — In Progress",
+  "Post-Delivery Design Revision": "Design Revision — After Delivery",
+  "Computer Diagnostics & Troubleshooting": "Computer Diagnosis",
+  "PC Tune-Up & Cleanup": "PC Tune-Up",
+  "Windows Installation (No Activation)": "Windows Install — No Activation",
+  "Windows Installation & Activation": "Windows Install + Activation",
+  "Microsoft 365 Installation & Setup": "Microsoft 365 Setup",
+}
+
 export function getDisplayName(sectionTitle: string, name: string): string {
+  if (SERVICE_LABELS[name]) return SERVICE_LABELS[name]
   if ((name === "Black & White" || name === "Colour") && SECTION_LABEL[sectionTitle])
     return `${name} ${SECTION_LABEL[sectionTitle]}`
   return name

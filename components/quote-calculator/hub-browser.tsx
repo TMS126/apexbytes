@@ -62,7 +62,7 @@ function CountBadge({
   return (
     <span
       className={cn(
-        "abh-badge-circle absolute font-medium shadow-md border-2 border-white dark:border-zinc-900 leading-none",
+        "abh-badge-circle absolute font-medium border border-white dark:border-zinc-900 leading-none",
         big ? "-top-2 -right-2 w-[26px] h-[26px] text-[0.72rem]" : "-top-1.5 -right-1.5 w-[22px] h-[22px] text-[0.66rem]"
       )}
       style={{ backgroundColor: solidAccent, color: onSolid }}
@@ -103,15 +103,13 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0 abh-press",
-                  "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                  "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0",
+                  "transition-colors duration-150 ease-out",
                   isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item
                 )}
                 style={{
                   ["--hub-accent" as unknown as string]: accent,
-boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
-                    transform: isSelected ? "translateY(-2px) scale(1.03)" : undefined,
                 }}
               >
                 {hubSub && (
@@ -157,16 +155,14 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                   aria-expanded={isSelected}
                   aria-controls={`hub-panel-${hubId}`}
                   className={cn(
-                    "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left abh-press",
-                    "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                    "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left",
+                    "transition-colors duration-150 ease-out",
                     isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                     GLASS.item
                   )}
                   style={{
                     ["--hub-accent" as unknown as string]: accent,
-                    boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
-                    transform: isSelected ? "translateY(-2px) scale(1.03)" : undefined,
-                  }}
+                    }}
                 >
                   {hubSub && (
                     <CountBadge
@@ -232,7 +228,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
         <div
           id={`hub-panel-${openHub}`}
           className={cn(
-            "rounded-[14px] overflow-hidden animate-in fade-in slide-in-from-top-1 duration-200 ease-out motion-reduce:animate-none",
+            "rounded-[14px] overflow-hidden animate-in fade-in duration-200 ease-out motion-reduce:animate-none",
             GLASS.section
           )}
         >
@@ -245,7 +241,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
             <button
               onClick={() => setOpenHub(null)}
               aria-label="Collapse hub"
-              className="abh-press w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150"
+              className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150"
             >
               <CaretDown size={13} className="rotate-180" aria-hidden="true" />
             </button>
@@ -361,7 +357,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                               <div
                                 className={cn(
                                   "group relative ml-6 flex items-center gap-2 rounded-[12px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
-                                  itemQty > 0 && "bg-[color-mix(in_srgb,var(--hub-accent)_9%,transparent)] shadow-[inset_3px_0_0_var(--hub-accent)]"
+                                  itemQty > 0 && "border-l-2 border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_9%,transparent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
@@ -400,7 +396,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                                       ["--hub-accent" as unknown as string]: solidAccent,
                                       ["--hub-on-accent" as unknown as string]: onSolid,
                                     }}
-                                    className="abh-press abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
+                                    className="abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
                                     aria-label={`Add ${item.name}`}
                                   >
                                     <Plus size={13} weight="bold" aria-hidden="true" />
