@@ -105,6 +105,7 @@ export function HubBrowser({
                 className={cn(
                   "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0 abh-press",
                   "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                  isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item
                 )}
                 style={{
@@ -158,6 +159,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                   className={cn(
                     "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left abh-press",
                     "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                    isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                     GLASS.item
                   )}
                   style={{
@@ -236,7 +238,6 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
         >
           <div className="flex items-center justify-between px-3 py-2.5 border-b border-zinc-100 dark:border-white/10">
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: "var(--brand-orange)" }} aria-hidden="true" />
               <span className="text-[0.95rem] font-medium" style={{ color: getAccent(openHub) }}>
                 {activeHub.title}
               </span>
@@ -279,10 +280,12 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                       aria-expanded={isSectionOpen}
                       aria-controls={sectionPanelId}
                       style={{ ["--hub-accent" as unknown as string]: accent }}
-                      className="group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5"
+                      className={cn(
+                        "group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5",
+                        isSectionOpen && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
+                      )}
                     >
                       <span className="flex items-center gap-2">
-                        <span className={cn("h-2 w-2 shrink-0 rounded-full transition-all duration-200", isSectionOpen ? "scale-125 shadow-[0_0_0_4px_color-mix(in_srgb,var(--hub-accent)_18%,transparent)]" : "opacity-45")} style={{ backgroundColor: accent }} aria-hidden="true" />
                         <span
                           className={cn(
                             "text-[0.78rem] font-medium uppercase tracking-[0.15em] transition-colors duration-200",
@@ -338,11 +341,6 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                       style={{ backgroundColor: "var(--border)" }}
                       aria-hidden="true"
                     />
-                    <span
-                      className="absolute left-[1.4rem] top-5 -translate-y-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
-                      style={{ backgroundColor: "var(--muted-foreground)" }}
-                      aria-hidden="true"
-                    />
                   </div>
 
                   <div
@@ -360,15 +358,10 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                           const itemQty = getItemQty(itemId)
                           return (
                             <div key={iIdx} className="relative">
-                              <span
-                                className="absolute left-[1.15rem] top-[22px] -translate-y-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
-                                style={{ backgroundColor: "var(--muted-foreground)" }}
-                                aria-hidden="true"
-                              />
-
                               <div
                                 className={cn(
-                                  "group relative ml-6 flex items-center gap-2 py-2 pl-3 pr-1 transition-colors duration-150"
+                                  "group relative ml-6 flex items-center gap-2 rounded-[12px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
+                                  itemQty > 0 && "bg-[color-mix(in_srgb,var(--hub-accent)_9%,transparent)] shadow-[inset_3px_0_0_var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
@@ -382,11 +375,14 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                                   </span>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                  <p className="break-words text-[0.9rem] font-medium text-zinc-700 dark:text-zinc-300">
+                                  <p className={cn(
+                                    "break-words text-[0.9rem] text-zinc-700 dark:text-zinc-300",
+                                    itemQty > 0 ? "font-semibold" : "font-medium"
+                                  )}>
                                     {getDisplayName(section.title, item.name)}
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
-                                  <p className="text-[0.78rem] font-medium text-muted-foreground">{item.price}</p>
+                                  <p className="text-[0.78rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
                                 </div>
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
