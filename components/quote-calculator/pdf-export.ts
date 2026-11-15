@@ -1,7 +1,7 @@
 // components/quote-calculator/pdf-export.ts
 import { BIZ } from "@/lib/brand"
 import { documentFilename, nextDocumentNumber } from "@/lib/document-naming"
-import { CartItem, getEffectiveRate, quoteTotals } from "./lib"
+import { BULK_TIERS, CartItem, getEffectiveRate, isScanItem, quoteTotals } from "./lib"
 import { pdfServiceName } from "./pdf-names"
 /* ============================================================
    QUOTE PDF — real downloadable file (jsPDF), A4.
@@ -22,12 +22,16 @@ const ROW_RULE: RGB = [229, 231, 235]
 const GREEN_BG: RGB = [240, 253, 244]
 const GREEN_LINE: RGB = [187, 247, 208]
 const GREEN_TEXT: RGB = [22, 101, 52]
+const BULK_FILL: RGB = [71, 85, 105]
+const BULK_TEXT: RGB = [248, 250, 252]
 
 // Page geometry (mm)
 const PAGE_W = 210
 const M = 14
 const R = PAGE_W - M
 const QTY_X = 121.3
+const BULK_X = 98.3
+const BULK_W = 18.5
 const RATE_X = 157.8
 const TOTAL_X = 192.7
 const TOTAL_BLOCK_X = 124.1
@@ -111,11 +115,14 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       const qty = item.qty || 1
       const effRate = getEffectiveRate(item.id, item.name, qty, item.unitPrice)
       const label = pdfServiceName(item)
+      const hasBulk = !!BULK_TIERS[item.id] || isScanItem(item.name)
       const qtyLabel = item.unit ? `${qty} ${item.unit}${qty > 1 ? "s" : ""}` : `x${qty}`
 
       doc.setFont("helvetica", "normal")
       doc.setFontSize(9.5)
-      const lines = doc.splitTextToSize(label, 82) as string[]
+      // Reserve a fixed marker lane so pills stay vertically aligned when
+      // consecutive rows both qualify for bulk pricing.
+      const lines = doc.splitTextToSize(label, hasBulk ? 76 : 82) as string[]
       const rowH = Math.max(11.1, 5.6 + lines.length * 4.2)
 
       if (y + rowH > CONTENT_BOTTOM) {
@@ -132,6 +139,16 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       doc.setTextColor(...SLATE_700)
       const firstBaseline = mid - ((lines.length - 1) * 4.2) / 2
       lines.forEach((ln, i) => doc.text(ln, M + 3.5, firstBaseline + i * 4.2))
+      if (hasBulk) {
+        doc.setFillColor(...BULK_FILL)
+        doc.roundedRect(BULK_X, mid - 2.65, BULK_W, 5.3, 1.1, 1.1, "F")
+        doc.setFont("helvetica", "bold")
+        doc.setFontSize(6.5)
+        doc.setTextColor(...BULK_TEXT)
+        doc.text("BULK", BULK_X + BULK_W / 2, mid + 1.65, { align: "center" })
+        doc.setFont("helvetica", "normal")
+        doc.setFontSize(9.5)
+      }
       doc.text(qtyLabel, QTY_X, mid, { align: "center" })
       doc.text(`R${effRate}`, RATE_X, mid, { align: "right" })
       doc.text(`R${effRate * qty}`, TOTAL_X, mid, { align: "right" })
