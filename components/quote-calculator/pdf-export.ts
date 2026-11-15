@@ -151,6 +151,7 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
         doc.text("BULK", pillX + BULK_W / 2, pillY + 3.35, { align: "center" })
         doc.setFont("helvetica", "normal")
         doc.setFontSize(9.5)
+        doc.setTextColor(...SLATE_700)
       }
       doc.text(qtyLabel, QTY_X, mid, { align: "center" })
       doc.text(`R${effRate}`, RATE_X, mid, { align: "right" })
