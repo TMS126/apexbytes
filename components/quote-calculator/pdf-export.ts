@@ -115,7 +115,9 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       const qty = item.qty || 1
       const effRate = getEffectiveRate(item.id, item.name, qty, item.unitPrice)
       const label = pdfServiceName(item)
-      const hasBulk = !!BULK_TIERS[item.id] || isScanItem(item.name)
+      // Use the same normalized service name that is printed in the PDF for
+      // name-based bulk rules, so renamed services behave consistently.
+      const hasBulk = !!BULK_TIERS[item.id] || isScanItem(label)
       const qtyLabel = item.unit ? `${qty} ${item.unit}${qty > 1 ? "s" : ""}` : `x${qty}`
 
       doc.setFont("helvetica", "normal")
