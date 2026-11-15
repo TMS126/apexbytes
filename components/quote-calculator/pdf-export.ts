@@ -30,8 +30,8 @@ const PAGE_W = 210
 const M = 14
 const R = PAGE_W - M
 const QTY_X = 121.3
-const BULK_X = 98.3
-const BULK_W = 18.5
+const BULK_W = 16.5
+const BULK_H = 4.8
 const RATE_X = 157.8
 const TOTAL_X = 192.7
 const TOTAL_BLOCK_X = 124.1
@@ -120,8 +120,8 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
 
       doc.setFont("helvetica", "normal")
       doc.setFontSize(9.5)
-      // Reserve a fixed marker lane so pills stay vertically aligned when
-      // consecutive rows both qualify for bulk pricing.
+      // Keep a little breathing room before the quantity column. The marker
+      // is drawn inline after the item name rather than in a fixed lane.
       const lines = doc.splitTextToSize(label, hasBulk ? 76 : 82) as string[]
       const rowH = Math.max(11.1, 5.6 + lines.length * 4.2)
 
@@ -140,12 +140,15 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       const firstBaseline = mid - ((lines.length - 1) * 4.2) / 2
       lines.forEach((ln, i) => doc.text(ln, M + 3.5, firstBaseline + i * 4.2))
       if (hasBulk) {
+        const itemTextWidth = doc.getTextWidth(lines[0])
+        const pillX = M + 3.5 + itemTextWidth + 2.2
+        const pillY = firstBaseline - BULK_H + 1.05
         doc.setFillColor(...BULK_FILL)
-        doc.roundedRect(BULK_X, mid - 2.65, BULK_W, 5.3, 1.1, 1.1, "F")
+        doc.roundedRect(pillX, pillY, BULK_W, BULK_H, 1.15, 1.15, "F")
         doc.setFont("helvetica", "bold")
-        doc.setFontSize(6.5)
+        doc.setFontSize(6.1)
         doc.setTextColor(...BULK_TEXT)
-        doc.text("BULK", BULK_X + BULK_W / 2, mid + 1.65, { align: "center" })
+        doc.text("BULK", pillX + BULK_W / 2, pillY + 3.35, { align: "center" })
         doc.setFont("helvetica", "normal")
         doc.setFontSize(9.5)
       }
