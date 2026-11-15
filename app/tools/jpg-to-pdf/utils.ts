@@ -20,10 +20,10 @@ function slugify(name: string) {
 export function buildFileName(sourceLabel: string, usedNames: Set<string>) {
   const { date, time } = stamp()
   const slug = slugify(sourceLabel)
-  let name = `abh_pdf-${slug}-${date}${time}.pdf`
+  let name = `PDF-ABH-${date}${time}-${slug}.pdf`
   let n = 2
   while (usedNames.has(name)) {
-    name = `abh_pdf-${slug}-${date}${time}-${n}.pdf`
+    name = `PDF-ABH-${date}${time}-${slug}-${n}.pdf`
     n++
   }
   usedNames.add(name)

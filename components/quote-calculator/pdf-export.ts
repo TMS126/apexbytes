@@ -1,5 +1,6 @@
 // components/quote-calculator/pdf-export.ts
 import { BIZ } from "@/lib/brand"
+import { documentFilename, nextDocumentNumber } from "@/lib/document-naming"
 import { CartItem, getEffectiveRate, quoteTotals } from "./lib"
 import { pdfServiceName } from "./pdf-names"
 /* ============================================================
@@ -31,23 +32,8 @@ const RATE_X = 157.8
 const TOTAL_X = 192.7
 const TOTAL_BLOCK_X = 124.1
 const CONTENT_BOTTOM = 266
-const SEQ_KEY = "apexbytes-quote-seq"
-
 function two(n: number) {
   return String(n).padStart(2, "0")
-}
-
-// INV-ABH-2026-001, then 002, 003... (counter is kept in this browser, resets each year)
-function nextQuoteNumber(now: Date): string {
-  const year = now.getFullYear()
-  let seq = 1
-  try {
-    const raw = localStorage.getItem(SEQ_KEY)
-    const parsed = raw ? (JSON.parse(raw) as { year?: number; seq?: number }) : null
-    if (parsed && parsed.year === year && typeof parsed.seq === "number") seq = parsed.seq + 1
-    localStorage.setItem(SEQ_KEY, JSON.stringify({ year, seq }))
-  } catch {}
-  return `INV-ABH-${year}-${String(seq).padStart(3, "0")}`
 }
 
 export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view" = "download"): Promise<void> {
@@ -58,7 +44,7 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
     const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" })
 
     const now = new Date()
-    const quoteNo = nextQuoteNumber(now)
+    const quoteNo = nextDocumentNumber("quote", now)
     const dateStr = `${two(now.getDate())}/${two(now.getMonth() + 1)}/${now.getFullYear()}`
     const t = quoteTotals(cart)
 
@@ -211,7 +197,7 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       window.open(url, "_blank", "noopener,noreferrer")
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
     } else {
-      doc.save(`${BIZ.name}-Quote-${quoteNo}.pdf`)
+      doc.save(documentFilename("quote", quoteNo))
     }
   } catch (err) {
     console.error("Quote PDF failed:", err)

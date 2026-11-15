@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { v2 as cloudinary } from "cloudinary"
 import { checkUploadRateLimit, getTrustedClientIdentifier } from "@/lib/upload-rate-limit"
 import { verifyTurnstileToken } from "@/lib/turnstile"
+import { safeDownloadName } from "@/lib/document-naming"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -190,6 +191,7 @@ export async function POST(request: NextRequest) {
             unique_filename: false,
             tags: ["pending-review", "customer-document"],
             context: {
+              original_filename: safeDownloadName(file.name, "customer-upload").slice(0, 120),
               original_extension: getExtension(file.name),
               retention: "manual-review-required",
             },
