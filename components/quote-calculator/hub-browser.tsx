@@ -73,6 +73,17 @@ function CountBadge({
   )
 }
 
+function HubBulkBadge() {
+  return (
+    <span
+      className="pointer-events-none absolute -top-2 -left-3 rounded-full bg-slate-600 px-1.5 py-0.5 text-[0.48rem] font-semibold leading-none tracking-[0.08em] text-slate-50 shadow-sm"
+      aria-label="Bulk pricing available"
+    >
+      BULK
+    </span>
+  )
+}
+
 export function HubBrowser({
   openHub, setOpenHub, openSections, toggleSection,
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem,
@@ -95,6 +106,7 @@ export function HubBrowser({
             const onSolid = HUB_ON_COLOR[hubId]
             const isSelected = openHub === hubId
             const hubSub = hubSubtotal(hubId)
+            const hubBulk = hubHasBulk(hubId)
 
             return (
               <button
@@ -120,14 +132,17 @@ export function HubBrowser({
                     label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   />
                 )}
-                <span
-                  className={cn(
-                    "transition-colors duration-150",
-                    isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                  )}
-                  style={isSelected ? { color: solidAccent } : undefined}
-                >
-                  <HubIcon id={hubId} size={36} color="currentColor" />
+                <span className="relative">
+                  <span
+                    className={cn(
+                      "transition-colors duration-150",
+                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                    )}
+                    style={isSelected ? { color: solidAccent } : undefined}
+                  >
+                    <HubIcon id={hubId} size={36} color="currentColor" />
+                  </span>
+                  {hubBulk && <HubBulkBadge />}
                 </span>
               </button>
             )
@@ -173,26 +188,19 @@ export function HubBrowser({
                       big
                     />
                   )}
-                  {hubBulk && (
-                    <span
-                      className="absolute top-1.5 left-1.5 flex items-center justify-center w-5 h-5 rounded-full"
-                      style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 15%, transparent)" }}
-                      aria-hidden="true"
-                    >
-                      <Tag size={10} weight="fill" style={{ color: "var(--brand-orange)" }} />
-                    </span>
-                  )}
-
                   {/* Single squircle chip — icon sits directly in the button,
                       no inner background circle, sized to nearly fill it. */}
-                  <span
-                    className={cn(
-                      "transition-colors duration-150",
-                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                    )}
-                    style={isSelected ? { color: solidAccent } : undefined}
-                  >
-                    <HubIcon id={hubId} size={48} color="currentColor" />
+                  <span className="relative">
+                    <span
+                      className={cn(
+                        "transition-colors duration-150",
+                        isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                      )}
+                      style={isSelected ? { color: solidAccent } : undefined}
+                    >
+                      <HubIcon id={hubId} size={48} color="currentColor" />
+                    </span>
+                    {hubBulk && <HubBulkBadge />}
                   </span>
 
                   <span className="min-w-0 flex-1">
