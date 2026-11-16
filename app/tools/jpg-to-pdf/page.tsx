@@ -64,12 +64,13 @@ export default function JpgToPdfPage() {
         {/* HERO HEADER */}
         <section className="abh-editorial-hero w-full">
           <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
-            <Link 
+            <Link
               href="/tools"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-6"
+              aria-label="Back to all tools"
+              className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              <CaretLeft size={16} weight="bold" />
-              Back to Tools
+              <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
+              <CaretLeft size={15} weight="bold" aria-hidden="true" />
             </Link>
             
             <div className="flex justify-center mb-5">

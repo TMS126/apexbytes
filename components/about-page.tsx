@@ -35,12 +35,16 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <AboutHeader />
-      <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
-      <AboutTeam blueColor={blueColor} />
-      <AboutStandards neutralColor={neutralColor} />
-      <AboutTestimonials />
-      <AboutMission missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
+      <main className="mx-auto max-w-[1240px] px-4 md:px-8">
+        <div className="abh-card overflow-hidden">
+          <AboutHeader />
+          <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
+          <AboutTeam blueColor={blueColor} />
+          <AboutStandards neutralColor={neutralColor} />
+          <AboutTestimonials />
+          <AboutMission missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
+        </div>
+      </main>
       <BackToTopButton visible={showBackToTop} />
     </div>
   )

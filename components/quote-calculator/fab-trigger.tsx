@@ -53,7 +53,7 @@ export function FabTrigger({
         <span
           className={cn(
             "text-[0.65rem] font-medium uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
-            "bg-transparent text-foreground px-2.5 py-1 rounded-full shadow-none",
+            "border border-border bg-card text-foreground px-2.5 py-1 rounded-full shadow-md",
             "transition-all duration-200 ease-out origin-right motion-reduce:transition-none transform-gpu",
             "max-w-0 opacity-0 scale-x-0 group-hover/calc:max-w-[100px] group-hover/calc:opacity-100 group-hover/calc:scale-x-100 group-focus-within/calc:max-w-[100px] group-focus-within/calc:opacity-100 group-focus-within/calc:scale-x-100"
           )}
@@ -64,6 +64,7 @@ export function FabTrigger({
 
         <button
           onClick={onOpen}
+          title="Open quotation calculator"
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
           className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
@@ -78,6 +79,7 @@ export function FabTrigger({
         {itemCount > 0 && (
           <button
             onClick={(e) => { e.stopPropagation(); onToggleMini() }}
+            title={miniExpanded ? "Hide quote total" : "Show quote total"}
             aria-label={miniExpanded ? "Hide quote total" : "Show quote total"}
             className="abh-badge-circle abh-press absolute -top-2 -right-2 size-6 rounded-full bg-transparent text-brand-orange text-[0.65rem] font-black border-0 shadow-none"
           >

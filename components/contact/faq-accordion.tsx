@@ -35,10 +35,11 @@ export function FAQAccordion() {
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={`contact-faq-${index}`}
-                    className="w-full py-4 text-left flex items-center justify-between gap-4 transition-colors"
+                    className="group w-full py-5 text-left flex items-center justify-between gap-4 transition-colors"
                   >
-                    <h4 className="abh-card-heading text-[1.2rem] text-zinc-800 dark:text-zinc-100 leading-snug">
-                      {faq.question}
+                    <h4 className="abh-card-heading flex items-start gap-3 text-[1.2rem] text-zinc-800 dark:text-zinc-100 leading-snug">
+                      <span className="shrink-0 text-[0.72rem] font-medium tracking-[0.18em] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                      <span>{faq.question}</span>
                     </h4>
                     <CaretDown
                       weight="bold"

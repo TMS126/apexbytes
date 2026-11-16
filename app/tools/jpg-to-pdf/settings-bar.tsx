@@ -94,13 +94,14 @@ function QualitySlider({
           input jank across browsers since this is fully custom. */}
       <div
         aria-hidden="true"
-        className="absolute w-5 h-5 rounded-full bg-white dark:bg-zinc-100 border-2 border-white dark:border-zinc-200"
+        className="absolute flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-white shadow-md dark:border-zinc-200 dark:bg-zinc-100"
         style={{
-          left: `calc(${pct}% - 10px)`,
+          left: `calc(${pct}% - 12px)`,
           transition: dragging ? "none" : "left 120ms cubic-bezier(0.22, 1, 0.36, 1)",
-          boxShadow: "0 2px 6px -1px rgba(0,0,0,0.28), 0 1px 3px -1px rgba(0,0,0,0.18)",
         }}
-      />
+      >
+        <span className="size-2.5 rounded-full" style={{ backgroundColor: BRAND.blue }} />
+      </div>
     </div>
   )
 }
@@ -119,7 +120,22 @@ export function SettingsBar({
   accentColor: string
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 rounded-[18px] border border-border/70 bg-card/80 p-4 shadow-[var(--shadow-card-lift)] md:p-5">
+      <div className="grid grid-cols-3 gap-2 border-b border-border/60 pb-4">
+        <div className="min-w-0 rounded-xl bg-background/70 px-3 py-2.5">
+          <span className="block text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">Output</span>
+          <span className="mt-1 block truncate text-sm font-medium text-foreground">{MODE_LABELS[mode]}</span>
+        </div>
+        <div className="min-w-0 rounded-xl bg-background/70 px-3 py-2.5">
+          <span className="block text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">Page size</span>
+          <span className="mt-1 block truncate text-sm font-medium text-foreground">{PAGE_SIZES[pageSize].label}</span>
+        </div>
+        <div className="min-w-0 rounded-xl bg-background/70 px-3 py-2.5">
+          <span className="block text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">Quality</span>
+          <span className="mt-1 block truncate text-sm font-medium" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
+        </div>
+      </div>
+
       {/* ─── OUTPUT / SIZE DROPDOWNS ────────────────────────────────────── */}
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <SimpleDropdown
@@ -145,15 +161,25 @@ export function SettingsBar({
             { label: "Print-ready", quality: 0.95, size: "a4" as PageSize, description: "Sharpest detail" },
             { label: "Small file", quality: 0.55, size: "letter" as PageSize, description: "Easy to send" },
           ].map((preset) => (
+            (() => {
+              const selected = mode === "merge" && quality === preset.quality && pageSize === preset.size
+              return (
             <button
               key={preset.label}
               type="button"
               onClick={() => { setQuality(preset.quality); setPageSize(preset.size); setMode("merge") }}
-              className="rounded-xl border border-border/70 bg-background/60 px-2 py-2 text-left transition-colors hover:border-primary/50 hover:bg-primary/5"
+              aria-pressed={selected}
+              className="relative rounded-xl border px-2 py-2 text-left transition-[border-color,background-color,box-shadow] hover:border-primary/50 hover:bg-primary/5"
+              style={selected ? { borderColor: accentColor, backgroundColor: `${accentColor}12`, boxShadow: `0 0 0 2px ${accentColor}24` } : undefined}
             >
-              <span className="block text-xs font-semibold text-foreground">{preset.label}</span>
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                <span className="size-2 rounded-full" style={{ backgroundColor: selected ? accentColor : "var(--border)" }} aria-hidden="true" />
+                {preset.label}
+              </span>
               <span className="mt-0.5 block text-[0.62rem] text-muted-foreground">{preset.description}</span>
             </button>
+              )
+            })()
           ))}
         </div>
       </div>
