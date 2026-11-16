@@ -138,13 +138,13 @@ export function NoticePill({
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(event) => event.stopPropagation()}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-background px-5 py-6 md:px-8 md:py-8"
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-[var(--surface-modal)] px-5 py-6 md:px-8 md:py-8"
                 style={{
                   boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}
               >
-                <div className="mb-6 border-b border-zinc-100 pb-5 dark:border-zinc-800">
-                  <h2 className="abh-section-heading mb-2 text-left text-2xl sm:text-3xl">{expandedLabel}</h2>
+                <div className="abh-notice-header mb-5 border-b border-zinc-100 pb-4 dark:border-zinc-800">
+                  <h2 className="abh-section-heading mb-3 text-left text-2xl sm:text-3xl">{expandedLabel}</h2>
                   <div className="abh-divider !my-0" />
                 </div>
                 <div className="abh-body mx-auto w-full max-w-[720px] text-[1.12rem] leading-8 text-zinc-700 dark:text-zinc-200">

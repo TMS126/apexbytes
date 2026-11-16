@@ -407,7 +407,7 @@ export function HubAccordionCard({
       </button>
 
       <div
-        className="overflow-hidden transition-all duration-300 ease-in-out"
+        className="overflow-hidden transition-[height,opacity] duration-[120ms] ease-out"
         style={{ maxHeight: isOpen ? '9999px' : '0px' }}
         aria-hidden={!isOpen}
       >

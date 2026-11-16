@@ -87,15 +87,16 @@ html[data-scroll-locked] body { overflow: hidden; }
   min-height: 54px;
   align-items: center;
   gap: .75rem;
-  border: 1px solid currentColor;
-  border-radius: 14px;
-  background: var(--background);
+  border: 0;
+  border-bottom: 1px solid var(--line-rule-soft);
+  border-radius: 0;
+  background: transparent;
   color: var(--foreground);
   padding: 0 .875rem;
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
-.abh-reference-search:focus-within { border-color: currentColor; box-shadow: 0 0 0 1px currentColor; }
+.abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 2px 0 -1px var(--line-rule); }
 .abh-reference-search input,
 .abh-search-input {
   min-width: 0;
@@ -289,14 +290,14 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --nav-h: 74px;
   --banner-h: 0px;
   --nav-bg: color-mix(in srgb, var(--background) 97%, transparent);
-  --footer-bg: var(--brand-blue-dark);
+  --footer-bg: #F4F4F1;
   --shadow: none;
   --card-border: transparent;
   --background: #FFFFFF;
   --foreground: #171717;
-  --card: rgba(246, 246, 245, 0.88);
+  --card: #F6F6F5;
   --card-foreground: #171717;
-  --popover: rgba(255, 255, 255, 0.96);
+  --popover: #FFFFFF;
   --popover-foreground: #171717;
   --primary: var(--brand-blue);
   --primary-foreground: var(--brand-white);
@@ -468,9 +469,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-error-text: #F3A39D;
   --background: #111827;
   --foreground: #F1F1EC;
-  --card: rgba(31, 41, 55, 0.58);
+  --card: #1F2937;
   --card-foreground: #F1F1EC;
-  --popover: rgba(31, 41, 55, 0.78);
+  --popover: #1F2937;
   --popover-foreground: #F1F1EC;
   --primary: var(--brand-blue);
   /* FIX: primary/accent/destructive foregrounds pointed at --brand-blue-dark,
@@ -751,12 +752,32 @@ input, textarea, select {
     backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   }
 }
-header, header nav, footer {
+header, header nav {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+}
+
+footer {
+  background: var(--footer-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+@media (min-width: 1280px) {
+  header:hover,
+  header:focus-within,
+  header[data-nav-scrolled="true"] {
+    background-color: var(--glass-tint) !important;
+    border-bottom-color: var(--glass-border) !important;
+    box-shadow: var(--glass-shadow) !important;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%) !important;
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%) !important;
+  }
 }
 
 input:focus, input:focus-visible,
@@ -1107,6 +1128,8 @@ button, a, [role="button"] {
     background: var(--line-rule);
     box-shadow: none;
   }
+
+  .abh-notice-header .abh-divider { margin-top: .15rem; }
 
   .abh-wa-btn {
     @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;

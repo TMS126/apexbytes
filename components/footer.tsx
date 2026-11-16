@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { WhatsappLogo, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
+import { WhatsappLogo, EnvelopeSimple, FacebookLogo, Copy, Check } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -29,7 +29,7 @@ function FooterContent() {
   const showFaq = pathname !== "/contact"
 
   return (
-    <div className="border-t border-border/50 bg-background pt-16 pb-12">
+    <div className="border-t border-border/50 bg-[var(--footer-bg)] pt-16 pb-12">
       {showFaq && (
         <ScrollBounce>
           <div className="px-6 md:px-10 lg:px-12 xl:px-16 mb-14 flex justify-center">
@@ -141,6 +141,23 @@ function FooterContent() {
                   <span className="truncate">{BIZ.email}</span>
                 </a>
               </li>
+              <li className="min-w-0">
+                <a
+                  href={BIZ.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit ApexbytesHub on Facebook"
+                  className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-blue transition-colors min-w-0"
+                >
+                  <div
+                    className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm shrink-0"
+                    aria-hidden="true"
+                  >
+                    <FacebookLogo weight="fill" className="w-5 h-5" />
+                  </div>
+                  <span>Facebook</span>
+                </a>
+              </li>
               <li className="pt-2">
                 <BusinessStatusFull />
               </li>
@@ -189,7 +206,7 @@ function FooterContent() {
 
 export function Footer() {
   return (
-    <footer className="bg-background text-foreground">
+    <footer className="bg-[var(--footer-bg)] text-foreground">
       <FooterContent />
     </footer>
   )
