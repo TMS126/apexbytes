@@ -30,7 +30,7 @@ export type ImageItem = {
 export type ImageFilter = "none" | "grayscale" | "bw" | "sepia"
 
 export type ConvertMode = "merge" | "separate"
-export type PageSize = "a4" | "letter"
+export type PageSize = "a0" | "a1" | "a2" | "a3" | "a4" | "a5" | "a6" | "letter" | "legal" | "photo4x6" | "photo5x7"
 
 export type ConvertError = { fileName: string; reason: string; id?: string }
 export type ConvertedFile = { fileName: string; blob: Blob; sourceIds: string[] }

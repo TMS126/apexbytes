@@ -300,7 +300,8 @@ export function useJpgToPdf() {
         }
         if (addedAny) {
           const blob = pdf.output("blob") as Blob
-          const fileName = buildFileName(`batch${targets.length}`, usedNames)
+          const sourceName = targets.length === 1 ? targets[0].file.name : `${targets[0].file.name}-merged-${targets.length}-images`
+          const fileName = buildFileName(sourceName, usedNames)
           triggerDownload(blob, fileName)
           results.push({ fileName, blob, sourceIds: targets.map((t) => t.id) })
         }

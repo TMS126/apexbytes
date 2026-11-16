@@ -2,33 +2,60 @@
 "use client"
 
 import { useRef, useCallback, useState } from "react"
-import { SimpleDropdown } from "@/components/ui/simple-dropdown"
 import { BRAND } from "@/lib/brand"
-import { PAGE_SIZES, MODE_LABELS } from "./constants"
+import { PAGE_SIZES, MODE_LABELS, type PageSizeOption } from "./constants"
 import { qualityLabel, formatBytes } from "./utils"
 import type { ConvertMode, PageSize } from "./types"
 
 const QUALITY_MIN = 0.4
 const QUALITY_MAX = 0.95
 
-// 60% blue / 30% green / 10% orange, blended smoothly rather than hard
-// color-stop cuts — each color holds its "core" briefly then eases into
-// the next over a short blend zone.
 const TRACK_GRADIENT = `linear-gradient(90deg,
   ${BRAND.blue} 0%, ${BRAND.blue} 52%,
   ${BRAND.green} 68%, ${BRAND.green} 82%,
   ${BRAND.orange} 94%, ${BRAND.orange} 100%)`
 
-function QualitySlider({
-  quality, setQuality,
-}: {
-  quality: number
-  setQuality: (q: number) => void
+const OUTPUT_OPTIONS: { value: ConvertMode; label: string; description: string }[] = [
+  { value: "merge", label: "One combined PDF", description: "All selected images become one ordered PDF." },
+  { value: "separate", label: "Separate PDFs", description: "Download one PDF for each selected image." },
+]
+
+const QUALITY_OPTIONS = [
+  { value: 0.55, label: "Small file", description: "Best for quick sharing" },
+  { value: 0.75, label: "Balanced", description: "Good quality and size" },
+  { value: 0.95, label: "Print-ready", description: "Keeps the most detail" },
+]
+
+function OptionCard({ selected, onClick, title, description, accentColor }: {
+  selected: boolean
+  onClick: () => void
+  title: string
+  description: string
+  accentColor: string
 }) {
+  return (
+    <button
+      type="button"
+      aria-pressed={selected}
+      onClick={onClick}
+      className="relative rounded-xl border px-3 py-3 text-left transition-[border-color,background-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/5"
+      style={selected ? { borderColor: accentColor, backgroundColor: `${accentColor}12`, boxShadow: `0 0 0 2px ${accentColor}24` } : undefined}
+    >
+      <span className="flex items-center gap-2 text-sm font-medium text-foreground">
+        <span className="flex size-4 items-center justify-center rounded-full border" style={{ borderColor: selected ? accentColor : "var(--border)" }} aria-hidden="true">
+          {selected && <span className="size-2 rounded-full" style={{ backgroundColor: accentColor }} />}
+        </span>
+        {title}
+      </span>
+      <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{description}</span>
+    </button>
+  )
+}
+
+function QualitySlider({ quality, setQuality, accentColor }: { quality: number; setQuality: (q: number) => void; accentColor: string }) {
   const trackRef = useRef<HTMLDivElement>(null)
   const draggingRef = useRef(false)
   const [dragging, setDragging] = useState(false)
-
   const pct = ((quality - QUALITY_MIN) / (QUALITY_MAX - QUALITY_MIN)) * 100
 
   const updateFromClientX = useCallback((clientX: number) => {
@@ -36,28 +63,24 @@ function QualitySlider({
     if (!track) return
     const rect = track.getBoundingClientRect()
     const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width))
-    const raw = QUALITY_MIN + ratio * (QUALITY_MAX - QUALITY_MIN)
-    // Snap to the nearest 0.05 step, same granularity as before.
-    const stepped = Math.round(raw / 0.05) * 0.05
+    const stepped = Math.round((QUALITY_MIN + ratio * (QUALITY_MAX - QUALITY_MIN)) / 0.05) * 0.05
     setQuality(Math.min(QUALITY_MAX, Math.max(QUALITY_MIN, Number(stepped.toFixed(2)))))
   }, [setQuality])
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     draggingRef.current = true
     setDragging(true)
-    ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
+    e.currentTarget.setPointerCapture(e.pointerId)
     updateFromClientX(e.clientX)
   }
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) return
-    updateFromClientX(e.clientX)
+    if (draggingRef.current) updateFromClientX(e.clientX)
   }
   const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
     draggingRef.current = false
     setDragging(false)
-    ;(e.target as HTMLElement).releasePointerCapture(e.pointerId)
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId)
   }
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
       e.preventDefault()
@@ -83,24 +106,15 @@ function QualitySlider({
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerUp}
       onKeyDown={handleKeyDown}
-      className="relative w-full h-6 flex items-center cursor-pointer touch-none select-none focus:outline-none"
+      className="relative flex h-8 w-full cursor-pointer touch-none select-none items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
-      {/* Track — smooth blue→green→orange gradient */}
       <div className="absolute inset-x-0 h-2 rounded-full" style={{ background: TRACK_GRADIENT }} />
-
-      {/* Thumb — neutral (white/zinc), moves via left% with a transition
-          that's disabled mid-drag (so it never lags the pointer) and
-          re-enabled on release for a tiny smoothing snap. No native
-          input jank across browsers since this is fully custom. */}
       <div
         aria-hidden="true"
-        className="absolute flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-white shadow-md dark:border-zinc-200 dark:bg-zinc-100"
-        style={{
-          left: `calc(${pct}% - 12px)`,
-          transition: dragging ? "none" : "left 120ms cubic-bezier(0.22, 1, 0.36, 1)",
-        }}
+        className="absolute flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-white shadow-md dark:border-zinc-200 dark:bg-zinc-100"
+        style={{ left: `calc(${pct}% - 14px)`, transition: dragging ? "none" : "left 120ms cubic-bezier(0.22, 1, 0.36, 1)" }}
       >
-        <span className="size-2.5 rounded-full" style={{ backgroundColor: BRAND.blue }} />
+        <span className="size-3 rounded-full" style={{ backgroundColor: accentColor }} />
       </div>
     </div>
   )
@@ -119,93 +133,74 @@ export function SettingsBar({
   estimatedBytes: number | null
   accentColor: string
 }) {
+  const sizeGroups: { label: string; options: PageSizeOption[] }[] = [
+    { label: "Standard", options: Object.values(PAGE_SIZES).filter((option) => ["a4", "letter", "legal"].includes(option.value)) },
+    { label: "ISO paper", options: Object.values(PAGE_SIZES).filter((option) => option.value.startsWith("a") && !["a4"].includes(option.value)) },
+    { label: "Photo", options: Object.values(PAGE_SIZES).filter((option) => option.value.startsWith("photo")) },
+  ]
+
   return (
-    <div className="flex flex-col gap-4 rounded-[18px] border border-border/70 bg-card/80 p-4 shadow-[var(--shadow-card-lift)] md:p-5">
-      <div className="grid grid-cols-3 gap-2 border-b border-border/60 pb-4">
-        <div className="min-w-0 rounded-xl bg-background/70 px-3 py-2.5">
-          <span className="block text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">Output</span>
-          <span className="mt-1 block truncate text-sm font-medium text-foreground">{MODE_LABELS[mode]}</span>
+    <div className="flex flex-col gap-5 rounded-[18px] border border-border/70 bg-card p-4 shadow-[var(--shadow-card-lift)] md:p-5">
+      <section aria-labelledby="pdf-output-heading">
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <div>
+            <h2 id="pdf-output-heading" className="text-sm font-medium text-foreground">Output</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Choose how your selected images become PDFs.</p>
+          </div>
+          <span className="text-xs font-medium text-muted-foreground">{MODE_LABELS[mode]}</span>
         </div>
-        <div className="min-w-0 rounded-xl bg-background/70 px-3 py-2.5">
-          <span className="block text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">Page size</span>
-          <span className="mt-1 block truncate text-sm font-medium text-foreground">{PAGE_SIZES[pageSize].label}</span>
-        </div>
-        <div className="min-w-0 rounded-xl bg-background/70 px-3 py-2.5">
-          <span className="block text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">Quality</span>
-          <span className="mt-1 block truncate text-sm font-medium" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
-        </div>
-      </div>
-
-      {/* ─── OUTPUT / SIZE DROPDOWNS ────────────────────────────────────── */}
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <SimpleDropdown
-          label="Output" value={mode} accentColor={accentColor}
-          onChange={(v) => setMode(v as ConvertMode)}
-          options={(Object.keys(MODE_LABELS) as ConvertMode[]).map((key) => ({ value: key, label: MODE_LABELS[key] }))}
-        />
-        <SimpleDropdown
-          label="Size" value={pageSize} accentColor={accentColor}
-          onChange={(v) => setPageSize(v as PageSize)}
-          options={(Object.keys(PAGE_SIZES) as PageSize[]).map((key) => ({ value: key, label: PAGE_SIZES[key].label }))}
-        />
-      </div>
-
-      <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
-        <div className="mb-3">
-          <span className="text-sm font-medium text-foreground">Smart presets</span>
-          <p className="mt-0.5 text-[0.68rem] text-muted-foreground">Choose a ready-to-use setup, then fine-tune anything below.</p>
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { label: "Balanced", quality: 0.75, size: "a4" as PageSize, description: "Everyday sharing" },
-            { label: "Print-ready", quality: 0.95, size: "a4" as PageSize, description: "Sharpest detail" },
-            { label: "Small file", quality: 0.55, size: "letter" as PageSize, description: "Easy to send" },
-          ].map((preset) => (
-            (() => {
-              const selected = mode === "merge" && quality === preset.quality && pageSize === preset.size
-              return (
-            <button
-              key={preset.label}
-              type="button"
-              onClick={() => { setQuality(preset.quality); setPageSize(preset.size); setMode("merge") }}
-              aria-pressed={selected}
-              className="relative rounded-xl border px-2 py-2 text-left transition-[border-color,background-color,box-shadow] hover:border-primary/50 hover:bg-primary/5"
-              style={selected ? { borderColor: accentColor, backgroundColor: `${accentColor}12`, boxShadow: `0 0 0 2px ${accentColor}24` } : undefined}
-            >
-              <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
-                <span className="size-2 rounded-full" style={{ backgroundColor: selected ? accentColor : "var(--border)" }} aria-hidden="true" />
-                {preset.label}
-              </span>
-              <span className="mt-0.5 block text-[0.62rem] text-muted-foreground">{preset.description}</span>
-            </button>
-              )
-            })()
+        <div className="grid gap-2 sm:grid-cols-2">
+          {OUTPUT_OPTIONS.map((option) => (
+            <OptionCard key={option.value} selected={mode === option.value} onClick={() => setMode(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* ─── QUALITY SLIDER ─────────────────────────────────────────────── */}
-      <div className="rounded-[14px] border border-white/30 bg-secondary/50 p-4 shadow-[0_18px_40px_-30px_rgba(15,63,102,0.8)] backdrop-blur-md">
-        <div className="flex items-center justify-between mb-2">
+      <section aria-labelledby="pdf-size-heading" className="border-t border-border/60 pt-5">
+        <div className="mb-3 flex items-end justify-between gap-3">
           <div>
-            <span className="text-sm font-medium text-zinc-600 dark:text-zinc-300">Quality</span>
-            <p className="mt-0.5 text-[0.68rem] text-muted-foreground">Higher keeps more detail; lower makes a smaller PDF.</p>
+            <h2 id="pdf-size-heading" className="text-sm font-medium text-foreground">Page size</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Pick the paper size your PDF should use.</p>
+          </div>
+          <span className="text-xs font-medium text-muted-foreground">{PAGE_SIZES[pageSize].label}</span>
+        </div>
+        <div className="space-y-3">
+          {sizeGroups.map((group) => (
+            <div key={group.label}>
+              <p className="mb-2 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">{group.label}</p>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {group.options.map((option) => (
+                  <OptionCard key={option.value} selected={pageSize === option.value} onClick={() => setPageSize(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section aria-labelledby="pdf-quality-heading" className="border-t border-border/60 pt-5">
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <div>
+            <h2 id="pdf-quality-heading" className="text-sm font-medium text-foreground">Quality</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Higher quality keeps more detail; lower quality creates a smaller file.</p>
           </div>
           <span className="text-sm font-medium" style={{ color: accentColor }}>{qualityLabel(quality)}</span>
         </div>
-
-        <QualitySlider quality={quality} setQuality={setQuality} />
-
-        <div className="flex justify-between text-[0.7rem] text-muted-foreground mt-1">
-          <span>Smaller file</span>
-          <span>High quality</span>
+        <div className="grid gap-2 sm:grid-cols-3">
+          {QUALITY_OPTIONS.map((option) => (
+            <OptionCard key={option.value} selected={quality === option.value} onClick={() => setQuality(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
+          ))}
+        </div>
+        <div className="mt-4">
+          <QualitySlider quality={quality} setQuality={setQuality} accentColor={accentColor} />
+          <div className="flex justify-between text-[0.7rem] text-muted-foreground"><span>Smaller file</span><span>High quality</span></div>
         </div>
         {originalBytes !== null && (
-          <p className="text-xs text-muted-foreground mt-2.5 text-center" aria-live="polite">
+          <p className="mt-3 text-center text-xs text-muted-foreground" aria-live="polite">
             Original {formatBytes(originalBytes)} → Estimated {estimatedBytes !== null ? formatBytes(estimatedBytes) : "…"}
           </p>
         )}
-      </div>
+      </section>
     </div>
   )
 }

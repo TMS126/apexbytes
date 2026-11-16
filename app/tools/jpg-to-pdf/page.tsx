@@ -20,7 +20,7 @@ import { ReconvertBanner } from "./reconvert-banner"
 import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
 import Link from "next/link"
-import { PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
+import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
 
 export default function JpgToPdfPage() {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -139,13 +139,13 @@ export default function JpgToPdfPage() {
                     </h2>
                     
                     <p className="text-sm text-muted-foreground text-center mb-6">
-                      JPG, PNG, or WEBP • Maximum 15 MB each • Up to 20 images
+                      JPG, JPEG, PNG, or WEBP only • Maximum 15 MB each • Up to 20 images
                     </p>
 
                     <input 
                       ref={inputRef} 
                       type="file" 
-accept="image/jpeg,image/png,image/webp"
+accept={ACCEPT_ATTRIBUTE}
                 multiple
                 aria-label="Choose images to convert to PDF"
                 onChange={handleFileInput}
@@ -257,7 +257,7 @@ accept="image/jpeg,image/png,image/webp"
                   <input 
                     ref={inputRef} 
                     type="file" 
-                    accept="image/jpeg,image/png,image/webp" 
+                    accept={ACCEPT_ATTRIBUTE}
                     multiple 
                     onChange={handleFileInput} 
                     className="hidden" 
