@@ -9,6 +9,7 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 import { BIZ, WA } from "@/lib/brand"
 import { ComingSoonTool } from "@/components/coming-soon-tool"
 import { CtaBar } from "@/components/strip-section"
+import { PageScrollControls } from "@/components/page-scroll-controls"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -86,6 +87,7 @@ export default function ToolsPage() {
         buttonText="Get in Touch"
         buttonHref={WA.general}
       />
+      <PageScrollControls />
       <Footer />
     </div>
   )

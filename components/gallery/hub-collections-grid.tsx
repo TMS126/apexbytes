@@ -116,7 +116,7 @@ function HubCollectionCard({
 
         {projects.length > 1 && (
           <>
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[0.78rem] font-medium">
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20  border border-white/25 text-white text-[0.78rem] font-medium">
               <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
               Swipe for projects
             </div>
@@ -130,7 +130,7 @@ function HubCollectionCard({
               onClick={(e) => { e.stopPropagation(); step(-1) }}
               aria-label={`Previous ${HUBS[hubId].title} project`}
               style={{ ["--hub-glow" as unknown as keyof import("react").CSSProperties]: accent }}
-              className="hidden md:flex absolute top-3 left-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
+              className="hidden md:flex absolute top-3 left-3 w-8 h-8 rounded-full bg-white/20  border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
             >
               <CaretLeft size={14} weight="bold" />
             </button>
@@ -138,7 +138,7 @@ function HubCollectionCard({
               onClick={(e) => { e.stopPropagation(); step(1) }}
               aria-label={`Next ${HUBS[hubId].title} project`}
               style={{ ["--hub-glow" as unknown as keyof import("react").CSSProperties]: accent }}
-              className="hidden md:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
+              className="hidden md:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20  border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
             >
               <CaretRight size={14} weight="bold" />
             </button>
@@ -146,7 +146,7 @@ function HubCollectionCard({
         )}
 
         <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 z-10">
-          <div className="w-8 h-8 rounded-full bg-black/45 hover:bg-black/65 backdrop-blur-sm shadow-lg flex items-center justify-center transition-colors shrink-0 [&_svg]:text-white" onClick={(e) => e.stopPropagation()}>
+          <div className="w-8 h-8 rounded-full bg-black/45 hover:bg-black/65  shadow-lg flex items-center justify-center transition-colors shrink-0 [&_svg]:text-white" onClick={(e) => e.stopPropagation()}>
             <LikeButton liked={likedIds.has(project.id)} onToggle={(e) => { e.stopPropagation(); onToggleLike(project.id) }} context="card" />
           </div>
           <p className="flex-1 min-w-0 text-center text-white text-base font-medium truncate px-1">{project.title}</p>
@@ -154,7 +154,7 @@ function HubCollectionCard({
               reads clearly and doesn't blend/get lost near other fixed
               UI (e.g. the calculator FAB) that can sit nearby. ---- */}
           <div
-            className="w-8 h-8 rounded-full backdrop-blur-sm shadow-lg flex items-center justify-center transition-colors shrink-0 [&_svg]:text-current"
+            className="w-8 h-8 rounded-full  shadow-lg flex items-center justify-center transition-colors shrink-0 [&_svg]:text-current"
             style={{ backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`, color: accentFg }}
             onClick={(e) => e.stopPropagation()}
           >

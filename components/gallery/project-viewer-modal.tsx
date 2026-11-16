@@ -28,10 +28,10 @@ function useIsMobile() {
   return isMobile
 }
 
-const CHIP = "bg-black/35 backdrop-blur-md border border-white/10 [&_svg]:text-white"
+const CHIP = "bg-black/35  border border-white/10 [&_svg]:text-white"
 
 // Graduated size pattern for the desktop image stack.
-const STACK_SIZE_RATIOS = [1, 0.72, 1, 0.6, 0.82]
+const STACK_SIZE_RATIOS = [1, 1, 1, 1, 1]
 
 // A paragraph only gets "Read more…" if it's actually long enough that a
 // 4-line clamp would cut it off — never forced on regardless of length.
@@ -138,7 +138,7 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
   const others = siblings.filter((p) => p.id !== currentId)
   if (others.length === 0) return null
   return (
-    <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "p-5" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
+    <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "hidden md:flex md:w-1/3 md:h-full md:min-h-0 md:flex-col md:overflow-y-auto p-6" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
       <h3 className="border-l-2 abh-line-left pl-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Other projects</h3>
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
@@ -187,7 +187,7 @@ function MobileImageViewer({
         />
 
         {hasMultiple && (
-          <div className="absolute top-2.5 left-2.5 z-20 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white text-[0.68rem] font-bold tracking-widest" aria-live="polite">
+          <div className="absolute top-2.5 left-2.5 z-20 px-2.5 py-1 rounded-full bg-black/40  text-white text-[0.68rem] font-bold tracking-widest" aria-live="polite">
             {activeIdx + 1} / {images.length}
           </div>
         )}
@@ -459,7 +459,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
       onClick={() => setComparing((v) => !v)}
       aria-label={comparing ? "Show gallery view" : "Show before and after comparison"}
       aria-pressed={comparing}
-      className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-medium uppercase tracking-wider bg-black/45 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-medium uppercase tracking-wider bg-black/45  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
     >
       <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
       {comparing ? "Gallery" : "Before/After"}
@@ -516,7 +516,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
         </div>
       ) : (
         <>
-          <div className="hidden bg-card md:flex md:w-[42%] md:h-full md:shrink-0 md:flex-col md:min-h-0">
+          <div className="hidden bg-card md:flex md:w-1/3 md:h-full md:shrink-0 md:flex-col md:min-h-0">
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
@@ -536,7 +536,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             </div>
           </div>
 
-          <div className="hidden border-l border-border bg-background md:flex md:w-[33%] md:h-full md:flex-col md:min-h-0">
+          <div className="hidden border-l border-border bg-background md:flex md:w-1/3 md:h-full md:flex-col md:min-h-0">
             <div className="shrink-0 w-full max-w-2xl px-6 md:px-8 pt-6">
               <ProjectHeader project={project} accent={accent} onClose={onClose} />
               <DesktopActionRow

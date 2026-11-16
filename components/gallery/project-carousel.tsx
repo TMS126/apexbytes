@@ -62,7 +62,7 @@ function ProjectCard({
 
         {/* ---- Position indicator (e.g. "2/5") ---- */}
         {position && (
-          <div className="absolute top-2.5 right-2.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md text-white/85 text-[0.74rem] font-medium z-20">
+          <div className="absolute top-2.5 right-2.5 px-2 py-1 rounded-full bg-black/40  text-white/85 text-[0.74rem] font-medium z-20">
             {position}
           </div>
         )}
@@ -72,10 +72,10 @@ function ProjectCard({
              circles sit fully clear of the footer bar instead of
              being overlapped/clipped by it. */}
         <div className="absolute bottom-24 right-3 flex flex-col items-center gap-2 z-30">
-          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
+          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40  flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
             <LikeButton liked={liked} onToggle={onToggleLike} context="card" />
           </div>
-          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
+          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40  flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
             <ShareButton url={shareUrl} title={project.title} />
           </div>
         </div>

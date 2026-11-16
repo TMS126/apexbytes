@@ -2,6 +2,7 @@
 "use client"
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
+import { PageScrollControls } from "@/components/page-scroll-controls"
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
@@ -82,7 +83,7 @@ export default function JpgToPdfPage() {
       
       <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
         {/* HERO HEADER */}
-        <section className="abh-editorial-hero abh-tool-hero w-full">
+        <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+1.5rem)]">
           <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
             <Link
               href="/tools"
@@ -136,7 +137,7 @@ export default function JpgToPdfPage() {
                       }
                     }}
                     aria-label="Upload images: drag and drop, or press Enter to browse"
-                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)] backdrop-blur-md transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)]  transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                       isDragging
                         ? "border-solid bg-primary/8 border-primary"
                         : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"
@@ -368,7 +369,7 @@ accept={ACCEPT_ATTRIBUTE}
                       role="region"
                       aria-label={item.question}
                       aria-hidden={!isOpen}
-                      className={`grid ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                      className={`grid transition-[grid-template-rows] duration-150 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                     >
                       <div className="overflow-hidden">
                         <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
@@ -411,6 +412,7 @@ accept={ACCEPT_ATTRIBUTE}
           onClose={() => setCropId(null)}
         />
       )}
+      <PageScrollControls />
     </div>
   )
 }

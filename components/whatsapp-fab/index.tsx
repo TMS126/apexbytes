@@ -202,7 +202,7 @@ export function WhatsAppFAB() {
   return (
     <>
       {isOpen && (
-        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
+        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
       )}
 
       {isOpen && (

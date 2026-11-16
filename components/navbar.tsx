@@ -108,7 +108,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top,transform,opacity] duration-300 ease-out dark:bg-background/88",
+          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out dark:bg-background/88",
           !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",
         )}
       >

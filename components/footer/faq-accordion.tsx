@@ -41,7 +41,7 @@ export function FaqAccordion() {
                   role="region"
                   aria-label={faq.question}
                   aria-hidden={!itemOpen}
-                className={cn("grid", itemOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
+                className={cn("grid transition-[grid-template-rows] duration-150 ease-out", itemOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}
                 >
                   <div className="overflow-hidden">
                     <div className="pb-5 text-[1.1rem] leading-relaxed text-muted-foreground whitespace-pre-wrap">{faq.answer}</div>

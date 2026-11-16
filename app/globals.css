@@ -738,8 +738,6 @@ body {
 .glass-strong,
 .abh-navbar-submenu {
   background-color: var(--glass-tint-strong) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  backdrop-filter: blur(24px) saturate(150%);
   isolation: isolate;
 }
 
@@ -748,8 +746,6 @@ input, textarea, select {
   border-color: var(--border) !important;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .glass,
-  .glass-strong,
   .abh-navbar-submenu {
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
     backdrop-filter: blur(var(--glass-blur)) saturate(140%);

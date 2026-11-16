@@ -265,19 +265,9 @@ export function HubBrowser({
               const secSub = sectionSubtotal(hubId, section.title)
               const sectionBulk = sectionHasBulk(hubId, section.title, section.items)
               const sectionPanelId = `section-panel-${hubId}-${sIdx}`
-              const isLastSection = sIdx === activeHub.sections.length - 1
-
               return (
-                <div key={sIdx} className="relative">
-                  {!isLastSection && (
-                    <span
-                      className="absolute left-3 top-5 bottom-0 w-0.5 pointer-events-none"
-                      style={{ backgroundColor: "var(--border)" }}
-                      aria-hidden="true"
-                    />
-                  )}
-
-                  <div className="relative">
+                <div key={sIdx}>
+                  <div>
                     <button
                       data-calculator-section-card
                       onClick={() => toggleSection(hubId, sIdx)}
@@ -334,22 +324,12 @@ export function HubBrowser({
                       </span>
                     </button>
 
-                    <span
-                      className="absolute left-3 top-0 h-5 w-0.5 pointer-events-none"
-                      style={{ backgroundColor: "var(--border)" }}
-                      aria-hidden="true"
-                    />
-                    <span
-                      className="absolute left-3 top-5 -translate-y-1/2 w-2.5 h-0.5 pointer-events-none"
-                      style={{ backgroundColor: "var(--border)" }}
-                      aria-hidden="true"
-                    />
                   </div>
 
                   <div
                     id={sectionPanelId}
                     className={cn(
-                      "grid",
+                      "grid transition-[grid-template-rows] duration-150 ease-out",
                       isSectionOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                   >

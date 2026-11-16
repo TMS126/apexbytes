@@ -255,7 +255,7 @@ export function FloatingSearchWidget() {
     <>
       {isOpen && (
         <div
-          className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none"
+          className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none"
           onClick={handleClose}
           aria-hidden="true"
         />

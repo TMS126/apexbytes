@@ -162,7 +162,7 @@ export function SettingsBar({
           role="region"
           aria-labelledby="pdf-output-heading"
           aria-hidden={openSection !== "output"}
-          className={`grid ${openSection === "output" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+          className={`grid transition-[grid-template-rows] duration-150 ease-out ${openSection === "output" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
         >
           <div className="overflow-hidden">
             <div className="pt-3">
@@ -196,7 +196,7 @@ export function SettingsBar({
           role="region"
           aria-labelledby="pdf-size-heading"
           aria-hidden={openSection !== "page-size"}
-          className={`grid ${openSection === "page-size" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+          className={`grid transition-[grid-template-rows] duration-150 ease-out ${openSection === "page-size" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
         >
           <div className="overflow-hidden">
             <div className="space-y-3 pt-3">
