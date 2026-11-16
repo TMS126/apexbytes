@@ -40,7 +40,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
         ["--hub-on" as string]: HUB_ON_COLOR[hubId],
       }}
       className={cn(
-        "group relative flex h-full min-h-[240px] w-full flex-col justify-end overflow-hidden rounded-[14px] p-6 text-left",
+        "group relative flex h-full min-h-[280px] w-full flex-col justify-end overflow-hidden rounded-[14px] p-6 text-left",
         "bg-card text-foreground transition-[background-color,color,box-shadow] duration-200 motion-reduce:transition-none",
         "hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)] hover:shadow-[var(--shadow-card-lift)]",
         "focus-visible:bg-[var(--hub-fill)] focus-visible:text-[var(--hub-on)] focus-visible:shadow-[var(--shadow-card-lift)]",
