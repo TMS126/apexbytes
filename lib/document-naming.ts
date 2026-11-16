@@ -6,14 +6,20 @@ export const DOCUMENT_PREFIX: Record<DocumentKind, string> = {
   invoice: "INV",
 }
 
-/**
- * Human-readable document numbers are intentionally stable and easy to say
- * over WhatsApp: QUO-ABH-2026-001, SA-ABH-2026-001, INV-ABH-2026-001.
- * Sequence storage is local until a server-side document register is added.
- */
-export function nextDocumentNumber(kind: DocumentKind, now = new Date()): string {
+/** Stable identity used when a document is viewed in-browser. */
+export function baseDocumentNumber(kind: DocumentKind, now = new Date()): string {
   const year = now.getFullYear()
-  const storageKey = `apexbytes-${kind}-seq`
+  return `${DOCUMENT_PREFIX[kind]}-ABH-${year}`
+}
+
+/**
+ * Allocate the next download number for this document kind on this device.
+ * Storage is intentionally device-local until a server-side document register
+ * exists. Viewing a document must never advance this counter.
+ */
+export function nextDownloadedDocumentNumber(kind: DocumentKind, now = new Date()): string {
+  const year = now.getFullYear()
+  const storageKey = `apexbytes-${kind}-download-seq`
   let sequence = 1
 
   try {
@@ -25,8 +31,11 @@ export function nextDocumentNumber(kind: DocumentKind, now = new Date()): string
     // Private browsing or blocked storage should never prevent a document download.
   }
 
-  return `${DOCUMENT_PREFIX[kind]}-ABH-${year}-${String(sequence).padStart(3, "0")}`
+  return `${baseDocumentNumber(kind, now)}-${String(sequence).padStart(3, "0")}`
 }
+
+/** @deprecated Use baseDocumentNumber or nextDownloadedDocumentNumber explicitly. */
+export const nextDocumentNumber = nextDownloadedDocumentNumber
 
 export function documentFilename(kind: DocumentKind, number: string): string {
   return `${number}.pdf`

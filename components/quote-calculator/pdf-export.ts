@@ -1,6 +1,6 @@
 // components/quote-calculator/pdf-export.ts
 import { BIZ } from "@/lib/brand"
-import { documentFilename, nextDocumentNumber } from "@/lib/document-naming"
+import { baseDocumentNumber, documentFilename, nextDownloadedDocumentNumber } from "@/lib/document-naming"
 import { BULK_TIERS, CartItem, getEffectiveRate, isScanItem, quoteTotals } from "./lib"
 import { pdfServiceName } from "./pdf-names"
 /* ============================================================
@@ -48,7 +48,11 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
     const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" })
 
     const now = new Date()
-    const quoteNo = nextDocumentNumber("quote", now)
+    // Viewing is a read-only action and always uses the stable document ID.
+    // Only a real download consumes the device-local numbered sequence.
+    const quoteNo = mode === "download"
+      ? nextDownloadedDocumentNumber("quote", now)
+      : baseDocumentNumber("quote", now)
     const dateStr = `${two(now.getDate())}/${two(now.getMonth() + 1)}/${now.getFullYear()}`
     const t = quoteTotals(cart)
 
