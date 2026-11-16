@@ -51,7 +51,7 @@ export function CartSummaryBar({
     <>
       {undoStack && (
         <div className="sticky top-0 z-20 border-b border-border bg-card p-3">
-          <div className="flex items-center justify-between gap-3 rounded-[14px] bg-foreground p-2.5 text-background shadow-lg animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="flex items-center justify-between gap-3 rounded-[12px] border border-border bg-foreground p-2.5 text-background animate-in fade-in slide-in-from-top-1 duration-200">
             <span className="text-[0.7rem] font-medium truncate">
               {getDisplayName(undoStack.item.sectionTitle, undoStack.item.name)} removed
             </span>
@@ -67,10 +67,7 @@ export function CartSummaryBar({
 
       {cart.length > 0 && (
         <div
-          className="sticky top-0 z-10 border-b border-border bg-card shadow-[0_4px_10px_-6px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_10px_-6px_rgba(0,0,0,0.4)]"
-          style={{
-            background: `color-mix(in srgb, ${fabColor} 6%, var(--card))`,
-          }}
+          className="sticky top-0 z-10 border-b border-border bg-card"
         >
           <div className="p-4 space-y-2.5">
             <div className="flex items-center justify-between gap-2">

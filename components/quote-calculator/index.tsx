@@ -334,14 +334,13 @@ export function QuoteCalculatorWidget() {
           className={cn(
             "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5",
             "w-full h-full md:h-auto md:w-[min(820px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
-            "rounded-none md:rounded-[14px] shadow-2xl flex flex-col overflow-hidden",
+            "rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
             GLASS.panel,
             "md:backdrop-blur-none"
           )}
-          style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}
         >
-          <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-zinc-200 dark:via-white/20 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-6 right-6 h-px bg-border pointer-events-none" />
 
           <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
 

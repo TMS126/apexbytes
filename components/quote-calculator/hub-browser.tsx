@@ -304,8 +304,7 @@ export function HubBrowser({
 
                         {!isSectionOpen && sectionBulk && (
                           <span
-                            className="bulk-ribbon inline-flex items-center gap-0.5 text-[0.58rem] font-medium px-2 py-1 rounded-full"
-                            style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 12%, transparent)", color: "var(--brand-orange-text)" }}
+                            className="inline-flex items-center gap-0.5 rounded-full bg-slate-600 px-2 py-1 text-[0.58rem] font-medium text-slate-50"
                             aria-label="Bulk pricing available in this section"
                           >
                             <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -371,8 +370,7 @@ export function HubBrowser({
                               >
                                 {hasBulk && (
                                   <span
-                                    className="bulk-ribbon absolute right-11 top-1/2 -translate-y-1/2 text-[0.55rem] font-medium uppercase tracking-wider px-2.5 py-1 rounded-full"
-                                    style={{ backgroundColor: "var(--brand-orange)", color: "var(--on-brand-orange)" }}
+                                    className="absolute right-11 top-1/2 -translate-y-1/2 rounded-full bg-slate-600 px-2.5 py-1 text-[0.55rem] font-medium tracking-wide text-slate-50"
                                     aria-hidden="true"
                                   >
                                     Bulk

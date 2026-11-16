@@ -40,11 +40,10 @@ export function CartItemCard({
       ref={cardRef}
       role="listitem"
       className={cn(
-        "shrink-0 w-[250px] snap-start rounded-[14px] bg-card p-3.5 space-y-2 transition-all duration-300 ease-out motion-reduce:transition-none",
+        "shrink-0 w-[250px] snap-start rounded-[14px] border border-border/70 bg-card p-3.5 space-y-2 transition-[border-color,background-color] duration-200 ease-out motion-reduce:transition-none",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{
-        boxShadow: `0 6px 16px -3px color-mix(in srgb, ${accent} 25%, transparent), 0 3px 8px -2px rgba(0,0,0,0.18)`,
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
