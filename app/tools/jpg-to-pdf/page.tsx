@@ -3,7 +3,7 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { useRef, useState } from "react"
+import { useRef, useState, useSyncExternalStore } from "react"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
@@ -22,6 +22,10 @@ import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
 import Link from "next/link"
 import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
+
+const subscribeToMount = () => () => {}
+const getMountedSnapshot = () => true
+const getServerMountedSnapshot = () => false
 
 const JPG_TO_PDF_HELP = [
   {
@@ -49,11 +53,11 @@ export default function JpgToPdfPage() {
   const [cropId, setCropId] = useState<string | null>(null)
   const [openHelpIndex, setOpenHelpIndex] = useState<number | null>(null)
 
-  const [tip] = useState(() => PAGE_TIPS[Math.floor(Math.random() * PAGE_TIPS.length)])
-  const [waPhrase] = useState(() => WHATSAPP_MAGIC_PHRASES[Math.floor(Math.random() * WHATSAPP_MAGIC_PHRASES.length)])
+  const tip = PAGE_TIPS[0]
+  const waPhrase = WHATSAPP_MAGIC_PHRASES[0]
+  const mounted = useSyncExternalStore(subscribeToMount, getMountedSnapshot, getServerMountedSnapshot)
 
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
   const pageBg = isDark ? THEME_HEX.dark.page : THEME_HEX.light.page
   const accentColor = ensureAccessible(isDark ? HEX.dark.adobePdfRed : HEX.light.adobePdfRed, pageBg, 4.5)

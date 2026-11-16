@@ -145,30 +145,33 @@ function ProjectCard({
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${p.id}` : `${pathname}?project=${p.id}`
   return (
     <div className="flex flex-col">
-      <button
-        onClick={() => onSelect(p)}
-        aria-label={`View ${p.title}`}
-        className="group relative aspect-[4/3] rounded-[14px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.99] active:translate-y-0"
-      >
-        <SafeImage
-          src={p.image}
-          alt={p.title}
-          accent={TOKEN.orangeText}
-          fill
-          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-          <div onClick={(e) => e.stopPropagation()}>
+      <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 shadow-sm transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] focus-within:-translate-y-1 focus-within:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] dark:bg-zinc-900">
+        <button
+          type="button"
+          onClick={() => onSelect(p)}
+          aria-label={`View ${p.title}`}
+          className="absolute inset-0 z-0 h-full w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+        >
+          <SafeImage
+            src={p.image}
+            alt={p.title}
+            accent={TOKEN.orangeText}
+            fill
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
+            className="object-cover"
+          />
+        </button>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-2">
+          <div className="pointer-events-auto">
             <ShareButton url={shareUrl} title={p.title} />
           </div>
-          <div onClick={(e) => e.stopPropagation()}>
+          <div className="pointer-events-auto">
             <LikeButton liked={liked} onToggle={(e) => { e.stopPropagation(); onToggleLike(p.id) }} context="card" />
           </div>
         </div>
-      </button>
+      </div>
 
-      <button onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
+      <button type="button" onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
         <span className="block text-base md:text-lg font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
         <span className="mt-1 block text-xs md:text-sm uppercase tracking-[0.14em] text-muted-foreground">{p.tag}</span>
       </button>
