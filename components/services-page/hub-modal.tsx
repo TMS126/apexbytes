@@ -161,7 +161,17 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     </span>
                     <CaretDown size={16} weight="bold" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                   </button>
-                  {isOpen && <div id={`hub-section-${sIdx}`} className="border-t border-border/60 px-4 pb-3 pt-2 text-left text-[0.86rem] leading-relaxed text-muted-foreground">{section.desc}</div>}
+                  <div
+                    id={`hub-section-${sIdx}`}
+                    role="region"
+                    aria-hidden={!isOpen}
+                    inert={!isOpen}
+                    className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                  >
+                    <div className="min-h-0 overflow-hidden">
+                      <p className="border-t border-border/60 px-4 pb-3 pt-2 text-left text-[0.86rem] leading-relaxed text-muted-foreground">{section.desc}</p>
+                    </div>
+                  </div>
                 </div>
               )
             })}

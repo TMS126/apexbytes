@@ -328,12 +328,15 @@ export function HubBrowser({
 
                   <div
                     id={sectionPanelId}
+                    role="region"
+                    aria-hidden={!isSectionOpen}
+                    inert={!isSectionOpen}
                     className={cn(
-                      "grid transition-[grid-template-rows] duration-150 ease-out",
-                      isSectionOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      "grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+                      isSectionOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     )}
                   >
-                    <div className="overflow-hidden">
+                    <div className="min-h-0 overflow-hidden">
                       <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
                         {sortItemsByPrice(section.items).map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`

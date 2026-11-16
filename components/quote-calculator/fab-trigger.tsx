@@ -26,15 +26,15 @@ export function FabTrigger({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-end group/calc pointer-events-auto",
+        "relative flex items-center justify-end group/calc pointer-events-none",
         "transition-all duration-200 ease-out motion-reduce:transition-none transform-gpu",
-        !visible ? "hidden" : dimmed ? "opacity-30 scale-100 pointer-events-auto" : "opacity-100 scale-100 pointer-events-auto"
+        !visible ? "hidden" : dimmed ? "opacity-30 scale-100" : "opacity-100 scale-100"
       )}
     >
       <button
         onClick={onOpen}
         className={cn(
-            "-mr-3 flex items-center gap-2 pl-3 pr-3.5 py-2 rounded-full bg-transparent text-foreground shadow-none active:scale-95 transition-all duration-250 ease-out origin-right motion-reduce:transition-none transform-gpu overflow-hidden whitespace-nowrap",
+            "pointer-events-auto -mr-3 flex items-center gap-2 pl-3 pr-3.5 py-2 rounded-full bg-transparent text-foreground shadow-none active:scale-95 transition-all duration-250 ease-out origin-right motion-reduce:transition-none transform-gpu overflow-hidden whitespace-nowrap",
           showMiniBar && miniExpanded ? "opacity-100 max-w-[220px] scale-100" : "opacity-0 max-w-0 scale-95 pl-0 pr-0 pointer-events-none"
         )}
       >
@@ -49,7 +49,7 @@ export function FabTrigger({
         <span className="text-[0.6rem] font-medium uppercase tracking-widest text-muted-foreground">View quote</span>
       </button>
 
-      <div className="relative flex items-center justify-end gap-2">
+      <div className="pointer-events-none relative flex items-center justify-end gap-2">
         <span
           className={cn(
             "text-[0.65rem] font-medium uppercase tracking-widest whitespace-nowrap pointer-events-none overflow-hidden",
@@ -67,7 +67,7 @@ export function FabTrigger({
           title="Open quotation calculator"
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
-          className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+          className="abh-press pointer-events-auto relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
         >
           <Calculator
             size={25}
@@ -81,7 +81,7 @@ export function FabTrigger({
             onClick={(e) => { e.stopPropagation(); onToggleMini() }}
             title={miniExpanded ? "Hide quote total" : "Show quote total"}
             aria-label={miniExpanded ? "Hide quote total" : "Show quote total"}
-            className="abh-badge-circle abh-press absolute -top-2 -right-2 size-6 rounded-full bg-transparent text-brand-orange text-[0.65rem] font-black border-0 shadow-none"
+            className="abh-badge-circle abh-press pointer-events-auto absolute -top-2 -right-2 size-6 rounded-full bg-transparent text-brand-orange text-[0.65rem] font-black border-0 shadow-none"
           >
             {itemCount}
           </button>

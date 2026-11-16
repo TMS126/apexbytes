@@ -128,7 +128,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   {item.label}
                 </Link>
                 {submenu && (
-                  <details className="w-full">
+                  <details className="group w-full">
                     <summary
                       tabIndex={menuOpen ? 0 : -1}
                       className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] border border-border/60 bg-card/60 px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
@@ -136,7 +136,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                       Browse {item.label.toLowerCase()}
                       <CaretDown size={16} aria-hidden="true" />
                     </summary>
-                    <div className="mt-2 flex flex-col items-stretch gap-1 border-t border-border/60 bg-card/50 p-2 pt-3">
+                    <div className="mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
+                      <div className="min-h-0 overflow-hidden flex flex-col items-stretch gap-1 bg-card/50 p-2 pt-3">
                       {submenu.map((subitem) => (
                         <Link
                           key={subitem.path}
@@ -148,6 +149,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                           {subitem.label}
                         </Link>
                       ))}
+                      </div>
                     </div>
                   </details>
                 )}

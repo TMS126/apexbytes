@@ -28,6 +28,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
   // Mobile accordion state
   const [openHubs, setOpenHubs] = useState<Set<HubId>>(new Set())
+  const [openedHubs, setOpenedHubs] = useState<Set<HubId>>(new Set())
   // Desktop selected hub state
 
   const [selectedHub, setSelectedHub] = useState<HubId | null>(null)
@@ -49,6 +50,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
   // ── Mobile accordion ────────────────────────────────────────────────────────
 
   const toggleHub = useCallback((id: HubId) => {
+    setOpenedHubs(prev => prev.has(id) ? prev : new Set(prev).add(id))
     setOpenHubs(prev => {
       const next = new Set(prev)
       if (next.has(id)) next.delete(id)
@@ -59,6 +61,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
   const jumpToHub = useCallback((hubId: HubId) => {
     const wasOpen = openHubs.has(hubId)
+    setOpenedHubs(prev => prev.has(hubId) ? prev : new Set(prev).add(hubId))
     setOpenHubs(prev => {
       const next = new Set(prev)
       if (wasOpen) next.delete(hubId)
@@ -73,10 +76,14 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
   }, [openHubs])
 
   const allOpen = openHubs.size === HUB_ORDER.length
-  const toggleAll = useCallback(
-    () => setOpenHubs(allOpen ? new Set() : new Set(HUB_ORDER)),
-    [allOpen]
-  )
+  const toggleAll = useCallback(() => {
+    if (allOpen) {
+      setOpenHubs(new Set())
+      return
+    }
+    setOpenHubs(new Set(HUB_ORDER))
+    setOpenedHubs(new Set(HUB_ORDER))
+  }, [allOpen])
 
   // ── Desktop hub selection ───────────────────────────────────────────────────
 
@@ -136,6 +143,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
           accent={accent}
           isDark={isDark}
           isOpen={openHubs.has(hubId)}
+          hasOpened={openedHubs.has(hubId)}
           onToggle={() => toggleHub(hubId)}
           justAdded={justAdded}
           onAdd={(section, name, price) => handleAdd(hubId, section, name, price)}

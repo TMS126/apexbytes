@@ -369,9 +369,10 @@ accept={ACCEPT_ATTRIBUTE}
                       role="region"
                       aria-label={item.question}
                       aria-hidden={!isOpen}
-                      className={`grid transition-[grid-template-rows] duration-150 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                      inert={!isOpen}
+                      className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
                     >
-                      <div className="overflow-hidden">
+                      <div className="min-h-0 overflow-hidden">
                         <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
                       </div>
                     </div>

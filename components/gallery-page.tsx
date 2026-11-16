@@ -4,7 +4,8 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { Broom, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
+import { Info, Shuffle } from "@phosphor-icons/react"
+import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -236,6 +237,7 @@ function GalleryPageInner() {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
   const [zoomIndex,       setZoomIndex]       = useState<number | null>(null)
   const [searchQuery,     setSearchQuery]     = useState("")
+  const [searchExpanded,  setSearchExpanded]  = useState(false)
   const [surpriseFlash,   setSurpriseFlash]   = useState(false)
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const showBackToTop = useBackToTop()
@@ -373,39 +375,31 @@ function GalleryPageInner() {
         )}
 
         <ScrollBounce delay={0.1}>
-          <div className="max-w-md mx-auto mb-8">
-            <div data-hover-border="" className="abh-reference-search">
-              <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                aria-label="Search projects"
-                className="abh-search-input text-base font-medium leading-6"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  aria-label="Clear search"
-                  className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-all hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:hover:bg-white/10 dark:hover:text-zinc-300"
-                >
-                  <Broom size={15} weight="regular" aria-hidden="true" />
-                </button>
+          <div className="relative mx-auto mb-8 flex w-full max-w-md justify-center">
+            <ExpandingSearch
+              id="gallery-search"
+              label="Search projects"
+              placeholder="Search..."
+              value={searchQuery}
+              expanded={searchExpanded}
+              onChange={setSearchQuery}
+              onExpandedChange={setSearchExpanded}
+              className="max-w-[300px]"
+            />
+            <button
+              onClick={handleSurprise}
+              aria-label="Surprise me with a random project"
+              aria-hidden={searchExpanded}
+              tabIndex={searchExpanded ? -1 : 0}
+              className={cn(
+                "absolute right-0 top-1/2 flex min-h-9 -translate-y-1/2 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-all duration-200 hover:text-zinc-800 active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-zinc-200",
+                surpriseFlash && "scale-90 opacity-60",
+                searchExpanded && "pointer-events-none opacity-0",
               )}
-
-              <button
-                onClick={handleSurprise}
-                aria-label="Surprise me with a random project"
-                className={cn(
-                  "flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-all duration-200 hover:text-zinc-800 active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-zinc-200",
-                  surpriseFlash && "scale-90 opacity-60"
-                )}
-              >
-                <Shuffle size={13} weight="bold" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />
-                Pick for me
-              </button>
-            </div>
+            >
+              <Shuffle size={13} weight="bold" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />
+              Pick for me
+            </button>
           </div>
         </ScrollBounce>
 

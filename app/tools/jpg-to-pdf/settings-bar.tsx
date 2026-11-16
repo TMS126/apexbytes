@@ -162,9 +162,10 @@ export function SettingsBar({
           role="region"
           aria-labelledby="pdf-output-heading"
           aria-hidden={openSection !== "output"}
-          className={`grid transition-[grid-template-rows] duration-150 ease-out ${openSection === "output" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+          inert={openSection !== "output"}
+          className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${openSection === "output" ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
         >
-          <div className="overflow-hidden">
+          <div className="min-h-0 overflow-hidden">
             <div className="pt-3">
               <p className="mb-3 text-xs text-muted-foreground">Choose how your selected images become PDFs.</p>
               <div className="grid gap-2 sm:grid-cols-2">
@@ -196,9 +197,10 @@ export function SettingsBar({
           role="region"
           aria-labelledby="pdf-size-heading"
           aria-hidden={openSection !== "page-size"}
-          className={`grid transition-[grid-template-rows] duration-150 ease-out ${openSection === "page-size" ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+          inert={openSection !== "page-size"}
+          className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${openSection === "page-size" ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
         >
-          <div className="overflow-hidden">
+          <div className="min-h-0 overflow-hidden">
             <div className="space-y-3 pt-3">
               <p className="text-xs text-muted-foreground">Pick the paper size your PDF should use.</p>
               {sizeGroups.map((group) => (

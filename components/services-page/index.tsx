@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence } from "framer-motion"
 import { Megaphone, SealPercent, CaretLeft, CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -176,9 +176,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
   return (
     <section className="min-h-screen bg-background transition-colors duration-300 pb-24 overflow-x-hidden">
 
-      <motion.div
-        layout
-        transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}
+      <div
         className="max-w-[1248px] mx-auto px-4 md:px-8 flex flex-col items-center transition-opacity duration-200 md:opacity-100 md:pointer-events-auto"
         style={isMobileViewport ? {
           opacity: isModalOpen ? 0 : 1,
@@ -236,7 +234,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
               <span title="See optional add-ons and included features">View add-ons and free features</span>
               <CaretDown size={16} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
-<div className="grid grid-rows-[0fr] border-t border-border/70 group-open:grid-rows-[1fr]">
+<div className="grid min-h-0 grid-rows-[0fr] border-t border-border/70 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
     <div className="min-h-0 overflow-hidden">
       <div className="p-3 sm:p-4"><AddOnsCard /></div>
     </div>
@@ -374,7 +372,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
         <ScrollBounce className="w-full mt-14 md:mt-20">
           <ClosingTagline />
         </ScrollBounce>
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {activeHub && (

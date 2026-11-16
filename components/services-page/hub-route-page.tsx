@@ -42,7 +42,9 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
               </span>
             </summary>
 
-            <ul className="grid gap-4 border-t border-border/60 p-4 md:grid-cols-2 md:p-5 lg:grid-cols-3">
+            <div className="grid grid-rows-[0fr] transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
+              <div className="min-h-0 overflow-hidden">
+                <ul className="grid gap-4 border-t border-border/60 p-4 md:grid-cols-2 md:p-5 lg:grid-cols-3">
               {sortItemsByPrice(section.items).map((item, itemIndex) => (
                 <li key={item.name}>
                   <Link
@@ -62,7 +64,9 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
                   </Link>
                 </li>
               ))}
-            </ul>
+                </ul>
+              </div>
+            </div>
           </details>
         ))}
       </div>

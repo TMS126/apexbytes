@@ -348,6 +348,7 @@ interface HubAccordionCardProps {
   accent: string
   isDark: boolean
   isOpen: boolean
+  hasOpened: boolean
   onToggle: () => void
   justAdded: string | null
   onAdd: (section: string, name: string, price: string) => void
@@ -363,6 +364,7 @@ export function HubAccordionCard({
   accent,
   isDark,
   isOpen,
+  hasOpened,
   onToggle,
   justAdded,
   onAdd,
@@ -374,7 +376,6 @@ export function HubAccordionCard({
   const hub = HUBS[hubId]
   const hubColor = isDark ? hub.tagStyleDark.color : hub.tagStyle.color
   const total = hub.sections.reduce((n, s) => n + s.items.length, 0)
-
   return (
     <div
       ref={cardRef}
@@ -407,11 +408,12 @@ export function HubAccordionCard({
       </button>
 
       <div
-        className="overflow-hidden transition-[height,opacity] duration-[120ms] ease-out"
-        style={{ maxHeight: isOpen ? '9999px' : '0px' }}
+        className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
         aria-hidden={!isOpen}
+        inert={!isOpen}
       >
-        {isOpen && (
+        <div className="min-h-0 overflow-hidden">
+        {hasOpened && (
           <div className="border-t border-zinc-100 dark:border-zinc-800">
             <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
               {hub.sections.map(section => {
@@ -443,6 +445,7 @@ export function HubAccordionCard({
             </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   )
