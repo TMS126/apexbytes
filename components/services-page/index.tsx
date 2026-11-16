@@ -19,7 +19,7 @@ import {
   HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService,
   hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor,
 } from "./lib"
-import { sectionHasBulk } from "../quote-calculator/lib"
+import { itemHasBulk, sectionHasBulk } from "../quote-calculator/lib"
 import { NoticePill } from "@/components/notice-pill"
 import { AddOnsCard } from "@/components/pricing-page/addons-card"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
@@ -349,6 +349,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
                       key={item.name}
                       item={item}
                       accent={desktopHubAccent}
+                      hasBulk={itemHasBulk(desktopActiveHub, desktopActiveSectionData.title, item.name)}
                       onClick={() =>
                         handleSelectService({
                           name: item.name,
