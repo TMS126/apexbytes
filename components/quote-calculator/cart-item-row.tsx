@@ -44,14 +44,14 @@ export function CartItemRow({
     >
       <div className="flex items-center justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-zinc-800 dark:text-zinc-200 truncate">{displayName}</p>
-          <p className="text-[0.62rem] font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
+          <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 truncate">{displayName}</p>
+          <p className="text-xs font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
         <button onClick={() => onRemove(item.id)} aria-label={`Remove ${displayName} from quote`} className="text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150">
           <Trash size={14} weight="bold" aria-hidden="true" />
         </button>
       </div>
-      <div className="flex items-center gap-2 text-xs">
+      <div className="flex items-center gap-2 text-sm">
         {discounted && <span className="text-red-400 line-through">R{item.unitPrice}{item.unit ? `/${item.unit}` : ""}</span>}
         <span className="font-medium text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
       </div>
@@ -103,7 +103,7 @@ export function CartItemRow({
               style={{ backgroundColor: i < progress.current ? accent : `color-mix(in srgb, ${accent} 19%, transparent)` }}
             />
           ))}
-          <span className="text-[0.6rem] font-medium ml-1" style={{ color: accent }}>
+        <span className="text-xs font-medium ml-1" style={{ color: accent }}>
             {progress.current}/{progress.target}
           </span>
         </div>
@@ -111,7 +111,7 @@ export function CartItemRow({
 
       {hint && (
         <p
-          className={cn("text-[0.6rem] font-medium", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")}
+          className={cn("text-xs font-medium", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")}
           role="status"
         >
           {hint}

@@ -165,7 +165,7 @@ function ContactPageInner() {
                   <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-3 items-stretch">
+                <div className="grid grid-cols-3 gap-4 items-stretch">
                   {GRID_CONTACT_LINKS.map((c, index) => {
                     const Icon = CONTACT_ICONS[c.title] ?? Phone
                     const isCopyable = COPYABLE_TITLES.has(c.title)
@@ -178,7 +178,7 @@ function ContactPageInner() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={c.title}
-                            className="group flex flex-col items-center justify-center text-center gap-2 p-4 h-full min-h-[104px] rounded-[14px] border border-transparent text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97]"
+                            className="group flex min-h-[112px] h-full flex-col items-center justify-center gap-2 rounded-[14px] border border-transparent p-4 text-center text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97]"
                           >
                             <Icon size={34} weight="regular" aria-hidden="true" className="text-current transition-colors duration-200" />
                             <span className="sr-only">{c.value}</span>
@@ -198,7 +198,7 @@ function ContactPageInner() {
                   })}
                 </div>
 
-                <p className="abh-muted flex items-center justify-center gap-1.5 mt-3">
+                <p className="abh-muted flex items-center justify-center gap-1.5 mt-4 text-sm">
                   <Clock size={13} weight="bold" aria-hidden="true" />
                   We usually reply within 15–30 minutes during business hours
                 </p>
@@ -207,7 +207,7 @@ function ContactPageInner() {
                   <div className="flex items-center gap-3 min-w-0">
                     <AddressBook size={20} weight="regular" aria-hidden="true" style={{ color: greyColor }} />
                     <div className="min-w-0">
-                      <p className="text-base font-normal text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
+                      <p className="text-lg font-normal text-zinc-800 dark:text-zinc-200">Save Our Contact</p>
                       <p className="abh-muted truncate">Add {BIZ.name} to your phone</p>
                     </div>
                   </div>

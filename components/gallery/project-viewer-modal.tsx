@@ -76,11 +76,11 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
   return (
     <div className="space-y-5">
       <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-[0.74rem] font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
+        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
         <ExpandableText text={project.clientGoal} accent={accent} />
       </div>
       <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-[0.74rem] font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
+        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
         <ul className="space-y-2">
           {project.whatWeDid.map((item, i) => (
             <li key={i} className="flex items-start gap-2.5 text-base text-zinc-700 dark:text-zinc-200 font-medium">
@@ -90,7 +90,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
         </ul>
       </div>
       <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-[0.74rem] font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
+        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
         <ExpandableText text={project.result} accent={accent} />
       </div>
     </div>
@@ -288,11 +288,11 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
           <HubIcon id={project.hub as HubId} size={13} color={accent} />
-          <span className="text-[0.7rem] font-medium uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
+          <span className="text-xs font-medium uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
         </div>
-        <h2 id="project-viewer-title" className="font-medium text-lg md:text-xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
+        <h2 id="project-viewer-title" className="font-medium text-xl md:text-2xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
         {project.clientType && (
-          <p className="text-[0.78rem] italic text-muted-foreground dark:text-muted-foreground mt-0.5">{CLIENT_TYPE_LABEL[project.clientType]}</p>
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground mt-1">{CLIENT_TYPE_LABEL[project.clientType]}</p>
         )}
       </div>
       <button
@@ -335,7 +335,7 @@ function DesktopActionRow({
             >
               <CaretLeft size={13} weight="bold" />
             </button>
-            <span className="text-[0.78rem] font-medium text-muted-foreground dark:text-muted-foreground whitespace-nowrap" aria-live="polite">
+            <span className="text-sm font-medium text-muted-foreground dark:text-muted-foreground whitespace-nowrap" aria-live="polite">
               Project {currentIdx + 1} of {siblingCount}
             </span>
             <button

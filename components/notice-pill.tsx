@@ -143,9 +143,9 @@ export function NoticePill({
                   boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}
               >
-                <div className="abh-notice-header mb-5 border-b border-zinc-100 pb-4 dark:border-zinc-800">
+                <div className="abh-notice-header mb-6 pb-5">
                   <h2 className="abh-section-heading mb-3 text-left text-2xl sm:text-3xl">{expandedLabel}</h2>
-                  <div className="abh-divider !my-0" />
+                  <div className="abh-divider !mx-0 !my-0" />
                 </div>
                 <div className="abh-body mx-auto w-full max-w-[720px] text-[1.12rem] leading-8 text-zinc-700 dark:text-zinc-200">
                   {children}
