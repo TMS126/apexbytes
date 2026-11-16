@@ -1,7 +1,7 @@
 // components/about-page.tsx
 "use client"
 
-import { useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { BRAND, THEME_BG } from "@/lib/brand"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
@@ -19,7 +19,7 @@ export function AboutPage() {
   const showBackToTop = useBackToTop()
 
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
 
   const cardBg = isDark ? THEME_BG.dark.card : THEME_BG.light.card

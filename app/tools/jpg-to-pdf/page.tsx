@@ -3,7 +3,8 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { useRef, useState, useSyncExternalStore } from "react"
+import { useRef, useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
@@ -22,10 +23,6 @@ import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
 import Link from "next/link"
 import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
-
-const subscribeToMount = () => () => {}
-const getMountedSnapshot = () => true
-const getServerMountedSnapshot = () => false
 
 const JPG_TO_PDF_HELP = [
   {
@@ -55,7 +52,7 @@ export default function JpgToPdfPage() {
 
   const tip = PAGE_TIPS[0]
   const waPhrase = WHATSAPP_MAGIC_PHRASES[0]
-  const mounted = useSyncExternalStore(subscribeToMount, getMountedSnapshot, getServerMountedSnapshot)
+  const mounted = useMounted()
 
   const { resolvedTheme } = useTheme()
   const isDark = mounted && resolvedTheme === "dark"

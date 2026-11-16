@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
@@ -15,7 +16,7 @@ import { FaqAccordion } from "@/components/footer/faq-accordion"
 function FooterContent() {
   const pathname = usePathname()
   const { theme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const [isTermsOpen, setIsTermsOpen] = useState(false)
   const [phoneCopied, setPhoneCopied] = useState(false)
 

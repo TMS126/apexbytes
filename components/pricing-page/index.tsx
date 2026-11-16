@@ -3,6 +3,7 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
+import { useMounted } from '@/hooks/use-mounted'
 import { useTheme } from 'next-themes'
 import { Lightning, SealPercent, WhatsappLogo } from '@phosphor-icons/react'
 import { Navbar } from '@/components/navbar'
@@ -23,7 +24,7 @@ import { AddOnsCard } from './addons-card'
 
 export default function PricingPage({ nonce }: { nonce?: string }) {
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === 'dark'
 
   // Mobile accordion state

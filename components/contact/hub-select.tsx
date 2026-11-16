@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { CaretDown } from "@phosphor-icons/react"
 import { BRAND, TOKEN } from "@/lib/brand"
@@ -14,7 +15,7 @@ import { FORM_HUB_KEYS, getFormHubColor } from "@/lib/contact-data"
 // leave a stale color stuck if a re-render lands mid-hover.
 export function HubSelect({ value, onChange }: { value: string; onChange: (val: string) => void }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const [hoveredOption, setHoveredOption] = useState<string | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const { resolvedTheme } = useTheme()

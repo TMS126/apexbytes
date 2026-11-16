@@ -3,6 +3,7 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState, useEffect, useRef, Suspense } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
@@ -43,7 +44,7 @@ const QUICK_LINKS = [
 function ContactPageInner() {
   const searchParams = useSearchParams()
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
   const greyColor = isDark ? CONTACT_GREY.dark : CONTACT_GREY.light
 

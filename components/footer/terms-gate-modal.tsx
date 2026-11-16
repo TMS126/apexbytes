@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { X, Info } from "@phosphor-icons/react"
 import { BIZ } from "@/lib/brand"
@@ -13,7 +14,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
   const containerRef = useRef<HTMLDivElement>(null)
   const BUFFER = 5
   const { theme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
 
 
   const resolveColor = (s: { colorLight: string; colorDark: string }) =>
