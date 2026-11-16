@@ -3,6 +3,7 @@
 import { CheckCircle, Sparkle } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 import { ADD_ONS_EFFECTIVE_DATE, ADD_ONS_FOOTER, FREE_ADD_ONS, PAID_ADD_ONS } from "@/lib/add-ons"
+import { sortItemsByPrice } from "@/lib/data"
 
 export function AddOnsCard() {
   return (
@@ -17,7 +18,7 @@ export function AddOnsCard() {
         </div>
       </div>
       <ul className="mb-6 grid gap-3 sm:grid-cols-2">
-        {PAID_ADD_ONS.map((addOn) => (
+        {sortItemsByPrice(PAID_ADD_ONS).map((addOn) => (
           <li key={addOn.name} className="flex min-h-[88px] items-start justify-between gap-3 rounded-[14px] border border-border/60 bg-background px-3.5 py-3">
             <span className="min-w-0">
               <span className="block text-[0.86rem] font-medium text-zinc-800 dark:text-zinc-100">{addOn.name}</span>

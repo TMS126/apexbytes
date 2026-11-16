@@ -54,7 +54,11 @@ export function parseRate(price: string): number {
 export function sortItemsByPrice<T extends { price: string }>(items: readonly T[]): T[] {
   return items
     .map((item, index) => ({ item, index }))
-    .sort((a, b) => parseRate(a.item.price) - parseRate(b.item.price) || a.index - b.index)
+    .sort((a, b) => {
+      const aRate = /^R\s*\d/i.test(a.item.price) ? parseRate(a.item.price) : Number.POSITIVE_INFINITY
+      const bRate = /^R\s*\d/i.test(b.item.price) ? parseRate(b.item.price) : Number.POSITIVE_INFINITY
+      return aRate - bRate || a.index - b.index
+    })
     .map(({ item }) => item)
 }
 
