@@ -149,7 +149,7 @@ export function SettingsBar({
           onClick={() => setOpenSection((current) => (current === "output" ? null : "output"))}
           aria-expanded={openSection === "output"}
           aria-controls="pdf-output-content"
-          className="group flex w-full items-center justify-between gap-4 text-left transition-colors"
+          className="group flex w-full items-center justify-between gap-4 rounded-xl border border-border/70 bg-background/45 px-3 py-3 text-left transition-[background-color,border-color,box-shadow] hover:border-primary/40 hover:bg-secondary/55 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <span>
             <span id="pdf-output-heading" className="block text-sm font-medium text-foreground">Output</span>
@@ -183,7 +183,7 @@ export function SettingsBar({
           onClick={() => setOpenSection((current) => (current === "page-size" ? null : "page-size"))}
           aria-expanded={openSection === "page-size"}
           aria-controls="pdf-size-content"
-          className="group flex w-full items-center justify-between gap-4 text-left transition-colors"
+          className="group flex w-full items-center justify-between gap-4 rounded-xl border border-border/70 bg-background/45 px-3 py-3 text-left transition-[background-color,border-color,box-shadow] hover:border-primary/40 hover:bg-secondary/55 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <span>
             <span id="pdf-size-heading" className="block text-sm font-medium text-foreground">Page size</span>

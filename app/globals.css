@@ -920,6 +920,19 @@ button, a, [role="button"] {
     text-align: center;
   }
 
+  /* Individual tools use a compact in-tool header, not a page-sized landing hero. */
+  .abh-tool-hero {
+    min-height: auto;
+    padding: 1.5rem 1rem 2.25rem;
+  }
+  .abh-tool-hero .abh-page-title {
+    max-width: 24ch;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .abh-tool-hero .abh-editorial-scroll-cue {
+    display: none;
+  }
+
   /* Keep non-home titles and their supporting copy together as a centered,
      balanced hero group while the scroll cue remains at the viewport edge. */
   .abh-editorial-hero:not(.abh-home-hero) .abh-tagline,

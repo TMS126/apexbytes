@@ -82,7 +82,7 @@ export default function JpgToPdfPage() {
       
       <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
         {/* HERO HEADER */}
-        <section className="abh-editorial-hero w-full">
+        <section className="abh-editorial-hero abh-tool-hero w-full">
           <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
             <Link
               href="/tools"
