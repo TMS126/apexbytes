@@ -236,7 +236,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
               <span title="See optional add-ons and included features">View add-ons and free features</span>
               <CaretDown size={16} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
-<div className="grid grid-rows-[0fr] border-t border-border/70 transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
+<div className="grid grid-rows-[0fr] border-t border-border/70 group-open:grid-rows-[1fr]">
     <div className="min-h-0 overflow-hidden">
       <div className="p-3 sm:p-4"><AddOnsCard /></div>
     </div>

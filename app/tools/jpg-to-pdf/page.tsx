@@ -368,7 +368,7 @@ accept={ACCEPT_ATTRIBUTE}
                       role="region"
                       aria-label={item.question}
                       aria-hidden={!isOpen}
-                      className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                      className={`grid ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                     >
                       <div className="overflow-hidden">
                         <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>

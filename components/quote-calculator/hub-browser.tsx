@@ -236,7 +236,7 @@ export function HubBrowser({
         <div
           id={`hub-panel-${openHub}`}
           className={cn(
-            "rounded-[14px] overflow-hidden animate-in fade-in duration-200 ease-out motion-reduce:animate-none",
+            "rounded-[14px] overflow-hidden",
             GLASS.section
           )}
         >
@@ -349,7 +349,7 @@ export function HubBrowser({
                   <div
                     id={sectionPanelId}
                     className={cn(
-                      "grid transition-[grid-template-rows] duration-250 ease-out motion-reduce:transition-none",
+                      "grid",
                       isSectionOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     )}
                   >

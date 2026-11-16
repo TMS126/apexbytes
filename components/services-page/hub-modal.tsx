@@ -176,7 +176,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
           className="flex-1 overflow-y-auto overscroll-contain p-5 md:p-8"
         >
           {activeSection && (
-            <div key={`items-${openSectionIdx}`} className="abh-shadow-nested-group rounded-[14px] bg-muted/45 p-3 md:p-4 grid grid-cols-1 gap-2 animate-in fade-in duration-200">
+            <div key={`items-${openSectionIdx}`} className="abh-shadow-nested-group rounded-[14px] bg-muted/45 p-3 md:p-4 grid grid-cols-1 gap-2">
               {sortItemsByPrice(activeSection.items).map((item, iIdx) => {
                 const priceKey = `${activeSection.title}|${item.name}`
                 const isRevealed = revealedPrices.has(priceKey)

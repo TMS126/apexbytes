@@ -36,7 +36,7 @@ export function SavedQuotesPanel({
         <span className="flex items-center gap-1.5"><BookmarkSimple size={13} weight="bold" aria-hidden="true" /> Saved Quotes ({savedQuotes.length})</span>
         <CaretDown size={12} className={cn("transition-transform duration-200", showSavedList ? "rotate-180" : "rotate-0")} aria-hidden="true" />
       </button>
-      <div id="saved-quotes-panel" className={cn("grid transition-[grid-template-rows] duration-250 ease-out motion-reduce:transition-none", showSavedList ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
+      <div id="saved-quotes-panel" className={cn("grid", showSavedList ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
         <div className="overflow-hidden">
           <div className="space-y-1.5 pb-3">
             {savedQuotes.map(q => {
