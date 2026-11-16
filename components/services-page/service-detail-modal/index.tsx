@@ -9,7 +9,7 @@ import { HUB_COLORS, HubKey, BIZ, BRAND } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
 import { useFocusTrap, HubIcon } from "../shared"
 import {
-  SelectedService, naturalServiceLabel, cleanText, formatAcceptHint,
+  SelectedService, naturalServiceLabel, formatAcceptHint,
   HUB_ACCEPT, MAX_UPLOAD_MB, ALLOWED_UPLOAD_MIME_TYPES, trackEvent,
 } from "../lib"
 import { getCartQtyForItem, getEffectiveRate, getBulkHint, parsePrice, itemHasBulk } from "@/components/quote-calculator/lib"
@@ -400,9 +400,6 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 <HubIcon id={svc.hubId} size={11} color={accent} />
                 <span className="text-[0.72rem] font-medium uppercase tracking-widest" style={{ color: accent }}>{hubTitle}</span>
               </div>
-              <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground uppercase tracking-wide mb-2.5 inline-block">
-                {cleanText(svc.sectionTitle)}
-              </span>
               <h3 className="abh-card-heading text-[1.28rem] leading-tight">{svc.name}</h3>
             </div>
             <div aria-hidden="true" />

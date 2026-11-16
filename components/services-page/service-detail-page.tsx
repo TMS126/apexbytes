@@ -31,9 +31,6 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         <span className="mb-2 inline-flex items-center text-xs font-medium uppercase tracking-[0.18em]" style={{ color: accent }}>
           {hub.title}
         </span>
-        <span className="mb-5 block text-sm font-medium text-muted-foreground">
-          {service.sectionTitle}
-        </span>
         <h1 className="abh-page-title mb-5">{service.name}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{service.desc || `Professional ${service.name.toLowerCase()} from the ${hub.title}.`}</p>
         <div className="abh-divider" />
