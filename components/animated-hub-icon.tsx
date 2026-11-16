@@ -24,7 +24,11 @@ export function AnimatedHubIcon({ hubId }: { hubId: HubId }) {
     >
       <Icon className="abh-home-hub-icon__base" weight="regular" />
 
-      {hubId === "print" && <span className="abh-home-hub-icon__page" />}
+      {hubId === "print" && (
+        <span className="abh-home-hub-icon__page">
+          <i /><i /><i />
+        </span>
+      )}
 
       {hubId === "doc" && (
         <span className="abh-home-hub-icon__fold">
@@ -32,7 +36,13 @@ export function AnimatedHubIcon({ hubId }: { hubId: HubId }) {
         </span>
       )}
 
-      {hubId === "design" && <span className="abh-home-hub-icon__paint-stroke" />}
+      {hubId === "design" && (
+        <span className="abh-home-hub-icon__paint-stroke">
+          <i />
+        </span>
+      )}
+
+      {hubId === "eservice" && <span className="abh-home-hub-icon__globe-sweep" />}
 
       {hubId === "tech" && (
         <span className="abh-home-hub-icon__brand-flash">
