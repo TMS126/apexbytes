@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useRef, useState } from "react"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, Plus } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -22,11 +22,31 @@ import { HistoryPanel } from "./history-panel"
 import Link from "next/link"
 import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
 
+const JPG_TO_PDF_HELP = [
+  {
+    question: "How does JPG to PDF work?",
+    answer: "Choose your images or drag them into the upload area. You can reorder, rotate, crop, and select images before downloading one PDF.",
+  },
+  {
+    question: "Are my images uploaded anywhere?",
+    answer: "No. The conversion happens in your browser, so your images stay on your device while you work.",
+  },
+  {
+    question: "Which files can I convert?",
+    answer: "You can use JPG, JPEG, PNG, or WEBP images. Each image can be up to 15 MB, with up to 20 images in one conversion.",
+  },
+  {
+    question: "Can I change the PDF output?",
+    answer: "Yes. After adding images, use the settings bar to choose the page size, image mode, and quality before downloading.",
+  },
+]
+
 export default function JpgToPdfPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [zoomId, setZoomId] = useState<string | null>(null)
   const [cropId, setCropId] = useState<string | null>(null)
+  const [openHelpIndex, setOpenHelpIndex] = useState<number | null>(null)
 
   const [tip] = useState(() => PAGE_TIPS[Math.floor(Math.random() * PAGE_TIPS.length)])
   const [waPhrase] = useState(() => WHATSAPP_MAGIC_PHRASES[Math.floor(Math.random() * WHATSAPP_MAGIC_PHRASES.length)])
@@ -315,6 +335,49 @@ accept={ACCEPT_ATTRIBUTE}
                 <HistoryPanel history={t.history} onClear={t.clearRecents} />
               </>
             )}
+          </div>
+        </section>
+
+        <section className="w-full px-4 pb-16 md:px-6" aria-labelledby="jpg-to-pdf-help-heading">
+          <div className="mx-auto max-w-2xl">
+            <h2 id="jpg-to-pdf-help-heading" className="abh-section-heading mb-5 text-center">JPG to PDF help</h2>
+            <div className="divide-y divide-border border-y border-border">
+              {JPG_TO_PDF_HELP.map((item, index) => {
+                const isOpen = openHelpIndex === index
+                const contentId = `jpg-to-pdf-help-${index}`
+
+                return (
+                  <div key={item.question}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenHelpIndex((current) => (current === index ? null : index))}
+                      aria-expanded={isOpen}
+                      aria-controls={contentId}
+                      className="flex w-full items-center justify-between gap-4 py-4 text-left text-base font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    >
+                      <span>{item.question}</span>
+                      <CaretDown
+                        size={17}
+                        weight="bold"
+                        aria-hidden="true"
+                        className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <div
+                      id={contentId}
+                      role="region"
+                      aria-label={item.question}
+                      aria-hidden={!isOpen}
+                      className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </section>
       </main>
