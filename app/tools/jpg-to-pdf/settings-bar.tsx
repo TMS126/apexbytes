@@ -2,6 +2,7 @@
 "use client"
 
 import { useRef, useCallback, useState } from "react"
+import { CaretDown } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
 import { PAGE_SIZES, MODE_LABELS, type PageSizeOption } from "./constants"
 import { qualityLabel, formatBytes } from "./utils"
@@ -133,6 +134,7 @@ export function SettingsBar({
   estimatedBytes: number | null
   accentColor: string
 }) {
+  const [openSection, setOpenSection] = useState<"output" | "page-size" | null>("output")
   const sizeGroups: { label: string; options: PageSizeOption[] }[] = [
     { label: "Standard", options: Object.values(PAGE_SIZES).filter((option) => ["a4", "letter", "legal"].includes(option.value)) },
     { label: "ISO paper", options: Object.values(PAGE_SIZES).filter((option) => option.value.startsWith("a") && !["a4"].includes(option.value)) },
@@ -140,41 +142,77 @@ export function SettingsBar({
   ]
 
   return (
-    <div className="flex flex-col gap-5 rounded-[18px] border border-border/70 bg-card p-4 shadow-[var(--shadow-card-lift)] md:p-5">
-      <section aria-labelledby="pdf-output-heading">
-        <div className="mb-3 flex items-end justify-between gap-3">
-          <div>
-            <h2 id="pdf-output-heading" className="text-sm font-medium text-foreground">Output</h2>
-            <p className="mt-1 text-xs text-muted-foreground">Choose how your selected images become PDFs.</p>
-          </div>
-          <span className="text-xs font-medium text-muted-foreground">{MODE_LABELS[mode]}</span>
-        </div>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {OUTPUT_OPTIONS.map((option) => (
-            <OptionCard key={option.value} selected={mode === option.value} onClick={() => setMode(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
-          ))}
-        </div>
-      </section>
-
-      <section aria-labelledby="pdf-size-heading" className="border-t border-border/60 pt-5">
-        <div className="mb-3 flex items-end justify-between gap-3">
-          <div>
-            <h2 id="pdf-size-heading" className="text-sm font-medium text-foreground">Page size</h2>
-            <p className="mt-1 text-xs text-muted-foreground">Pick the paper size your PDF should use.</p>
-          </div>
-          <span className="text-xs font-medium text-muted-foreground">{PAGE_SIZES[pageSize].label}</span>
-        </div>
-        <div className="space-y-3">
-          {sizeGroups.map((group) => (
-            <div key={group.label}>
-              <p className="mb-2 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">{group.label}</p>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {group.options.map((option) => (
-                  <OptionCard key={option.value} selected={pageSize === option.value} onClick={() => setPageSize(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
+    <div className="flex flex-col rounded-[18px] border border-border/70 bg-card p-4 shadow-[var(--shadow-card-lift)] md:p-5">
+      <section aria-labelledby="pdf-output-heading" className="pb-5">
+        <button
+          type="button"
+          onClick={() => setOpenSection((current) => (current === "output" ? null : "output"))}
+          aria-expanded={openSection === "output"}
+          aria-controls="pdf-output-content"
+          className="group flex w-full items-center justify-between gap-4 text-left transition-colors"
+        >
+          <span>
+            <span id="pdf-output-heading" className="block text-sm font-medium text-foreground">Output</span>
+            <span className="mt-1 block text-xs text-muted-foreground">{MODE_LABELS[mode]}</span>
+          </span>
+          <CaretDown size={16} weight="bold" aria-hidden="true" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${openSection === "output" ? "rotate-180" : ""}`} />
+        </button>
+        <div
+          id="pdf-output-content"
+          role="region"
+          aria-labelledby="pdf-output-heading"
+          aria-hidden={openSection !== "output"}
+          className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${openSection === "output" ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+        >
+          <div className="overflow-hidden">
+            <div className="pt-3">
+              <p className="mb-3 text-xs text-muted-foreground">Choose how your selected images become PDFs.</p>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {OUTPUT_OPTIONS.map((option) => (
+                  <OptionCard key={option.value} selected={mode === option.value} onClick={() => setMode(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
                 ))}
               </div>
             </div>
-          ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="pdf-size-heading" className="border-t border-border/60 py-5">
+        <button
+          type="button"
+          onClick={() => setOpenSection((current) => (current === "page-size" ? null : "page-size"))}
+          aria-expanded={openSection === "page-size"}
+          aria-controls="pdf-size-content"
+          className="group flex w-full items-center justify-between gap-4 text-left transition-colors"
+        >
+          <span>
+            <span id="pdf-size-heading" className="block text-sm font-medium text-foreground">Page size</span>
+            <span className="mt-1 block text-xs text-muted-foreground">{PAGE_SIZES[pageSize].label}</span>
+          </span>
+          <CaretDown size={16} weight="bold" aria-hidden="true" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${openSection === "page-size" ? "rotate-180" : ""}`} />
+        </button>
+        <div
+          id="pdf-size-content"
+          role="region"
+          aria-labelledby="pdf-size-heading"
+          aria-hidden={openSection !== "page-size"}
+          className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${openSection === "page-size" ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+        >
+          <div className="overflow-hidden">
+            <div className="space-y-3 pt-3">
+              <p className="text-xs text-muted-foreground">Pick the paper size your PDF should use.</p>
+              {sizeGroups.map((group) => (
+                <div key={group.label}>
+                  <p className="mb-2 text-[0.65rem] font-medium uppercase tracking-[0.14em] text-muted-foreground">{group.label}</p>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {group.options.map((option) => (
+                      <OptionCard key={option.value} selected={pageSize === option.value} onClick={() => setPageSize(option.value)} title={option.label} description={option.description} accentColor={accentColor} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
