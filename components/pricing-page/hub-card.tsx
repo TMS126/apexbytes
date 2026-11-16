@@ -3,10 +3,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { CaretDown, CaretUp, Plus, Check, SealPercent, Clock } from '@phosphor-icons/react'
-import { HUBS, type HubId } from '@/lib/data'
+import { HUBS, sortItemsByPrice, type HubId } from '@/lib/data'
 import { HubIcon } from '@/components/services-page/shared'
 import { PdfPillButton } from './shared'
-import { parsePrice } from './lib'
 
 // ── Turnaround times per hub ──────────────────────────────────────────────────
 
@@ -303,9 +302,7 @@ export function HubExpandedPanel({
           {/* ── Right: Services list ── */}
           <div className="overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800 max-h-[460px]">
             {hub.sections.map(section => {
-              const sorted = [...section.items].sort(
-                (a, b) => parsePrice(a.price) - parsePrice(b.price)
-              )
+              const sorted = sortItemsByPrice(section.items)
               return (
                 <div key={section.title} className="px-6 py-4">
                   <SectionHeader title={section.title} color={hubColor} />
@@ -418,9 +415,7 @@ export function HubAccordionCard({
           <div className="border-t border-zinc-100 dark:border-zinc-800">
             <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
               {hub.sections.map(section => {
-                const sorted = [...section.items].sort(
-                  (a, b) => parsePrice(a.price) - parsePrice(b.price)
-                )
+                const sorted = sortItemsByPrice(section.items)
                 return (
                   <div key={section.title} className="px-4 py-3">
                     <SectionHeader title={section.title} color={hubColor} />

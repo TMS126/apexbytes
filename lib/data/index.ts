@@ -50,6 +50,14 @@ export function parseRate(price: string): number {
   return parsePrice(price).rate
 }
 
+/** Return a new array ordered from the lowest listed rate to the highest. */
+export function sortItemsByPrice<T extends { price: string }>(items: readonly T[]): T[] {
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => parseRate(a.item.price) - parseRate(b.item.price) || a.index - b.index)
+    .map(({ item }) => item)
+}
+
 function derivePricing(hubs: Record<HubId, Hub>): Record<HubId, Record<string, Record<string, PriceEntry>>> {
   const result = {} as Record<HubId, Record<string, Record<string, PriceEntry>>>
   for (const hubId of Object.keys(hubs) as HubId[]) {

@@ -9,7 +9,7 @@ import { Megaphone, SealPercent, CaretLeft, CaretDown } from "@phosphor-icons/re
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
-import { HUBS, HubId } from "@/lib/data"
+import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { HubIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
@@ -344,7 +344,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
                   </p>
                 )}
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {desktopActiveSectionData.items.map((item) => (
+                  {sortItemsByPrice(desktopActiveSectionData.items).map((item) => (
                     <ServiceCard
                       key={item.name}
                       item={item}

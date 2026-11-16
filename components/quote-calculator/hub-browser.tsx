@@ -36,7 +36,7 @@
 
 import { CaretDown, CheckCircle, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { HUBS, HubId } from "@/lib/data"
+import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
 import { GLASS, HubIcon } from "./shared"
 import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
@@ -356,7 +356,7 @@ export function HubBrowser({
                   >
                     <div className="overflow-hidden">
                       <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
-                        {section.items.map((item, iIdx) => {
+                        {sortItemsByPrice(section.items).map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)
                           const itemQty = getItemQty(itemId)
