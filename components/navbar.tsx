@@ -117,7 +117,7 @@ export function Navbar() {
       <header
         data-nav-scrolled={hasScrolled ? "true" : "false"}
         className={cn(
-          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out dark:bg-background/88",
+          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 pointer-events-none transition-[top,transform,opacity,background-color] duration-300 ease-out dark:bg-background/88",
           !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",
         )}
       >
@@ -187,7 +187,7 @@ export function Navbar() {
                     {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
                     {submenu && activeSubmenu === item.id && (
                       <div
-                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-1 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background/92 p-2.5 shadow-lg backdrop-blur-xl"
+                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-1 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background/92 p-2.5 shadow-lg"
                         onMouseEnter={() => openSubmenu(item.id as "services" | "tools")}
                         onMouseLeave={closeSubmenuSoon}
                       >

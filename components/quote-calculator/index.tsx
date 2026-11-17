@@ -10,7 +10,7 @@ import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { GLASS, HOME_BLUE } from "./shared"
 import {
-  CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED, HUB_ORDER,
+  CartItem, SavedQuote, QuoteUndoAction, STORAGE_KEY, STORAGE_KEY_SAVED, HUB_ORDER,
   getDisplayName, getEffectiveRate, parsePrice, quoteTotals,
 } from "./lib"
 import { HubBrowser } from "./hub-browser"
@@ -23,10 +23,6 @@ import { SavedQuotesPanel } from "./saved-quotes-panel"
 import { FooterActions } from "./footer-actions"
 
 const VIEW_KEY = "apexbytes-quote-view"
-type UndoAction =
-  | { kind: "remove"; item: CartItem; index: number }
-  | { kind: "clear"; items: CartItem[] }
-  | { kind: "saved"; quote: SavedQuote; index: number }
 
 export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
@@ -43,7 +39,7 @@ export function QuoteCalculatorWidget() {
   const chipRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [announce, setAnnounce] = useState("")
 
-  const [undoStack, setUndoStack] = useState<UndoAction | null>(null)
+  const [undoStack, setUndoStack] = useState<QuoteUndoAction | null>(null)
   const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [savedQuotes, setSavedQuotes] = useState<SavedQuote[]>([])

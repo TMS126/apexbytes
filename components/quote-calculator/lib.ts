@@ -144,6 +144,11 @@ export interface SavedQuote {
   id: string; name: string; savedAt: number; items: CartItem[]
 }
 
+export type QuoteUndoAction =
+  | { kind: "remove"; item: CartItem; index: number }
+  | { kind: "clear"; items: CartItem[] }
+  | { kind: "saved"; quote: SavedQuote; index: number }
+
 export const STORAGE_KEY       = "apexbytes-quote-cart"
 export const STORAGE_KEY_SAVED = "apexbytes-saved-quotes"
 

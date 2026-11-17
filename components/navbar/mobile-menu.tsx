@@ -74,7 +74,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       )}
     >
       <div
-        className="absolute inset-0 bg-background/95 backdrop-blur-xl"
+        className="absolute inset-0 bg-background/95"
         onClick={() => setMenuOpen(false)}
         aria-hidden="true"
       />

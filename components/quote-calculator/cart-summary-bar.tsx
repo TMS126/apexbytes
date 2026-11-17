@@ -9,15 +9,9 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowCounterClockwise, ArrowsOutSimple, ArrowsInSimple, FloppyDisk, Trash } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
-import { CartItem, getDisplayName } from "./lib"
+import { CartItem, QuoteUndoAction, getDisplayName } from "./lib"
 import { CartItemChip } from "./cart-item-chip"
 import { CartItemCard } from "./cart-item-card"
-
-interface UndoStack {
-  kind: "remove" | "clear" | "saved"
-  item?: CartItem
-  quote?: { name: string }
-}
 
 interface CartSummaryBarProps {
   isDark: boolean
@@ -34,7 +28,7 @@ interface CartSummaryBarProps {
   setSaveNameDraft: (v: string) => void
   confirmSaveQuote: () => void
   clearCart: () => void
-  undoStack: UndoStack | null
+  undoStack: QuoteUndoAction | null
   undoRemove: () => void
   highlightId: string | null
   chipRefs: React.MutableRefObject<Record<string, HTMLDivElement | null>>
@@ -57,9 +51,9 @@ export function CartSummaryBar({
         <div className="sticky top-0 z-20 border-b border-border bg-card p-3">
           <div className="flex items-center justify-between gap-3 rounded-[12px] border border-border bg-foreground p-2.5 text-background animate-in fade-in slide-in-from-top-1 duration-200">
             <span className="text-[0.7rem] font-medium truncate">
-              {undoStack.kind === "remove" && undoStack.item
+              {undoStack.kind === "remove"
                 ? `${getDisplayName(undoStack.item.sectionTitle, undoStack.item.name)} removed`
-                : undoStack.kind === "clear" ? "Quote cleared" : `${undoStack.quote?.name ?? "Saved quote"} deleted`}
+                : undoStack.kind === "clear" ? "Quote cleared" : `${undoStack.quote.name} deleted`}
             </span>
             <button
               onClick={undoRemove}
