@@ -7,7 +7,7 @@ import { useMounted } from "@/hooks/use-mounted"
 import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
-import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, Phone, EnvelopeSimple, FacebookLogo, Copy, Check } from "@phosphor-icons/react"
+import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, FacebookLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
 import { BRAND, TOKEN, BIZ, CONTACT_LINKS } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { BusinessStatusFull } from "@/components/business-status"
@@ -21,9 +21,9 @@ import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 const CONTACT_ICONS: Record<string, React.ElementType> = {
   "WhatsApp Us": WhatsappLogo,
+  "Facebook": FacebookLogo,
   "Call Us": Phone,
   "Email Us": EnvelopeSimple,
-  "Facebook": FacebookLogo,
 }
 
 const COPYABLE_TITLES = new Set(["Call Us", "Email Us"])
