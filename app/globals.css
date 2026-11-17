@@ -118,6 +118,14 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-reference-search input:focus-visible,
 .abh-search-input:focus,
 .abh-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
+.dark .abh-reference-search,
+.dark .abh-reference-search input,
+.dark .abh-search-input {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
 .abh-reference-search input::placeholder,
 .abh-search-input::placeholder { color: var(--muted-foreground); opacity: 1; }
 .abh-reference-search svg { color: currentColor; }
@@ -178,7 +186,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-orange-brown: #8D4D1F;
   --brand-white: #FFFFFF;
   /* Neutral rules keep the editorial layout quiet; dark mode retains its warm accent. */
-  --line-rule: #D9D9D6;
+  --line-rule: var(--brand-blue);
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --card-rule: var(--line-rule);
   --form-rule: var(--brand-blue);
@@ -1527,12 +1535,19 @@ input, textarea, select {
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 input:focus, textarea:focus, select:focus,
-input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: none !important;
-  border-bottom-color: var(--line-rule) !important;
-  box-shadow: 0 3px 0 -1px var(--line-rule) !important;
-}
-.abh-footer-icon-link {
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: none !important;
+    border-bottom-color: var(--line-rule) !important;
+    box-shadow: 0 3px 0 -1px var(--line-rule) !important;
+  }
+
+  /* Structural rules are blue on light surfaces and seal orange in dark mode.
+     Card outlines remain independently monochromatic. */
+  [class~="border-t"], [class~="border-b"], [class~="border-y"] {
+    border-color: var(--line-rule) !important;
+  }
+
+  .abh-footer-icon-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;

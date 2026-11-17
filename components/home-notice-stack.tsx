@@ -29,6 +29,13 @@ const VARIANT_TEXT: Record<NoticeVariant, string> = {
   error: TOKEN.errorText,
 }
 
+const VARIANT_LABEL: Record<NoticeVariant, string> = {
+  success: "Good news",
+  info: "Information",
+  warning: "Important",
+  error: "Action needed",
+}
+
 function NoticeCard({ notice }: { notice: HomeNotice }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
@@ -91,6 +98,9 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
 
   const isMulti = notices.length > 1
   const first = notices[0]
+  const groupedNotices = (Object.keys(VARIANT_LABEL) as NoticeVariant[])
+    .map((variant) => ({ variant, notices: notices.filter((notice) => notice.variant === variant) }))
+    .filter((group) => group.notices.length > 0)
 
   useEffect(() => {
     if (!modalOpen) return
@@ -203,9 +213,18 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
                   </button>
                 </div>
 
-                <div className="mx-auto w-full max-w-[720px] space-y-4">
-                  {notices.map((notice) => (
-                    <NoticeCard key={notice.id} notice={notice} />
+                <div className="mx-auto w-full max-w-[720px] space-y-6">
+                  {groupedNotices.map((group) => (
+                    <section key={group.variant} aria-labelledby={`${titleId}-${group.variant}`}>
+                      <h3 id={`${titleId}-${group.variant}`} className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                        {VARIANT_LABEL[group.variant]}
+                      </h3>
+                      <div className="space-y-4">
+                        {group.notices.map((notice) => (
+                          <NoticeCard key={notice.id} notice={notice} />
+                        ))}
+                      </div>
+                    </section>
                   ))}
                 </div>
 
