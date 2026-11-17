@@ -712,6 +712,7 @@ code, pre, kbd, samp, .abh-mono {
   --glass-tint-strong: rgba(255, 255, 255, 0.94);
   --glass-border: rgba(255, 255, 255, 0.62);
   --glass-shadow: 0 18px 48px -28px rgba(15, 63, 102, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  --glass-blur: 12px;
 }
 .dark {
   --glass-tint: rgba(31, 41, 55, 0.48);
@@ -743,6 +744,12 @@ input, textarea, select {
   background-color: var(--card) !important;
   border-color: var(--border) !important;
 }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .abh-navbar-submenu {
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  }
+}
 header, header nav {
   background: transparent !important;
   border-color: transparent !important;
@@ -762,6 +769,8 @@ footer {
     background-color: var(--glass-tint) !important;
     border-bottom-color: var(--glass-border) !important;
     box-shadow: var(--glass-shadow) !important;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%) !important;
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%) !important;
   }
 }
 
