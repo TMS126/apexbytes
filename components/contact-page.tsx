@@ -170,7 +170,7 @@ function ContactPageInner() {
                   <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
                 </div>
 
-                <div className="flex w-full flex-nowrap items-stretch gap-2 sm:gap-3">
+                <div className="flex w-full flex-nowrap items-stretch justify-center gap-2 sm:gap-3">
                   {GRID_CONTACT_LINKS.map((c, index) => {
                     const Icon = CONTACT_ICONS[c.title] ?? Phone
                     const isCopyable = COPYABLE_TITLES.has(c.title)
@@ -260,8 +260,8 @@ function ContactPageInner() {
                         value={rawValue}
                         aria-invalid={err}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className="w-full rounded-[14px] border border-[var(--line-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
-                        style={{ borderColor: err ? TOKEN.errorBg : "var(--line-rule)" }}
+                        className="w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
+                        style={{ borderColor: err ? TOKEN.errorBg : "var(--form-rule)" }}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />
@@ -282,8 +282,8 @@ function ContactPageInner() {
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       maxLength={1000}
-                      className="w-full flex-1 rounded-[14px] border border-[var(--line-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
-                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--line-rule)" }}
+                      className="w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
+                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--form-rule)" }}
                       rows={4}
                       value={formData.message}
                       onBlur={() => setTouched({ ...touched, message: true })}
