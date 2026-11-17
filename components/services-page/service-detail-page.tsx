@@ -6,9 +6,9 @@ import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
-import { HUBS } from "@/lib/data"
+import { HUBS, sortItemsByPrice } from "@/lib/data"
 import { HubIcon } from "./shared"
-import { getTurnaround, type SelectedService } from "./lib"
+import { getTurnaround, serviceRouteFor, type SelectedService } from "./lib"
 import { ServiceDetailModal } from "./service-detail-modal"
 
 export function ServiceDetailPage({ service }: { service: SelectedService }) {
@@ -18,21 +18,21 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
   const colors = HUB_COLORS[service.hubId as HubKey]
   const accent = resolvedTheme === "dark" ? colors.accentDark : colors.accentLight
   const turnaround = service.turnaround ?? getTurnaround(service.sectionTitle, service.name)
+  const relatedServices = sortItemsByPrice(
+    hub.sections.find((section) => section.title === service.sectionTitle)?.items.filter((item) => item.name !== service.name) ?? [],
+  )
 
   return (
     <main className="min-h-screen bg-background pb-24">
       <header className="abh-editorial-hero">
         <Link href={`/services/${service.hubId}`} aria-label={`Back to ${hub.title}`} className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-          <span className="group inline-flex size-10 items-center justify-center rounded-full bg-secondary text-muted-foreground shadow-sm transition-[background-color,box-shadow,transform,color] hover:-translate-y-0.5 hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)] hover:shadow-[var(--shadow-card-lift)]" style={{ ["--hub-fill" as string]: colors.primary, ["--hub-on" as string]: "var(--background)" }}>
+          <span className="inline-flex size-10 items-center justify-center text-muted-foreground">
             <HubIcon id={service.hubId} size={20} color="currentColor" />
           </span>
           <ArrowLeft size={15} aria-hidden="true" style={{ color: accent }} />
         </Link>
         <span className="mb-2 inline-flex items-center text-xs font-medium uppercase tracking-[0.18em]" style={{ color: accent }}>
           {hub.title}
-        </span>
-        <span className="mb-5 block text-sm font-medium text-muted-foreground">
-          {service.sectionTitle}
         </span>
         <h1 className="abh-page-title mb-5">{service.name}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{service.desc || `Professional ${service.name.toLowerCase()} from the ${hub.title}.`}</p>
@@ -84,6 +84,27 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
           </button>
         </section>
       </div>
+
+      {relatedServices.length > 0 && (
+        <section className="mx-auto mt-10 max-w-[1080px] border-t border-[var(--line-rule)] px-4 pt-7 md:px-8" aria-labelledby="related-services-heading">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">More in this category</p>
+          <h2 id="related-services-heading" className="mt-2 font-heading text-2xl font-medium tracking-tight text-foreground">
+            More {service.sectionTitle}
+          </h2>
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 md:justify-start">
+            {relatedServices.map((item) => (
+              <Link
+                key={item.name}
+                href={serviceRouteFor(service.hubId, service.sectionTitle, item.name)}
+                className="group inline-flex items-center rounded-full px-3 py-1.5 text-sm text-muted-foreground transition-[background-color,color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:bg-card hover:text-foreground hover:shadow-[var(--shadow-card-lift)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--line-rule)]/50"
+              >
+                <span>{item.name}</span>
+                <span className="ml-1.5 text-xs opacity-0 transition-opacity group-hover:opacity-100" style={{ color: accent }}>↗</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <ServiceDetailModal svc={requestOpen ? service : null} onClose={() => setRequestOpen(false)} />
     </main>

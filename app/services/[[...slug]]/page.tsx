@@ -12,6 +12,7 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { Footer } from "@/components/footer"
 import { HUBS } from "@/lib/data"
 import { BIZ } from "@/lib/brand"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 import { hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor } from "@/components/services-page/lib"
 
 export const dynamic = "force-dynamic"
@@ -138,6 +139,7 @@ export default async function ServicesRoute({
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <PageNoticeBell page="services" />
       <div>
         {slug.length === 1 && <ServiceHubRoutePage hubId={hubSlugToId(slug[0])!} />}
         {slug.length === 0 && (
@@ -146,7 +148,7 @@ export default async function ServicesRoute({
           </Suspense>
         )}
         {selectedService && <ServiceDetailPage service={selectedService} />}
-        <TestimonialsSection />
+        {!selectedService && <TestimonialsSection />}
         <CtaBar
           title="Not sure what you need?"
           description="Just WhatsApp us and we'll guide you in the right direction."

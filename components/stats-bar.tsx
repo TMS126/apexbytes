@@ -1,7 +1,7 @@
 // components/stats-bar.tsx
 "use client"
 
-import { useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { PlusCircle, Gear, Wrench, CalendarCheck } from "@phosphor-icons/react"
 import { BIZ, pickHex } from "@/lib/brand"
@@ -9,7 +9,7 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 
 export function StatsBar() {
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
 
   const stats = [

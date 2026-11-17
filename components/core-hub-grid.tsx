@@ -27,9 +27,9 @@ export function CoreHubGrid() {
           </div>
         </ScrollBounce>
 
-        <ul className="flex flex-col gap-12 md:gap-20">
+        <ul className="flex flex-col gap-8 md:gap-14">
           {HUB_ORDER.map((hubId, index) => (
-            <li key={hubId} className="border-b border-border/65 pb-12 last:border-b-0 md:pb-20">
+            <li key={hubId} className="border-b border-border/65 pb-8 last:border-b-0 md:pb-14">
               <ScrollBounce delay={index * 0.06}>
                 <HomeHubCard hubId={hubId} reverse={index % 2 === 1} />
               </ScrollBounce>

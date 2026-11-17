@@ -4,7 +4,8 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { Broom, Info, MagnifyingGlass, Shuffle } from "@phosphor-icons/react"
+import { Funnel, Info, Shuffle } from "@phosphor-icons/react"
+import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -40,15 +41,15 @@ export function HubFilterCircles({
   const neutralIconColor = isDark ? "#a1a1aa" : "#71717a"
 
   return (
-    <div className="flex items-center justify-center flex-wrap gap-4 overflow-x-auto no-scrollbar px-1 pb-1">
+    <div className="flex items-center justify-center flex-wrap gap-4 overflow-x-auto no-scrollbar px-1 pb-1 md:gap-7">
       <button
         onClick={() => onSelect("all")}
         aria-pressed={activeFilter === "all"}
         aria-label="All projects"
-        className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150"
+        className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
       >
         <span
-          className="relative w-16 h-16 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 border-2 transition-colors overflow-hidden"
+          className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
           style={{ borderColor: activeFilter === "all" ? TOKEN.orangeText : "transparent" }}
         >
           <span
@@ -58,7 +59,8 @@ export function HubFilterCircles({
           />
           <span className={cn("relative text-[0.8rem] font-medium", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
         </span>
-        <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground">All</span>
+        <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:text-base">All</span>
+        <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
       </button>
 
       {ROW_ORDER.map((row) => {
@@ -70,10 +72,10 @@ export function HubFilterCircles({
             onClick={() => onSelect(row.id)}
             aria-pressed={isActive}
             aria-label={row.label}
-            className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150"
+            className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
           >
             <span
-              className="relative w-16 h-16 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 border-2 transition-colors overflow-hidden"
+              className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
               style={{ borderColor: isActive ? accent : "transparent" }}
             >
               <span
@@ -90,7 +92,8 @@ export function HubFilterCircles({
                 <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
-            <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
+            <span className="max-w-[64px] truncate text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:max-w-none md:text-base">{row.short}</span>
+            <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100"><HubIcon id={row.id} size={16} weight="regular" color="currentColor" /></span>
           </button>
         )
       })}
@@ -144,30 +147,33 @@ function ProjectCard({
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${p.id}` : `${pathname}?project=${p.id}`
   return (
     <div className="flex flex-col">
-      <button
-        onClick={() => onSelect(p)}
-        aria-label={`View ${p.title}`}
-        className="group relative aspect-[4/3] rounded-[14px] overflow-hidden bg-zinc-100 dark:bg-zinc-900 shadow-sm transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.99] active:translate-y-0"
-      >
-        <SafeImage
-          src={p.image}
-          alt={p.title}
-          accent={TOKEN.orangeText}
-          fill
-          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-          <div onClick={(e) => e.stopPropagation()}>
+      <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 shadow-sm transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] focus-within:-translate-y-1 focus-within:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] dark:bg-zinc-900">
+        <button
+          type="button"
+          onClick={() => onSelect(p)}
+          aria-label={`View ${p.title}`}
+          className="absolute inset-0 z-0 h-full w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
+        >
+          <SafeImage
+            src={p.image}
+            alt={p.title}
+            accent={TOKEN.orangeText}
+            fill
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
+            className="object-cover"
+          />
+        </button>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-2">
+          <div className="pointer-events-auto">
             <ShareButton url={shareUrl} title={p.title} />
           </div>
-          <div onClick={(e) => e.stopPropagation()}>
+          <div className="pointer-events-auto">
             <LikeButton liked={liked} onToggle={(e) => { e.stopPropagation(); onToggleLike(p.id) }} context="card" />
           </div>
         </div>
-      </button>
+      </div>
 
-      <button onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
+      <button type="button" onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
         <span className="block text-base md:text-lg font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
         <span className="mt-1 block text-xs md:text-sm uppercase tracking-[0.14em] text-muted-foreground">{p.tag}</span>
       </button>
@@ -236,6 +242,7 @@ function GalleryPageInner() {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
   const [zoomIndex,       setZoomIndex]       = useState<number | null>(null)
   const [searchQuery,     setSearchQuery]     = useState("")
+  const [searchExpanded,  setSearchExpanded]  = useState(false)
   const [surpriseFlash,   setSurpriseFlash]   = useState(false)
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const showBackToTop = useBackToTop()
@@ -373,39 +380,31 @@ function GalleryPageInner() {
         )}
 
         <ScrollBounce delay={0.1}>
-          <div className="max-w-md mx-auto mb-8">
-            <div data-hover-border="" className="abh-reference-search">
-              <MagnifyingGlass size={18} weight="regular" className="shrink-0 text-muted-foreground" aria-hidden="true" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                aria-label="Search projects"
-                className="abh-search-input text-base font-medium leading-6"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  aria-label="Clear search"
-                  className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-all hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:hover:bg-white/10 dark:hover:text-zinc-300"
-                >
-                  <Broom size={15} weight="regular" aria-hidden="true" />
-                </button>
+          <div className="relative mx-auto mb-8 flex w-full max-w-md justify-center">
+            <ExpandingSearch
+              id="gallery-search"
+              label="Search projects"
+              placeholder="Search..."
+              value={searchQuery}
+              expanded={searchExpanded}
+              onChange={setSearchQuery}
+              onExpandedChange={setSearchExpanded}
+              className="max-w-[300px]"
+            />
+            <button
+              onClick={handleSurprise}
+              aria-label="Surprise me with a random project"
+              aria-hidden={searchExpanded}
+              tabIndex={searchExpanded ? -1 : 0}
+              className={cn(
+                "absolute right-0 top-1/2 flex min-h-9 -translate-y-1/2 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-all duration-200 hover:text-zinc-800 active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-zinc-200",
+                surpriseFlash && "scale-90 opacity-60",
+                searchExpanded && "pointer-events-none opacity-0",
               )}
-
-              <button
-                onClick={handleSurprise}
-                aria-label="Surprise me with a random project"
-                className={cn(
-                  "flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-all duration-200 hover:text-zinc-800 active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-zinc-200",
-                  surpriseFlash && "scale-90 opacity-60"
-                )}
-              >
-                <Shuffle size={13} weight="bold" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />
-                Pick for me
-              </button>
-            </div>
+            >
+              <Shuffle size={13} weight="bold" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />
+              Pick for me
+            </button>
           </div>
         </ScrollBounce>
 

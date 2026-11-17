@@ -202,14 +202,14 @@ export function WhatsAppFAB() {
   return (
     <>
       {isOpen && (
-        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur-sm transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
+        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none" onClick={handleClose} aria-hidden="true" />
       )}
 
       {isOpen && (
         <div
           className={cn(
             "pointer-events-auto fixed bottom-4 right-4 left-4 z-[9995] max-h-[75vh] md:bottom-24 md:left-auto md:right-6 md:w-[400px]",
-            "rounded-[20px] shadow-2xl flex flex-col overflow-hidden bg-white dark:bg-zinc-950",
+            "rounded-[14px] shadow-2xl flex flex-col overflow-hidden bg-white dark:bg-zinc-950 font-heading",
             "animate-in slide-in-from-bottom-4 fade-in duration-200 ease-out motion-reduce:animate-none transform-gpu"
           )}
           style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.25)" }}

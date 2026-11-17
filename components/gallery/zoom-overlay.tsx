@@ -64,7 +64,7 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
         <X size={18} weight="bold" />
       </button>
       {images.length > 1 && (
-        <div className="absolute top-5 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm text-white text-[0.84rem] font-medium tracking-widest">
+        <div className="absolute top-5 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full bg-black/50  text-white text-[0.84rem] font-medium tracking-widest">
           {idx + 1} / {images.length}
         </div>
       )}

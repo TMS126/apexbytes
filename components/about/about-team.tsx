@@ -40,10 +40,10 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
           </div>
         </ScrollBounce>
 
-        <ul className="flex flex-col gap-5" aria-label="Team members">
+        <ul className="abh-card flex flex-col gap-0 overflow-hidden p-2" aria-label="Team members">
           {TEAM.map((member, index) => {
             const card = (
-              <li key={member.initials} className="abh-card abh-card-rule p-6 flex items-center text-left gap-4">
+                <li key={member.initials} className="flex items-center gap-4 border-b border-border/60 p-5 text-left last:border-b-0">
                 <div className="abh-icon-chip flex h-14 w-14 items-center justify-center bg-background font-medium text-lg shrink-0" style={{ color: blueColor }} aria-hidden="true">
                   {member.initials}
                 </div>

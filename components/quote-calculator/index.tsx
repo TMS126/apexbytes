@@ -23,6 +23,10 @@ import { SavedQuotesPanel } from "./saved-quotes-panel"
 import { FooterActions } from "./footer-actions"
 
 const VIEW_KEY = "apexbytes-quote-view"
+type UndoAction =
+  | { kind: "remove"; item: CartItem; index: number }
+  | { kind: "clear"; items: CartItem[] }
+  | { kind: "saved"; quote: SavedQuote; index: number }
 
 export function QuoteCalculatorWidget() {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
@@ -39,7 +43,7 @@ export function QuoteCalculatorWidget() {
   const chipRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [announce, setAnnounce] = useState("")
 
-  const [undoStack, setUndoStack] = useState<{ item: CartItem; index: number } | null>(null)
+  const [undoStack, setUndoStack] = useState<UndoAction | null>(null)
   const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const [savedQuotes, setSavedQuotes] = useState<SavedQuote[]>([])
@@ -175,14 +179,20 @@ export function QuoteCalculatorWidget() {
     if (index === -1) return
     const item = cart[index]
     setCart(prev => prev.filter(i => i.id !== id))
-    setUndoStack({ item, index })
+    setUndoStack({ kind: "remove", item, index })
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
     undoTimerRef.current = setTimeout(() => setUndoStack(null), 6000)
   }
 
   const undoRemove = () => {
     if (!undoStack) return
-    setCart(prev => { const next = [...prev]; next.splice(Math.min(undoStack.index, next.length), 0, undoStack.item); return next })
+    if (undoStack.kind === "remove") {
+      setCart(prev => { const next = [...prev]; next.splice(Math.min(undoStack.index, next.length), 0, undoStack.item); return next })
+    } else if (undoStack.kind === "clear") {
+      setCart(undoStack.items)
+    } else {
+      setSavedQuotes(prev => { const next = [...prev]; next.splice(Math.min(undoStack.index, next.length), 0, undoStack.quote); return next })
+    }
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
     setUndoStack(null)
   }
@@ -194,7 +204,7 @@ export function QuoteCalculatorWidget() {
     if (newQty < 1) {
       const index = cart.findIndex(i => i.id === id)
       setCart(prev => prev.filter(i => i.id !== id))
-      setUndoStack({ item, index })
+      setUndoStack({ kind: "remove", item, index })
       if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
       undoTimerRef.current = setTimeout(() => setUndoStack(null), 6000)
       return
@@ -250,7 +260,13 @@ export function QuoteCalculatorWidget() {
     stepQty(id, delta)
   }
 
-  const clearCart = () => setCart([])
+  const clearCart = () => {
+    if (cart.length === 0) return
+    setUndoStack({ kind: "clear", items: cart })
+    setCart([])
+    if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
+    undoTimerRef.current = setTimeout(() => setUndoStack(null), 6000)
+  }
 
   const { total, savings: totalSavings, count: itemCount } = useMemo(() => quoteTotals(cart), [cart])
   const hubSubtotal = (hubId: HubId) => { const items = cart.filter(i => i.hubId === hubId); return items.length === 0 ? null : quoteTotals(items) }
@@ -303,14 +319,22 @@ export function QuoteCalculatorWidget() {
     setSaveNameDraft(""); setShowSaveForm(false)
   }
   const loadSavedQuote = (q: SavedQuote) => { setCart(q.items); setShowSavedList(false) }
-  const deleteSavedQuote = (id: string) => setSavedQuotes(prev => prev.filter(q => q.id !== id))
+  const deleteSavedQuote = (id: string) => {
+    const index = savedQuotes.findIndex(q => q.id === id)
+    if (index === -1) return
+    const quote = savedQuotes[index]
+    setSavedQuotes(prev => prev.filter(q => q.id !== id))
+    setUndoStack({ kind: "saved", quote, index })
+    if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
+    undoTimerRef.current = setTimeout(() => setUndoStack(null), 6000)
+  }
 
   return (
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
       {isOpen && (
-        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none md:backdrop-blur-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
+        <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none md:-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
       )}
 
       <FabTrigger
@@ -333,15 +357,14 @@ export function QuoteCalculatorWidget() {
           aria-label="Quotation Calculator"
           className={cn(
             "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5",
-            "w-full h-full md:h-auto md:w-[min(820px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
-            "rounded-none md:rounded-[14px] shadow-2xl flex flex-col overflow-hidden",
+            "abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
+            "rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
             GLASS.panel,
-            "md:backdrop-blur-none"
+            "md:-none"
           )}
-          style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.18)" }}
         >
-          <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-zinc-200 dark:via-white/20 to-transparent pointer-events-none" />
+          <div className="absolute top-0 left-6 right-6 h-px bg-border pointer-events-none" />
 
           <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
 

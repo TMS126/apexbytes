@@ -2,7 +2,10 @@
 import type { HubKey } from "@/lib/brand"
 import type { PageSize, ConvertMode, ImageFilter } from "./types"
 
+export type PageSizeOption = { value: PageSize; w: number; h: number; label: string; description: string }
+
 export const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+export const ACCEPT_ATTRIBUTE = "image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
 export const MAX_FILES = 20
 export const MAX_FILE_SIZE_MB = 15
 export const HISTORY_KEY = "abh-jpg-to-pdf-history"
@@ -20,9 +23,18 @@ export const MAX_CANVAS_DIMENSION = 2200
 
 export const SENDABLE_HUBS: HubKey[] = ["print", "doc", "design", "eservice", "tech"]
 
-export const PAGE_SIZES: Record<PageSize, { w: number; h: number; label: string }> = {
-  a4: { w: 210, h: 297, label: "A4" },
-  letter: { w: 215.9, h: 279.4, label: "Letter" },
+export const PAGE_SIZES: Record<PageSize, PageSizeOption> = {
+  a0: { value: "a0", w: 841, h: 1189, label: "A0", description: "Poster / large format" },
+  a1: { value: "a1", w: 594, h: 841, label: "A1", description: "Poster / presentation" },
+  a2: { value: "a2", w: 420, h: 594, label: "A2", description: "Poster / display" },
+  a3: { value: "a3", w: 297, h: 420, label: "A3", description: "Large document" },
+  a4: { value: "a4", w: 210, h: 297, label: "A4", description: "Everyday document" },
+  a5: { value: "a5", w: 148, h: 210, label: "A5", description: "Flyer / booklet" },
+  a6: { value: "a6", w: 105, h: 148, label: "A6", description: "Small card / note" },
+  letter: { value: "letter", w: 215.9, h: 279.4, label: "Letter", description: "US standard" },
+  legal: { value: "legal", w: 215.9, h: 355.6, label: "Legal", description: "US legal paper" },
+  photo4x6: { value: "photo4x6", w: 101.6, h: 152.4, label: "4 × 6 in", description: "Photo print" },
+  photo5x7: { value: "photo5x7", w: 127, h: 177.8, label: "5 × 7 in", description: "Photo print" },
 }
 
 export const MODE_LABELS: Record<ConvertMode, string> = {

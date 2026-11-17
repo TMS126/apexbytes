@@ -9,6 +9,8 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 import { BIZ, WA } from "@/lib/brand"
 import { ComingSoonTool } from "@/components/coming-soon-tool"
 import { CtaBar } from "@/components/strip-section"
+import { PageScrollControls } from "@/components/page-scroll-controls"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -36,6 +38,7 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <PageNoticeBell page="tools" />
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
@@ -63,7 +66,7 @@ export default function ToolsPage() {
                     aria-label={tool.name}
                   >
                     <span className="flex flex-col items-center gap-2 text-center">
-                      <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                      <span className="flex size-12 items-center justify-center text-primary transition-colors group-hover:text-foreground">
                         <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
                       </span>
                       <span className="text-sm font-medium text-foreground">{tool.name}</span>
@@ -86,6 +89,7 @@ export default function ToolsPage() {
         buttonText="Get in Touch"
         buttonHref={WA.general}
       />
+      <PageScrollControls />
       <Footer />
     </div>
   )

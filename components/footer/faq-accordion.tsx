@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CaretDown } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
+import { Minus, Plus } from "@phosphor-icons/react"
 import { FAQS } from "@/lib/brand"
 
 export function FaqAccordion() {
@@ -30,20 +29,17 @@ export function FaqAccordion() {
                   <h4 className="abh-card-heading text-[1.28rem] leading-snug text-zinc-800 dark:text-zinc-100">
                     {faq.question}
                   </h4>
-                  <CaretDown
-                    weight="bold"
-                    aria-hidden="true"
-                    className={cn("h-3.5 w-3.5 shrink-0 text-muted-foreground transition-transform duration-300", itemOpen && "rotate-180")}
-                  />
+                  {itemOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
                 </button>
                 <div
                   id={`footer-faq-${index}`}
                   role="region"
                   aria-label={faq.question}
                   aria-hidden={!itemOpen}
-                  className={cn("grid transition-none sm:transition-[grid-template-rows,opacity] sm:duration-200 sm:ease-out motion-reduce:transition-none", itemOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
+                  inert={!itemOpen}
+                className={itemOpen ? "block" : "hidden"}
                 >
-                  <div className="overflow-hidden">
+                  <div className="min-h-0 overflow-hidden">
                     <div className="pb-6 text-[1.12rem] leading-relaxed text-muted-foreground whitespace-pre-wrap">{faq.answer}</div>
                   </div>
                 </div>

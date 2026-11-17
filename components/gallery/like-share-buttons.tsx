@@ -63,7 +63,7 @@ export function LikeButton({ liked, onToggle, context = "header" }: {
       aria-pressed={liked}
       className={cn(
         "w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-all active:scale-90 hover:opacity-80",
-        context === "card" && "bg-black/40 hover:bg-black/60 backdrop-blur-sm"
+        context === "card" && "bg-black/40 hover:bg-black/60 "
       )}
       style={context === "header" ? { backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor } : undefined}
     >

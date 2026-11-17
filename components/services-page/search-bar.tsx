@@ -1,8 +1,8 @@
 // components/services-page/search-bar.tsx
 "use client"
 
-import { useState, useEffect, useMemo, useRef } from "react"
-import { Broom, MagnifyingGlass } from "@phosphor-icons/react"
+import { useState, useMemo } from "react"
+import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
@@ -14,7 +14,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
   const isDark = resolvedTheme === "dark"
   const [query, setQuery] = useState("")
   const [focused, setFocused] = useState(false)
-  const wrapRef = useRef<HTMLDivElement>(null)
+  const [expanded, setExpanded] = useState(false)
   const index = useMemo(() => buildSearchIndex(), [])
 
   const results = useMemo(() => {
@@ -23,41 +23,28 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
     return index.filter((s) => s.name.toLowerCase().includes(q) || s.description.toLowerCase().includes(q)).slice(0, 8)
   }, [query, index])
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) setFocused(false)
-    }
-    document.addEventListener("mousedown", handler)
-    return () => document.removeEventListener("mousedown", handler)
-  }, [])
-
   const pick = (s: SearchableService) => {
     onSelect({ name: s.name, price: s.price, hubId: s.hubId, sectionTitle: s.sectionTitle, requirements: s.requirements, desc: s.description, turnaround: s.turnaround })
     setQuery("")
     setFocused(false)
+    setExpanded(false)
   }
 
   return (
-    <div ref={wrapRef} className="relative mx-auto w-full max-w-[300px]">
-      <div data-hover-border="" className="abh-reference-search">
-        <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
-        <label htmlFor="inline-search-input" className="sr-only">Find a service</label>
-        <input
-          id="inline-search-input"
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setFocused(true)}
-          placeholder="Find a service…"
-          className="abh-search-input"
-        />
-        {query && (
-          <button onClick={() => setQuery("")} aria-label="Clear search" className="flex size-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:hover:bg-white/10">
-            <Broom size={15} weight="regular" aria-hidden="true" />
-          </button>
-        )}
-      </div>
-      {focused && query.trim().length > 0 && (
+    <ExpandingSearch
+      id="inline-search-input"
+      label="Find a service"
+      placeholder="Find a service…"
+      value={query}
+      expanded={expanded}
+      onChange={setQuery}
+      onExpandedChange={(next) => {
+        setExpanded(next)
+        if (!next) setFocused(false)
+      }}
+      onFocus={() => setFocused(true)}
+    >
+      {focused && expanded && query.trim().length > 0 && (
         <div className="abh-reference-search-results absolute left-0 right-0 top-full z-30 animate-in fade-in zoom-in-95 duration-150">
           {results.length > 0 ? (
             <div className="max-h-[320px] overflow-y-auto p-2">
@@ -86,6 +73,6 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
           )}
         </div>
       )}
-    </div>
+    </ExpandingSearch>
   )
 } 

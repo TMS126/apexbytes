@@ -3,13 +3,14 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
+import { useMounted } from '@/hooks/use-mounted'
 import { useTheme } from 'next-themes'
-import { Lightning, SealPercent, WhatsappLogo } from '@phosphor-icons/react'
+import { WhatsappLogo } from '@phosphor-icons/react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { ScrollBounce } from '@/components/scroll-bounce'
 import { HUBS, type HubId } from '@/lib/data'
-import { BRAND, TOKEN, BIZ, waLink } from '@/lib/brand'
+import { BRAND, BIZ, waLink } from '@/lib/brand'
 import { itemHasBulk, hubHasBulk } from '@/components/quote-calculator/lib'
 import { PricingSearchInput, PricingSearchResults } from './search-bar'
 import { HubAccordionCard, HubCompactCard, HubExpandedPanel } from './hub-card'
@@ -17,25 +18,24 @@ import { PdfPillButton } from './shared'
 import { HUB_ORDER, dispatchAddToQuote, dispatchRemoveFromQuote, searchHubs } from './lib'
 import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
-import { NoticePill } from '@/components/notice-pill'
+import { PageNoticeBell } from '@/components/page-notice-bell'
 import { HubFilterCircles } from '@/components/gallery-page'
 import { AddOnsCard } from './addons-card'
 
 export default function PricingPage({ nonce }: { nonce?: string }) {
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === 'dark'
 
   // Mobile accordion state
   const [openHubs, setOpenHubs] = useState<Set<HubId>>(new Set())
+  const [openedHubs, setOpenedHubs] = useState<Set<HubId>>(new Set())
   // Desktop selected hub state
 
   const [selectedHub, setSelectedHub] = useState<HubId | null>(null)
   const [hoveredHub, setHoveredHub] = useState<HubId | null>(null)
   const displayedHub = hoveredHub ?? selectedHub
   const [query, setQuery] = useState('')
-  const [rushNoticeDismissed, setRushNoticeDismissed] = useState(false)
-  const [bulkNoticeDismissed, setBulkNoticeDismissed] = useState(false)
   const [justAdded, setJustAdded] = useState<string | null>(null)
 
   const hubRefs = useRef<Partial<Record<HubId, HTMLDivElement | null>>>({})
@@ -49,6 +49,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
   // ── Mobile accordion ────────────────────────────────────────────────────────
 
   const toggleHub = useCallback((id: HubId) => {
+    setOpenedHubs(prev => prev.has(id) ? prev : new Set(prev).add(id))
     setOpenHubs(prev => {
       const next = new Set(prev)
       if (next.has(id)) next.delete(id)
@@ -59,6 +60,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
   const jumpToHub = useCallback((hubId: HubId) => {
     const wasOpen = openHubs.has(hubId)
+    setOpenedHubs(prev => prev.has(hubId) ? prev : new Set(prev).add(hubId))
     setOpenHubs(prev => {
       const next = new Set(prev)
       if (wasOpen) next.delete(hubId)
@@ -73,10 +75,14 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
   }, [openHubs])
 
   const allOpen = openHubs.size === HUB_ORDER.length
-  const toggleAll = useCallback(
-    () => setOpenHubs(allOpen ? new Set() : new Set(HUB_ORDER)),
-    [allOpen]
-  )
+  const toggleAll = useCallback(() => {
+    if (allOpen) {
+      setOpenHubs(new Set())
+      return
+    }
+    setOpenHubs(new Set(HUB_ORDER))
+    setOpenedHubs(new Set(HUB_ORDER))
+  }, [allOpen])
 
   // ── Desktop hub selection ───────────────────────────────────────────────────
 
@@ -103,14 +109,14 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
   const handleDownload = useCallback(() => {
     const link = document.createElement('a')
     link.href = '/ApexbytesHub_Pricing_Catalog_v2.pdf'
-    link.download = 'ApexbytesHub_Pricing_Catalog.pdf'
+    link.download = 'CAT-ABH-Pricing-Catalog.pdf'
     link.click()
   }, [])
 
   const handleHubDownload = useCallback((hubId: HubId) => {
     const link = document.createElement('a')
     link.href = `/ApexbytesHub_Pricing_${hubId}.pdf`
-    link.download = `ApexbytesHub_Pricing_${HUBS[hubId].title.replace(/\s+/g, '_')}.pdf`
+    link.download = `CAT-ABH-Pricing-${HUBS[hubId].title.replace(/\s+/g, '-')}.pdf`
     link.click()
   }, [])
 
@@ -136,6 +142,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
           accent={accent}
           isDark={isDark}
           isOpen={openHubs.has(hubId)}
+          hasOpened={openedHubs.has(hubId)}
           onToggle={() => toggleHub(hubId)}
           justAdded={justAdded}
           onAdd={(section, name, price) => handleAdd(hubId, section, name, price)}
@@ -155,6 +162,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
       <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
+        <PageNoticeBell page="pricing" />
 
         <main className="flex-1">
 
@@ -171,52 +179,6 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
               <EditorialScrollCue />
             </div>
           </section>
-
-          {/* ── Rush fee + Bulk notice pills — below divider, above search ── */}
-          <div className="max-w-[980px] mx-auto px-4 pb-4">
-            <div className="flex flex-wrap justify-center gap-2">
-              {!rushNoticeDismissed && (
-                <ScrollBounce delay={0.06}>
-                  <NoticePill
-                    variant="warning"
-                    Icon={Lightning}
-                    collapsedLabel="Rush Fee"
-                    expandedLabel="Rush Fee"
-                    isDark={isDark}
-                    onDismiss={() => setRushNoticeDismissed(true)}
-                  >
-                    A{' '}
-                    <span className="font-medium" style={{ color: TOKEN.orangeText }}>
-                      50% surcharge
-                    </span>{' '}
-                    applies when same-session or urgent turnaround is required.
-                  </NoticePill>
-                </ScrollBounce>
-              )}
-
-              {!bulkNoticeDismissed && (
-                <ScrollBounce delay={0.1}>
-                  <NoticePill
-                    variant="info"
-                    Icon={SealPercent}
-                    collapsedLabel="Bulk Deals"
-                    expandedLabel="Bulk Pricing"
-                    isDark={isDark}
-                    onDismiss={() => setBulkNoticeDismissed(true)}
-                  >
-                    Look for the{' '}
-                    <span
-                      className="inline-flex items-center gap-0.5 font-medium"
-                      style={{ color: accent }}
-                    >
-                      <SealPercent size={12} weight="fill" aria-hidden="true" /> Bulk
-                    </span>{' '}
-                    tag — larger quantities get a better rate.
-                  </NoticePill>
-                </ScrollBounce>
-              )}
-            </div>
-          </div>
 
           <div className="max-w-[980px] mx-auto px-4 pb-16 space-y-8">
 

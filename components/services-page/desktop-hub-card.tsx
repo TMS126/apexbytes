@@ -40,10 +40,10 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
         ["--hub-on" as string]: HUB_ON_COLOR[hubId],
       }}
       className={cn(
-        "group relative flex h-full min-h-[240px] w-full flex-col justify-end overflow-hidden rounded-[14px] p-6 text-left",
-        "bg-card text-foreground transition-[background-color,color,box-shadow] duration-200 motion-reduce:transition-none",
-        "hover:bg-[var(--hub-fill)] hover:text-[var(--hub-on)] hover:shadow-[var(--shadow-card-lift)]",
-        "focus-visible:bg-[var(--hub-fill)] focus-visible:text-[var(--hub-on)] focus-visible:shadow-[var(--shadow-card-lift)]",
+        "group relative flex h-full min-h-[280px] w-full flex-col justify-end overflow-hidden rounded-[14px] border-2 border-[color-mix(in_srgb,var(--hub-fill)_48%,var(--border))] p-6 text-left",
+        "bg-card text-foreground transition-[border-color,box-shadow,transform] duration-200 motion-reduce:transition-none",
+        "hover:border-[var(--hub-fill)] hover:shadow-[var(--shadow-card-lift)]",
+        "focus-visible:border-[var(--hub-fill)] focus-visible:shadow-[var(--shadow-card-lift)]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hub-fill)]"
       )}
     >
@@ -55,8 +55,8 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
         className={cn(
           "pointer-events-none absolute -right-10 top-1/2 -translate-y-[58%] transform-gpu",
           "text-muted-foreground/20 transition-[color,transform] duration-300 motion-reduce:transition-none",
-          "group-hover:-translate-x-1 group-hover:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)]",
-          "group-focus-visible:-translate-x-1 group-focus-visible:text-[color-mix(in_srgb,var(--hub-on)_28%,transparent)]"
+          "group-hover:-translate-x-1 group-hover:text-[color-mix(in_srgb,var(--hub-fill)_28%,transparent)]",
+          "group-focus-visible:-translate-x-1 group-focus-visible:text-[color-mix(in_srgb,var(--hub-fill)_28%,transparent)]"
         )}
       />
 
@@ -87,7 +87,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
       {/* ── Copy ─────────────────────────────────────────────── */}
       <div className="relative z-10 max-w-[62%]">
         <h3 className="mb-1.5 break-words font-sans text-[1.3rem] font-medium leading-tight">{hub.title}</h3>
-        <p className="mb-4 text-[1.125rem] leading-snug text-muted-foreground transition-colors duration-200 group-hover:text-[var(--hub-on)] group-focus-visible:text-[var(--hub-on)] motion-reduce:transition-none">
+        <p className="mb-4 text-[1.125rem] leading-snug text-muted-foreground transition-colors duration-200 motion-reduce:transition-none">
           {hub.desc}
         </p>
         <span className="abh-link-underline inline-flex items-center gap-1 text-[0.82rem] font-medium">

@@ -169,7 +169,7 @@ export function BusinessStatusFull() {
       collapsedLabel="Business Hours"
       expandedLabel="Business Hours"
       dot
-      className="justify-center"
+      className="justify-start"
     >
       <div className="mx-auto grid w-full max-w-[720px] gap-5 text-left">
         <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">

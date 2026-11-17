@@ -87,15 +87,16 @@ html[data-scroll-locked] body { overflow: hidden; }
   min-height: 54px;
   align-items: center;
   gap: .75rem;
-  border: 1px solid currentColor;
-  border-radius: 14px;
-  background: var(--background);
+  border: 0;
+  border-bottom: 2px solid var(--line-rule-soft);
+  border-radius: 0;
+  background: transparent;
   color: var(--foreground);
   padding: 0 .875rem;
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
-.abh-reference-search:focus-within { border-color: currentColor; box-shadow: 0 0 0 1px currentColor; }
+.abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 3px 0 -1px var(--line-rule); }
 .abh-reference-search input,
 .abh-search-input {
   min-width: 0;
@@ -117,6 +118,14 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-reference-search input:focus-visible,
 .abh-search-input:focus,
 .abh-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
+.dark .abh-reference-search,
+.dark .abh-reference-search input,
+.dark .abh-search-input {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
 .abh-reference-search input::placeholder,
 .abh-search-input::placeholder { color: var(--muted-foreground); opacity: 1; }
 .abh-reference-search svg { color: currentColor; }
@@ -124,7 +133,8 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: var(--foreground); transition: background-color 140ms ease; }
 .abh-reference-search-row:hover, .abh-reference-search-row:focus-visible { background: var(--muted); }
 .abh-reference-search-row + .abh-reference-search-row { border-top: 1px solid var(--border); }
-.abh-reference-search-results .abh-search-muted { color: #737373; }
+.abh-reference-search-results .abh-search-muted { color: #52525b; }
+.dark .abh-reference-search-results .abh-search-muted { color: #a1a1aa; }
 @media (prefers-reduced-motion: reduce) { .abh-reference-search, .abh-reference-search-row { transition: none; } }
 
 /* Site-wide text hierarchy: neutral copy stays readable and consistent;
@@ -176,9 +186,10 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-orange-brown: #8D4D1F;
   --brand-white: #FFFFFF;
   /* Neutral rules keep the editorial layout quiet; dark mode retains its warm accent. */
-  --line-rule: #D9D9D6;
+  --line-rule: var(--brand-blue);
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --card-rule: var(--line-rule);
+  --form-rule: var(--brand-blue);
   --brand-adobe-pdf-red: #EC1C24;
 
   --hub-print-primary: #1E6FA8;
@@ -289,14 +300,14 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --nav-h: 74px;
   --banner-h: 0px;
   --nav-bg: color-mix(in srgb, var(--background) 97%, transparent);
-  --footer-bg: var(--brand-blue-dark);
+  --footer-bg: #F4F4F1;
   --shadow: none;
   --card-border: transparent;
   --background: #FFFFFF;
   --foreground: #171717;
-  --card: rgba(246, 246, 245, 0.88);
+  --card: #F6F6F5;
   --card-foreground: #171717;
-  --popover: rgba(255, 255, 255, 0.96);
+  --popover: #FFFFFF;
   --popover-foreground: #171717;
   --primary: var(--brand-blue);
   --primary-foreground: var(--brand-white);
@@ -357,6 +368,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-orange: #FF9B73;
   --line-rule: var(--brand-orange);
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
+  --form-rule: var(--brand-orange);
   --brand-orange-dark: #F9D1B0;
   --brand-orange-brown: #FFE5D3;
   --brand-green-dark: #B8D993;
@@ -468,9 +480,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --brand-error-text: #F3A39D;
   --background: #111827;
   --foreground: #F1F1EC;
-  --card: rgba(31, 41, 55, 0.58);
+  --card: #1F2937;
   --card-foreground: #F1F1EC;
-  --popover: rgba(31, 41, 55, 0.78);
+  --popover: #1F2937;
   --popover-foreground: #F1F1EC;
   --primary: var(--brand-blue);
   /* FIX: primary/accent/destructive foregrounds pointed at --brand-blue-dark,
@@ -707,7 +719,7 @@ code, pre, kbd, samp, .abh-mono {
 }
 .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
-/* Acrylic is deliberately limited to the desktop submenu and grouped FABs. */
+/* Acrylic is deliberately limited to the desktop submenu. */
 :root {
   --glass-tint: rgba(255, 255, 255, 0.42);
   --glass-tint-strong: rgba(255, 255, 255, 0.94);
@@ -738,29 +750,53 @@ body {
 .glass-strong,
 .abh-navbar-submenu {
   background-color: var(--glass-tint-strong) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  backdrop-filter: blur(24px) saturate(150%);
   isolation: isolate;
 }
 
 input, textarea, select {
-  background-color: var(--card) !important;
-  border-color: var(--border) !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line-rule-soft) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+input:focus, textarea:focus, select:focus,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .glass,
-  .glass-strong,
   .abh-navbar-submenu {
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
     backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   }
 }
-header, header nav, footer {
+header, header nav {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+}
+
+footer {
+  background: var(--footer-bg) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+@media (min-width: 1280px) {
+  header:hover,
+  header:focus-within,
+  header[data-nav-scrolled="true"] {
+    background-color: var(--glass-tint) !important;
+    border-bottom-color: var(--glass-border) !important;
+    box-shadow: var(--glass-shadow) !important;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%) !important;
+    backdrop-filter: blur(var(--glass-blur)) saturate(140%) !important;
+  }
 }
 
 input:focus, input:focus-visible,
@@ -825,7 +861,7 @@ button, a, [role="button"] {
 @media (prefers-reduced-transparency: reduce) {
   :root { --glass-tint: rgba(255,255,255,0.94); --glass-tint-strong: rgba(255,255,255,0.98); }
   .dark { --glass-tint: rgba(31,41,55,0.96); --glass-tint-strong: rgba(31,41,55,0.99); }
-  .glass, .glass-strong, .abh-navbar-submenu, .abh-fab-group { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .glass, .glass-strong, .abh-navbar-submenu { -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
 @layer components {
@@ -847,8 +883,9 @@ button, a, [role="button"] {
 
   .abh-icon-chip {
     border: 0 !important;
-    border-radius: 14px;
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 
   .abh-nav-control {
@@ -869,8 +906,10 @@ button, a, [role="button"] {
   }
 
   .abh-scroll-cue {
-    border: 1px solid var(--border) !important;
-    background: color-mix(in srgb, var(--background) 76%, transparent);
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -918,6 +957,19 @@ button, a, [role="button"] {
     align-items: center;
     justify-content: center;
     text-align: center;
+  }
+
+  /* Individual tools use a compact in-tool header, not a page-sized landing hero. */
+  .abh-tool-hero {
+    min-height: auto;
+    padding: 1.5rem 1rem 2.25rem;
+  }
+  .abh-tool-hero .abh-page-title {
+    max-width: 24ch;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  .abh-tool-hero .abh-editorial-scroll-cue {
+    display: none;
   }
 
   /* Keep non-home titles and their supporting copy together as a centered,
@@ -1098,6 +1150,12 @@ button, a, [role="button"] {
     background: var(--line-rule);
     box-shadow: none;
   }
+
+  .abh-notice-header .abh-divider { margin-top: .15rem; }
+
+  .abh-quote-calculator { font-size: 1rem; }
+  .abh-quote-calculator .text-\[0\.78rem\],
+  .abh-quote-calculator .text-\[0\.9rem\] { font-size: 1rem; }
 
   .abh-wa-btn {
     @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
@@ -1421,8 +1479,7 @@ body::before {
 /* Shared surfaces */
 .glass,
 .glass-strong,
-.abh-navbar-submenu,
-.abh-fab-group {
+.abh-navbar-submenu {
   border: 0 !important;
   border-color: transparent !important;
   border-radius: var(--ui-radius-md) !important;
@@ -1431,8 +1488,7 @@ body::before {
   transition: box-shadow 240ms ease, transform 240ms ease, background-color 240ms ease;
 }
 .glass:hover,
-.abh-navbar-submenu:hover,
-.abh-fab-group:hover {
+.abh-navbar-submenu:hover {
   box-shadow: var(--ui-shadow-hover) !important;
 }
 .abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
@@ -1473,20 +1529,38 @@ button:active:not(:disabled),
 /* Fields share the same tactile language while keeping focus visible. */
 input, textarea, select {
   border: 0 !important;
-  border-radius: var(--ui-radius-sm) !important;
-  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 1px 0 var(--ui-highlight) !important;
-  transition: box-shadow 180ms ease, background-color 180ms ease;
+  border-bottom: 2px solid var(--line-rule-soft) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 input:focus, textarea:focus, select:focus,
-input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--ring) 42%, transparent) !important;
-  outline-offset: 2px;
-  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 8px 22px -16px color-mix(in srgb, var(--ring) 60%, transparent) !important;
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: none !important;
+    border-bottom-color: var(--line-rule) !important;
+    box-shadow: 0 3px 0 -1px var(--line-rule) !important;
+  }
+
+  /* Structural rules are blue on light surfaces and seal orange in dark mode.
+     Card outlines remain independently monochromatic. */
+  [class~="border-t"], [class~="border-b"], [class~="border-y"] {
+    border-color: var(--line-rule) !important;
+  }
+
+  .abh-footer-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: transform 150ms ease, filter 150ms ease, color 150ms ease;
+}
+.abh-footer-icon-link:hover,
+.abh-footer-icon-link:focus-visible {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 5px 8px color-mix(in srgb, currentColor 30%, transparent));
 }
 
-@media (max-width: 640px) {
-  .glass, .abh-navbar-submenu, .abh-fab-group { border-radius: var(--ui-radius-sm) !important; }
-}
 @media (prefers-reduced-motion: reduce) {
   button:hover:not(:disabled), [role="button"]:hover, .abh-btn-primary:hover, .abh-btn-cta:hover, .abh-line-cta:hover, .abh-wa-btn:hover { transform: none; }
 }

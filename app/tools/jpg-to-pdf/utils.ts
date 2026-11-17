@@ -6,24 +6,22 @@ const pad2 = (n: number) => String(n).padStart(2, "0")
 
 function stamp(date = new Date()) {
   return {
-    date: `${pad2(date.getDate())}${pad2(date.getMonth() + 1)}${String(date.getFullYear()).slice(2)}`,
+    date: `${date.getFullYear()}${pad2(date.getMonth() + 1)}${pad2(date.getDate())}`,
     time: `${pad2(date.getHours())}${pad2(date.getMinutes())}`,
   }
 }
-
-function slugify(name: string) {
+function safeOriginalName(name: string) {
   const base = name.replace(/\.[^/.]+$/, "")
-  const clean = base.toLowerCase().replace(/[^a-z0-9]+/g, "")
-  return clean.slice(0, 10) || "img"
+  const clean = base.replace(/[^a-zA-Z0-9 _.-]+/g, " ").replace(/\s+/g, " ").trim()
+  return clean.slice(0, 96) || "image"
 }
-
 export function buildFileName(sourceLabel: string, usedNames: Set<string>) {
   const { date, time } = stamp()
-  const slug = slugify(sourceLabel)
-  let name = `abh_pdf-${slug}-${date}${time}.pdf`
+  const originalName = safeOriginalName(sourceLabel)
+  let name = `PDF-ABH-${date}-${time}-${originalName}.pdf`
   let n = 2
   while (usedNames.has(name)) {
-    name = `abh_pdf-${slug}-${date}${time}-${n}.pdf`
+    name = `PDF-ABH-${date}-${time}-${originalName}-${n}.pdf`
     n++
   }
   usedNames.add(name)

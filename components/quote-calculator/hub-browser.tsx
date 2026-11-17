@@ -36,7 +36,7 @@
 
 import { CaretDown, CheckCircle, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
-import { HUBS, HubId } from "@/lib/data"
+import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
 import { GLASS, HubIcon } from "./shared"
 import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
@@ -62,13 +62,24 @@ function CountBadge({
   return (
     <span
       className={cn(
-        "abh-badge-circle absolute font-medium shadow-md border-2 border-white dark:border-zinc-900 leading-none",
+        "abh-badge-circle absolute font-medium border border-white dark:border-zinc-900 leading-none",
         big ? "-top-2 -right-2 w-[26px] h-[26px] text-[0.72rem]" : "-top-1.5 -right-1.5 w-[22px] h-[22px] text-[0.66rem]"
       )}
       style={{ backgroundColor: solidAccent, color: onSolid }}
       aria-label={label}
     >
       {count}
+    </span>
+  )
+}
+
+function HubBulkBadge() {
+  return (
+    <span
+      className="pointer-events-none absolute -top-2 -left-3 rounded-full bg-slate-600 px-1.5 py-0.5 text-[0.48rem] font-semibold leading-none tracking-[0.08em] text-slate-50 shadow-sm"
+      aria-label="Bulk pricing available"
+    >
+      BULK
     </span>
   )
 }
@@ -95,6 +106,7 @@ export function HubBrowser({
             const onSolid = HUB_ON_COLOR[hubId]
             const isSelected = openHub === hubId
             const hubSub = hubSubtotal(hubId)
+            const hubBulk = hubHasBulk(hubId)
 
             return (
               <button
@@ -103,14 +115,13 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0 abh-press",
-                  "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                  "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0",
+                  "transition-colors duration-150 ease-out",
+                  isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item
                 )}
                 style={{
                   ["--hub-accent" as unknown as string]: accent,
-boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
-                    transform: isSelected ? "translateY(-2px) scale(1.03)" : undefined,
                 }}
               >
                 {hubSub && (
@@ -121,14 +132,17 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                     label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   />
                 )}
-                <span
-                  className={cn(
-                    "transition-colors duration-150",
-                    isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                  )}
-                  style={isSelected ? { color: solidAccent } : undefined}
-                >
-                  <HubIcon id={hubId} size={36} color="currentColor" />
+                <span className="relative">
+                  <span
+                    className={cn(
+                      "transition-colors duration-150",
+                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                    )}
+                    style={isSelected ? { color: solidAccent } : undefined}
+                  >
+                    <HubIcon id={hubId} size={36} color="currentColor" />
+                  </span>
+                  {hubBulk && <HubBulkBadge />}
                 </span>
               </button>
             )
@@ -156,15 +170,14 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                   aria-expanded={isSelected}
                   aria-controls={`hub-panel-${hubId}`}
                   className={cn(
-                    "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left abh-press",
-                    "transition-all duration-150 ease-out transform-gpu shadow-sm hover:shadow-md",
+                    "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left",
+                    "transition-colors duration-150 ease-out",
+                    isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                     GLASS.item
                   )}
                   style={{
                     ["--hub-accent" as unknown as string]: accent,
-                    boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
-                    transform: isSelected ? "translateY(-2px) scale(1.03)" : undefined,
-                  }}
+                    }}
                 >
                   {hubSub && (
                     <CountBadge
@@ -175,26 +188,19 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                       big
                     />
                   )}
-                  {hubBulk && (
-                    <span
-                      className="absolute top-1.5 left-1.5 flex items-center justify-center w-5 h-5 rounded-full"
-                      style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 15%, transparent)" }}
-                      aria-hidden="true"
-                    >
-                      <Tag size={10} weight="fill" style={{ color: "var(--brand-orange)" }} />
-                    </span>
-                  )}
-
                   {/* Single squircle chip — icon sits directly in the button,
                       no inner background circle, sized to nearly fill it. */}
-                  <span
-                    className={cn(
-                      "transition-colors duration-150",
-                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                    )}
-                    style={isSelected ? { color: solidAccent } : undefined}
-                  >
-                    <HubIcon id={hubId} size={48} color="currentColor" />
+                  <span className="relative">
+                    <span
+                      className={cn(
+                        "transition-colors duration-150",
+                        isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
+                      )}
+                      style={isSelected ? { color: solidAccent } : undefined}
+                    >
+                      <HubIcon id={hubId} size={48} color="currentColor" />
+                    </span>
+                    {hubBulk && <HubBulkBadge />}
                   </span>
 
                   <span className="min-w-0 flex-1">
@@ -230,13 +236,12 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
         <div
           id={`hub-panel-${openHub}`}
           className={cn(
-            "rounded-[14px] overflow-hidden animate-in fade-in slide-in-from-top-1 duration-200 ease-out motion-reduce:animate-none",
+            "rounded-[14px] overflow-hidden",
             GLASS.section
           )}
         >
           <div className="flex items-center justify-between px-3 py-2.5 border-b border-zinc-100 dark:border-white/10">
             <span className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: "var(--brand-orange)" }} aria-hidden="true" />
               <span className="text-[0.95rem] font-medium" style={{ color: getAccent(openHub) }}>
                 {activeHub.title}
               </span>
@@ -244,7 +249,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
             <button
               onClick={() => setOpenHub(null)}
               aria-label="Collapse hub"
-              className="abh-press w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150"
+              className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors duration-150"
             >
               <CaretDown size={13} className="rotate-180" aria-hidden="true" />
             </button>
@@ -260,29 +265,21 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
               const secSub = sectionSubtotal(hubId, section.title)
               const sectionBulk = sectionHasBulk(hubId, section.title, section.items)
               const sectionPanelId = `section-panel-${hubId}-${sIdx}`
-              const isLastSection = sIdx === activeHub.sections.length - 1
-
               return (
-                <div key={sIdx} className="relative">
-                  {!isLastSection && (
-                    <span
-                      className="absolute left-3 top-5 bottom-0 w-0.5 pointer-events-none"
-                      style={{ backgroundColor: "var(--border)" }}
-                      aria-hidden="true"
-                    />
-                  )}
-
-                  <div className="relative">
+                <div key={sIdx}>
+                  <div>
                     <button
                       data-calculator-section-card
                       onClick={() => toggleSection(hubId, sIdx)}
                       aria-expanded={isSectionOpen}
                       aria-controls={sectionPanelId}
                       style={{ ["--hub-accent" as unknown as string]: accent }}
-                      className="group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5"
+                      className={cn(
+                        "group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5",
+                        isSectionOpen && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
+                      )}
                     >
                       <span className="flex items-center gap-2">
-                        <span className={cn("h-2 w-2 shrink-0 rounded-full transition-all duration-200", isSectionOpen ? "scale-125 shadow-[0_0_0_4px_color-mix(in_srgb,var(--hub-accent)_18%,transparent)]" : "opacity-45")} style={{ backgroundColor: accent }} aria-hidden="true" />
                         <span
                           className={cn(
                             "text-[0.78rem] font-medium uppercase tracking-[0.15em] transition-colors duration-200",
@@ -297,8 +294,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
 
                         {!isSectionOpen && sectionBulk && (
                           <span
-                            className="bulk-ribbon inline-flex items-center gap-0.5 text-[0.58rem] font-medium px-2 py-1 rounded-full"
-                            style={{ backgroundColor: "color-mix(in srgb, var(--brand-orange) 12%, transparent)", color: "var(--brand-orange-text)" }}
+                            className="inline-flex items-center gap-0.5 rounded-full bg-slate-600 px-2 py-1 text-[0.58rem] font-medium text-slate-50"
                             aria-label="Bulk pricing available in this section"
                           >
                             <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -328,65 +324,50 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                       </span>
                     </button>
 
-                    <span
-                      className="absolute left-3 top-0 h-5 w-0.5 pointer-events-none"
-                      style={{ backgroundColor: "var(--border)" }}
-                      aria-hidden="true"
-                    />
-                    <span
-                      className="absolute left-3 top-5 -translate-y-1/2 w-2.5 h-0.5 pointer-events-none"
-                      style={{ backgroundColor: "var(--border)" }}
-                      aria-hidden="true"
-                    />
-                    <span
-                      className="absolute left-[1.4rem] top-5 -translate-y-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
-                      style={{ backgroundColor: "var(--muted-foreground)" }}
-                      aria-hidden="true"
-                    />
                   </div>
 
                   <div
                     id={sectionPanelId}
+                    role="region"
+                    aria-hidden={!isSectionOpen}
+                    inert={!isSectionOpen}
                     className={cn(
-                      "grid transition-[grid-template-rows] duration-250 ease-out motion-reduce:transition-none",
-                      isSectionOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      "grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+                      isSectionOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                     )}
                   >
-                    <div className="overflow-hidden">
+                    <div className="min-h-0 overflow-hidden">
                       <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
-                        {section.items.map((item, iIdx) => {
+                        {sortItemsByPrice(section.items).map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)
                           const itemQty = getItemQty(itemId)
                           return (
                             <div key={iIdx} className="relative">
-                              <span
-                                className="absolute left-[1.15rem] top-[22px] -translate-y-1/2 w-1.5 h-1.5 rounded-full pointer-events-none"
-                                style={{ backgroundColor: "var(--muted-foreground)" }}
-                                aria-hidden="true"
-                              />
-
                               <div
                                 className={cn(
-                                  "group relative ml-6 flex items-center gap-2 py-2 pl-3 pr-1 transition-colors duration-150"
+                                  "group relative ml-6 flex items-center gap-2 rounded-[12px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
+                                  itemQty > 0 && "border-l-2 border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_9%,transparent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
                                 {hasBulk && (
                                   <span
-                                    className="bulk-ribbon absolute right-11 top-1/2 -translate-y-1/2 text-[0.55rem] font-medium uppercase tracking-wider px-2.5 py-1 rounded-full"
-                                    style={{ backgroundColor: "var(--brand-orange)", color: "var(--on-brand-orange)" }}
+                                    className="absolute right-11 top-1/2 -translate-y-1/2 rounded-full bg-slate-600 px-2.5 py-1 text-[0.55rem] font-medium tracking-wide text-slate-50"
                                     aria-hidden="true"
                                   >
                                     Bulk
                                   </span>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                  <p className="break-words text-[0.9rem] font-medium text-zinc-700 dark:text-zinc-300">
+                                  <p className={cn(
+                                    "break-words text-[0.9rem] text-zinc-700 dark:text-zinc-300",
+                                    itemQty > 0 ? "font-semibold" : "font-medium"
+                                  )}>
                                     {getDisplayName(section.title, item.name)}
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
-                                  <p className="text-[0.78rem] font-medium text-muted-foreground">{item.price}</p>
+                                  <p className="text-[0.78rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
                                 </div>
                                 <div className="flex items-center gap-1.5 shrink-0">
                                   {itemQty > 0 && (
@@ -404,7 +385,7 @@ boxShadow: isSelected ? `0 12px 28px -12px ${accent}` : undefined,
                                       ["--hub-accent" as unknown as string]: solidAccent,
                                       ["--hub-on-accent" as unknown as string]: onSolid,
                                     }}
-                                    className="abh-press abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
+                                    className="abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
                                     aria-label={`Add ${item.name}`}
                                   >
                                     <Plus size={13} weight="bold" aria-hidden="true" />
