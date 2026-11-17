@@ -51,6 +51,16 @@
     border-radius: 9999px !important;
   }
 
+  /* Contact form fields are intentional, persistent controls: keep their borders visible. */
+  :root:root:root .abh-contact-field {
+    border: 1px solid var(--form-rule) !important;
+    border-color: var(--form-rule) !important;
+    border-radius: 14px !important;
+    background-color: var(--card) !important;
+  }
+  :root:root.dark .abh-contact-field {
+    border-color: var(--form-rule) !important;
+  }
   /* 2. Search: slight border around the search BAR and the RESULTS card only.
         Nothing around the input text itself. */
   :root:root:root:root [role="dialog"][aria-label="Search services"] > div {

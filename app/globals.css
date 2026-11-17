@@ -720,6 +720,19 @@ code, pre, kbd, samp, .abh-mono {
 .dark :focus-visible { outline-color: var(--brand-light-blue); }
 
 /* Acrylic is deliberately limited to the desktop submenu and grouped FABs. */
+.abh-fab-rail {
+  padding: 0.45rem;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--card) 34%, transparent);
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(135%);
+  backdrop-filter: blur(12px) saturate(135%);
+}
+.abh-quote-calculator { font-size: 1.06rem; }
+.abh-quote-calculator .text-\[0\.78rem\],
+.abh-quote-calculator .text-\[0\.9rem\] { font-size: 1rem; }
+.abh-wa-panel,
+[data-widget="whatsapp-fab"] { font-size: 1.05rem; }
 :root {
   --glass-tint: rgba(255, 255, 255, 0.42);
   --glass-tint-strong: rgba(255, 255, 255, 0.94);

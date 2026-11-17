@@ -260,7 +260,7 @@ function ContactPageInner() {
                         value={rawValue}
                         aria-invalid={err}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className="w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
+                        className="abh-contact-field w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
                         style={{ borderColor: err ? TOKEN.errorBg : "var(--form-rule)" }}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
@@ -282,7 +282,7 @@ function ContactPageInner() {
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       maxLength={1000}
-                      className="w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
+                      className="abh-contact-field w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
                       style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--form-rule)" }}
                       rows={4}
                       value={formData.message}
