@@ -34,7 +34,7 @@ export function UploadButton({ phase, accent, onClick }: { phase: UploadPhase; a
         transform: pressed ? "translateY(1px) scale(0.97)" : "translateY(0) scale(1)",
       }}
     >
-      <Paperclip size={22} weight="bold" aria-hidden="true" />
+      <Paperclip size={22} weight="regular" aria-hidden="true" />
     </button>
   )
 }
@@ -49,7 +49,7 @@ export function UploadStatus({
   if (phase === "idle") {
     return (
       <div className="flex items-start gap-2 px-1">
-        <ShieldCheck size={13} weight="fill" aria-hidden="true" className="text-[#6FBF1A] shrink-0 mt-0.5" />
+        <ShieldCheck size={13} weight="regular" aria-hidden="true" className="text-[#6FBF1A] shrink-0 mt-0.5" />
         <p className="abh-muted text-[0.78rem] leading-relaxed">
           Accepts: {acceptHint}. Your file is uploaded securely for processing and used only for your order.
         </p>
@@ -86,17 +86,17 @@ export function UploadStatus({
               <img src={previewUrl} alt="" className="w-8 h-8 rounded-[8px] object-cover shrink-0 border border-zinc-200 dark:border-zinc-700" />
             ) : (
               <div className="w-8 h-8 rounded-[8px] flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}>
-                <Paperclip size={14} weight="bold" aria-hidden="true" />
+                <Paperclip size={14} weight="regular" aria-hidden="true" />
               </div>
             )}
             <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-950" style={{ backgroundColor: "#22c55e" }}>
-              <CheckCircle size={9} weight="fill" color="#fff" aria-hidden="true" />
+              <CheckCircle size={9} weight="regular" color="#fff" aria-hidden="true" />
             </span>
           </span>
           <span className="truncate text-zinc-700 dark:text-zinc-300 text-[0.94rem]">{file.name}</span>
         </span>
         <button type="button" onClick={onClear} aria-label="Remove file" title="Remove file" className="shrink-0 opacity-60 hover:opacity-100 transition-opacity">
-          <X size={14} weight="bold" aria-hidden="true" />
+          <X size={14} weight="regular" aria-hidden="true" />
         </button>
       </div>
     )
@@ -106,7 +106,7 @@ export function UploadStatus({
     return (
       <div className="space-y-2">
         <div className="flex items-start gap-2 w-full px-4 py-3 rounded-[14px] text-base font-medium bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400">
-          <WarningCircle size={17} weight="fill" aria-hidden="true" className="shrink-0 mt-0.5" />
+          <WarningCircle size={17} weight="regular" aria-hidden="true" className="shrink-0 mt-0.5" />
           <span className="leading-snug font-medium">{uploadErr}</span>
         </div>
         <button
@@ -116,7 +116,7 @@ export function UploadStatus({
           className="abh-line-cta flex min-h-10 w-full items-center justify-center gap-1.5 py-2 text-sm font-medium"
           style={{ color: accent }}
         >
-          <ArrowClockwise size={14} weight="bold" aria-hidden="true" />
+          <ArrowClockwise size={14} weight="regular" aria-hidden="true" />
           Try a Different File
         </button>
       </div>

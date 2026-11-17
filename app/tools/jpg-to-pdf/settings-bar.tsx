@@ -155,7 +155,7 @@ export function SettingsBar({
             <span id="pdf-output-heading" className="block text-sm font-medium text-foreground">Output</span>
             <span className="mt-1 block text-xs text-muted-foreground">{MODE_LABELS[mode]}</span>
           </span>
-          <CaretDown size={16} weight="bold" aria-hidden="true" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${openSection === "output" ? "rotate-180" : ""}`} />
+          <CaretDown size={16} weight="regular" aria-hidden="true" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${openSection === "output" ? "rotate-180" : ""}`} />
         </button>
         <div
           id="pdf-output-content"
@@ -190,7 +190,7 @@ export function SettingsBar({
             <span id="pdf-size-heading" className="block text-sm font-medium text-foreground">Page size</span>
             <span className="mt-1 block text-xs text-muted-foreground">{PAGE_SIZES[pageSize].label}</span>
           </span>
-          <CaretDown size={16} weight="bold" aria-hidden="true" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${openSection === "page-size" ? "rotate-180" : ""}`} />
+          <CaretDown size={16} weight="regular" aria-hidden="true" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${openSection === "page-size" ? "rotate-180" : ""}`} />
         </button>
         <div
           id="pdf-size-content"

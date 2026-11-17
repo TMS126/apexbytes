@@ -43,7 +43,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
       className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-colors hover:opacity-80"
       style={{ backgroundColor: `color-mix(in srgb, ${blueColor} 8%, transparent)`, color: blueColor }}
     >
-      {shared ? <Check size={16} weight="bold" className="text-green-500" /> : canNativeShare ? <ShareNetwork size={16} weight="bold" /> : <LinkSimple size={16} weight="bold" />}
+      {shared ? <Check size={16} weight="regular" className="text-green-500" /> : canNativeShare ? <ShareNetwork size={16} weight="regular" /> : <LinkSimple size={16} weight="regular" />}
     </button>
   )
 }

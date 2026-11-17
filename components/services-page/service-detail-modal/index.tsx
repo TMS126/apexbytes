@@ -350,7 +350,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               ICON_BTN_FOCUS
             )}
           >
-            <Lightbulb size={18} weight="fill" aria-hidden="true" />
+            <Lightbulb size={18} weight="regular" aria-hidden="true" />
           </button>
 
           <div className="relative">
@@ -364,7 +364,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 ICON_BTN_FOCUS
               )}
             >
-              <ShareNetwork size={16} weight="bold" aria-hidden="true" />
+              <ShareNetwork size={16} weight="regular" aria-hidden="true" />
             </button>
             {shareCopied && (
               <span
@@ -387,7 +387,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               ICON_BTN_FOCUS
             )}
           >
-            <X size={16} weight="bold" aria-hidden="true" />
+            <X size={16} weight="regular" aria-hidden="true" />
           </button>
         </div>
 
@@ -416,7 +416,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                   className="flex items-center gap-1 text-[0.82rem] font-medium pb-0.5 border-b"
                   style={{ color: accent, borderColor: `color-mix(in srgb, ${accent} 31%, transparent)` }}
                 >
-                  <Clock size={12} weight="bold" aria-hidden="true" />
+                  <Clock size={12} weight="regular" aria-hidden="true" />
                   {svc.turnaround}
                 </span>
               )}
@@ -475,7 +475,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 {requirements.map((req, idx) => (
                   <li key={idx} className="flex items-start gap-3 py-2 text-left">
                     <span className="shrink-0 mt-1 text-muted-foreground" aria-hidden="true">
-                      <WarningCircle size={13} weight="fill" />
+                      <WarningCircle size={13} weight="regular" />
                     </span>
                     <span className="abh-body text-[0.95rem] leading-relaxed">{req}</span>
                   </li>
@@ -580,7 +580,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
               style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 7%, transparent)` }}
             >
-              <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
+              <WarningCircle size={16} weight="regular" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
               <p className="text-[0.82rem] leading-relaxed" style={{ color: BRAND.orange }}>{NSFAS_CLOSED_NOTICE_TEXT}</p>
             </div>
           )}

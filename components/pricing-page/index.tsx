@@ -219,7 +219,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                       className="inline-flex items-center gap-0.5 font-medium"
                       style={{ color: accent }}
                     >
-                      <SealPercent size={12} weight="fill" aria-hidden="true" /> Bulk
+                      <SealPercent size={12} weight="regular" aria-hidden="true" /> Bulk
                     </span>{' '}
                     tag — larger quantities get a better rate.
                   </NoticePill>
@@ -280,7 +280,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                       rel="noopener noreferrer"
                       className="abh-wa-btn inline-flex px-4 py-2.5 text-xs"
                     >
-                      <WhatsappLogo size={14} weight="fill" aria-hidden="true" />
+                      <WhatsappLogo size={14} weight="regular" aria-hidden="true" />
                       Can&apos;t find it? Ask us on WhatsApp
                     </a>
                   </div>

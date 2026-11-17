@@ -30,7 +30,7 @@ export function ResultsPanel({
       {convertedFiles.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="mt-8 abh-card p-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
-            <CheckCircle weight="fill" className="w-5 h-5 text-green-600 shrink-0" aria-hidden="true" />
+            <CheckCircle weight="regular" className="w-5 h-5 text-green-600 shrink-0" aria-hidden="true" />
             <span className="text-sm font-medium text-green-700 dark:text-green-300">
               {convertedFiles.length} file{convertedFiles.length > 1 ? "s" : ""} converted
             </span>
@@ -40,7 +40,7 @@ export function ResultsPanel({
             Actual size: {formatBytes(totalActualBytes)}
           </p>
           <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mb-6">
-            <DownloadSimple size={13} weight="bold" aria-hidden="true" />
+            <DownloadSimple size={13} weight="regular" aria-hidden="true" />
             Saved to your device automatically
           </div>
 
@@ -62,7 +62,7 @@ export function ResultsPanel({
               className="col-span-2 flex items-center justify-center gap-2 rounded-[12px] py-3 px-4 text-sm font-medium text-white transition-transform active:scale-[0.98]"
               style={{ backgroundColor: accentColor }}
             >
-              <PaperPlaneTilt weight="fill" className="w-4 h-4" aria-hidden="true" />
+              <PaperPlaneTilt weight="regular" className="w-4 h-4" aria-hidden="true" />
               Send to ApexbytesHub
             </button>
           </div>

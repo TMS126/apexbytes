@@ -29,7 +29,7 @@ export function FaqAccordion() {
                   <h4 className="abh-card-heading text-[1.28rem] leading-snug text-zinc-800 dark:text-zinc-100">
                     {faq.question}
                   </h4>
-                  {itemOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
+                  {itemOpen ? <Minus size={18} weight="regular" aria-hidden="true" /> : <Plus size={18} weight="regular" aria-hidden="true" />}
                 </button>
                 <div
                   id={`footer-faq-${index}`}

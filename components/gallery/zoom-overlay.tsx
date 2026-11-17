@@ -61,7 +61,7 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
         aria-label="Close image viewer"
         className="absolute top-5 right-5 z-10 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors active:scale-90"
       >
-        <X size={18} weight="bold" />
+        <X size={18} weight="regular" />
       </button>
       {images.length > 1 && (
         <div className="absolute top-5 left-1/2 -translate-x-1/2 z-10 px-3 py-1.5 rounded-full bg-black/50  text-white text-[0.84rem] font-medium tracking-widest">
@@ -85,14 +85,14 @@ export function ZoomOverlay({ images, startIndex, onClose, title }: {
             aria-label="Previous image"
             className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors active:scale-90"
           >
-            <CaretLeft size={18} weight="bold" />
+            <CaretLeft size={18} weight="regular" />
           </button>
           <button
             onClick={() => setIdx(i => (i + 1) % images.length)}
             aria-label="Next image"
             className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition-colors active:scale-90"
           >
-            <CaretRight size={18} weight="bold" />
+            <CaretRight size={18} weight="regular" />
           </button>
         </>
       )}

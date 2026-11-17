@@ -27,7 +27,7 @@ export function HomeServiceMarquee() {
         aria-label={paused ? "Play scrolling services list" : "Pause scrolling services list"}
         className="absolute right-2 top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/90 text-muted-foreground transition-colors hover:text-foreground"
       >
-        {paused ? <Play size={11} weight="fill" aria-hidden="true" /> : <Pause size={11} weight="fill" aria-hidden="true" />}
+        {paused ? <Play size={11} weight="regular" aria-hidden="true" /> : <Pause size={11} weight="regular" aria-hidden="true" />}
       </button>
       <div className="flex w-max whitespace-nowrap animate-marquee" style={{ animationPlayState: paused ? "paused" : "running" }}>
         {[0, 1].map((copy) => (

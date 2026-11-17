@@ -108,7 +108,7 @@ function HubCollectionCard({
         {projects.length > 1 && (
           <>
             <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20  border border-white/25 text-white text-[0.78rem] font-medium">
-              <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
+              <ArrowsLeftRight size={12} weight="regular" aria-hidden="true" />
               Swipe for projects
             </div>
 
@@ -123,7 +123,7 @@ function HubCollectionCard({
               style={{ ["--hub-glow" as unknown as keyof import("react").CSSProperties]: accent }}
               className="hidden md:flex absolute top-3 left-3 w-8 h-8 rounded-full bg-white/20  border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
             >
-              <CaretLeft size={14} weight="bold" />
+              <CaretLeft size={14} weight="regular" />
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); step(1) }}
@@ -131,7 +131,7 @@ function HubCollectionCard({
               style={{ ["--hub-glow" as unknown as keyof import("react").CSSProperties]: accent }}
               className="hidden md:flex absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20  border border-white/25 items-center justify-center text-white transition-all duration-300 hover:bg-white/30 hover:shadow-[0_0_14px_-2px_var(--hub-glow)] active:scale-90"
             >
-              <CaretRight size={14} weight="bold" />
+              <CaretRight size={14} weight="regular" />
             </button>
           </>
         )}
@@ -158,7 +158,7 @@ function HubCollectionCard({
       <button onClick={() => onSelectHub(hubId)} className="w-full flex items-center justify-between pt-2 pb-1 text-left">
         <h3 className="font-sans font-medium text-xl text-zinc-900 dark:text-zinc-50">{HUBS[hubId].title}</h3>
         <span className="flex items-center gap-1 text-sm font-medium" style={{ color: accent }}>
-          <Stack size={14} weight="fill" aria-hidden="true" />
+          <Stack size={14} weight="regular" aria-hidden="true" />
           {projects.length}
         </span>
       </button>

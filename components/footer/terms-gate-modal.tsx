@@ -105,7 +105,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
             aria-label="Close Terms & Service Policies"
             className="flex size-8 shrink-0 items-center justify-center rounded-[14px] bg-muted text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground active:scale-95"
           >
-            <X size={14} weight="bold" aria-hidden="true" />
+            <X size={14} weight="regular" aria-hidden="true" />
           </button>
         </div>
 
@@ -113,7 +113,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
           <div className="mx-auto max-w-3xl space-y-9">
             <div className="rounded-[14px] border border-border bg-card px-5 py-5">
               <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-foreground">
-                <Info weight="fill" className="w-4 h-4" aria-hidden="true" /> Operational Rule
+                <Info weight="regular" className="w-4 h-4" aria-hidden="true" /> Operational Rule
               </h3>
               <p className="text-base leading-7 text-muted-foreground">
                 By tapping &ldquo;I Agree&rdquo; below, you confirm full agreement with all operational rules and terms listed here.
@@ -126,7 +126,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
               return (
                 <div key={i} className="space-y-3">
                   <h3 className="flex items-center gap-2 text-base font-semibold" style={{ color }}>
-                    <IconComp weight="fill" className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color }} />
+                    <IconComp weight="regular" className="w-4 h-4 shrink-0" aria-hidden="true" style={{ color }} />
                     {s.title}
                   </h3>
                   <ul className="space-y-2 list-disc list-inside pl-1">

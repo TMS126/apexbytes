@@ -41,7 +41,7 @@ export function ServicesDashboardModal({ isOpen, onClose }: ServicesDashboardMod
           className="absolute top-4 right-4 z-50 flex size-9 items-center justify-center rounded-[14px] bg-card text-foreground shadow-md transition-colors duration-200 hover:bg-muted active:scale-95"
           aria-label="Close Dashboard"
         >
-          <X className="w-4 h-4" weight="bold" />
+          <X className="w-4 h-4" weight="regular" />
         </button>
 
         <div className="flex-1 overflow-y-auto pb-12 scrollbar-none">

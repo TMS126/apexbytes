@@ -81,7 +81,7 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+
       <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
         {/* HERO HEADER */}
         <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+1.5rem)]">
@@ -92,17 +92,17 @@ export default function JpgToPdfPage() {
               className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
-              <CaretLeft size={15} weight="bold" aria-hidden="true" />
+              <CaretLeft size={15} weight="regular" aria-hidden="true" />
             </Link>
-            
+
             <div className="flex justify-center mb-5">
-              <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
+              <FilePdf weight="regular" size={40} style={{ color: accentColor }} aria-hidden="true" />
             </div>
-            
+
             <h1 className="abh-page-title mb-3">
               JPG to PDF
             </h1>
-            
+
             <div className="abh-editorial-subtitle">
               <p className="text-lg text-muted-foreground mb-1">
                 Convert your images into PDF in seconds
@@ -144,36 +144,36 @@ export default function JpgToPdfPage() {
                         : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"
                     }`}
                   >
-                    <div 
+                    <div
                       className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transition-colors"
                       style={{ backgroundColor: `${accentColor}12` }}
                     >
-                      <UploadSimple 
-                        weight="bold" 
+                      <UploadSimple
+                        weight="regular"
                         size={40}
                         style={{ color: accentColor }}
-                        aria-hidden="true" 
+                        aria-hidden="true"
                       />
                     </div>
-                    
+
                     <h2 className="text-xl font-semibold text-foreground mb-2 text-center">
                       Select images or drag them here
                     </h2>
-                    
+
                     <p className="text-sm text-muted-foreground text-center mb-6">
                       JPG, JPEG, PNG, or WEBP only • Maximum 15 MB each • Up to 20 images
                     </p>
 
-                    <input 
-                      ref={inputRef} 
-                      type="file" 
+                    <input
+                      ref={inputRef}
+                      type="file"
 accept={ACCEPT_ATTRIBUTE}
                 multiple
                 aria-label="Choose images to convert to PDF"
                 onChange={handleFileInput}
-                      className="hidden" 
-                      aria-hidden="true" 
-                      tabIndex={-1} 
+                      className="hidden"
+                      aria-hidden="true"
+                      tabIndex={-1}
                     />
                   </div>
                 </ScrollBounce>
@@ -226,18 +226,18 @@ accept={ACCEPT_ATTRIBUTE}
                       {t.selectedCount} of {t.images.length} selected
                     </div>
                     <div className="flex items-center gap-3">
-                      <button 
-                        type="button" 
-                        onClick={() => t.selectAll(!allSelected)} 
+                      <button
+                        type="button"
+                        onClick={() => t.selectAll(!allSelected)}
                         className="text-sm font-medium transition-colors hover:text-primary"
                         style={{ color: allSelected ? accentColor : "inherit" }}
                       >
                         {allSelected ? "Deselect All" : "Select All"}
                       </button>
                       <span className="text-border/50">•</span>
-                      <button 
-                        type="button" 
-                        onClick={t.clearAll} 
+                      <button
+                        type="button"
+                        onClick={t.clearAll}
                         className="text-sm font-medium text-muted-foreground hover:text-destructive transition-colors"
                       >
                         Clear All
@@ -272,26 +272,26 @@ accept={ACCEPT_ATTRIBUTE}
                     onClick={() => inputRef.current?.click()}
                     className="w-full mt-4 rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-all flex flex-col items-center justify-center gap-2"
                   >
-                    <Plus size={24} style={{ color: accentColor }} weight="bold" />
+                    <Plus size={24} style={{ color: accentColor }} weight="regular" />
                     <span className="text-sm font-medium text-foreground">Add More Images</span>
                     <span className="text-xs text-muted-foreground">Add up to {20 - t.images.length} more</span>
                   </button>
-                  <input 
-                    ref={inputRef} 
-                    type="file" 
+                  <input
+                    ref={inputRef}
+                    type="file"
                     accept={ACCEPT_ATTRIBUTE}
-                    multiple 
-                    onChange={handleFileInput} 
-                    className="hidden" 
-                    aria-hidden="true" 
-                    tabIndex={-1} 
+                    multiple
+                    onChange={handleFileInput}
+                    className="hidden"
+                    aria-hidden="true"
+                    tabIndex={-1}
                   />
                 </div>
 
                 {/* Error State */}
                 {t.errors.length > 0 && (
                   <div className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
-                    <WarningCircle weight="fill" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
+                    <WarningCircle weight="regular" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
                     <div>
                       <p className="text-sm font-medium text-red-900 dark:text-red-200">
                         {t.errors.length} issue{t.errors.length > 1 ? "s" : ""} found
@@ -312,12 +312,12 @@ accept={ACCEPT_ATTRIBUTE}
                     disabled={t.isConverting || t.selectedCount === 0}
                     aria-busy={t.isConverting}
                     className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
-                    style={{ 
+                    style={{
                       backgroundColor: accentColor,
                       boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"
                     }}
                   >
-                    <Download size={20} weight="bold" />
+                    <Download size={20} weight="regular" />
                     <span>{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
                   </button>
                   <span className="sr-only" aria-live="polite">
@@ -360,7 +360,7 @@ accept={ACCEPT_ATTRIBUTE}
                       <span>{item.question}</span>
                       <CaretDown
                         size={17}
-                        weight="bold"
+                        weight="regular"
                         aria-hidden="true"
                         className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                       />

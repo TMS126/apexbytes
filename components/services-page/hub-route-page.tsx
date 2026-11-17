@@ -18,7 +18,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
           <ArrowLeft size={15} aria-hidden="true" />
         </Link>
         <span className="mb-5 inline-flex items-center text-muted-foreground" title={`${hub.title} icon`} aria-label={hub.title}>
-          <HubIcon id={hubId} size={34} color={accent} weight="fill" />
+          <HubIcon id={hubId} size={34} color={accent} weight="regular" />
         </span>
         <h1 className="abh-page-title mb-5">{hub.title}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{hub.desc}</p>

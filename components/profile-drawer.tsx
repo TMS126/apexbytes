@@ -166,7 +166,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                 aria-label="Close profile"
                 className="absolute top-4 right-4 flex size-8 items-center justify-center rounded-[14px] bg-black/20 text-white transition-colors hover:bg-black/35 z-10"
               >
-                <X size={15} weight="bold" aria-hidden="true" />
+                <X size={15} weight="regular" aria-hidden="true" />
               </button>
             </div>
 
@@ -193,7 +193,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = BRAND.whatsappAccessibleDark }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = BRAND.whatsappAccessible }}
                 >
-                  <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
+                  <WhatsappLogo size={18} weight="regular" aria-hidden="true" />
                   <span className="text-sm font-medium leading-tight">WhatsApp</span>
                 </a>
 
@@ -208,12 +208,12 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                 >
                   {vcardDone ? (
                     <>
-                      <AddressBook size={18} weight="fill" aria-hidden="true" />
+                      <AddressBook size={18} weight="regular" aria-hidden="true" />
                       <span className="text-sm font-medium leading-tight">Saved!</span>
                     </>
                   ) : (
                     <>
-                      <DownloadSimple size={18} weight="fill" aria-hidden="true" />
+                      <DownloadSimple size={18} weight="regular" aria-hidden="true" />
                       <span className="text-sm font-medium leading-tight">Save Contact</span>
                     </>
                   )}

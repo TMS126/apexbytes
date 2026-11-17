@@ -28,7 +28,7 @@ export function ChatHeader({ onClose, onGalleryClick, shakeKey, onShake }: ChatH
         className="abh-press w-9 h-9 rounded-full flex items-center justify-center text-white/90 hover:bg-white/10 transition-colors duration-150 shrink-0"
         aria-label="Close"
       >
-        <ArrowLeft size={20} weight="bold" />
+        <ArrowLeft size={20} weight="regular" />
       </button>
 
       <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0 p-1.5" style={{ backgroundColor: WA.avatarBg }}>
@@ -59,7 +59,7 @@ export function ChatHeader({ onClose, onGalleryClick, shakeKey, onShake }: ChatH
           aria-label="View our gallery"
           className="abh-press w-8 h-8 rounded-full flex items-center justify-center text-white/85 hover:bg-white/10 transition-colors duration-150"
         >
-          <ImageSquare size={18} weight="fill" />
+          <ImageSquare size={18} weight="regular" />
         </button>
         {/* Real navigation — no shake, per request */}
         <a
@@ -67,7 +67,7 @@ export function ChatHeader({ onClose, onGalleryClick, shakeKey, onShake }: ChatH
           aria-label="Call us"
           className="abh-press w-8 h-8 rounded-full flex items-center justify-center text-white/85 hover:bg-white/10 transition-colors duration-150"
         >
-          <Phone size={18} weight="fill" />
+          <Phone size={18} weight="regular" />
         </a>
         {/* Inert — shakes like every other non-functional control */}
         <button
@@ -78,7 +78,7 @@ export function ChatHeader({ onClose, onGalleryClick, shakeKey, onShake }: ChatH
             shakeKey === "kebab" && "wa-shake"
           )}
         >
-          <DotsThreeVertical size={20} weight="bold" />
+          <DotsThreeVertical size={20} weight="regular" />
         </button>
       </div>
     </div>

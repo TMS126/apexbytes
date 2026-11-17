@@ -100,7 +100,7 @@ export function AboutStory({
             <div className="abh-card flex h-full flex-col rounded-[14px] border border-border p-5 shadow-sm md:p-6" aria-label="Business overview">
               <div className="flex flex-col items-center gap-2 border-b border-border pb-6 text-center">
                 <div className="abh-icon-chip flex h-10 w-10 items-center justify-center shrink-0 bg-background" style={{ color: blueColor }}>
-                  <UsersThree size={20} weight="fill" />
+                  <UsersThree size={20} weight="regular" />
                 </div>
                 <div>
                   <p className="abh-card-heading text-base leading-none">{BIZ.name}</p>
@@ -110,8 +110,8 @@ export function AboutStory({
 
               <div className="mt-6 grid flex-1 grid-cols-2 gap-3">
                 {[
-                  { value: <WhatsappLogo weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "WhatsApp Ready" },
-                  { value: <ShieldCheck weight="fill" className="w-6 h-6" aria-hidden="true" />, label: "Community Trusted" },
+                  { value: <WhatsappLogo weight="regular" className="w-6 h-6" aria-hidden="true" />, label: "WhatsApp Ready" },
+                  { value: <ShieldCheck weight="regular" className="w-6 h-6" aria-hidden="true" />, label: "Community Trusted" },
                 ].map((stat, index) => (
                     <div key={index} className="flex flex-col items-center justify-center rounded-[14px] border border-border bg-background p-5 text-center shadow-sm">
                     <div className="abh-icon-chip mb-1 flex h-9 w-9 items-center justify-center bg-background text-zinc-700 dark:text-zinc-300">{stat.value}</div>

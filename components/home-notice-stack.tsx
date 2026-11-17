@@ -41,7 +41,7 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
   return (
     <div className="rounded-[14px] border border-border/70 bg-card/35 px-5 py-5">
       <div className="flex items-start gap-3">
-        <notice.Icon size={20} weight="bold" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
+        <notice.Icon size={20} weight="regular" style={{ color }} className="shrink-0 mt-0.5" aria-hidden="true" />
         <div className="flex flex-col gap-1 min-w-0">
           <h3 className="text-sm font-semibold uppercase tracking-[0.14em]" style={{ color }}>
             {notice.header}
@@ -165,7 +165,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
             title="Dismiss notices"
             className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
-            <X size={13} weight="bold" aria-hidden="true" />
+            <X size={13} weight="regular" aria-hidden="true" />
           </button>
         </motion.div>
       </motion.div>
@@ -209,7 +209,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
                     title="Close updates"
                     className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400 dark:text-zinc-400"
                   >
-                    <X size={14} weight="bold" aria-hidden="true" />
+                    <X size={14} weight="regular" aria-hidden="true" />
                   </button>
                 </div>
 

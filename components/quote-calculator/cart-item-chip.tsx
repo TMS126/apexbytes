@@ -58,7 +58,7 @@ export function CartItemChip({
           aria-label={`Decrease quantity for ${displayName}`}
           className="abh-press w-7 h-7 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
         >
-          <Minus size={11} weight="bold" aria-hidden="true" />
+          <Minus size={11} weight="regular" aria-hidden="true" />
         </button>
         <span className="text-[0.68rem] font-medium w-4 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
         <button
@@ -70,7 +70,7 @@ export function CartItemChip({
           aria-label={`Increase quantity for ${displayName}`}
           className="abh-press w-7 h-7 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
         >
-          <Plus size={11} weight="bold" aria-hidden="true" />
+          <Plus size={11} weight="regular" aria-hidden="true" />
         </button>
       </div>
 
@@ -79,7 +79,7 @@ export function CartItemChip({
         aria-label={`Remove ${displayName} from quote`}
         className="abh-press w-6 h-6 flex items-center justify-center text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150"
       >
-        <X size={12} weight="bold" aria-hidden="true" />
+        <X size={12} weight="regular" aria-hidden="true" />
       </button>
     </div>
   )

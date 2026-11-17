@@ -57,7 +57,7 @@ export function PricingSearchResults({
                 className="group flex size-9 items-center justify-center rounded-[14px] transition-transform duration-150 active:scale-90 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
                 style={{ color: justAdded === key ? '#16a34a' : r.accent }}
               >
-                {justAdded === key ? <Check size={20} weight="bold" /> : <PlusCircle size={20} weight="regular" className="transition-all duration-150 group-hover:fill-current group-focus-visible:fill-current" />}
+                {justAdded === key ? <Check size={20} weight="regular" /> : <PlusCircle size={20} weight="regular" className="transition-all duration-150" />}
               </button>
             </div>
           </div>

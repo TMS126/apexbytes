@@ -50,7 +50,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
       {/* ── Icon, cropped by the right edge ─────────────────── */}
       <Icon
         size={180}
-        weight="fill"
+        weight="regular"
         aria-hidden="true"
         className={cn(
           "pointer-events-none absolute -right-10 top-1/2 -translate-y-[58%] transform-gpu",
@@ -70,7 +70,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
               role="img"
               aria-label="Notice for some services in this hub"
             >
-              <WarningCircle size={16} weight="fill" aria-hidden="true" />
+              <WarningCircle size={16} weight="regular" aria-hidden="true" />
             </span>
           )}
           {hubHasBulk && (
@@ -94,7 +94,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
           Explore
           <ArrowUpRight
             size={14}
-            weight="bold"
+            weight="regular"
             aria-hidden="true"
             className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
           />

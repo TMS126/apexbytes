@@ -12,7 +12,7 @@ export function BulkBadge() {
       className="inline-flex items-center gap-1 text-[0.68rem] font-medium uppercase tracking-wide px-2 py-0.5 rounded-full text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
       aria-label="Bulk pricing available"
     >
-      <SealPercent size={11} weight="fill" aria-hidden="true" />
+      <SealPercent size={11} weight="regular" aria-hidden="true" />
       Bulk
     </span>
   )
@@ -62,7 +62,7 @@ export function PdfPillButton({
         ['--tw-ring-color' as unknown as keyof import("react").CSSProperties]: restColor,
       }}
     >
-      <FilePdf size={isLg ? 20 : 16} weight="fill" aria-hidden="true" />
+      <FilePdf size={isLg ? 20 : 16} weight="regular" aria-hidden="true" />
       {label}
     </button>
   )

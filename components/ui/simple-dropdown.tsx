@@ -93,7 +93,7 @@ export function SimpleDropdown({
                   className="flex min-h-10 w-full items-center justify-between gap-3 rounded-[10px] px-3.5 py-2.5 text-left text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900"
                 >
                   {opt.label}
-                  {opt.value === value && <Check weight="bold" className="w-4 h-4" style={{ color: accentColor }} aria-hidden="true" />}
+                  {opt.value === value && <Check weight="regular" className="w-4 h-4" style={{ color: accentColor }} aria-hidden="true" />}
                 </button>
               </li>
             ))}

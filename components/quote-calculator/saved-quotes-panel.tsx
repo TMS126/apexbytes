@@ -33,7 +33,7 @@ export function SavedQuotesPanel({
         aria-controls="saved-quotes-panel"
         className="w-full flex items-center justify-between gap-2 text-[0.65rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-zinc-300 px-1 mb-2"
       >
-        <span className="flex items-center gap-1.5"><BookmarkSimple size={13} weight="bold" aria-hidden="true" /> Saved Quotes ({savedQuotes.length})</span>
+        <span className="flex items-center gap-1.5"><BookmarkSimple size={13} weight="regular" aria-hidden="true" /> Saved Quotes ({savedQuotes.length})</span>
         <CaretDown size={12} className={cn("transition-transform duration-200", showSavedList ? "rotate-180" : "rotate-0")} aria-hidden="true" />
       </button>
       <div id="saved-quotes-panel" inert={!showSavedList} className={cn("grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none", showSavedList ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}>
@@ -49,7 +49,7 @@ export function SavedQuotesPanel({
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button onClick={() => onLoad(q)} className="abh-press rounded-[14px] px-2.5 py-1 text-[0.65rem] font-medium" style={{ backgroundColor: fabColor, color: fabTextColor }}>Load</button>
-                    <button onClick={() => onDelete(q.id)} aria-label={`Delete saved quote ${q.name}`} className="abh-press w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"><Trash size={12} weight="bold" aria-hidden="true" /></button>
+                    <button onClick={() => onDelete(q.id)} aria-label={`Delete saved quote ${q.name}`} className="abh-press w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-red-500 transition-colors"><Trash size={12} weight="regular" aria-hidden="true" /></button>
                   </div>
                 </div>
               )

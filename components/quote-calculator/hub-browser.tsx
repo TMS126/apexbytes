@@ -218,7 +218,7 @@ export function HubBrowser({
                   {isSelected && (
                     <CheckCircle
                       size={18}
-                      weight="fill"
+                      weight="regular"
                       className="absolute right-2 top-2"
                       style={{ color: solidAccent }}
                       aria-label="Selected hub"
@@ -297,7 +297,7 @@ export function HubBrowser({
                             className="inline-flex items-center gap-0.5 rounded-full bg-slate-600 px-2 py-1 text-[0.58rem] font-medium text-slate-50"
                             aria-label="Bulk pricing available in this section"
                           >
-                            <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
+                            <Tag size={9} weight="regular" aria-hidden="true" /> Bulk
                           </span>
                         )}
 
@@ -306,13 +306,13 @@ export function HubBrowser({
                             className="abh-badge-circle w-6 h-6 gap-0.5 text-[0.6rem] font-medium bg-secondary text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                             aria-label={`${secSub.count} item${secSub.count === 1 ? "" : "s"} in cart from ${section.title}`}
                           >
-                            <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
+                            <ShoppingBagOpen size={10} weight="regular" aria-hidden="true" />
                             {secSub.count}
                           </span>
                         )}
                       </span>
                       <span className="flex items-center gap-2">
-                        {isSectionOpen && <CheckCircle size={15} weight="fill" style={{ color: solidAccent }} aria-label="Selected section" />}
+                        {isSectionOpen && <CheckCircle size={15} weight="regular" style={{ color: solidAccent }} aria-label="Selected section" />}
                         <CaretDown
                           size={14}
                           className={cn(
@@ -375,7 +375,7 @@ export function HubBrowser({
                                       className="abh-badge-circle w-6 h-6 gap-0.5 text-[0.6rem] font-medium text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
                                       aria-label={`${itemQty} already in your quote`}
                                     >
-                                      <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
+                                      <ShoppingBagOpen size={10} weight="regular" aria-hidden="true" />
                                       {itemQty}
                                     </span>
                                   )}
@@ -388,7 +388,7 @@ export function HubBrowser({
                                     className="abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
                                     aria-label={`Add ${item.name}`}
                                   >
-                                    <Plus size={13} weight="bold" aria-hidden="true" />
+                                    <Plus size={13} weight="regular" aria-hidden="true" />
                                   </button>
                                 </div>
                               </div>

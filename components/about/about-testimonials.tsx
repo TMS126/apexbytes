@@ -23,15 +23,15 @@ function CompactTestimonials() {
               tabIndex={0}
               className={cn("abh-card abh-card-rule h-full min-h-[260px] w-full p-5 flex flex-col items-center text-center outline-none transition-all duration-300 min-w-0", isHovered && "-translate-y-1.5")}
             >
-              <Quotes size={16} weight="fill" className="mb-2 opacity-30 text-muted-foreground dark:text-muted-foreground" aria-hidden="true" />
+              <Quotes size={16} weight="regular" className="mb-2 opacity-30 text-muted-foreground dark:text-muted-foreground" aria-hidden="true" />
               <p className="text-[0.92rem] font-normal text-zinc-600 dark:text-zinc-300 leading-relaxed mb-3">{r.quote}</p>
               <div className="abh-icon-chip flex h-12 w-12 items-center justify-center mb-1.5 bg-background text-muted-foreground dark:text-muted-foreground" aria-hidden="true">
-                <UserCircle size={30} weight="fill" />
+                <UserCircle size={30} weight="regular" />
               </div>
               <p className="abh-card-heading text-[0.9rem] truncate max-w-full">{r.name}</p>
               <div className="flex items-center gap-0.5 mt-1">
                 {Array.from({ length: 5 }).map((_, si) => (
-                  <Star key={si} size={11} weight="fill" className={si < r.rating ? "text-muted-foreground dark:text-muted-foreground" : "text-zinc-200 dark:text-zinc-700"} />
+                  <Star key={si} size={11} weight="regular" className={si < r.rating ? "text-muted-foreground dark:text-muted-foreground" : "text-zinc-200 dark:text-zinc-700"} />
                 ))}
               </div>
             </li>

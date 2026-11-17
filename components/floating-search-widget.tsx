@@ -51,7 +51,7 @@ function buildSearchIndex(): SearchableService[] {
 }
 
 function HubIcon({ id, size = 16, color }: { id: HubId; size?: number; color?: string }) {
-  const p = { size, weight: "fill" as const, color: color ?? "currentColor", "aria-hidden": true }
+  const p = { size, weight: "regular" as const, color: color ?? "currentColor", "aria-hidden": true }
   switch (id) {
     case "print":    return <Printer    {...p} />
     case "doc":      return <FileText   {...p} />

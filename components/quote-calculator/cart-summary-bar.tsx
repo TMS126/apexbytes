@@ -65,7 +65,7 @@ export function CartSummaryBar({
               onClick={undoRemove}
               className="abh-press shrink-0 flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 dark:bg-black/10 hover:bg-white/25 dark:hover:bg-black/20 transition-colors"
             >
-              <ArrowCounterClockwise size={12} weight="bold" aria-hidden="true" /> Undo
+              <ArrowCounterClockwise size={12} weight="regular" aria-hidden="true" /> Undo
             </button>
           </div>
         </div>
@@ -88,7 +88,7 @@ export function CartSummaryBar({
                   title={expandView ? "Compact view" : "Expand view"}
                   className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
                 >
-                  {expandView ? <ArrowsInSimple size={14} weight="bold" aria-hidden="true" /> : <ArrowsOutSimple size={14} weight="bold" aria-hidden="true" />}
+                  {expandView ? <ArrowsInSimple size={14} weight="regular" aria-hidden="true" /> : <ArrowsOutSimple size={14} weight="regular" aria-hidden="true" />}
                 </button>
                 <button
                   onClick={() => setShowSaveForm(v => !v)}
@@ -96,7 +96,7 @@ export function CartSummaryBar({
                   title="Save quote"
                   className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
                 >
-                  <FloppyDisk size={14} weight="bold" aria-hidden="true" />
+                  <FloppyDisk size={14} weight="regular" aria-hidden="true" />
                 </button>
                 <button
                   onClick={clearCart}
@@ -104,7 +104,7 @@ export function CartSummaryBar({
                   title="Clear quote"
                   className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-red-500 hover:bg-white dark:hover:bg-white/10 transition-colors"
                 >
-                  <Trash size={14} weight="bold" aria-hidden="true" />
+                  <Trash size={14} weight="regular" aria-hidden="true" />
                 </button>
               </div>
             </div>

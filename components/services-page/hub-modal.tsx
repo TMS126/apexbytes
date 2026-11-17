@@ -127,7 +127,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 className="flex items-center gap-1.5 rounded-[14px] px-3 py-1.5 text-[0.8rem] font-medium text-muted-foreground transition-colors duration-150 whitespace-nowrap hover:bg-muted hover:text-foreground"
               >
                 Gallery
-                <ArrowSquareOut size={11} weight="bold" aria-hidden="true" />
+                <ArrowSquareOut size={11} weight="regular" aria-hidden="true" />
               </Link>
 
               <button
@@ -135,7 +135,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 aria-label="Close"
                 className="flex size-9 items-center justify-center rounded-[14px] bg-muted text-muted-foreground transition-colors duration-150 hover:text-foreground shrink-0"
               >
-                <XIcon size={18} weight="bold" aria-hidden="true" />
+                <XIcon size={18} weight="regular" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -159,7 +159,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                       {section.title}
                       {hasBulk && <span className="ml-2 rounded-full border border-border/70 px-2 py-0.5 text-[0.62rem] font-medium uppercase tracking-[0.12em] text-muted-foreground">Bulk deals</span>}
                     </span>
-                    <CaretDown size={16} weight="bold" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+                    <CaretDown size={16} weight="regular" className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                   </button>
                   <div
                     id={`hub-section-${sIdx}`}
@@ -273,7 +273,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     aria-expanded={false}
                     className="w-8 h-8 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:text-foreground transition-colors duration-150"
                   >
-                    <Info size={15} weight="bold" aria-hidden="true" />
+                    <Info size={15} weight="regular" aria-hidden="true" />
                   </motion.button>
                 </motion.div>
               ) : (
@@ -294,7 +294,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                     aria-expanded={true}
                     className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center bg-muted text-muted-foreground hover:text-foreground transition-colors duration-150"
                   >
-                    <XIcon size={15} weight="bold" aria-hidden="true" />
+                    <XIcon size={15} weight="regular" aria-hidden="true" />
                   </motion.button>
                   <p className="text-[0.86rem] font-medium text-muted-foreground dark:text-muted-foreground mb-1 pr-8">
                     Please Note

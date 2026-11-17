@@ -44,7 +44,7 @@ export function ComposeBar({ isValid, shakeKey, onShake, onSend }: ComposeBarPro
         style={{ backgroundColor: WA.accent }}
         aria-label={isValid ? "Send" : "Complete the form to send"}
       >
-        {isValid ? <PaperPlaneTilt size={18} weight="fill" /> : <Microphone size={19} weight="fill" />}
+        {isValid ? <PaperPlaneTilt size={18} weight="regular" /> : <Microphone size={19} weight="regular" />}
       </button>
     </div>
   )

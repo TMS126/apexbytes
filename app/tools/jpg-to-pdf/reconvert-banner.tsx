@@ -17,7 +17,7 @@ export function ReconvertBanner({ prompt, onResolve }: { prompt: ReconvertPrompt
         className="mt-4 rounded-[14px] border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/30 p-4 text-center overflow-hidden"
       >
         <div className="flex items-center justify-center gap-2 mb-2">
-          <ArrowsClockwise weight="bold" className="w-4 h-4 text-amber-600 shrink-0" aria-hidden="true" />
+          <ArrowsClockwise weight="regular" className="w-4 h-4 text-amber-600 shrink-0" aria-hidden="true" />
           <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
             {prompt.overlapCount} of {prompt.totalCount} image{prompt.overlapCount > 1 ? "s were" : " was"} already converted. Convert again?
           </p>

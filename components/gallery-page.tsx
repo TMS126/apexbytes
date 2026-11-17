@@ -83,7 +83,7 @@ export function HubFilterCircles({
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 style={{ backgroundColor: `color-mix(in srgb, ${accent} 19%, transparent)` }}
               />
-              {/* NOTE: HubIcon is hardcoded to weight="fill" in
+              {/* NOTE: HubIcon is hardcoded to weight="regular" in
                   services-page/shared.tsx right now — "regular unless
                   selected" needs a `weight` prop added there first. Once
                   that file's updated, pass weight={isActive ? "fill" : "regular"}
@@ -402,7 +402,7 @@ function GalleryPageInner() {
                 searchExpanded && "pointer-events-none opacity-0",
               )}
             >
-              <Shuffle size={13} weight="bold" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />
+              <Shuffle size={13} weight="regular" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />
               Pick for me
             </button>
           </div>

@@ -157,7 +157,7 @@ export function LogoMarquee() {
         aria-label={paused ? "Play logo scroll" : "Pause logo scroll"}
         className="absolute top-1/2 right-2 -translate-y-1/2 z-10 w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground bg-background/90 border border-border transition-colors"
       >
-        {paused ? <Play size={10} weight="fill" aria-hidden="true" /> : <Pause size={10} weight="fill" aria-hidden="true" />}
+        {paused ? <Play size={10} weight="regular" aria-hidden="true" /> : <Pause size={10} weight="regular" aria-hidden="true" />}
       </button>
 
       <div

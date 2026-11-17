@@ -76,7 +76,7 @@ export function MobileHubCard({
         {hubHasNotice && (
           <WarningCircle
             size={18}
-            weight="fill"
+            weight="regular"
             aria-label="Notice for some services in this hub"
             style={{ color: TOKEN.warningBg }}
           />
@@ -90,7 +90,7 @@ export function MobileHubCard({
         {hubHasBulk ? <BulkPill /> : <span aria-hidden="true" />}
         <ArrowUpRight
           size={16}
-          weight="bold"
+          weight="regular"
           className="transition-colors duration-150"
           style={{ color: pressed ? accent : TOKEN.orangeText }}
           aria-hidden="true"

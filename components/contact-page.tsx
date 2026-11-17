@@ -194,7 +194,7 @@ function ContactPageInner() {
                               aria-label={justCopied ? `${c.title} copied` : `Copy ${c.title.toLowerCase()}`}
                               className="absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 transition-all active:scale-90"
                             >
-                              {justCopied ? <Check size={12} weight="bold" style={{ color: BRAND.green }} /> : <Copy size={12} weight="bold" />}
+                              {justCopied ? <Check size={12} weight="regular" style={{ color: BRAND.green }} /> : <Copy size={12} weight="regular" />}
                             </button>
                           )}
                         </div>
@@ -204,7 +204,7 @@ function ContactPageInner() {
                 </div>
 
                 <p className="abh-muted flex items-center justify-center gap-1.5 mt-4 text-sm">
-                  <Clock size={13} weight="bold" aria-hidden="true" />
+                  <Clock size={13} weight="regular" aria-hidden="true" />
                   We usually reply within 15–30 minutes during business hours
                 </p>
 
@@ -217,7 +217,7 @@ function ContactPageInner() {
                     </div>
                   </div>
                   <button onClick={handleVCard} aria-label={vcardDone ? "Contact saved" : "Download contact card"} className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium">
-                    <DownloadSimple size={16} weight="bold" aria-hidden="true" />
+                    <DownloadSimple size={16} weight="regular" aria-hidden="true" />
                     {vcardDone ? "Saved!" : "Download"}
                   </button>
                 </div>
@@ -296,7 +296,7 @@ function ContactPageInner() {
                 </div>
 
                 <button onClick={handleSubmit} disabled={!isFormValid} className="abh-wa-btn mt-auto w-full py-4 disabled:opacity-50 shadow-lg">
-                  <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
+                  <WhatsappLogo size={18} weight="regular" aria-hidden="true" />
                   Send via WhatsApp
                 </button>
               </div>
@@ -311,7 +311,7 @@ function ContactPageInner() {
 
       <div className="md:hidden fixed bottom-0 inset-x-0 z-[9985] px-4 pb-4 pt-2 bg-gradient-to-t from-background via-background to-transparent">
         <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`} target="_blank" rel="noopener noreferrer" className="abh-wa-btn w-full py-3.5 shadow-lg">
-          <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
+          <WhatsappLogo size={20} weight="regular" aria-hidden="true" />
           Chat on WhatsApp
         </a>
       </div>

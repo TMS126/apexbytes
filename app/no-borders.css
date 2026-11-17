@@ -29,10 +29,6 @@
 :root.dark :is(.abh-pill, .abh-hub-pill, .abh-badge, .abh-badge-circle, [class*="rounded-full"]) {
   box-shadow: 0 8px 14px -12px rgba(0, 0, 0, 0.60);
 }
-:root.dark .abh-icon-chip {
-  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.50);
-}
-
 /* ============================================================
    RULES: live in "base" so their !important beats the older
    !important rules that sit in the "components" layer.

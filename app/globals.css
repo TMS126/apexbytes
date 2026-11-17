@@ -883,8 +883,9 @@ button, a, [role="button"] {
 
   .abh-icon-chip {
     border: 0 !important;
-    border-radius: 14px;
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--foreground) 10%, transparent);
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 
   .abh-nav-control {

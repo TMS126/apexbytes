@@ -40,7 +40,7 @@ export function FAQAccordion() {
                       <span className="shrink-0 text-[0.72rem] font-medium tracking-[0.18em] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
                       <span>{faq.question}</span>
                     </h4>
-                    {isOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
+                    {isOpen ? <Minus size={18} weight="regular" aria-hidden="true" /> : <Plus size={18} weight="regular" aria-hidden="true" />}
                   </button>
                   <div
                     id={`contact-faq-${index}`}

@@ -28,7 +28,7 @@ function RecenterButton() {
       className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl  transition-transform hover:-translate-y-0.5 active:scale-95"
       aria-label="Show ApexbytesHub on the map"
     >
-      <Target size={16} weight="bold" aria-hidden="true" />
+      <Target size={16} weight="regular" aria-hidden="true" />
       <span className="truncate">ApexbytesHub</span>
     </button>
   )
@@ -61,7 +61,7 @@ function DirectionsButton() {
           className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl  transition-transform hover:-translate-y-0.5 active:scale-95"
           aria-label={`Open driving directions to ${BIZ.name} in Google Maps`}
         >
-          <MapPinLine size={16} weight="bold" aria-hidden="true" />
+          <MapPinLine size={16} weight="regular" aria-hidden="true" />
           <span className="truncate">Get directions</span>
         </button>
         <RecenterButton />

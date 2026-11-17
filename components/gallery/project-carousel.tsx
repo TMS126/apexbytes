@@ -54,7 +54,7 @@ function ProjectCard({
               className="shrink-0 flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.66rem] font-medium uppercase tracking-wider text-white"
               style={{ backgroundColor: badgeBg }}
             >
-              <ArrowsLeftRight size={9} weight="bold" />
+              <ArrowsLeftRight size={9} weight="regular" />
               B&amp;A
             </span>
           )}
