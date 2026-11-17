@@ -1,7 +1,7 @@
 // components/home-notice-stack.tsx
 "use client"
 
-import { useEffect, useId, useState, useSyncExternalStore } from "react"
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
@@ -78,7 +78,10 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
 export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[]; className?: string }) {
   const [dismissed, setDismissed] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const [unread, setUnread] = useState(true)
+  const [unread, setUnread] = useState(() => {
+    try { return typeof window === "undefined" || sessionStorage.getItem("abh-notice-seen:home-updates") !== "1" } catch { return true }
+  })
+  const swipeStart = useRef<number | null>(null)
   const titleId = useId()
 
   // Hydration-safe "are we in the browser yet" check — matches the
@@ -117,6 +120,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
 
   const handlePillClick = () => {
     setUnread(false)
+    try { sessionStorage.setItem("abh-notice-seen:home-updates", "1") } catch {}
     setModalOpen(true)
   }
 
@@ -130,7 +134,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 rounded-[14px] border border-border bg-card/90 p-1.5 shadow-sm"
+          className="inline-flex items-center gap-2 rounded-[14px]"
         >
           <button
             type="button"
@@ -138,7 +142,7 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
             aria-haspopup="dialog"
             aria-expanded={modalOpen}
             aria-label={`Open ${notices.length} update${notices.length === 1 ? "" : "s"}`}
-            className="relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
+            className="relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[transform,filter] hover:-translate-y-0.5 hover:drop-shadow-[0_5px_8px_color-mix(in_srgb,var(--foreground)_28%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/40"
           >
             <AnnouncementIconChip unread={unread} />
             <span className="sr-only">{collapsedLabel}</span>
@@ -178,7 +182,9 @@ export function HomeNoticeStack({ notices, className }: { notices: HomeNotice[];
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 onClick={(e) => e.stopPropagation()}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-[var(--surface-modal)] px-5 py-6 sm:px-8 sm:py-8"
+                onTouchStart={(e) => { swipeStart.current = e.touches[0]?.clientX ?? null }}
+                onTouchEnd={(e) => { const start = swipeStart.current; swipeStart.current = null; if (start !== null && Math.abs((e.changedTouches[0]?.clientX ?? start) - start) > 70) setModalOpen(false) }}
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto rounded-[14px] bg-[var(--surface-modal)] px-5 py-6 sm:px-8 sm:py-8"
                 style={{ boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)" }}
               >
                 <div className="abh-notice-header mb-6 pb-5">

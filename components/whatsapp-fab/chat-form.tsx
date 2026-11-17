@@ -27,7 +27,7 @@ function ChatBubble({ field, followTyping, revealed, children }: BubbleProps) {
   return (
     <div
       className={cn(
-        "relative self-start w-[92%] max-w-[92%] px-4 py-3 rounded-lg rounded-tl-none shadow-sm transition-opacity duration-200 ease-out motion-reduce:transition-none",
+        "relative self-start w-[92%] max-w-[92%] px-4 py-3 rounded-[14px] rounded-tl-none shadow-sm transition-opacity duration-200 ease-out motion-reduce:transition-none",
         (followTyping[field] || revealed[field]) ? "opacity-100" : "opacity-0"
       )}
       style={{ backgroundColor: WA.bubbleIn }}
@@ -72,14 +72,14 @@ export function ChatForm({
       <DateDivider dateLabel={dateLabel} subColor={WA.sub} />
 
       {!showGreeting && (
-        <div className="self-start px-4 py-3 rounded-lg rounded-tl-none shadow-sm" style={{ backgroundColor: WA.bubbleIn }}>
+        <div className="self-start px-4 py-3 rounded-[14px] rounded-tl-none shadow-sm" style={{ backgroundColor: WA.bubbleIn }}>
           <TypingLoader subColor={WA.sub} />
         </div>
       )}
 
       {showGreeting && (
         <div
-          className="relative self-start max-w-[85%] px-4 py-3 rounded-lg rounded-tl-none shadow-sm animate-in fade-in slide-in-from-left-1 duration-200 ease-out motion-reduce:animate-none"
+          className="relative self-start max-w-[85%] px-4 py-3 rounded-[14px] rounded-tl-none shadow-sm animate-in fade-in slide-in-from-left-1 duration-200 ease-out motion-reduce:animate-none"
           style={{ backgroundColor: WA.bubbleIn }}
         >
           <p className={cn(TXT.body, "leading-relaxed pr-10")} style={{ color: WA.text }}>{GREETING}</p>

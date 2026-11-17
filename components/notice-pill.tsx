@@ -1,7 +1,7 @@
 // components/notice-pill.tsx — full file, paste over the current one
 "use client"
 
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
@@ -52,8 +52,14 @@ export function NoticePill({
   className?: string
 }) {
   const [open, setOpen] = useState(false)
-  const [unread, setUnread] = useState(true)
-  const [dotVisible, setDotVisible] = useState(dot)
+  const [unread, setUnread] = useState(() => {
+    try { return typeof window === "undefined" || sessionStorage.getItem(`abh-notice-seen:${expandedLabel}`) !== "1" } catch { return true }
+  })
+  const [dotVisible, setDotVisible] = useState(() => {
+    try { return dot && (typeof window === "undefined" || sessionStorage.getItem(`abh-notice-seen:${expandedLabel}`) !== "1") } catch { return dot }
+  })
+  const swipeStart = useRef<number | null>(null)
+  const noticeKey = `abh-notice-seen:${expandedLabel}`
   const close = () => setOpen(false)
 
   const iconColor = VARIANT_TEXT[variant]
@@ -72,21 +78,21 @@ export function NoticePill({
   return (
     <div className={cn("w-full flex justify-center", className)}>
       <div className={cn(
-        "relative abh-shadow-badge inline-flex items-center gap-2 border border-border bg-[var(--notice-surface)]",
-        announcement ? "rounded-[14px] p-1.5" : "rounded-full py-1.5 pl-2.5 pr-1.5",
+        "relative inline-flex items-center gap-2",
+        announcement ? "rounded-[14px] p-0" : "rounded-[14px] border border-border bg-[var(--notice-surface)] py-1.5 pl-2.5 pr-1.5 shadow-sm",
       )}>
         {dotVisible && <span className="absolute -right-0.5 -top-0.5 size-2.5 rounded-full bg-[var(--brand-orange)] ring-2 ring-background" aria-hidden="true" />}
         <button
           type="button"
-          onClick={() => { setUnread(false); setDotVisible(false); setOpen(true) }}
+          onClick={() => { setUnread(false); setDotVisible(false); try { sessionStorage.setItem(noticeKey, "1") } catch {}; setOpen(true) }}
           aria-expanded={open}
           aria-haspopup="dialog"
           aria-label={`Open: ${collapsedLabel}`}
           className={cn(
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400",
             announcement
-              ? "relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-colors hover:bg-muted"
-              : "flex items-center gap-2 rounded-full",
+              ? "relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[transform,filter] hover:-translate-y-0.5 hover:drop-shadow-[0_5px_8px_color-mix(in_srgb,var(--foreground)_28%,transparent)]"
+              : "flex items-center gap-2 rounded-[14px]",
           )}
         >
           {announcement ? (
@@ -138,7 +144,9 @@ export function NoticePill({
                 exit={{ opacity: 0, y: 6, scale: 0.99 }}
                 transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(event) => event.stopPropagation()}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto bg-[var(--surface-modal)] px-5 py-6 md:px-8 md:py-8"
+                onTouchStart={(event) => { swipeStart.current = event.touches[0]?.clientX ?? null }}
+                onTouchEnd={(event) => { const start = swipeStart.current; swipeStart.current = null; if (start !== null && Math.abs((event.changedTouches[0]?.clientX ?? start) - start) > 70) close() }}
+                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto rounded-[14px] bg-[var(--surface-modal)] px-5 py-6 md:px-8 md:py-8"
                 style={{
                   boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}

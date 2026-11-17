@@ -743,8 +743,16 @@ body {
 }
 
 input, textarea, select {
-  background-color: var(--card) !important;
-  border-color: var(--border) !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--line-rule-soft) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+input:focus, textarea:focus, select:focus,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .abh-navbar-submenu {
@@ -1131,6 +1139,10 @@ button, a, [role="button"] {
 
   .abh-notice-header .abh-divider { margin-top: .15rem; }
 
+  .abh-quote-calculator { font-size: 1rem; }
+  .abh-quote-calculator .text-\[0\.78rem\],
+  .abh-quote-calculator .text-\[0\.9rem\] { font-size: 1rem; }
+
   .abh-wa-btn {
     @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
     background: transparent;
@@ -1505,15 +1517,29 @@ button:active:not(:disabled),
 /* Fields share the same tactile language while keeping focus visible. */
 input, textarea, select {
   border: 0 !important;
-  border-radius: var(--ui-radius-sm) !important;
-  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 1px 0 var(--ui-highlight) !important;
-  transition: box-shadow 180ms ease, background-color 180ms ease;
+  border-bottom: 1px solid var(--line-rule-soft) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 input:focus, textarea:focus, select:focus,
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--ring) 42%, transparent) !important;
-  outline-offset: 2px;
-  box-shadow: inset 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent), 0 8px 22px -16px color-mix(in srgb, var(--ring) 60%, transparent) !important;
+  outline: none !important;
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+}
+.abh-footer-icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: transform 150ms ease, filter 150ms ease, color 150ms ease;
+}
+.abh-footer-icon-link:hover,
+.abh-footer-icon-link:focus-visible {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 5px 8px color-mix(in srgb, currentColor 30%, transparent));
 }
 
 @media (max-width: 640px) {

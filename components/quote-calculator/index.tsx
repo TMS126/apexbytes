@@ -357,7 +357,7 @@ export function QuoteCalculatorWidget() {
           aria-label="Quotation Calculator"
           className={cn(
             "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5",
-            "w-full h-full md:w-[min(680px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
+            "abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
             "rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
             GLASS.panel,

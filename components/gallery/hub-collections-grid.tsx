@@ -46,7 +46,6 @@ function HubCollectionCard({
   }, [project.id, images.length])
 
   const bigIdx = order[0] ?? 0
-  const thumbIdxs = order.slice(1, 3)
 
   // ---- Shared step logic used by both touch-swipe and the desktop arrow buttons ----
   const step = (dir: -1 | 1) => {
@@ -73,14 +72,6 @@ function HubCollectionCard({
       return
     }
     onOpenProject(project)
-  }
-
-  const swapThumb = (posInOrder: number) => {
-    setOrder((prev) => {
-      const next = [...prev]
-      ;[next[0], next[posInOrder]] = [next[posInOrder], next[0]]
-      return next
-    })
   }
 
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${project.id}` : `${pathname}?project=${project.id}`
@@ -163,18 +154,7 @@ function HubCollectionCard({
         </div>
       </div>
 
-      {/* Two square thumbnails — click to swap into the big spot */}
-      {thumbIdxs.length > 0 && (
-        <div className="grid grid-cols-2 gap-2 pt-2">
-          {thumbIdxs.map((imgIdx, posOffset) => (
-            <button key={imgIdx} onClick={() => swapThumb(posOffset + 1)} aria-label="View this image large" className="relative aspect-square rounded-[10px] overflow-hidden">
-              <SafeImage src={images[imgIdx]} alt={`${project.title} detail`} accent={accent} fill sizes="150px" className="object-cover" />
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Footer — hub name + project count (projects icon, in hub color — not a gallery/image icon) */}
+      {/* Minimal work caption — the image remains the primary surface. */}
       <button onClick={() => onSelectHub(hubId)} className="w-full flex items-center justify-between pt-2 pb-1 text-left">
         <h3 className="font-sans font-medium text-xl text-zinc-900 dark:text-zinc-50">{HUBS[hubId].title}</h3>
         <span className="flex items-center gap-1 text-sm font-medium" style={{ color: accent }}>

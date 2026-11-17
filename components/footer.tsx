@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { WhatsappLogo, EnvelopeSimple, FacebookLogo, Copy, Check } from "@phosphor-icons/react"
+import { WhatsappLogo, EnvelopeSimple, FacebookLogo } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -18,19 +18,10 @@ function FooterContent() {
   const { theme } = useTheme()
   const mounted = useMounted()
   const [isTermsOpen, setIsTermsOpen] = useState(false)
-  const [phoneCopied, setPhoneCopied] = useState(false)
-
-  const handleCopyPhone = async () => {
-    if (typeof navigator === "undefined" || !navigator.clipboard) return
-    await navigator.clipboard.writeText(BIZ.phone)
-    setPhoneCopied(true)
-    setTimeout(() => setPhoneCopied(false), 2000)
-  }
-
   const showFaq = pathname !== "/contact"
 
   return (
-    <div className="border-t border-border/50 bg-[var(--footer-bg)] pt-16 pb-12">
+    <div className="border-t border-border/50 bg-background pt-16 pb-12">
       {showFaq && (
         <ScrollBounce>
           <div className="px-6 md:px-10 lg:px-12 xl:px-16 mb-14 flex justify-center">
@@ -39,8 +30,10 @@ function FooterContent() {
         </ScrollBounce>
       )}
 
+      <div className="mx-4 md:mx-8">
+      <div className="mx-auto max-w-[1280px] rounded-[14px] bg-[var(--footer-bg)] px-6 py-10 shadow-sm md:px-10">
       <ScrollBounce>
-        <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 px-6 md:px-10">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-16">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2 select-none">
               <div
@@ -89,80 +82,13 @@ function FooterContent() {
           </nav>
 
           <div>
-            <h3 className="text-[0.84rem] font-medium uppercase tracking-widest mb-8 text-muted-foreground">Connect</h3>
-            <ul className="flex flex-col gap-5">
-              <li className="relative">
-                <div className="flex items-center gap-2">
-                  <a
-                    href={WA.general}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Contact via WhatsApp: ${BIZ.phone}`}
-                    className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-whatsapp transition-colors flex-1 min-w-0"
-                  >
-                    <div
-                      className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm shrink-0"
-                      aria-hidden="true"
-                    >
-                      <WhatsappLogo weight="fill" className="w-5 h-5" />
-                    </div>
-                    <span className="truncate">{BIZ.phone}</span>
-                  </a>
-                  <button
-                    type="button"
-                    onClick={handleCopyPhone}
-                    aria-label="Copy phone number"
-                    className="w-8 h-8 rounded-[10px] flex items-center justify-center border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm text-muted-foreground hover:text-brand-blue transition-colors active:scale-90"
-                  >
-                    {phoneCopied ? (
-                      <Check weight="bold" className="w-3.5 h-3.5 text-brand-green" />
-                    ) : (
-                      <Copy weight="bold" className="w-3.5 h-3.5" />
-                    )}
-                  </button>
-                </div>
-                {phoneCopied && (
-                  <span className="absolute -top-7 right-0 whitespace-nowrap text-[0.72rem] font-medium uppercase tracking-widest text-white bg-zinc-900 dark:bg-zinc-50 dark:text-zinc-900 px-2.5 py-1 rounded-sm pointer-events-none animate-pulse">
-                    Copied!
-                  </span>
-                )}
-              </li>
-              <li className="min-w-0">
-                <a
-                  href={`mailto:${BIZ.email}`}
-                  aria-label={`Contact via email: ${BIZ.email}`}
-                  className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-blue transition-colors min-w-0"
-                >
-                  <div
-                    className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm shrink-0"
-                    aria-hidden="true"
-                  >
-                    <EnvelopeSimple weight="fill" className="w-5 h-5" />
-                  </div>
-                  <span className="truncate">{BIZ.email}</span>
-                </a>
-              </li>
-              <li className="min-w-0">
-                <a
-                  href={BIZ.facebookUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Visit ApexbytesHub on Facebook"
-                  className="flex items-center gap-4 text-base text-zinc-600 dark:text-zinc-300 hover:text-brand-blue transition-colors min-w-0"
-                >
-                  <div
-                    className="w-10 h-10 rounded-[14px] border border-zinc-100 dark:border-zinc-800 flex items-center justify-center bg-white dark:bg-zinc-900 shadow-sm shrink-0"
-                    aria-hidden="true"
-                  >
-                    <FacebookLogo weight="fill" className="w-5 h-5" />
-                  </div>
-                  <span>Facebook</span>
-                </a>
-              </li>
-              <li className="pt-2">
-                <BusinessStatusFull />
-              </li>
-            </ul>
+            <h3 className="mb-5 text-[0.84rem] font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
+            <div className="flex items-center gap-4">
+              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} className="abh-footer-icon-link text-brand-whatsapp"><WhatsappLogo weight="regular" size={25} /></a>
+              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} className="abh-footer-icon-link text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
+              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" className="abh-footer-icon-link text-brand-blue"><FacebookLogo weight="regular" size={25} /></a>
+            </div>
+            <div className="mt-7"><BusinessStatusFull /></div>
           </div>
         </div>
       </ScrollBounce>
@@ -199,6 +125,8 @@ function FooterContent() {
           </div>
         </div>
       </ScrollBounce>
+      </div>
+      </div>
 
       <TermsGateModal open={isTermsOpen} onAgree={() => setIsTermsOpen(false)} />
     </div>
@@ -207,7 +135,7 @@ function FooterContent() {
 
 export function Footer() {
   return (
-    <footer className="bg-[var(--footer-bg)] text-foreground">
+    <footer className="bg-background text-foreground">
       <FooterContent />
     </footer>
   )

@@ -146,7 +146,7 @@ export default async function ServicesRoute({
           </Suspense>
         )}
         {selectedService && <ServiceDetailPage service={selectedService} />}
-        <TestimonialsSection />
+        {!selectedService && <TestimonialsSection />}
         <CtaBar
           title="Not sure what you need?"
           description="Just WhatsApp us and we'll guide you in the right direction."
