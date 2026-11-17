@@ -214,7 +214,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
           aria-expanded={open}
           aria-controls={panelId}
           aria-label={`Open ${PAGE_LABEL[page]} notifications (${notices.length})`}
-          className="flex size-11 items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm ring-1 ring-border/70 transition-colors hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex size-11 items-center justify-center text-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <AnnouncementIconChip unread={unread} />
         </button>
@@ -243,7 +243,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Close notifications"
-                  className="inline-flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <span aria-hidden="true">×</span>
                 </button>

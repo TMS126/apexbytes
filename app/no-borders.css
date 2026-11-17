@@ -29,9 +29,6 @@
 :root.dark :is(.abh-pill, .abh-hub-pill, .abh-badge, .abh-badge-circle, [class*="rounded-full"]) {
   box-shadow: 0 8px 14px -12px rgba(0, 0, 0, 0.60);
 }
-:root.dark .abh-icon-chip {
-  box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.50);
-}
 
 /* ============================================================
    RULES: live in "base" so their !important beats the older
@@ -45,6 +42,13 @@
   :root:root:root *:not(.animate-spin):not([data-hover-border])::after {
     border: 0 none transparent !important;
     border-color: transparent !important;
+  }
+
+  :root:root:root :where(span, div, button, a):has(> svg:only-child) {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
 
   :root:root:root button.abh-pill-action:not(:hover):not(:focus-visible):not(:active) {

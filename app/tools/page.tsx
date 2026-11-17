@@ -66,7 +66,7 @@ export default function ToolsPage() {
                     aria-label={tool.name}
                   >
                     <span className="flex flex-col items-center gap-2 text-center">
-                      <span className="flex size-12 items-center justify-center rounded-[14px] bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                      <span className="flex size-12 items-center justify-center text-primary transition-colors group-hover:text-foreground">
                         <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
                       </span>
                       <span className="text-sm font-medium text-foreground">{tool.name}</span>

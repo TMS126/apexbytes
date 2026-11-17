@@ -50,7 +50,7 @@ export function HowItWorks() {
               <ScrollBounce key={step.title} delay={index * 0.1}>
                 <div className="abh-card h-full p-6 md:p-7 flex flex-col items-center text-center">
                   <div className="relative mb-4">
-                    <div className="w-14 h-14 rounded-[14px] flex items-center justify-center bg-secondary text-muted-foreground">
+                    <div className="flex size-14 items-center justify-center text-muted-foreground">
                       <StepIcon size={28} weight="regular" aria-hidden="true" />
                     </div>
                     <span
