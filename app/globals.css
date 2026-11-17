@@ -88,7 +88,7 @@ html[data-scroll-locked] body { overflow: hidden; }
   align-items: center;
   gap: .75rem;
   border: 0;
-  border-bottom: 1px solid var(--line-rule-soft);
+  border-bottom: 2px solid var(--line-rule-soft);
   border-radius: 0;
   background: transparent;
   color: var(--foreground);
@@ -96,7 +96,7 @@ html[data-scroll-locked] body { overflow: hidden; }
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
-.abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 2px 0 -1px var(--line-rule); }
+.abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 3px 0 -1px var(--line-rule); }
 .abh-reference-search input,
 .abh-search-input {
   min-width: 0;
@@ -125,7 +125,8 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: var(--foreground); transition: background-color 140ms ease; }
 .abh-reference-search-row:hover, .abh-reference-search-row:focus-visible { background: var(--muted); }
 .abh-reference-search-row + .abh-reference-search-row { border-top: 1px solid var(--border); }
-.abh-reference-search-results .abh-search-muted { color: #737373; }
+.abh-reference-search-results .abh-search-muted { color: #52525b; }
+.dark .abh-reference-search-results .abh-search-muted { color: #a1a1aa; }
 @media (prefers-reduced-motion: reduce) { .abh-reference-search, .abh-reference-search-row { transition: none; } }
 
 /* Site-wide text hierarchy: neutral copy stays readable and consistent;
@@ -1517,7 +1518,7 @@ button:active:not(:disabled),
 /* Fields share the same tactile language while keeping focus visible. */
 input, textarea, select {
   border: 0 !important;
-  border-bottom: 1px solid var(--line-rule-soft) !important;
+  border-bottom: 2px solid var(--line-rule-soft) !important;
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -1527,7 +1528,7 @@ input:focus, textarea:focus, select:focus,
 input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: none !important;
   border-bottom-color: var(--line-rule) !important;
-  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+  box-shadow: 0 3px 0 -1px var(--line-rule) !important;
 }
 .abh-footer-icon-link {
   display: inline-flex;

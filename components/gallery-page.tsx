@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { Info, Shuffle } from "@phosphor-icons/react"
+import { Funnel, Info, Shuffle } from "@phosphor-icons/react"
 import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -41,15 +41,15 @@ export function HubFilterCircles({
   const neutralIconColor = isDark ? "#a1a1aa" : "#71717a"
 
   return (
-    <div className="flex items-center justify-center flex-wrap gap-4 overflow-x-auto no-scrollbar px-1 pb-1">
+    <div className="flex items-center justify-center flex-wrap gap-4 overflow-x-auto no-scrollbar px-1 pb-1 md:gap-7">
       <button
         onClick={() => onSelect("all")}
         aria-pressed={activeFilter === "all"}
         aria-label="All projects"
-        className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150"
+        className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
       >
         <span
-          className="relative w-16 h-16 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 border-2 transition-colors overflow-hidden"
+          className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
           style={{ borderColor: activeFilter === "all" ? TOKEN.orangeText : "transparent" }}
         >
           <span
@@ -59,7 +59,8 @@ export function HubFilterCircles({
           />
           <span className={cn("relative text-[0.8rem] font-medium", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
         </span>
-        <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground">All</span>
+        <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:text-base">All</span>
+        <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
       </button>
 
       {ROW_ORDER.map((row) => {
@@ -71,10 +72,10 @@ export function HubFilterCircles({
             onClick={() => onSelect(row.id)}
             aria-pressed={isActive}
             aria-label={row.label}
-            className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150"
+            className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
           >
             <span
-              className="relative w-16 h-16 rounded-full flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 border-2 transition-colors overflow-hidden"
+              className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
               style={{ borderColor: isActive ? accent : "transparent" }}
             >
               <span
@@ -91,7 +92,8 @@ export function HubFilterCircles({
                 <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
-            <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground max-w-[64px] truncate">{row.short}</span>
+            <span className="max-w-[64px] truncate text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:max-w-none md:text-base">{row.short}</span>
+            <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100"><HubIcon id={row.id} size={16} weight="regular" color="currentColor" /></span>
           </button>
         )
       })}

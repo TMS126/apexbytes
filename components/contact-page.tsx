@@ -7,7 +7,7 @@ import { useMounted } from "@/hooks/use-mounted"
 import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
-import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
+import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, Phone, EnvelopeSimple, FacebookLogo, Copy, Check } from "@phosphor-icons/react"
 import { BRAND, TOKEN, BIZ, CONTACT_LINKS } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { BusinessStatusFull } from "@/components/business-status"
@@ -23,10 +23,14 @@ const CONTACT_ICONS: Record<string, React.ElementType> = {
   "WhatsApp Us": WhatsappLogo,
   "Call Us": Phone,
   "Email Us": EnvelopeSimple,
+  "Facebook": FacebookLogo,
 }
 
 const COPYABLE_TITLES = new Set(["Call Us", "Email Us"])
-const GRID_CONTACT_LINKS = CONTACT_LINKS.filter((c) => c.title !== "Visit Us")
+const GRID_CONTACT_LINKS = [
+  ...CONTACT_LINKS.filter((c) => c.title !== "Visit Us"),
+  { title: "Facebook", value: "ApexbytesHub", href: BIZ.facebookUrl },
+]
 const SCROLL_MARGIN = { scrollMarginTop: "calc(var(--nav-h, 74px) + 1rem)" }
 
 const LocationMap = dynamic(

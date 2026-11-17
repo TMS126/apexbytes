@@ -133,7 +133,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                       tabIndex={menuOpen ? 0 : -1}
                       className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
                     >
-                      Browse {item.label.toLowerCase()}
+                      <span className="sr-only">Browse {item.label.toLowerCase()}</span>
                       <CaretDown size={16} aria-hidden="true" />
                     </summary>
                     <div className="mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">

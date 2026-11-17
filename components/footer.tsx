@@ -81,9 +81,9 @@ function FooterContent() {
             </ul>
           </nav>
 
-          <div>
+          <div className="flex flex-col items-end text-right">
             <h3 className="mb-5 text-[0.84rem] font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-end gap-4">
               <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} className="abh-footer-icon-link text-brand-whatsapp"><WhatsappLogo weight="regular" size={25} /></a>
               <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} className="abh-footer-icon-link text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
               <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" className="abh-footer-icon-link text-brand-blue"><FacebookLogo weight="regular" size={25} /></a>

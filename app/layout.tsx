@@ -12,6 +12,7 @@ import { FloatingSearchWidget } from '@/components/floating-search-widget'
 import { QuoteCalculatorWidget } from "@/components/quote-calculator"
 import { WhatsAppFAB } from '@/components/whatsapp-fab'
 import { MaintenanceBanner } from '@/components/maintenance-banner'
+import { RouteFade } from '@/components/route-fade'
 import { headers } from 'next/headers'
 import './globals.css'
 import './no-borders.css'
@@ -83,7 +84,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <LocalBusinessJsonLd nonce={nonce ?? ""} />
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
-          <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
+          <InstanceGuardProvider><main id="main-content"><RouteFade>{children}</RouteFade></main></InstanceGuardProvider>
           <div className="pointer-events-none fixed inset-y-0 right-3 z-[9992] flex flex-col items-end justify-center gap-2 md:right-5">
             <FloatingSearchWidget />
             <QuoteCalculatorWidget />

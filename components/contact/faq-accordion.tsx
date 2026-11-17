@@ -2,9 +2,8 @@
 "use client"
 
 import { useState } from "react"
-import { CaretDown } from "@phosphor-icons/react"
+import { Minus, Plus } from "@phosphor-icons/react"
 import { FAQS } from "@/lib/brand"
-import { cn } from "@/lib/utils"
 import { ScrollBounce } from "@/components/scroll-bounce"
 // Card minimization: each FAQ was its own bordered/tinted box. The
 // expand/collapse interaction already signals "this is interactive" — a
@@ -41,11 +40,7 @@ export function FAQAccordion() {
                       <span className="shrink-0 text-[0.72rem] font-medium tracking-[0.18em] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
                       <span>{faq.question}</span>
                     </h4>
-                    <CaretDown
-                      weight="bold"
-                      aria-hidden="true"
-                      className={cn("w-3.5 h-3.5 shrink-0 text-muted-foreground transition-transform duration-300", isOpen ? "rotate-180" : "rotate-0")}
-                    />
+                    {isOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
                   </button>
                   <div
                     id={`contact-faq-${index}`}
@@ -53,7 +48,7 @@ export function FAQAccordion() {
                     aria-label={faq.question}
                     aria-hidden={!isOpen}
                     inert={!isOpen}
-                    className={cn("grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
+                    className={isOpen ? "block" : "hidden"}
                   >
                     <div className="min-h-0 overflow-hidden">
                       <div className="pb-5 text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">
