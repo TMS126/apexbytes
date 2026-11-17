@@ -41,9 +41,9 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Select a service hub"
-        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-border bg-card px-4 py-3 text-[1rem] font-medium text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/30"
+        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-[var(--line-rule)] bg-card px-4 py-3 text-[1rem] font-medium text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/30"
         style={{
-          borderColor: value ? activeColor : (isOpen ? BRAND.blue : undefined),
+          borderColor: value ? activeColor : (isOpen ? BRAND.blue : "var(--line-rule)"),
           color: value ? activeColor : placeholderColor,
         }}
       >
