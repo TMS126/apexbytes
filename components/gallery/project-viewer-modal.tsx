@@ -74,25 +74,60 @@ function ExpandableText({ text, accent }: { text: string; accent: string }) {
 
 function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent: string }) {
   return (
-    <div className="space-y-5">
-      <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
+    <div className="space-y-10">
+      <section aria-labelledby="project-about-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">About the project</p>
+        <h3 id="project-about-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">A clear outcome, built for the real brief.</h3>
         <ExpandableText text={project.clientGoal} accent={accent} />
-      </div>
-      <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
-        <ul className="space-y-2">
-          {project.whatWeDid.map((item, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-base text-zinc-700 dark:text-zinc-200 font-medium">
-              <Check size={14} weight="bold" className="mt-1 shrink-0" style={{ color: accent }} />{item}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
+      </section>
+
+      <section className="grid gap-7 border-y border-border py-7 md:grid-cols-2" aria-label="Project information">
+        <div>
+          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Hub</h4>
+          <p className="text-base font-medium text-foreground">{hubLabelFor(project.hub as HubId)}</p>
+        </div>
+        <div>
+          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project type</h4>
+          <p className="text-base font-medium text-foreground">{project.clientType ? CLIENT_TYPE_LABEL[project.clientType] : "ApexBytesHub project"}</p>
+        </div>
+        <div className="md:col-span-2">
+          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Tools and format</h4>
+          <p className="text-base font-medium leading-7 text-foreground">{project.tools.join(" · ")}</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="project-challenges-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Challenges</p>
+        <h3 id="project-challenges-title" className="mb-6 text-xl font-medium text-foreground md:text-2xl">From the problem to the finished piece.</h3>
+        <div className="space-y-7">
+          <div>
+            <h4 className="mb-2 text-base font-semibold text-foreground">Problem</h4>
+            <ExpandableText text={project.clientGoal} accent={accent} />
+          </div>
+          <div>
+            <h4 className="mb-2 text-base font-semibold text-foreground">Solution</h4>
+            <ul className="space-y-2.5">
+              {project.whatWeDid.map((item, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-base font-medium leading-7 text-muted-foreground">
+                  <Check size={15} weight="bold" className="mt-1.5 shrink-0" style={{ color: accent }} />{item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border py-7" aria-labelledby="project-takeaway-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Key takeaway</p>
+        <h3 id="project-takeaway-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">Useful, clear, and ready to use.</h3>
         <ExpandableText text={project.result} accent={accent} />
-      </div>
+      </section>
+
+      <section aria-labelledby="project-summary-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Summary</p>
+        <h3 id="project-summary-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">A practical result for the client.</h3>
+        <p className="text-base leading-7 text-muted-foreground">{project.result}</p>
+      </section>
     </div>
   )
 }
@@ -290,10 +325,13 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
           <HubIcon id={project.hub as HubId} size={13} color={accent} />
           <span className="text-xs font-medium uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
         </div>
-        <h2 id="project-viewer-title" className="font-medium text-xl md:text-2xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
-        {project.clientType && (
-          <p className="text-sm text-muted-foreground dark:text-muted-foreground mt-1">{CLIENT_TYPE_LABEL[project.clientType]}</p>
-        )}
+        <h2 id="project-viewer-title" className="mt-2 max-w-[34rem] text-2xl font-medium leading-tight text-zinc-900 dark:text-zinc-50 md:text-4xl">{project.title}</h2>
+        <p className="mt-3 max-w-[40rem] text-base leading-7 text-muted-foreground">{project.shortDesc}</p>
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+          <span>{project.tag}</span>
+          <span aria-hidden="true">—</span>
+          <span>{project.clientType ? CLIENT_TYPE_LABEL[project.clientType] : "Project"}</span>
+        </div>
       </div>
       <button
         onClick={onClose}
