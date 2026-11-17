@@ -232,7 +232,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                       rel="noopener noreferrer"
                       className="abh-wa-btn inline-flex px-4 py-2.5 text-xs"
                     >
-                      <WhatsappLogo size={14} weight="fill" aria-hidden="true" />
+                      <WhatsappLogo size={14} weight="regular" aria-hidden="true" />
                       Can&apos;t find it? Ask us on WhatsApp
                     </a>
                   </div>

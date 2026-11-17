@@ -30,7 +30,7 @@ export function QuoteControl({
           boxShadow: pressed ? "inset 0 2px 6px -1px rgba(0,0,0,0.22)" : undefined,
         }}
       >
-        <ShoppingCartSimple size={22} weight="bold" aria-hidden="true" />
+        <ShoppingCartSimple size={22} weight="regular" aria-hidden="true" />
       </button>
     )
   }
@@ -44,7 +44,7 @@ export function QuoteControl({
         title="Remove one from quote"
         className="group w-8 h-8 rounded-full border-2 border-red-500 flex items-center justify-center shrink-0 transition-colors duration-150 hover:bg-red-500 active:scale-90"
       >
-        <Minus size={14} weight="bold" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />
+        <Minus size={14} weight="regular" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />
       </button>
 
       <span className="flex items-center gap-1.5 text-[0.94rem] font-medium text-green-600 dark:text-green-400">
@@ -59,7 +59,7 @@ export function QuoteControl({
         title="Add one more to quote"
         className="group w-8 h-8 rounded-full border-2 border-green-500 flex items-center justify-center shrink-0 transition-colors duration-150 hover:bg-green-500 active:scale-90"
       >
-        <Plus size={14} weight="bold" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />
+        <Plus size={14} weight="regular" style={{ color: neutralIconColor }} className="transition-colors duration-150 group-hover:!text-[var(--on-primary-fill)]" />
       </button>
     </div>
   )

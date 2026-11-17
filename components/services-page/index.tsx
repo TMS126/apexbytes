@@ -196,7 +196,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
           <details className="group overflow-hidden rounded-[14px] border border-border/70 bg-card/70">
             <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 text-left text-[0.76rem] font-medium uppercase tracking-[0.12em] text-muted-foreground [&::-webkit-details-marker]:hidden">
               <span title="See optional add-ons and included features">View add-ons and free features</span>
-              <CaretDown size={16} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+              <CaretDown size={16} weight="regular" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
 <div className="grid min-h-0 grid-rows-[0fr] border-t border-border/70 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
     <div className="min-h-0 overflow-hidden">
@@ -245,7 +245,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
 
             <nav aria-label="Service hubs" className="mb-7 flex w-full max-w-5xl flex-wrap items-end justify-center gap-x-5 gap-y-3 px-2 sm:gap-x-7 sm:px-4">
               <button type="button" onClick={handleDesktopBackToHubs} className="group inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.78rem] font-medium text-muted-foreground transition-colors hover:text-foreground">
-                <CaretLeft size={14} weight="bold" aria-hidden="true" />
+                <CaretLeft size={14} weight="regular" aria-hidden="true" />
                 All hubs
               </button>
               {HUB_ORDER.map((hubId) => {
@@ -271,7 +271,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
             {desktopActiveSectionData && (
               <nav aria-label="Service sections" className="mb-8 flex w-full max-w-4xl flex-wrap items-end justify-center gap-x-4 gap-y-2 px-2 sm:gap-x-6 sm:px-4">
                 <button type="button" onClick={handleDesktopBackToSections} className="inline-flex min-h-9 items-center gap-1.5 pb-2 text-[0.75rem] font-medium text-muted-foreground transition-colors hover:text-foreground">
-                  <CaretLeft size={14} weight="bold" aria-hidden="true" />
+                  <CaretLeft size={14} weight="regular" aria-hidden="true" />
                   All sections
                 </button>
                 {desktopHub.sections.map((section, sIdx) => {

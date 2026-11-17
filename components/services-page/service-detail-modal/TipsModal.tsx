@@ -44,7 +44,7 @@ export function TipsModal({
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 min-w-0">
               <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}>
-                <Lightbulb size={16} weight="fill" aria-hidden="true" />
+                <Lightbulb size={16} weight="regular" aria-hidden="true" />
               </div>
               <h4 className="abh-card-heading text-base truncate">Helpful Tips</h4>
             </div>
@@ -54,7 +54,7 @@ export function TipsModal({
               className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95 shrink-0"
               style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
             >
-              <X size={16} weight="bold" aria-hidden="true" />
+              <X size={16} weight="regular" aria-hidden="true" />
             </button>
           </div>
           <div className="abh-divider !mx-0 !my-0 mt-3" />

@@ -73,7 +73,7 @@ export function ImageLightbox({
             aria-label="Close full size image"
             className="absolute top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center  transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white"
           >
-            <X size={20} weight="bold" aria-hidden="true" />
+            <X size={20} weight="regular" aria-hidden="true" />
           </button>
         </motion.div>
       )}

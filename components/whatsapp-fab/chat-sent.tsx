@@ -31,8 +31,8 @@ export function ChatSent({ dateLabel, sentTime, onSendAnother, onClose }: ChatSe
         <span className={cn(TXT.time, "absolute bottom-1.5 right-3 flex items-center gap-0.5")} style={{ color: WA.sub }}>
           {sentTime}
           <span className="relative w-3.5 h-2.5 inline-block ml-0.5">
-            <Check size={11} weight="bold" className="absolute left-0" style={{ color: WA.tick }} />
-            <Check size={11} weight="bold" className="absolute left-[3px]" style={{ color: WA.tick }} />
+            <Check size={11} weight="regular" className="absolute left-0" style={{ color: WA.tick }} />
+            <Check size={11} weight="regular" className="absolute left-[3px]" style={{ color: WA.tick }} />
           </span>
         </span>
       </div>

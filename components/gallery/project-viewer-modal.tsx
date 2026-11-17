@@ -109,7 +109,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
             <ul className="space-y-2.5">
               {project.whatWeDid.map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-base font-medium leading-7 text-muted-foreground">
-                  <Check size={15} weight="bold" className="mt-1.5 shrink-0" style={{ color: accent }} />{item}
+                  <Check size={15} weight="regular" className="mt-1.5 shrink-0" style={{ color: accent }} />{item}
                 </li>
               ))}
             </ul>
@@ -148,7 +148,7 @@ function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = f
           className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 py-2.5 text-[0.9rem] font-semibold text-foreground transition-colors hover:bg-[color-mix(in_srgb,var(--brand-whatsapp)_12%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
-          <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
+          <WhatsappLogo size={18} weight="regular" aria-hidden="true" />
           Order
         </a>
         <div className="abh-divider-vertical" aria-hidden="true" />
@@ -159,7 +159,7 @@ function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = f
           className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 py-2.5 text-[0.9rem] font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset"
           style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
         >
-          <EnvelopeSimple size={18} weight="bold" aria-hidden="true" />
+          <EnvelopeSimple size={18} weight="regular" aria-hidden="true" />
           Ask
         </Link>
       </div>
@@ -340,7 +340,7 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
         className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-muted-foreground dark:text-muted-foreground transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
         style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
       >
-        <X size={16} weight="bold" />
+        <X size={16} weight="regular" />
       </button>
     </div>
   )
@@ -371,7 +371,7 @@ function DesktopActionRow({
               aria-label="Previous project"
               className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             >
-              <CaretLeft size={13} weight="bold" />
+              <CaretLeft size={13} weight="regular" />
             </button>
             <span className="text-sm font-medium text-muted-foreground dark:text-muted-foreground whitespace-nowrap" aria-live="polite">
               Project {currentIdx + 1} of {siblingCount}
@@ -381,7 +381,7 @@ function DesktopActionRow({
               aria-label="Next project"
               className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             >
-              <CaretRight size={13} weight="bold" />
+              <CaretRight size={13} weight="regular" />
             </button>
           </>
         )}
@@ -401,13 +401,13 @@ function MobileProjectNavPill({ currentIdx, siblingCount, onPrev, onNext }: {
     <div className="flex items-center justify-center px-3 pt-2">
       <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900">
         <button onClick={onPrev} aria-label="Previous project" className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground active:scale-90">
-          <CaretLeft size={12} weight="bold" />
+          <CaretLeft size={12} weight="regular" />
         </button>
         <span className="text-[0.76rem] font-medium text-muted-foreground dark:text-muted-foreground whitespace-nowrap">
           Project {currentIdx + 1} of {siblingCount}
         </span>
         <button onClick={onNext} aria-label="Next project" className="w-6 h-6 rounded-full flex items-center justify-center text-muted-foreground dark:text-muted-foreground active:scale-90">
-          <CaretRight size={12} weight="bold" />
+          <CaretRight size={12} weight="regular" />
         </button>
       </div>
     </div>
@@ -499,7 +499,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
       aria-pressed={comparing}
       className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-medium uppercase tracking-wider bg-black/45  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
     >
-      <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
+      <ArrowsLeftRight size={12} weight="regular" aria-hidden="true" />
       {comparing ? "Gallery" : "Before/After"}
     </button>
   )

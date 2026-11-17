@@ -83,7 +83,7 @@ function GridItem({
         className="absolute top-2 left-2 w-7 h-7 rounded-full flex items-center justify-center border-2 bg-black/30"
         style={img.selected ? { backgroundColor: accentColor, borderColor: accentColor } : { borderColor: "#ffffff" }}
       >
-        {img.selected && <CheckCircle weight="fill" className="w-full h-full text-white" aria-hidden="true" />}
+        {img.selected && <CheckCircle weight="regular" className="w-full h-full text-white" aria-hidden="true" />}
       </button>
 
       {/* ─── REMOVE ──────────────────────────────────────────────────── */}
@@ -93,7 +93,7 @@ function GridItem({
         aria-label={`Remove ${img.file.name}`}
         className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-red-500/80 transition-colors"
       >
-        <X size={14} weight="bold" aria-hidden="true" />
+        <X size={14} weight="regular" aria-hidden="true" />
       </button>
 
       {/* ─── ERROR OVERLAY ───────────────────────────────────────────── */}
@@ -102,7 +102,7 @@ function GridItem({
           className="absolute inset-0 bg-red-600/70 flex flex-col items-center justify-center gap-2 px-3 text-center pointer-events-none"
           role="alert"
         >
-          <WarningCircle weight="fill" className="w-6 h-6 text-white shrink-0" aria-hidden="true" />
+          <WarningCircle weight="regular" className="w-6 h-6 text-white shrink-0" aria-hidden="true" />
           <p className="text-[0.68rem] font-medium text-white leading-tight">{err.reason}</p>
           <button
             type="button"
@@ -113,9 +113,9 @@ function GridItem({
             className="pointer-events-auto flex items-center gap-1 rounded-full bg-white/25 hover:bg-white/40 disabled:opacity-70 text-white text-[0.62rem] font-medium px-3 py-1 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
           >
             {isRetrying ? (
-              <CircleNotch size={12} weight="bold" className="animate-spin" aria-hidden="true" />
+              <CircleNotch size={12} weight="regular" className="animate-spin" aria-hidden="true" />
             ) : (
-              <ArrowsClockwise size={12} weight="bold" aria-hidden="true" />
+              <ArrowsClockwise size={12} weight="regular" aria-hidden="true" />
             )}
             {isRetrying ? "Checking…" : "Refresh"}
           </button>
@@ -138,18 +138,18 @@ function GridItem({
               aria-label={`Filter for ${img.file.name}: ${FILTER_LABELS[filter]}. Tap for ${FILTER_LABELS[upcoming]}.`}
               className="w-7 h-7 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors"
             >
-              <Palette size={14} weight={filter !== "none" ? "fill" : "bold"} aria-hidden="true" />
+              <Palette size={14} weight="regular" aria-hidden="true" />
             </button>
             <button type="button" onClick={() => onCrop(img.id)} aria-label={`Crop ${img.file.name}`} className="w-7 h-7 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors">
-              <Crop size={14} weight="bold" aria-hidden="true" />
+              <Crop size={14} weight="regular" aria-hidden="true" />
             </button>
             {rotation !== 0 && (
               <button type="button" onClick={() => onResetRotation(img.id)} aria-label={`Reset rotation for ${img.file.name}`} className="w-7 h-7 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors">
-                <ArrowCounterClockwise size={14} weight="bold" aria-hidden="true" />
+                <ArrowCounterClockwise size={14} weight="regular" aria-hidden="true" />
               </button>
             )}
             <button type="button" onClick={() => onRotate(img.id)} aria-label={`Rotate ${img.file.name} 90 degrees`} className="w-7 h-7 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors">
-              <ArrowsClockwise size={14} weight="bold" aria-hidden="true" />
+              <ArrowsClockwise size={14} weight="regular" aria-hidden="true" />
             </button>
           </div>
         </div>

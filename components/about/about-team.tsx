@@ -34,7 +34,7 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
               rel="noopener noreferrer"
               className="abh-underline-button text-[0.88rem] font-medium text-zinc-600 dark:text-zinc-300"
             >
-              <WhatsappLogo size={16} weight="fill" className="text-brand-whatsapp" aria-hidden="true" />
+              <WhatsappLogo size={16} weight="regular" className="text-brand-whatsapp" aria-hidden="true" />
               Chat with the team on WhatsApp
             </a>
           </div>

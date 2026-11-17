@@ -187,7 +187,7 @@ export function Navbar() {
                     >
                       {item.label}
                     </Link>
-                    {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
+                    {submenu && <CaretDown size={12} weight="regular" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
                     {submenu && activeSubmenu === item.id && (
                       <div
                         className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-0 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background p-2 shadow-lg"
@@ -263,7 +263,7 @@ export function Navbar() {
 
               <div className="order-3 hidden items-center gap-1 rounded-[14px] bg-muted/80 p-1 sm:flex">
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
-                  {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
+                  {mounted && (theme === "dark" ? <Moon size={18} weight="regular" /> : <Sun size={18} weight="regular" />)}
                 </button>
                 <Link href="/contact" className="rounded-[14px] px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-background">Let&apos;s Talk</Link>
               </div>

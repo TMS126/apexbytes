@@ -56,7 +56,7 @@ export function SectionCard({
         </span>
         <CaretRight
           size={15}
-          weight="bold"
+          weight="regular"
           className="transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
           style={{ color: accent }}
           aria-hidden="true"
@@ -106,7 +106,7 @@ export function ServiceCard({
         View details
         <ArrowRight
           size={11}
-          weight="bold"
+          weight="regular"
           aria-hidden="true"
           className="transition-transform duration-200 group-hover/svccard:translate-x-0.5"
         />

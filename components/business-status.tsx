@@ -97,7 +97,7 @@ export function BusinessStatusNavbar() {
         aria-label="Show business hours"
         className="flex items-center justify-center w-7 h-7 active:scale-90 transition-transform"
       >
-        <Clock size={18} weight="fill" className={clockColor} />
+        <Clock size={18} weight="regular" className={clockColor} />
       </button>
 
       <div

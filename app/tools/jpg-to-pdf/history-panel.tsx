@@ -13,11 +13,11 @@ export function HistoryPanel({ history, onClear }: { history: HistoryEntry[]; on
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-6 abh-card p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-[0.78rem] font-medium uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
-              <ClockCounterClockwise weight="fill" size={14} aria-hidden="true" />
+              <ClockCounterClockwise weight="regular" size={14} aria-hidden="true" />
               Recent
             </span>
             <button type="button" onClick={onClear} aria-label="Clear recent conversions" className="text-zinc-300 hover:text-red-500 transition-colors">
-              <Trash weight="bold" className="w-4 h-4" />
+              <Trash weight="regular" className="w-4 h-4" />
             </button>
           </div>
           <ul className="flex flex-col gap-2">

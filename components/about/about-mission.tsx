@@ -41,13 +41,13 @@ export function AboutMission({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link href="/services" className="abh-identity-btn abh-mission-cta w-full sm:w-64 justify-center px-8 py-3.5 font-medium">
             See All Services
-            <ArrowRight size={16} weight="bold" />
+            <ArrowRight size={16} weight="regular" />
           </Link>
           <Link
             href="/contact"
             className="abh-identity-btn abh-mission-cta-secondary w-full sm:w-64 justify-center px-8 py-3.5 font-medium"
           >
-            <EnvelopeSimple size={16} weight="bold" />
+            <EnvelopeSimple size={16} weight="regular" />
             Get in Touch
           </Link>
         </div>

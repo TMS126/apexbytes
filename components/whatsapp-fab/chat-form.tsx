@@ -131,7 +131,7 @@ export function ChatForm({
             </div>
             <CaretDown
               size={15}
-              weight="bold"
+              weight="regular"
               className="transition-transform duration-200 ease-out motion-reduce:transition-none shrink-0"
               style={{ color: WA.sub, transform: hubPicking ? "rotate(180deg)" : "rotate(0deg)" }}
             />
@@ -167,7 +167,7 @@ export function ChatForm({
             className={cn(TXT.hint, "abh-press flex-1 min-w-0 flex items-center gap-1 px-2 py-1 rounded-full font-medium border transition-all duration-150 ease-out hover:-translate-y-0.5")}
             style={{ borderColor: "color-mix(in srgb, var(--wa-sub) 12%, transparent)", color: WA.text, backgroundColor: "color-mix(in srgb, var(--wa-accent) 7%, transparent)" }}
           >
-            <Lightning size={9} weight="fill" style={{ color: WA.accent }} className="shrink-0" />
+            <Lightning size={9} weight="regular" style={{ color: WA.accent }} className="shrink-0" />
             <span className="truncate">{QUICK_NOTES[quickNoteIdx]}</span>
           </button>
           <button
@@ -177,7 +177,7 @@ export function ChatForm({
             className="abh-press shrink-0 w-6 h-6 rounded-full flex items-center justify-center border transition-transform duration-150 ease-out active:rotate-180"
             style={{ borderColor: "color-mix(in srgb, var(--wa-sub) 12%, transparent)", color: WA.sub, backgroundColor: "color-mix(in srgb, var(--wa-accent) 4%, transparent)" }}
           >
-            <ArrowsClockwise size={11} weight="bold" />
+            <ArrowsClockwise size={11} weight="regular" />
           </button>
         </div>
         <div className="flex justify-end mt-1.5">

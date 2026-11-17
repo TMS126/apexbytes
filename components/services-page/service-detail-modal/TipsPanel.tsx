@@ -26,12 +26,12 @@ export function TipsPanel({ tips, isGeneric, accent, copied, onCopy }: {
         >
           {copied ? (
             <span key="copied" className="flex items-center gap-1.5 text-[0.74rem] font-medium uppercase tracking-wider animate-in fade-in zoom-in-95 duration-150">
-              <CheckCircle size={14} weight="fill" aria-hidden="true" />
+              <CheckCircle size={14} weight="regular" aria-hidden="true" />
               Copied
             </span>
           ) : (
             <span key="idle" className="flex items-center animate-in fade-in zoom-in-95 duration-150">
-              <Copy size={14} weight="bold" aria-hidden="true" />
+              <Copy size={14} weight="regular" aria-hidden="true" />
             </span>
           )}
         </button>

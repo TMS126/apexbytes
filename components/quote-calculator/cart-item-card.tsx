@@ -57,7 +57,7 @@ export function CartItemCard({
           aria-label={`Remove ${displayName} from quote`}
           className="abh-press text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150"
         >
-          <Trash size={14} weight="bold" aria-hidden="true" />
+          <Trash size={14} weight="regular" aria-hidden="true" />
         </button>
       </div>
 
@@ -77,7 +77,7 @@ export function CartItemCard({
             aria-label={`Decrease quantity for ${displayName}`}
             className="abh-press w-9 h-9 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
           >
-            <Minus size={13} weight="bold" aria-hidden="true" />
+            <Minus size={13} weight="regular" aria-hidden="true" />
           </button>
           <span className="text-base font-medium w-6 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
           <button
@@ -89,7 +89,7 @@ export function CartItemCard({
             aria-label={`Increase quantity for ${displayName}`}
             className="abh-press w-9 h-9 flex items-center justify-center active:bg-black/10 dark:active:bg-white/20 transition-colors duration-150 select-none touch-none"
           >
-            <Plus size={13} weight="bold" aria-hidden="true" />
+            <Plus size={13} weight="regular" aria-hidden="true" />
           </button>
         </div>
         <span className="text-base font-medium text-zinc-900 dark:text-zinc-50">R{lineTotal}</span>

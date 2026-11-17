@@ -135,7 +135,7 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
   return (
     <article className="rounded-xl border border-border/70 bg-card/55 px-4 py-3.5">
       <div className="flex items-start gap-3">
-        <notice.Icon size={19} weight="bold" style={{ color }} className="mt-0.5 shrink-0" aria-hidden="true" />
+        <notice.Icon size={19} weight="regular" style={{ color }} className="mt-0.5 shrink-0" aria-hidden="true" />
         <div className="flex min-w-0 flex-col gap-1">
           <h3 className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color }}>
             {notice.header}

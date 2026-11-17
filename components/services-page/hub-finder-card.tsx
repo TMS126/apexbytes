@@ -35,7 +35,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
   return (
     <div className="relative flex h-full min-h-[240px] w-full flex-col overflow-hidden rounded-[14px] bg-card p-6 text-foreground">
       <div className="mb-1 flex items-center gap-2">
-        <Compass size={22} weight="bold" aria-hidden="true" className="text-muted-foreground" />
+        <Compass size={22} weight="regular" aria-hidden="true" className="text-muted-foreground" />
         <h3 className="font-sans text-[1.15rem] font-medium leading-tight">Not sure where to start?</h3>
       </div>
       <p className="mb-3 text-[0.82rem] leading-snug text-muted-foreground">
@@ -73,7 +73,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
           <div className="flex items-end justify-between gap-3">
             <div className="min-w-0">
               <p className="flex items-center gap-1.5 text-[0.95rem] font-medium" style={{ color: HUB_COLORS[picked].primary }}>
-                <Icon size={18} weight="fill" aria-hidden="true" />
+                <Icon size={18} weight="regular" aria-hidden="true" />
                 {hub.title}
               </p>
               <p className="mt-0.5 text-[0.78rem] leading-snug text-muted-foreground">{hub.previews.join(" · ")}</p>
@@ -85,7 +85,7 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
               style={{ backgroundColor: HUB_COLORS[picked].primary, color: HUB_ON_COLOR[picked] }}
             >
               Open
-              <ArrowRight size={13} weight="bold" aria-hidden="true" />
+              <ArrowRight size={13} weight="regular" aria-hidden="true" />
             </button>
           </div>
         ) : (

@@ -50,7 +50,7 @@ function Stars({ rating, color }: { rating: number; color: string }) {
         <Star
           key={i}
           size={13}
-          weight="fill"
+          weight="regular"
           style={{ color: i < rating ? color : undefined }}
           className={i < rating ? "" : "text-zinc-200 dark:text-zinc-700"}
           aria-hidden="true"
@@ -105,7 +105,7 @@ export function TestimonialsSection({
             return (
               <ScrollBounce key={review.name + index} delay={index * 0.08} className="h-full">
                 <article className="abh-card flex h-full min-h-[360px] flex-col items-center justify-center overflow-hidden px-7 py-8 text-center transition-transform duration-200 hover:-translate-y-1">
-                  <Quotes size={22} weight="fill" style={{ color: accent }} className="mb-4 shrink-0 opacity-50" aria-hidden="true" />
+                  <Quotes size={22} weight="regular" style={{ color: accent }} className="mb-4 shrink-0 opacity-50" aria-hidden="true" />
                   <p className="mb-6 max-w-[32ch] text-[1.05rem] font-medium leading-relaxed text-zinc-700 dark:text-zinc-300">{review.quote}</p>
                   <div className="mt-auto flex flex-col items-center">
                     <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full text-[0.9rem] font-medium text-white" style={{ backgroundColor: solid }}>
@@ -130,7 +130,7 @@ export function TestimonialsSection({
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 rounded-full border border-border bg-card px-5 py-2.5 text-[0.88rem] font-medium text-muted-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-whatsapp hover:text-brand-whatsapp active:translate-y-0 active:scale-95"
           >
-            <WhatsappLogo size={16} weight="fill" className="text-brand-whatsapp" aria-hidden="true" />
+            <WhatsappLogo size={16} weight="regular" className="text-brand-whatsapp" aria-hidden="true" />
             Share your experience on WhatsApp
           </a>
         </div>

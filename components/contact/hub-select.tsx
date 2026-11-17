@@ -49,7 +49,7 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
       >
         <span className="truncate">{value || "Select a hub"}</span>
         <CaretDown
-          weight="bold"
+          weight="regular"
           aria-hidden="true"
           className={cn(
             "w-4 h-4 shrink-0 transition-transform duration-300",

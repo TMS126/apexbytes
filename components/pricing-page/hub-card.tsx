@@ -84,7 +84,7 @@ function ServiceRow({
           className="inline-flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 transition-colors duration-200"
             style={{ backgroundColor: `color-mix(in srgb, ${accent} 8%, transparent)`, color: accent }}
           >
-            <SealPercent size={9} weight="fill" aria-hidden="true" />
+            <SealPercent size={9} weight="regular" aria-hidden="true" />
             Bulk
           </span>
         )}
@@ -111,8 +111,8 @@ function ServiceRow({
           }}
         >
           {added
-            ? <Check size={11} weight="bold" aria-hidden="true" />
-            : <Plus size={11} weight="bold" aria-hidden="true" />
+            ? <Check size={11} weight="regular" aria-hidden="true" />
+            : <Plus size={11} weight="regular" aria-hidden="true" />
           }
         </button>
       </div>
@@ -157,7 +157,7 @@ export function HubCompactCard({
         aria-pressed
         className="h-full w-full rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.98] flex flex-col items-center justify-center gap-2"
       >
-        <HubIcon id={hubId} size={34} weight="fill" color={hubColor} />
+        <HubIcon id={hubId} size={34} weight="regular" color={hubColor} />
           <span className="text-lg font-medium" style={{ color: hubColor }}>{hub.title}</span>
       </button>
     )
@@ -172,7 +172,7 @@ export function HubCompactCard({
     >
       {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
-        <HubIcon id={hubId} size={22} weight={isActive ? "fill" : "regular"} color={isActive ? hubColor : '#a1a1aa'} />
+        <HubIcon id={hubId} size={22} weight="regular" color={isActive ? hubColor : '#a1a1aa'} />
         <span className="sr-only">{hub.title}</span>
       </div>
 
@@ -202,7 +202,7 @@ export function HubCompactCard({
         </span>
         {hubHasBulk && (
           <span className="inline-flex items-center gap-0.5 text-[10px] text-muted-foreground">
-            <SealPercent size={10} weight="fill" aria-hidden="true" />
+            <SealPercent size={10} weight="regular" aria-hidden="true" />
             Bulk
           </span>
         )}
@@ -328,7 +328,7 @@ export function HubExpandedPanel({
         {/* ── One shared footer, spanning both columns ── */}
         <div className="flex items-center justify-between gap-4 border-t border-border bg-background/60 px-6 py-3.5">
           <div className="flex items-start gap-2 min-w-0">
-            <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
+            <Clock size={13} weight="regular" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
             <div className="min-w-0">
       <span className="text-sm font-medium" style={{ color: hubColor }}>{turnaround.label}</span>
       <span className="text-sm text-muted-foreground ml-1.5">{turnaround.detail}</span>

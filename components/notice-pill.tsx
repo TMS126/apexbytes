@@ -118,7 +118,7 @@ export function NoticePill({
             title={`Dismiss: ${collapsedLabel}`}
             className="w-8 h-8 rounded-full flex items-center justify-center text-muted-foreground hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400"
           >
-            <X size={13} weight="bold" aria-hidden="true" />
+            <X size={13} weight="regular" aria-hidden="true" />
           </button>
         )}
       </div>
@@ -159,7 +159,7 @@ export function NoticePill({
                   {children}
                 </div>
                 <button type="button" onClick={close} aria-label="Close notice" title="Close notice" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                  <X size={14} weight="bold" aria-hidden="true" />
+                  <X size={14} weight="regular" aria-hidden="true" />
                 </button>
               </motion.div>
             </motion.div>

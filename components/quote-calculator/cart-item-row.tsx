@@ -48,7 +48,7 @@ export function CartItemRow({
           <p className="text-xs font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
         <button onClick={() => onRemove(item.id)} aria-label={`Remove ${displayName} from quote`} className="text-muted-foreground hover:text-red-500 shrink-0 transition-colors duration-150">
-          <Trash size={14} weight="bold" aria-hidden="true" />
+          <Trash size={14} weight="regular" aria-hidden="true" />
         </button>
       </div>
       <div className="flex items-center gap-2 text-sm">
@@ -66,7 +66,7 @@ export function CartItemRow({
             aria-label={`Decrease quantity for ${displayName}`}
             className="w-11 h-11 flex items-center justify-center shrink-0 active:bg-black/5 dark:active:bg-white/10 transition-colors duration-150 select-none touch-none"
           >
-            <Minus size={14} weight="bold" aria-hidden="true" />
+            <Minus size={14} weight="regular" aria-hidden="true" />
           </button>
           <input
             ref={qtyInputRef}
@@ -87,7 +87,7 @@ export function CartItemRow({
             aria-label={`Increase quantity for ${displayName}`}
             className="w-11 h-11 flex items-center justify-center shrink-0 active:bg-black/5 dark:active:bg-white/10 transition-colors duration-150 select-none touch-none"
           >
-            <Plus size={14} weight="bold" aria-hidden="true" />
+            <Plus size={14} weight="regular" aria-hidden="true" />
           </button>
         </div>
         <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50">R{lineTotal}</span>

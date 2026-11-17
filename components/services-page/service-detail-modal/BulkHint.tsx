@@ -27,7 +27,7 @@ export function BulkHint({
           className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-wider whitespace-nowrap"
           style={{ backgroundColor: accent, color: labelTextColor }}
         >
-          <Tag size={11} weight="fill" aria-hidden="true" />
+          <Tag size={11} weight="regular" aria-hidden="true" />
           {label}
         </span>
         <span

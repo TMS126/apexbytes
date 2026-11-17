@@ -94,11 +94,11 @@ export default function JpgToPdfPage() {
               className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
-              <CaretLeft size={15} weight="bold" aria-hidden="true" />
+              <CaretLeft size={15} weight="regular" aria-hidden="true" />
             </Link>
             
             <div className="flex justify-center mb-5">
-              <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
+              <FilePdf weight="regular" size={40} style={{ color: accentColor }} aria-hidden="true" />
             </div>
             
             <h1 className="abh-page-title mb-3">
@@ -151,7 +151,7 @@ export default function JpgToPdfPage() {
                       style={{ backgroundColor: `${accentColor}12` }}
                     >
                       <UploadSimple 
-                        weight="bold" 
+                        weight="regular"
                         size={40}
                         style={{ color: accentColor }}
                         aria-hidden="true" 
@@ -274,7 +274,7 @@ accept={ACCEPT_ATTRIBUTE}
                     onClick={() => inputRef.current?.click()}
                     className="w-full mt-4 rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-all flex flex-col items-center justify-center gap-2"
                   >
-                    <Plus size={24} style={{ color: accentColor }} weight="bold" />
+                    <Plus size={24} style={{ color: accentColor }} weight="regular" />
                     <span className="text-sm font-medium text-foreground">Add More Images</span>
                     <span className="text-xs text-muted-foreground">Add up to {20 - t.images.length} more</span>
                   </button>
@@ -293,7 +293,7 @@ accept={ACCEPT_ATTRIBUTE}
                 {/* Error State */}
                 {t.errors.length > 0 && (
                   <div className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
-                    <WarningCircle weight="fill" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
+                    <WarningCircle weight="regular" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
                     <div>
                       <p className="text-sm font-medium text-red-900 dark:text-red-200">
                         {t.errors.length} issue{t.errors.length > 1 ? "s" : ""} found
@@ -319,7 +319,7 @@ accept={ACCEPT_ATTRIBUTE}
                       boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"
                     }}
                   >
-                    <Download size={20} weight="bold" />
+                    <Download size={20} weight="regular" />
                     <span>{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
                   </button>
                   <span className="sr-only" aria-live="polite">
@@ -362,7 +362,7 @@ accept={ACCEPT_ATTRIBUTE}
                       <span>{item.question}</span>
                       <CaretDown
                         size={17}
-                        weight="bold"
+                        weight="regular"
                         aria-hidden="true"
                         className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                       />

@@ -1564,3 +1564,34 @@ input:focus, textarea:focus, select:focus,
 @media (prefers-reduced-motion: reduce) {
   button:hover:not(:disabled), [role="button"]:hover, .abh-btn-primary:hover, .abh-btn-cta:hover, .abh-line-cta:hover, .abh-wa-btn:hover { transform: none; }
 }
+
+/* Site-wide icon language: raw icons by default; interactive icons lift with a restrained shadow. */
+.abh-icon-chip,
+.abh-raw-icon {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+button:has(> svg:only-child),
+a:has(> svg:only-child),
+button:has(> span > svg:only-child),
+a:has(> span > svg:only-child) {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none;
+  transition: transform 150ms ease, filter 150ms ease, color 150ms ease;
+}
+
+button:has(> svg:only-child):hover,
+a:has(> svg:only-child):hover,
+button:has(> span > svg:only-child):hover,
+a:has(> span > svg:only-child):hover,
+button:has(> svg:only-child):focus-visible,
+a:has(> svg:only-child):focus-visible,
+button:has(> span > svg:only-child):focus-visible,
+a:has(> span > svg:only-child):focus-visible {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 5px 8px color-mix(in srgb, currentColor 28%, transparent));
+}
