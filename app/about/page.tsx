@@ -2,7 +2,6 @@
 import { AboutPage } from "@/components/about-page"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata = {
   title: "About Us — ApexbytesHub",
@@ -13,7 +12,6 @@ export default function AboutRoute() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageNoticeBell page="about" />
       <div>
         <AboutPage />
       </div>

@@ -10,7 +10,6 @@ import { BIZ, WA } from "@/lib/brand"
 import { ComingSoonTool } from "@/components/coming-soon-tool"
 import { CtaBar } from "@/components/strip-section"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -38,7 +37,6 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageNoticeBell page="tools" />
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>

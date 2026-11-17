@@ -14,6 +14,7 @@ import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useNavContrast } from "@/hooks/use-navbar"
 import { MobileMenu } from "@/components/navbar/mobile-menu"
 import { DesktopMenu } from "@/components/navbar/desktop-menu"
+import { PageNoticeBell, type NoticePage } from "@/components/page-notice-bell"
 
 // Shared by both the logo icon's neutral color and the nav-controls'
 // neutral color — previously duplicated as two near-identical ternary
@@ -109,6 +110,15 @@ export function Navbar() {
   )
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
+  const noticePage: NoticePage = pathname === "/" ? "home"
+    : pathname.startsWith("/services") ? "services"
+      : pathname.startsWith("/gallery") ? "gallery"
+        : pathname.startsWith("/contact") ? "contact"
+          : pathname.startsWith("/about") ? "about"
+            : pathname.startsWith("/pricing") ? "pricing"
+              : pathname.startsWith("/tools/jpg-to-pdf") ? "jpg-to-pdf"
+                : pathname.startsWith("/tools") ? "tools"
+                  : "home"
 
   if (calculatorOpen) return null
 
@@ -195,7 +205,7 @@ export function Navbar() {
                         onMouseLeave={closeSubmenuSoon}
                       >
                         {submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path ? "page" : undefined} className="rounded-[14px] px-4 py-3 text-[0.95rem] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("rounded-[14px] px-4 py-3 text-[0.95rem] transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold text-foreground" : "text-muted-foreground")}>
                             {subitem.label}
                           </Link>
                         ))}
@@ -262,6 +272,7 @@ export function Navbar() {
               </button>
 
               <div className="order-3 hidden items-center gap-1 rounded-[14px] bg-muted/80 p-1 sm:flex">
+                <PageNoticeBell page={noticePage} embedded />
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="regular" /> : <Sun size={18} weight="regular" />)}
                 </button>

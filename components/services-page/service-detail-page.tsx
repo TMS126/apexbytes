@@ -5,7 +5,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
-import { HUB_COLORS, HubKey } from "@/lib/brand"
+import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
 import { HUBS, sortItemsByPrice } from "@/lib/data"
 import { HubIcon } from "./shared"
 import { getTurnaround, serviceRouteFor, type SelectedService } from "./lib"
@@ -46,7 +46,11 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         <button
           type="button"
           onClick={() => setRequestOpen(true)}
-          className="abh-service-request-cta inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="abh-service-request-cta inline-flex min-h-11 items-center gap-2 rounded-[14px] px-5 py-2.5 text-sm font-medium shadow-[var(--shadow-card-lift)] transition-[opacity,box-shadow,transform] hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          style={{
+            backgroundColor: resolvedTheme === "dark" ? TOKEN.brandOrange : TOKEN.brandBlue,
+            color: resolvedTheme === "dark" ? TOKEN.onBrandOrange : TOKEN.onBrandBlue,
+          }}
         >
           Request this service
           <ArrowUpRight size={15} aria-hidden="true" />

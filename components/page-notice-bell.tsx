@@ -133,7 +133,7 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
 function NoticeCard({ notice }: { notice: HomeNotice }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
-    <article className="rounded-xl border border-border/70 bg-card/55 px-4 py-3.5">
+      <article className="rounded-[14px] border border-border/70 bg-card px-4 py-4">
       <div className="flex items-start gap-3">
         <notice.Icon size={19} weight="regular" style={{ color }} className="mt-0.5 shrink-0" aria-hidden="true" />
         <div className="flex min-w-0 flex-col gap-1">
@@ -141,7 +141,7 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
             {notice.header}
           </h3>
           {notice.date && <p className="text-xs font-medium text-muted-foreground">{notice.date}</p>}
-          <p className="text-sm leading-relaxed text-foreground/90">{notice.body}</p>
+          <p className="text-base leading-relaxed text-foreground/90">{notice.body}</p>
           {notice.sourceUrl && notice.sourceLabel && (
             <a
               href={notice.sourceUrl}
@@ -158,7 +158,7 @@ function NoticeCard({ notice }: { notice: HomeNotice }) {
   )
 }
 
-export function PageNoticeBell({ page, className }: { page: NoticePage; className?: string }) {
+export function PageNoticeBell({ page, className, embedded = false }: { page: NoticePage; className?: string; embedded?: boolean }) {
   const notices = page === "home" ? HOME_NOTICES : PAGE_NOTICES[page]
   const [open, setOpen] = useState(false)
   const [unread, setUnread] = useState(true)
@@ -205,7 +205,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
 
   return (
     <>
-      <div className={cn("fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
+      <div className={cn(embedded ? "relative" : "fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
         <button
           ref={buttonRef}
           type="button"
@@ -232,12 +232,12 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.98 }}
               transition={{ duration: 0.16, ease: "easeOut" }}
-              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] max-h-[min(70svh,36rem)] w-[min(24rem,calc(100vw-1.5rem))] overflow-y-auto rounded-2xl border border-border/80 bg-background p-4 shadow-xl md:right-5"
+              className="fixed inset-x-0 top-[calc(var(--nav-h,74px)+0.9rem)] z-[9999] mx-auto max-h-[min(72svh,40rem)] w-[min(30rem,calc(100vw-1.5rem))] overflow-y-auto rounded-[14px] border border-border/80 bg-card p-5 shadow-2xl"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
-                  <h2 id={titleId} className="text-base font-semibold text-foreground">{PAGE_LABEL[page]} notices</h2>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{notices.length} update{notices.length === 1 ? "" : "s"} for this page</p>
+                  <h2 id={titleId} className="text-lg font-semibold text-foreground">{PAGE_LABEL[page]} notices</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">{notices.length} update{notices.length === 1 ? "" : "s"} for this page</p>
                 </div>
                 <button
                   type="button"
@@ -251,13 +251,20 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
               <div className="flex flex-col gap-4">
                 {groups.map((group) => (
                   <section key={group.label} aria-label={group.label}>
-                    <h3 className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group.label}</h3>
+                    <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group.label}</h3>
                     <div className="flex flex-col gap-2">
                       {group.notices.map((notice) => <NoticeCard key={notice.id} notice={notice} />)}
                     </div>
                   </section>
                 ))}
               </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="mt-5 w-full rounded-[14px] border border-border px-4 py-2.5 text-sm font-medium text-foreground transition-[background-color,box-shadow] hover:bg-muted hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Dismiss
+              </button>
             </motion.div>
           )}
         </AnimatePresence>,

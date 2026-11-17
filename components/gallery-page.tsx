@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { Funnel, Info, Shuffle } from "@phosphor-icons/react"
+import { Shuffle, SquaresFour } from "@phosphor-icons/react"
 import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -18,7 +18,6 @@ import { SafeImage } from "@/components/gallery/safe-image"
 import { LikeButton, ShareButton } from "@/components/gallery/like-share-buttons"
 import { HubIcon } from "@/components/services-page/shared"
 import { GalleryClosingTagline } from "@/components/gallery/empty-and-tagline"
-import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 const LIKES_STORAGE_KEY = "apexbytes-gallery-likes"
@@ -48,19 +47,10 @@ export function HubFilterCircles({
         aria-label="All projects"
         className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
       >
-        <span
-          className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
-          style={{ borderColor: activeFilter === "all" ? TOKEN.orangeText : "transparent" }}
-        >
-          <span
-            aria-hidden="true"
-            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 19%, transparent)` }}
-          />
-          <span className={cn("relative text-[0.8rem] font-medium", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
+        <span className="relative flex h-20 w-20 items-center justify-center md:hidden">
+          <SquaresFour size={34} weight="regular" color={activeFilter === "all" ? TOKEN.orangeText : neutralIconColor} aria-hidden="true" />
         </span>
         <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:text-base">All</span>
-        <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
       </button>
 
       {ROW_ORDER.map((row) => {
@@ -74,26 +64,18 @@ export function HubFilterCircles({
             aria-label={row.label}
             className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
           >
-            <span
-              className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
-              style={{ borderColor: isActive ? accent : "transparent" }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                style={{ backgroundColor: `color-mix(in srgb, ${accent} 19%, transparent)` }}
-              />
+            <span className="relative flex h-20 w-20 items-center justify-center md:hidden">
               {/* NOTE: HubIcon is hardcoded to weight="regular" in
                   services-page/shared.tsx right now — "regular unless
                   selected" needs a `weight` prop added there first. Once
                   that file's updated, pass weight="regular"
                   here. */}
               <span className="relative">
-                <HubIcon id={row.id} size={26} weight="regular" color={isActive ? accent : neutralIconColor} />
+                <HubIcon id={row.id} size={34} weight="regular" color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
             <span className="max-w-[64px] truncate text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:max-w-none md:text-base">{row.short}</span>
-            <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100"><HubIcon id={row.id} size={16} weight="regular" color="currentColor" /></span>
+            <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-5 md:group-hover:opacity-100"><HubIcon id={row.id} size={18} weight="regular" color="currentColor" /></span>
           </button>
         )
       })}
@@ -101,30 +83,22 @@ export function HubFilterCircles({
   )
 }
 
-// ── Hub group card ──
-// Replaces the old flat "divider + grid" pattern entirely. Each hub's
-// projects now sit inside a real abh-card container — same containment
-// language as the Services page's hub cards — with a neutral header
-// (icon + label) and a clean internal border as the divider between
-// header and grid, instead of a floating pill over a horizontal rule.
+// ── Flat editorial hub section ──
 function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: string; children: React.ReactNode }) {
   return (
-    <div className="relative mb-6">
-      <div className="pointer-events-none absolute inset-x-2 -bottom-2 top-2 rounded-[14px] bg-card/55 shadow-[var(--shadow-card-lift)]" aria-hidden="true" />
-      <div className="relative abh-card p-4 md:p-6 transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)]">
-      <div className="flex items-center gap-2.5 mb-4 pb-3.5 border-b border-zinc-100 dark:border-zinc-800">
+    <div className="relative mb-10">
+      <div className="mb-4 flex items-center gap-2.5 border-b border-border/60 pb-3.5">
         <span
-          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-          style={{ backgroundColor: `${accent}15`, color: accent }}
+          className="flex size-9 shrink-0 items-center justify-center text-muted-foreground"
+          style={{ color: accent }}
         >
-          <HubIcon id={hubId} size={15} weight="regular" color="currentColor" />
+          <HubIcon id={hubId} size={22} weight="regular" color="currentColor" />
         </span>
         <h2 className="text-[0.82rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
           {hubLabelFor(hubId)}
         </h2>
       </div>
         {children}
-      </div>
     </div>
   )
 }
@@ -247,7 +221,6 @@ function GalleryPageInner() {
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const showBackToTop = useBackToTop()
   const likesHydrated = useRef(false)
-  const [photoNoticeDismissed, setPhotoNoticeDismissed] = useState(false)
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -360,24 +333,6 @@ function GalleryPageInner() {
             <EditorialScrollCue />
           </div>
         </ScrollBounce>
-
-        {!photoNoticeDismissed && (
-          <ScrollBounce delay={0.06}>
-            <div className="flex justify-center max-w-2xl mx-auto mb-6">
-              <NoticePill
-                variant="info"
-                Icon={Info}
-                collapsedLabel="Notice"
-                expandedLabel="A Note on Our Photos"
-                announcement
-                isDark={isDark}
-                onDismiss={() => setPhotoNoticeDismissed(true)}
-              >
-                We use high-quality sample photos to represent our services — the professional standard shown is exactly what you receive.
-              </NoticePill>
-            </div>
-          </ScrollBounce>
-        )}
 
         <ScrollBounce delay={0.1}>
           <div className="relative mx-auto mb-8 flex w-full max-w-md justify-center">

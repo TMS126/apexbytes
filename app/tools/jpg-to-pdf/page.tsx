@@ -3,11 +3,10 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
+import { UploadSimple, FileJpg, FilePdf, ArrowRight, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -82,7 +81,6 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageNoticeBell page="jpg-to-pdf" />
       
       <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
         {/* HERO HEADER */}
@@ -97,8 +95,10 @@ export default function JpgToPdfPage() {
               <CaretLeft size={15} weight="regular" aria-hidden="true" />
             </Link>
             
-            <div className="flex justify-center mb-5">
-              <FilePdf weight="regular" size={40} style={{ color: accentColor }} aria-hidden="true" />
+            <div className="flex items-center justify-center gap-1 mb-5" aria-label="JPG to PDF">
+              <FileJpg weight="regular" size={38} style={{ color: accentColor }} aria-hidden="true" />
+              <ArrowRight weight="regular" size={20} style={{ color: accentColor }} aria-hidden="true" />
+              <FilePdf weight="regular" size={38} style={{ color: accentColor }} aria-hidden="true" />
             </div>
             
             <h1 className="abh-page-title mb-3">

@@ -115,44 +115,46 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
             return (
               <div
                 key={item.id}
-                className={cn("flex w-full flex-col items-center rounded-[14px] bg-card/70 p-2 transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
+                className={cn("flex w-full flex-col items-center transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
                 style={{ transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms" }}
               >
-                <Link
-                  href={item.path}
-                  aria-current={isActive ? "page" : undefined}
-                  tabIndex={menuOpen ? 0 : -1}
-                  style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
-                  className="w-full rounded-[14px] bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
-                >
-                  {item.label}
-                </Link>
-                {submenu && (
-                  <details className="group w-full">
-                    <summary
-                      tabIndex={menuOpen ? 0 : -1}
-                      className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
-                    >
-                      <span className="sr-only">Browse {item.label.toLowerCase()}</span>
-                      <CaretDown size={16} aria-hidden="true" />
-                    </summary>
-                    <div className="mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
-                      <div className="min-h-0 overflow-hidden flex flex-col items-center gap-1 p-2 pt-3">
-                      {submenu.map((subitem) => (
-                        <Link
-                          key={subitem.path}
-                          href={subitem.path}
-                          tabIndex={menuOpen ? 0 : -1}
-                          aria-current={pathname === subitem.path ? "page" : undefined}
-                          className="w-full rounded-[14px] px-5 py-3 text-center text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground"
-                        >
-                          {subitem.label}
-                        </Link>
-                      ))}
+                <div className="flex items-center justify-center gap-1">
+                  <Link
+                    href={item.path}
+                    aria-current={isActive ? "page" : undefined}
+                    tabIndex={menuOpen ? 0 : -1}
+                    style={{ color: isActive ? HOVER_TEXT : neutralColor }}
+                    className="px-3 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
+                  >
+                    {item.label}
+                  </Link>
+                  {submenu && (
+                    <details className="group">
+                      <summary
+                        tabIndex={menuOpen ? 0 : -1}
+                        className="flex size-9 cursor-pointer list-none items-center justify-center text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
+                      >
+                        <span className="sr-only">Browse {item.label.toLowerCase()}</span>
+                        <CaretDown size={18} weight="regular" aria-hidden="true" />
+                      </summary>
+                      <div className="absolute left-0 right-0 mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
+                        <div className="min-h-0 overflow-hidden flex flex-col items-center gap-1 p-2 pt-3">
+                          {submenu.map((subitem) => (
+                            <Link
+                              key={subitem.path}
+                              href={subitem.path}
+                              tabIndex={menuOpen ? 0 : -1}
+                              aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined}
+                              className={cn("w-full px-5 py-3 text-center text-base font-medium transition-colors hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "font-semibold text-foreground" : "text-muted-foreground")}
+                            >
+                              {subitem.label}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </details>
-                )}
+                    </details>
+                  )}
+                </div>
               </div>
             )
           })}
