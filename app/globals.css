@@ -1159,15 +1159,15 @@ button, a, [role="button"] {
 
   .abh-wa-btn {
     @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;
-    background: transparent;
-    color: var(--brand-whatsapp-accessible-dark);
-    border: 0;
+    background: var(--brand-whatsapp-accessible);
+    color: var(--brand-whatsapp-text);
+    border: 1px solid var(--brand-whatsapp-accessible-dark);
     border-radius: 14px;
-    box-shadow: none;
+    box-shadow: 0 5px 16px color-mix(in srgb, var(--brand-whatsapp) 24%, transparent);
     position: relative;
-    padding: .35rem 0 .45rem;
+    padding: .7rem 1rem .75rem;
   }
-  .abh-wa-btn:hover, .abh-wa-btn:focus-visible, .abh-wa-btn:active { background: color-mix(in srgb, var(--brand-whatsapp) 12%, transparent); border-radius: 14px; box-shadow: var(--shadow-action-whatsapp); }
+  .abh-wa-btn:hover, .abh-wa-btn:focus-visible, .abh-wa-btn:active { background: var(--brand-whatsapp); border-radius: 14px; box-shadow: var(--shadow-action-whatsapp); }
 
   .abh-btn-primary,
   .abh-btn-cta {
@@ -1190,15 +1190,15 @@ button, a, [role="button"] {
     @apply inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-95;
     position: relative;
     color: var(--cta-action);
-    background: transparent;
-    border: 0;
+    background: var(--surface-modal-control);
+    border: 1px solid var(--border);
     border-radius: 14px;
     box-shadow: none;
   }
   .abh-line-cta:hover,
   .abh-line-cta:focus-visible,
   .abh-line-cta:active {
-    background: color-mix(in srgb, currentColor 10%, transparent);
+    background: var(--surface-modal-control-hover);
     border-radius: 14px;
     box-shadow: var(--shadow-action-brand);
   }

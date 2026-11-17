@@ -272,7 +272,6 @@ export function Navbar() {
               </button>
 
               <div className="order-3 hidden items-center gap-1 rounded-[14px] bg-muted/80 p-1 sm:flex">
-                <PageNoticeBell page={noticePage} embedded />
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="regular" /> : <Sun size={18} weight="regular" />)}
                 </button>
@@ -282,6 +281,8 @@ export function Navbar() {
           </div>
         </div>
       </header>
+
+      <PageNoticeBell page={noticePage} />
 
       <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} pathname={pathname} neutralColor={neutralColor} />
     </>

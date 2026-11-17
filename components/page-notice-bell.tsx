@@ -205,7 +205,7 @@ export function PageNoticeBell({ page, className, embedded = false }: { page: No
 
   return (
     <>
-      <div className={cn(embedded ? "relative" : "fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
+      <div className={cn(embedded ? "relative" : "fixed left-1/2 top-[calc(var(--nav-h,74px)+var(--banner-h,0px)+0.5rem)] z-[9998] -translate-x-1/2", className)}>
         <button
           ref={buttonRef}
           type="button"

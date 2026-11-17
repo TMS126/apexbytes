@@ -1,7 +1,7 @@
 // components/navbar/mobile-menu.tsx
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { NAV_ITEMS, TOKEN, HUB_NAMES } from "@/lib/brand"
@@ -9,14 +9,11 @@ import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
 import { CaretDown } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 
-// FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
-// "keep in sync" comment. That hex is the OLD, WCAG-failing --brand-orange
-// value (documented in globals.css as "was #F4A261 at 2.06:1") — still
-// failing here as both text color AND border color (border also needs
-// ≥3:1 for non-text UI components, which 2.06:1 fails too). Now imports
-// the same verified TOKEN.orangeText used in navbar.tsx directly, so
-// there's a real single source of truth instead of a manually-synced copy.
 const HOVER_TEXT = TOKEN.orangeText
+
+function isNavPathActive(pathname: string, path: string): boolean {
+  return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`)
+}
 
 interface MobileMenuProps {
   menuOpen: boolean
@@ -28,19 +25,25 @@ interface MobileMenuProps {
 export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: MobileMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null)
+  const closeMenu = useCallback(() => {
+    setOpenSubmenu(null)
+    setMenuOpen(false)
+  }, [setMenuOpen])
 
   useEffect(() => {
     if (!menuOpen) return
+
     previouslyFocused.current = document.activeElement as HTMLElement
     containerRef.current?.focus()
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setMenuOpen(false)
+        closeMenu()
         return
       }
       if (e.key !== "Tab" || !containerRef.current) return
       const focusable = Array.from(containerRef.current.querySelectorAll<HTMLElement>(
-        'button, summary, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       )).filter((element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden")
       if (focusable.length === 0) return
       const first = focusable[0]
@@ -58,7 +61,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       document.removeEventListener("keydown", handleKeyDown)
       previouslyFocused.current?.focus?.()
     }
-  }, [menuOpen, setMenuOpen])
+  }, [menuOpen, closeMenu])
 
   return (
     <div
@@ -69,26 +72,26 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       aria-hidden={!menuOpen}
       tabIndex={-1}
       className={cn(
-        "fixed inset-0 z-[9998] md:hidden transition-opacity duration-300 outline-none",
-        menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        "fixed inset-0 z-[9998] md:hidden outline-none transition-[visibility,opacity] duration-200",
+        menuOpen ? "visible opacity-100 pointer-events-auto" : "invisible opacity-0 pointer-events-none"
       )}
     >
       <div
-        className="absolute inset-0 bg-background/95 backdrop-blur-xl"
-        onClick={() => setMenuOpen(false)}
+        className="absolute inset-0 bg-black/20 dark:bg-black/45"
+        onClick={closeMenu}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
-        <nav className="flex w-full max-w-[380px] flex-col items-center gap-4" aria-label="Mobile navigation">
+      <div className="relative z-10 mt-[calc(var(--nav-h,4.5rem)+var(--banner-h,0px))] max-h-[calc(100dvh-var(--nav-h,4.5rem)-var(--banner-h,0px))] overflow-y-auto border-t border-border/70 bg-background px-5 pb-8 pt-4 shadow-2xl">
+        <nav className="mx-auto flex w-full max-w-[440px] flex-col gap-2" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
-            const isActive =
-              pathname === item.path || (item.path === "/services" && pathname.startsWith("/services")) || (item.path === "/tools" && pathname.startsWith("/tools"))
+            const isActive = isNavPathActive(pathname, item.path)
             const submenu = item.id === "services"
               ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
               : item.id === "tools"
                 ? [{ label: "All tools", path: "/tools" }, { label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
                 : null
+            const submenuIsOpen = openSubmenu === item.id
 
             if (item.isCta) {
               return (
@@ -97,15 +100,9 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   href={item.path}
                   aria-current={isActive ? "page" : undefined}
                   tabIndex={menuOpen ? 0 : -1}
-                  style={{
-                    transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    backgroundColor: "var(--surface-accent)",
-                    color: "var(--text-on-accent)",
-                  }}
-                  className={cn(
-                    "w-full rounded-[14px] px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-all duration-300 active:scale-95",
-                    menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  )}
+                  onClick={closeMenu}
+                  style={{ transitionDelay: menuOpen ? `${idx * 35}ms` : "0ms", backgroundColor: "var(--surface-accent)", color: "var(--text-on-accent)" }}
+                  className={cn("w-full rounded-[14px] px-6 py-3 text-center font-sans text-base font-semibold transition-all duration-200 active:scale-[0.98]", menuOpen ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0")}
                 >
                   {item.label}
                 </Link>
@@ -115,67 +112,62 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
             return (
               <div
                 key={item.id}
-                className={cn("flex w-full flex-col items-center transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
-                style={{ transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms" }}
+                className={cn("flex w-full flex-col gap-1 transition-all duration-200", menuOpen ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0")}
+                style={{ transitionDelay: menuOpen ? `${idx * 35}ms` : "0ms" }}
               >
-                <div className="flex items-center justify-center gap-1">
+                <div className="flex w-full items-stretch gap-1">
                   <Link
                     href={item.path}
                     aria-current={isActive ? "page" : undefined}
                     tabIndex={menuOpen ? 0 : -1}
-                    style={{ color: isActive ? HOVER_TEXT : neutralColor }}
-                    className="px-3 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
+                    onClick={closeMenu}
+                    style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "var(--border)" }}
+                    className={cn("flex min-h-12 flex-1 items-center rounded-[14px] border bg-card/70 px-5 py-3 text-left font-sans text-base font-semibold transition-colors hover:bg-card active:scale-[0.99]", isActive && "bg-card")}
                   >
                     {item.label}
                   </Link>
                   {submenu && (
-                    <details className="group">
-                      <summary
-                        tabIndex={menuOpen ? 0 : -1}
-                        className="flex size-9 cursor-pointer list-none items-center justify-center text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
-                      >
-                        <span className="sr-only">Browse {item.label.toLowerCase()}</span>
-                        <CaretDown size={18} weight="regular" aria-hidden="true" />
-                      </summary>
-                      <div className="absolute left-0 right-0 mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
-                        <div className="min-h-0 overflow-hidden flex flex-col items-center gap-1 p-2 pt-3">
-                          {submenu.map((subitem) => (
-                            <Link
-                              key={subitem.path}
-                              href={subitem.path}
-                              tabIndex={menuOpen ? 0 : -1}
-                              aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined}
-                              className={cn("w-full px-5 py-3 text-center text-base font-medium transition-colors hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "font-semibold text-foreground" : "text-muted-foreground")}
-                            >
-                              {subitem.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </details>
+                    <button
+                      type="button"
+                      aria-label={`${submenuIsOpen ? "Collapse" : "Expand"} ${item.label.toLowerCase()} options`}
+                      aria-expanded={submenuIsOpen}
+                      aria-controls={`mobile-submenu-${item.id}`}
+                      tabIndex={menuOpen ? 0 : -1}
+                      onClick={() => setOpenSubmenu(submenuIsOpen ? null : item.id)}
+                      className="flex min-h-12 w-12 shrink-0 items-center justify-center rounded-[14px] border border-border bg-card/70 text-foreground transition-colors hover:bg-card"
+                    >
+                      <CaretDown size={18} weight="regular" className={cn("transition-transform duration-200", submenuIsOpen && "rotate-180")} aria-hidden="true" />
+                    </button>
                   )}
                 </div>
+
+                {submenu && submenuIsOpen && (
+                  <div id={`mobile-submenu-${item.id}`} className="ml-3 flex flex-col gap-1 border-l-2 border-border px-2 py-1" role="region" aria-label={`${item.label} options`}>
+                    {submenu.map((subitem) => {
+                      const subActive = isNavPathActive(pathname, subitem.path)
+                      return (
+                        <Link
+                          key={subitem.path}
+                          href={subitem.path}
+                          tabIndex={menuOpen ? 0 : -1}
+                          aria-current={subActive ? "page" : undefined}
+                          onClick={closeMenu}
+                          className={cn("rounded-[10px] px-4 py-2.5 text-left text-sm transition-colors hover:bg-muted hover:text-foreground", subActive ? "bg-muted font-semibold text-foreground" : "font-medium text-muted-foreground")}
+                        >
+                          {subitem.label}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             )
           })}
         </nav>
       </div>
 
-      <div
-        className={cn(
-          "absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center select-none transition-all duration-500 z-10",
-          menuOpen ? "opacity-30" : "opacity-0"
-        )}
-        aria-hidden="true"
-      >
-        <Image
-          src="/logo.png"
-          alt=""
-          width={32}
-          height={32}
-          className="relative w-8 h-8 shrink-0 object-contain transition-[filter] duration-300"
-          style={{ filter: "brightness(0) invert(1) contrast(0.6)" }}
-        />
+      <div className={cn("pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 select-none transition-opacity duration-300", menuOpen ? "opacity-20" : "opacity-0")} aria-hidden="true">
+        <Image src="/logo.png" alt="" width={32} height={32} className="h-8 w-8 shrink-0 object-contain" style={{ filter: "brightness(0) invert(1) contrast(0.6)" }} />
       </div>
     </div>
   )

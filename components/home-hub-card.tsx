@@ -31,11 +31,11 @@ export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?
   const card = (
     <Link
       href={hubRouteFor(hubId)}
-      className={cn("group/hub-icon relative flex min-h-[176px] w-full flex-col items-center justify-center gap-4 px-3 py-6 text-center transition-[background-color,transform] duration-250 ease-out hover:-translate-y-1 hover:bg-[color-mix(in_srgb,var(--hub-primary)_6%,transparent)] focus-visible:outline-none sm:min-h-[204px] sm:px-5 sm:py-8", reverse ? "md:order-2" : "md:order-1")}
+      className={cn("group/hub-icon relative flex min-h-[150px] w-full flex-col items-center justify-center gap-3 rounded-[14px] border border-border/70 bg-card/45 px-3 py-5 text-center transition-[background-color,transform,box-shadow] duration-250 ease-out hover:-translate-y-1 hover:bg-card hover:shadow-[var(--shadow-card-lift)] focus-visible:outline-none sm:min-h-[176px] sm:px-5 sm:py-7", reverse ? "md:order-2" : "md:order-1")}
       aria-label={`Explore ${hub.title}`}
     >
-        <span className="flex h-16 w-16 items-center justify-center transition-transform duration-250 ease-out group-hover/hub-icon:-translate-y-1 group-hover/hub-icon:rotate-[-5deg] sm:h-20 sm:w-20">
-        <Icon size={42} weight="regular" aria-hidden="true" className="text-muted-foreground transition-[color,transform] duration-250 ease-out group-hover/hub-icon:scale-110 group-hover/hub-icon:text-[var(--hub-primary)] sm:size-[52px]" />
+        <span className="flex h-14 w-14 items-center justify-center transition-transform duration-250 ease-out group-hover/hub-icon:-translate-y-1 group-hover/hub-icon:rotate-[-5deg] sm:h-16 sm:w-16">
+        <Icon size={36} weight="regular" aria-hidden="true" className="text-muted-foreground transition-[color,transform] duration-250 ease-out group-hover/hub-icon:scale-110 group-hover/hub-icon:text-[var(--hub-primary)] sm:size-[42px]" />
       </span>
       <span aria-hidden="true" className="absolute bottom-4 left-1/2 h-0.5 w-0 -translate-x-1/2 bg-[var(--hub-primary)] transition-all duration-250 ease-out group-hover/hub-icon:w-16 group-focus-visible/hub-icon:w-16" />
       <span className="font-heading text-lg font-semibold leading-tight text-foreground sm:text-xl md:text-2xl">{CLIENT_TITLE[hubId]}</span>
@@ -44,7 +44,7 @@ export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?
   )
 
   const description = (
-    <div className={cn("flex min-h-[176px] flex-col items-start justify-center px-1 py-8 text-left sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8", reverse ? "md:order-1" : "md:order-2")}>
+    <div className={cn("flex min-h-[150px] flex-col justify-center rounded-[14px] border border-border/45 bg-card/20 px-5 py-6 sm:min-h-[176px] sm:px-7 sm:py-8 md:px-10", reverse ? "md:order-1" : "md:order-2")}>
       <p className="mt-3 max-w-2xl text-[1.125rem] leading-7 text-muted-foreground sm:mt-4 sm:leading-8">{BLURB[hubId]}</p>
       <Link href={hubRouteFor(hubId)} className="group/cta relative mt-7 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
         Explore hub
@@ -58,7 +58,7 @@ export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?
       style={{
         ["--hub-primary" as string]: HUB_COLORS[hubId].primary,
       }}
-        className="grid grid-cols-[minmax(116px,34%)_1fr] gap-4 md:grid-cols-[minmax(190px,260px)_1fr] md:items-stretch md:gap-8"
+      className="grid grid-cols-1 gap-3 md:grid-cols-[minmax(190px,260px)_minmax(0,1fr)] md:items-stretch md:gap-6"
     >
       {card}{description}
     </div>

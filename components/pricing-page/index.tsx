@@ -18,7 +18,6 @@ import { PdfPillButton } from './shared'
 import { HUB_ORDER, dispatchAddToQuote, dispatchRemoveFromQuote, searchHubs } from './lib'
 import { BackToTopButton, useBackToTop } from '@/components/back-to-top-button'
 import { CtaBar } from '@/components/strip-section'
-import { PageNoticeBell } from '@/components/page-notice-bell'
 import { HubFilterCircles } from '@/components/gallery-page'
 import { AddOnsCard } from './addons-card'
 
@@ -162,7 +161,6 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
       <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
-        <PageNoticeBell page="pricing" />
 
         <main className="flex-1">
 
