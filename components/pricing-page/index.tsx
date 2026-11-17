@@ -211,6 +211,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                     collapsedLabel="Bulk Deals"
                     expandedLabel="Bulk Pricing"
                     isDark={isDark}
+                    announcement
                     onDismiss={() => setBulkNoticeDismissed(true)}
                   >
                     Look for the{' '}

@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "framer-motion"
 import { X } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { TOKEN } from "@/lib/brand"
-import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
 
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 
@@ -97,7 +96,8 @@ export function NoticePill({
         >
           {announcement ? (
             <>
-              <AnnouncementIconChip unread={unread} />
+              <Icon size={24} weight="regular" style={{ color: iconColor }} aria-hidden="true" />
+              {unread && <span className="absolute right-1.5 top-1.5 size-2.5 rounded-full bg-red-500 shadow-[0_2px_5px_rgba(239,68,68,.45)]" aria-hidden="true" />}
               <span className="sr-only">{collapsedLabel}</span>
             </>
           ) : (

@@ -196,8 +196,9 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
           </div>
         </ScrollBounce>
 
+        <div className="mb-6 flex w-full items-center justify-center gap-6">
         {!clientNoticeDismissed && (
-          <ScrollBounce delay={0.08} className="relative z-0 w-full flex justify-center mb-6">
+          <ScrollBounce delay={0.08} className="relative z-0 !w-auto">
             <NoticePill
               variant="warning"
               Icon={Megaphone}
@@ -213,12 +214,13 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
         )}
 
         {hasBulkDeals && !bulkNoticeDismissed && (
-          <ScrollBounce delay={0.1} className="relative z-0 mb-6 w-full flex justify-center">
+          <ScrollBounce delay={0.1} className="relative z-0 !w-auto">
             <NoticePill
               variant="info"
               Icon={SealPercent}
               collapsedLabel="Bulk deals"
               expandedLabel="Bulk Deals"
+              announcement
               onDismiss={() => setBulkNoticeDismissed(true)}
             >
               <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">
@@ -227,6 +229,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
             </NoticePill>
           </ScrollBounce>
         )}
+        </div>
 
         <ScrollBounce delay={0.12} className="relative z-0 mb-7 w-full max-w-[980px]">
           <details className="group overflow-hidden rounded-[14px] border border-border/70 bg-card/70">
