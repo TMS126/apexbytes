@@ -5,7 +5,7 @@ import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { AnimatePresence } from "framer-motion"
-import { Megaphone, SealPercent, CaretLeft, CaretDown } from "@phosphor-icons/react"
+import { CaretLeft, CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
@@ -16,11 +16,10 @@ import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
 import {
-  HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService,
+  HUB_ORDER, trackEvent, getTurnaround, SelectedService,
   hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor,
 } from "./lib"
 import { itemHasBulk, sectionHasBulk } from "../quote-calculator/lib"
-import { NoticePill } from "@/components/notice-pill"
 import { AddOnsCard } from "@/components/pricing-page/addons-card"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 import { MobileHubCard } from "./mobile-hub-card"
@@ -70,15 +69,12 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
     : null
 
   const [hubOriginSide, setHubOriginSide] = useState<"left" | "right">("right")
-  const [clientNoticeDismissed, setClientNoticeDismissed] = useState(false)
-  const [bulkNoticeDismissed, setBulkNoticeDismissed] = useState(false)
   const showBackToTop = useBackToTop()
 
   const [desktopActiveHub, setDesktopActiveHub] = useState<HubId | null>(null)
   const [desktopActiveSection, setDesktopActiveSection] = useState<number | null>(null)
 
   const isModalOpen = !!(activeHub || selectedService)
-  const hasBulkDeals = HUB_ORDER.some((hubId) => HUBS[hubId].sections.some((section) => sectionHasBulk(hubId, section.title, section.items)))
 
   const handleSelectService = useCallback((svc: SelectedService) => {
     trackEvent("view_service", {
@@ -195,41 +191,6 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
             <EditorialScrollCue />
           </div>
         </ScrollBounce>
-
-        <div className="mb-6 flex w-full items-center justify-center gap-6">
-        {!clientNoticeDismissed && (
-          <ScrollBounce delay={0.08} className="relative z-0 !w-auto">
-            <NoticePill
-              variant="warning"
-              Icon={Megaphone}
-              collapsedLabel="Notice"
-              expandedLabel="Notice to Clients"
-              announcement
-              onDismiss={() => setClientNoticeDismissed(true)}
-            >
-              <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">{NOTICE.intro}</p>
-              <p className="mt-3 text-[0.92rem] font-medium italic leading-6 text-zinc-500 dark:text-zinc-400">{NOTICE.footer}</p>
-            </NoticePill>
-          </ScrollBounce>
-        )}
-
-        {hasBulkDeals && !bulkNoticeDismissed && (
-          <ScrollBounce delay={0.1} className="relative z-0 !w-auto">
-            <NoticePill
-              variant="info"
-              Icon={SealPercent}
-              collapsedLabel="Bulk deals"
-              expandedLabel="Bulk Deals"
-              announcement
-              onDismiss={() => setBulkNoticeDismissed(true)}
-            >
-              <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">
-                Selected printing and service items have lower rates at qualifying quantities. Look for the Bulk deals marker on each relevant hub and service.
-              </p>
-            </NoticePill>
-          </ScrollBounce>
-        )}
-        </div>
 
         <ScrollBounce delay={0.12} className="relative z-0 mb-7 w-full max-w-[980px]">
           <details className="group overflow-hidden rounded-[14px] border border-border/70 bg-card/70">
