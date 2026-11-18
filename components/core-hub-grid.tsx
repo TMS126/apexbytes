@@ -1,8 +1,6 @@
 // components/core-hub-grid.tsx
 // Landing-page "What We Can Help With" section: five hub cards stacked in
-// one vertical column on every screen size. Cards alternate layout:
-// text left / icon right, then icon left / text right, and so on.
-// Display only — not clickable. Hub colour on hover only.
+// one consistent, compact layout. Hub colour appears on hover only.
 
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { HomeHubCard } from "@/components/home-hub-card"
@@ -16,7 +14,7 @@ export function CoreHubGrid() {
     <section className="px-4 py-20 md:px-8 md:py-28" aria-labelledby="core-hubs-title">
       <div className="max-w-[1240px] mx-auto">
         <ScrollBounce>
-          <div className="mb-14 max-w-2xl text-left md:mb-20">
+          <div className="mb-8 max-w-2xl text-left md:mb-10">
             <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">A clear place to start</p>
             <h2 id="core-hubs-title" className="abh-section-heading mt-0 text-left">
               What we can help with

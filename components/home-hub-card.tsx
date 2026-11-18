@@ -24,7 +24,7 @@ const BLURB: Record<HubId, string> = {
   tech: "PC setup, virus removal and Windows installs — sorted properly. Practical help for the everyday tech problems that slow you down.",
 }
 
-export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?: boolean }) {
+export function HomeHubCard({ hubId }: { hubId: HubId }) {
   const hub = HUBS[hubId]
   const Icon = HUB_ICON[hubId]
   const serviceCount = hub.sections.reduce((total, section) => total + section.items.length, 0)
@@ -44,7 +44,7 @@ export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?
   )
 
   const description = (
-    <div className={cn("flex min-h-[176px] flex-col items-start justify-center px-1 py-8 text-left sm:min-h-[204px] sm:px-4 sm:py-10 md:px-8", reverse ? "md:order-1" : "md:order-2")}>
+    <div className="flex min-h-[120px] flex-col items-start justify-center px-1 py-5 text-left sm:min-h-[148px] sm:px-4 sm:py-6 md:px-8">
       <p className="mt-3 max-w-2xl text-[1.125rem] leading-7 text-muted-foreground sm:mt-4 sm:leading-8">{BLURB[hubId]}</p>
       <Link href={hubRouteFor(hubId)} className="group/cta relative mt-7 w-fit px-0 py-1.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:text-[var(--hub-primary)] focus-visible:text-[var(--hub-primary)] sm:text-base">
         Explore hub
@@ -58,7 +58,7 @@ export function HomeHubCard({ hubId, reverse = false }: { hubId: HubId; reverse?
       style={{
         ["--hub-primary" as string]: HUB_COLORS[hubId].primary,
       }}
-        className="grid grid-cols-[minmax(116px,34%)_1fr] gap-4 md:grid-cols-[minmax(190px,260px)_1fr] md:items-stretch md:gap-8"
+        className="grid grid-cols-[minmax(116px,34%)_1fr] items-center gap-3 md:grid-cols-[minmax(190px,240px)_1fr] md:gap-5"
     >
       {card}{description}
     </div>

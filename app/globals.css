@@ -127,7 +127,9 @@ html[data-scroll-locked] body { overflow: hidden; }
   box-shadow: none !important;
 }
 .abh-reference-search input::placeholder,
-.abh-search-input::placeholder { color: var(--muted-foreground); opacity: 1; }
+.abh-search-input::placeholder,
+input::placeholder,
+textarea::placeholder { color: color-mix(in srgb, var(--muted-foreground) 72%, transparent); opacity: 1; }
 .abh-reference-search svg { color: currentColor; }
 .abh-reference-search-results { margin-top: .5rem; overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: var(--card); color: var(--foreground); box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 12%, transparent); }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: var(--foreground); transition: background-color 140ms ease; }
