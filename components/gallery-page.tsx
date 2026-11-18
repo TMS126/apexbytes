@@ -4,21 +4,20 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { Funnel, Info, Shuffle } from "@phosphor-icons/react"
+import { Funnel, Shuffle } from "@phosphor-icons/react"
 import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
 import { PROJECTS, ProjectData } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { ROW_ORDER, HubId, hubLabelFor } from "@/lib/gallery-helpers"
+import { ROW_ORDER, HubId } from "@/lib/gallery-helpers"
 import { useGalleryBackStack } from "@/hooks/use-gallery-back-stack"
 import { ProjectViewerModal } from "@/components/gallery/project-viewer-modal"
 import { SafeImage } from "@/components/gallery/safe-image"
 import { LikeButton, ShareButton } from "@/components/gallery/like-share-buttons"
 import { HubIcon } from "@/components/services-page/shared"
 import { GalleryClosingTagline } from "@/components/gallery/empty-and-tagline"
-import { NoticePill } from "@/components/notice-pill"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 const LIKES_STORAGE_KEY = "apexbytes-gallery-likes"
@@ -59,7 +58,7 @@ export function HubFilterCircles({
           />
           <span className={cn("relative text-[0.8rem] font-medium", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
         </span>
-        <span className="text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:text-base">All</span>
+            <span className={cn("relative text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:text-base", activeFilter === "all" && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--line-rule)]")}>All</span>
         <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
       </button>
 
@@ -92,39 +91,11 @@ export function HubFilterCircles({
                 <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
               </span>
             </span>
-            <span className="max-w-[64px] truncate text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:max-w-none md:text-base">{row.short}</span>
+            <span className={cn("relative max-w-[64px] truncate text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:max-w-none md:text-base", isActive && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--line-rule)]")}>{row.short}</span>
             <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100"><HubIcon id={row.id} size={16} weight="regular" color="currentColor" /></span>
           </button>
         )
       })}
-    </div>
-  )
-}
-
-// ── Hub group card ──
-// Replaces the old flat "divider + grid" pattern entirely. Each hub's
-// projects now sit inside a real abh-card container — same containment
-// language as the Services page's hub cards — with a neutral header
-// (icon + label) and a clean internal border as the divider between
-// header and grid, instead of a floating pill over a horizontal rule.
-function HubGroupCard({ hubId, accent, children }: { hubId: HubId; accent: string; children: React.ReactNode }) {
-  return (
-    <div className="relative mb-6">
-      <div className="pointer-events-none absolute inset-x-2 -bottom-2 top-2 rounded-[14px] bg-card/55 shadow-[var(--shadow-card-lift)]" aria-hidden="true" />
-      <div className="relative abh-card p-4 md:p-6 transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-lift)]">
-      <div className="flex items-center gap-2.5 mb-4 pb-3.5 border-b border-zinc-100 dark:border-zinc-800">
-        <span
-          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-          style={{ backgroundColor: `${accent}15`, color: accent }}
-        >
-          <HubIcon id={hubId} size={15} weight="regular" color="currentColor" />
-        </span>
-        <h2 className="text-[0.82rem] font-medium uppercase tracking-widest text-muted-foreground dark:text-muted-foreground">
-          {hubLabelFor(hubId)}
-        </h2>
-      </div>
-        {children}
-      </div>
     </div>
   )
 }
@@ -199,40 +170,6 @@ function ProjectGrid({
   )
 }
 
-// Grouped-by-hub view for the "All" filter — each hub's projects now
-// render inside HubGroupCard instead of a flat divider. Still preserves
-// ROW_ORDER, still skips empty hubs, still falls back to a flat grid
-// when only one hub matches (e.g. mid-search) so a single lonely card
-// wrapper doesn't appear for no reason.
-function GroupedProjectGrid({
-  projects, likedIds, onToggleLike, onSelect, pathname, getAccent,
-}: {
-  projects: ProjectData[]
-  likedIds: Set<string>
-  onToggleLike: (id: string) => void
-  onSelect: (p: ProjectData) => void
-  pathname: string
-  getAccent: (id: HubId) => string
-}) {
-  const groups = ROW_ORDER
-    .map((row) => ({ hubId: row.id, items: projects.filter((p) => p.hub === row.id) }))
-    .filter((g) => g.items.length > 0)
-
-  if (groups.length <= 1) {
-    return <ProjectGrid projects={projects} likedIds={likedIds} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
-  }
-
-  return (
-    <div>
-      {groups.map((group) => (
-        <HubGroupCard key={group.hubId} hubId={group.hubId} accent={getAccent(group.hubId)}>
-          <ProjectGrid projects={group.items} likedIds={likedIds} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
-        </HubGroupCard>
-      ))}
-    </div>
-  )
-}
-
 function GalleryPageInner() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
@@ -247,7 +184,6 @@ function GalleryPageInner() {
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const showBackToTop = useBackToTop()
   const likesHydrated = useRef(false)
-  const [photoNoticeDismissed, setPhotoNoticeDismissed] = useState(false)
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -361,24 +297,6 @@ function GalleryPageInner() {
           </div>
         </ScrollBounce>
 
-        {!photoNoticeDismissed && (
-          <ScrollBounce delay={0.06}>
-            <div className="flex justify-center max-w-2xl mx-auto mb-6">
-              <NoticePill
-                variant="info"
-                Icon={Info}
-                collapsedLabel="Notice"
-                expandedLabel="A Note on Our Photos"
-                announcement
-                isDark={isDark}
-                onDismiss={() => setPhotoNoticeDismissed(true)}
-              >
-                We use high-quality sample photos to represent our services — the professional standard shown is exactly what you receive.
-              </NoticePill>
-            </div>
-          </ScrollBounce>
-        )}
-
         <ScrollBounce delay={0.1}>
           <div className="relative mx-auto mb-8 flex w-full max-w-md justify-center">
             <ExpandingSearch
@@ -431,18 +349,13 @@ function GalleryPageInner() {
         ) : (
           <ScrollBounce>
             <div className="max-w-6xl mx-auto">
-              {activeFilter === "all" ? (
-                <GroupedProjectGrid
-                  projects={visibleProjects}
-                  likedIds={likedIds}
-                  onToggleLike={toggleLike}
-                  onSelect={setSelectedProject}
-                  pathname={pathname}
-                  getAccent={getAccent}
-                />
-              ) : (
-                <ProjectGrid projects={visibleProjects} likedIds={likedIds} onToggleLike={toggleLike} onSelect={setSelectedProject} pathname={pathname} />
-              )}
+              <ProjectGrid
+                projects={visibleProjects}
+                likedIds={likedIds}
+                onToggleLike={toggleLike}
+                onSelect={setSelectedProject}
+                pathname={pathname}
+              />
             </div>
           </ScrollBounce>
         )}

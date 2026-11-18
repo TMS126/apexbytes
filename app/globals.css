@@ -788,9 +788,7 @@ footer {
 }
 
 @media (min-width: 1280px) {
-  header:hover,
-  header:focus-within,
-  header[data-nav-scrolled="true"] {
+  header[data-nav-visible="true"][data-nav-scrolled="true"] {
     background-color: var(--glass-tint) !important;
     border-bottom-color: var(--glass-border) !important;
     box-shadow: var(--glass-shadow) !important;
@@ -809,6 +807,15 @@ select:focus, select:focus-visible {
 
 button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
+}
+
+.abh-close-chip:hover,
+button[aria-label^="Close"]:hover {
+  color: #fff !important;
+  background: #dc2626 !important;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .abh-close-chip { transition: background-color 140ms ease, color 140ms ease, transform 140ms ease; }
 }
 
 @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }
@@ -911,13 +918,6 @@ button, a, [role="button"] {
     padding-bottom: 3rem;
   }
 
-  .abh-quote-calculator :is(.text-xs, .text-sm),
-  .abh-quote-calculator [class*="text-[0.7"],
-  .abh-quote-calculator [class*="text-[0.8"],
-  .abh-quote-calculator [class*="text-[0.9"] {
-    font-size: 1.125rem !important;
-    line-height: 1.45 !important;
-  }
 
   body:has([role="dialog"]:not([aria-hidden="true"])) .abh-page-notice-bell {
     display: none !important;
@@ -955,6 +955,9 @@ button, a, [role="button"] {
   }
 
   .abh-page-title {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
     @apply font-heading font-medium tracking-tight text-center;
     color: var(--title-color);
     width: 100%;
@@ -1172,8 +1175,6 @@ button, a, [role="button"] {
   .abh-notice-header .abh-divider { margin-top: .15rem; }
 
   .abh-quote-calculator { font-size: 1rem; }
-  .abh-quote-calculator .text-\[0\.78rem\],
-  .abh-quote-calculator .text-\[0\.9rem\] { font-size: 1rem; }
 
   .abh-wa-btn {
     @apply font-sans flex items-center justify-center gap-2 font-medium text-base transition-all duration-200 active:scale-95;

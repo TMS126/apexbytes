@@ -347,7 +347,7 @@ export function HubBrowser({
                               <div
                                 className={cn(
                                   "group relative ml-6 flex items-center gap-2 rounded-[12px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
-                                  itemQty > 0 && "border-l-2 border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_9%,transparent)]"
+                                  itemQty > 0 && "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >

@@ -116,6 +116,7 @@ export function Navbar() {
     <>
       <header
         data-nav-scrolled={hasScrolled ? "true" : "false"}
+        data-nav-visible={navVisible && !menuOpen ? "true" : "false"}
         className={cn(
           "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-transparent bg-transparent pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out",
           !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",

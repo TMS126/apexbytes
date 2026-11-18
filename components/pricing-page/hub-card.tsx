@@ -158,7 +158,7 @@ export function HubCompactCard({
         className="h-full w-full rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.98] flex flex-col items-center justify-center gap-2"
       >
         <HubIcon id={hubId} size={34} weight="fill" color={hubColor} />
-          <span className="text-lg font-medium" style={{ color: hubColor }}>{hub.title}</span>
+          <span className="relative pb-1 text-lg font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-current" style={{ color: hubColor }}>{hub.title}</span>
       </button>
     )
   }

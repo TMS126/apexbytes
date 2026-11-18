@@ -70,7 +70,7 @@ export function LikeButton({ liked, onToggle, context = "header" }: {
       <Heart
         key={liked ? "liked" : "unliked"}
         size={16}
-        weight={liked ? "fill" : "bold"}
+        weight={liked ? "fill" : "regular"}
         className={cn(
           "animate-in zoom-in-50 duration-300",
           liked ? "text-red-600 dark:text-red-400" : context === "card" ? "text-white" : ""

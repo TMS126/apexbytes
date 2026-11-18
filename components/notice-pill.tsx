@@ -146,7 +146,7 @@ export function NoticePill({
                 onClick={(event) => event.stopPropagation()}
                 onTouchStart={(event) => { swipeStart.current = event.touches[0]?.clientX ?? null }}
                 onTouchEnd={(event) => { const start = swipeStart.current; swipeStart.current = null; if (start !== null && Math.abs((event.changedTouches[0]?.clientX ?? start) - start) > 70) close() }}
-                className="transform-gpu will-change-transform relative max-h-[80vh] w-full max-w-[980px] overflow-y-auto rounded-[14px] bg-[var(--surface-modal)] px-5 py-6 md:px-8 md:py-8"
+                className="transform-gpu will-change-transform relative w-full max-w-[980px] rounded-[14px] bg-[var(--surface-modal)] px-5 py-6 md:px-8 md:py-8"
                 style={{
                   boxShadow: "0 16px 38px -18px rgba(0,0,0,0.42), 0 5px 14px -8px rgba(0,0,0,0.24)",
                 }}

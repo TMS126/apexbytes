@@ -36,21 +36,21 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         </span>
         <h1 className="abh-page-title mb-5">{service.name}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{service.desc || `Professional ${service.name.toLowerCase()} from the ${hub.title}.`}</p>
-        <button
-          type="button"
-          onClick={() => setRequestOpen(true)}
-          className="abh-service-request-cta mt-6 inline-flex min-h-12 items-center gap-2 rounded-full px-6 py-3 text-base font-semibold transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          Request this service
-          <ArrowUpRight size={17} aria-hidden="true" />
-        </button>
         <div className="abh-divider" />
         <EditorialScrollCue />
       </header>
 
-      <div id="service-actions" className="mx-auto flex max-w-[1080px] flex-wrap items-center justify-center gap-x-7 gap-y-3 px-4 py-12 md:px-8">
+      <div id="service-actions" className="mx-auto flex max-w-[1080px] flex-wrap items-center justify-center gap-x-6 gap-y-3 px-4 py-10 md:px-8">
         <span className="font-heading text-3xl font-medium tracking-tight md:text-4xl" style={{ color: accent }}>{service.price}</span>
         <span className="inline-flex items-center gap-2 text-sm text-muted-foreground"><Clock size={16} aria-hidden="true" />{turnaround}</span>
+        <button
+          type="button"
+          onClick={() => setRequestOpen(true)}
+          className="abh-service-request-cta inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Request this service
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </button>
       </div>
 
       <div id="service-details" className="mx-auto grid max-w-[1080px] scroll-mt-24 gap-5 px-4 md:grid-cols-2 md:px-8">

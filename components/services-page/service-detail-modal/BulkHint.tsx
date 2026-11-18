@@ -16,7 +16,7 @@ export function BulkHint({
 }) {
   // Keep both halves on explicit token pairings: the previous soft tint could
   // resolve to a dark surface while retaining a dark foreground in dark mode.
-  const labelTextColor = "var(--on-brand-blue)"
+  const labelTextColor = "var(--background)"
   const hintBackground = "var(--bulk-hint-bg)"
   const hintTextColor = "var(--bulk-hint-text)"
 
@@ -25,7 +25,7 @@ export function BulkHint({
       <div className="inline-flex items-stretch rounded-full overflow-hidden shadow-sm">
         <span
           className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[0.65rem] font-medium uppercase tracking-wider whitespace-nowrap"
-          style={{ backgroundColor: accent, color: labelTextColor }}
+          style={{ backgroundColor: "var(--foreground)", color: labelTextColor }}
         >
           <Tag size={11} weight="fill" aria-hidden="true" />
           {label}

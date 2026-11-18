@@ -3,7 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { X, CaretLeft, CaretRight, ArrowsLeftRight, WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react"
+import { X, CaretLeft, CaretRight, ArrowsLeftRight, WhatsappLogo, EnvelopeSimple, Check, Sun, Moon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ } from "@/lib/brand"
@@ -118,15 +118,9 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
       </section>
 
       <section className="border-y border-border py-7" aria-labelledby="project-takeaway-title">
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Key takeaway</p>
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project outcome</p>
         <h3 id="project-takeaway-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">Useful, clear, and ready to use.</h3>
         <ExpandableText text={project.result} accent={accent} />
-      </section>
-
-      <section aria-labelledby="project-summary-title">
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Summary</p>
-        <h3 id="project-summary-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">A practical result for the client.</h3>
-        <p className="text-base leading-7 text-muted-foreground">{project.result}</p>
       </section>
     </div>
   )
@@ -318,6 +312,8 @@ function DesktopImageStack({
 }
 
 function ProjectHeader({ project, accent, onClose }: { project: ProjectData; accent: string; onClose: () => void }) {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   return (
     <div className="flex items-start justify-between gap-3 px-6 md:px-8 pt-8 pb-4">
       <div className="min-w-0">
@@ -333,15 +329,25 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
           <span>{project.clientType ? CLIENT_TYPE_LABEL[project.clientType] : "Project"}</span>
         </div>
       </div>
-      <button
-        onClick={onClose}
-        title="Close project"
-        aria-label="Close project"
-        className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-muted-foreground dark:text-muted-foreground transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
-      >
-        <X size={16} weight="bold" />
-      </button>
+      <div className="flex shrink-0 items-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => setTheme(isDark ? "light" : "dark")}
+          aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+          className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          {isDark ? <Moon size={16} weight="fill" /> : <Sun size={16} weight="fill" />}
+        </button>
+        <button
+          onClick={onClose}
+          title="Close project"
+          aria-label="Close project"
+          className="abh-close-chip flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
+        >
+          <X size={16} weight="bold" />
+        </button>
+      </div>
     </div>
   )
 }
@@ -554,7 +560,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
         </div>
       ) : (
         <>
-          <div className="hidden bg-card md:flex md:w-1/3 md:h-full md:shrink-0 md:flex-col md:min-h-0">
+          <div className={cn("hidden bg-card md:flex md:h-full md:shrink-0 md:flex-col md:min-h-0", hasSiblings ? "md:w-1/3" : "md:w-1/2")}>
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
@@ -574,7 +580,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             </div>
           </div>
 
-          <div className="hidden border-l border-border bg-background md:flex md:w-1/3 md:h-full md:flex-col md:min-h-0">
+          <div className={cn("hidden border-l border-border bg-background md:flex md:h-full md:flex-col md:min-h-0", hasSiblings ? "md:w-1/3" : "md:w-1/2 md:flex-1")}>
             <div className="shrink-0 w-full max-w-2xl px-6 md:px-8 pt-6">
               <ProjectHeader project={project} accent={accent} onClose={onClose} />
               <DesktopActionRow
@@ -594,7 +600,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
               </div>
               <div className="h-28" aria-hidden="true" />
             </div>
-            <FloatingCTAPill project={project} onClose={onClose} accent={accent} visible={actionsVisible} desktop />
+            <FloatingCTAPill project={project} onClose={onClose} accent={accent} visible desktop />
           </div>
           <OtherProjectsPanel siblings={siblings} currentId={project.id} accent={accent} onSelect={onNavigate} compact />
         </>

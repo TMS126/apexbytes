@@ -77,6 +77,13 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
     category: "Portfolio",
     header: "Examples of our work",
     body: "This gallery brings together client work, samples, and practice projects to show the kinds of design and print work we can help with.",
+  }, {
+    id: "gallery-photo-note",
+    variant: "info",
+    Icon: ImageIcon,
+    category: "Photography",
+    header: "A note on our photos",
+    body: "We use high-quality sample photos to represent our services — the professional standard shown is exactly what you receive.",
   }],
   contact: [{
     id: "contact-before-visit",
@@ -251,7 +258,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.98 }}
               transition={{ duration: 0.16, ease: "easeOut" }}
-              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] max-h-[min(70svh,36rem)] w-[min(24rem,calc(100vw-1.5rem))] overflow-y-auto rounded-2xl border border-border/80 bg-background p-4 shadow-xl md:right-5"
+              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] w-[min(26rem,calc(100vw-1.5rem))] rounded-2xl border border-border/80 bg-background p-4 shadow-xl md:right-5"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
