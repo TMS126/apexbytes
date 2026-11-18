@@ -58,7 +58,7 @@ export function HowItWorks() {
                       style={{ backgroundColor: `${TOKEN.orangeText}18`, color: TOKEN.orangeText }}
                       aria-hidden="true"
                     >
-                      {index + 1}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
                   </div>
 
