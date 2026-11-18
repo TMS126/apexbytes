@@ -84,9 +84,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
-          <div className="pointer-events-none fixed inset-y-0 right-3 z-[9992] flex flex-col items-end justify-center gap-2 md:right-5">
+          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 11rem)" }}>
             <FloatingSearchWidget />
+          </div>
+          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 6.5rem)" }}>
             <QuoteCalculatorWidget />
+          </div>
+          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 1.5rem)" }}>
             <WhatsAppFAB />
           </div>
         </ThemeProvider>

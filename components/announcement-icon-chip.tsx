@@ -4,7 +4,7 @@ import { Bell } from "@phosphor-icons/react"
 
 export function AnnouncementIconChip({ unread = true }: { unread?: boolean }) {
   return (
-    <span className="relative inline-flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[transform,filter,color] duration-150 hover:-translate-y-0.5 hover:drop-shadow-[0_5px_8px_color-mix(in_srgb,var(--foreground)_28%,transparent)]">
+    <span className="relative inline-flex size-11 items-center justify-center text-foreground">
       <Bell size={24} weight="regular" aria-hidden="true" />
       {unread && (
         <span

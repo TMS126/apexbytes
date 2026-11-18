@@ -3,6 +3,7 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { PageScrollControls } from "@/components/page-scroll-controls"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
@@ -81,6 +82,7 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <PageNoticeBell page="jpg-to-pdf" />
       
       <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
         {/* HERO HEADER */}

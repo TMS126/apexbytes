@@ -9,8 +9,6 @@ import { getBusinessStatus, type BusinessStatus } from "@/lib/sa-time"
 import { getWeatherSnapshot, type WeatherCategory } from "@/lib/weather"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 import { HomeServiceMarquee } from "@/components/home-service-marquee"
-import { HomeNoticeStack } from "@/components/home-notice-stack"
-import { HOME_NOTICES } from "@/lib/home-notices"
 
 const HERO_SUBHEAD = "Friendly print, design and tech support in Bothaville."
 
@@ -73,7 +71,6 @@ export function HeroSection() {
               Tech, Design &amp; E-Service are closed today for {status.holidayName} — Print &amp; Docu is open as usual
             </span>
           )}
-          <HomeNoticeStack notices={HOME_NOTICES} className="-translate-y-3 mb-8" />
           <p className="mb-4 font-heading text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
           <h1 className="abh-home-title font-extrabold text-foreground">
             <span className="block">Design. Print. Upgrade.</span>
