@@ -905,6 +905,24 @@ button, a, [role="button"] {
     color: var(--background);
   }
 
+  .abh-editorial-hero.abh-service-detail-hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-h, 74px) + 2rem);
+    padding-bottom: 3rem;
+  }
+
+  .abh-quote-calculator :is(.text-xs, .text-sm),
+  .abh-quote-calculator [class*="text-[0.7"],
+  .abh-quote-calculator [class*="text-[0.8"],
+  .abh-quote-calculator [class*="text-[0.9"] {
+    font-size: 1.125rem !important;
+    line-height: 1.45 !important;
+  }
+
+  body:has([role="dialog"]:not([aria-hidden="true"])) .abh-page-notice-bell {
+    display: none !important;
+  }
+
   .abh-scroll-cue {
     border: 0 !important;
     border-radius: 0 !important;

@@ -31,6 +31,9 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
 
   useEffect(() => {
     if (!menuOpen) return
+    const html = document.documentElement
+    const previousScrollLock = html.getAttribute("data-scroll-locked")
+    html.setAttribute("data-scroll-locked", "true")
     previouslyFocused.current = document.activeElement as HTMLElement
     containerRef.current?.focus()
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,6 +59,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
     document.addEventListener("keydown", handleKeyDown)
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
+      if (previousScrollLock === null) html.removeAttribute("data-scroll-locked")
+      else html.setAttribute("data-scroll-locked", previousScrollLock)
       previouslyFocused.current?.focus?.()
     }
   }, [menuOpen, setMenuOpen])
@@ -69,7 +74,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       aria-hidden={!menuOpen}
       tabIndex={-1}
       className={cn(
-        "fixed inset-0 z-[9998] md:hidden transition-opacity duration-300 outline-none",
+        "fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain md:hidden transition-opacity duration-300 outline-none",
         menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
     >
@@ -79,7 +84,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
+      <div className="relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 py-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         <nav className="flex w-full max-w-[380px] flex-col items-center gap-4" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
             const isActive =

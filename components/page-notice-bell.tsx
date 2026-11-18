@@ -130,28 +130,35 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
   }],
 }
 
-function NoticeCard({ notice }: { notice: HomeNotice }) {
+function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id: string) => void }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
     <article className="rounded-xl border border-border/70 bg-card/55 px-4 py-3.5">
       <div className="flex items-start gap-3">
         <notice.Icon size={19} weight="bold" style={{ color }} className="mt-0.5 shrink-0" aria-hidden="true" />
         <div className="flex min-w-0 flex-col gap-1">
-          <h3 className="text-xs font-semibold uppercase tracking-[0.12em]" style={{ color }}>
+          <h3 className="text-sm font-semibold uppercase tracking-[0.12em]" style={{ color }}>
             {notice.header}
           </h3>
-          {notice.date && <p className="text-xs font-medium text-muted-foreground">{notice.date}</p>}
-          <p className="text-sm leading-relaxed text-foreground/90">{notice.body}</p>
+          {notice.date && <p className="text-sm font-medium text-muted-foreground">{notice.date}</p>}
+          <p className="text-base leading-relaxed text-foreground/90">{notice.body}</p>
           {notice.sourceUrl && notice.sourceLabel && (
             <a
               href={notice.sourceUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-1 w-fit text-xs text-muted-foreground underline decoration-dotted underline-offset-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="mt-1 w-fit text-sm text-muted-foreground underline decoration-dotted underline-offset-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Source: {notice.sourceLabel}
             </a>
           )}
+          <button
+            type="button"
+            onClick={() => onDismiss(notice.id)}
+            className="mt-2 w-fit text-sm font-medium text-foreground underline underline-offset-4 hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Dismiss this update
+          </button>
         </div>
       </div>
     </article>
@@ -162,12 +169,14 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
   const notices = page === "home" ? HOME_NOTICES : PAGE_NOTICES[page]
   const [open, setOpen] = useState(false)
   const [unread, setUnread] = useState(true)
+  const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => new Set())
+  const visibleNotices = notices.filter((notice) => !dismissedIds.has(notice.id))
   const buttonRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const titleId = useId()
   const panelId = useId()
 
-  const groups = notices.reduce<Array<{ label: string; notices: HomeNotice[] }>>((result, notice) => {
+  const groups = visibleNotices.reduce<Array<{ label: string; notices: HomeNotice[] }>>((result, notice) => {
     const label = notice.category ?? VARIANT_LABEL[notice.variant]
     const group = result.find((item) => item.label === label)
     if (group) group.notices.push(notice)
@@ -195,7 +204,17 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
     }
   }, [open])
 
-  if (!notices.length) return null
+  if (!visibleNotices.length) return null
+
+  const dismissNotice = (id: string) => {
+    const next = new Set(dismissedIds)
+    next.add(id)
+    setDismissedIds(next)
+    if (next.size >= notices.length) {
+      setOpen(false)
+      setUnread(false)
+    }
+  }
 
   const toggle = () => {
     const nextOpen = !open
@@ -205,7 +224,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
 
   return (
     <>
-      <div className={cn("fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
+      <div className={cn("abh-page-notice-bell fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
         <button
           ref={buttonRef}
           type="button"
@@ -213,7 +232,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-controls={panelId}
-          aria-label={`Open ${PAGE_LABEL[page]} notifications (${notices.length})`}
+          aria-label={`Open ${PAGE_LABEL[page]} notifications (${visibleNotices.length})`}
           className="flex size-11 items-center justify-center text-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <AnnouncementIconChip unread={unread} />
@@ -236,8 +255,8 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
-                  <h2 id={titleId} className="text-base font-semibold text-foreground">{PAGE_LABEL[page]} notices</h2>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{notices.length} update{notices.length === 1 ? "" : "s"} for this page</p>
+                  <h2 id={titleId} className="text-lg font-semibold text-foreground">{PAGE_LABEL[page]} notices</h2>
+                  <p className="mt-0.5 text-base text-muted-foreground">{visibleNotices.length} update{visibleNotices.length === 1 ? "" : "s"} remaining</p>
                 </div>
                 <button
                   type="button"
@@ -251,9 +270,9 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
               <div className="flex flex-col gap-4">
                 {groups.map((group) => (
                   <section key={group.label} aria-label={group.label}>
-                    <h3 className="mb-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group.label}</h3>
+                    <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group.label}</h3>
                     <div className="flex flex-col gap-2">
-                      {group.notices.map((notice) => <NoticeCard key={notice.id} notice={notice} />)}
+                      {group.notices.map((notice) => <NoticeCard key={notice.id} notice={notice} onDismiss={dismissNotice} />)}
                     </div>
                   </section>
                 ))}

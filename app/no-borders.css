@@ -44,7 +44,7 @@
     border-color: transparent !important;
   }
 
-  :root:root:root :where(span, div, button, a):has(> svg:only-child) {
+  :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):has(> svg:only-child) {
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -98,11 +98,13 @@
     outline-offset: -2px;
   }
 
-  /* 5. Dark mode fields: black inner shadow only (no white glow, no blue glow). */
-  :root:root.dark :is(input, textarea, select),
-  :root:root.dark :is(input, textarea, select):focus,
-  :root:root.dark :is(input, textarea, select):focus-visible {
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.45) !important;
+  /* 5. Dark mode fields use a single flat surface with no inset box. */
+  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input),
+  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):focus,
+  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):focus-visible {
+    background-color: var(--input) !important;
+    background-image: none !important;
+    box-shadow: none !important;
   }
 
   /* 6. About-page style card: surface + radius + shadow, no left rule. */
