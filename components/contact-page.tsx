@@ -316,7 +316,7 @@ function ContactPageInner() {
         </a>
       </div>
 
-      <BackToTopButton visible={showBackToTop} bottomClass="bottom-24 md:bottom-6" />
+      <BackToTopButton visible={showBackToTop} bottomClass="bottom-[18rem] md:bottom-6" />
     </div>
   )
 }

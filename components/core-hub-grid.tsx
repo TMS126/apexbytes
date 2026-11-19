@@ -15,7 +15,7 @@ export function CoreHubGrid() {
       <div className="max-w-[1240px] mx-auto">
         <ScrollBounce>
           <div className="mb-8 max-w-2xl text-left md:mb-10">
-            <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">A clear place to start</p>
+            <p className="abh-eyebrow mb-3">A clear place to start</p>
             <h2 id="core-hubs-title" className="abh-section-heading mt-0 text-left">
               What we can help with
             </h2>

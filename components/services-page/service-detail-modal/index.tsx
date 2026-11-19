@@ -324,7 +324,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
               className="absolute block text-center text-[0.66rem] font-medium uppercase"
               style={{
 top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
-                    backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", padding: "6px 0",
+                    backgroundColor: "var(--foreground)", color: "var(--background)", padding: "6px 0",
                     boxShadow: "var(--shadow-soft)",
               }}
             >

@@ -258,7 +258,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -4, scale: 0.98 }}
               transition={{ duration: 0.16, ease: "easeOut" }}
-              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] w-[min(26rem,calc(100vw-1.5rem))] rounded-2xl border border-border/80 bg-background p-4 shadow-xl md:right-5"
+              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] w-[min(26rem,calc(100vw-1.5rem))] rounded-[14px] border border-border/80 bg-background p-4 shadow-xl md:right-5"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>

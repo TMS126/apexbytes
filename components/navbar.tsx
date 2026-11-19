@@ -182,8 +182,8 @@ export function Navbar() {
                       href={item.path}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors hover:bg-muted hover:text-foreground",
-                        active ? "font-semibold text-foreground" : "font-semibold text-muted-foreground"
+                        "relative whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:bg-current after:transition-transform hover:bg-muted hover:text-foreground",
+                        active ? "font-semibold text-foreground after:scale-x-100" : "font-semibold text-muted-foreground after:scale-x-0 hover:after:scale-x-100"
                       )}
                     >
                       {item.label}
@@ -196,7 +196,7 @@ export function Navbar() {
                         onMouseLeave={closeSubmenuSoon}
                       >
                         {submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path ? "page" : undefined} className="rounded-[14px] px-4 py-3 text-[0.95rem] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("rounded-[14px] px-4 py-3 text-[0.95rem] transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold text-foreground" : "text-muted-foreground")}>
                             {subitem.label}
                           </Link>
                         ))}
@@ -266,7 +266,7 @@ export function Navbar() {
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
                 </button>
-                <Link href="/contact" className="rounded-[14px] px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-background">Let&apos;s Talk</Link>
+                <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={cn("rounded-[14px] px-4 py-2 text-sm font-medium transition-colors hover:bg-background", pathname === "/contact" ? "bg-background text-brand-blue" : "text-foreground")}>Let&apos;s Talk</Link>
               </div>
             </div>
           </div>

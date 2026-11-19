@@ -148,8 +148,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                           key={subitem.path}
                           href={subitem.path}
                           tabIndex={menuOpen ? 0 : -1}
-                          aria-current={pathname === subitem.path ? "page" : undefined}
-                          className="w-full rounded-[14px] px-5 py-3 text-center text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground"
+                          aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined}
+                          className={cn("w-full rounded-[14px] px-5 py-3 text-center text-base text-foreground transition-colors hover:bg-muted hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold" : "font-medium")}
                         >
                           {subitem.label}
                         </Link>

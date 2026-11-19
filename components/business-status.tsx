@@ -185,7 +185,7 @@ export function BusinessStatusFull() {
           </div>
         </div>
         <div className="border-t border-border/70 pt-4">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Current status</p>
+          <p className="abh-eyebrow mb-3">Current status</p>
           <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
             <StatusLine status={printDoc} />
             <StatusLine status={techEtc} />

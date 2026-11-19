@@ -14,7 +14,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
   const isDark = resolvedTheme === "dark"
   const [query, setQuery] = useState("")
   const [focused, setFocused] = useState(false)
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(true)
   const index = useMemo(() => buildSearchIndex(), [])
 
   const results = useMemo(() => {

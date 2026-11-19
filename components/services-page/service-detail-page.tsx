@@ -1,6 +1,5 @@
 "use client"
 
-import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState } from "react"
 import Link from "next/link"
 import { ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
@@ -31,13 +30,12 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
           </span>
           <ArrowLeft size={15} aria-hidden="true" style={{ color: accent }} />
         </Link>
-        <span className="mb-2 inline-flex items-center text-xs font-medium uppercase tracking-[0.18em]" style={{ color: accent }}>
+        <span className="abh-eyebrow mb-2" style={{ color: accent }}>
           {hub.title}
         </span>
         <h1 className="abh-page-title mb-5">{service.name}</h1>
         <p className="abh-tagline max-w-2xl text-base md:text-lg">{service.desc || `Professional ${service.name.toLowerCase()} from the ${hub.title}.`}</p>
         <div className="abh-divider" />
-        <EditorialScrollCue />
       </header>
 
       <div id="service-actions" className="mx-auto flex max-w-[1080px] flex-wrap items-center justify-center gap-x-6 gap-y-3 px-4 py-10 md:px-8">
@@ -46,7 +44,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         <button
           type="button"
           onClick={() => setRequestOpen(true)}
-          className="abh-service-request-cta inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="abh-service-request-cta inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-[color,background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Request this service
           <ArrowUpRight size={16} aria-hidden="true" />
@@ -55,7 +53,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
 
       <div id="service-details" className="mx-auto grid max-w-[1080px] scroll-mt-24 gap-5 px-4 md:grid-cols-2 md:px-8">
         <section className="abh-service-info-card abh-card-rule p-6 md:p-8" aria-labelledby="service-requirements">
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Before you visit</p>
+          <p className="abh-eyebrow mb-3">Before you visit</p>
           <h2 id="service-requirements" className="font-heading text-2xl font-medium tracking-tight text-foreground">What to bring</h2>
           <ul className="mt-6 flex flex-col gap-3">
             {(service.requirements.length ? service.requirements : ["Bring your file, document or USB drive — we’ll guide you through the rest."]).map((requirement) => (
@@ -68,9 +66,9 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         </section>
 
         <section className="abh-service-info-card abh-card-rule p-6 md:p-8" aria-labelledby="service-overview">
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Service overview</p>
+          <p className="abh-eyebrow mb-3">Service overview</p>
           <h2 id="service-overview" className="font-heading text-2xl font-medium tracking-tight text-foreground">How it works</h2>
-          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">{service.desc || `Visit ApexbytesHub in ${hub.title} to get help with ${service.name.toLowerCase()}. We’ll confirm your requirements and price before getting started.`}</p>
+          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">Bring the listed items and we&apos;ll walk through {service.name.toLowerCase()} with you. We&apos;ll confirm the details before getting started. Typical turnaround: {turnaround}.</p>
           {service.tips?.length ? (
             <div className="mt-6 border-t border-border/60 pt-5">
               <h3 className="text-sm font-medium text-foreground">Helpful tips</h3>
@@ -96,7 +94,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
               <Link
                 key={item.name}
                 href={serviceRouteFor(service.hubId, service.sectionTitle, item.name)}
-                className="group inline-flex items-center rounded-full px-3 py-1.5 text-sm text-muted-foreground transition-[background-color,color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:bg-card hover:text-foreground hover:shadow-[var(--shadow-card-lift)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--line-rule)]/50"
+                className="group inline-flex items-center rounded-[14px] px-3 py-1.5 text-sm text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--line-rule)]/50"
               >
                 <span>{item.name}</span>
                 <span className="ml-1.5 text-xs opacity-0 transition-opacity group-hover:opacity-100" style={{ color: accent }}>↗</span>

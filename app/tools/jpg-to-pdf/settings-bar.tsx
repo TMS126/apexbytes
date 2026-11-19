@@ -142,7 +142,7 @@ export function SettingsBar({
   ]
 
   return (
-    <div className="flex flex-col rounded-[18px] border border-border/70 bg-card p-4 shadow-[var(--shadow-card-lift)] md:p-5">
+    <div className="flex flex-col rounded-[14px] border border-border/70 bg-card p-4 shadow-[var(--shadow-card-lift)] md:p-5">
       <section aria-labelledby="pdf-output-heading" className="pb-5">
         <button
           type="button"

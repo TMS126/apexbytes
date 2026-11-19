@@ -9,13 +9,7 @@ import { ScrollBounce } from "@/components/scroll-bounce"
 // Card minimization: DROPPED. This was a singleton CTA banner in an
 // abh-card — nothing else on the page looks like it. Plain spacing + a
 // soft background tint now, no border/shadow shell.
-export function AboutMission({
-  missionBadgeBg,
-  missionBadgeText,
-}: {
-  missionBadgeBg: string
-  missionBadgeText: string
-}) {
+export function AboutMission() {
   return (
     <section
       className="px-4 md:px-8 py-16 md:py-20 text-center relative overflow-hidden transition-colors duration-300"
@@ -26,7 +20,7 @@ export function AboutMission({
       <div className="absolute bottom-0 left-0 w-56 h-56 bg-brand-blue rounded-full blur-[100px] opacity-[0.06] -ml-28 -mb-28" aria-hidden="true" />
 
       <ScrollBounce className="max-w-[750px] mx-auto relative z-10">
-        <span className="abh-eyebrow px-4 py-1.5 rounded-full mb-6 inline-block" style={{ backgroundColor: missionBadgeBg, color: missionBadgeText }}>
+        <span className="abh-eyebrow mb-6">
           Our Mission
         </span>
 
@@ -39,15 +33,15 @@ export function AboutMission({
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/services" className="abh-identity-btn abh-mission-cta w-full sm:w-64 justify-center px-8 py-3.5 font-medium">
+          <Link href="/services" className="abh-site-cta w-full sm:w-64 justify-center px-8 py-3.5 font-medium">
             See All Services
-            <ArrowRight size={16} weight="bold" />
+            <ArrowRight size={16} weight="regular" />
           </Link>
           <Link
             href="/contact"
-            className="abh-identity-btn abh-mission-cta-secondary w-full sm:w-64 justify-center px-8 py-3.5 font-medium"
+            className="abh-site-cta w-full sm:w-64 justify-center px-8 py-3.5 font-medium"
           >
-            <EnvelopeSimple size={16} weight="bold" />
+            <EnvelopeSimple size={16} weight="regular" />
             Get in Touch
           </Link>
         </div>

@@ -50,7 +50,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
       {/* ── Icon, cropped by the right edge ─────────────────── */}
       <Icon
         size={180}
-        weight="fill"
+        weight="regular"
         aria-hidden="true"
         className={cn(
           "pointer-events-none absolute -right-10 top-1/2 -translate-y-[58%] transform-gpu",

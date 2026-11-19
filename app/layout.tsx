@@ -72,7 +72,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       suppressHydrationWarning
       className={`${dmSans.variable} ${poppins.variable}`}
     >
-      <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-[17.5px] leading-relaxed">
+      <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-base leading-relaxed">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[99999] focus:px-4 focus:py-2 focus:bg-background focus:text-brand-blue focus:font-medium focus:rounded-lg focus:shadow-lg focus:outline-none">
           Skip to main content
         </a>

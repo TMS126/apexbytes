@@ -201,7 +201,7 @@ function MobileImageViewer({
   return (
     <div className="flex gap-2 px-3">
       <div
-        className="relative flex-1 aspect-[4/3] max-h-[380px] rounded-[16px] overflow-hidden cursor-zoom-in"
+        className="relative flex-1 aspect-[4/3] max-h-[380px] rounded-[14px] overflow-hidden cursor-zoom-in"
         onClick={() => onOpenZoom(activeIdx)}
       >
         <SafeImage
@@ -528,7 +528,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
               {beforeAfterToggle}
               {comparing && hasBA ? (
                 <div className="px-3">
-                  <div className="relative aspect-[4/3] max-h-[380px] rounded-[16px] overflow-hidden">
+                  <div className="relative aspect-[4/3] max-h-[380px] rounded-[14px] overflow-hidden">
                     <BeforeAfterSlider before={beforeImg!} after={afterImg!} accent={accent} />
                   </div>
                 </div>
@@ -564,7 +564,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
-                <div className="relative w-full h-full rounded-[16px] overflow-hidden">
+                <div className="relative w-full h-full rounded-[14px] overflow-hidden">
                   <BeforeAfterSlider before={beforeImg!} after={afterImg!} accent={accent} />
                 </div>
               ) : (

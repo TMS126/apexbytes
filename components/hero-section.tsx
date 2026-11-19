@@ -56,7 +56,7 @@ export function HeroSection() {
   const showHolidayBanner = mounted && status?.isHoliday
   const displayCategory = weatherCategory ?? (status ? fallbackCategory(status.greeting) : "clear-day")
   const { Icon: WeatherIcon, color: weatherIconColor } = WEATHER_ICON_MAP[displayCategory]
-  const heroCtaClass = "group/hero-cta relative inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-base font-bold text-foreground transition-colors hover:text-brand-blue focus-visible:outline-none sm:w-[170px]"
+  const heroCtaClass = "abh-site-cta group/hero-cta relative inline-flex h-12 w-full items-center justify-center px-7 text-base font-medium focus-visible:outline-none sm:w-[170px]"
 
   return (
     <section
@@ -72,7 +72,7 @@ export function HeroSection() {
             </span>
           )}
           <p className="mb-4 font-heading text-sm font-medium text-muted-foreground md:text-base">{HERO_SUBHEAD}</p>
-          <h1 className="abh-home-title font-extrabold text-foreground">
+          <h1 className="abh-home-title text-foreground">
             <span className="block">Design. Print. Upgrade.</span>
           </h1>
           <p className="mt-5 max-w-xl font-heading text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>
@@ -80,7 +80,7 @@ export function HeroSection() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))}
-              className={`${heroCtaClass} hover:text-brand-orange`}
+              className={heroCtaClass}
             >
               Quote
               <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/hero-cta:scale-x-100 group-focus-visible/hero-cta:scale-x-100" />

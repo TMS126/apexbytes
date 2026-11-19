@@ -115,7 +115,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-[18px] w-14 h-14 shrink-0",
+                  "group relative flex items-center justify-center rounded-[14px] w-14 h-14 shrink-0",
                   "transition-colors duration-150 ease-out",
                   isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item
@@ -170,7 +170,7 @@ export function HubBrowser({
                   aria-expanded={isSelected}
                   aria-controls={`hub-panel-${hubId}`}
                   className={cn(
-                    "group relative flex w-full items-center gap-4 rounded-[20px] px-4 py-3 text-left",
+                    "group relative flex w-full items-center gap-4 rounded-[14px] px-4 py-3 text-left",
                     "transition-colors duration-150 ease-out",
                     isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                     GLASS.item

@@ -129,7 +129,7 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-reference-search input::placeholder,
 .abh-search-input::placeholder,
 input::placeholder,
-textarea::placeholder { color: color-mix(in srgb, var(--muted-foreground) 72%, transparent); opacity: 1; }
+textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
 .abh-reference-search svg { color: currentColor; }
 .abh-reference-search-results { margin-top: .5rem; overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: var(--card); color: var(--foreground); box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 12%, transparent); }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: var(--foreground); transition: background-color 140ms ease; }
@@ -471,7 +471,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --notice-surface: #343852;
   --notice-text: #F1F1EC;
   --pdf-rest: #BFC2CE;
-  --pdf-hover: #FF8A80;
+  --pdf-hover: #B42318;
 
   --brand-whatsapp: #46E47D;
   --brand-whatsapp-dark: #6BE995;
@@ -882,12 +882,15 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-card-rule {
-    border-left: 1px solid var(--card-rule) !important;
-    border-right: 0 !important;
-    border-block: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: var(--card) !important;
+    box-shadow: none;
+  }
+
+  .abh-card:is(a, button, [role="button"], [tabindex="0"]):hover,
+  .abh-card:is(a, button, [role="button"], [tabindex="0"]):focus-visible {
+    box-shadow: var(--shadow-card-lift) !important;
   }
 
   .abh-icon-chip {
@@ -906,13 +909,42 @@ button[aria-label^="Close"]:hover {
 
   .abh-service-info-card {
     min-height: 100%;
-    border-left-width: 2px !important;
   }
 
   .abh-service-request-cta {
     background: var(--foreground);
     color: var(--background);
   }
+  .abh-service-request-cta:hover,
+  .abh-service-request-cta:focus-visible {
+    background: var(--brand-blue);
+    color: #fff;
+  }
+  .dark .abh-service-request-cta:hover,
+  .dark .abh-service-request-cta:focus-visible {
+    background: var(--brand-orange);
+    color: #171717;
+  }
+
+  .abh-site-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    gap: .5rem;
+    border: 0 !important;
+    border-radius: 9999px !important;
+    background: #eceeef;
+    color: #171717;
+    box-shadow: none;
+    transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+  }
+  .dark .abh-site-cta { background: #292c30; color: var(--foreground); }
+  .abh-site-cta:hover,
+  .abh-site-cta:focus-visible { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
+  .dark .abh-site-cta:hover,
+  .dark .abh-site-cta:focus-visible { background: var(--brand-orange); color: #171717; }
+  @media (prefers-reduced-motion: reduce) { .abh-site-cta { transition: none; } }
 
   .abh-editorial-hero.abh-service-detail-hero {
     min-height: auto;
@@ -942,11 +974,12 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-home-title {
-  font-family: var(--font-poppins), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(2.15rem, 4vw, 3.65rem);
-    font-weight: 500;
-    letter-spacing: -0.065em;
-    line-height: 1.08;
+    font-family: var(--font-poppins), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(2.35rem, 4.2vw, 3.75rem);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 1.12;
+    text-wrap: balance;
   }
 
   .abh-home-hero {
@@ -960,14 +993,14 @@ button[aria-label^="Close"]:hover {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     filter: none !important;
-    @apply font-heading font-medium tracking-tight text-center;
+    @apply font-heading font-normal tracking-tight text-center;
     color: var(--title-color);
     width: 100%;
-    max-width: 20ch;
+    max-width: 22ch;
     margin-inline: auto;
-    font-size: clamp(2.5rem, 5.6vw, 4.75rem);
-    letter-spacing: -0.06em;
-    line-height: 1.08;
+    font-size: clamp(2.35rem, 4.2vw, 3.75rem);
+    letter-spacing: -0.045em;
+    line-height: 1.12;
     text-wrap: balance;
   }
 
@@ -1041,11 +1074,12 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-section-heading {
-    @apply font-heading font-medium leading-tight;
+    @apply font-heading font-normal leading-tight;
     color: var(--title-color);
-    font-size: clamp(2rem, 3.4vw, 3.25rem);
-    letter-spacing: -0.055em;
+    font-size: clamp(2rem, 3.4vw, 3.25rem) !important;
+    letter-spacing: -0.045em;
     margin-top: 4rem;
+    text-wrap: balance;
   }
 
   .abh-card-heading {
@@ -1054,14 +1088,14 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-eyebrow {
-    @apply inline-flex items-center gap-2 font-sans font-semibold text-[0.68rem] uppercase tracking-[0.18em];
-    color: #0f172a;
+    @apply inline-flex items-center gap-2 font-sans font-medium text-[0.72rem] uppercase tracking-[0.16em];
+    color: var(--muted-foreground);
     background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 0 !important;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
   }
   .abh-eyebrow::before {
     content: "";
@@ -1071,7 +1105,7 @@ button[aria-label^="Close"]:hover {
     background: currentColor;
     opacity: 0.7;
   }
-  .dark .abh-eyebrow { color: #f8fafc; }
+  .dark .abh-eyebrow { color: var(--muted-foreground); }
 
   .abh-btn-label {
     @apply font-sans font-medium text-base;
@@ -1118,10 +1152,15 @@ button[aria-label^="Close"]:hover {
   .abh-shadow-elevated {
     border: 0 !important;
   }
-  .abh-shadow-card:hover,
-  .abh-shadow-contact-card:hover,
-  .abh-shadow-tile:hover {
-    box-shadow: none;
+  a.abh-shadow-card:hover,
+  button.abh-shadow-card:hover,
+  [role="button"].abh-shadow-card:hover,
+  a.abh-shadow-contact-card:hover,
+  button.abh-shadow-contact-card:hover,
+  [tabindex="0"].abh-shadow-tile:hover,
+  a.abh-shadow-tile:hover,
+  button.abh-shadow-tile:hover {
+    box-shadow: var(--shadow-card-lift);
   }
 
   .abh-shadow-modal { box-shadow: var(--shadow-modal); }

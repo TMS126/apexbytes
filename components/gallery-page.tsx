@@ -37,8 +37,6 @@ export function HubFilterCircles({
   getAccent: (id: HubId) => string
   isDark: boolean
 }) {
-  const neutralIconColor = isDark ? "#a1a1aa" : "#71717a"
-
   return (
     <div className="flex items-center justify-center flex-wrap gap-4 overflow-x-auto no-scrollbar px-1 pb-1 md:gap-7">
       <button
@@ -48,18 +46,14 @@ export function HubFilterCircles({
         className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
       >
         <span
-          className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
+          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
           style={{ borderColor: activeFilter === "all" ? TOKEN.orangeText : "transparent" }}
         >
-          <span
-            aria-hidden="true"
-            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-            style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 19%, transparent)` }}
-          />
-          <span className={cn("relative text-[0.8rem] font-medium", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground dark:text-muted-foreground")}>All</span>
+          <span aria-hidden="true" className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100" style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 19%, transparent)` }} />
+          <Funnel size={22} weight="regular" aria-hidden="true" className={cn("relative transition-colors", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground group-hover:text-brand-orange")} />
         </span>
-            <span className={cn("relative text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:text-base", activeFilter === "all" && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--line-rule)]")}>All</span>
-        <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
+        <span className={cn("relative hidden text-[1.1rem] font-medium text-muted-foreground md:block", activeFilter === "all" && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--filter-accent)]")} style={{ ["--filter-accent" as string]: TOKEN.orangeText } as React.CSSProperties}>All</span>
+        <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-colors group-hover:text-foreground md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
       </button>
 
       {ROW_ORDER.map((row) => {
@@ -74,7 +68,7 @@ export function HubFilterCircles({
             className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
           >
             <span
-              className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
+              className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
               style={{ borderColor: isActive ? accent : "transparent" }}
             >
               <span
@@ -82,16 +76,11 @@ export function HubFilterCircles({
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 style={{ backgroundColor: `color-mix(in srgb, ${accent} 19%, transparent)` }}
               />
-              {/* NOTE: HubIcon is hardcoded to weight="fill" in
-                  services-page/shared.tsx right now — "regular unless
-                  selected" needs a `weight` prop added there first. Once
-                  that file's updated, pass weight={isActive ? "fill" : "regular"}
-                  here. */}
-              <span className="relative">
-                <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? accent : neutralIconColor} />
+              <span className={cn("relative text-muted-foreground transition-colors group-hover:text-[var(--filter-accent)]", isActive && "text-[var(--filter-accent)]")} style={{ ["--filter-accent" as string]: accent }}>
+                <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} />
               </span>
             </span>
-            <span className={cn("relative max-w-[64px] truncate text-[0.72rem] font-medium text-muted-foreground dark:text-muted-foreground md:max-w-none md:text-base", isActive && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--line-rule)]")}>{row.short}</span>
+            <span className={cn("relative hidden max-w-[64px] truncate text-[1.1rem] font-medium text-muted-foreground md:block md:max-w-none", isActive && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--filter-accent)]")} style={{ ["--filter-accent" as string]: accent } as React.CSSProperties}>{row.short}</span>
             <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100"><HubIcon id={row.id} size={16} weight="regular" color="currentColor" /></span>
           </button>
         )
@@ -118,7 +107,7 @@ function ProjectCard({
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${p.id}` : `${pathname}?project=${p.id}`
   return (
     <div className="flex flex-col">
-      <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 shadow-sm transition-[box-shadow,transform] duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] focus-within:-translate-y-1 focus-within:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] dark:bg-zinc-900">
+      <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 transition-[box-shadow,transform] duration-200 ease-out hover:shadow-[var(--shadow-card-lift)] focus-within:shadow-[var(--shadow-card-lift)] dark:bg-zinc-900">
         <button
           type="button"
           onClick={() => onSelect(p)}
@@ -179,7 +168,7 @@ function GalleryPageInner() {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
   const [zoomIndex,       setZoomIndex]       = useState<number | null>(null)
   const [searchQuery,     setSearchQuery]     = useState("")
-  const [searchExpanded,  setSearchExpanded]  = useState(false)
+  const [searchExpanded,  setSearchExpanded]  = useState(true)
   const [surpriseFlash,   setSurpriseFlash]   = useState(false)
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const showBackToTop = useBackToTop()
@@ -360,7 +349,7 @@ function GalleryPageInner() {
           </ScrollBounce>
         )}
 
-        <ScrollBounce>
+        <ScrollBounce className="mt-28 md:mt-40">
           <GalleryClosingTagline />
         </ScrollBounce>
       </div>

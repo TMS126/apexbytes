@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowUpRight, CaretDown } from "@phosphor-icons/react/dist/s
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HubIcon } from "./shared"
-import { serviceRouteFor } from "./lib"
+import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "./lib"
 
 export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
   const hub = HUBS[hubId]
@@ -29,7 +29,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
       <div className="mx-auto flex max-w-[1248px] flex-col gap-14 px-4 md:px-8">
         <p className="text-center text-sm text-muted-foreground">{hub.sections.length} service categories · {hub.turnaround}</p>
         {hub.sections.map((section, sectionIndex) => (
-          <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[16px] border border-border/60 bg-card/40">
+          <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[14px] border border-border/60 bg-card/40 transition-shadow hover:shadow-[var(--shadow-card-lift)]">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 transition-colors hover:bg-card/70 [&::-webkit-details-marker]:hidden md:px-6">
               <span className="min-w-0">
                 <span className="mb-1 block text-xs font-medium uppercase tracking-[0.16em]" style={{ color: accent }}>{hub.title}</span>
@@ -49,7 +49,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
                 <li key={item.name}>
                   <Link
                     href={serviceRouteFor(hubId, section.title, item.name)}
-                    className="group flex h-full min-h-48 flex-col rounded-[14px] border border-border/50 bg-card/60 p-5 transition-[transform,background-color,border-color,box-shadow] duration-200 hover:-translate-y-1 hover:border-foreground/20 hover:bg-card hover:shadow-[var(--shadow-card-lift)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="group flex h-full min-h-48 flex-col rounded-[14px] border border-border/50 bg-card/60 p-5 transition-[background-color,border-color,box-shadow] duration-200 hover:border-foreground/20 hover:bg-card hover:shadow-[var(--shadow-card-lift)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <div className="mb-6 flex items-start justify-between gap-4">
                       <span className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">{String(itemIndex + 1).padStart(2, "0")}</span>
@@ -69,7 +69,29 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
             </div>
           </details>
         ))}
+
+        <section className="mt-16 border-t border-border/60 pt-10" aria-labelledby="other-hubs-title">
+          <p className="abh-eyebrow mb-3">Keep exploring</p>
+          <h2 id="other-hubs-title" className="font-heading text-2xl font-medium tracking-tight text-foreground md:text-3xl">Other service hubs</h2>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {HUB_ORDER.filter((otherHubId) => otherHubId !== hubId).map((otherHubId) => {
+              const otherHub = HUBS[otherHubId]
+              return (
+                <Link
+                  key={otherHubId}
+                  href={hubRouteFor(otherHubId)}
+                  className="group inline-flex min-h-11 items-center gap-2 rounded-[14px] border border-border/70 bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-[var(--hub-link-accent)] hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  style={{ ["--hub-link-accent" as string]: HUB_COLORS[otherHubId as HubKey].accentLight }}
+                >
+                  <span className="text-muted-foreground transition-colors group-hover:text-[var(--hub-link-accent)]" aria-hidden="true"><HubIcon id={otherHubId} size={18} weight="regular" /></span>
+                  {otherHub.title}
+                </Link>
+              )
+            })}
+          </div>
+        </section>
       </div>
+
     </main>
   )
 }

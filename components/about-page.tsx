@@ -30,9 +30,6 @@ export function AboutPage() {
   const blueOnCard = ensureAccessible(blueColor, cardBg, 4.5)
   const orangeOnCard = ensureAccessible(orangeColor, cardBg, 4.5)
 
-  const missionBadgeBg = "var(--cta-badge-bg)"
-  const missionBadgeText = "var(--cta-badge-text)"
-
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
       <main className="mx-auto max-w-[1240px] px-4 md:px-8">
@@ -41,7 +38,7 @@ export function AboutPage() {
         <AboutTeam blueColor={blueColor} />
         <AboutStandards neutralColor={neutralColor} />
         <AboutTestimonials />
-        <AboutMission missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
+        <AboutMission />
       </main>
       <BackToTopButton visible={showBackToTop} />
     </div>
