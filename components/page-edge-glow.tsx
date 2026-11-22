@@ -1,7 +1,7 @@
 // components/page-edge-glow.tsx
 "use client"
 
-import { useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { BRAND } from "@/lib/brand"
@@ -23,7 +23,7 @@ const PAGE_GLOW_COLORS: Record<string, GlowColorPair> = {
 export function PageEdgeGlow() {
   const pathname = usePathname()
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
 
   // The pathname key remounts the glow on every route change, replaying the
   // animation on both in-app navigation and direct page loads.

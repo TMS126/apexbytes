@@ -1,15 +1,11 @@
 // components/about/about-standards.tsx
 "use client"
 
-import { useState } from "react"
-import { cn } from "@/lib/utils"
 import { ABOUT_STANDARDS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { renderIcon } from "@/components/about/about-icons"
 
 export function AboutStandards({ neutralColor }: { neutralColor: string }) {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
-
   return (
     <section className="py-14 md:py-16 px-4 md:px-8 bg-zinc-50/60 dark:bg-zinc-900/20 border-t border-zinc-100 dark:border-zinc-800/60" aria-labelledby="standards-title">
       <div className="max-w-[980px] mx-auto">
@@ -25,20 +21,14 @@ export function AboutStandards({ neutralColor }: { neutralColor: string }) {
 
         <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5" aria-label="Standards">
           {ABOUT_STANDARDS.map((item, index) => {
-            const isHovered = hoveredCard === item.id
             return (
               <ScrollBounce key={item.id} delay={index * 0.1}>
                 <li
-                  onMouseEnter={() => setHoveredCard(item.id)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  onFocus={() => setHoveredCard(item.id)}
-                  onBlur={() => setHoveredCard(null)}
-                  tabIndex={0}
-                  className={cn("abh-card abh-card-rule p-6 flex flex-col h-full outline-none transition-all duration-300", isHovered && "-translate-y-1.5")}
+                  className="group abh-card abh-card-rule flex h-full flex-col rounded-[14px] p-6"
                 >
                   <div
-                    className="abh-icon-chip flex h-11 w-11 items-center justify-center mb-5 bg-background shrink-0"
-                    style={{ backgroundColor: `color-mix(in srgb, ${neutralColor} 8%, transparent)`, color: neutralColor }}
+                    className="abh-icon-chip mb-5 flex h-11 w-11 shrink-0 items-center justify-center bg-background text-muted-foreground transition-colors group-hover:text-[var(--about-accent)]"
+                    style={{ ["--about-accent" as string]: neutralColor }}
                     aria-hidden="true"
                   >
                     {renderIcon(item.iconName, "w-5 h-5")}

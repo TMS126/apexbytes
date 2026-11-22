@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { X, Info } from "@phosphor-icons/react"
 import { BIZ } from "@/lib/brand"
@@ -13,7 +14,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
   const containerRef = useRef<HTMLDivElement>(null)
   const BUFFER = 5
   const { theme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
 
 
   const resolveColor = (s: { colorLight: string; colorDark: string }) =>
@@ -87,7 +88,7 @@ export function TermsGateModal({ open, onAgree }: { open: boolean; onAgree: () =
       role="dialog"
       aria-modal="true"
       aria-label="Terms & Service Policies"
-      className="fixed inset-0 z-[99999] flex items-center justify-center bg-white dark:bg-zinc-950 md:bg-black/55 md:dark:bg-black/70 md:p-8 md:backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-white dark:bg-zinc-950 md:bg-black/55 md:dark:bg-black/70 md:p-8 md: animate-in fade-in duration-200"
     >
       <div className="relative flex h-full w-full flex-col overflow-hidden bg-background md:h-[85vh] md:max-w-4xl md:rounded-[14px] md:shadow-2xl animate-in md:zoom-in-95 duration-300">
 

@@ -2,9 +2,8 @@
 "use client"
 
 import { useState } from "react"
-import { CaretDown } from "@phosphor-icons/react"
+import { Minus, Plus } from "@phosphor-icons/react"
 import { FAQS } from "@/lib/brand"
-import { cn } from "@/lib/utils"
 import { ScrollBounce } from "@/components/scroll-bounce"
 // Card minimization: each FAQ was its own bordered/tinted box. The
 // expand/collapse interaction already signals "this is interactive" — a
@@ -35,25 +34,23 @@ export function FAQAccordion() {
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
                     aria-controls={`contact-faq-${index}`}
-                    className="w-full py-4 text-left flex items-center justify-between gap-4 transition-colors"
+                    className="group w-full py-5 text-left flex items-center justify-between gap-4 transition-colors"
                   >
-                    <h4 className="abh-card-heading text-[1.2rem] text-zinc-800 dark:text-zinc-100 leading-snug">
-                      {faq.question}
+                    <h4 className="abh-card-heading flex items-start gap-3 text-[1.2rem] text-zinc-800 dark:text-zinc-100 leading-snug">
+                      <span className="shrink-0 text-[0.72rem] font-medium tracking-[0.18em] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
+                      <span>{faq.question}</span>
                     </h4>
-                    <CaretDown
-                      weight="bold"
-                      aria-hidden="true"
-                      className={cn("w-3.5 h-3.5 shrink-0 text-muted-foreground transition-transform duration-300", isOpen ? "rotate-180" : "rotate-0")}
-                    />
+                    {isOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
                   </button>
                   <div
                     id={`contact-faq-${index}`}
                     role="region"
                     aria-label={faq.question}
                     aria-hidden={!isOpen}
-                    className={cn("grid transition-none sm:transition-[grid-template-rows,opacity] sm:duration-200 sm:ease-out motion-reduce:transition-none", isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0")}
+                    inert={!isOpen}
+                    className={isOpen ? "block" : "hidden"}
                   >
-                    <div className="overflow-hidden">
+                    <div className="min-h-0 overflow-hidden">
                       <div className="pb-5 text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">
                         {faq.answer}
                       </div>

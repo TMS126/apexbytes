@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { PrivacyPage } from "@/components/privacy-page"
+import { PageScrollControls } from "@/components/page-scroll-controls"
 
 export const metadata = {
   title:       "Privacy Policy — ApexbytesHub",
@@ -15,6 +16,7 @@ export default function PrivacyRoute() {
       <div>
         <PrivacyPage />
       </div>
+      <PageScrollControls />
       <Footer />
     </div>
   )

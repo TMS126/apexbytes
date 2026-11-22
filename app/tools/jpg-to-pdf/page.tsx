@@ -2,9 +2,12 @@
 "use client"
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
+import { PageScrollControls } from "@/components/page-scroll-controls"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, Download, Plus } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -20,19 +23,39 @@ import { ReconvertBanner } from "./reconvert-banner"
 import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
 import Link from "next/link"
-import { PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
+import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
+
+const JPG_TO_PDF_HELP = [
+  {
+    question: "How does JPG to PDF work?",
+    answer: "Choose your images or drag them into the upload area. You can reorder, rotate, crop, and select images before downloading one PDF.",
+  },
+  {
+    question: "Are my images uploaded anywhere?",
+    answer: "No. The conversion happens in your browser, so your images stay on your device while you work.",
+  },
+  {
+    question: "Which files can I convert?",
+    answer: "You can use JPG, JPEG, PNG, or WEBP images. Each image can be up to 15 MB, with up to 20 images in one conversion.",
+  },
+  {
+    question: "Can I change the PDF output?",
+    answer: "Yes. After adding images, use the settings bar to choose the page size, image mode, and quality before downloading.",
+  },
+]
 
 export default function JpgToPdfPage() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [zoomId, setZoomId] = useState<string | null>(null)
   const [cropId, setCropId] = useState<string | null>(null)
+  const [openHelpIndex, setOpenHelpIndex] = useState<number | null>(null)
 
-  const [tip] = useState(() => PAGE_TIPS[Math.floor(Math.random() * PAGE_TIPS.length)])
-  const [waPhrase] = useState(() => WHATSAPP_MAGIC_PHRASES[Math.floor(Math.random() * WHATSAPP_MAGIC_PHRASES.length)])
+  const tip = PAGE_TIPS[0]
+  const waPhrase = WHATSAPP_MAGIC_PHRASES[0]
+  const mounted = useMounted()
 
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
   const isDark = mounted && resolvedTheme === "dark"
   const pageBg = isDark ? THEME_HEX.dark.page : THEME_HEX.light.page
   const accentColor = ensureAccessible(isDark ? HEX.dark.adobePdfRed : HEX.light.adobePdfRed, pageBg, 4.5)
@@ -59,17 +82,19 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <PageNoticeBell page="jpg-to-pdf" />
       
       <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
         {/* HERO HEADER */}
-        <section className="abh-editorial-hero w-full">
+        <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+1.5rem)]">
           <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
-            <Link 
+            <Link
               href="/tools"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors mb-6"
+              aria-label="Back to all tools"
+              className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              <CaretLeft size={16} weight="bold" />
-              Back to Tools
+              <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
+              <CaretLeft size={15} weight="bold" aria-hidden="true" />
             </Link>
             
             <div className="flex justify-center mb-5">
@@ -115,7 +140,7 @@ export default function JpgToPdfPage() {
                       }
                     }}
                     aria-label="Upload images: drag and drop, or press Enter to browse"
-                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)] backdrop-blur-md transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)]  transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                       isDragging
                         ? "border-solid bg-primary/8 border-primary"
                         : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"
@@ -138,13 +163,13 @@ export default function JpgToPdfPage() {
                     </h2>
                     
                     <p className="text-sm text-muted-foreground text-center mb-6">
-                      JPG, PNG, or WEBP • Maximum 15 MB each • Up to 20 images
+                      JPG, JPEG, PNG, or WEBP only • Maximum 15 MB each • Up to 20 images
                     </p>
 
                     <input 
                       ref={inputRef} 
                       type="file" 
-accept="image/jpeg,image/png,image/webp"
+accept={ACCEPT_ATTRIBUTE}
                 multiple
                 aria-label="Choose images to convert to PDF"
                 onChange={handleFileInput}
@@ -256,7 +281,7 @@ accept="image/jpeg,image/png,image/webp"
                   <input 
                     ref={inputRef} 
                     type="file" 
-                    accept="image/jpeg,image/png,image/webp" 
+                    accept={ACCEPT_ATTRIBUTE}
                     multiple 
                     onChange={handleFileInput} 
                     className="hidden" 
@@ -316,6 +341,50 @@ accept="image/jpeg,image/png,image/webp"
             )}
           </div>
         </section>
+
+        <section className="w-full px-4 pb-16 md:px-6" aria-labelledby="jpg-to-pdf-help-heading">
+          <div className="mx-auto max-w-2xl">
+            <h2 id="jpg-to-pdf-help-heading" className="abh-section-heading mb-5 text-center">JPG to PDF help</h2>
+            <div className="divide-y divide-border border-y border-border">
+              {JPG_TO_PDF_HELP.map((item, index) => {
+                const isOpen = openHelpIndex === index
+                const contentId = `jpg-to-pdf-help-${index}`
+
+                return (
+                  <div key={item.question}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenHelpIndex((current) => (current === index ? null : index))}
+                      aria-expanded={isOpen}
+                      aria-controls={contentId}
+                      className="flex w-full items-center justify-between gap-4 py-4 text-left text-base font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    >
+                      <span>{item.question}</span>
+                      <CaretDown
+                        size={17}
+                        weight="bold"
+                        aria-hidden="true"
+                        className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <div
+                      id={contentId}
+                      role="region"
+                      aria-label={item.question}
+                      aria-hidden={!isOpen}
+                      inert={!isOpen}
+                      className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* CTA Bar */}
@@ -347,6 +416,7 @@ accept="image/jpeg,image/png,image/webp"
           onClose={() => setCropId(null)}
         />
       )}
+      <PageScrollControls />
     </div>
   )
 }

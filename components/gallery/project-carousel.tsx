@@ -39,9 +39,9 @@ function ProjectCard({
       tabIndex={0}
       onClick={() => onSelect(project)}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(project) } }}
-      className="w-full h-full text-left cursor-pointer"
+      className="group w-full h-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue"
     >
-      <div className="relative w-full h-full rounded-[16px] overflow-hidden shadow-[0_4px_20px_-4px_rgba(0,0,0,0.18),0_2px_8px_-2px_rgba(0,0,0,0.12)] dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.60),0_2px_10px_-2px_rgba(0,0,0,0.45)]">
+      <div className="relative w-full h-full rounded-[14px] overflow-hidden shadow-none transition-shadow duration-200 group-hover:shadow-[var(--shadow-card-lift)] group-focus-visible:shadow-[var(--shadow-card-lift)]">
         <SafeImage src={project.image} alt={project.title} accent={accent} fill sizes="(max-width: 640px) 100vw, 448px" className="object-cover" />
 
         {/* ---- Header bar: hub label + before/after badge ---- */}
@@ -62,7 +62,7 @@ function ProjectCard({
 
         {/* ---- Position indicator (e.g. "2/5") ---- */}
         {position && (
-          <div className="absolute top-2.5 right-2.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md text-white/85 text-[0.74rem] font-medium z-20">
+          <div className="absolute top-2.5 right-2.5 px-2 py-1 rounded-full bg-black/40  text-white/85 text-[0.74rem] font-medium z-20">
             {position}
           </div>
         )}
@@ -72,10 +72,10 @@ function ProjectCard({
              circles sit fully clear of the footer bar instead of
              being overlapped/clipped by it. */}
         <div className="absolute bottom-24 right-3 flex flex-col items-center gap-2 z-30">
-          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
+          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40  flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
             <LikeButton liked={liked} onToggle={onToggleLike} context="card" />
           </div>
-          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
+          <div onClick={(e) => e.stopPropagation()} className="w-9 h-9 rounded-full bg-black/40  flex items-center justify-center [&_svg]:text-white [&_svg]:w-4 [&_svg]:h-4">
             <ShareButton url={shareUrl} title={project.title} />
           </div>
         </div>

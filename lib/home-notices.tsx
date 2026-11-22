@@ -2,7 +2,7 @@
 // Homepage notices. Keep only time-sensitive updates that are supported by
 // a current official source. Re-verify dates before changing this file.
 import { Info } from "@phosphor-icons/react"
-import type { HomeNotice } from "@/components/home-notice-stack"
+import type { HomeNotice } from "@/components/page-notice-bell"
 
 export const HOME_NOTICES: HomeNotice[] = [
   {

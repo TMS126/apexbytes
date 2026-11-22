@@ -2,9 +2,10 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { CaretDown } from "@phosphor-icons/react"
-import { BRAND, TOKEN } from "@/lib/brand"
+import { TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { FORM_HUB_KEYS, getFormHubColor } from "@/lib/contact-data"
 
@@ -14,7 +15,7 @@ import { FORM_HUB_KEYS, getFormHubColor } from "@/lib/contact-data"
 // leave a stale color stuck if a re-render lands mid-hover.
 export function HubSelect({ value, onChange }: { value: string; onChange: (val: string) => void }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const [hoveredOption, setHoveredOption] = useState<string | null>(null)
   const ref = useRef<HTMLDivElement>(null)
   const { resolvedTheme } = useTheme()
@@ -40,9 +41,9 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Select a service hub"
-        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-border bg-card px-4 py-3 text-[1rem] font-medium text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--card-rule)]/30"
+        className="flex w-full items-center justify-between gap-3 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-[1rem] font-medium text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--form-rule)]/30"
         style={{
-          borderColor: value ? activeColor : (isOpen ? BRAND.blue : undefined),
+          borderColor: "var(--form-rule)",
           color: value ? activeColor : placeholderColor,
         }}
       >

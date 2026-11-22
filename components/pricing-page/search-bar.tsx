@@ -3,36 +3,25 @@
 // flag me if the actual file lives elsewhere and I'll re-anchor.)
 "use client"
 
-import { Broom, MagnifyingGlass } from '@phosphor-icons/react'
+import { useState } from "react"
 import { Check, PlusCircle } from '@phosphor-icons/react'
+import { ExpandingSearch } from '@/components/expanding-search'
 import { HubIcon } from '@/components/services-page/shared'
 import { Result } from './lib'
 
 export function PricingSearchInput({ query, setQuery }: { query: string; setQuery: (v: string) => void }) {
+  const [expanded, setExpanded] = useState(true)
+
   return (
-    <div className="relative mx-auto w-full max-w-[300px]">
-      <div data-hover-border="" className="abh-reference-search">
-        <MagnifyingGlass size={18} weight="regular" className="shrink-0" aria-hidden="true" />
-        <label htmlFor="pricing-search" className="sr-only">Search any service or price</label>
-        <input
-          id="pricing-search"
-          type="text"
-          placeholder="Search any service or price…"
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          className="abh-search-input"
-        />
-        {query && (
-          <button
-            onClick={() => setQuery("")}
-            aria-label="Clear search"
-            className="flex size-7 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <Broom size={15} weight="regular" aria-hidden="true" />
-          </button>
-        )}
-      </div>
-    </div>
+    <ExpandingSearch
+      id="pricing-search"
+      label="Search any service or price"
+      placeholder="Search any service or price…"
+      value={query}
+      expanded={expanded}
+      onChange={setQuery}
+      onExpandedChange={setExpanded}
+    />
   )
 }
 
@@ -52,7 +41,7 @@ export function PricingSearchResults({
       {results.map((r, i) => {
         const key = `${r.hubId}-${r.section}-${r.name}`
         return (
-          <div key={i} className="abh-card flex items-center gap-3 px-4 py-4 transition-shadow duration-200 hover:shadow-md">
+          <div key={i} className="abh-card flex items-center gap-3 px-4 py-4">
             <HubIcon id={r.hubId} size={20} color={r.accent} />
             <div className="min-w-0 flex-1">
               <p className="flex items-center gap-1.5 truncate text-[1.05rem] font-medium text-foreground">

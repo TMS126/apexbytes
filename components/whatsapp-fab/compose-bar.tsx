@@ -20,7 +20,7 @@ interface ComposeBarProps {
 export function ComposeBar({ isValid, shakeKey, onShake, onSend }: ComposeBarProps) {
   return (
     <div className="relative shrink-0 flex items-end gap-2 px-2.5 py-2" style={{ backgroundColor: WA.composeBar }}>
-      <div className="flex-1 flex items-center gap-2 rounded-full px-3 py-2 shadow-sm min-w-0" style={{ backgroundColor: WA.composeField }}>
+      <div className="flex-1 flex items-center gap-2 rounded-[14px] px-3 py-2 shadow-sm min-w-0 font-heading" style={{ backgroundColor: WA.composeField }}>
         <button type="button" onClick={() => onShake("smiley")} aria-label="Emoji" className={cn("shrink-0", shakeKey === "smiley" && "wa-shake")}>
           <Smiley size={20} weight="regular" style={{ color: WA.sub }} />
         </button>

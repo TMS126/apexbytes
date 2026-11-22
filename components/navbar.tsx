@@ -35,6 +35,7 @@ export function Navbar() {
   // render. next-themes resolves the stored theme only after hydration.
   const [mounted, setMounted] = useState(false)
   const [ctaPulse, setCtaPulse] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
   const [activeSubmenu, setActiveSubmenu] = useState<"services" | "tools" | null>(null)
   const submenuTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -46,6 +47,13 @@ export function Navbar() {
   useEffect(() => {
     const frame = requestAnimationFrame(() => setMounted(true))
     return () => cancelAnimationFrame(frame)
+  }, [])
+
+  useEffect(() => {
+    const update = () => setHasScrolled(window.scrollY > 80)
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    return () => window.removeEventListener("scroll", update)
   }, [])
 
   const menuToggleRef = useRef<HTMLButtonElement>(null)
@@ -107,8 +115,10 @@ export function Navbar() {
   return (
     <>
       <header
+        data-nav-scrolled={hasScrolled ? "true" : "false"}
+        data-nav-visible={navVisible && !menuOpen ? "true" : "false"}
         className={cn(
-          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-border/20 bg-white/90 backdrop-blur-xl pointer-events-none transition-[top,transform,opacity] duration-300 ease-out dark:bg-background/88",
+          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-transparent bg-transparent pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out",
           !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",
         )}
       >
@@ -160,7 +170,10 @@ export function Navbar() {
                 return (
                   <div
                     key={item.id}
-                    className="group/nav relative flex items-center gap-1"
+                    className={cn(
+                      "group/nav relative flex items-center gap-1 rounded-[14px] transition-[background-color,box-shadow] duration-150 hover:bg-muted/70 focus-within:bg-muted/70",
+                      activeSubmenu === item.id && "bg-muted/70 shadow-sm"
+                    )}
                     onMouseEnter={() => submenu && openSubmenu(item.id as "services" | "tools")}
                     onMouseLeave={submenu ? closeSubmenuSoon : undefined}
                     onFocus={() => submenu && openSubmenu(item.id as "services" | "tools")}
@@ -169,8 +182,8 @@ export function Navbar() {
                       href={item.path}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors hover:bg-muted hover:text-foreground",
-                        active ? "font-semibold text-foreground" : "font-semibold text-muted-foreground"
+                        "relative whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:bg-current after:transition-transform hover:bg-muted hover:text-foreground",
+                        active ? "font-semibold text-foreground after:scale-x-100" : "font-semibold text-muted-foreground after:scale-x-0 hover:after:scale-x-100"
                       )}
                     >
                       {item.label}
@@ -178,12 +191,12 @@ export function Navbar() {
                     {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
                     {submenu && activeSubmenu === item.id && (
                       <div
-                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-3 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background/92 p-2.5 shadow-lg backdrop-blur-xl"
+                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-0 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background p-2 shadow-lg"
                         onMouseEnter={() => openSubmenu(item.id as "services" | "tools")}
                         onMouseLeave={closeSubmenuSoon}
                       >
                         {submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path ? "page" : undefined} className="rounded-[14px] px-4 py-3 text-[0.95rem] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("rounded-[14px] px-4 py-3 text-[0.95rem] transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold text-foreground" : "text-muted-foreground")}>
                             {subitem.label}
                           </Link>
                         ))}
@@ -253,7 +266,7 @@ export function Navbar() {
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
                 </button>
-                <Link href="/contact" className="rounded-[14px] px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-background">Let&apos;s Talk</Link>
+                <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={cn("rounded-[14px] px-4 py-2 text-sm font-medium transition-colors hover:bg-background", pathname === "/contact" ? "bg-background text-brand-blue" : "text-foreground")}>Let&apos;s Talk</Link>
               </div>
             </div>
           </div>

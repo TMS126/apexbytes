@@ -81,8 +81,8 @@ export function HubFinderCard({ onSelectHub }: HubFinderCardProps) {
             <button
               type="button"
               onClick={() => onSelectHub(picked)}
-              className="inline-flex shrink-0 items-center gap-1 rounded-[10px] px-3.5 py-2 text-[0.8rem] font-medium transition-transform duration-150 active:scale-95"
-              style={{ backgroundColor: HUB_COLORS[picked].primary, color: HUB_ON_COLOR[picked] }}
+              className="inline-flex shrink-0 items-center gap-1 rounded-[14px] border border-border bg-background px-3.5 py-2 text-[0.8rem] font-semibold text-foreground transition-colors duration-150 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              style={{ borderColor: HUB_COLORS[picked].primary }}
             >
               Open
               <ArrowRight size={13} weight="bold" aria-hidden="true" />

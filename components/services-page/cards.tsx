@@ -35,7 +35,7 @@ export function SectionCard({
       type="button"
       onClick={onClick}
       style={{ ["--card-accent" as string]: accent }}
-      className="group/sectioncard min-h-[190px] overflow-hidden rounded-[14px] border border-border bg-card p-6 text-left transition-[background-color,color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98]"
+      className="group/sectioncard min-h-[190px] overflow-hidden rounded-[14px] border border-border bg-card p-6 text-left transition-[background-color,color,box-shadow] duration-200 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98]"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
           <h4 className="flex items-center gap-2 font-medium text-[1.08rem] text-foreground leading-tight break-words transition-colors group-hover/sectioncard:text-[var(--on-brand-blue)]">
@@ -70,10 +70,11 @@ export function SectionCard({
 // LEVEL 2 — SERVICE CARD (desktop drill-down)
 // ============================================================
 export function ServiceCard({
-  item, accent, onClick,
+  item, accent, hasBulk = false, onClick,
 }: {
   item: { name: string; price: string; description?: string }
   accent: string
+  hasBulk?: boolean
   onClick: () => void
 }) {
   return (
@@ -81,22 +82,26 @@ export function ServiceCard({
       type="button"
       onClick={onClick}
       style={{ ["--card-accent" as string]: accent }}
-      className="group/svccard min-h-[170px] flex flex-col overflow-hidden rounded-[14px] border border-border bg-card p-5 text-left transition-[background-color,color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98]"
+      className="group/svccard min-h-[184px] flex flex-col overflow-hidden rounded-[14px] border border-border bg-card p-5 text-left transition-[background-color,color,box-shadow] duration-200 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98]"
     >
-      <div className="flex items-start justify-between gap-2 mb-2">
-          <span className="text-foreground leading-snug flex items-start gap-2 min-w-0 transition-colors group-hover/svccard:text-[var(--on-brand-blue)]">
+      <div className="relative mb-3 min-h-[2.6rem]">
+        <span className="flex min-w-0 items-start gap-2 pr-14 text-[0.98rem] font-medium leading-snug text-foreground transition-colors group-hover/svccard:text-[var(--on-brand-blue)]">
           <ServiceIcon name={item.name} size={19} />
           <span className="break-words">{item.name}</span>
         </span>
+        {hasBulk && (
+          <span className="absolute right-0 top-0 rounded-full bg-slate-600 px-2 py-1 text-[0.58rem] font-medium leading-none tracking-wide text-slate-50">
+            Bulk
+          </span>
+        )}
       </div>
 
-      <p className="text-[0.88rem] text-muted-foreground leading-relaxed mb-4 flex-1 transition-colors group-hover/svccard:text-[var(--on-brand-blue)]/80">
+      <p className="mb-5 flex-1 text-[0.9rem] leading-relaxed text-muted-foreground transition-colors group-hover/svccard:text-[var(--on-brand-blue)]/80">
         {item.description || "Tap to view full pricing and details."}
       </p>
 
       <span
-        className="inline-flex items-center gap-1 text-[0.78rem] font-medium transition-colors duration-200"
-        style={{ color: accent }}
+        className="inline-flex items-center gap-1 text-[0.78rem] font-medium text-[var(--card-accent)] transition-colors duration-200 group-hover/svccard:text-[var(--on-brand-blue)]"
       >
         View details
         <ArrowRight

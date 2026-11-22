@@ -2,8 +2,9 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { NAV_ITEMS, BRAND, TOKEN, HUB_NAMES } from "@/lib/brand"
-import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
+import { NAV_ITEMS, BRAND, TOKEN } from "@/lib/brand"
+import { HUB_ORDER, serviceRouteFor } from "@/components/services-page/lib"
+import { HUBS } from "@/lib/data"
 import { cn } from "@/lib/utils"
 
 // ============================================================
@@ -44,7 +45,7 @@ export function DesktopMenu({
   ctaPulse,
 }: DesktopMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [hubsOpen, setHubsOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
   const [contactHovered, setContactHovered] = useState(false)
 
   // ── Close on outside click / Escape ──────────────────────────────
@@ -73,7 +74,7 @@ export function DesktopMenu({
   // Collapse the hubs flyout whenever the menu itself closes, so it
   // isn't already expanded the next time the menu opens.
   useEffect(() => {
-    if (!menuOpen) requestAnimationFrame(() => setHubsOpen(false))
+    if (!menuOpen) requestAnimationFrame(() => setServicesOpen(false))
   }, [menuOpen])
 
   return (
@@ -126,18 +127,18 @@ export function DesktopMenu({
             <div
               key={item.id}
               className="relative"
-              onMouseEnter={() => isServices && setHubsOpen(true)}
-              onMouseLeave={() => isServices && setHubsOpen(false)}
+              onMouseEnter={() => isServices && setServicesOpen(true)}
+              onMouseLeave={() => isServices && setServicesOpen(false)}
             >
               <button
                 type="button"
                 role="menuitem"
                 tabIndex={menuOpen ? 0 : -1}
                 onClick={() => navigate(item.path)}
-                onFocus={() => isServices && setHubsOpen(true)}
+                onFocus={() => isServices && setServicesOpen(true)}
                 aria-current={isActive ? "page" : undefined}
                 aria-haspopup={isServices ? "true" : undefined}
-                aria-expanded={isServices ? hubsOpen : undefined}
+                aria-expanded={isServices ? servicesOpen : undefined}
                 style={{ color: isActive ? HOVER_TEXT : neutralColor }}
                 className={cn(
                   "relative w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150 after:absolute after:left-4 after:right-4 after:bottom-1 after:h-px after:origin-left after:bg-current after:transition-transform",
@@ -156,37 +157,29 @@ export function DesktopMenu({
               {isServices && (
                 <div
                   role="menu"
-                  aria-label="Hubs"
-                  aria-hidden={!hubsOpen}
-                  className={cn(
-                    "absolute right-full top-0 mr-3 flex min-w-[210px] flex-col gap-1.5 rounded-[14px] border border-border/60 bg-background p-3 shadow-[var(--shadow-card-lift)] transition-all duration-150 ease-out origin-top-right",
-                    hubsOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-1 pointer-events-none"
+                    aria-label="Featured services"
+                    aria-hidden={!servicesOpen}
+                    className={cn(
+                    "absolute right-full top-0 mr-3 grid min-w-[360px] grid-cols-2 gap-1.5 rounded-[14px] border border-border/60 bg-background p-3 shadow-[var(--shadow-card-lift)] transition-all duration-150 ease-out origin-top-right",
+                    servicesOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-1 pointer-events-none"
                   )}
                 >
-                  {HUB_ORDER.map((hubId) => {
-                    const hubPath = hubRouteFor(hubId)
-                    const isHubActive = pathname === hubPath
+                  {HUB_ORDER.flatMap((hubId) => HUBS[hubId].sections.flatMap((section) => section.items.slice(0, 1).map((service) => ({ hubId, service, sectionTitle: section.title })))).map(({ hubId, service, sectionTitle }) => {
+                    const servicePath = serviceRouteFor(hubId, sectionTitle, service.name)
+                    const isServiceActive = pathname === servicePath
                     return (
                       <button
-                        key={hubId}
+                        key={servicePath}
                         type="button"
                         role="menuitem"
-                        tabIndex={menuOpen && hubsOpen ? 0 : -1}
-                        onClick={() => navigate(hubPath)}
-                        aria-current={isHubActive ? "page" : undefined}
-                        style={{ color: isHubActive ? HOVER_TEXT : neutralColor }}
-                        className={cn(
-                          "w-full rounded-[14px] bg-card px-4 py-3 text-left text-base whitespace-nowrap transition-colors duration-150 hover:bg-muted",
-                          isHubActive ? "font-semibold" : "font-semibold"
-                        )}
-                        onMouseEnter={(e) => {
-                          if (!isHubActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isHubActive) (e.currentTarget as HTMLElement).style.color = neutralColor
-                        }}
+                        tabIndex={menuOpen && servicesOpen ? 0 : -1}
+                        onClick={() => navigate(servicePath)}
+                        aria-current={isServiceActive ? "page" : undefined}
+                        style={{ color: isServiceActive ? HOVER_TEXT : neutralColor }}
+                        className="w-full rounded-[14px] bg-card px-3 py-2.5 text-left text-sm font-medium transition-colors duration-150 hover:bg-muted"
                       >
-                        {HUB_NAMES[hubId]}
+                        <span className="block truncate">{service.name}</span>
+                        <span className="mt-0.5 block truncate text-xs text-muted-foreground">{sectionTitle}</span>
                       </button>
                     )
                   })}

@@ -54,7 +54,7 @@ function GridItem({
       onDragStart={(e) => (e as unknown as React.DragEvent<HTMLLIElement>).dataTransfer.setData("text/plain", String(index))}
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => onReorder(Number(e.dataTransfer.getData("text/plain")), index)}
-      className={`relative rounded-[14px] overflow-hidden border bg-zinc-100 dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "border-red-300 dark:border-red-800" : "border-zinc-200 dark:border-zinc-700"}`}
+      className={`relative w-full max-w-[11rem] rounded-[14px] overflow-hidden border bg-zinc-100 dark:bg-zinc-900 ${!img.selected ? "opacity-45" : ""} ${err ? "border-red-300 dark:border-red-800" : "border-zinc-200 dark:border-zinc-700"}`}
     >
       {/* ─── IMAGE / ZOOM TRIGGER ────────────────────────────────────── */}
       <button type="button" onClick={() => onZoom(img.id)} aria-label={`View ${img.file.name} full size`} className="relative block w-full aspect-square">
@@ -185,7 +185,7 @@ export function ImageGrid({
     errors.find((e) => (e.id ? e.id === img.id : e.fileName === img.file.name))
 
   return (
-    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4" aria-label="Images to convert">
+    <ul className="grid w-full grid-cols-[repeat(auto-fit,minmax(9rem,11rem))] justify-center gap-4" aria-label="Images to convert">
       <AnimatePresence initial={false}>
         {images.map((img, index) => (
           <MemoGridItem

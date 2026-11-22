@@ -3,7 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { X, CaretLeft, CaretRight, ArrowsLeftRight, WhatsappLogo, EnvelopeSimple, Check } from "@phosphor-icons/react"
+import { X, CaretLeft, CaretRight, ArrowsLeftRight, WhatsappLogo, EnvelopeSimple, Check, Sun, Moon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, BIZ } from "@/lib/brand"
@@ -28,10 +28,10 @@ function useIsMobile() {
   return isMobile
 }
 
-const CHIP = "bg-black/35 backdrop-blur-md border border-white/10 [&_svg]:text-white"
+const CHIP = "bg-black/35  border border-white/10 [&_svg]:text-white"
 
 // Graduated size pattern for the desktop image stack.
-const STACK_SIZE_RATIOS = [1, 0.72, 1, 0.6, 0.82]
+const STACK_SIZE_RATIOS = [1, 1, 1, 1, 1]
 
 // A paragraph only gets "Read more…" if it's actually long enough that a
 // 4-line clamp would cut it off — never forced on regardless of length.
@@ -74,25 +74,54 @@ function ExpandableText({ text, accent }: { text: string; accent: string }) {
 
 function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent: string }) {
   return (
-    <div className="space-y-5">
-      <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Goal</h4>
+    <div className="space-y-10">
+      <section aria-labelledby="project-about-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">About the project</p>
+        <h3 id="project-about-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">A clear outcome, built for the real brief.</h3>
         <ExpandableText text={project.clientGoal} accent={accent} />
-      </div>
-      <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">What we did</h4>
-        <ul className="space-y-2">
-          {project.whatWeDid.map((item, i) => (
-            <li key={i} className="flex items-start gap-2.5 text-base text-zinc-700 dark:text-zinc-200 font-medium">
-              <Check size={14} weight="bold" className="mt-1 shrink-0" style={{ color: accent }} />{item}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="border-l-2 abh-line-left py-1 pl-5">
-        <h4 className="text-xs font-medium uppercase tracking-widest mb-2 text-muted-foreground dark:text-muted-foreground">The Result</h4>
+      </section>
+
+      <section className="grid gap-7 border-y border-border py-7 md:grid-cols-2" aria-label="Project information">
+        <div>
+          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Hub</h4>
+          <p className="text-base font-medium text-foreground">{hubLabelFor(project.hub as HubId)}</p>
+        </div>
+        <div>
+          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project type</h4>
+          <p className="text-base font-medium text-foreground">{project.clientType ? CLIENT_TYPE_LABEL[project.clientType] : "ApexBytesHub project"}</p>
+        </div>
+        <div className="md:col-span-2">
+          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Tools and format</h4>
+          <p className="text-base font-medium leading-7 text-foreground">{project.tools.join(" · ")}</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="project-challenges-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Challenges</p>
+        <h3 id="project-challenges-title" className="mb-6 text-xl font-medium text-foreground md:text-2xl">From the problem to the finished piece.</h3>
+        <div className="space-y-7">
+          <div>
+            <h4 className="mb-2 text-base font-semibold text-foreground">Problem</h4>
+            <ExpandableText text={project.clientGoal} accent={accent} />
+          </div>
+          <div>
+            <h4 className="mb-2 text-base font-semibold text-foreground">Solution</h4>
+            <ul className="space-y-2.5">
+              {project.whatWeDid.map((item, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-base font-medium leading-7 text-muted-foreground">
+                  <Check size={15} weight="bold" className="mt-1.5 shrink-0" style={{ color: accent }} />{item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border py-7" aria-labelledby="project-takeaway-title">
+        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project outcome</p>
+        <h3 id="project-takeaway-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">Useful, clear, and ready to use.</h3>
         <ExpandableText text={project.result} accent={accent} />
-      </div>
+      </section>
     </div>
   )
 }
@@ -138,7 +167,7 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
   const others = siblings.filter((p) => p.id !== currentId)
   if (others.length === 0) return null
   return (
-    <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "p-5" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
+    <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "hidden md:flex md:w-1/3 md:h-full md:min-h-0 md:flex-col md:overflow-y-auto p-6" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
       <h3 className="border-l-2 abh-line-left pl-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Other projects</h3>
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
@@ -172,7 +201,7 @@ function MobileImageViewer({
   return (
     <div className="flex gap-2 px-3">
       <div
-        className="relative flex-1 aspect-[4/3] max-h-[380px] rounded-[16px] overflow-hidden cursor-zoom-in"
+        className="relative flex-1 aspect-[4/3] max-h-[380px] rounded-[14px] overflow-hidden cursor-zoom-in"
         onClick={() => onOpenZoom(activeIdx)}
       >
         <SafeImage
@@ -187,7 +216,7 @@ function MobileImageViewer({
         />
 
         {hasMultiple && (
-          <div className="absolute top-2.5 left-2.5 z-20 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white text-[0.68rem] font-bold tracking-widest" aria-live="polite">
+          <div className="absolute top-2.5 left-2.5 z-20 px-2.5 py-1 rounded-full bg-black/40  text-white text-[0.68rem] font-bold tracking-widest" aria-live="polite">
             {activeIdx + 1} / {images.length}
           </div>
         )}
@@ -283,6 +312,8 @@ function DesktopImageStack({
 }
 
 function ProjectHeader({ project, accent, onClose }: { project: ProjectData; accent: string; onClose: () => void }) {
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   return (
     <div className="flex items-start justify-between gap-3 px-6 md:px-8 pt-8 pb-4">
       <div className="min-w-0">
@@ -290,20 +321,33 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
           <HubIcon id={project.hub as HubId} size={13} color={accent} />
           <span className="text-xs font-medium uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
         </div>
-        <h2 id="project-viewer-title" className="font-medium text-xl md:text-2xl text-zinc-900 dark:text-zinc-50 leading-snug mt-1 truncate">{project.title}</h2>
-        {project.clientType && (
-          <p className="text-sm text-muted-foreground dark:text-muted-foreground mt-1">{CLIENT_TYPE_LABEL[project.clientType]}</p>
-        )}
+        <h2 id="project-viewer-title" className="mt-2 max-w-[34rem] text-2xl font-medium leading-tight text-zinc-900 dark:text-zinc-50 md:text-4xl">{project.title}</h2>
+        <p className="mt-3 max-w-[40rem] text-base leading-7 text-muted-foreground">{project.shortDesc}</p>
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+          <span>{project.tag}</span>
+          <span aria-hidden="true">—</span>
+          <span>{project.clientType ? CLIENT_TYPE_LABEL[project.clientType] : "Project"}</span>
+        </div>
       </div>
-      <button
-        onClick={onClose}
-        title="Close project"
-        aria-label="Close project"
-        className="shrink-0 w-9 h-9 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-muted-foreground dark:text-muted-foreground transition-transform active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-        style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
-      >
-        <X size={16} weight="bold" />
-      </button>
+      <div className="flex shrink-0 items-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => setTheme(isDark ? "light" : "dark")}
+          aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
+          className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          {isDark ? <Moon size={16} weight="fill" /> : <Sun size={16} weight="fill" />}
+        </button>
+        <button
+          onClick={onClose}
+          title="Close project"
+          aria-label="Close project"
+          className="abh-close-chip flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}
+        >
+          <X size={16} weight="bold" />
+        </button>
+      </div>
     </div>
   )
 }
@@ -459,7 +503,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
       onClick={() => setComparing((v) => !v)}
       aria-label={comparing ? "Show gallery view" : "Show before and after comparison"}
       aria-pressed={comparing}
-      className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-medium uppercase tracking-wider bg-black/45 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+      className="absolute -top-2 right-3 md:top-3 md:right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-white text-[0.68rem] font-medium uppercase tracking-wider bg-black/45  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
     >
       <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
       {comparing ? "Gallery" : "Before/After"}
@@ -484,7 +528,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
               {beforeAfterToggle}
               {comparing && hasBA ? (
                 <div className="px-3">
-                  <div className="relative aspect-[4/3] max-h-[380px] rounded-[16px] overflow-hidden">
+                  <div className="relative aspect-[4/3] max-h-[380px] rounded-[14px] overflow-hidden">
                     <BeforeAfterSlider before={beforeImg!} after={afterImg!} accent={accent} />
                   </div>
                 </div>
@@ -516,11 +560,11 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
         </div>
       ) : (
         <>
-          <div className="hidden bg-card md:flex md:w-[42%] md:h-full md:shrink-0 md:flex-col md:min-h-0">
+          <div className={cn("hidden bg-card md:flex md:h-full md:shrink-0 md:flex-col md:min-h-0", hasSiblings ? "md:w-1/3" : "md:w-1/2")}>
             <div className="relative flex-1 min-h-0 p-8">
               {beforeAfterToggle}
               {comparing && hasBA ? (
-                <div className="relative w-full h-full rounded-[16px] overflow-hidden">
+                <div className="relative w-full h-full rounded-[14px] overflow-hidden">
                   <BeforeAfterSlider before={beforeImg!} after={afterImg!} accent={accent} />
                 </div>
               ) : (
@@ -536,7 +580,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
             </div>
           </div>
 
-          <div className="hidden border-l border-border bg-background md:flex md:w-[33%] md:h-full md:flex-col md:min-h-0">
+          <div className={cn("hidden border-l border-border bg-background md:flex md:h-full md:flex-col md:min-h-0", hasSiblings ? "md:w-1/3" : "md:w-1/2 md:flex-1")}>
             <div className="shrink-0 w-full max-w-2xl px-6 md:px-8 pt-6">
               <ProjectHeader project={project} accent={accent} onClose={onClose} />
               <DesktopActionRow
@@ -556,7 +600,7 @@ const allImages = project.images?.length > 0 ? [...project.images] : [project.im
               </div>
               <div className="h-28" aria-hidden="true" />
             </div>
-            <FloatingCTAPill project={project} onClose={onClose} accent={accent} visible={actionsVisible} desktop />
+            <FloatingCTAPill project={project} onClose={onClose} accent={accent} visible desktop />
           </div>
           <OtherProjectsPanel siblings={siblings} currentId={project.id} accent={accent} onSelect={onNavigate} compact />
         </>

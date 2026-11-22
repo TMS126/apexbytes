@@ -1,7 +1,7 @@
 // components/about-page.tsx
 "use client"
 
-import { useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { BRAND, THEME_BG } from "@/lib/brand"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
@@ -19,7 +19,7 @@ export function AboutPage() {
   const showBackToTop = useBackToTop()
 
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
 
   const cardBg = isDark ? THEME_BG.dark.card : THEME_BG.light.card
@@ -30,17 +30,16 @@ export function AboutPage() {
   const blueOnCard = ensureAccessible(blueColor, cardBg, 4.5)
   const orangeOnCard = ensureAccessible(orangeColor, cardBg, 4.5)
 
-  const missionBadgeBg = "var(--cta-badge-bg)"
-  const missionBadgeText = "var(--cta-badge-text)"
-
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <AboutHeader />
-      <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
-      <AboutTeam blueColor={blueColor} />
-      <AboutStandards neutralColor={neutralColor} />
-      <AboutTestimonials />
-      <AboutMission missionBadgeBg={missionBadgeBg} missionBadgeText={missionBadgeText} />
+      <main className="mx-auto max-w-[1240px] px-4 md:px-8">
+        <AboutHeader />
+        <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
+        <AboutTeam blueColor={blueColor} />
+        <AboutStandards neutralColor={neutralColor} />
+        <AboutTestimonials />
+        <AboutMission />
+      </main>
       <BackToTopButton visible={showBackToTop} />
     </div>
   )

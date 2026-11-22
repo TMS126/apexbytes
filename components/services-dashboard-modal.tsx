@@ -30,7 +30,7 @@ export function ServicesDashboardModal({ isOpen, onClose }: ServicesDashboardMod
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300 animate-in fade-in"
+        className="absolute inset-0 bg-black/60  transition-opacity duration-300 animate-in fade-in"
         onClick={onClose}
       />
 

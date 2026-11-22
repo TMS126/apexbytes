@@ -1,7 +1,7 @@
 // components/services-page/mobile-hub-card.tsx
 "use client"
 
-import { useState, type CSSProperties } from "react"
+import type { CSSProperties } from "react"
 import {
   ArrowUpRight, WarningCircle,
   Printer, FileText, PaintBrush, Globe, Desktop,
@@ -49,28 +49,21 @@ export function MobileHubCard({
   hubHasNotice: boolean
   onClick: () => void
 }) {
-  const [pressed, setPressed] = useState(false)
   const Icon = HUB_ICON[hubId]
-  const release = () => setPressed(false)
 
   return (
     <button
       type="button"
       onClick={onClick}
-      onPointerDown={() => setPressed(true)}
-      onPointerUp={release}
-      onPointerLeave={release}
-      onPointerCancel={release}
       aria-label={`Open ${hub.title}`}
       style={{ ["--hub-accent" as string]: accent } as CSSProperties}
-      className="group relative w-full text-left border-y border-border/70 bg-transparent overflow-visible transition-all duration-200 active:scale-[0.98] transform-gpu flex flex-col min-h-[170px] p-5 sm:min-h-[184px] sm:p-6 hover:bg-card/35"
+      className="group relative w-full text-left border-y border-l-2 border-[color-mix(in_srgb,var(--hub-accent)_48%,var(--border))] bg-transparent overflow-visible transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.98] transform-gpu flex flex-col min-h-[170px] p-5 sm:min-h-[184px] sm:p-6 hover:border-[var(--hub-accent)] hover:shadow-[var(--shadow-card-lift)]"
     >
       <div className="flex items-start justify-between mb-5">
         <Icon
           size={36}
-          weight={pressed ? "fill" : "regular"}
-          className="transition-colors duration-150"
-          style={{ color: pressed ? accent : "var(--muted-foreground)" }}
+          weight="regular"
+          className="text-muted-foreground transition-colors duration-150 group-hover:text-[var(--hub-accent)] group-focus-visible:text-[var(--hub-accent)]"
           aria-hidden="true"
         />
         {hubHasNotice && (
@@ -90,9 +83,8 @@ export function MobileHubCard({
         {hubHasBulk ? <BulkPill /> : <span aria-hidden="true" />}
         <ArrowUpRight
           size={16}
-          weight="bold"
-          className="transition-colors duration-150"
-          style={{ color: pressed ? accent : TOKEN.orangeText }}
+          weight="regular"
+          className="text-muted-foreground transition-colors duration-150 group-hover:text-[var(--hub-accent)] group-focus-visible:text-[var(--hub-accent)]"
           aria-hidden="true"
         />
       </div>

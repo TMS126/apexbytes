@@ -30,7 +30,7 @@ export function CartItemRow({
   const discounted = effRate < item.unitPrice
   const hint = getBulkHint(item.id, item.name, qty, effRate, item.unitPrice)
   const progress = getBulkProgress(item.id, item.name, qty)
-  const displayName = `${getDisplayName(item.sectionTitle, item.name)} - ${item.sectionTitle}`
+  const displayName = getDisplayName(item.sectionTitle, item.name)
   const hubLabel = HUBS[item.hubId].title
 
   return (

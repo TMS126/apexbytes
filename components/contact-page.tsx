@@ -3,10 +3,11 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useState, useEffect, useRef, Suspense } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
-import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
+import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, FacebookLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
 import { BRAND, TOKEN, BIZ, CONTACT_LINKS } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { BusinessStatusFull } from "@/components/business-status"
@@ -20,12 +21,16 @@ import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 const CONTACT_ICONS: Record<string, React.ElementType> = {
   "WhatsApp Us": WhatsappLogo,
+  "Facebook": FacebookLogo,
   "Call Us": Phone,
   "Email Us": EnvelopeSimple,
 }
 
 const COPYABLE_TITLES = new Set(["Call Us", "Email Us"])
-const GRID_CONTACT_LINKS = CONTACT_LINKS.filter((c) => c.title !== "Visit Us")
+const GRID_CONTACT_LINKS = [
+  ...CONTACT_LINKS.filter((c) => c.title !== "Visit Us"),
+  { title: "Facebook", value: "ApexbytesHub", href: BIZ.facebookUrl },
+]
 const SCROLL_MARGIN = { scrollMarginTop: "calc(var(--nav-h, 74px) + 1rem)" }
 
 const LocationMap = dynamic(
@@ -43,7 +48,7 @@ const QUICK_LINKS = [
 function ContactPageInner() {
   const searchParams = useSearchParams()
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
   const greyColor = isDark ? CONTACT_GREY.dark : CONTACT_GREY.light
 
@@ -165,20 +170,20 @@ function ContactPageInner() {
                   <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 items-stretch">
+                <div className="flex w-full flex-nowrap items-stretch justify-center gap-2 sm:gap-3">
                   {GRID_CONTACT_LINKS.map((c, index) => {
                     const Icon = CONTACT_ICONS[c.title] ?? Phone
                     const isCopyable = COPYABLE_TITLES.has(c.title)
                     const justCopied = copiedTitle === c.title
                     return (
                       <ScrollBounce key={c.title} delay={index * 0.08}>
-                        <div className="relative h-full">
+                        <div className="relative h-full min-w-0 flex-1">
                           <a
                             href={c.href}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={c.title}
-                            className="group flex min-h-[112px] h-full flex-col items-center justify-center gap-2 rounded-[14px] border border-transparent p-4 text-center text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97]"
+                            className="group flex min-h-[112px] h-full flex-col items-center justify-center gap-2 rounded-[14px] border border-transparent p-3 text-center text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97] sm:p-4"
                           >
                             <Icon size={34} weight="regular" aria-hidden="true" className="text-current transition-colors duration-200" />
                             <span className="sr-only">{c.value}</span>
@@ -255,8 +260,8 @@ function ContactPageInner() {
                         value={rawValue}
                         aria-invalid={err}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className="w-full rounded-[14px] border border-border bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
-                        style={{ borderColor: err ? TOKEN.errorBg : undefined }}
+                        className="w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
+                        style={{ borderColor: err ? TOKEN.errorBg : "var(--form-rule)" }}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />
@@ -277,8 +282,8 @@ function ContactPageInner() {
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       maxLength={1000}
-                      className="w-full flex-1 rounded-[14px] border border-border bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--card-rule)] focus:ring-2 focus:ring-[var(--card-rule)]/20"
-                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : undefined }}
+                      className="w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
+                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--form-rule)" }}
                       rows={4}
                       value={formData.message}
                       onBlur={() => setTouched({ ...touched, message: true })}
@@ -311,7 +316,7 @@ function ContactPageInner() {
         </a>
       </div>
 
-      <BackToTopButton visible={showBackToTop} bottomClass="bottom-24 md:bottom-6" />
+      <BackToTopButton visible={showBackToTop} bottomClass="bottom-[18rem] md:bottom-6" />
     </div>
   )
 }

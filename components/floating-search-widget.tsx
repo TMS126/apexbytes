@@ -2,6 +2,7 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef, useCallback, useLayoutEffect } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { Broom, MagnifyingGlass, X, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { usePathname } from "next/navigation"
@@ -90,7 +91,7 @@ function dispatchSelectService(svc: SelectedService) {
 export function FloatingSearchWidget() {
   const { resolvedTheme } = useTheme()
   const pathname = usePathname()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
@@ -255,7 +256,7 @@ export function FloatingSearchWidget() {
     <>
       {isOpen && (
         <div
-          className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70 backdrop-blur transition-opacity duration-200 ease-out motion-reduce:transition-none"
+          className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none"
           onClick={handleClose}
           aria-hidden="true"
         />

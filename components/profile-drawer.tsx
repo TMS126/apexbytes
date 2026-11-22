@@ -108,7 +108,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
     <>
       <div
         className={cn(
-          "fixed inset-0 z-[10050] bg-black/40 backdrop-blur-sm transition-opacity duration-300 overscroll-contain",
+          "fixed inset-0 z-[10050] bg-black/40  transition-opacity duration-300 overscroll-contain",
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
@@ -13,7 +14,7 @@ const WORDS = [
 
 export function ClassicTagline() {
   const { resolvedTheme } = useTheme()
-  const [mounted] = useState(() => typeof window !== "undefined")
+  const mounted = useMounted()
   const [hovered, setHovered] = useState(false)
 
   const isDark  = mounted && resolvedTheme === "dark"

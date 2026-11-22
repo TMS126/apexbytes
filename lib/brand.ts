@@ -274,7 +274,7 @@ export const BIZ = {
   lat: -27.3790123,
   lng: 26.6599691,
   mapsUrl: "https://maps.app.goo.gl/v25Le9SfmCBfTh616?g_st=ac",
-  facebookUrl: "https://www.facebook.com/16558343683795756839",
+  facebookUrl: "https://www.facebook.com/ApexbytesHub/",
   founder: "Theji Meje",
   // Self-updating copyright year (computed at build time).
   year: String(new Date().getFullYear()),

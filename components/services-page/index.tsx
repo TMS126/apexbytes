@@ -4,23 +4,22 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
-import { AnimatePresence, motion } from "framer-motion"
-import { Megaphone, SealPercent, CaretLeft, CaretDown } from "@phosphor-icons/react"
+import { AnimatePresence } from "framer-motion"
+import { CaretLeft, CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
-import { HUBS, HubId } from "@/lib/data"
+import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { HubIcon } from "./shared"
 import { InlineSearchBar } from "./search-bar"
 import { HubModal } from "./hub-modal"
 import { ServiceDetailModal } from "./service-detail-modal"
 import {
-  HUB_ORDER, NOTICE, trackEvent, getTurnaround, SelectedService,
+  HUB_ORDER, trackEvent, getTurnaround, SelectedService,
   hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor,
 } from "./lib"
-import { sectionHasBulk } from "../quote-calculator/lib"
-import { NoticePill } from "@/components/notice-pill"
+import { itemHasBulk, sectionHasBulk } from "../quote-calculator/lib"
 import { AddOnsCard } from "@/components/pricing-page/addons-card"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 import { MobileHubCard } from "./mobile-hub-card"
@@ -70,15 +69,12 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
     : null
 
   const [hubOriginSide, setHubOriginSide] = useState<"left" | "right">("right")
-  const [clientNoticeDismissed, setClientNoticeDismissed] = useState(false)
-  const [bulkNoticeDismissed, setBulkNoticeDismissed] = useState(false)
   const showBackToTop = useBackToTop()
 
   const [desktopActiveHub, setDesktopActiveHub] = useState<HubId | null>(null)
   const [desktopActiveSection, setDesktopActiveSection] = useState<number | null>(null)
 
   const isModalOpen = !!(activeHub || selectedService)
-  const hasBulkDeals = HUB_ORDER.some((hubId) => HUBS[hubId].sections.some((section) => sectionHasBulk(hubId, section.title, section.items)))
 
   const handleSelectService = useCallback((svc: SelectedService) => {
     trackEvent("view_service", {
@@ -176,9 +172,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
   return (
     <section className="min-h-screen bg-background transition-colors duration-300 pb-24 overflow-x-hidden">
 
-      <motion.div
-        layout
-        transition={{ layout: { duration: 0.3, ease: "easeInOut" } }}
+      <div
         className="max-w-[1248px] mx-auto px-4 md:px-8 flex flex-col items-center transition-opacity duration-200 md:opacity-100 md:pointer-events-auto"
         style={isMobileViewport ? {
           opacity: isModalOpen ? 0 : 1,
@@ -198,45 +192,13 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
           </div>
         </ScrollBounce>
 
-        {!clientNoticeDismissed && (
-          <ScrollBounce delay={0.08} className="relative z-0 w-full flex justify-center mb-6">
-            <NoticePill
-              variant="warning"
-              Icon={Megaphone}
-              collapsedLabel="Notice"
-              expandedLabel="Notice to Clients"
-              announcement
-              onDismiss={() => setClientNoticeDismissed(true)}
-            >
-              <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">{NOTICE.intro}</p>
-              <p className="mt-3 text-[0.92rem] font-medium italic leading-6 text-zinc-500 dark:text-zinc-400">{NOTICE.footer}</p>
-            </NoticePill>
-          </ScrollBounce>
-        )}
-
-        {hasBulkDeals && !bulkNoticeDismissed && (
-          <ScrollBounce delay={0.1} className="relative z-0 mb-6 w-full flex justify-center">
-            <NoticePill
-              variant="info"
-              Icon={SealPercent}
-              collapsedLabel="Bulk deals"
-              expandedLabel="Bulk Deals"
-              onDismiss={() => setBulkNoticeDismissed(true)}
-            >
-              <p className="mb-3 text-[1.05rem] font-medium leading-7 text-zinc-700 dark:text-zinc-200">
-                Selected printing and service items have lower rates at qualifying quantities. Look for the Bulk deals marker on each relevant hub and service.
-              </p>
-            </NoticePill>
-          </ScrollBounce>
-        )}
-
         <ScrollBounce delay={0.12} className="relative z-0 mb-7 w-full max-w-[980px]">
           <details className="group overflow-hidden rounded-[14px] border border-border/70 bg-card/70">
             <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 text-left text-[0.76rem] font-medium uppercase tracking-[0.12em] text-muted-foreground [&::-webkit-details-marker]:hidden">
               <span title="See optional add-ons and included features">View add-ons and free features</span>
               <CaretDown size={16} weight="bold" className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
             </summary>
-<div className="grid grid-rows-[0fr] border-t border-border/70 transition-[grid-template-rows] duration-300 ease-out group-open:grid-rows-[1fr]">
+<div className="grid min-h-0 grid-rows-[0fr] border-t border-border/70 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
     <div className="min-h-0 overflow-hidden">
       <div className="p-3 sm:p-4"><AddOnsCard /></div>
     </div>
@@ -344,11 +306,12 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
                   </p>
                 )}
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {desktopActiveSectionData.items.map((item) => (
+                  {sortItemsByPrice(desktopActiveSectionData.items).map((item) => (
                     <ServiceCard
                       key={item.name}
                       item={item}
                       accent={desktopHubAccent}
+                      hasBulk={itemHasBulk(desktopActiveHub, desktopActiveSectionData.title, item.name)}
                       onClick={() =>
                         handleSelectService({
                           name: item.name,
@@ -373,7 +336,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
         <ScrollBounce className="w-full mt-14 md:mt-20">
           <ClosingTagline />
         </ScrollBounce>
-      </motion.div>
+      </div>
 
       <AnimatePresence>
         {activeHub && (

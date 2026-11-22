@@ -1,37 +1,28 @@
 // components/about/about-testimonials.tsx
 "use client"
 
-import { useState } from "react"
 import { Quotes, Star, UserCircle } from "@phosphor-icons/react"
-import { cn } from "@/lib/utils"
 import { SAMPLE_REVIEWS } from "@/components/testimonials-section"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
 function CompactTestimonials() {
-  const [hovered, setHovered] = useState<number | null>(null)
   return (
     <ul className="grid auto-rows-fr grid-cols-1 items-stretch gap-5 sm:grid-cols-3" aria-label="What clients say">
       {SAMPLE_REVIEWS.map((r, i) => {
-        const isHovered = hovered === i
         return (
           <ScrollBounce key={r.name + i} delay={i * 0.1} className="h-full">
             <li
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              onFocus={() => setHovered(i)}
-              onBlur={() => setHovered(null)}
-              tabIndex={0}
-              className={cn("abh-card abh-card-rule h-full min-h-[260px] w-full p-5 flex flex-col items-center text-center outline-none transition-all duration-300 min-w-0", isHovered && "-translate-y-1.5")}
+              className="abh-card abh-card-rule flex h-full min-w-0 flex-col items-center p-5 text-center"
             >
-              <Quotes size={16} weight="fill" className="mb-2 opacity-30 text-muted-foreground dark:text-muted-foreground" aria-hidden="true" />
+              <Quotes size={16} weight="regular" className="mb-2 text-muted-foreground" aria-hidden="true" />
               <p className="text-[0.92rem] font-normal text-zinc-600 dark:text-zinc-300 leading-relaxed mb-3">{r.quote}</p>
               <div className="abh-icon-chip flex h-12 w-12 items-center justify-center mb-1.5 bg-background text-muted-foreground dark:text-muted-foreground" aria-hidden="true">
-                <UserCircle size={30} weight="fill" />
+                <UserCircle size={30} weight="regular" />
               </div>
               <p className="abh-card-heading text-[0.9rem] truncate max-w-full">{r.name}</p>
               <div className="flex items-center gap-0.5 mt-1">
                 {Array.from({ length: 5 }).map((_, si) => (
-                  <Star key={si} size={11} weight="fill" className={si < r.rating ? "text-muted-foreground dark:text-muted-foreground" : "text-zinc-200 dark:text-zinc-700"} />
+                  <Star key={si} size={11} weight="regular" className={si < r.rating ? "text-muted-foreground dark:text-muted-foreground" : "text-zinc-200 dark:text-zinc-700"} />
                 ))}
               </div>
             </li>

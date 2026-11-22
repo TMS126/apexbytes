@@ -86,7 +86,7 @@ export function TestimonialsSection({
       <div className="mx-auto max-w-[1300px]">
         <ScrollBounce>
           <div className="mb-12 text-center">
-            <p className="mb-2 text-[0.78rem] font-medium uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground">
+            <p className="abh-eyebrow mb-2">
               Testimonials
             </p>
             <h2 className="mb-3 font-sans text-[1.8rem] font-medium text-zinc-900 dark:text-zinc-50 md:text-[2.25rem]">{title}</h2>
@@ -104,7 +104,7 @@ export function TestimonialsSection({
             const solid = solidFor(review)
             return (
               <ScrollBounce key={review.name + index} delay={index * 0.08} className="h-full">
-                <article className="abh-card flex h-full min-h-[360px] flex-col items-center justify-center overflow-hidden px-7 py-8 text-center transition-transform duration-200 hover:-translate-y-1">
+                <article className="abh-card flex h-full min-h-[360px] flex-col items-center justify-center overflow-hidden px-7 py-8 text-center">
                   <Quotes size={22} weight="fill" style={{ color: accent }} className="mb-4 shrink-0 opacity-50" aria-hidden="true" />
                   <p className="mb-6 max-w-[32ch] text-[1.05rem] font-medium leading-relaxed text-zinc-700 dark:text-zinc-300">{review.quote}</p>
                   <div className="mt-auto flex flex-col items-center">

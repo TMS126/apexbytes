@@ -10,7 +10,6 @@ import { BIZ, HEX } from '@/lib/brand'
 import { LocalBusinessJsonLd } from '@/components/ui/json-ld'
 import { FloatingSearchWidget } from '@/components/floating-search-widget'
 import { QuoteCalculatorWidget } from "@/components/quote-calculator"
-import { WhatsAppFAB } from '@/components/whatsapp-fab'
 import { MaintenanceBanner } from '@/components/maintenance-banner'
 import { headers } from 'next/headers'
 import './globals.css'
@@ -73,7 +72,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       suppressHydrationWarning
       className={`${dmSans.variable} ${poppins.variable}`}
     >
-      <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-[17.5px] leading-relaxed">
+      <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-base leading-relaxed">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[99999] focus:px-4 focus:py-2 focus:bg-background focus:text-brand-blue focus:font-medium focus:rounded-lg focus:shadow-lg focus:outline-none">
           Skip to main content
         </a>
@@ -84,11 +83,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
-          <div className="pointer-events-none fixed inset-y-0 right-3 z-[9992] flex flex-col items-end justify-center gap-2 md:right-5">
+          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 14rem)" }}>
             <FloatingSearchWidget />
-            <QuoteCalculatorWidget />
-            <WhatsAppFAB />
           </div>
+          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 9rem)" }}>
+            <QuoteCalculatorWidget />
+          </div>
+          {/* WhatsApp FAB intentionally disabled until we bring it back. */}
         </ThemeProvider>
 
         {isProd && (

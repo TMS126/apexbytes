@@ -31,6 +31,9 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
 
   useEffect(() => {
     if (!menuOpen) return
+    const html = document.documentElement
+    const previousScrollLock = html.getAttribute("data-scroll-locked")
+    html.setAttribute("data-scroll-locked", "true")
     previouslyFocused.current = document.activeElement as HTMLElement
     containerRef.current?.focus()
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -56,6 +59,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
     document.addEventListener("keydown", handleKeyDown)
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
+      if (previousScrollLock === null) html.removeAttribute("data-scroll-locked")
+      else html.setAttribute("data-scroll-locked", previousScrollLock)
       previouslyFocused.current?.focus?.()
     }
   }, [menuOpen, setMenuOpen])
@@ -69,7 +74,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       aria-hidden={!menuOpen}
       tabIndex={-1}
       className={cn(
-        "fixed inset-0 z-[9998] md:hidden transition-opacity duration-300 outline-none",
+        "fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain md:hidden transition-opacity duration-300 outline-none",
         menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
     >
@@ -79,7 +84,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
+      <div className="relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 py-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         <nav className="flex w-full max-w-[380px] flex-col items-center gap-4" aria-label="Mobile navigation">
           {NAV_ITEMS.map((item, idx) => {
             const isActive =
@@ -115,7 +120,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
             return (
               <div
                 key={item.id}
-                className={cn("flex w-full flex-col items-center gap-1 transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
+                className={cn("flex w-full flex-col items-center rounded-[14px] bg-card/70 p-2 transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
                 style={{ transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms" }}
               >
                 <Link
@@ -123,31 +128,33 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
                   aria-current={isActive ? "page" : undefined}
                   tabIndex={menuOpen ? 0 : -1}
                   style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
-                  className="w-full rounded-[14px] border-2 bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
+                  className="w-full rounded-[14px] bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
                 >
                   {item.label}
                 </Link>
                 {submenu && (
-                  <details className="w-full">
+                  <details className="group w-full">
                     <summary
                       tabIndex={menuOpen ? 0 : -1}
-                      className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] border border-border/60 bg-card/60 px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
+                      className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
                     >
-                      Browse {item.label.toLowerCase()}
+                      <span className="sr-only">Browse {item.label.toLowerCase()}</span>
                       <CaretDown size={16} aria-hidden="true" />
                     </summary>
-                    <div className="mt-2 flex flex-col items-stretch gap-1 border-t border-border/60 bg-card/50 p-2 pt-3">
+                    <div className="mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
+                      <div className="min-h-0 overflow-hidden flex flex-col items-center gap-1 p-2 pt-3">
                       {submenu.map((subitem) => (
                         <Link
                           key={subitem.path}
                           href={subitem.path}
                           tabIndex={menuOpen ? 0 : -1}
-                          aria-current={pathname === subitem.path ? "page" : undefined}
-                          className="w-full rounded-[14px] px-5 py-3 text-left text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground"
+                          aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined}
+                          className={cn("w-full rounded-[14px] px-5 py-3 text-center text-base text-foreground transition-colors hover:bg-muted hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold" : "font-medium")}
                         >
                           {subitem.label}
                         </Link>
                       ))}
+                      </div>
                     </div>
                   </details>
                 )}

@@ -3,10 +3,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { CaretDown, CaretUp, Plus, Check, SealPercent, Clock } from '@phosphor-icons/react'
-import { HUBS, type HubId } from '@/lib/data'
+import { HUBS, sortItemsByPrice, type HubId } from '@/lib/data'
 import { HubIcon } from '@/components/services-page/shared'
 import { PdfPillButton } from './shared'
-import { parsePrice } from './lib'
 
 // ── Turnaround times per hub ──────────────────────────────────────────────────
 
@@ -156,10 +155,10 @@ export function HubCompactCard({
         onClick={onSelect}
         onMouseEnter={onHover}
         aria-pressed
-        className="h-full w-full rounded-[14px] bg-card shadow-[var(--shadow-card-lift)] transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.98] flex flex-col items-center justify-center gap-2"
+        className="h-full w-full rounded-[14px] bg-card transition-[box-shadow,background-color] duration-200 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.98] flex flex-col items-center justify-center gap-2"
       >
         <HubIcon id={hubId} size={34} weight="fill" color={hubColor} />
-          <span className="text-lg font-medium" style={{ color: hubColor }}>{hub.title}</span>
+          <span className="relative pb-1 text-lg font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-current" style={{ color: hubColor }}>{hub.title}</span>
       </button>
     )
   }
@@ -169,7 +168,7 @@ export function HubCompactCard({
       onClick={onSelect}
       onMouseEnter={onHover}
       aria-pressed={false}
-      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-[transform,background-color,box-shadow] duration-200 active:scale-[0.98] bg-card/70 hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)] flex flex-col"
+      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-[background-color,box-shadow] duration-200 active:scale-[0.98] bg-card/70 hover:bg-card hover:shadow-[var(--shadow-card-lift)] flex flex-col"
     >
       {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
@@ -303,9 +302,7 @@ export function HubExpandedPanel({
           {/* ── Right: Services list ── */}
           <div className="overflow-y-auto divide-y divide-zinc-100 dark:divide-zinc-800 max-h-[460px]">
             {hub.sections.map(section => {
-              const sorted = [...section.items].sort(
-                (a, b) => parsePrice(a.price) - parsePrice(b.price)
-              )
+              const sorted = sortItemsByPrice(section.items)
               return (
                 <div key={section.title} className="px-6 py-4">
                   <SectionHeader title={section.title} color={hubColor} />
@@ -351,6 +348,7 @@ interface HubAccordionCardProps {
   accent: string
   isDark: boolean
   isOpen: boolean
+  hasOpened: boolean
   onToggle: () => void
   justAdded: string | null
   onAdd: (section: string, name: string, price: string) => void
@@ -366,6 +364,7 @@ export function HubAccordionCard({
   accent,
   isDark,
   isOpen,
+  hasOpened,
   onToggle,
   justAdded,
   onAdd,
@@ -377,11 +376,10 @@ export function HubAccordionCard({
   const hub = HUBS[hubId]
   const hubColor = isDark ? hub.tagStyleDark.color : hub.tagStyle.color
   const total = hub.sections.reduce((n, s) => n + s.items.length, 0)
-
   return (
     <div
       ref={cardRef}
-      className="rounded-[14px] bg-card overflow-hidden shadow-[var(--shadow-card-lift)] transition-[box-shadow,transform] duration-200 hover:-translate-y-0.5"
+      className="rounded-[14px] bg-card overflow-hidden transition-[box-shadow,transform] duration-200 hover:shadow-[var(--shadow-card-lift)]"
       style={isOpen ? { borderColor: hubColor } : undefined}
     >
       <button
@@ -410,17 +408,16 @@ export function HubAccordionCard({
       </button>
 
       <div
-        className="overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: isOpen ? '9999px' : '0px' }}
+        className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
         aria-hidden={!isOpen}
+        inert={!isOpen}
       >
-        {isOpen && (
+        <div className="min-h-0 overflow-hidden">
+        {hasOpened && (
           <div className="border-t border-zinc-100 dark:border-zinc-800">
             <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
               {hub.sections.map(section => {
-                const sorted = [...section.items].sort(
-                  (a, b) => parsePrice(a.price) - parsePrice(b.price)
-                )
+                const sorted = sortItemsByPrice(section.items)
                 return (
                   <div key={section.title} className="px-4 py-3">
                     <SectionHeader title={section.title} color={hubColor} />
@@ -448,6 +445,7 @@ export function HubAccordionCard({
             </div>
           </div>
         )}
+        </div>
       </div>
     </div>
   )

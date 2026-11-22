@@ -1,6 +1,7 @@
 // components/quote-calculator/pdf-export.ts
 import { BIZ } from "@/lib/brand"
-import { CartItem, getEffectiveRate, quoteTotals } from "./lib"
+import { baseDocumentNumber, documentFilename, nextDownloadedDocumentNumber } from "@/lib/document-naming"
+import { BULK_TIERS, CartItem, getEffectiveRate, isScanItem, quoteTotals } from "./lib"
 import { pdfServiceName } from "./pdf-names"
 /* ============================================================
    QUOTE PDF — real downloadable file (jsPDF), A4.
@@ -21,33 +22,22 @@ const ROW_RULE: RGB = [229, 231, 235]
 const GREEN_BG: RGB = [240, 253, 244]
 const GREEN_LINE: RGB = [187, 247, 208]
 const GREEN_TEXT: RGB = [22, 101, 52]
+const BULK_FILL: RGB = [71, 85, 105]
+const BULK_TEXT: RGB = [248, 250, 252]
 
 // Page geometry (mm)
 const PAGE_W = 210
 const M = 14
 const R = PAGE_W - M
 const QTY_X = 121.3
+const BULK_W = 16.5
+const BULK_H = 4.8
 const RATE_X = 157.8
 const TOTAL_X = 192.7
 const TOTAL_BLOCK_X = 124.1
 const CONTENT_BOTTOM = 266
-const SEQ_KEY = "apexbytes-quote-seq"
-
 function two(n: number) {
   return String(n).padStart(2, "0")
-}
-
-// INV-ABH-2026-001, then 002, 003... (counter is kept in this browser, resets each year)
-function nextQuoteNumber(now: Date): string {
-  const year = now.getFullYear()
-  let seq = 1
-  try {
-    const raw = localStorage.getItem(SEQ_KEY)
-    const parsed = raw ? (JSON.parse(raw) as { year?: number; seq?: number }) : null
-    if (parsed && parsed.year === year && typeof parsed.seq === "number") seq = parsed.seq + 1
-    localStorage.setItem(SEQ_KEY, JSON.stringify({ year, seq }))
-  } catch {}
-  return `INV-ABH-${year}-${String(seq).padStart(3, "0")}`
 }
 
 export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view" = "download"): Promise<void> {
@@ -58,7 +48,11 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
     const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" })
 
     const now = new Date()
-    const quoteNo = nextQuoteNumber(now)
+    // Viewing is a read-only action and always uses the stable document ID.
+    // Only a real download consumes the device-local numbered sequence.
+    const quoteNo = mode === "download"
+      ? nextDownloadedDocumentNumber("quote", now)
+      : baseDocumentNumber("quote", now)
     const dateStr = `${two(now.getDate())}/${two(now.getMonth() + 1)}/${now.getFullYear()}`
     const t = quoteTotals(cart)
 
@@ -125,11 +119,16 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       const qty = item.qty || 1
       const effRate = getEffectiveRate(item.id, item.name, qty, item.unitPrice)
       const label = pdfServiceName(item)
+      // Use the same normalized service name that is printed in the PDF for
+      // name-based bulk rules, so renamed services behave consistently.
+      const hasBulk = !!BULK_TIERS[item.id] || isScanItem(label)
       const qtyLabel = item.unit ? `${qty} ${item.unit}${qty > 1 ? "s" : ""}` : `x${qty}`
 
       doc.setFont("helvetica", "normal")
       doc.setFontSize(9.5)
-      const lines = doc.splitTextToSize(label, 82) as string[]
+      // Keep a little breathing room before the quantity column. The marker
+      // is drawn inline after the item name rather than in a fixed lane.
+      const lines = doc.splitTextToSize(label, hasBulk ? 76 : 82) as string[]
       const rowH = Math.max(11.1, 5.6 + lines.length * 4.2)
 
       if (y + rowH > CONTENT_BOTTOM) {
@@ -146,6 +145,20 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       doc.setTextColor(...SLATE_700)
       const firstBaseline = mid - ((lines.length - 1) * 4.2) / 2
       lines.forEach((ln, i) => doc.text(ln, M + 3.5, firstBaseline + i * 4.2))
+      if (hasBulk) {
+        const itemTextWidth = doc.getTextWidth(lines[0])
+        const pillX = M + 3.5 + itemTextWidth + 2.2
+        const pillY = firstBaseline - BULK_H + 1.05
+        doc.setFillColor(...BULK_FILL)
+        doc.roundedRect(pillX, pillY, BULK_W, BULK_H, 1.15, 1.15, "F")
+        doc.setFont("helvetica", "bold")
+        doc.setFontSize(6.1)
+        doc.setTextColor(...BULK_TEXT)
+        doc.text("BULK", pillX + BULK_W / 2, pillY + 3.35, { align: "center" })
+        doc.setFont("helvetica", "normal")
+        doc.setFontSize(9.5)
+        doc.setTextColor(...SLATE_700)
+      }
       doc.text(qtyLabel, QTY_X, mid, { align: "center" })
       doc.text(`R${effRate}`, RATE_X, mid, { align: "right" })
       doc.text(`R${effRate * qty}`, TOTAL_X, mid, { align: "right" })
@@ -211,7 +224,7 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       window.open(url, "_blank", "noopener,noreferrer")
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
     } else {
-      doc.save(`${BIZ.name}-Quote-${quoteNo}.pdf`)
+      doc.save(documentFilename("quote", quoteNo))
     }
   } catch (err) {
     console.error("Quote PDF failed:", err)

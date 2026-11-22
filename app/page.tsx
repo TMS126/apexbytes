@@ -10,11 +10,13 @@ import { TestimonialsSection } from "@/components/testimonials-section"
 import { StripSection, CtaBar } from "@/components/strip-section"
 import { Footer } from "@/components/footer"
 import { BIZ } from "@/lib/brand"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export default function HomeRoute() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <PageNoticeBell page="home" />
       <div>
         <div className="animate-fade-up">
           <HeroSection />

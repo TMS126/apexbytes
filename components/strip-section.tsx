@@ -12,7 +12,7 @@ export function StripSection() {
       <div className="max-w-[1080px] mx-auto">
         <ScrollBounce>
           <div className="text-center mb-10">
-            <p className="text-[0.78rem] font-medium uppercase tracking-[0.2em] text-muted-foreground dark:text-muted-foreground mb-2">
+            <p className="abh-eyebrow mb-2">
               Why ApexbytesHub
             </p>
             <h2 className="font-sans font-medium text-2xl md:text-3xl text-foreground">
@@ -97,8 +97,7 @@ export function CtaBar({
 
       <ScrollBounce className="max-w-[750px] mx-auto relative z-10">
         <span
-          className="abh-eyebrow px-4 py-1.5 rounded-full mb-6 inline-block"
-          style={{ backgroundColor: "var(--cta-badge-bg)", color: "var(--cta-badge-text)" }}
+          className="abh-eyebrow mb-6"
         >
           {badgeText}
         </span>

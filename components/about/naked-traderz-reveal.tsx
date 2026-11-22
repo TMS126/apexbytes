@@ -100,7 +100,7 @@ export function TheNakedTradersZAReveal({
               className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground outline-none focus-visible:ring-2"
               style={{ ["--tw-ring-color" as string]: accentColor }}
             >
-                <X size={16} weight="bold" aria-hidden="true" />
+                <X size={16} weight="regular" aria-hidden="true" />
               </button>
             </div>
 
@@ -109,7 +109,7 @@ export function TheNakedTradersZAReveal({
             </div>
             <div className="px-1 pb-1 pt-5 sm:px-2 sm:pt-6">
               <div className="mb-2 flex items-center gap-2">
-                <Sparkle size={14} weight="fill" style={{ color: accentOrange }} aria-hidden="true" />
+                <Sparkle size={14} weight="regular" style={{ color: accentOrange }} aria-hidden="true" />
                 <span className="abh-eyebrow">1st Ever Logo</span>
               </div>
               <h3 id="nt-modal-title" className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">The Naked Traders ZA</h3>
