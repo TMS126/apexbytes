@@ -107,7 +107,7 @@ html[data-scroll-locked] body { overflow: hidden; }
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
-  color: var(--foreground);
+  color: var(--muted-foreground);
   font-size: 1.125rem !important;
   font-weight: 400;
   line-height: 1.5;
@@ -129,7 +129,7 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-reference-search input::placeholder,
 .abh-search-input::placeholder,
 input::placeholder,
-textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
+textarea::placeholder { color: color-mix(in srgb, var(--muted-foreground) 52%, transparent); opacity: 1; }
 .abh-reference-search svg { color: currentColor; }
 .abh-reference-search-results { margin-top: .5rem; overflow: hidden; border: 1px solid var(--border); border-radius: 14px; background: var(--card); color: var(--foreground); box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 12%, transparent); }
 .abh-reference-search-row { display: flex; width: 100%; min-height: 56px; align-items: center; gap: .75rem; padding: .65rem .75rem; text-align: left; color: var(--foreground); transition: background-color 140ms ease; }
@@ -1390,8 +1390,8 @@ button[aria-label^="Close"]:hover {
 
 /* Every button starts as a restrained 14px control; interaction styles may
    deliberately turn it into a pill when the control is hovered or pressed. */
-button:not(:hover):not(:focus-visible):not(:active),
-[role="button"]:not(:hover):not(:focus-visible):not(:active) {
+button:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active),
+[role="button"]:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active) {
   border-radius: 14px !important;
 }
 
@@ -1554,22 +1554,17 @@ body::before {
 .abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
 
 /* Buttons feel like physical controls rather than flat links. */
-button,
-[role="button"],
+.abh-site-cta { border-radius: 9999px !important; }
+button:not(.abh-site-cta),
+[role="button"]:not(.abh-site-cta),
 .abh-btn-primary,
 .abh-btn-cta,
 .abh-line-cta,
 .abh-wa-btn {
   border: 0 !important;
   border-radius: var(--ui-radius-sm) !important;
-  transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+  transition: box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
 }
-button:hover:not(:disabled),
-[role="button"]:hover,
-.abh-btn-primary:hover,
-.abh-btn-cta:hover,
-.abh-line-cta:hover,
-.abh-wa-btn:hover { transform: translateY(-2px); }
 button:active:not(:disabled),
 [role="button"]:active,
 .abh-btn-primary:active,
@@ -1613,11 +1608,10 @@ input:focus, textarea:focus, select:focus,
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  transition: transform 150ms ease, filter 150ms ease, color 150ms ease;
+  transition: filter 150ms ease, color 150ms ease;
 }
 .abh-footer-icon-link:hover,
 .abh-footer-icon-link:focus-visible {
-  transform: translateY(-2px);
   filter: drop-shadow(0 5px 8px color-mix(in srgb, currentColor 30%, transparent));
 }
 

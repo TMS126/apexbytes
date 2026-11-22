@@ -31,7 +31,7 @@ function FooterContent() {
       )}
 
       <div className="mx-4 md:mx-8">
-      <div className="mx-auto max-w-[1280px] rounded-[14px] bg-[var(--footer-bg)] px-6 py-10 shadow-sm md:px-10">
+      <div className="mx-auto max-w-[1280px] rounded-[14px] bg-[var(--footer-bg)] px-6 py-10 md:px-10">
       <ScrollBounce>
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-16">
           <div className="flex flex-col gap-6">
@@ -60,7 +60,7 @@ function FooterContent() {
             <h3 className="text-[0.84rem] font-medium uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
-                const isActive = page.path === "/tools" ? pathname.startsWith("/tools") : pathname === page.path
+                const isActive = pathname === page.path || pathname.startsWith(`${page.path}/`)
 
                 return (
                   <li key={page.path}>
@@ -84,9 +84,9 @@ function FooterContent() {
           <div className="flex flex-col items-end text-right">
             <h3 className="mb-5 text-[0.84rem] font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
             <div className="flex items-center justify-end gap-4">
-              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} className="abh-footer-icon-link text-brand-whatsapp"><WhatsappLogo weight="regular" size={25} /></a>
-              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} className="abh-footer-icon-link text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
-              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" className="abh-footer-icon-link text-brand-blue"><FacebookLogo weight="regular" size={25} /></a>
+              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} className="abh-footer-icon-link text-muted-foreground hover:text-brand-whatsapp"><WhatsappLogo weight="regular" size={25} /></a>
+              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} className="abh-footer-icon-link text-muted-foreground hover:text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
+              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" className="abh-footer-icon-link text-muted-foreground hover:text-brand-blue"><FacebookLogo weight="regular" size={25} /></a>
             </div>
             <div className="mt-7"><BusinessStatusFull /></div>
           </div>

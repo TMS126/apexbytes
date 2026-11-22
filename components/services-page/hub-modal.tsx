@@ -147,7 +147,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
               const hasBulk = sectionHasBulk(hubId, section.title, section.items)
 
               return (
-                <div key={sIdx} className="overflow-hidden rounded-[12px] border border-border/60 bg-card/25">
+                <div key={sIdx} className="overflow-hidden rounded-[14px] border border-border/60 bg-card/25">
                   <button
                     type="button"
                     aria-expanded={isOpen}
@@ -330,7 +330,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   onClick={() => onSwitchHub(id)}
                   aria-label={`Switch to ${HUBS[id].title}`}
                   title={HUBS[id].title}
-                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
+                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
                   style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: otherAccent }}
                 >
                   <HubIcon id={id} size={18} color="currentColor" />

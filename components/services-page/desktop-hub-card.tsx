@@ -96,7 +96,7 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
             size={14}
             weight="bold"
             aria-hidden="true"
-            className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+            className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
           />
         </span>
       </div>

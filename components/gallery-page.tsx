@@ -22,66 +22,28 @@ import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 const LIKES_STORAGE_KEY = "apexbytes-gallery-likes"
 
-// ── Hub-filter circles ──
-// "All" now uses the seal-orange minimal accent (it isn't hub-specific,
-// so it gets the site's one neutral accent rather than borrowing blue).
-// Each hub circle still reveals its OWN color on hover/select — that
-// part was already correct logic, untouched. Added active:scale press
-// feedback to every circle (was hover-only before, no tactile response
-// on tap).
+// Shared compact mobile icons and editorial desktop text filters.
 export function HubFilterCircles({
-  activeFilter, onSelect, getAccent, isDark,
+  activeFilter, onSelect, getAccent,
 }: {
   activeFilter: HubId | "all"
   onSelect: (id: HubId | "all") => void
   getAccent: (id: HubId) => string
   isDark: boolean
 }) {
+  const filters = [{ id: "all" as const, label: "All", accent: TOKEN.orangeText, icon: <Funnel size={23} weight="regular" aria-hidden="true" /> }, ...ROW_ORDER.map((row) => ({ id: row.id, label: row.short, accent: getAccent(row.id), icon: <HubIcon id={row.id} size={24} weight="regular" /> }))]
   return (
-    <div className="flex items-center justify-center flex-wrap gap-4 overflow-x-auto no-scrollbar px-1 pb-1 md:gap-7">
-      <button
-        onClick={() => onSelect("all")}
-        aria-pressed={activeFilter === "all"}
-        aria-label="All projects"
-        className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
-      >
-        <span
-          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
-          style={{ borderColor: activeFilter === "all" ? TOKEN.orangeText : "transparent" }}
-        >
-          <span aria-hidden="true" className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-100" style={{ backgroundColor: `color-mix(in srgb, ${TOKEN.orangeText} 19%, transparent)` }} />
-          <Funnel size={22} weight="regular" aria-hidden="true" className={cn("relative transition-colors", activeFilter === "all" ? "text-brand-orange" : "text-muted-foreground group-hover:text-brand-orange")} />
-        </span>
-        <span className={cn("relative hidden text-[1.1rem] font-medium text-muted-foreground md:block", activeFilter === "all" && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--filter-accent)]")} style={{ ["--filter-accent" as string]: TOKEN.orangeText } as React.CSSProperties}>All</span>
-        <Funnel size={16} weight="regular" aria-hidden="true" className="hidden text-muted-foreground transition-colors group-hover:text-foreground md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100" />
-      </button>
-
-      {ROW_ORDER.map((row) => {
-        const isActive = activeFilter === row.id
-        const accent = getAccent(row.id)
+    <div className="flex items-center justify-center gap-5 overflow-x-auto px-2 pb-2 no-scrollbar md:gap-8">
+      {filters.map((filter) => {
+        const isActive = activeFilter === filter.id
         return (
-          <button
-            key={row.id}
-            onClick={() => onSelect(row.id)}
-            aria-pressed={isActive}
-            aria-label={row.label}
-            className="group shrink-0 flex flex-col items-center gap-1.5 active:scale-90 transition-transform duration-150 md:flex-row md:gap-2"
-          >
-            <span
-              className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 bg-zinc-100 transition-colors dark:bg-zinc-800 md:hidden"
-              style={{ borderColor: isActive ? accent : "transparent" }}
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                style={{ backgroundColor: `color-mix(in srgb, ${accent} 19%, transparent)` }}
-              />
-              <span className={cn("relative text-muted-foreground transition-colors group-hover:text-[var(--filter-accent)]", isActive && "text-[var(--filter-accent)]")} style={{ ["--filter-accent" as string]: accent }}>
-                <HubIcon id={row.id} size={26} weight={isActive ? "fill" : "regular"} />
-              </span>
+          <button key={filter.id} type="button" onClick={() => onSelect(filter.id)} aria-pressed={isActive} aria-label={filter.id === "all" ? "All projects" : filter.label} className="group relative flex shrink-0 flex-col items-center gap-1.5 pb-2 text-muted-foreground transition-colors hover:text-[var(--filter-accent)] focus-visible:text-[var(--filter-accent)] md:flex-row md:gap-2 md:text-[1.18rem] md:font-medium" style={{ ["--filter-accent" as string]: filter.accent, color: isActive ? filter.accent : undefined }}>
+            <span className="relative flex items-center justify-center text-muted-foreground transition-colors group-hover:text-[var(--filter-accent)] md:hidden" aria-hidden="true">
+              {filter.icon}
+              <span className={cn("absolute -bottom-2 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-[var(--filter-accent)] transition-all", isActive ? "w-7 opacity-100" : "w-0 opacity-0")} />
             </span>
-            <span className={cn("relative hidden max-w-[64px] truncate text-[1.1rem] font-medium text-muted-foreground md:block md:max-w-none", isActive && "after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:bg-[var(--filter-accent)]")} style={{ ["--filter-accent" as string]: accent } as React.CSSProperties}>{row.short}</span>
-            <span aria-hidden="true" className="hidden text-muted-foreground transition-[transform,filter,color] group-hover:block group-hover:-translate-y-0.5 group-hover:text-foreground group-hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_28%,transparent)] md:block md:w-0 md:opacity-0 md:group-hover:w-4 md:group-hover:opacity-100"><HubIcon id={row.id} size={16} weight="regular" color="currentColor" /></span>
+            <span className="hidden md:block">{filter.label}</span>
+            <span aria-hidden="true" className={cn("absolute bottom-0 left-0 h-0.5 rounded-full bg-[var(--filter-accent)] transition-all", isActive ? "w-full opacity-100" : "w-0 opacity-0")} />
           </button>
         )
       })}
@@ -287,7 +249,7 @@ function GalleryPageInner() {
         </ScrollBounce>
 
         <ScrollBounce delay={0.1}>
-          <div className="relative mx-auto mb-8 flex w-full max-w-md justify-center">
+          <div className="mx-auto mb-8 flex w-full max-w-md items-center justify-center gap-3">
             <ExpandingSearch
               id="gallery-search"
               label="Search projects"
@@ -301,12 +263,9 @@ function GalleryPageInner() {
             <button
               onClick={handleSurprise}
               aria-label="Surprise me with a random project"
-              aria-hidden={searchExpanded}
-              tabIndex={searchExpanded ? -1 : 0}
               className={cn(
-                "absolute right-0 top-1/2 flex min-h-9 -translate-y-1/2 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-all duration-200 hover:text-zinc-800 active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-zinc-200",
+                "flex min-h-9 shrink-0 items-center gap-2 rounded-full bg-zinc-100 px-3.5 py-2 text-[0.82rem] font-medium whitespace-nowrap text-muted-foreground transition-colors duration-200 hover:text-foreground active:scale-95 group/surprise dark:bg-zinc-800 dark:text-muted-foreground dark:hover:text-foreground",
                 surpriseFlash && "scale-90 opacity-60",
-                searchExpanded && "pointer-events-none opacity-0",
               )}
             >
               <Shuffle size={13} weight="bold" className="transition-transform duration-300 group-hover/surprise:rotate-180" aria-hidden="true" />

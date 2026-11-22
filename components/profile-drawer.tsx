@@ -184,7 +184,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   href={FOUNDER_WA_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-colors duration-200 active:scale-95"
                   style={{
                     backgroundColor: BRAND.whatsappAccessible,
                     color: TOKEN.onWhatsappAccessible,
@@ -199,7 +199,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
 
                 <button
                   onClick={handleVCard}
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-colors duration-200 active:scale-95"
                   style={{
                     backgroundColor: vcardDone ? BRAND.green : BRAND.blue,
                     color: vcardDone ? TOKEN.onBrandGreen : TOKEN.onBrandBlue,

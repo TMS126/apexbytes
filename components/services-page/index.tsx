@@ -258,7 +258,7 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
                     type="button"
                     aria-current={isActiveHub ? "page" : undefined}
                     onClick={() => handleDesktopSwitchHub(hubId)}
-                    className={cn("group relative inline-flex min-h-9 items-center gap-2 pb-2 text-[0.82rem] font-medium transition-colors after:absolute after:bottom-0 after:left-[3%] after:w-[94%] after:h-0.5 after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", isActiveHub ? "text-foreground after:opacity-100" : "text-muted-foreground hover:text-foreground after:opacity-0")}
+                    className={cn("group relative inline-flex min-h-9 items-center gap-2 pb-2 text-[1.18rem] font-medium text-muted-foreground transition-colors hover:text-[var(--underline-color)] after:absolute after:bottom-0 after:left-[3%] after:h-0.5 after:w-[94%] after:rounded-full after:bg-[var(--underline-color)] after:transition-opacity", isActiveHub ? "after:opacity-100" : "after:opacity-0")}
                     style={{ color: isActiveHub ? accent : undefined, ['--underline-color' as string]: accent }}
                   >
                     <HubIcon id={hubId} size={20} color="currentColor" />

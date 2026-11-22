@@ -53,7 +53,7 @@ export function PdfPillButton({
       onBlur={() => setHovered(false)}
       aria-label={label}
       title={label}
-      className={`inline-flex items-center gap-2 rounded-[14px] font-medium transition-all duration-150 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-95 active:shadow-sm active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-900 ${
+      className={`inline-flex items-center gap-2 rounded-[14px] font-medium transition-colors duration-150 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-900 ${
         isLg ? 'px-5 py-3 text-[1.05rem]' : 'px-4 py-2 text-[0.9rem]'
       }`}
       style={{

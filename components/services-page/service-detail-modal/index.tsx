@@ -577,7 +577,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               consistency. */}
           {showNsfasClosedNotice && (
             <div
-              className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
+              className="flex items-start gap-2.5 px-3.5 py-3 rounded-[14px]"
               style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 7%, transparent)` }}
             >
               <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />

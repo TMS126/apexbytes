@@ -55,7 +55,7 @@ export function CartSummaryBar({
     <>
       {undoStack && (
         <div className="sticky top-0 z-20 border-b border-border bg-card p-3">
-          <div className="flex items-center justify-between gap-3 rounded-[12px] border border-border bg-foreground p-2.5 text-background animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="flex items-center justify-between gap-3 rounded-[14px] border border-border bg-foreground p-2.5 text-background animate-in fade-in slide-in-from-top-1 duration-200">
             <span className="text-[0.7rem] font-medium truncate">
               {undoStack.kind === "remove" && undoStack.item
                 ? `${getDisplayName(undoStack.item.sectionTitle, undoStack.item.name)} removed`

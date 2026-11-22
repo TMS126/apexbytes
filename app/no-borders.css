@@ -35,13 +35,35 @@
    !important rules that sit in the "components" layer.
    ============================================================ */
 @layer base {
-  /* 1. No borders anywhere. Only exceptions: loading spinner, and the
-        "What we bring to the table" cards (data-hover-border). */
-  :root:root:root *:not(.animate-spin):not([data-hover-border]),
+  /* 1. No borders anywhere. Only exceptions: loading spinner and explicit UI rules. */
+  :root:root:root *:not(.animate-spin):not([data-hover-border]):not(input):not(textarea):not(select):not([role="combobox"]),
   :root:root:root *:not(.animate-spin):not([data-hover-border])::before,
   :root:root:root *:not(.animate-spin):not([data-hover-border])::after {
     border: 0 none transparent !important;
     border-color: transparent !important;
+  }
+
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input) {
+    border: 0 !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
+    border-radius: 0 !important;
+    background: color-mix(in srgb, var(--secondary) 72%, transparent) !important;
+    color: var(--foreground) !important;
+  }
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus,
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus-visible {
+    border-bottom-color: var(--line-rule) !important;
+    box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+  }
+  :root:root:root button[aria-haspopup="listbox"] {
+    border: 0 !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
+    border-radius: 0 !important;
+    background: color-mix(in srgb, var(--secondary) 72%, transparent) !important;
+  }
+  :root:root:root button[aria-haspopup="listbox"]:focus-visible {
+    border-bottom-color: var(--line-rule) !important;
+    box-shadow: 0 2px 0 -1px var(--line-rule) !important;
   }
 
   :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):has(> svg:only-child) {
@@ -99,19 +121,20 @@
   }
 
   /* 5. Dark mode fields use a single flat surface with no inset box. */
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input),
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):focus,
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):focus-visible {
-    background-color: var(--input) !important;
+  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input) {
+    background-color: color-mix(in srgb, var(--input) 78%, transparent) !important;
     background-image: none !important;
-    box-shadow: none !important;
   }
 
-  /* 6. About-page style card: surface + radius + shadow, no left rule. */
+  /* 6. About-page style cards stay flat until an interactive card is engaged. */
   :root:root:root .abh-card-rule {
     background: var(--card) !important;
     border-radius: 14px !important;
-    box-shadow: var(--ui-shadow-soft) !important;
+    box-shadow: none !important;
+  }
+  :root:root:root .abh-card-rule:is(a, button, [role="button"], [tabindex="0"]):hover,
+  :root:root:root .abh-card-rule:is(a, button, [role="button"], [tabindex="0"]):focus-visible {
+    box-shadow: var(--ui-shadow-hover) !important;
   }
 
   /* 7. 14px radii for old hard-coded big radii (rounded-full pills are untouched). */

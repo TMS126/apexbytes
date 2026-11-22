@@ -278,7 +278,7 @@ export function FloatingSearchWidget() {
             ref={fabRef}
 onClick={isOpen ? handleClose : handleOpen}
   aria-label={isOpen ? "Close search" : "Search services"}
-            className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+            className="abh-press group/search relative flex size-11 items-center justify-center rounded-full bg-transparent text-muted-foreground shadow-none transition-colors duration-150 ease-out hover:text-[var(--search-accent)] motion-reduce:transition-none" style={{ ["--search-accent" as string]: accentColor }}
           >
   {isOpen ? (
   <X size={24} weight="regular" aria-hidden="true" />
@@ -287,8 +287,7 @@ onClick={isOpen ? handleClose : handleOpen}
   size={21}
   weight="regular"
   aria-hidden="true"
-  className="transition-all duration-200 ease-out motion-reduce:transition-none"
-  style={{ color: accentColor }}
+  className="text-muted-foreground transition-colors duration-200 ease-out group-hover/search:text-[var(--search-accent)] motion-reduce:transition-none"
   />
   )}
           </button>

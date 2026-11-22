@@ -39,7 +39,7 @@ function OptionCard({ selected, onClick, title, description, accentColor }: {
       type="button"
       aria-pressed={selected}
       onClick={onClick}
-      className="relative rounded-xl border px-3 py-3 text-left transition-[border-color,background-color,box-shadow,transform] hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/5"
+      className="relative rounded-[14px] border px-3 py-3 text-left transition-[border-color,background-color,box-shadow] hover:border-primary/50 hover:bg-primary/5"
       style={selected ? { borderColor: accentColor, backgroundColor: `${accentColor}12`, boxShadow: `0 0 0 2px ${accentColor}24` } : undefined}
     >
       <span className="flex items-center gap-2 text-sm font-medium text-foreground">
@@ -142,14 +142,14 @@ export function SettingsBar({
   ]
 
   return (
-    <div className="flex flex-col rounded-[14px] border border-border/70 bg-card p-4 shadow-[var(--shadow-card-lift)] md:p-5">
+    <div className="flex flex-col rounded-[14px] border border-border/70 bg-card p-4 md:p-5">
       <section aria-labelledby="pdf-output-heading" className="pb-5">
         <button
           type="button"
           onClick={() => setOpenSection((current) => (current === "output" ? null : "output"))}
           aria-expanded={openSection === "output"}
           aria-controls="pdf-output-content"
-          className="group flex w-full items-center justify-between gap-4 rounded-xl border border-border/70 bg-background/45 px-3 py-3 text-left transition-[background-color,border-color,box-shadow] hover:border-primary/40 hover:bg-secondary/55 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+          className="group flex w-full items-center justify-between gap-4 rounded-[14px] border border-border/70 bg-background/45 px-3 py-3 text-left transition-[background-color,border-color,box-shadow] hover:border-primary/40 hover:bg-secondary/55 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <span>
             <span id="pdf-output-heading" className="block text-sm font-medium text-foreground">Output</span>
@@ -184,7 +184,7 @@ export function SettingsBar({
           onClick={() => setOpenSection((current) => (current === "page-size" ? null : "page-size"))}
           aria-expanded={openSection === "page-size"}
           aria-controls="pdf-size-content"
-          className="group flex w-full items-center justify-between gap-4 rounded-xl border border-border/70 bg-background/45 px-3 py-3 text-left transition-[background-color,border-color,box-shadow] hover:border-primary/40 hover:bg-secondary/55 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+          className="group flex w-full items-center justify-between gap-4 rounded-[14px] border border-border/70 bg-background/45 px-3 py-3 text-left transition-[background-color,border-color,box-shadow] hover:border-primary/40 hover:bg-secondary/55 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           <span>
             <span id="pdf-size-heading" className="block text-sm font-medium text-foreground">Page size</span>

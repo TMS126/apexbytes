@@ -14,7 +14,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
     <main className="min-h-screen bg-background pb-24">
       <header className="abh-editorial-hero">
         <Link href="/services" aria-label="Back to all services" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
-          <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
+          <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-muted-foreground transition-colors hover:bg-card hover:text-foreground">All</span>
           <ArrowLeft size={15} aria-hidden="true" />
         </Link>
         <span className="mb-5 inline-flex items-center text-muted-foreground" title={`${hub.title} icon`} aria-label={hub.title}>
@@ -32,7 +32,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
           <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[14px] border border-border/60 bg-card/40 transition-shadow hover:shadow-[var(--shadow-card-lift)]">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 transition-colors hover:bg-card/70 [&::-webkit-details-marker]:hidden md:px-6">
               <span className="min-w-0">
-                <span className="mb-1 block text-xs font-medium uppercase tracking-[0.16em]" style={{ color: accent }}>{hub.title}</span>
+                <span className="abh-eyebrow mb-1 block">{hub.title}</span>
                 <span id={`section-${sectionIndex}`} className="block font-heading text-2xl font-medium tracking-tight text-foreground md:text-3xl">{section.title}</span>
                 {section.desc && <span className="mt-2 block max-w-2xl text-sm leading-relaxed text-muted-foreground">{section.desc}</span>}
               </span>
@@ -59,7 +59,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
                     <p className="mt-3 flex-1 text-base leading-relaxed text-muted-foreground">{item.description || "View service details and what to bring."}</p>
                     <span className="mt-5 inline-flex items-center gap-2 text-base font-medium text-foreground">
                       View service
-                      <ArrowUpRight size={15} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                      <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                     </span>
                   </Link>
                 </li>

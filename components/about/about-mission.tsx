@@ -2,7 +2,6 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, EnvelopeSimple } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
@@ -33,16 +32,13 @@ export function AboutMission() {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/services" className="abh-site-cta w-full sm:w-64 justify-center px-8 py-3.5 font-medium">
+          <Link href="/services" className="abh-site-cta group/mission-cta relative inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-base font-medium focus-visible:outline-none sm:w-[184px]">
             See All Services
-            <ArrowRight size={16} weight="regular" />
+            <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/mission-cta:scale-x-100 group-focus-visible/mission-cta:scale-x-100" />
           </Link>
-          <Link
-            href="/contact"
-            className="abh-site-cta w-full sm:w-64 justify-center px-8 py-3.5 font-medium"
-          >
-            <EnvelopeSimple size={16} weight="regular" />
+          <Link href="/contact" className="abh-site-cta group/mission-cta relative inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-base font-medium focus-visible:outline-none sm:w-[184px]">
             Get in Touch
+            <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/mission-cta:scale-x-100 group-focus-visible/mission-cta:scale-x-100" />
           </Link>
         </div>
       </ScrollBounce>

@@ -28,9 +28,9 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
           <span className="inline-flex size-10 items-center justify-center text-muted-foreground">
             <HubIcon id={service.hubId} size={20} color="currentColor" />
           </span>
-          <ArrowLeft size={15} aria-hidden="true" style={{ color: accent }} />
+          <ArrowLeft size={15} aria-hidden="true" className="text-muted-foreground transition-colors hover:text-[var(--hub-accent)]" style={{ ["--hub-accent" as string]: accent }} />
         </Link>
-        <span className="abh-eyebrow mb-2" style={{ color: accent }}>
+        <span className="abh-eyebrow mb-2">
           {hub.title}
         </span>
         <h1 className="abh-page-title mb-5">{service.name}</h1>
@@ -85,7 +85,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
 
       {relatedServices.length > 0 && (
         <section className="mx-auto mt-10 max-w-[1080px] border-t border-[var(--line-rule)] px-4 pt-7 md:px-8" aria-labelledby="related-services-heading">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">More in this category</p>
+          <p className="abh-eyebrow">More in this category</p>
           <h2 id="related-services-heading" className="mt-2 font-heading text-2xl font-medium tracking-tight text-foreground">
             More {service.sectionTitle}
           </h2>

@@ -146,9 +146,9 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
 function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id: string) => void }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
-    <article className="rounded-xl border border-border/70 bg-card/55 px-4 py-3.5">
+    <article className="rounded-[14px] border border-border/70 bg-card/55 px-4 py-3.5">
       <div className="flex items-start gap-3">
-        <notice.Icon size={19} weight="bold" style={{ color }} className="mt-0.5 shrink-0" aria-hidden="true" />
+        <notice.Icon size={19} weight="bold" className="mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true" />
         <div className="flex min-w-0 flex-col gap-1">
           <h3 className="text-sm font-semibold uppercase tracking-[0.12em]" style={{ color }}>
             {notice.header}

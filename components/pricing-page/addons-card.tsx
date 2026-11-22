@@ -7,10 +7,10 @@ import { sortItemsByPrice } from "@/lib/data"
 
 export function AddOnsCard() {
   return (
-    <section className="rounded-[14px] border border-border bg-card px-5 py-6 shadow-sm md:px-7 md:py-7" aria-labelledby="pricing-add-ons-title">
+    <section className="rounded-[14px] border border-border bg-card px-5 py-6 md:px-7 md:py-7" aria-labelledby="pricing-add-ons-title">
       <div className="mb-5 flex items-start gap-3">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: `${TOKEN.orangeText}1a` }} aria-hidden="true">
-          <Sparkle size={18} weight="bold" style={{ color: TOKEN.orangeText }} aria-hidden="true" />
+          <Sparkle size={18} weight="bold" className="text-muted-foreground" aria-hidden="true" />
         </span>
         <div>
           <h2 id="pricing-add-ons-title" className="font-sans text-2xl font-medium leading-tight text-zinc-900 dark:text-zinc-50">New Add-Ons &amp; Free Features</h2>
@@ -28,11 +28,11 @@ export function AddOnsCard() {
           </li>
         ))}
       </ul>
-      <h3 className="mb-2.5 text-sm font-medium uppercase tracking-widest text-muted-foreground">Free — No Extra Charge</h3>
+      <h3 className="abh-eyebrow mb-2.5">Free — No Extra Charge</h3>
       <ul className="mb-4 grid gap-1.5 sm:grid-cols-2">
         {FREE_ADD_ONS.map((addOn) => (
           <li key={addOn} className="flex items-center gap-2 text-base font-medium text-zinc-700 dark:text-zinc-200">
-            <CheckCircle size={16} weight="bold" style={{ color: TOKEN.greenText }} aria-hidden="true" />
+            <CheckCircle size={16} weight="bold" className="text-muted-foreground" aria-hidden="true" />
             {addOn}
           </li>
         ))}

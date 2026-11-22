@@ -51,8 +51,8 @@ function Stars({ rating, color }: { rating: number; color: string }) {
           key={i}
           size={13}
           weight="fill"
-          style={{ color: i < rating ? color : undefined }}
-          className={i < rating ? "" : "text-zinc-200 dark:text-zinc-700"}
+          style={{ ["--testimonial-accent" as string]: color }}
+          className={i < rating ? "text-muted-foreground transition-colors group-hover:text-[var(--testimonial-accent)]" : "text-zinc-200 dark:text-zinc-700"}
           aria-hidden="true"
         />
       ))}
@@ -104,8 +104,8 @@ export function TestimonialsSection({
             const solid = solidFor(review)
             return (
               <ScrollBounce key={review.name + index} delay={index * 0.08} className="h-full">
-                <article className="abh-card flex h-full min-h-[360px] flex-col items-center justify-center overflow-hidden px-7 py-8 text-center">
-                  <Quotes size={22} weight="fill" style={{ color: accent }} className="mb-4 shrink-0 opacity-50" aria-hidden="true" />
+                <article className="group abh-card flex h-full min-h-[360px] flex-col items-center justify-center overflow-hidden px-7 py-8 text-center" style={{ ["--testimonial-accent" as string]: accent }}>
+                  <Quotes size={22} weight="fill" className="mb-4 shrink-0 text-muted-foreground opacity-50 transition-colors group-hover:text-[var(--testimonial-accent)]" aria-hidden="true" />
                   <p className="mb-6 max-w-[32ch] text-[1.05rem] font-medium leading-relaxed text-zinc-700 dark:text-zinc-300">{review.quote}</p>
                   <div className="mt-auto flex flex-col items-center">
                     <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-full text-[0.9rem] font-medium text-white" style={{ backgroundColor: solid }}>
@@ -128,9 +128,9 @@ export function TestimonialsSection({
             href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexbytesHub! I'd like to share my experience with you.")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 rounded-full border border-border bg-card px-5 py-2.5 text-[0.88rem] font-medium text-muted-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-whatsapp hover:text-brand-whatsapp active:translate-y-0 active:scale-95"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-border bg-card px-5 py-2.5 text-[0.88rem] font-medium text-muted-foreground transition-colors duration-200 hover:border-brand-whatsapp hover:text-brand-whatsapp active:scale-95"
           >
-            <WhatsappLogo size={16} weight="fill" className="text-brand-whatsapp" aria-hidden="true" />
+            <WhatsappLogo size={16} weight="fill" className="text-muted-foreground transition-colors group-hover:text-brand-whatsapp" aria-hidden="true" />
             Share your experience on WhatsApp
           </a>
         </div>

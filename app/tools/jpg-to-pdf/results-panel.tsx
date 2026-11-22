@@ -59,7 +59,7 @@ export function ResultsPanel({
             <button
               type="button"
               onClick={() => onSend(convertedFiles.find((f) => f.fileName === fileName) || convertedFiles[0])}
-              className="col-span-2 flex items-center justify-center gap-2 rounded-[12px] py-3 px-4 text-sm font-medium text-white transition-transform active:scale-[0.98]"
+              className="col-span-2 flex items-center justify-center gap-2 rounded-[14px] py-3 px-4 text-sm font-medium text-white transition-transform active:scale-[0.98]"
               style={{ backgroundColor: accentColor }}
             >
               <PaperPlaneTilt weight="fill" className="w-4 h-4" aria-hidden="true" />

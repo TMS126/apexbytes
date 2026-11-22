@@ -67,12 +67,12 @@ export function FabTrigger({
           title="Open quotation calculator"
           aria-label="Open quotation calculator"
           aria-haspopup="dialog"
-          className="abh-press pointer-events-auto relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+          className="abh-press group/calc pointer-events-auto relative flex size-11 items-center justify-center rounded-full bg-transparent text-muted-foreground shadow-none transition-colors duration-150 ease-out hover:text-[var(--fab-accent)] motion-reduce:transition-none" style={{ ["--fab-accent" as string]: fabColor }}
         >
           <Calculator
             size={25}
             weight="regular"
-            style={{ color: fabColor }}
+            className="text-muted-foreground transition-colors group-hover/calc:text-[var(--fab-accent)]"
           />
         </button>
 

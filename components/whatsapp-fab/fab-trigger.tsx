@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation"
 import { WhatsappLogo, X } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { BIZ } from "@/lib/brand"
-import { WA, TXT } from "./wa-theme"
+import { TXT } from "./wa-theme"
 
 interface FabTriggerProps {
   visible: boolean
@@ -50,7 +50,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
           onClick={isOpen ? onClose : onOpen}
           title={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name}`}
           aria-label={isOpen ? "Close WhatsApp chat" : `Chat with ${BIZ.name} on WhatsApp`}
-          className="abh-press relative flex size-11 items-center justify-center rounded-[14px] bg-transparent text-foreground shadow-none hover:-translate-y-0.5 hover:drop-shadow-[0_5px_8px_color-mix(in_srgb,var(--foreground)_28%,transparent)] transition-[transform,filter] duration-150 ease-out motion-reduce:transition-none"
+          className="abh-press relative flex size-11 items-center justify-center rounded-[14px] bg-transparent text-muted-foreground shadow-none transition-colors duration-150 ease-out hover:text-brand-whatsapp motion-reduce:transition-none"
         >
           {isOpen ? (
             <X size={24} weight="regular" aria-hidden="true" />
@@ -58,7 +58,7 @@ export function FabTrigger({ visible, dimmed, isOpen, onOpen, onClose }: FabTrig
             <WhatsappLogo
               size={25}
               weight="regular"
-              style={{ color: WA.accent }}
+              className="text-muted-foreground transition-colors group-hover/wa:text-brand-whatsapp"
             />
           )}
         </button>

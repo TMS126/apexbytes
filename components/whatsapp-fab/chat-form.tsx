@@ -164,7 +164,7 @@ export function ChatForm({
           <button
             type="button"
             onClick={() => addQuickNote(QUICK_NOTES[quickNoteIdx])}
-            className={cn(TXT.hint, "abh-press flex-1 min-w-0 flex items-center gap-1 px-2 py-1 rounded-full font-medium border transition-all duration-150 ease-out hover:-translate-y-0.5")}
+            className={cn(TXT.hint, "abh-press flex-1 min-w-0 flex items-center gap-1 px-2 py-1 rounded-full font-medium border transition-colors duration-150 ease-out")}
             style={{ borderColor: "color-mix(in srgb, var(--wa-sub) 12%, transparent)", color: WA.text, backgroundColor: "color-mix(in srgb, var(--wa-accent) 7%, transparent)" }}
           >
             <Lightning size={9} weight="fill" style={{ color: WA.accent }} className="shrink-0" />

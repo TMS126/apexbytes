@@ -155,7 +155,7 @@ export function HubCompactCard({
         onClick={onSelect}
         onMouseEnter={onHover}
         aria-pressed
-        className="h-full w-full rounded-[14px] bg-card transition-[box-shadow,background-color] duration-200 hover:shadow-[0_18px_34px_-16px_rgba(0,0,0,0.45)] active:scale-[0.98] flex flex-col items-center justify-center gap-2"
+        className="h-full w-full rounded-[14px] bg-card transition-colors duration-200 active:scale-[0.98] flex flex-col items-center justify-center gap-2"
       >
         <HubIcon id={hubId} size={34} weight="fill" color={hubColor} />
           <span className="relative pb-1 text-lg font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-current" style={{ color: hubColor }}>{hub.title}</span>
@@ -168,7 +168,7 @@ export function HubCompactCard({
       onClick={onSelect}
       onMouseEnter={onHover}
       aria-pressed={false}
-      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-[background-color,box-shadow] duration-200 active:scale-[0.98] bg-card/70 hover:bg-card hover:shadow-[var(--shadow-card-lift)] flex flex-col"
+      className="h-full w-full text-left rounded-[14px] px-6 py-6 transition-colors duration-200 active:scale-[0.98] bg-card/70 hover:bg-card flex flex-col"
     >
       {/* Hubs are identified by their icon; the title remains available to assistive technology. */}
       <div className="flex items-center gap-2 mb-2.5">
@@ -253,7 +253,7 @@ export function HubExpandedPanel({
 
   return (
     <div
-      className="mt-3 rounded-[14px] bg-card overflow-hidden shadow-[var(--shadow-card-lift)]"
+      className="mt-3 rounded-[14px] bg-card overflow-hidden"
       style={{ border: `1.5px solid ${hubColor}` }}
     >
       <div
@@ -328,7 +328,7 @@ export function HubExpandedPanel({
         {/* ── One shared footer, spanning both columns ── */}
         <div className="flex items-center justify-between gap-4 border-t border-border bg-background/60 px-6 py-3.5">
           <div className="flex items-start gap-2 min-w-0">
-            <Clock size={13} weight="bold" style={{ color: hubColor }} className="shrink-0 mt-0.5" aria-hidden="true" />
+            <Clock size={13} weight="bold" className="shrink-0 mt-0.5 text-muted-foreground" aria-hidden="true" />
             <div className="min-w-0">
       <span className="text-sm font-medium" style={{ color: hubColor }}>{turnaround.label}</span>
       <span className="text-sm text-muted-foreground ml-1.5">{turnaround.detail}</span>
@@ -379,7 +379,7 @@ export function HubAccordionCard({
   return (
     <div
       ref={cardRef}
-      className="rounded-[14px] bg-card overflow-hidden transition-[box-shadow,transform] duration-200 hover:shadow-[var(--shadow-card-lift)]"
+      className="rounded-[14px] bg-card overflow-hidden transition-colors duration-200"
       style={isOpen ? { borderColor: hubColor } : undefined}
     >
       <button

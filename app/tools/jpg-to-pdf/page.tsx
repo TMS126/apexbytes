@@ -93,12 +93,12 @@ export default function JpgToPdfPage() {
               aria-label="Back to all tools"
               className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
+              <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-muted-foreground transition-colors hover:bg-card hover:text-foreground">All</span>
               <CaretLeft size={15} weight="bold" aria-hidden="true" />
             </Link>
             
             <div className="flex justify-center mb-5">
-              <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
+              <FilePdf weight="fill" size={40} className="text-muted-foreground" aria-hidden="true" />
             </div>
             
             <h1 className="abh-page-title mb-3">
@@ -140,20 +140,20 @@ export default function JpgToPdfPage() {
                       }
                     }}
                     aria-label="Upload images: drag and drop, or press Enter to browse"
-                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)]  transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                    className={`group relative w-full rounded-[14px] border-2 bg-card/55 transition-colors duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                       isDragging
                         ? "border-solid bg-primary/8 border-primary"
                         : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"
                     }`}
                   >
                     <div 
-                      className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transition-colors"
-                      style={{ backgroundColor: `${accentColor}12` }}
+                      className="w-20 h-20 rounded-[14px] flex items-center justify-center mb-6 transition-colors"
+                      style={{ backgroundColor: `color-mix(in srgb, var(--secondary) 72%, transparent)`, ["--tool-accent" as string]: accentColor }}
                     >
                       <UploadSimple 
                         weight="bold" 
                         size={40}
-                        style={{ color: accentColor }}
+                        className="text-muted-foreground transition-colors group-hover:text-[var(--tool-accent)]"
                         aria-hidden="true" 
                       />
                     </div>
@@ -272,9 +272,9 @@ accept={ACCEPT_ATTRIBUTE}
                   {/* Add More Button */}
                   <button
                     onClick={() => inputRef.current?.click()}
-                    className="w-full mt-4 rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-all flex flex-col items-center justify-center gap-2"
+                    className="w-full mt-4 rounded-[14px] border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-colors flex flex-col items-center justify-center gap-2"
                   >
-                    <Plus size={24} style={{ color: accentColor }} weight="bold" />
+                    <Plus size={24} className="text-muted-foreground" weight="bold" />
                     <span className="text-sm font-medium text-foreground">Add More Images</span>
                     <span className="text-xs text-muted-foreground">Add up to {20 - t.images.length} more</span>
                   </button>
@@ -313,7 +313,7 @@ accept={ACCEPT_ATTRIBUTE}
                     onClick={t.requestConvert}
                     disabled={t.isConverting || t.selectedCount === 0}
                     aria-busy={t.isConverting}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 rounded-[14px] font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
                     style={{ 
                       backgroundColor: accentColor,
                       boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"

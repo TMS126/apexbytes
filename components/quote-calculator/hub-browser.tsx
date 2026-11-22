@@ -346,7 +346,7 @@ export function HubBrowser({
                             <div key={iIdx} className="relative">
                               <div
                                 className={cn(
-                                  "group relative ml-6 flex items-center gap-2 rounded-[12px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
+                                  "group relative ml-6 flex items-center gap-2 rounded-[14px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
                                   itemQty > 0 && "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
