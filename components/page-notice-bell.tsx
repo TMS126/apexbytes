@@ -1,8 +1,7 @@
 "use client"
 
-import { useEffect, useId, useRef, useState } from "react"
-import { createPortal } from "react-dom"
-import { AnimatePresence, motion } from "framer-motion"
+import { useId, useState } from "react"
+import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, Megaphone, SealPercent, Wrench } from "@phosphor-icons/react"
 import { ADD_ONS_EFFECTIVE_DATE } from "@/lib/add-ons"
 import { TOKEN } from "@/lib/brand"
@@ -178,8 +177,6 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
   const [unread, setUnread] = useState(true)
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => new Set())
   const visibleNotices = notices.filter((notice) => !dismissedIds.has(notice.id))
-  const buttonRef = useRef<HTMLButtonElement>(null)
-  const panelRef = useRef<HTMLDivElement>(null)
   const titleId = useId()
   const panelId = useId()
 
@@ -190,26 +187,6 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
     else result.push({ label, notices: [notice] })
     return result
   }, [])
-
-  useEffect(() => {
-    if (!open) return
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false)
-        buttonRef.current?.focus()
-      }
-    }
-    const onPointerDown = (event: PointerEvent) => {
-      const target = event.target as Node
-      if (!buttonRef.current?.contains(target) && !panelRef.current?.contains(target)) setOpen(false)
-    }
-    document.addEventListener("keydown", onKeyDown)
-    document.addEventListener("pointerdown", onPointerDown)
-    return () => {
-      document.removeEventListener("keydown", onKeyDown)
-      document.removeEventListener("pointerdown", onPointerDown)
-    }
-  }, [open])
 
   if (!visibleNotices.length) return null
 
@@ -223,72 +200,56 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
     }
   }
 
-  const toggle = () => {
-    const nextOpen = !open
+  const handleOpenChange = (nextOpen: boolean) => {
     setOpen(nextOpen)
     if (nextOpen) setUnread(false)
   }
 
   return (
-    <>
+    <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
       <div className={cn("abh-page-notice-bell fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
-        <button
-          ref={buttonRef}
-          type="button"
-          onClick={toggle}
-          aria-haspopup="dialog"
-          aria-expanded={open}
-          aria-controls={panelId}
-          aria-label={`Open ${PAGE_LABEL[page]} notifications (${visibleNotices.length})`}
-          className="flex size-11 items-center justify-center text-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <AnnouncementIconChip unread={unread} />
-        </button>
+        <DialogPrimitive.Trigger asChild>
+          <button
+            type="button"
+            aria-label={`Open ${PAGE_LABEL[page]} notifications (${visibleNotices.length})`}
+            className="flex size-11 items-center justify-center text-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <AnnouncementIconChip unread={unread} />
+          </button>
+        </DialogPrimitive.Trigger>
       </div>
 
-      {typeof document !== "undefined" && createPortal(
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              ref={panelRef}
-              id={panelId}
-              role="dialog"
-              aria-labelledby={titleId}
-              initial={{ opacity: 0, y: -5, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -4, scale: 0.98 }}
-              transition={{ duration: 0.16, ease: "easeOut" }}
-              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] w-[min(26rem,calc(100vw-1.5rem))] rounded-[14px] border border-border/80 bg-background p-4 shadow-xl md:right-5"
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Content
+          id={panelId}
+          aria-labelledby={titleId}
+          className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] max-h-[calc(100dvh-var(--nav-h,74px)-5.5rem)] w-[min(26rem,calc(100vw-1.5rem))] overflow-y-auto rounded-[14px] border border-border/80 bg-background p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:slide-in-from-top-1 md:right-5"
+        >
+          <div className="mb-4 flex items-start justify-between gap-3">
+            <div>
+              <DialogPrimitive.Title id={titleId} className="text-lg font-semibold text-foreground">{PAGE_LABEL[page]} notices</DialogPrimitive.Title>
+              <p className="mt-0.5 text-base text-muted-foreground">{visibleNotices.length} update{visibleNotices.length === 1 ? "" : "s"} remaining</p>
+            </div>
+            <DialogPrimitive.Close
+              type="button"
+              aria-label="Close notifications"
+              className="inline-flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <div className="mb-4 flex items-start justify-between gap-3">
-                <div>
-                  <h2 id={titleId} className="text-lg font-semibold text-foreground">{PAGE_LABEL[page]} notices</h2>
-                  <p className="mt-0.5 text-base text-muted-foreground">{visibleNotices.length} update{visibleNotices.length === 1 ? "" : "s"} remaining</p>
+              <span aria-hidden="true">×</span>
+            </DialogPrimitive.Close>
+          </div>
+          <div className="flex flex-col gap-4">
+            {groups.map((group) => (
+              <section key={group.label} aria-label={group.label}>
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group.label}</h3>
+                <div className="flex flex-col gap-2">
+                  {group.notices.map((notice) => <NoticeCard key={notice.id} notice={notice} onDismiss={dismissNotice} />)}
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  aria-label="Close notifications"
-                  className="inline-flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="flex flex-col gap-4">
-                {groups.map((group) => (
-                  <section key={group.label} aria-label={group.label}>
-                    <h3 className="mb-2 text-sm font-semibold uppercase tracking-[0.16em] text-muted-foreground">{group.label}</h3>
-                    <div className="flex flex-col gap-2">
-                      {group.notices.map((notice) => <NoticeCard key={notice.id} notice={notice} onDismiss={dismissNotice} />)}
-                    </div>
-                  </section>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
-      )}
-    </>
+              </section>
+            ))}
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   )
 }
