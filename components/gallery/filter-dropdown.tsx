@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CaretDown, Funnel } from "@phosphor-icons/react"
+import { CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -90,9 +90,7 @@ export function FilterDropdown({
             )}
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
-            <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-zinc-100 dark:bg-zinc-800">
-              {activeFilter !== "all" ? <HubIcon id={activeFilter} size={15} weight="fill" color={getAccent(activeFilter)} /> : <Funnel size={15} weight="bold" aria-hidden="true" />}
-            </span>
+            <span className="sr-only">Current filter:</span>
             {displayedLabel}
             <CaretDown size={13} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
           </button>

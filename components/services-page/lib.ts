@@ -106,7 +106,10 @@ export function cleanText(s: string) {
 
 export function naturalServiceLabel(name: string, sectionTitle: string) {
   const cleanName = cleanText(name)
-  if (SUFFIX_SECTIONS[sectionTitle]) return `${cleanName} ${SUFFIX_SECTIONS[sectionTitle]}`
+  if (SUFFIX_SECTIONS[sectionTitle]) {
+    const suffix = SUFFIX_SECTIONS[sectionTitle]
+    return cleanName.toLowerCase().endsWith(suffix.toLowerCase()) ? cleanName : `${cleanName} ${suffix}`
+  }
   if (PREFIX_SECTIONS[sectionTitle]) {
     const keyword = PREFIX_SECTIONS[sectionTitle]
     if (cleanName.toLowerCase().startsWith(keyword.toLowerCase())) return cleanName

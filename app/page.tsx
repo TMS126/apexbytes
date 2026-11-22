@@ -9,7 +9,7 @@ import { StatsBar } from "@/components/stats-bar"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { StripSection, CtaBar } from "@/components/strip-section"
 import { Footer } from "@/components/footer"
-import { BIZ } from "@/lib/brand"
+import { BIZ, waChatLink } from "@/lib/brand"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export default function HomeRoute() {
@@ -29,7 +29,7 @@ export default function HomeRoute() {
             title="Ready to get started?"
             description={`WhatsApp us or visit us in ${BIZ.location} — we're always happy to help.`}
             buttonText="WhatsApp Us Now"
-            buttonHref={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`}
+            buttonHref={waChatLink()}
           />
         </div>
       </div>

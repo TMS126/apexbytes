@@ -8,7 +8,7 @@ import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, FacebookLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
-import { BRAND, TOKEN, BIZ, CONTACT_LINKS } from "@/lib/brand"
+import { BRAND, TOKEN, BIZ, CONTACT_LINKS, waChatLink } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -310,7 +310,7 @@ function ContactPageInner() {
       </div>
 
       <div className="md:hidden fixed bottom-0 inset-x-0 z-[9985] px-4 pb-4 pt-2 bg-gradient-to-t from-background via-background to-transparent">
-        <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`} target="_blank" rel="noopener noreferrer" className="abh-wa-btn w-full py-3.5 shadow-lg">
+        <a href={waChatLink()} target="_blank" rel="noopener noreferrer" className="abh-wa-btn w-full py-3.5 shadow-lg">
           <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
           Chat on WhatsApp
         </a>

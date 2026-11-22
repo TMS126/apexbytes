@@ -2,36 +2,25 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { FilePdf, Wrench } from "@phosphor-icons/react/dist/ssr"
+import { FilePdf, FileText, ClipboardText, CurrencyDollar } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { BIZ, WA } from "@/lib/brand"
-import { ComingSoonTool } from "@/components/coming-soon-tool"
 import { CtaBar } from "@/components/strip-section"
 import { PageScrollControls } from "@/components/page-scroll-controls"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
-  description: "Free browser-based tools from ApexbytesHub — starting with JPG to PDF conversion, with more on the way.",
+  description: "Free tools from ApexbytesHub: convert JPG to PDF, prepare a CV, and send service intake details."
 }
 
 const TOOLS = [
-  {
-    id: "jpg-to-pdf",
-    name: "JPG to PDF",
-    desc: "Convert images into a PDF right in your browser — nothing is uploaded.",
-    href: "/tools/jpg-to-pdf",
-    Icon: FilePdf,
-  },
-  {
-    id: "coming-soon",
-    name: "Coming soon",
-    desc: "Another focused utility is on the way.",
-    href: "#coming-soon",
-    Icon: Wrench,
-  },
+  { id: "jpg-to-pdf", name: "JPG to PDF", desc: "Convert images into a PDF right in your browser — nothing is uploaded.", href: "/tools/jpg-to-pdf", Icon: FilePdf },
+  { id: "cv-writing", name: "CV Writing / CV Typing", desc: "Enter your details and create a clean, print-ready CV.", href: "/tools/cv-writing", Icon: FileText },
+  { id: "intake-form", name: "Intake Form Filling", desc: "Share your details for a service request in one guided form.", href: "/tools/intake-form", Icon: ClipboardText },
+  { id: "quote", name: "Quote", desc: "Browse services and build a quote for your request.", href: "/pricing", Icon: CurrencyDollar },
 ]
 
 export default function ToolsPage() {
@@ -54,13 +43,10 @@ export default function ToolsPage() {
 
       <div className="px-6 md:px-8 pb-24">
         <div className="max-w-[720px] mx-auto">
-          <div className="grid grid-cols-2 items-stretch gap-4">
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
-                {tool.id === "coming-soon" ? (
-                  <ComingSoonTool />
-                ) : (
-                  <Link
+                <Link
                     href={tool.href}
                     className="group flex min-h-24 w-full items-center justify-center rounded-[14px] p-5 text-center transition-transform duration-150 active:translate-y-px"
                     aria-label={tool.name}
@@ -72,13 +58,12 @@ export default function ToolsPage() {
                       <span className="text-sm font-medium text-foreground">{tool.name}</span>
                     </span>
                   </Link>
-                )}
               </ScrollBounce>
             ))}
           </div>
 
           <p className="mt-8 text-center text-sm font-medium text-muted-foreground">
-            More focused utilities are being built for this workspace.
+            Choose a tool to get started. Your details stay in your browser until you choose to send them.
           </p>
         </div>
       </div>

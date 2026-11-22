@@ -1,5 +1,5 @@
 // components/privacy-page.tsx
-import { BIZ } from "@/lib/brand"
+import { BIZ, waChatLink } from "@/lib/brand"
 
 const LAST_UPDATED = "August 2026"
 
@@ -231,7 +231,7 @@ export function PrivacyPage() {
               </p>
               <p>
                 Phone:{" "}
-                <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`} className="text-brand-blue underline underline-offset-2">
+                <a href={waChatLink()} className="text-brand-blue underline underline-offset-2">
                   {BIZ.phone}
                 </a>
               </p>

@@ -289,6 +289,14 @@ export const BIZ = {
 export const waLink = (message: string) =>
   `https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`
 
+// Build consistent, prefilled WhatsApp messages for contextual and general chats.
+export const waChatLink = (serviceName?: string, details?: string) => {
+  const greeting = serviceName
+    ? `Hi ${BIZ.name}, I'd like a quote for ${serviceName}.`
+    : `Hi ${BIZ.name}, I'd like to ask about your services.`
+  return waLink(details ? `${greeting}\n\n${details}` : greeting)
+}
+
 export const WA = {
   general: waLink(`Hi ${BIZ.name}! I'm interested in your services. Can you tell me more?`),
   print: waLink(`Hi ${BIZ.name}! I need printing services. Can you help?`),
@@ -451,6 +459,7 @@ export const FOOTER_NAV = [
   { label: "Gallery", path: "/gallery" },
   { label: "Pricing", path: "/pricing" },
   { label: "Tools", path: "/tools" },
+  { label: "Quote", path: "/pricing" },
   { label: "About", path: "/about" },
   { label: "Contact", path: "/contact" },
 ] as const 

@@ -11,7 +11,7 @@ import { Navbar } from "@/components/navbar"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { Footer } from "@/components/footer"
 import { HUBS } from "@/lib/data"
-import { BIZ } from "@/lib/brand"
+import { BIZ, waChatLink } from "@/lib/brand"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 import { hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor } from "@/components/services-page/lib"
 
@@ -153,7 +153,7 @@ export default async function ServicesRoute({
           title="Not sure what you need?"
           description="Just WhatsApp us and we'll guide you in the right direction."
           buttonText="Chat With Us"
-          buttonHref="https://wa.me/27753338260"
+          buttonHref={waChatLink()}
         />
       </div>
       <Footer />

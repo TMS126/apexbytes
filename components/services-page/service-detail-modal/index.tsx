@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, type ChangeEvent, type TouchEvent } from "
 import { X, ShareNetwork, Clock, Lightbulb, WarningCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { HUB_COLORS, HubKey, BIZ, BRAND } from "@/lib/brand"
+import { HUB_COLORS, HubKey, BIZ, BRAND, waLink } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
 import { useFocusTrap, HubIcon } from "../shared"
 import {
@@ -296,8 +296,15 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   }
 
   const waMessage = uploadReference
-    ? `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. My secure upload reference: ${uploadReference}`
-    : `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. Can you assist?`
+    ? `Hi ${BIZ.name}, I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. My secure upload reference: ${uploadReference}`
+    : `Hi ${BIZ.name}, I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. Can you assist?`
+  const requestLabel = /printing services?/i.test(naturalLabel)
+    ? `Request a Quote for ${naturalLabel.replace(/\s+services?$/i, "")}`
+    : /tech support/i.test(naturalLabel)
+      ? "Request Tech Support"
+      : /design/i.test(naturalLabel)
+        ? "Book Design Help"
+        : `Request ${naturalLabel}`
 
   const requirements = svc.requirements?.length ? svc.requirements : ["Just bring your file, document or USB — we'll take care of the rest."]
   const desc = svc.desc?.trim() || null
@@ -590,7 +597,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
           {/* CTA — was text-white on the #25D366 fill; switched to dark
               text (zinc-900) per request. Fill unchanged. */}
           <a
-            href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(waMessage)}`}
+            href={waLink(waMessage)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
@@ -599,7 +606,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               ICON_BTN_FOCUS
             )}
           >
-            Request {naturalLabel}
+            {requestLabel}
           </a>
         </div>
       </div>

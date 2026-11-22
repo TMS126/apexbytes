@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { WhatsappLogo, EnvelopeSimple, FacebookLogo } from "@phosphor-icons/react"
+import { WhatsappLogo, EnvelopeSimple, FacebookLogo, Phone } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
 import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -84,9 +84,10 @@ function FooterContent() {
           <div className="flex flex-col items-end text-right">
             <h3 className="mb-5 text-[0.84rem] font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
             <div className="flex items-center justify-end gap-4">
-              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} className="abh-footer-icon-link text-muted-foreground hover:text-brand-whatsapp"><WhatsappLogo weight="regular" size={25} /></a>
-              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} className="abh-footer-icon-link text-muted-foreground hover:text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
-              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" className="abh-footer-icon-link text-muted-foreground hover:text-brand-blue"><FacebookLogo weight="regular" size={25} /></a>
+              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} title="WhatsApp" className="abh-footer-icon-link hover:!text-[#25D366]"><WhatsappLogo weight="regular" size={25} /></a>
+              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} title="Email" className="abh-footer-icon-link hover:!text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
+              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" title="Facebook" className="abh-footer-icon-link hover:!text-[#1877F2]"><FacebookLogo weight="regular" size={25} /></a>
+              <a href={`tel:${BIZ.phoneE164}`} aria-label={`Call ${BIZ.name}`} title="Phone" className="abh-footer-icon-link hover:!text-brand-blue"><Phone weight="regular" size={25} /></a>
             </div>
             <div className="mt-7"><BusinessStatusFull /></div>
           </div>

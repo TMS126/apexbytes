@@ -35,17 +35,17 @@ export function SectionCard({
       type="button"
       onClick={onClick}
       style={{ ["--card-accent" as string]: accent }}
-      className="group/sectioncard min-h-[190px] overflow-hidden rounded-[14px] border border-border bg-card p-6 text-left transition-[background-color,color,box-shadow] duration-200 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98]"
+      className="min-h-[190px] overflow-hidden rounded-[14px] border border-border bg-card p-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div className="flex items-start justify-between gap-2 mb-3">
-          <h4 className="flex items-center gap-2 font-medium text-[1.08rem] text-foreground leading-tight break-words transition-colors group-hover/sectioncard:text-[var(--on-brand-blue)]">
+          <h4 className="flex items-center gap-2 font-medium text-[1.08rem] text-foreground leading-tight break-words">
           <ServiceIcon name={section.title} size={20} />
           <span>{section.title}</span>
         </h4>
       </div>
 
       {section.desc && (
-        <p className="text-[0.9rem] text-muted-foreground leading-relaxed mb-5 transition-colors group-hover/sectioncard:text-[var(--on-brand-blue)]/80">
+        <p className="text-[0.9rem] text-muted-foreground leading-relaxed mb-5">
           {section.desc}
         </p>
       )}
@@ -57,7 +57,6 @@ export function SectionCard({
         <CaretRight
           size={15}
           weight="bold"
-          className="transition-transform duration-200 group-hover/sectioncard:translate-x-0.5"
           style={{ color: accent }}
           aria-hidden="true"
         />

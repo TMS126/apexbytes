@@ -20,7 +20,7 @@ export function StatsBar() {
   ]
 
   return (
-    <section aria-label="Key stats" className="px-4 md:px-8 py-10 md:py-14 transition-colors duration-300">
+    <section aria-label="Key stats" className="px-4 md:px-8 py-10 md:py-14 text-center transition-colors duration-300">
       <ScrollBounce>
         <p className="abh-eyebrow mb-2 justify-center">By the Numbers</p>
         <h2 className="text-center font-sans font-medium text-2xl md:text-3xl text-foreground mb-8">What We Bring to the Table</h2>

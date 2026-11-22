@@ -164,7 +164,7 @@ export function Navbar() {
                 const submenu = item.id === "services"
                   ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
                   : item.id === "tools"
-                    ? [{ label: "All tools", path: "/tools" }, { label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                    ? [{ label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
                     : null
 
                 return (

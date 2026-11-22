@@ -159,7 +159,7 @@ export default function JpgToPdfPage() {
                     </div>
                     
                     <h2 className="text-xl font-semibold text-foreground mb-2 text-center">
-                      Select images or drag them here
+                      Upload a JPG image or drag images here
                     </h2>
                     
                     <p className="text-sm text-muted-foreground text-center mb-6">
