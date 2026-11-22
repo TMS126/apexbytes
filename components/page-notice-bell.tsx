@@ -1,8 +1,10 @@
+// components/page-notice-bell.tsx
 "use client"
 
+// ─── IMPORTS ───────────────────────────────────────────────────────────────
 import { useEffect, useId, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, Megaphone, SealPercent, Wrench } from "@phosphor-icons/react"
 import { ADD_ONS_EFFECTIVE_DATE } from "@/lib/add-ons"
 import { TOKEN } from "@/lib/brand"
@@ -10,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
 import { HOME_NOTICES } from "@/lib/home-notices"
 
+// ─── TYPES ─────────────────────────────────────────────────────────────────
 export type NoticeVariant = "success" | "info" | "warning" | "error"
 export type NoticePage = "home" | "services" | "gallery" | "contact" | "about" | "pricing" | "tools" | "jpg-to-pdf"
 
@@ -25,6 +28,7 @@ export interface HomeNotice {
   date?: string
 }
 
+// ─── LOOKUP TABLES ─────────────────────────────────────────────────────────
 const VARIANT_TEXT: Record<NoticeVariant, string> = {
   success: TOKEN.greenText,
   info: TOKEN.blueText,
@@ -50,6 +54,7 @@ const PAGE_LABEL: Record<NoticePage, string> = {
   "jpg-to-pdf": "JPG to PDF",
 }
 
+// ─── PER-PAGE NOTICE CONTENT ───────────────────────────────────────────────
 const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
   services: [
     {
@@ -137,6 +142,7 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
   }],
 }
 
+// ─── NOTICE CARD ───────────────────────────────────────────────────────────
 function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id: string) => void }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
@@ -153,7 +159,7 @@ function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id:
             <a
               href={notice.sourceUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="mt-1 w-fit text-sm text-muted-foreground underline decoration-dotted underline-offset-2 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Source: {notice.sourceLabel}
@@ -172,17 +178,22 @@ function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id:
   )
 }
 
+// ─── PAGE NOTICE BELL ──────────────────────────────────────────────────────
 export function PageNoticeBell({ page, className }: { page: NoticePage; className?: string }) {
+  // ── State & refs ──
   const notices = page === "home" ? HOME_NOTICES : PAGE_NOTICES[page]
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const [unread, setUnread] = useState(true)
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => new Set())
-  const visibleNotices = notices.filter((notice) => !dismissedIds.has(notice.id))
   const buttonRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const titleId = useId()
   const panelId = useId()
+  const reduceMotion = useReducedMotion()
 
+  // ── Derived data ──
+  const visibleNotices = notices.filter((notice) => !dismissedIds.has(notice.id))
   const groups = visibleNotices.reduce<Array<{ label: string; notices: HomeNotice[] }>>((result, notice) => {
     const label = notice.category ?? VARIANT_LABEL[notice.variant]
     const group = result.find((item) => item.label === label)
@@ -191,6 +202,19 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
     return result
   }, [])
 
+  // ── Close helper: returns focus to the bell (used by Escape and ×) ──
+  const closeAndRestoreFocus = () => {
+    setOpen(false)
+    buttonRef.current?.focus()
+  }
+
+  // ── Effects (all hooks stay above the early return below) ──
+  // Portal target only exists on the client; gating on `mounted` avoids a
+  // hydration mismatch from rendering a portal during server hydration.
+  useEffect(() => setMounted(true), [])
+
+  // Escape closes (focus returns to the bell); clicking outside closes
+  // without stealing focus from wherever the person clicked.
   useEffect(() => {
     if (!open) return
     const onKeyDown = (event: KeyboardEvent) => {
@@ -211,8 +235,16 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
     }
   }, [open])
 
+  // Move focus into the panel on open. The panel is portaled to the end of
+  // <body>, so without this a keyboard user pressing Tab after opening it
+  // would land on whatever follows the bell in the page, not on the notices.
+  useEffect(() => {
+    if (open) panelRef.current?.focus({ preventScroll: true })
+  }, [open])
+
   if (!visibleNotices.length) return null
 
+  // ── Handlers ──
   const dismissNotice = (id: string) => {
     const next = new Set(dismissedIds)
     next.add(id)
@@ -229,6 +261,17 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
     if (nextOpen) setUnread(false)
   }
 
+  // ── Motion (opacity-only when the visitor prefers reduced motion) ──
+  const panelMotion = reduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, transition: { duration: 0.1 } }
+    : {
+        initial: { opacity: 0, y: -5, scale: 0.98 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+        exit: { opacity: 0, y: -4, scale: 0.98 },
+        transition: { duration: 0.16, ease: "easeOut" as const },
+      }
+
+  // ── Render ──
   return (
     <>
       <div className={cn("abh-page-notice-bell fixed right-3 top-[calc(var(--nav-h,74px)+0.65rem)] z-[9998] md:right-5", className)}>
@@ -238,7 +281,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
           onClick={toggle}
           aria-haspopup="dialog"
           aria-expanded={open}
-          aria-controls={panelId}
+          aria-controls={open ? panelId : undefined}
           aria-label={`Open ${PAGE_LABEL[page]} notifications (${visibleNotices.length})`}
           className="flex size-11 items-center justify-center text-foreground transition-colors hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
@@ -246,7 +289,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
         </button>
       </div>
 
-      {typeof document !== "undefined" && createPortal(
+      {mounted && createPortal(
         <AnimatePresence>
           {open && (
             <motion.div
@@ -254,11 +297,9 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
               id={panelId}
               role="dialog"
               aria-labelledby={titleId}
-              initial={{ opacity: 0, y: -5, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -4, scale: 0.98 }}
-              transition={{ duration: 0.16, ease: "easeOut" }}
-              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] w-[min(26rem,calc(100vw-1.5rem))] rounded-[14px] border border-border/80 bg-background p-4 shadow-xl md:right-5"
+              tabIndex={-1}
+              {...panelMotion}
+              className="fixed right-3 top-[calc(var(--nav-h,74px)+4.1rem)] z-[9999] max-h-[calc(100dvh-var(--nav-h,74px)-5.5rem)] w-[min(26rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain rounded-[14px] border border-border/80 bg-background p-4 shadow-xl outline-none md:right-5"
             >
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
@@ -267,9 +308,9 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
                 </div>
                 <button
                   type="button"
-                  onClick={() => setOpen(false)}
+                  onClick={closeAndRestoreFocus}
                   aria-label="Close notifications"
-                  className="inline-flex size-8 shrink-0 items-center justify-center text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="inline-flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <span aria-hidden="true">×</span>
                 </button>
@@ -291,4 +332,4 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
       )}
     </>
   )
-}
+      }
