@@ -8,7 +8,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { Sun, Moon, CaretDown } from "@phosphor-icons/react"
 import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
-import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
+import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
+import { HUBS } from "@/lib/data"
+import { HubIcon } from "@/components/services-page/shared"
 import { cn } from "@/lib/utils"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useNavContrast } from "@/hooks/use-navbar"
@@ -118,10 +120,18 @@ export function Navbar() {
         data-nav-scrolled={hasScrolled ? "true" : "false"}
         data-nav-visible={navVisible && !menuOpen ? "true" : "false"}
         className={cn(
-          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-transparent bg-transparent pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out",
+          "abh-site-header fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-transparent bg-transparent pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out",
           !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",
         )}
       >
+        {activeSubmenu && (
+          <button
+            type="button"
+            aria-label="Close navigation menu"
+            className="fixed inset-0 top-[var(--nav-h)] z-0 bg-black/35 opacity-100 transition-opacity duration-200 pointer-events-auto"
+            onClick={() => setActiveSubmenu(null)}
+          />
+        )}
         <div className="flex h-[var(--nav-h)] items-center justify-center px-5 md:px-10">
           <div className="relative grid w-full max-w-[1320px] grid-cols-[1fr_auto_1fr] items-center gap-4">
             {/* Logo */}
@@ -167,10 +177,7 @@ export function Navbar() {
                 return (
                   <div
                     key={item.id}
-                    className={cn(
-                      "group/nav relative flex items-center gap-1 rounded-[14px] transition-[background-color,box-shadow] duration-150 hover:bg-muted/70 focus-within:bg-muted/70",
-                      activeSubmenu === item.id && "bg-muted/70 shadow-sm"
-                    )}
+                    className="group/nav relative flex items-center gap-1"
                     onMouseEnter={() => submenu && openSubmenu(item.id as "services" | "tools")}
                     onMouseLeave={submenu ? closeSubmenuSoon : undefined}
                     onFocus={() => submenu && openSubmenu(item.id as "services" | "tools")}
@@ -178,22 +185,36 @@ export function Navbar() {
                     <Link
                       href={item.path}
                       aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "relative whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:bg-current after:transition-transform hover:bg-muted hover:text-foreground",
-                        active ? "font-semibold text-foreground after:scale-x-100" : "font-semibold text-muted-foreground after:scale-x-0 hover:after:scale-x-100"
-                      )}
+                      className={cn("abh-link-underline whitespace-nowrap py-3 text-[0.9rem] font-semibold text-muted-foreground hover:text-foreground", active && "text-foreground")}
                     >
                       {item.label}
                     </Link>
                     {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
                     {submenu && activeSubmenu === item.id && (
                       <div
-                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-0 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background p-2 shadow-lg"
+                        className={cn("abh-navbar-submenu absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 p-5 shadow-xl", item.id === "services" ? "grid w-[min(1120px,calc(100vw-3rem))] grid-cols-5 gap-5" : "flex w-max flex-row items-center gap-6")}
                         onMouseEnter={() => openSubmenu(item.id as "services" | "tools")}
                         onMouseLeave={closeSubmenuSoon}
                       >
-                        {submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("rounded-[14px] px-4 py-3 text-[0.95rem] transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold text-foreground" : "text-muted-foreground")}>
+                        {item.id === "services" ? HUB_ORDER.map((hubId) => {
+                          const hub = HUBS[hubId]
+                          return (
+                            <div key={hubId} className="min-w-0">
+                              <Link href={hubRouteFor(hubId)} className="abh-link-underline mb-3 inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                                <HubIcon id={hubId} size={20} weight="regular" />
+                                {HUB_NAMES[hubId]}
+                              </Link>
+                              <div className="space-y-1">
+                                {hub.sections.flatMap((section) => section.items.map((service) => ({ ...service, sectionTitle: section.title }))).slice(0, 5).map((service) => (
+                                  <Link key={`${service.sectionTitle}-${service.name}`} href={serviceRouteFor(hubId, service.sectionTitle, service.name)} className="abh-link-underline block w-fit py-1 text-xs text-muted-foreground hover:text-foreground">
+                                    {service.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          )
+                        }) : submenu.map((subitem) => (
+                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("abh-link-underline py-2 text-sm text-muted-foreground hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "font-semibold text-foreground" : undefined)}>
                             {subitem.label}
                           </Link>
                         ))}

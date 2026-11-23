@@ -22,16 +22,18 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-link-underline::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 100%;
+  left: 50%;
+  width: 100%;
   bottom: -0.25rem;
   height: 2px;
   background: var(--line-rule);
-  transition: right 220ms ease-out;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out;
 }
 .abh-link-underline:hover::after,
 .abh-link-underline:focus-visible::after,
-.abh-link-underline[aria-current="page"]::after { right: 0; }
+.abh-link-underline[aria-current="page"]::after { transform: translateX(-50%) scaleX(1); }
 .dark .abh-link-underline::after { background: var(--line-rule); }
 @media (prefers-reduced-motion: reduce) {
   .abh-link-underline::after { transition: none; }
@@ -67,16 +69,18 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-underline-button::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 100%;
+  left: 50%;
+  width: 100%;
   bottom: .05rem;
   height: 2px;
   background: var(--card-rule);
-  transition: right 220ms ease-out;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out;
 }
 .abh-underline-button:hover::after,
 .abh-underline-button:focus-visible::after,
-.abh-underline-button[aria-current="page"]::after { right: 0; }
+.abh-underline-button[aria-current="page"]::after { transform: translateX(-50%) scaleX(1); }
 
 /* Main search treatment: one theme-aware outer field; the native input stays
    visually unboxed so dark mode never produces a light inner rectangle. */
@@ -1660,4 +1664,56 @@ input:focus, textarea:focus, select:focus,
 
 @media (prefers-reduced-motion: reduce) {
   button:hover:not(:disabled), [role="button"]:hover, .abh-btn-primary:hover, .abh-btn-cta:hover, .abh-line-cta:hover, .abh-wa-btn:hover { transform: none; }
+}
+
+/* Minimal navigation language: translucent surfaces, no hover pills, and a
+   single centered underline motion shared by every text link. */
+.abh-site-header[data-nav-scrolled="true"],
+.abh-site-header[data-nav-visible="true"] {
+  background: color-mix(in srgb, var(--background) 76%, transparent) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  backdrop-filter: blur(14px) saturate(135%);
+  box-shadow: 0 12px 36px -28px color-mix(in srgb, var(--foreground) 45%, transparent);
+}
+.abh-mega-menu {
+  border: 0 !important;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+.abh-mega-backdrop { background: rgb(0 0 0 / 0.34); }
+.abh-mobile-nav {
+  background: color-mix(in srgb, var(--background) 92%, transparent) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  backdrop-filter: blur(16px) saturate(135%);
+}
+.abh-bulk-label {
+  background: var(--brand-blue) !important;
+  color: #fff !important;
+}
+.dark .abh-bulk-label {
+  background: var(--brand-orange) !important;
+  color: #fff !important;
+}
+
+/* Buttons and button-like controls get one restrained, consistent lift. */
+button:not(:disabled):not([data-no-lift]):hover,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):hover,
+.abh-btn-primary:hover,
+.abh-btn-cta:hover,
+.abh-site-cta:hover,
+.abh-wa-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-shadow-hover) !important;
+}
+button:not(:disabled):not([data-no-lift]):focus-visible,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent), var(--ui-shadow-soft) !important;
+}
+
+@media (max-width: 1279px) {
+  .abh-site-header[data-nav-visible="true"] {
+    background: color-mix(in srgb, var(--background) 84%, transparent) !important;
+  }
 }

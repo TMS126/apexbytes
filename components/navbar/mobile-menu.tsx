@@ -83,7 +83,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
       aria-hidden={!menuOpen}
       tabIndex={-1}
       className={cn(
-        "fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain bg-background text-foreground md:hidden outline-none transition-[opacity,transform] duration-300",
+        "abh-mobile-nav fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain bg-background text-foreground xl:hidden outline-none transition-[opacity,transform] duration-300",
         menuOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "pointer-events-none -translate-y-2 opacity-0"
       )}
     >
