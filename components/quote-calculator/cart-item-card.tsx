@@ -13,6 +13,7 @@ import { CartItem, getDisplayName, getEffectiveRate, getBulkHint, getBulkProgres
 
 interface CartItemCardProps {
   item: CartItem
+  embedded?: boolean
   accent: string
   isHighlighted: boolean
   cardRef?: (el: HTMLDivElement | null) => void
@@ -23,7 +24,7 @@ interface CartItemCardProps {
 }
 
 export function CartItemCard({
-  item, accent, isHighlighted, cardRef,
+  item, embedded = false, accent, isHighlighted, cardRef,
   onRemove, onClickStep, onPressStart, onPressEnd,
 }: CartItemCardProps) {
   const qty = item.qty || 1
@@ -40,7 +41,8 @@ export function CartItemCard({
       ref={cardRef}
       role="listitem"
       className={cn(
-        "shrink-0 w-[250px] snap-start rounded-[14px] border border-border/70 bg-card p-3.5 space-y-2 transition-[border-color,background-color] duration-200 ease-out motion-reduce:transition-none",
+        "shrink-0 rounded-[14px] border border-border/70 bg-card p-3.5 space-y-2 transition-[border-color,background-color] duration-200 ease-out motion-reduce:transition-none",
+        embedded ? "w-full" : "w-[250px] snap-start",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{

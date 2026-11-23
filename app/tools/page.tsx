@@ -1,5 +1,4 @@
 // app/tools/page.tsx
-import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { FilePdf, FileText, ClipboardText, CurrencyDollar } from "@phosphor-icons/react/dist/ssr"
@@ -17,10 +16,10 @@ export const metadata: Metadata = {
 }
 
 const TOOLS = [
-  { id: "jpg-to-pdf", name: "JPG to PDF", desc: "Convert images into a PDF right in your browser — nothing is uploaded.", href: "/tools/jpg-to-pdf", Icon: FilePdf },
-  { id: "cv-writing", name: "CV Writing / CV Typing", desc: "Enter your details and create a clean, print-ready CV.", href: "/tools/cv-writing", Icon: FileText },
-  { id: "intake-form", name: "Intake Form Filling", desc: "Share your details for a service request in one guided form.", href: "/tools/intake-form", Icon: ClipboardText },
-  { id: "quote", name: "Quote Calculator", desc: "Browse services, review your estimate, and send it on WhatsApp.", href: "/tools/quote", Icon: CurrencyDollar },
+  { id: "jpg-to-pdf", name: "JPG to PDF", href: "/tools/jpg-to-pdf", Icon: FilePdf },
+  { id: "cv-writing", name: "CV Writing / CV Typing", href: "/tools/cv-writing", Icon: FileText },
+  { id: "intake-form", name: "Intake Form Filling", href: "/tools/intake-form", Icon: ClipboardText },
+  { id: "quote", name: "Quote Calculator", href: "/tools/quote", Icon: CurrencyDollar },
 ]
 
 export default function ToolsPage() {
@@ -32,24 +31,19 @@ export default function ToolsPage() {
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
-            <h1 className="abh-page-title mb-3">Tools</h1>
+            <h1 className="abh-page-title">Tools</h1>
           </ScrollBounce>
-          <p className="abh-tagline max-w-md mx-auto">
-            Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
-          </p>
-          <div className="abh-divider mx-auto" />
-          <EditorialScrollCue />
         </div>
       </section>
 
       <div className="px-6 md:px-8 pb-24">
         <div className="max-w-[720px] mx-auto">
-          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 items-stretch gap-3 md:grid-cols-4">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
                 <Link
                     href={tool.href}
-                    className="group flex min-h-24 w-full items-center justify-center rounded-[14px] p-5 text-center transition-transform duration-150 active:translate-y-px"
+                    className="group flex min-h-32 w-full items-center justify-center rounded-[16px] bg-card/70 p-5 text-center shadow-[var(--ui-shadow-popup)] transition-transform duration-150 hover:-translate-y-1 active:translate-y-px"
                     aria-label={tool.name}
                   >
                     <span className="flex flex-col items-center gap-2 text-center">
@@ -63,9 +57,6 @@ export default function ToolsPage() {
             ))}
           </div>
 
-          <p className="mt-8 text-center text-sm font-medium text-muted-foreground">
-            Choose a tool to get started. Your details stay in your browser until you choose to send them.
-          </p>
         </div>
       </div>
       <CtaBar

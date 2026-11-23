@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { CaretDown, CaretRight, CaretUp, WhatsappLogo, X } from "@phosphor-icons/react"
 import { NAV_ITEMS, BIZ, HUB_NAMES } from "@/lib/brand"
+import { HUBS } from "@/lib/data"
 import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
 
@@ -26,7 +27,7 @@ interface MobileMenuProps {
 export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
-  const [servicesOpen, setServicesOpen] = useState(true)
+  const [servicesOpen, setServicesOpen] = useState(false)
 
   useEffect(() => {
     if (!menuOpen) return
@@ -35,7 +36,6 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
     html.setAttribute("data-scroll-locked", "true")
     previouslyFocused.current = document.activeElement as HTMLElement
     requestAnimationFrame(() => {
-      setServicesOpen(true)
       containerRef.current?.focus()
     })
 
@@ -92,9 +92,14 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
           <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} className="font-heading text-[1.65rem] font-semibold tracking-[-0.04em] text-foreground">
             ApexBytesHub
           </Link>
-          <button type="button" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <X size={28} weight="regular" aria-hidden="true" />
-          </button>
+          <div className="flex items-center gap-2">
+            <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="rounded-full bg-brand-orange px-4 py-2 text-sm font-semibold text-white shadow-[var(--ui-shadow-popup)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              Get a quote
+            </Link>
+            <button type="button" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              <X size={28} weight="regular" aria-hidden="true" />
+            </button>
+          </div>
         </header>
 
         <nav className="flex-1" aria-label="Mobile navigation">
@@ -102,9 +107,19 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
             const active = isActive(item.path)
             const hasSubmenu = item.id === "services"
             const submenu = hasSubmenu
-              ? HUB_ORDER.map((hubId) => ({ id: hubId, label: SERVICE_LABELS[hubId] ?? HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
+              ? HUB_ORDER.map((hubId) => ({
+                  id: hubId,
+                  label: SERVICE_LABELS[hubId] ?? HUB_NAMES[hubId],
+                  path: hubRouteFor(hubId),
+                  sections: HUBS[hubId].sections.map((section) => section.title),
+                }))
               : item.id === "tools"
-                ? [{ id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                ? [
+                    { id: "quote", label: "Quote Calculator", path: "/tools/quote" },
+                    { id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf" },
+                    { id: "cv-writing", label: "CV Writing / CV Typing", path: "/tools/cv-writing" },
+                    { id: "intake-form", label: "Intake Form Filling", path: "/tools/intake-form" },
+                  ]
                 : []
 
             return (
@@ -125,12 +140,13 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
                 {hasSubmenu && (
                   <div className={cn("grid transition-[grid-template-rows,opacity] duration-200 motion-reduce:transition-none", servicesOpen ? "grid-rows-[1fr] pb-5 opacity-100" : "grid-rows-[0fr] opacity-0")}>
                     <div className="min-h-0 overflow-hidden">
-                      <div className="flex flex-wrap gap-2">
+                      <div className="grid gap-3 sm:grid-cols-2">
                         {submenu.map((subitem) => {
                           const selected = pathname === subitem.path || pathname.startsWith(`${subitem.path}/`)
                           return (
-                            <Link key={subitem.id} href={subitem.path} onClick={close} aria-current={selected ? "page" : undefined} tabIndex={menuOpen && servicesOpen ? 0 : -1} className={cn("rounded-full bg-[var(--mobile-service-pill)] px-4 py-2.5 text-base font-medium text-[var(--mobile-service-pill-text)] transition-colors hover:bg-[var(--mobile-service-pill-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", selected && "bg-[var(--mobile-service-pill-active)] font-semibold")}>
-                              {subitem.label}
+                            <Link key={subitem.id} href={subitem.path} onClick={close} aria-current={selected ? "page" : undefined} tabIndex={menuOpen && servicesOpen ? 0 : -1} className={cn("rounded-[14px] bg-[var(--mobile-service-pill)] px-4 py-3 text-base font-medium text-[var(--mobile-service-pill-text)] transition-colors hover:bg-[var(--mobile-service-pill-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", selected && "bg-[var(--mobile-service-pill-active)] font-semibold")}>
+                              <span className="block">{subitem.label}</span>
+                              {"sections" in subitem && subitem.sections.length > 0 && <span className="mt-1 block text-xs font-normal opacity-70">{subitem.sections.slice(0, 3).join(" · ")}</span>}
                             </Link>
                           )
                         })}
@@ -140,10 +156,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
                 )}
 
                 {item.id === "tools" && submenu.length > 0 && (
-                  <div className="pb-4">
-                    <Link href={submenu[0].path} onClick={close} tabIndex={menuOpen ? 0 : -1} className="inline-flex rounded-full bg-[var(--mobile-service-pill)] px-4 py-2 text-sm font-medium text-[var(--mobile-service-pill-text)] hover:bg-[var(--mobile-service-pill-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                      {submenu[0].label}
-                    </Link>
+                  <div className="grid gap-2 pb-4 sm:grid-cols-2">
+                    {submenu.map((tool) => <Link key={tool.id} href={tool.path} onClick={close} tabIndex={menuOpen ? 0 : -1} className="rounded-[14px] bg-[var(--mobile-service-pill)] px-4 py-3 text-sm font-medium text-[var(--mobile-service-pill-text)] hover:bg-[var(--mobile-service-pill-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{tool.label}</Link>)}
                   </div>
                 )}
               </div>
@@ -151,13 +165,12 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
           })}
         </nav>
 
-        <aside className="mt-5 rounded-[18px] bg-[var(--mobile-whatsapp-surface)] p-5 text-foreground">
+        <aside className="mt-5 rounded-[18px] bg-[#10251b] p-5 text-white shadow-[var(--ui-shadow-popup)]">
           <p className="font-heading text-lg font-semibold">Need it done today?</p>
           <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexBytesHub! I'd like to get help today.")}`} onClick={close} tabIndex={menuOpen ? 0 : -1} className="mt-4 flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[var(--brand-whatsapp-accessible)] px-5 text-lg font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <WhatsappLogo size={26} weight="regular" aria-hidden="true" />
             Chat on WhatsApp
           </a>
-          <p className="mt-3 text-center text-sm text-muted-foreground">Mon–Fri 08:00–17:00</p>
         </aside>
       </div>
     </div>

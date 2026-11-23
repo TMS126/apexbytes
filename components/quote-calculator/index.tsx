@@ -315,6 +315,10 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
       ? mode === "view" ? "Quote preview opened in a new tab." : "Quote PDF downloaded."
       : mode === "view" ? "Quote preview could not open. Allow pop-ups and try again." : "Quote PDF could not be created. Please try again.")
   }
+  const setQty = useCallback((id: string, qty: number) => {
+    if (qty < 1) { stepQty(id, -1); return }
+    setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))
+  }, [stepQty])
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
   const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!openHub || (event.target as HTMLElement).closest("[data-calculator-cart-area], input, textarea, [data-calculator-swipe-block]")) {
@@ -398,13 +402,17 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
           <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
 
           <div
-            className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]"
+            className={cn(
+              "flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
+              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)] md:items-start md:gap-5" : ""
+            )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
-            <div data-calculator-cart-area>
+            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-background/95 md:static md:col-start-2 md:row-start-1" : ""}>
             <CartSummaryBar
+              embedded={embedded}
               isDark={isDark}
               fabColor={fabColor}
               fabTextColor={fabTextColor}
@@ -431,6 +439,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             />
             </div>
 
+            <div className={embedded ? "order-1 min-w-0 md:col-start-1 md:row-start-1" : ""}>
             <SavedQuotesPanel
               savedQuotes={savedQuotes}
               showSavedList={showSavedList}
@@ -452,7 +461,10 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
               sectionSubtotal={sectionSubtotal}
               getItemQty={getItemQty}
               onAddItem={addItem}
+              onStepQty={stepQty}
+              onSetQty={setQty}
             />
+            </div>
           </div>
 
           <FooterActions

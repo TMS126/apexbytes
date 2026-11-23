@@ -10,7 +10,6 @@ import { useTheme } from "next-themes"
 import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, FacebookLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
 import { BRAND, TOKEN, BIZ, CONTACT_LINKS, waChatLink } from "@/lib/brand"
 import { cn } from "@/lib/utils"
-import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { FORM_HUB_KEYS, getFormHubColor, CONTACT_GREY, downloadBusinessVCard } from "@/lib/contact-data"
 import { FAQAccordion } from "@/components/contact/faq-accordion"
@@ -229,9 +228,6 @@ function ContactPageInner() {
             <ScrollBounce delay={0.1}>
               <div className="abh-card overflow-hidden flex-1" id="contact-map" style={SCROLL_MARGIN}>
                 <LocationMap />
-                <div className="flex justify-start p-6" id="contact-hours" style={SCROLL_MARGIN}>
-                  <BusinessStatusFull />
-                </div>
               </div>
             </ScrollBounce>
           </div>

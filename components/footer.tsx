@@ -8,7 +8,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { WhatsappLogo, EnvelopeSimple, FacebookLogo, Phone } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
-import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { TermsGateModal } from "@/components/footer/terms-gate-modal"
 import { FaqAccordion } from "@/components/footer/faq-accordion"
@@ -89,7 +88,6 @@ function FooterContent() {
               <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexBytesHub on Facebook" title="Facebook" className="abh-footer-icon-link hover:!text-[#1877F2]"><FacebookLogo weight="regular" size={25} /></a>
               <a href={`tel:${BIZ.phoneE164}`} aria-label={`Call ${BIZ.name}`} title="Phone" className="abh-footer-icon-link hover:!text-brand-blue"><Phone weight="regular" size={25} /></a>
             </div>
-            <div className="mt-7"><BusinessStatusFull /></div>
           </div>
         </div>
       </ScrollBounce>

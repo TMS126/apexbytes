@@ -1543,9 +1543,10 @@ button:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active),
   --ui-radius-sm: 18px;
   --ui-radius-md: 26px;
   --ui-radius-lg: 34px;
-  --ui-shadow-soft: 0 20px 50px -30px color-mix(in srgb, var(--foreground) 34%, transparent), 0 8px 20px -16px color-mix(in srgb, var(--foreground) 18%, transparent);
-  --ui-shadow-hover: 0 28px 64px -30px color-mix(in srgb, var(--foreground) 42%, transparent), 0 12px 24px -16px color-mix(in srgb, var(--foreground) 24%, transparent);
-  --ui-shadow-float: 0 32px 80px -34px color-mix(in srgb, var(--foreground) 52%, transparent), 0 10px 28px -18px color-mix(in srgb, var(--foreground) 24%, transparent);
+  --ui-shadow-popup: 0 18px 28px -18px color-mix(in srgb, var(--foreground) 34%, transparent), 0 4px 8px -5px color-mix(in srgb, var(--foreground) 16%, transparent);
+  --ui-shadow-soft: var(--ui-shadow-popup);
+  --ui-shadow-hover: var(--ui-shadow-popup);
+  --ui-shadow-float: var(--ui-shadow-popup);
   --ui-highlight: rgba(255, 255, 255, 0.58);
   --ui-grain: rgba(15, 63, 102, 0.045);
 }
@@ -1588,15 +1589,15 @@ body::before {
   border: 0 !important;
   border-color: transparent !important;
   border-radius: var(--ui-radius-md) !important;
-  box-shadow: var(--ui-shadow-soft) !important;
+  box-shadow: var(--ui-shadow-popup) !important;
   background-image: linear-gradient(145deg, color-mix(in srgb, var(--ui-highlight) 70%, transparent), transparent 48%) !important;
   transition: box-shadow 240ms ease, transform 240ms ease, background-color 240ms ease;
 }
 .glass:hover,
 .abh-navbar-submenu:hover {
-  box-shadow: var(--ui-shadow-hover) !important;
+  box-shadow: var(--ui-shadow-popup) !important;
 }
-.abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
+.abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-popup) !important; }
 
 /* Buttons feel like physical controls rather than flat links. */
 .abh-site-cta { border-radius: 9999px !important; }
@@ -1693,7 +1694,7 @@ input:focus, textarea:focus, select:focus,
   color: var(--on-brand-blue) !important;
 }
 .abh-navbar-quote-cta:hover,
-.abh-navbar-quote-cta:focus-visible { transform: translateY(-2px); box-shadow: var(--ui-shadow-hover); }
+.abh-navbar-quote-cta:focus-visible { transform: translateY(-2px); box-shadow: var(--ui-shadow-popup); }
 .abh-mobile-nav {
   background: color-mix(in srgb, var(--background) 92%, transparent) !important;
   -webkit-backdrop-filter: blur(16px) saturate(135%);
@@ -1716,15 +1717,27 @@ button:not(:disabled):not([data-no-lift]):hover,
 .abh-site-cta:hover,
 .abh-wa-btn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--ui-shadow-hover) !important;
+  box-shadow: var(--ui-shadow-popup) !important;
 }
 button:not(:disabled):not([data-no-lift]):focus-visible,
 [role="button"]:not([aria-disabled="true"]):not([data-no-lift]):focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent), var(--ui-shadow-soft) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent), var(--ui-shadow-popup) !important;
 }
 
 @media (max-width: 1279px) {
   .abh-site-header[data-nav-visible="true"] {
     background: color-mix(in srgb, var(--background) 84%, transparent) !important;
   }
+}
+
+
+/* Final form rule: inputs remain transparent and underline-only, including focus. */
+:where(input, textarea, select):focus,
+:where(input, textarea, select):focus-visible {
+  outline: none !important;
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
 }

@@ -9,6 +9,7 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowCounterClockwise, ArrowsOutSimple, ArrowsInSimple, FloppyDisk, Trash } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
+import { cn } from "@/lib/utils"
 import { CartItem, getDisplayName } from "./lib"
 import { CartItemChip } from "./cart-item-chip"
 import { CartItemCard } from "./cart-item-card"
@@ -20,6 +21,7 @@ interface UndoStack {
 }
 
 interface CartSummaryBarProps {
+  embedded?: boolean
   isDark: boolean
   fabColor: string
   fabTextColor: string
@@ -46,7 +48,7 @@ interface CartSummaryBarProps {
 }
 
 export function CartSummaryBar({
-  fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
+  embedded = false, fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
   showSaveForm, setShowSaveForm, saveNameDraft, setSaveNameDraft, confirmSaveQuote, clearCart,
   undoStack, undoRemove, highlightId, chipRefs, getAccent,
   removeItem, handleClickStep, handlePressStart, handlePressEnd,
@@ -73,9 +75,9 @@ export function CartSummaryBar({
 
       {cart.length > 0 && (
         <div
-          className="sticky top-0 z-10 border-b border-border bg-card"
+          className="sticky top-0 z-10 border-b border-border/40 bg-card/80 md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]"
         >
-          <div className="p-4 space-y-2.5">
+          <div className="p-4 space-y-2.5 md:p-5">
             <div className="flex items-center justify-between gap-2">
               <span className="text-[0.72rem] font-medium uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
                 Your Quote · {itemCount} item{itemCount === 1 ? "" : "s"} · R{total}
@@ -134,7 +136,10 @@ export function CartSummaryBar({
             <div
               role="list"
               aria-label="Items in your quote"
-              className="abh-chip-strip flex gap-2.5 overflow-x-auto overscroll-x-contain snap-x snap-mandatory pb-1"
+              className={cn(
+                "gap-2.5 pb-1",
+                embedded ? "grid overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
+              )}
               style={{ WebkitOverflowScrolling: "touch" }}
             >
               <AnimatePresence initial={false} mode="popLayout">
@@ -146,11 +151,12 @@ export function CartSummaryBar({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.85 }}
                     transition={{ duration: 0.18 }}
-                    className="shrink-0 snap-start"
+                    className={embedded ? "w-full" : "shrink-0 snap-start"}
                   >
-                    {expandView ? (
+                    {embedded || expandView ? (
                       <CartItemCard
                         item={item}
+                        embedded={embedded}
                         accent={getAccent(item.hubId)}
                         isHighlighted={highlightId === item.id}
                         cardRef={(el) => { chipRefs.current[item.id] = el }}

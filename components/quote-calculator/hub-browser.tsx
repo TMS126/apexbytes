@@ -34,7 +34,7 @@
      hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
-import { CaretDown, CheckCircle, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
+import { CaretDown, CheckCircle, Minus, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
@@ -54,6 +54,8 @@ interface HubBrowserProps {
   sectionSubtotal: (hubId: HubId, sectionTitle: string) => Subtotal | null
   getItemQty: (itemId: string) => number
   onAddItem: (hubId: HubId, sectionTitle: string, name: string, price: string) => void
+  onStepQty: (id: string, delta: number) => void
+  onSetQty: (id: string, qty: number) => void
 }
 
 function CountBadge({
@@ -86,19 +88,20 @@ function HubBulkBadge() {
 
 export function HubBrowser({
   openHub, setOpenHub, openSections, toggleSection,
-  getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem,
+  getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
 }: HubBrowserProps) {
   const activeHub = openHub ? HUBS[openHub] : null
 
   return (
-    <div className="p-4 space-y-4">
-      <span className="text-[0.78rem] font-medium uppercase tracking-widest text-muted-foreground px-1">
-        Choose a Hub
-      </span>
+    <div className="min-w-0 p-4 space-y-4 md:p-5">
+      <div className="flex items-center justify-between gap-3 px-1">
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Choose a Hub</span>
+        <span className="text-xs text-muted-foreground">Pick a service to begin</span>
+      </div>
 
       {openHub ? (
         // Compact row — same squircle language as the full grid, smaller.
-        <div className="flex items-center justify-center flex-wrap gap-2" role="tablist" aria-label="Hubs">
+        <div className="flex items-center justify-start gap-2 overflow-x-auto pb-1 [scrollbar-width:none]" role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
@@ -115,7 +118,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-[14px] w-14 h-14 shrink-0",
+                  "group relative flex items-center justify-center rounded-[14px] w-14 h-14 shrink-0 bg-secondary/60",
                   "transition-colors duration-150 ease-out",
                   isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item
@@ -170,7 +173,7 @@ export function HubBrowser({
                   aria-expanded={isSelected}
                   aria-controls={`hub-panel-${hubId}`}
                   className={cn(
-                    "group relative flex w-full items-center gap-4 rounded-[14px] px-4 py-3 text-left",
+                    "group relative flex w-full items-center gap-4 rounded-[16px] px-4 py-3 text-left bg-card/70 shadow-[var(--ui-shadow-popup)]",
                     "transition-colors duration-150 ease-out",
                     isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                     GLASS.item
@@ -369,27 +372,28 @@ export function HubBrowser({
                                   </p>
                                   <p className="text-[0.78rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
                                 </div>
-                                <div className="flex items-center gap-1.5 shrink-0">
-                                  {itemQty > 0 && (
-                                    <span
-                                      className="abh-badge-circle w-6 h-6 gap-0.5 text-[0.6rem] font-medium text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
-                                      aria-label={`${itemQty} already in your quote`}
-                                    >
-                                      <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
-                                      {itemQty}
-                                    </span>
-                                  )}
+                                <div className="flex items-center gap-1 shrink-0 rounded-full bg-secondary/70 p-0.5" data-calculator-swipe-block>
+                                  <button
+                                    onClick={() => onStepQty(itemId, -1)}
+                                    disabled={itemQty < 1}
+                                    aria-label={`Decrease quantity for ${item.name}`}
+                                    className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-background hover:text-foreground disabled:opacity-35"
+                                  ><Minus size={13} weight="bold" aria-hidden="true" /></button>
+                                  <input
+                                    aria-label={`Quantity for ${item.name}`}
+                                    inputMode="numeric"
+                                    type="number"
+                                    min={itemQty > 0 ? 1 : 0}
+                                    value={itemQty}
+                                    onChange={(event) => onSetQty(itemId, Math.max(0, Number(event.target.value) || 0))}
+                                    className="w-8 border-0 border-b border-foreground/20 bg-transparent p-0 text-center text-sm font-semibold outline-none focus:border-[var(--hub-accent)] focus:ring-0"
+                                  />
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
-                                    style={{
-                                      ["--hub-accent" as unknown as string]: solidAccent,
-                                      ["--hub-on-accent" as unknown as string]: onSolid,
-                                    }}
-                                    className="abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
-                                    aria-label={`Add ${item.name}`}
-                                  >
-                                    <Plus size={13} weight="bold" aria-hidden="true" />
-                                  </button>
+                                    aria-label={`Increase quantity for ${item.name}`}
+                                    style={{ ["--hub-accent" as unknown as string]: solidAccent, ["--hub-on-accent" as unknown as string]: onSolid }}
+                                    className="flex h-8 w-8 items-center justify-center rounded-full text-foreground transition-colors hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)]"
+                                  ><Plus size={13} weight="bold" aria-hidden="true" /></button>
                                 </div>
                               </div>
                             </div>
