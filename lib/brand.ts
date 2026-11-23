@@ -373,7 +373,7 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "pricing", label: "Pricing", path: "/pricing" },
   { id: "tools", label: "Tools", path: "/tools" },
   { id: "about", label: "About", path: "/about" },
-  { id: "contact", label: "Contact", path: "/contact", isCta: true },
+  { id: "contact", label: "Contact", path: "/contact" },
 ] as const
 
 // ============================================================

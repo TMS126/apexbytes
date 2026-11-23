@@ -19,9 +19,10 @@ interface FooterActionsProps {
   onViewQuote: () => void
   onSendQuote: () => void
   onClose: () => void
+  showClose?: boolean
 }
 
-export function FooterActions({ hasItems, totalSavings, total, fabColor, onExportPdf, onViewQuote, onSendQuote, onClose }: FooterActionsProps) {
+export function FooterActions({ hasItems, totalSavings, total, fabColor, onExportPdf, onViewQuote, onSendQuote, onClose, showClose = true }: FooterActionsProps) {
   return (
     <>
       {hasItems && (
@@ -68,7 +69,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
         </div>
       )}
 
-      <div className="shrink-0 flex justify-center border-t border-zinc-100 py-2 dark:border-white/10" style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
+      {showClose && <div className="shrink-0 flex justify-center border-t border-zinc-100 py-2 dark:border-white/10" style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
         <button
           onClick={onClose}
           aria-label="Close quotation calculator"
@@ -77,7 +78,7 @@ export function FooterActions({ hasItems, totalSavings, total, fabColor, onExpor
         >
           <X size={18} weight="bold" aria-hidden="true" />
         </button>
-      </div>
+      </div>}
     </>
   )
 }

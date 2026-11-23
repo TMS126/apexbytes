@@ -20,7 +20,7 @@ const TOOLS = [
   { id: "jpg-to-pdf", name: "JPG to PDF", desc: "Convert images into a PDF right in your browser — nothing is uploaded.", href: "/tools/jpg-to-pdf", Icon: FilePdf },
   { id: "cv-writing", name: "CV Writing / CV Typing", desc: "Enter your details and create a clean, print-ready CV.", href: "/tools/cv-writing", Icon: FileText },
   { id: "intake-form", name: "Intake Form Filling", desc: "Share your details for a service request in one guided form.", href: "/tools/intake-form", Icon: ClipboardText },
-  { id: "quote", name: "Quote", desc: "Browse services and build a quote for your request.", href: "/pricing", Icon: CurrencyDollar },
+  { id: "quote", name: "Quote Calculator", desc: "Browse services, review your estimate, and send it on WhatsApp.", href: "/tools/quote", Icon: CurrencyDollar },
 ]
 
 export default function ToolsPage() {

@@ -3,7 +3,7 @@ import { ToolForm } from "@/components/tools/tool-form"
 
 export const metadata: Metadata = {
   title: "Intake Form Filling — ApexBytesHub",
-  description: "Share the details of your service request in a simple guided form.",
+  description: "Choose a service first, answer only the useful follow-up questions, then review and share your intake as a PDF.",
 }
 
 // Service intake tool route.

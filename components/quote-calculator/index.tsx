@@ -29,11 +29,13 @@ type UndoAction =
   | { kind: "clear"; items: CartItem[] }
   | { kind: "saved"; quote: SavedQuote; index: number }
 
-export function QuoteCalculatorWidget() {
+export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean } = {}) {
   const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
-  const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
+  const [isOpenState, setIsOpenState, isOtherOpen] = useExclusiveWidget("calculator")
+  const isOpen = embedded || isOpenState
+  const setIsOpen = useMemo(() => embedded ? (() => {}) : setIsOpenState, [embedded, setIsOpenState])
   const isScrolling = useScrollHide()
-  const fabVisible = !isOpen && !isOtherOpen
+  const fabVisible = !embedded && !isOpen && !isOtherOpen
 
   const [openHub, setOpenHub] = useState<HubId | null>(null)
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
@@ -44,7 +46,7 @@ export function QuoteCalculatorWidget() {
   const chipRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [announce, setAnnounce] = useState("")
   const calculatorRef = useRef<HTMLDivElement | null>(null)
-  useFocusTrap(isOpen, calculatorRef)
+  useFocusTrap(!embedded && isOpen, calculatorRef)
 
   const [undoStack, setUndoStack] = useState<UndoAction | null>(null)
   const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -105,10 +107,10 @@ export function QuoteCalculatorWidget() {
   }, [savedQuotes, savedHydrated])
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : ""
-    announceCalculatorState(isOpen)
-    return () => { document.body.style.overflow = ""; announceCalculatorState(false) }
-  }, [isOpen])
+    document.body.style.overflow = !embedded && isOpen ? "hidden" : ""
+    if (!embedded) announceCalculatorState(isOpen)
+    return () => { document.body.style.overflow = ""; if (!embedded) announceCalculatorState(false) }
+  }, [embedded, isOpen])
 
   const toggleCalculatorTheme = () => {
     const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
@@ -119,18 +121,18 @@ export function QuoteCalculatorWidget() {
 
   const wasOpenRef = useRef(false)
   useEffect(() => {
-    if (isOpen && !wasOpenRef.current) window.history.pushState({ abhCalc: true }, "")
+    if (!embedded && isOpen && !wasOpenRef.current) window.history.pushState({ abhCalc: true }, "")
     wasOpenRef.current = isOpen
-  }, [isOpen])
+  }, [embedded, isOpen])
 
   useEffect(() => {
-    const onPop = () => { if (isOpen) setIsOpen(false) }
+    const onPop = () => { if (isOpen && !embedded) setIsOpen(false) }
     window.addEventListener("popstate", onPop)
     return () => window.removeEventListener("popstate", onPop)
-  }, [isOpen, setIsOpen])
+  }, [embedded, isOpen, setIsOpen])
 
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen || embedded) return
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         event.preventDefault()
@@ -139,7 +141,7 @@ export function QuoteCalculatorWidget() {
     }
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
-  }, [isOpen, setIsOpen])
+  }, [embedded, isOpen, setIsOpen])
 
   useEffect(() => {
     if (!(isOpen || cart.length === 0)) return
@@ -357,11 +359,11 @@ export function QuoteCalculatorWidget() {
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
-      {isOpen && (
+      {!embedded && isOpen && (
         <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none md:-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
       )}
 
-      {cart.length > 0 && (
+      {!embedded && cart.length > 0 && (
         <FabTrigger
           visible={fabVisible}
           dimmed={isScrolling}
@@ -383,12 +385,12 @@ export function QuoteCalculatorWidget() {
           aria-modal="true"
           aria-label="Quotation Calculator"
           className={cn(
-            "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5",
-            "abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
-            "rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
+            embedded
+              ? "abh-quote-calculator relative mx-auto min-h-[680px] w-full max-w-[1440px] rounded-[22px] flex flex-col overflow-hidden"
+              : "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5 abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh] rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
             GLASS.panel,
-            "md:-none"
+            embedded ? "" : "md:-none"
           )}
         >
           <div className="absolute top-0 left-6 right-6 h-px bg-border pointer-events-none" />
@@ -462,6 +464,7 @@ export function QuoteCalculatorWidget() {
             onViewQuote={() => { void exportPdf("view") }}
             onSendQuote={sendQuote}
             onClose={() => setIsOpen(false)}
+            showClose={!embedded}
           />
         </div>
       )}

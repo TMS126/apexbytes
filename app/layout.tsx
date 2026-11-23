@@ -9,7 +9,6 @@ import { InstanceGuardProvider } from '@/hooks/use-instance-guard'
 import { BIZ, HEX } from '@/lib/brand'
 import { LocalBusinessJsonLd } from '@/components/ui/json-ld'
 import { FloatingSearchWidget } from '@/components/floating-search-widget'
-import { QuoteCalculatorWidget } from "@/components/quote-calculator"
 import { MaintenanceBanner } from '@/components/maintenance-banner'
 import { headers } from 'next/headers'
 import './globals.css'
@@ -88,9 +87,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <InstanceGuardProvider><div id="main-content">{children}</div></InstanceGuardProvider>
           <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 14rem)" }}>
             <FloatingSearchWidget />
-          </div>
-          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 9rem)" }}>
-            <QuoteCalculatorWidget />
           </div>
           {/* WhatsApp FAB intentionally disabled until we bring it back. */}
         </ThemeProvider>

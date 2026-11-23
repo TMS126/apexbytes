@@ -280,11 +280,12 @@ export function Navbar() {
                 {mounted && (theme === "dark" ? <Moon size={19} weight="regular" /> : <Sun size={19} weight="regular" />)}
               </button>
 
-              <div className="order-3 hidden items-center gap-1 rounded-[14px] bg-muted/80 p-1 sm:flex">
-                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
+              <div className="order-3 hidden items-center gap-5 xl:flex">
+                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
                 </button>
-                <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={cn("rounded-[14px] px-4 py-2 text-sm font-medium transition-colors hover:bg-background", pathname === "/contact" ? "bg-background text-brand-blue" : "text-foreground")}>Let&apos;s Talk</Link>
+                <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={cn("abh-link-underline text-sm font-semibold", pathname === "/contact" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>Contact</Link>
+                <Link href="/tools/quote" aria-current={pathname === "/tools/quote" ? "page" : undefined} className="abh-navbar-quote-cta inline-flex items-center rounded-full px-5 py-2.5 text-sm font-bold transition-transform">Get a quote</Link>
               </div>
             </div>
           </div>
