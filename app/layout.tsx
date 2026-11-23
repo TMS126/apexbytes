@@ -24,9 +24,13 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', weight: ['400', '500', '600', '700'] })
 const poppins = Poppins({ subsets: ['latin'], variable: '--font-poppins', weight: ['400', '500', '600', '700'] })
 
+// Search results and browser tabs showed the bare business name, so nothing in
+// the title matched what people search for ("printing Bothaville", "CV writing").
+const SITE_TITLE = `${BIZ.name} — Printing, CVs & Tech Help | ${BIZ.location}`
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: BIZ.name,
+  title: SITE_TITLE,
   description: `We make technology and important services accessible to everyone — no jargon, no stress. Right here in ${BIZ.address}.`,
   keywords: ['printing Bothaville','printing Kgotsong','CV writing Kgotsong','SASSA help Kgotsong','ApexbytesHub'],
   authors: [{ name: BIZ.name }],
@@ -34,11 +38,11 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: 'website', locale: 'en_ZA', url: SITE_URL, siteName: BIZ.name,
-    title: BIZ.name,
+    title: SITE_TITLE,
     description: `Printing, CVs, design, SASSA/SARS help, and tech support in ${BIZ.location}.`,
     images: [{ url: '/api/og', width: 1200, height: 630, alt: BIZ.name }],
   },
-  twitter: { card: 'summary_large_image', title: BIZ.name, images: ['/api/og'] },
+  twitter: { card: 'summary_large_image', title: SITE_TITLE, images: ['/api/og'] },
 
   icons: {
     icon: [
