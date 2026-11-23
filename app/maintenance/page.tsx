@@ -1,11 +1,8 @@
 import { headers } from 'next/headers'
-import { Nunito } from 'next/font/google'
+import { DM_Sans, Manrope } from 'next/font/google'
 
-const nunito = Nunito({
-  subsets: ['latin'],
-  weight: ['400', '600', '700', '900'],
-  display: 'swap',
-})
+const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700'], display: 'swap' })
+const manrope = Manrope({ subsets: ['latin'], weight: ['500', '600', '700', '800'], display: 'swap' })
 
 export default async function MaintenancePage() {
   const nonce = (await headers()).get('x-nonce') ?? undefined
@@ -16,8 +13,8 @@ export default async function MaintenancePage() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-          font-family: ${nunito.style.fontFamily}, sans-serif;
-          background: #07111F;
+          font-family: ${dmSans.style.fontFamily}, sans-serif;
+          background: var(--brand-dark-100);
           min-height: 100dvh;
           display: flex;
           align-items: center;
@@ -55,7 +52,7 @@ export default async function MaintenancePage() {
           width: 600px;
           height: 600px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(30,111,168,0.14) 0%, transparent 70%);
+          background: radial-gradient(circle, color-mix(in srgb, var(--brand-blue) 18%, transparent) 0%, transparent 70%);
           pointer-events: none;
           z-index: 0;
         }
@@ -67,7 +64,7 @@ export default async function MaintenancePage() {
           width: 400px;
           height: 400px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(111,191,26,0.07) 0%, transparent 70%);
+          background: radial-gradient(circle, color-mix(in srgb, var(--brand-orange) 10%, transparent) 0%, transparent 70%);
           pointer-events: none;
           z-index: 0;
         }
@@ -86,15 +83,15 @@ export default async function MaintenancePage() {
           letter-spacing: -0.02em;
           margin-bottom: 36px;
         }
-        .logo-blue  { color: #1E6FA8; }
-        .logo-green { color: #6FBF1A; }
+        .logo-blue  { color: var(--brand-light-blue); }
+        .logo-green { color: var(--brand-orange); }
 
         .badge {
           display: inline-flex;
           align-items: center;
           gap: 7px;
-          background: rgba(30,111,168,0.12);
-          border: 1px solid rgba(30,111,168,0.25);
+          background: color-mix(in srgb, var(--brand-blue) 12%, transparent);
+          border: 1px solid color-mix(in srgb, var(--brand-blue) 25%, transparent);
           border-radius: 999px;
           padding: 6px 14px;
           margin-bottom: 28px;
@@ -103,11 +100,11 @@ export default async function MaintenancePage() {
           width: 7px;
           height: 7px;
           border-radius: 50%;
-          background: #6FBF1A;
+          background: var(--brand-orange);
           animation: pulse-dot 2s ease-in-out infinite;
         }
         .badge-text {
-          color: #A9D6F2;
+          color: var(--brand-light-blue);
           font-size: 0.72rem;
           font-weight: 500;
           letter-spacing: 0.12em;
@@ -120,25 +117,26 @@ export default async function MaintenancePage() {
         }
 
         h1 {
+          font-family: ${manrope.style.fontFamily}, sans-serif;
           max-width: 16ch;
           margin: 0 auto 14px;
           font-weight: 500;
           font-size: clamp(2rem, 6vw, 2.8rem);
-          color: #FFFFFF;
+          color: var(--brand-white);
           letter-spacing: -0.03em;
           line-height: 1.15;
           text-wrap: balance;
         }
 
         .sub {
-          color: #8AABBF;
+          color: var(--brand-neutral-300);
           font-size: 0.93rem;
           font-weight: 400;
           line-height: 1.65;
           margin-bottom: 6px;
         }
         .location {
-          color: #4A6785;
+          color: var(--brand-neutral-400);
           font-size: 0.78rem;
           font-weight: 500;
           margin-bottom: 32px;
@@ -148,7 +146,7 @@ export default async function MaintenancePage() {
         .divider {
           width: 80px;
           height: 1px;
-          background: linear-gradient(to right, transparent, #1E6FA8, transparent);
+          background: linear-gradient(to right, transparent, var(--brand-blue), transparent);
           margin: 0 auto 32px;
         }
 
@@ -161,8 +159,8 @@ export default async function MaintenancePage() {
         .card {
           flex: 1;
           max-width: 130px;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: color-mix(in srgb, var(--card) 45%, transparent);
+          border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
           border-radius: 14px;
           padding: 14px 10px;
           text-align: center;
@@ -172,7 +170,7 @@ export default async function MaintenancePage() {
           margin-bottom: 6px;
         }
         .card-label {
-          color: #4A6785;
+          color: var(--brand-neutral-400);
           font-size: 0.6rem;
           font-weight: 500;
           text-transform: uppercase;
@@ -180,13 +178,13 @@ export default async function MaintenancePage() {
           margin-bottom: 3px;
         }
         .card-value {
-          color: #A9D6F2;
+          color: var(--brand-light-blue);
           font-size: 0.75rem;
           font-weight: 500;
         }
 
         .wa-prompt {
-          color: #4A6785;
+          color: var(--brand-neutral-400);
           font-size: 0.78rem;
           font-weight: 400;
           margin-bottom: 14px;
@@ -197,7 +195,7 @@ export default async function MaintenancePage() {
           align-items: center;
           gap: 10px;
           background: #25D366;
-          color: #FFFFFF;
+          color: var(--brand-white);
           font-weight: 500;
           font-size: 0.9rem;
           padding: 13px 28px;
@@ -222,7 +220,7 @@ export default async function MaintenancePage() {
 
         .progress-wrap {
           width: 100%;
-          background: rgba(255,255,255,0.05);
+          background: color-mix(in srgb, var(--foreground) 8%, transparent);
           border-radius: 999px;
           height: 3px;
           overflow: hidden;
@@ -231,7 +229,7 @@ export default async function MaintenancePage() {
         .progress-bar {
           height: 100%;
           border-radius: 999px;
-          background: linear-gradient(to right, #1E6FA8, #6FBF1A);
+          background: linear-gradient(to right, var(--brand-blue), var(--brand-orange));
           animation: progress-flow 3s ease-in-out infinite alternate;
         }
         @keyframes progress-flow {
@@ -240,7 +238,7 @@ export default async function MaintenancePage() {
         }
 
         .footer {
-          color: #243648;
+          color: var(--brand-neutral-500);
           font-size: 0.65rem;
           font-weight: 500;
           letter-spacing: 0.08em;

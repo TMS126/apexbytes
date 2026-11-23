@@ -80,14 +80,14 @@ export function HeroSection() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))}
-              className={heroCtaClass}
+              className={`${heroCtaClass} abh-site-cta-primary`}
             >
               Quote
               <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/hero-cta:scale-x-100 group-focus-visible/hero-cta:scale-x-100" />
             </button>
             <Link
               href="/services"
-              className={heroCtaClass}
+              className={`${heroCtaClass} abh-site-cta-secondary`}
             >
               Services
               <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/hero-cta:scale-x-100 group-focus-visible/hero-cta:scale-x-100" />

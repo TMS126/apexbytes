@@ -1,22 +1,20 @@
 // components/navbar/mobile-menu.tsx
 "use client"
 
-import { useEffect, useRef } from "react"
-import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { NAV_ITEMS, TOKEN, HUB_NAMES } from "@/lib/brand"
+import { CaretDown, CaretRight, CaretUp, WhatsappLogo, X } from "@phosphor-icons/react"
+import { NAV_ITEMS, BIZ, HUB_NAMES } from "@/lib/brand"
 import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
-import { CaretDown } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 
-// FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
-// "keep in sync" comment. That hex is the OLD, WCAG-failing --brand-orange
-// value (documented in globals.css as "was #F4A261 at 2.06:1") — still
-// failing here as both text color AND border color (border also needs
-// ≥3:1 for non-text UI components, which 2.06:1 fails too). Now imports
-// the same verified TOKEN.orangeText used in navbar.tsx directly, so
-// there's a real single source of truth instead of a manually-synced copy.
-const HOVER_TEXT = TOKEN.orangeText
+const SERVICE_LABELS: Record<string, string> = {
+  print: "Print",
+  doc: "Documents",
+  design: "Design",
+  eservice: "E-Services",
+  tech: "Tech",
+}
 
 interface MobileMenuProps {
   menuOpen: boolean
@@ -25,9 +23,10 @@ interface MobileMenuProps {
   neutralColor: string
 }
 
-export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: MobileMenuProps) {
+export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
+  const [servicesOpen, setServicesOpen] = useState(true)
 
   useEffect(() => {
     if (!menuOpen) return
@@ -35,27 +34,32 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
     const previousScrollLock = html.getAttribute("data-scroll-locked")
     html.setAttribute("data-scroll-locked", "true")
     previouslyFocused.current = document.activeElement as HTMLElement
-    containerRef.current?.focus()
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+    requestAnimationFrame(() => {
+      setServicesOpen(true)
+      containerRef.current?.focus()
+    })
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setMenuOpen(false)
         return
       }
-      if (e.key !== "Tab" || !containerRef.current) return
+      if (event.key !== "Tab" || !containerRef.current) return
       const focusable = Array.from(containerRef.current.querySelectorAll<HTMLElement>(
-        'button, summary, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       )).filter((element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden")
-      if (focusable.length === 0) return
+      if (!focusable.length) return
       const first = focusable[0]
       const last = focusable[focusable.length - 1]
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault()
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
         last.focus()
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
         first.focus()
       }
     }
+
     document.addEventListener("keydown", handleKeyDown)
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
@@ -64,6 +68,11 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       previouslyFocused.current?.focus?.()
     }
   }, [menuOpen, setMenuOpen])
+
+  const isActive = (path: string) =>
+    pathname === path || (path === "/services" && pathname.startsWith("/services")) || (path === "/tools" && pathname.startsWith("/tools"))
+
+  const close = () => setMenuOpen(false)
 
   return (
     <div
@@ -74,111 +83,82 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       aria-hidden={!menuOpen}
       tabIndex={-1}
       className={cn(
-        "fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain md:hidden transition-opacity duration-300 outline-none",
-        menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        "fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain bg-background text-foreground md:hidden outline-none transition-[opacity,transform] duration-300",
+        menuOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "pointer-events-none -translate-y-2 opacity-0"
       )}
     >
-      <div
-        className="absolute inset-0 bg-background/95 backdrop-blur-xl"
-        onClick={() => setMenuOpen(false)}
-        aria-hidden="true"
-      />
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-[680px] flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
+        <header className="flex items-center justify-between border-b border-border/70 pb-5">
+          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} className="font-heading text-[1.65rem] font-semibold tracking-[-0.04em] text-foreground">
+            ApexBytesHub
+          </Link>
+          <button type="button" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <X size={28} weight="regular" aria-hidden="true" />
+          </button>
+        </header>
 
-      <div className="relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 py-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        <nav className="flex w-full max-w-[380px] flex-col items-center gap-4" aria-label="Mobile navigation">
-          {NAV_ITEMS.map((item, idx) => {
-            const isActive =
-              pathname === item.path || (item.path === "/services" && pathname.startsWith("/services")) || (item.path === "/tools" && pathname.startsWith("/tools"))
-            const submenu = item.id === "services"
-              ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
+        <nav className="flex-1" aria-label="Mobile navigation">
+          {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
+            const active = isActive(item.path)
+            const hasSubmenu = item.id === "services"
+            const submenu = hasSubmenu
+              ? HUB_ORDER.map((hubId) => ({ id: hubId, label: SERVICE_LABELS[hubId] ?? HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
               : item.id === "tools"
-                ? [{ label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
-                : null
-
-            if (item.isCta) {
-              return (
-                <Link
-                  key={item.id}
-                  href={item.path}
-                  aria-current={isActive ? "page" : undefined}
-                  tabIndex={menuOpen ? 0 : -1}
-                  style={{
-                    transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    backgroundColor: "var(--surface-accent)",
-                    color: "var(--text-on-accent)",
-                  }}
-                  className={cn(
-                    "w-full rounded-[14px] px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-all duration-300 active:scale-95",
-                    menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              )
-            }
+                ? [{ id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                : []
 
             return (
-              <div
-                key={item.id}
-                className={cn("flex w-full flex-col items-center rounded-[14px] bg-card/70 p-2 transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
-                style={{ transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms" }}
-              >
-                <Link
-                  href={item.path}
-                  aria-current={isActive ? "page" : undefined}
-                  tabIndex={menuOpen ? 0 : -1}
-                  style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
-                  className="w-full rounded-[14px] bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
-                >
-                  {item.label}
-                </Link>
-                {submenu && (
-                  <details className="group w-full">
-                    <summary
-                      tabIndex={menuOpen ? 0 : -1}
-                      className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
-                    >
-                      <span className="sr-only">Browse {item.label.toLowerCase()}</span>
-                      <CaretDown size={16} aria-hidden="true" />
-                    </summary>
-                    <div className="mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
-                      <div className="min-h-0 overflow-hidden flex flex-col items-center gap-1 p-2 pt-3">
-                      {submenu.map((subitem) => (
-                        <Link
-                          key={subitem.path}
-                          href={subitem.path}
-                          tabIndex={menuOpen ? 0 : -1}
-                          aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined}
-                          className={cn("w-full rounded-[14px] px-5 py-3 text-center text-base text-foreground transition-colors hover:bg-muted hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold" : "font-medium")}
-                        >
-                          {subitem.label}
-                        </Link>
-                      ))}
+              <div key={item.id} className="border-b border-border/70">
+                <div className="flex min-h-[76px] items-center justify-between gap-4">
+                  <Link href={item.path} onClick={close} aria-current={active ? "page" : undefined} tabIndex={menuOpen ? 0 : -1} className={cn("flex-1 py-5 font-heading text-[1.55rem] font-semibold tracking-[-0.035em] transition-colors", active ? "text-brand-blue" : "text-foreground hover:text-brand-blue")}>
+                    {item.label}
+                  </Link>
+                  {hasSubmenu ? (
+                    <button type="button" onClick={() => setServicesOpen((open) => !open)} aria-expanded={servicesOpen} aria-label={`${servicesOpen ? "Collapse" : "Expand"} services`} tabIndex={menuOpen ? 0 : -1} className="flex size-11 shrink-0 items-center justify-center rounded-full text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      {servicesOpen ? <CaretUp size={24} aria-hidden="true" /> : <CaretDown size={24} aria-hidden="true" />}
+                    </button>
+                  ) : (
+                    <CaretRight size={24} className="shrink-0 text-muted-foreground" aria-hidden="true" />
+                  )}
+                </div>
+
+                {hasSubmenu && (
+                  <div className={cn("grid transition-[grid-template-rows,opacity] duration-200 motion-reduce:transition-none", servicesOpen ? "grid-rows-[1fr] pb-5 opacity-100" : "grid-rows-[0fr] opacity-0")}>
+                    <div className="min-h-0 overflow-hidden">
+                      <div className="flex flex-wrap gap-2">
+                        {submenu.map((subitem) => {
+                          const selected = pathname === subitem.path || pathname.startsWith(`${subitem.path}/`)
+                          return (
+                            <Link key={subitem.id} href={subitem.path} onClick={close} aria-current={selected ? "page" : undefined} tabIndex={menuOpen && servicesOpen ? 0 : -1} className={cn("rounded-full bg-[var(--mobile-service-pill)] px-4 py-2.5 text-base font-medium text-[var(--mobile-service-pill-text)] transition-colors hover:bg-[var(--mobile-service-pill-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", selected && "bg-[var(--mobile-service-pill-active)] font-semibold")}>
+                              {subitem.label}
+                            </Link>
+                          )
+                        })}
                       </div>
                     </div>
-                  </details>
+                  </div>
+                )}
+
+                {item.id === "tools" && submenu.length > 0 && (
+                  <div className="pb-4">
+                    <Link href={submenu[0].path} onClick={close} tabIndex={menuOpen ? 0 : -1} className="inline-flex rounded-full bg-[var(--mobile-service-pill)] px-4 py-2 text-sm font-medium text-[var(--mobile-service-pill-text)] hover:bg-[var(--mobile-service-pill-active)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                      {submenu[0].label}
+                    </Link>
+                  </div>
                 )}
               </div>
             )
           })}
         </nav>
-      </div>
 
-      <div
-        className={cn(
-          "absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center select-none transition-all duration-500 z-10",
-          menuOpen ? "opacity-30" : "opacity-0"
-        )}
-        aria-hidden="true"
-      >
-        <Image
-          src="/logo.png"
-          alt=""
-          width={32}
-          height={32}
-          className="relative w-8 h-8 shrink-0 object-contain transition-[filter] duration-300"
-          style={{ filter: "brightness(0) invert(1) contrast(0.6)" }}
-        />
+        <aside className="mt-5 rounded-[18px] bg-[var(--mobile-whatsapp-surface)] p-5 text-foreground">
+          <p className="font-heading text-lg font-semibold">Need it done today?</p>
+          <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexBytesHub! I'd like to get help today.")}`} onClick={close} tabIndex={menuOpen ? 0 : -1} className="mt-4 flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[var(--brand-whatsapp-accessible)] px-5 text-lg font-semibold text-white transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <WhatsappLogo size={26} weight="regular" aria-hidden="true" />
+            Chat on WhatsApp
+          </a>
+          <p className="mt-3 text-center text-sm text-muted-foreground">Mon–Fri 08:00–17:00</p>
+        </aside>
       </div>
     </div>
   )

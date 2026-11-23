@@ -150,10 +150,7 @@ export function Navbar() {
                 className="flex max-w-[200px] items-center overflow-hidden font-sans text-[1.12rem] font-medium leading-none tracking-tight"
               >
                 <span className="whitespace-nowrap transition-colors duration-300 abh-logo-primary">
-                  Apexbytes
-                </span>
-                <span className="whitespace-nowrap transition-colors duration-300 abh-logo-secondary">
-                  Hub
+                  ApexBytesHub
                 </span>
               </div>
             </button>

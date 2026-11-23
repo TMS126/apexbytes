@@ -160,17 +160,32 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Canonical ApexBytesHub palette. Legacy tokens below alias these values. */
+  --palette-page: #FFFFFF;
+  --palette-surface: #F4F4F2;
+  --palette-ink: #25283E;
+  --palette-muted: #6B6B6B;
+  --palette-blue: #1E6FA8;
+  --palette-blue-dark: #0F3F66;
+  --palette-orange: #FA5215;
+  --palette-orange-dark: #B06225;
+  --palette-whatsapp-surface: #EAF8D5;
+  --palette-whatsapp: #178540;
+  --mobile-service-pill: #DCEBF5;
+  --mobile-service-pill-active: #A9D6F2;
+  --mobile-service-pill-text: #0F3F66;
+  --mobile-whatsapp-surface: var(--palette-whatsapp-surface);
   --brand-green: #4A8011;
-  --brand-orange: #FA5215;
+  --brand-orange: var(--palette-orange);
   --brand-light-blue: #A9D6F2;
   --brand-light-green: #CDEB9F;
   --brand-light-orange: #F9D1B0;
 
-  --brand-blue: #1E6FA8;
+  --brand-blue: var(--palette-blue);
   --brand-blue-mid: #15537D;
-  --brand-blue-dark: #0F3F66;
+  --brand-blue-dark: var(--palette-blue-dark);
   --brand-green-dark: #35600D;
-  --brand-orange-dark: #B06225;
+  --brand-orange-dark: var(--palette-orange-dark);
   --brand-teal: #3E7473;
   --brand-teal-dark: #2C5E60;
   --brand-teal-light: #D3E9E5;
@@ -305,9 +320,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --footer-bg: #F4F4F1;
   --shadow: none;
   --card-border: transparent;
-  --background: #FFFFFF;
-  --foreground: #171717;
-  --card: #F6F6F5;
+  --background: var(--palette-page);
+  --foreground: var(--palette-ink);
+  --card: var(--palette-surface);
   --card-foreground: #171717;
   --popover: #FFFFFF;
   --popover-foreground: #171717;
@@ -362,6 +377,10 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 }
 
 .dark {
+  --mobile-service-pill: #2D314B;
+  --mobile-service-pill-active: #0F3F66;
+  --mobile-service-pill-text: #D9EEFA;
+  --mobile-whatsapp-surface: #253A27;
   --brand-blue: #A9D6F2;
   --brand-blue-mid: #D9EEFA;
   --brand-blue-dark: #EEF8FD;
@@ -944,6 +963,15 @@ button[aria-label^="Close"]:hover {
   .abh-site-cta:focus-visible { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
   .dark .abh-site-cta:hover,
   .dark .abh-site-cta:focus-visible { background: var(--brand-orange); color: #171717; }
+  .abh-site-cta-primary { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
+  .abh-site-cta-primary:hover,
+  .abh-site-cta-primary:focus-visible { background: var(--brand-blue-dark); color: #fff; }
+  .dark .abh-site-cta-primary { background: var(--brand-orange); color: #171717; }
+  .dark .abh-site-cta-primary:hover,
+  .dark .abh-site-cta-primary:focus-visible { background: var(--brand-orange-dark); color: #fff; }
+  .abh-site-cta-secondary { background: transparent; color: var(--foreground); box-shadow: inset 0 -2px 0 var(--line-rule); }
+  .abh-site-cta-secondary:hover,
+  .abh-site-cta-secondary:focus-visible { background: color-mix(in srgb, var(--line-rule) 10%, transparent); color: var(--foreground); }
   @media (prefers-reduced-motion: reduce) { .abh-site-cta { transition: none; } }
 
   .abh-editorial-hero.abh-service-detail-hero {
