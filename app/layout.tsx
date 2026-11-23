@@ -24,9 +24,7 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', weight: ['400', '500', '600', '700'] })
 const poppins = Poppins({ subsets: ['latin'], variable: '--font-poppins', weight: ['400', '500', '600', '700'] })
 
-// Search results and browser tabs showed the bare business name, so nothing in
-// the title matched what people search for ("printing Bothaville", "CV writing").
-const SITE_TITLE = `${BIZ.name} — Printing, CVs & Tech Help | ${BIZ.location}`
+const SITE_TITLE = `${BIZ.name} — ${BIZ.tagline}`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

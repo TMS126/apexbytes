@@ -265,6 +265,7 @@ export const NEUTRAL_ICON_COLOR = {
 // ============================================================
 export const BIZ = {
   name: "ApexbytesHub",
+  tagline: "Your local tech & print partner.",
   location: "Kgotsong, Bothaville",
   phone: "075 333 8260",
   phoneE164: "+27753338260",
