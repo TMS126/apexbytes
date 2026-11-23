@@ -17,7 +17,7 @@ export default function HomeRoute() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="home" />
-      <div>
+      <main id="main-content">
         <div className="animate-fade-up">
           <HeroSection />
           <CoreHubGrid />
@@ -32,7 +32,7 @@ export default function HomeRoute() {
             buttonHref={waChatLink()}
           />
         </div>
-      </div>
+      </main>
       <Footer />
     </div>
   )

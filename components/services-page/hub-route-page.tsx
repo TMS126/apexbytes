@@ -11,7 +11,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
   const accent = HUB_COLORS[hubId as HubKey].accentLight
 
   return (
-    <main className="min-h-screen bg-background pb-24">
+    <main id="main-content" className="min-h-screen bg-background pb-24">
       <header className="abh-editorial-hero">
         <Link href="/services" aria-label="Back to all services" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
           <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-muted-foreground transition-colors hover:bg-card hover:text-foreground">All</span>

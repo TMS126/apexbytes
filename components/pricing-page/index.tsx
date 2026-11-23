@@ -164,7 +164,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
         <Navbar />
         <PageNoticeBell page="pricing" />
 
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
 
           {/* ── Page header ── */}
           <section className="abh-editorial-hero">

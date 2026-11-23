@@ -22,7 +22,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
   )
 
   return (
-    <main className="min-h-screen bg-background pb-24">
+    <main id="main-content" className="min-h-screen bg-background pb-24">
       <header className="abh-editorial-hero abh-service-detail-hero">
         <Link href={`/services/${service.hubId}`} aria-label={`Back to ${hub.title}`} className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
           <span className="inline-flex size-10 items-center justify-center text-muted-foreground">

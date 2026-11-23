@@ -14,9 +14,9 @@ export default function ContactRoute() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="contact" />
-      <div>
+      <main id="main-content">
         <ContactPage />
-      </div>
+      </main>
       <Footer />
     </div>
   )

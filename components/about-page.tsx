@@ -32,7 +32,7 @@ export function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <main className="mx-auto max-w-[1240px] px-4 md:px-8">
+      <main id="main-content" className="mx-auto max-w-[1240px] px-4 md:px-8">
         <AboutHeader />
         <AboutStory blueColor={blueColor} blueOnCard={blueOnCard} orangeOnCard={orangeOnCard} cardBg={cardBg} />
         <AboutTeam blueColor={blueColor} />

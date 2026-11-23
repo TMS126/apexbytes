@@ -52,7 +52,7 @@ export function ToolForm({ mode }: { mode: ToolMode }) {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="tools" />
-      <main className="mx-auto w-full max-w-3xl px-5 pb-20 pt-[calc(var(--nav-h)+2.5rem)] md:px-8">
+      <main id="main-content" className="mx-auto w-full max-w-3xl px-5 pb-20 pt-[calc(var(--nav-h)+2.5rem)] md:px-8">
         <Link href="/tools" className="mb-7 inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <ArrowLeft size={17} aria-hidden="true" /> Back to tools
         </Link>

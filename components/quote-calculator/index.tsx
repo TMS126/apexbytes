@@ -130,6 +130,18 @@ export function QuoteCalculatorWidget() {
   }, [isOpen, setIsOpen])
 
   useEffect(() => {
+    if (!isOpen) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [isOpen, setIsOpen])
+
+  useEffect(() => {
     if (!(isOpen || cart.length === 0)) return
     const frame = requestAnimationFrame(() => setMiniExpanded(false))
     return () => cancelAnimationFrame(frame)
@@ -349,18 +361,20 @@ export function QuoteCalculatorWidget() {
         <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none md:-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
       )}
 
-      <FabTrigger
-        visible={fabVisible}
-        dimmed={isScrolling}
-        miniExpanded={miniExpanded}
-        hubsInCart={hubsInCart}
-        total={total}
-        itemCount={itemCount}
-        fabColor={fabColor}
-        getAccent={getAccent}
-        onOpen={() => setIsOpen(true)}
-        onToggleMini={() => setMiniExpanded(v => !v)}
-      />
+      {cart.length > 0 && (
+        <FabTrigger
+          visible={fabVisible}
+          dimmed={isScrolling}
+          miniExpanded={miniExpanded}
+          hubsInCart={hubsInCart}
+          total={total}
+          itemCount={itemCount}
+          fabColor={fabColor}
+          getAccent={getAccent}
+          onOpen={() => setIsOpen(true)}
+          onToggleMini={() => setMiniExpanded(v => !v)}
+        />
+      )}
 
       {isOpen && (
         <div

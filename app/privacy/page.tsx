@@ -13,9 +13,9 @@ export default function PrivacyRoute() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div>
+      <main id="main-content">
         <PrivacyPage />
-      </div>
+      </main>
       <PageScrollControls />
       <Footer />
     </div>

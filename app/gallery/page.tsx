@@ -14,9 +14,9 @@ export default function GalleryRoute() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="gallery" />
-      <div>
+      <main id="main-content">
         <GalleryPage />
-      </div>
+      </main>
       <Footer />
     </div>
   )

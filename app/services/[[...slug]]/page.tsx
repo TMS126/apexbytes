@@ -143,9 +143,11 @@ export default async function ServicesRoute({
       <div>
         {slug.length === 1 && <ServiceHubRoutePage hubId={hubSlugToId(slug[0])!} />}
         {slug.length === 0 && (
-          <Suspense fallback={null}>
-            <ServicesPage />
-          </Suspense>
+          <main id="main-content">
+            <Suspense fallback={null}>
+              <ServicesPage />
+            </Suspense>
+          </main>
         )}
         {selectedService && <ServiceDetailPage service={selectedService} />}
         {!selectedService && <TestimonialsSection />}

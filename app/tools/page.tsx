@@ -28,6 +28,7 @@ export default function ToolsPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="tools" />
+      <main id="main-content">
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
@@ -75,6 +76,7 @@ export default function ToolsPage() {
         buttonHref={WA.general}
       />
       <PageScrollControls />
+      </main>
       <Footer />
     </div>
   )
