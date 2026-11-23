@@ -167,3 +167,23 @@
     z-index: 90 !important;
   }
      }
+
+/* Quote calculator fields are intentionally unboxed: only the underline may change on focus. */
+:root:root:root .abh-quote-calculator :is(input, textarea, select),
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus,
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus-visible {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus,
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus-visible {
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+}

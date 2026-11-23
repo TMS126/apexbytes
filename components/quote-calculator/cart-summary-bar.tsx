@@ -42,6 +42,7 @@ interface CartSummaryBarProps {
   chipRefs: React.MutableRefObject<Record<string, HTMLDivElement | null>>
   getAccent: (id: HubId) => string
   removeItem: (id: string) => void
+  onSetQty: (id: string, qty: number) => void
   handleClickStep: (id: string, delta: number) => void
   handlePressStart: (id: string, delta: number) => void
   handlePressEnd: (id: string) => void
@@ -51,7 +52,7 @@ export function CartSummaryBar({
   embedded = false, fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
   showSaveForm, setShowSaveForm, saveNameDraft, setSaveNameDraft, confirmSaveQuote, clearCart,
   undoStack, undoRemove, highlightId, chipRefs, getAccent,
-  removeItem, handleClickStep, handlePressStart, handlePressEnd,
+  removeItem, onSetQty, handleClickStep, handlePressStart, handlePressEnd,
 }: CartSummaryBarProps) {
   return (
     <>
@@ -75,7 +76,7 @@ export function CartSummaryBar({
 
       {cart.length > 0 && (
         <div
-          className="sticky top-0 z-10 border-b border-border/40 bg-card/80 md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]"
+          className={cn("z-10 border-b border-border/40 bg-card/90 md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]", embedded ? "md:sticky md:top-0" : "sticky top-0")}
         >
           <div className="p-4 space-y-2.5 md:p-5">
             <div className="flex items-center justify-between gap-2">
@@ -138,7 +139,7 @@ export function CartSummaryBar({
               aria-label="Items in your quote"
               className={cn(
                 "gap-2.5 pb-1",
-                embedded ? "grid overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
+                embedded ? "hidden md:grid overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
               )}
               style={{ WebkitOverflowScrolling: "touch" }}
             >
@@ -161,6 +162,7 @@ export function CartSummaryBar({
                         isHighlighted={highlightId === item.id}
                         cardRef={(el) => { chipRefs.current[item.id] = el }}
                         onRemove={removeItem}
+                        onSetQty={onSetQty}
                         onClickStep={handleClickStep}
                         onPressStart={handlePressStart}
                         onPressEnd={handlePressEnd}

@@ -34,7 +34,8 @@
      hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
-import { CaretDown, CheckCircle, Minus, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
+import { CaretDown, CheckCircle, MagnifyingGlass, Minus, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
@@ -90,18 +91,21 @@ export function HubBrowser({
   openHub, setOpenHub, openSections, toggleSection,
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
 }: HubBrowserProps) {
+  const [query, setQuery] = useState("")
   const activeHub = openHub ? HUBS[openHub] : null
+  const normalizedQuery = query.trim().toLowerCase()
+  const visibleSections = activeHub?.sections.filter(section =>
+    !normalizedQuery || section.title.toLowerCase().includes(normalizedQuery) || section.items.some(item => item.name.toLowerCase().includes(normalizedQuery))
+  ) ?? []
 
   return (
     <div className="min-w-0 p-4 space-y-4 md:p-5">
       <div className="flex items-center justify-between gap-3 px-1">
-        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Choose a Hub</span>
-        <span className="text-xs text-muted-foreground">Pick a service to begin</span>
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Services</span>
+        <span className="text-xs text-muted-foreground">Pick a hub, then a service</span>
       </div>
 
-      {openHub ? (
-        // Compact row — same squircle language as the full grid, smaller.
-        <div className="flex items-center justify-start gap-2 overflow-x-auto pb-1 [scrollbar-width:none]" role="tablist" aria-label="Hubs">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5" role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
@@ -118,7 +122,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-[14px] w-14 h-14 shrink-0 bg-secondary/60",
+                  "group relative flex min-w-0 items-center gap-2 rounded-[14px] bg-secondary/60 px-3 py-2.5 text-left",
                   "transition-colors duration-150 ease-out",
                   isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item
@@ -143,96 +147,21 @@ export function HubBrowser({
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubIcon id={hubId} size={36} color="currentColor" />
+                    <HubIcon id={hubId} size={25} color="currentColor" />
                   </span>
                   {hubBulk && <HubBulkBadge />}
+                  <span className="min-w-0 truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
                 </span>
               </button>
             )
           })}
         </div>
-      ) : (
-        // Full grid, pre-selection — vertically centered in the remaining
-        // scroll space (see note above on what "centered" means here).
-        <div className="flex items-center justify-center min-h-[42vh]">
-          <div className="flex w-full max-w-[420px] flex-col gap-2.5">
-            {HUB_ORDER.map(hubId => {
-              const hub = HUBS[hubId]
-              const accent = getAccent(hubId)
-              const solidAccent = getSolid(hubId)
-              const onSolid = HUB_ON_COLOR[hubId]
-              const isSelected = openHub === hubId
-              const hubSub = hubSubtotal(hubId)
-              const hubBulk = hubHasBulk(hubId)
 
-              return (
-                <button
-                  key={hubId}
-                  onClick={() => setOpenHub(isSelected ? null : hubId)}
-                  aria-pressed={isSelected}
-                  aria-expanded={isSelected}
-                  aria-controls={`hub-panel-${hubId}`}
-                  className={cn(
-                    "group relative flex w-full items-center gap-4 rounded-[16px] px-4 py-3 text-left bg-card/70 shadow-[var(--ui-shadow-popup)]",
-                    "transition-colors duration-150 ease-out",
-                    isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
-                    GLASS.item
-                  )}
-                  style={{
-                    ["--hub-accent" as unknown as string]: accent,
-                    }}
-                >
-                  {hubSub && (
-                    <CountBadge
-                      count={hubSub.count}
-                      solidAccent={solidAccent}
-                      onSolid={onSolid}
-                      label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
-                      big
-                    />
-                  )}
-                  {/* Single squircle chip — icon sits directly in the button,
-                      no inner background circle, sized to nearly fill it. */}
-                  <span className="relative">
-                    <span
-                      className={cn(
-                        "transition-colors duration-150",
-                        isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                      )}
-                      style={isSelected ? { color: solidAccent } : undefined}
-                    >
-                      <HubIcon id={hubId} size={48} color="currentColor" />
-                    </span>
-                    {hubBulk && <HubBulkBadge />}
-                  </span>
-
-                  <span className="min-w-0 flex-1">
-                    <span
-                    className={cn(
-                      "block text-[0.78rem] font-medium leading-tight transition-colors duration-150",
-                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                    )}
-                    style={isSelected ? { color: solidAccent } : undefined}
-                  >
-                    {hub.title.replace(" Hub", "")}
-                    </span>
-                    <span className="mt-1 block text-[0.68rem] leading-snug text-muted-foreground">{hub.desc}</span>
-                  </span>
-                  {isSelected && (
-                    <CheckCircle
-                      size={18}
-                      weight="fill"
-                      className="absolute right-2 top-2"
-                      style={{ color: solidAccent }}
-                      aria-label="Selected hub"
-                    />
-                  )}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      <label className="flex min-h-12 items-center gap-2 border-b border-foreground/20 px-1 text-muted-foreground focus-within:border-[var(--line-rule)]" data-calculator-swipe-block>
+        <MagnifyingGlass size={18} aria-hidden="true" />
+        <span className="sr-only">Search services</span>
+        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={openHub ? "Search services" : "Choose a hub to browse services"} disabled={!openHub} className="min-w-0 flex-1 border-0 bg-transparent px-0 py-2 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60" />
+      </label>
 
       {/* Expanded content for whichever hub is selected */}
       {activeHub && openHub && (
@@ -259,7 +188,8 @@ export function HubBrowser({
           </div>
 
           <div className="py-1">
-            {activeHub.sections.map((section, sIdx) => {
+            {visibleSections.map((section) => {
+              const sIdx = activeHub.sections.indexOf(section)
               const hubId = openHub
               const accent = getAccent(hubId)
               const solidAccent = getSolid(hubId)

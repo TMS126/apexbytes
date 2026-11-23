@@ -393,13 +393,13 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
               ? "abh-quote-calculator relative mx-auto min-h-[680px] w-full max-w-[1440px] rounded-[22px] flex flex-col overflow-hidden"
               : "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5 abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh] rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
-            GLASS.panel,
+            embedded ? "border-0 bg-background shadow-none" : GLASS.panel,
             embedded ? "" : "md:-none"
           )}
         >
           <div className="absolute top-0 left-6 right-6 h-px bg-border pointer-events-none" />
 
-          <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
+          <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} embedded={embedded} />
 
           <div
             className={cn(
@@ -433,6 +433,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
               chipRefs={chipRefs}
               getAccent={getAccent}
               removeItem={removeItem}
+              onSetQty={setQty}
               handleClickStep={handleClickStep}
               handlePressStart={handlePressStart}
               handlePressEnd={handlePressEnd}

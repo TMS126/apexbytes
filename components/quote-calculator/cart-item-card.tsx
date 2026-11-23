@@ -18,6 +18,7 @@ interface CartItemCardProps {
   isHighlighted: boolean
   cardRef?: (el: HTMLDivElement | null) => void
   onRemove: (id: string) => void
+  onSetQty?: (id: string, qty: number) => void
   onClickStep: (id: string, delta: number) => void
   onPressStart: (id: string, delta: number) => void
   onPressEnd: (id: string) => void
@@ -25,7 +26,7 @@ interface CartItemCardProps {
 
 export function CartItemCard({
   item, embedded = false, accent, isHighlighted, cardRef,
-  onRemove, onClickStep, onPressStart, onPressEnd,
+  onRemove, onSetQty, onClickStep, onPressStart, onPressEnd,
 }: CartItemCardProps) {
   const qty = item.qty || 1
   const effRate = getEffectiveRate(item.id, item.name, qty, item.unitPrice)
@@ -81,7 +82,15 @@ export function CartItemCard({
           >
             <Minus size={13} weight="bold" aria-hidden="true" />
           </button>
-          <span className="text-base font-medium w-6 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
+          <input
+            aria-label={`Quantity for ${displayName}`}
+            inputMode="numeric"
+            type="number"
+            min={1}
+            value={qty}
+            onChange={(event) => onSetQty?.(item.id, Math.max(1, Number(event.target.value) || 1))}
+            className="abh-quote-quantity-input w-8 border-0 border-b border-foreground/20 bg-transparent p-0 text-center text-base font-medium text-zinc-800 outline-none dark:text-zinc-100"
+          />
           <button
             onClick={() => onClickStep(item.id, 1)}
             onPointerDown={() => onPressStart(item.id, 1)}

@@ -7,6 +7,7 @@
 
 import Image from "next/image"
 import { Sun, Moon } from "@phosphor-icons/react"
+import { cn } from "@/lib/utils"
 
 interface PanelHeaderProps {
   clockLabel: string
@@ -14,9 +15,10 @@ interface PanelHeaderProps {
   onToggleTheme: () => void
   hasItems: boolean
   titleAccent: string
+  embedded?: boolean
 }
 
-export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, titleAccent }: PanelHeaderProps) {
+export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, titleAccent, embedded = false }: PanelHeaderProps) {
   return (
     <>
       <div className="flex items-center justify-between px-5 pb-2 shrink-0" style={{ paddingTop: "max(1rem, env(safe-area-inset-top))" }}>
@@ -41,12 +43,13 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
         </div>
       </div>
 
-      <div className="shrink-0 border-b border-border px-5 pb-3 text-center">
-        <h3 className="font-sans font-medium text-xl leading-snug" style={{ color: titleAccent }}>
-          {hasItems ? "Looking good so far" : "What can we help you with today?"}
+      <div className={cn("shrink-0 border-b border-border px-5 pb-3", embedded ? "text-left" : "text-center")}>
+        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">ApexBytesHub</p>
+        <h3 className="mt-1 font-sans text-xl font-medium leading-snug" style={{ color: titleAccent }}>
+          {embedded ? "Build your quote" : hasItems ? "Looking good so far" : "What can we help you with today?"}
         </h3>
-        <p className="text-[0.78rem] font-medium text-muted-foreground mt-1">
-          {hasItems ? "Add more, or send it through whenever you're ready 🙂" : "Tap a hub below and let's put your quote together ✨"}
+        <p className="mt-1 text-[0.78rem] font-medium text-muted-foreground">
+          {embedded ? "Choose a hub, add a service, and review it on the right." : hasItems ? "Add more, or send it through whenever you're ready." : "Tap a hub below and let's put your quote together."}
         </p>
       </div>
     </>
