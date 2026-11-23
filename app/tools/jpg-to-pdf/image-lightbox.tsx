@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react"
 import Image from "next/image"
 import { X } from "@phosphor-icons/react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useFocusTrap } from "@/components/services-page/shared"
 
 // Closes via: backdrop tap, Esc key, X button, or the device/browser back
 // gesture (we push a history entry on open and listen for popstate).
@@ -17,6 +18,8 @@ export function ImageLightbox({
   onClose: () => void
 }) {
   const pushedRef = useRef(false)
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  useFocusTrap(!!imageUrl, dialogRef)
 
   useEffect(() => {
     if (!imageUrl) return
@@ -48,6 +51,7 @@ export function ImageLightbox({
     <AnimatePresence>
       {imageUrl && (
         <motion.div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={fileName ? `Full size view of ${fileName}` : "Full size image"}

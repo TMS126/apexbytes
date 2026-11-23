@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { X } from "@phosphor-icons/react"
 import { ServicesPage } from "./services-page"
+import { useFocusTrap } from "./services-page/shared"
 
 interface ServicesDashboardModalProps {
   isOpen: boolean
@@ -10,6 +11,8 @@ interface ServicesDashboardModalProps {
 }
 
 export function ServicesDashboardModal({ isOpen, onClose }: ServicesDashboardModalProps) {
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  useFocusTrap(isOpen, dialogRef)
   
   useEffect(() => {
     if (isOpen) {
@@ -34,7 +37,7 @@ export function ServicesDashboardModal({ isOpen, onClose }: ServicesDashboardMod
         onClick={onClose}
       />
 
-      <div className="relative z-10 bg-background w-full h-full sm:h-[85vh] sm:max-w-[1140px] sm:rounded-[14px] shadow-[0_32px_80px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-10 duration-300 ease-out">
+      <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Services dashboard" className="relative z-10 bg-background w-full h-full sm:h-[85vh] sm:max-w-[1140px] sm:rounded-[14px] shadow-[0_32px_80px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col animate-in zoom-in-95 slide-in-from-bottom-10 duration-300 ease-out">
         
         <button
           onClick={onClose}

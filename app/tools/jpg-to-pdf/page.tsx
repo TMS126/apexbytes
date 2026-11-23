@@ -292,7 +292,7 @@ accept={ACCEPT_ATTRIBUTE}
 
                 {/* Error State */}
                 {t.errors.length > 0 && (
-                  <div className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
+                  <div role="alert" className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
                     <WarningCircle weight="fill" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
                     <div>
                       <p className="text-sm font-medium text-red-900 dark:text-red-200">

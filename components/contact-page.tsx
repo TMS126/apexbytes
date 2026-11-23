@@ -55,6 +55,7 @@ function ContactPageInner() {
   const [formData, setFormData] = useState({ name: "", phone: "", service: "", message: "" })
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [vcardDone, setVcardDone] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null)
   const [prefilled, setPrefilled] = useState(false)
   const [glowActive, setGlowActive] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
@@ -104,7 +105,8 @@ function ContactPageInner() {
       : `I'm interested in your ${formData.service}.`
     const rawMsg = `Hi ${BIZ.name}! My name is ${formData.name.trim()}. ${serviceLine} \n\nMessage: ${formData.message.trim()}`
     const msg = withStatusPrefix(rawMsg)
-    window.open(`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(msg)}`, "_blank")
+    const handoff = window.open(`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer")
+    setSubmitStatus(handoff ? "WhatsApp opened with your message ready to send." : "Your browser blocked WhatsApp. Please allow pop-ups or contact us directly using the details above.")
   }
 
   const handleVCard = () => {
@@ -259,20 +261,21 @@ function ContactPageInner() {
                         type={f.type}
                         value={rawValue}
                         aria-invalid={err}
+                        aria-describedby={err ? `contact-${f.key}-error` : undefined}
                         maxLength={f.key === "name" ? 80 : 20}
                         className="w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
                         style={{ borderColor: err ? TOKEN.errorBg : "var(--form-rule)" }}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />
-                      {err && <FieldErrorTooltip message={errMessage} />}
+                      {err && <FieldErrorTooltip id={`contact-${f.key}-error`} message={errMessage} />}
                     </div>
                   )
                 })}
 
                 <div>
-                  <label className="abh-label block mb-1.5">Service Needed</label>
-                  <HubSelect value={formData.service} onChange={(val) => setFormData({ ...formData, service: val })} />
+                  <label htmlFor="contact-service" className="abh-label block mb-1.5">Service Needed</label>
+                  <HubSelect id="contact-service" value={formData.service} onChange={(val) => setFormData({ ...formData, service: val })} />
                 </div>
 
                 <div className="flex-1 flex flex-col">
@@ -281,6 +284,7 @@ function ContactPageInner() {
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
+                      aria-describedby={touched.message && !isMessageValid(formData.message) ? "contact-message-error" : undefined}
                       maxLength={1000}
                       className="w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
                       style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--form-rule)" }}
@@ -291,7 +295,7 @@ function ContactPageInner() {
                     />
                   </div>
                   {touched.message && !isMessageValid(formData.message) && (
-                    <FieldErrorTooltip message={!formData.message.trim() ? "This field is required." : "Message too short"} />
+                    <FieldErrorTooltip id="contact-message-error" message={!formData.message.trim() ? "This field is required." : "Message too short"} />
                   )}
                 </div>
 
@@ -299,6 +303,7 @@ function ContactPageInner() {
                   <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
                   Send via WhatsApp
                 </button>
+                {submitStatus && <p role="status" className="mt-3 text-center text-sm text-muted-foreground">{submitStatus}</p>}
               </div>
             </div>
           </ScrollBounce>

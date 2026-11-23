@@ -13,7 +13,7 @@ import { FORM_HUB_KEYS, getFormHubColor } from "@/lib/contact-data"
 // replaced direct DOM style mutation on hover (e.currentTarget.style.color)
 // with real React state — mixing manual style writes with re-renders can
 // leave a stale color stuck if a re-render lands mid-hover.
-export function HubSelect({ value, onChange }: { value: string; onChange: (val: string) => void }) {
+export function HubSelect({ value, onChange, id = "contact-service" }: { value: string; onChange: (val: string) => void; id?: string }) {
   const [isOpen, setIsOpen] = useState(false)
   const mounted = useMounted()
   const [hoveredOption, setHoveredOption] = useState<string | null>(null)
@@ -36,6 +36,7 @@ export function HubSelect({ value, onChange }: { value: string; onChange: (val: 
   return (
     <div className="relative" ref={ref}>
       <button
+        id={id}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"

@@ -7,6 +7,7 @@ import { X, Check, ArrowCounterClockwise, Rectangle, Shapes } from "@phosphor-ic
 import { BRAND } from "@/lib/brand"
 import { CROP_ASPECT_PRESETS } from "./constants"
 import type { CropRect, CropPoint } from "./types"
+import { useFocusTrap } from "@/components/services-page/shared"
 
 type Inset = { top: number; left: number; right: number; bottom: number }
 type Corners = [CropPoint, CropPoint, CropPoint, CropPoint]
@@ -51,6 +52,8 @@ export function CropModal({
   const dragRef = useRef<{ kind: "inset" | "corner"; handle: string; startX: number; startY: number; startInset: Inset; startCorners: Corners } | null>(null)
 
   const pushedRef = useRef(false)
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  useFocusTrap(true, dialogRef)
 
   useEffect(() => {
     window.history.pushState({ abhCrop: true }, "")
@@ -312,7 +315,7 @@ const onDragRect = useCallback((e: PointerEvent) => {
   }, [mode, inset, corners, naturalSize])
 
   return (
-    <div role="dialog" aria-modal="true" aria-label={`Crop ${fileName}`} className="fixed inset-0 z-[200] flex flex-col bg-black/95">
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={`Crop ${fileName}`} className="fixed inset-0 z-[200] flex flex-col bg-black/95">
       <div className="absolute inset-0" onClick={requestClose} aria-hidden="true" />
 
       <div className="relative flex items-center justify-between px-4 py-3 text-white shrink-0">

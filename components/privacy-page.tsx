@@ -72,8 +72,9 @@ export function PrivacyPage() {
                 affidavits, certificates, payslips, or any documents you bring or upload for us to work on.
               </li>
               <li>
-                <strong className="text-zinc-700 dark:text-zinc-300">Financial information:</strong> Payment method
-                (cash, card, mobile money) — we do not store card details.
+                <strong className="text-zinc-700 dark:text-zinc-300">Financial information:</strong> Payment and
+                order details you choose to share when arranging a service directly with us. We do not collect or
+                store card details through this website.
               </li>
               <li>
                 <strong className="text-zinc-700 dark:text-zinc-300">Device files:</strong> Files you provide on a
@@ -148,17 +149,7 @@ export function PrivacyPage() {
           <section>
             <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">5. How Long We Keep Your Information</h2>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
-              {/* FIX: this previously promised uploaded files are
-                  "removed as part of our regular account cleanup" — but
-                  a direct audit of app/api/upload/route.ts (the only
-                  upload endpoint in the codebase) found no deletion
-                  mechanism anywhere: no cloudinary.uploader.destroy call,
-                  no scheduled cleanup job, no cron config. This is now
-                  worded to accurately describe what the system actually
-                  does today. If/when automated deletion is implemented,
-                  this line should be updated to describe the real
-                  retention window at that point. */}
-              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Stored on Cloudinary for as long as needed to complete your service. We currently review and remove files manually rather than on an automated schedule — if you&apos;d like a specific file deleted sooner, contact us using the details in Section 10 and we&apos;ll action it directly.</li>
+              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Uploaded files are retained for up to 30 days by default to complete your service, then scheduled for deletion. If you&apos;d like a specific file deleted sooner, contact us using the details in Section 10 and we&apos;ll action it directly.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Physical documents:</strong> Returned to you immediately after service or destroyed on the same day.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Government application records:</strong> Retained only as long as needed to resolve your application (typically same day to 7 days).</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Contact information:</strong> Not stored in any database unless you have an ongoing order.</li>

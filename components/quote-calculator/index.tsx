@@ -21,6 +21,7 @@ import { PanelHeader } from "./panel-header"
 import { CartSummaryBar } from "./cart-summary-bar"
 import { SavedQuotesPanel } from "./saved-quotes-panel"
 import { FooterActions } from "./footer-actions"
+import { useFocusTrap } from "@/components/services-page/shared"
 
 const VIEW_KEY = "apexbytes-quote-view"
 type UndoAction =
@@ -42,6 +43,8 @@ export function QuoteCalculatorWidget() {
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const chipRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [announce, setAnnounce] = useState("")
+  const calculatorRef = useRef<HTMLDivElement | null>(null)
+  useFocusTrap(isOpen, calculatorRef)
 
   const [undoStack, setUndoStack] = useState<UndoAction | null>(null)
   const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -288,7 +291,16 @@ export function QuoteCalculatorWidget() {
     return msg
   }
 
-  const sendQuote = () => window.open(waLink(buildQuoteMessage(cart)), "_blank")
+  const sendQuote = () => {
+    const handoff = window.open(waLink(buildQuoteMessage(cart)), "_blank", "noopener,noreferrer")
+    setAnnounce(handoff ? "WhatsApp opened with your quote ready to send." : "WhatsApp was blocked. Allow pop-ups or copy the quote and contact us directly.")
+  }
+  const exportPdf = async (mode: "download" | "view") => {
+    const successful = await exportQuotePdf(cart, mode)
+    setAnnounce(successful
+      ? mode === "view" ? "Quote preview opened in a new tab." : "Quote PDF downloaded."
+      : mode === "view" ? "Quote preview could not open. Allow pop-ups and try again." : "Quote PDF could not be created. Please try again.")
+  }
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
   const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!openHub || (event.target as HTMLElement).closest("[data-calculator-cart-area], input, textarea, [data-calculator-swipe-block]")) {
@@ -352,6 +364,7 @@ export function QuoteCalculatorWidget() {
 
       {isOpen && (
         <div
+          ref={calculatorRef}
           role="dialog"
           aria-modal="true"
           aria-label="Quotation Calculator"
@@ -431,8 +444,8 @@ export function QuoteCalculatorWidget() {
             totalSavings={totalSavings}
             total={total}
             fabColor={fabColor}
-            onExportPdf={() => exportQuotePdf(cart)}
-            onViewQuote={() => exportQuotePdf(cart, "view")}
+            onExportPdf={() => { void exportPdf("download") }}
+            onViewQuote={() => { void exportPdf("view") }}
             onSendQuote={sendQuote}
             onClose={() => setIsOpen(false)}
           />

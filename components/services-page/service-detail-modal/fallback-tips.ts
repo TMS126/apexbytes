@@ -150,7 +150,7 @@ const ITEM_TIPS_MAP: Record<string, string[]> = {
   "design|flyers & posters complex": [
     "What to bring: All text upfront — price list, services, map, photos — adding content later may need revision fee.",
     "What you get: Complex layout with multiple sections, delivered as A3 300dpi for printing plus 1080px for WhatsApp.",
-    "Policy: Minor text fixes after completion are R80; major layout changes or adding new sections will require a new design fee.",
+    "Policy: Minor text fixes after completion are charged at the listed post-delivery revision rate; major layout changes or adding new sections will require a new design fee.",
   ],
   "design|social media post": [
     "What to bring: Exact wording you want — we copy it exactly to avoid typos.",

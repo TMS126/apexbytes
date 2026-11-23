@@ -20,7 +20,7 @@ import './no-borders.css'
 export const dynamic = 'force-dynamic'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', weight: ['400', '500', '600', '700'] })
 const poppins = Poppins({ subsets: ['latin'], variable: '--font-poppins', weight: ['400', '500', '600', '700'] })
 
@@ -33,6 +33,7 @@ export const metadata: Metadata = {
   keywords: ['printing Bothaville','printing Kgotsong','CV writing Kgotsong','SASSA help Kgotsong','ApexbytesHub'],
   authors: [{ name: BIZ.name }],
   robots: { index: true, follow: true },
+  alternates: { canonical: './' },
 
   openGraph: {
     type: 'website', locale: 'en_ZA', url: SITE_URL, siteName: BIZ.name,
@@ -84,7 +85,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <LocalBusinessJsonLd nonce={nonce ?? ""} />
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
-          <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
+          <InstanceGuardProvider><div id="main-content">{children}</div></InstanceGuardProvider>
           <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 14rem)" }}>
             <FloatingSearchWidget />
           </div>
@@ -94,7 +95,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           {/* WhatsApp FAB intentionally disabled until we bring it back. */}
         </ThemeProvider>
 
-        {isProd && (
+        {isProd && GA_MEASUREMENT_ID && (
           <>
             <Analytics />
             <SpeedInsights />

@@ -103,7 +103,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
           itemListElement: [
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SASSA Applications' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SARS eFiling Assistance' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Home Affairs Application Assistance' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Online Application Assistance' } },
           ],
         },
         {

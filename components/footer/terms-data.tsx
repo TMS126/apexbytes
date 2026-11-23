@@ -78,7 +78,7 @@ export const TERMS_SECTIONS = [
     points: [
       { label: "Standard Services", text: "Payable on execution. Clear, upfront pricing with no hidden fees." },
       { label: "Custom & Complex Work", text: "50% deposit to confirm order, balance on completion." },
-      { label: "Walk-ins", text: "Cash preferred. Card and mobile money accepted." },
+      { label: "Walk-ins", text: "Payment is arranged directly with ApexbytesHub before collection or final delivery. Please confirm the available offline payment method when you request your service." },
     ],
   },
   {

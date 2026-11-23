@@ -87,17 +87,15 @@
     border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent) !important;
   }
 
-  /* 3. No rings. Keyboard focus rings stay on buttons/links, but never inside fields or search. */
+  /* 3. Keep surfaces borderless without removing keyboard focus visibility. */
   :root:root:root *:not(:focus-visible) {
     --tw-ring-shadow: 0 0 #0000 !important;
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
   }
-  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]),
-  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus,
-  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible,
-  :root:root:root [role="dialog"][aria-label="Search services"] *:focus-visible {
-    outline: none !important;
+  :root:root:root :is(button, a, input, textarea, select, [role="button"], [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible {
+    outline: 2px solid var(--brand-orange) !important;
+    outline-offset: 3px !important;
     --tw-ring-shadow: 0 0 #0000 !important;
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
