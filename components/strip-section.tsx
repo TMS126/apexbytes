@@ -13,7 +13,7 @@ export function StripSection() {
         <ScrollBounce>
           <div className="text-center mb-10">
             <p className="abh-eyebrow mb-2">
-              Why ApexbytesHub
+              Why ApexBytesHub
             </p>
             <h2 className="font-sans font-medium text-2xl md:text-3xl text-foreground">
               Fast, Friendly &amp; Local

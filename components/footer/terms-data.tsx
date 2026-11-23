@@ -39,7 +39,7 @@ export const TERMS_SECTIONS = [
       { label: "Branding Design", text: "Logos and business cards built in Adobe Illustrator. No generic templates." },
       { label: "Marketing Designs", text: "Flyers, posters, banners, and social media templates custom-created from your brief." },
       { label: "Business Profile", text: "Full company profile documents, professionally branded and formatted for pitching, tenders, or registration." },
-      { label: "Revisions & Ownership", text: "Revisions are limited to what's included in your package; extra rounds may cost more. Designs remain the property of ApexbytesHub until paid in full." },
+      { label: "Revisions & Ownership", text: "Revisions are limited to what's included in your package; extra rounds may cost more. Designs remain the property of ApexBytesHub until paid in full." },
       { label: "Approval", text: "Prompt approval of drafts is needed to keep your deadline on track. Final work is for legal, ethical use only." },
       { label: "Turnaround", text: "2–3 business days, no exceptions." },
     ],
@@ -65,7 +65,7 @@ export const TERMS_SECTIONS = [
     title: "Tech Hub – Hardware & Software",
     points: [
       { label: "System Maintenance", text: "Software installations, cleaning, virus removal, and performance optimisation." },
-      { label: "Data Backup", text: "Back up your important data before requesting service — ApexbytesHub is not responsible for data loss." },
+      { label: "Data Backup", text: "Back up your important data before requesting service — ApexBytesHub is not responsible for data loss." },
       { label: "Access & Consent", text: "Devices must be available at the agreed time, charged and accessible. Remote sessions only proceed with your consent." },
       { label: "Turnaround", text: "Most services same-day. Virus/Malware Removal and OS Updates may take several hours. Windows Install & PC Setup: same-day to next-day. Troubleshooting: same-day, hours vary." },
     ],
@@ -78,7 +78,7 @@ export const TERMS_SECTIONS = [
     points: [
       { label: "Standard Services", text: "Payable on execution. Clear, upfront pricing with no hidden fees." },
       { label: "Custom & Complex Work", text: "50% deposit to confirm order, balance on completion." },
-      { label: "Walk-ins", text: "Payment is arranged directly with ApexbytesHub before collection or final delivery. Please confirm the available offline payment method when you request your service." },
+      { label: "Walk-ins", text: "Payment is arranged directly with ApexBytesHub before collection or final delivery. Please confirm the available offline payment method when you request your service." },
     ],
   },
   {
@@ -88,7 +88,7 @@ export const TERMS_SECTIONS = [
     title: "General Terms",
     points: [
       { label: "Appointments", text: "Confirmed in advance; late arrival may mean rescheduling. Cancellations need 24-hour notice where possible." },
-      { label: "Policy Changes", text: "ApexbytesHub may update services, pricing, or policy — clients will be notified." },
+      { label: "Policy Changes", text: "ApexBytesHub may update services, pricing, or policy — clients will be notified." },
       { label: "Confidentiality", text: "Client data is kept confidential at all times and never shared without consent." },
       { label: "Disputes", text: "Handled respectfully; repeated non-compliance may result in service refusal." },
     ],

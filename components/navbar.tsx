@@ -127,7 +127,7 @@ export function Navbar() {
             {/* Logo */}
             <button
               type="button"
-              aria-label="ApexbytesHub — go to homepage"
+              aria-label="ApexBytesHub — go to homepage"
               className={cn(
                 glassPillClass,
                 "flex items-center gap-2 cursor-pointer select-none pointer-events-auto group transition-all duration-300 px-1", 
@@ -140,7 +140,7 @@ export function Navbar() {
             >
               <Image
                 src="/logo.png"
-                alt="ApexbytesHub home"
+                alt="ApexBytesHub home"
                 width={36}
                 height={36}
                 className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 object-contain transition-[filter] duration-300"

@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { ToolForm } from "@/components/tools/tool-form"
 
 export const metadata: Metadata = {
-  title: "Intake Form Filling — ApexbytesHub",
+  title: "Intake Form Filling — ApexBytesHub",
   description: "Share the details of your service request in a simple guided form.",
 }
 

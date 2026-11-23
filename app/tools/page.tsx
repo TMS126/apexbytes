@@ -13,7 +13,7 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
-  description: "Free tools from ApexbytesHub: convert JPG to PDF, prepare a CV, and send service intake details."
+  description: "Free tools from ApexBytesHub: convert JPG to PDF, prepare a CV, and send service intake details."
 }
 
 const TOOLS = [

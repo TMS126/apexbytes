@@ -19,7 +19,7 @@ const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
     e.stopPropagation()
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
-        await navigator.share({ title, text: `Check out "${title}" from Apexbytes Hub`, url })
+        await navigator.share({ title, text: `Check out "${title}" from ApexBytesHub`, url })
         return
       } catch {
         // fall through to clipboard

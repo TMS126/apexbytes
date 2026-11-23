@@ -11,7 +11,7 @@ import { ServiceIcon } from "./shared"
 export function ClosingTagline() {
   return (
     <div className="mt-2 mb-4 text-center px-6 py-6">
-      <p className="abh-eyebrow text-muted-foreground mb-3">Why ApexbytesHub</p>
+      <p className="abh-eyebrow text-muted-foreground mb-3">Why ApexBytesHub</p>
       <p className="font-sans font-medium text-2xl md:text-3xl text-foreground leading-snug max-w-2xl mx-auto">
         From your first CV to your next big idea — one hub does it all, right here in Bothaville.
       </p>

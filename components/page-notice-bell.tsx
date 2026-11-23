@@ -103,9 +103,9 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
     id: "about-local-business",
     variant: "info",
     Icon: Buildings,
-    category: "About ApexbytesHub",
+    category: "About ApexBytesHub",
     header: "Local, practical support",
-    body: "ApexbytesHub brings print, design, digital services, and tech support together for the Bothaville community.",
+    body: "ApexBytesHub brings print, design, digital services, and tech support together for the Bothaville community.",
   }],
   pricing: [
     {

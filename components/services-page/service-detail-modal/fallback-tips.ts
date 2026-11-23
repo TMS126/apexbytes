@@ -7,7 +7,7 @@ function normalize(s: string | undefined) {
 }
 
 // ─────────────────────────────────────────────────────────
-// APEXBYTES HUB - FINAL TIPS SYSTEM
+// APEXBYTESHUB - FINAL TIPS SYSTEM
 // Architecture:
 // 1. Exact composite key: hub|section|item (most specific)
 // 2. hub|item

@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata = {
-  title: "Contact Us — ApexbytesHub",
+  title: "Contact Us — ApexBytesHub",
   description: "WhatsApp, call, email or visit us in Kgotsong. We're here to help.",
 }
 

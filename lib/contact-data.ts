@@ -31,14 +31,14 @@ export function downloadBusinessVCard() {
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    `FN:Theji Meje — Apexbytes Hub`,
-    `N:ApexbytesHub;Theji Meje;;;`,
-    // FIX: was "ORG:ApexbytesHub" (no space) — contradicted this same
+    `FN:Theji Meje — ApexBytesHub`,
+    `N:ApexBytesHub;Theji Meje;;;`,
+    // FIX: was "ORG:ApexBytesHub" (no space) — contradicted this same
     // file's own NOTE field below, which correctly uses the spaced
-    // "Apexbytes Hub" form. The earlier codebase audit already
-    // established spaced "Apexbytes Hub" as the correct public-facing
+    // "ApexBytesHub" form. The earlier codebase audit already
+    // established exact "ApexBytesHub" as the correct public-facing
     // brand form specifically for places like vCards.
-    `ORG:Apexbytes Hub`,
+    `ORG:ApexBytesHub`,
     `TITLE:Founder & Lead Designer`,
     // FIX: was a hardcoded literal duplicating BIZ.phoneE164.
     `TEL;TYPE=CELL,PREF:${BIZ.phoneE164}`,
@@ -47,7 +47,7 @@ export function downloadBusinessVCard() {
     `ADR;TYPE=WORK:;;5878 Mpumalanga Section;Kgotsong;Bothaville;9660;South Africa`,
     // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.
     `URL:https://apexbytes.vercel.app/`,
-    `NOTE:Apexbytes Hub — Print\\, Design\\, Docs\\, Tech & E-Services in Kgotsong\\, Bothaville.`,
+    `NOTE:ApexBytesHub — Print\\, Design\\, Docs\\, Tech & E-Services in Kgotsong\\, Bothaville.`,
     "END:VCARD",
   ].join("\r\n")
 
@@ -55,7 +55,7 @@ export function downloadBusinessVCard() {
   const url  = URL.createObjectURL(blob)
   const a    = document.createElement("a")
   a.href     = url
-  a.download = "ApexbytesHub.vcf"
+  a.download = "ApexBytesHub.vcf"
   // FIX: same detached-element / premature-revoke issue as
   // profile-drawer.tsx — see that file's comment for the reasoning.
   document.body.appendChild(a)

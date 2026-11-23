@@ -108,14 +108,14 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
   const handleDownload = useCallback(() => {
     const link = document.createElement('a')
-    link.href = '/ApexbytesHub_Pricing_Catalog_v2.pdf'
+    link.href = '/ApexBytesHub_Pricing_Catalog_v2.pdf'
     link.download = 'CAT-ABH-Pricing-Catalog.pdf'
     link.click()
   }, [])
 
   const handleHubDownload = useCallback((hubId: HubId) => {
     const link = document.createElement('a')
-    link.href = `/ApexbytesHub_Pricing_${hubId}.pdf`
+    link.href = `/ApexBytesHub_Pricing_${hubId}.pdf`
     link.download = `CAT-ABH-Pricing-${HUBS[hubId].title.replace(/\s+/g, '-')}.pdf`
     link.click()
   }, [])

@@ -255,7 +255,7 @@ export default async function MaintenancePage() {
         <div className="content">
 
           <div className="logo">
-            <span className="logo-blue">Apexbytes</span>
+            <span className="logo-blue">ApexBytes</span>
             <span className="logo-green">Hub</span>
           </div>
 
@@ -269,7 +269,7 @@ export default async function MaintenancePage() {
           <p className="sub">
             We&apos;re making improvements to give you a better experience. Everything will be back shortly.
           </p>
-          <p className="location">Apexbytes Hub · Kgotsong, Bothaville</p>
+          <p className="location">ApexBytesHub · Kgotsong, Bothaville</p>
 
           <div className="divider" />
 
@@ -297,7 +297,7 @@ export default async function MaintenancePage() {
 
           <p className="wa-prompt">Need something urgent? We&apos;re still here.</p>
           <a
-            href="https://wa.me/27753338260?text=Hi%20Apexbytes%20Hub!%20I%20saw%20your%20site%20is%20under%20maintenance.%20Can%20you%20still%20help%20me%3F"
+            href="https://wa.me/27753338260?text=Hi%20ApexBytesHub!%20I%20saw%20your%20site%20is%20under%20maintenance.%20Can%20you%20still%20help%20me%3F"
             className="wa-btn"
           >
             <svg className="wa-icon" viewBox="0 0 24 24" fill="white">
@@ -306,7 +306,7 @@ export default async function MaintenancePage() {
             Chat With Us
           </a>
 
-          <p className="footer">© {new Date().getFullYear()} Apexbytes Hub · All rights reserved</p>
+          <p className="footer">© {new Date().getFullYear()} ApexBytesHub · All rights reserved</p>
 
         </div>
       </div>

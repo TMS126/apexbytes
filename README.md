@@ -1,6 +1,6 @@
-# ApexbytesHub
+# ApexBytesHub
 
-ApexbytesHub is a local technology, printing, design, document, and e-service business based in Kgotsong, Bothaville. The website presents five service hubs, a portfolio, pricing information, customer FAQs, contact paths, and browser-based document tools.
+ApexBytesHub is a local technology, printing, design, document, and e-service business based in Kgotsong, Bothaville. The website presents five service hubs, a portfolio, pricing information, customer FAQs, contact paths, and browser-based document tools.
 
 ## Technology
 
@@ -61,4 +61,4 @@ Business information and service content are maintained in the shared data and b
 
 ## License and ownership
 
-This repository contains the ApexbytesHub website and its original business content. It is private application code and is not intended as a general-purpose starter template.
+This repository contains the ApexBytesHub website and its original business content. It is private application code and is not intended as a general-purpose starter template.

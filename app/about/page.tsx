@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata = {
-  title: "About Us — ApexbytesHub",
+  title: "About Us — ApexBytesHub",
   description: "A local business built on community, trust, and real results.",
 }
 

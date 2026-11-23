@@ -5,8 +5,8 @@ import { PrivacyPage } from "@/components/privacy-page"
 import { PageScrollControls } from "@/components/page-scroll-controls"
 
 export const metadata = {
-  title:       "Privacy Policy — ApexbytesHub",
-  description: "How Apexbytes Hub collects, uses, and protects your personal information in accordance with POPIA.",
+  title:       "Privacy Policy — ApexBytesHub",
+  description: "How ApexBytesHub collects, uses, and protects your personal information in accordance with POPIA.",
 }
 
 export default function PrivacyRoute() {

@@ -27,7 +27,7 @@ export function AboutMission() {
           Bridging the digital gap — one person at a time.
         </h2>
         <p className="abh-body text-xl max-w-[500px] mx-auto mb-10">
-          ApexbytesHub is that bridge — printing, design, IT support, and government services brought to people
+          ApexBytesHub is that bridge — printing, design, IT support, and government services brought to people
           who need them most, in a community that deserves better access.
         </p>
 

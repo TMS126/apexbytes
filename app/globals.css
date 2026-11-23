@@ -1492,7 +1492,7 @@ button:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active),
   border-color: var(--pill-hover-color) !important;
 }
 
-/* ApexbytesHub tactile interface layer: soft acrylic, paper grain, and quiet depth. */
+/* ApexBytesHub tactile interface layer: soft acrylic, paper grain, and quiet depth. */
 :root {
   --ui-radius-xs: 12px;
   --ui-radius-sm: 18px;

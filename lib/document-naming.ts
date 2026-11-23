@@ -41,7 +41,7 @@ export function documentFilename(kind: DocumentKind, number: string): string {
   return `${number}.pdf`
 }
 
-export function safeDownloadName(name: string, fallback = "ApexbytesHub-file"): string {
+export function safeDownloadName(name: string, fallback = "ApexBytesHub-file"): string {
   const cleaned = name
     .normalize("NFKD")
     .replace(/[\\/:*?"<>|\u0000-\u001f]/g, "-")

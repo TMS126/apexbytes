@@ -9,7 +9,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'ProfessionalService'],
     name: BIZ.name,
-    alternateName: ['Apexbytes Hub', 'Apexbytes'],
+    // Do not publish alternate brand spellings; ApexBytesHub is canonical.
     image: `${SITE_URL}/logo.png`,
     '@id': SITE_URL,
     url: SITE_URL,
@@ -73,7 +73,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'ApexbytesHub Services',
+      name: 'ApexBytesHub Services',
       itemListElement: [
         {
           '@type': 'OfferCatalog',

@@ -29,7 +29,7 @@ const CONTACT_ICONS: Record<string, React.ElementType> = {
 const COPYABLE_TITLES = new Set(["Call Us", "Email Us"])
 const GRID_CONTACT_LINKS = [
   ...CONTACT_LINKS.filter((c) => c.title !== "Visit Us"),
-  { title: "Facebook", value: "ApexbytesHub", href: BIZ.facebookUrl },
+  { title: "Facebook", value: "ApexBytesHub", href: BIZ.facebookUrl },
 ]
 const SCROLL_MARGIN = { scrollMarginTop: "calc(var(--nav-h, 74px) + 1rem)" }
 

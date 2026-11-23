@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import PricingPage from '@/components/pricing-page'
 
 export const metadata = {
-  title: "Pricing — ApexbytesHub",
+  title: "Pricing — ApexBytesHub",
   description: "Browse instant pricing across Print, Document, Design, E-Service, and Tech — every service, one price list, no hidden fees.",
 }
 

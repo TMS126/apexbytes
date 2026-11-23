@@ -53,7 +53,7 @@ export async function generateMetadata({
     const hubId = hubSlugToId(slug[0])
     if (hubId) {
       const hub = HUBS[hubId]
-      const title = `${hub.title} — ApexbytesHub`
+      const title = `${hub.title} — ApexBytesHub`
       const description = hub.desc || `Explore ${hub.title} services and pricing at ${BIZ.name}.`
       const pageUrl = `${SITE_URL}${hubRouteFor(hubId)}`
       return {
@@ -66,7 +66,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: "Services — ApexbytesHub",
+    title: "Services — ApexBytesHub",
     description: "Printing, documents, design, government services and tech support — all in one place.",
     alternates: { canonical: `${SITE_URL}/services` },
     openGraph: { url: `${SITE_URL}/services` },

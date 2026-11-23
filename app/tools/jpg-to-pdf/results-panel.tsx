@@ -63,7 +63,7 @@ export function ResultsPanel({
               style={{ backgroundColor: accentColor }}
             >
               <PaperPlaneTilt weight="fill" className="w-4 h-4" aria-hidden="true" />
-              Send to ApexbytesHub
+              Send to ApexBytesHub
             </button>
           </div>
 

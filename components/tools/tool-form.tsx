@@ -57,7 +57,7 @@ export function ToolForm({ mode }: { mode: ToolMode }) {
           <ArrowLeft size={17} aria-hidden="true" /> Back to tools
         </Link>
         <header className="mb-8 text-center">
-          <p className="abh-eyebrow mb-2">ApexbytesHub Tools</p>
+          <p className="abh-eyebrow mb-2">ApexBytesHub Tools</p>
           <h1 className="abh-page-title mb-3">{title}</h1>
           <p className="mx-auto max-w-xl text-muted-foreground">{isCv ? "Enter your information to create a clear, formatted CV you can print or save as PDF." : "Tell us a little about your request so we can prepare the right support."}</p>
         </header>
@@ -82,7 +82,7 @@ export function ToolForm({ mode }: { mode: ToolMode }) {
             {isCv ? <pre className="whitespace-pre-wrap font-sans text-sm leading-7 text-foreground">{cvText}</pre> : <dl className="grid gap-3 sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 break-words text-sm text-foreground">{values[field.id] || "Not provided"}</dd></div>)}</dl>}
             <div className="mt-6 flex flex-wrap gap-3">
               {isCv && <button type="button" onClick={() => window.print()} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><DownloadSimple size={17} aria-hidden="true" /> Print / Save as PDF</button>}
-              <button type="button" onClick={shareDetails} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><PaperPlaneTilt size={17} aria-hidden="true" /> Send to ApexbytesHub</button>
+              <button type="button" onClick={shareDetails} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><PaperPlaneTilt size={17} aria-hidden="true" /> Send to ApexBytesHub</button>
             </div>
           </section>
         )}
