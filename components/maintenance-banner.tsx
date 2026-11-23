@@ -53,17 +53,17 @@ export function MaintenanceBanner() {
       // banner's own background never gets mistaken for page content
       // when deciding nav icon contrast.
       data-maintenance-banner="true"
-      className="fixed inset-x-0 top-0 z-[10000] flex items-center justify-center gap-3 border-b border-white/15 px-4 py-2.5 text-sm font-medium shadow-[0_8px_24px_-14px_rgba(0,0,0,0.6)] animate-in fade-in slide-in-from-top-2 duration-500 md:text-[0.92rem]"
-      style={{ color: "var(--maintenance-text)", background: "linear-gradient(180deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 100%)" }}
+      className="fixed inset-x-0 top-0 z-[10000] flex min-h-10 items-center justify-center gap-2 px-3 py-1.5 text-xs font-medium shadow-[0_8px_24px_-14px_rgba(0,0,0,0.6)] animate-in fade-in duration-300 sm:gap-2.5 sm:px-4 sm:text-sm"
+      style={{ color: "var(--maintenance-text)", background: "linear-gradient(105deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 52%, var(--maintenance-bg-start) 100%)" }}
     >
-      <Wrench size={16} weight="fill" className="shrink-0 hidden sm:block opacity-90" aria-hidden="true" />
-      <p className="flex-1 min-w-0 text-center leading-snug">
+      <Wrench size={14} weight="regular" className="hidden shrink-0 opacity-80 sm:block" aria-hidden="true" />
+      <p className="min-w-0 text-center leading-tight">
         {MAINTENANCE_BANNER.message}{" "}
         <a
           href={MAINTENANCE_BANNER.linkHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 font-medium whitespace-nowrap transition-colors"
+          className="whitespace-nowrap font-semibold underline decoration-white/60 underline-offset-2 transition-opacity hover:opacity-80"
           style={{ color: "var(--maintenance-text)" }}
         >
           {MAINTENANCE_BANNER.linkText}
@@ -73,7 +73,7 @@ export function MaintenanceBanner() {
         type="button"
         onClick={handleDismiss}
         aria-label="Dismiss notice"
-        className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full hover:bg-white/15 active:scale-90 transition-all"
+        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white active:scale-95"
       >
         <X size={14} weight="bold" />
       </button>
