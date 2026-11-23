@@ -5,6 +5,7 @@
 import { useEffect, useId, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { useMounted } from "@/hooks/use-mounted"
 import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, Megaphone, SealPercent, Wrench } from "@phosphor-icons/react"
 import { ADD_ONS_EFFECTIVE_DATE } from "@/lib/add-ons"
 import { TOKEN } from "@/lib/brand"
@@ -183,7 +184,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
   // ── State & refs ──
   const notices = page === "home" ? HOME_NOTICES : PAGE_NOTICES[page]
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useMounted()
   const [unread, setUnread] = useState(true)
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => new Set())
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -211,7 +212,6 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
   // ── Effects (all hooks stay above the early return below) ──
   // Portal target only exists on the client; gating on `mounted` avoids a
   // hydration mismatch from rendering a portal during server hydration.
-  useEffect(() => setMounted(true), [])
 
   // Escape closes (focus returns to the bell); clicking outside closes
   // without stealing focus from wherever the person clicked.

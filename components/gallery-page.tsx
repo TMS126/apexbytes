@@ -249,7 +249,7 @@ function GalleryPageInner() {
         </ScrollBounce>
 
         <ScrollBounce delay={0.1}>
-          <div className="mx-auto mb-8 flex w-full max-w-md items-center justify-center gap-3">
+          <div className="mx-auto mb-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <ExpandingSearch
               id="gallery-search"
               label="Search projects"
@@ -258,7 +258,7 @@ function GalleryPageInner() {
               expanded={searchExpanded}
               onChange={setSearchQuery}
               onExpandedChange={setSearchExpanded}
-              className="max-w-[300px]"
+              className="w-full max-w-none sm:max-w-[300px]"
             />
             <button
               onClick={handleSurprise}

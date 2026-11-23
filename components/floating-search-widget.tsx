@@ -321,7 +321,7 @@ onClick={isOpen ? handleClose : handleOpen}
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="abh-press flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-muted-foreground transition-colors duration-150 hover:text-zinc-700 dark:bg-zinc-700"
+                  className="abh-press flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] duration-150 hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                   aria-label="Clear search"
                 >
                   <Broom size={15} weight="regular" aria-hidden="true" />
