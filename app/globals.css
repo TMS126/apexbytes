@@ -163,6 +163,18 @@ textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
 .dark .abh-reference-search-results .abh-search-muted { color: #a1a1aa; }
 @media (prefers-reduced-motion: reduce) { .abh-reference-search, .abh-reference-search-row { transition: none; } }
 
+/* Shared FAQ language: one divided list, one trigger, one answer surface. */
+.abh-faq-list { margin-inline: .5rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.abh-faq-item + .abh-faq-item { border-top: 1px solid var(--border); }
+.abh-faq-trigger { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; text-align: left; color: var(--foreground); transition: color 160ms ease; }
+.abh-faq-trigger:hover, .abh-faq-trigger:focus-visible { color: var(--line-rule); }
+.abh-faq-trigger:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.abh-faq-question { display: flex; min-width: 0; align-items: flex-start; gap: .75rem; font-size: 1.15rem; font-weight: 600; line-height: 1.35; }
+.abh-faq-number { flex: 0 0 auto; color: var(--muted-foreground); font-size: .72rem; font-weight: 500; letter-spacing: .18em; }
+.abh-faq-answer { margin: 0 .25rem 1rem; border-radius: 14px; background: color-mix(in srgb, var(--muted) 50%, transparent); padding: .75rem 1rem; color: color-mix(in srgb, var(--foreground) 82%, transparent); font-size: 1rem; line-height: 1.65; white-space: pre-wrap; }
+@media (min-width: 768px) { .abh-faq-list { margin-inline: 1.5rem; } .abh-faq-answer { margin-inline: 2rem; } }
+@media (prefers-reduced-motion: reduce) { .abh-faq-trigger { transition: none; } }
+
 /* Site-wide text hierarchy: neutral copy stays readable and consistent;
    brand colors remain reserved for links, actions, and meaningful status. */
 [class~="text-zinc-900"], [class~="text-zinc-800"], [class~="text-slate-900"], [class~="text-slate-800"], [class~="text-gray-900"], [class~="text-gray-800"] { color: var(--foreground) !important; }
@@ -1681,6 +1693,11 @@ input, textarea, select {
   box-shadow: none !important;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
+.abh-form-control,
+.abh-form-control:focus,
+.abh-form-control:focus-visible { border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.abh-form-control { border: 0 !important; border-bottom: 1px solid var(--line-rule-soft) !important; color: var(--foreground); }
+.abh-form-control:focus, .abh-form-control:focus-visible { border-bottom-color: transparent !important; outline: none !important; }
 input::placeholder, textarea::placeholder, select:invalid {
   color: var(--muted-foreground) !important;
   opacity: .72 !important;

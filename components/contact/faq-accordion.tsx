@@ -1,67 +1,24 @@
 // components/contact/faq-accordion.tsx
 "use client"
 
-import { useState } from "react"
-import { Minus, Plus } from "@phosphor-icons/react"
-import { FAQS } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
-// Card minimization: each FAQ was its own bordered/tinted box. The
-// expand/collapse interaction already signals "this is interactive" — a
-// per-item card added nothing. Now one divided list.
-export function FAQAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+import { FAQAccordionList } from "@/components/faq-accordion-list"
 
+export function FAQAccordion() {
   return (
-    <section className="px-4 md:px-8 py-16 md:py-20">
-      <div className="max-w-[980px] mx-auto">
+    <section className="px-4 py-16 md:px-8 md:py-20">
+      <div className="mx-auto max-w-[980px]">
         <ScrollBounce>
-            <div className="mb-8">
+          <div className="mb-8">
             <h2 className="abh-section-heading mb-3 text-center">Frequently Asked Questions</h2>
-            <p className="abh-body text-center max-w-xl mx-auto">
+            <p className="abh-body mx-auto max-w-xl text-center">
               Everything you need to know about orders, processing, and timelines.
             </p>
             <div className="abh-divider" />
-            </div>
-          </ScrollBounce>
-
-        <div className="mx-2 divide-y divide-zinc-100 border-y border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800 md:mx-6">
-          {FAQS.map((faq, index) => {
-            const isOpen = openIndex === index
-            return (
-              <div key={index}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? null : index)}
-                    data-no-lift
-                    aria-expanded={isOpen}
-                    aria-controls={`contact-faq-${index}`}
-                    className="group w-full py-5 text-left flex items-center justify-between gap-4 transition-colors"
-                  >
-                    <h4 className="abh-card-heading flex items-start gap-3 text-[1.15rem] text-zinc-800 dark:text-zinc-100 leading-snug">
-                      <span className="shrink-0 text-[0.72rem] font-medium tracking-[0.18em] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
-                      <span>{faq.question}</span>
-                    </h4>
-                    {isOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
-                  </button>
-                  <div
-                    id={`contact-faq-${index}`}
-                    role="region"
-                    aria-label={faq.question}
-                    aria-hidden={!isOpen}
-                    inert={!isOpen}
-                    className={isOpen ? "block" : "hidden"}
-                  >
-                    <div className="min-h-0 overflow-hidden">
-                      <div className="mx-1 mb-4 rounded-[14px] bg-muted/50 px-4 py-3 text-base text-foreground/80 leading-relaxed whitespace-pre-wrap md:mx-8">
-                        {faq.answer}
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            )
-          })}
-        </div>
+          </div>
+        </ScrollBounce>
+        <FAQAccordionList idPrefix="contact-faq" defaultOpenIndex={0} />
       </div>
     </section>
   )
-} 
+}
