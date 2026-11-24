@@ -53,6 +53,7 @@ export function FilterDropdown({
             <button
               key={opt.id}
               onClick={() => handleSelect(opt.id)}
+              data-no-lift
               aria-pressed={isActive}
               className={cn(
                 "abh-underline-button px-3 py-2 text-base font-medium whitespace-nowrap transition-colors duration-150 active:scale-95",
@@ -79,6 +80,7 @@ export function FilterDropdown({
         {!open && (
           <button
             onClick={handleToggleClick}
+            data-no-lift
             aria-expanded={open}
             aria-haspopup="listbox"
             className={cn(
@@ -123,6 +125,7 @@ export function FilterDropdown({
                         role="option"
                         aria-selected={isActive}
                         onClick={() => handleSelect(opt.id)}
+                        data-no-lift
                         className={cn(
                           "abh-underline-button w-full flex items-center justify-center gap-1.5 px-3 py-2.5",
                           "text-sm font-medium whitespace-nowrap transition-all duration-150 active:scale-95",

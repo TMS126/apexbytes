@@ -1795,8 +1795,8 @@ input:focus, textarea:focus, select:focus,
 }
 
 /* Buttons and button-like controls get one restrained, consistent lift. */
-button:not(:disabled):not([data-no-lift]):hover,
-[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):hover,
+button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):hover,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):hover,
 .abh-btn-primary:hover,
 .abh-btn-cta:hover,
 .abh-site-cta:hover,
@@ -1804,8 +1804,8 @@ button:not(:disabled):not([data-no-lift]):hover,
   transform: translateY(-2px);
   box-shadow: var(--ui-shadow-popup) !important;
 }
-button:not(:disabled):not([data-no-lift]):focus-visible,
-[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):focus-visible {
+button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visible,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):focus-visible {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent), var(--ui-shadow-popup) !important;
 }
 

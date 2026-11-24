@@ -32,6 +32,7 @@ export function FAQAccordion() {
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : index)}
+                    data-no-lift
                     aria-expanded={isOpen}
                     aria-controls={`contact-faq-${index}`}
                     className="group w-full py-5 text-left flex items-center justify-between gap-4 transition-colors"

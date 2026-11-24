@@ -22,6 +22,7 @@ export function FaqAccordion() {
                 <button
                   type="button"
                   onClick={() => setOpenIndex((current) => (current === index ? null : index))}
+                  data-no-lift
                   aria-expanded={itemOpen}
                   aria-controls={`footer-faq-${index}`}
                     className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors"
