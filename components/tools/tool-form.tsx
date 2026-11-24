@@ -62,11 +62,11 @@ const INTAKE_BASE_FIELDS: Field[] = [
 ]
 
 const INTAKE_FORM_END_FIELDS: Field[] = [
-  { id: "clientSignature", label: "Client signature / authorisation", placeholder: "Type your full name to confirm the details are yours", required: true },
-  { id: "signatureDate", label: "Date", placeholder: "Choose a date", type: "date", required: true },
-  { id: "documentsVerified", label: "Documents verified", placeholder: "Select all that apply", control: "checkbox-group", options: ["ID", "Proof of address / bank"] },
-  { id: "addOns", label: "Additional items to include", placeholder: "Select all that apply", control: "checkbox-group", options: ["Printed copy", "Email copy", "WhatsApp / PDF copy"] },
-  { id: "processedBy", label: "Processed by staff", placeholder: "For ApexBytesHub use" },
+  { id: "clientSignature", label: "Client signature / authorisation", placeholder: "Type your full name to confirm the details are yours", required: true, section: "Client self-service authorisation" },
+  { id: "signatureDate", label: "Date", placeholder: "Choose a date", type: "date", required: true, section: "Client self-service authorisation" },
+  { id: "documentsVerified", label: "Documents verified", placeholder: "Select all that apply", control: "checkbox-group", options: ["ID", "Proof of address / bank"], section: "Office use" },
+  { id: "addOns", label: "Additional items to include", placeholder: "Select all that apply", control: "checkbox-group", options: ["Printed copy", "Email copy", "WhatsApp / PDF copy"], section: "Office use" },
+  { id: "processedBy", label: "Processed by staff", placeholder: "For ApexBytesHub use", section: "Office use" },
 ]
 
 function displayFieldValue(value: string) {
@@ -198,15 +198,15 @@ function InputField({ field, value, onChange }: { field: Field; value: string; o
   }
 
   return (
-    <div className={field.multiline ? "sm:col-span-2" : ""}>
+    <div className={`intake-field ${field.multiline ? "sm:col-span-2" : ""}`}>
       {field.control ? (
         <fieldset className="sm:col-span-2 text-left">
-          <legend className="mb-2 text-sm font-semibold text-foreground">{field.label}{field.required ? " *" : ""}</legend>
-          <div className="grid gap-2 rounded-[14px] bg-background/70 p-3 sm:grid-cols-2">
+          <legend className="intake-field-label">{field.label}{field.required ? " *" : ""}</legend>
+          <div className="intake-choice-grid">
             {field.options?.map((option) => {
               const checked = field.control === "radio-group" ? value === option : selectedOptions.includes(option)
               return (
-                <label key={option} className="flex min-h-10 cursor-pointer items-center gap-3 rounded-[14px] px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted">
+                <label key={option} className="intake-choice-row">
                   <input
                     type={field.control === "radio-group" ? "radio" : "checkbox"}
                     name={field.id}
@@ -224,13 +224,13 @@ function InputField({ field, value, onChange }: { field: Field; value: string; o
         </fieldset>
       ) : (
         <>
-          <label htmlFor={field.id} className="mb-1.5 block text-center text-sm font-semibold text-foreground">
+          <label htmlFor={field.id} className="intake-field-label">
             {field.label}{field.required ? " *" : ""}
           </label>
           {field.multiline ? (
-        <textarea id={field.id} required={field.required} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} rows={4} className="w-full rounded-[14px] bg-background px-4 py-3 text-center text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+        <textarea id={field.id} required={field.required} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} rows={4} className="intake-control min-h-24 w-full px-1 py-2 text-left text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
       ) : (
-        <input id={field.id} required={field.required} type={field.type ?? "text"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} className="w-full rounded-[14px] bg-background px-4 py-3 text-center text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+        <input id={field.id} required={field.required} type={field.type ?? "text"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} className="intake-control w-full px-1 py-2 text-left text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
       )}
         </>
       )}
@@ -325,7 +325,7 @@ function CvTool() {
   const back = () => setStep(CV_STEPS[Math.max(stepIndex - 1, 0)].id)
 
   return <div className="min-h-screen bg-background text-foreground"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-[1480px] px-5 pb-20 pt-[calc(var(--nav-h)+2rem)] md:px-8">
-    <div className="mx-auto mb-6 max-w-[1240px] text-center"><ToolBackLink /><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--brand-orange)]">Free tool</p><h1 className="mt-2 text-4xl font-bold tracking-tight text-foreground md:text-5xl">CV Writer</h1><p className="mt-2 text-lg text-muted-foreground">Fill in the basics — we handle the layout.</p></div><CvSteps step={step} /></div>
+    <div className="mx-auto mb-6 max-w-[1240px] text-center"><ToolBackLink /><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--brand-orange)]">Free tool</p><h1 className="abh-page-title mt-2">CV Writer</h1><p className="mt-2 text-base text-muted-foreground">Fill in the basics — we handle the layout.</p></div><CvSteps step={step} /></div>
     <div className="cv-editor mx-auto grid max-w-[1240px] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,.9fr)] lg:items-start"><section className="min-w-0">
       {step === "details" && <CvEditorCard><h2 className="text-2xl font-bold">Your details</h2><p className="mt-1 text-sm text-muted-foreground">Start with the basics.</p><div className="mt-6 grid gap-5 sm:grid-cols-2"><CvStepField id="fullName" label="Full name" value={values.fullName ?? ""} onChange={(v) => setValue("fullName", v)} placeholder="e.g. Thabo Mokoena" /><CvStepField id="professionalTitle" label="Professional title" value={values.professionalTitle ?? ""} onChange={(v) => setValue("professionalTitle", v)} placeholder="e.g. Junior Bookkeeper" /><CvStepField id="phone" label="Phone number" value={values.phone ?? ""} onChange={(v) => setValue("phone", v)} placeholder="Your best contact number" type="tel" /><CvStepField id="email" label="Email address" value={values.email ?? ""} onChange={(v) => setValue("email", v)} placeholder="you@example.com" type="email" /><CvStepField id="location" label="Location" value={values.location ?? ""} onChange={(v) => setValue("location", v)} placeholder="Town, province" /><CvStepSelect id="driverLicense" label="Driver's licence" value={values.driverLicense ?? ""} onChange={(v) => setValue("driverLicense", v)} options={["No licence", "Code 8 / B", "Code 10 / C1", "Code 14 / EC", "Other"]} /><CvStepField id="profile" label="About me" value={values.profile ?? ""} onChange={(v) => setValue("profile", v)} placeholder="A short, confident introduction about your experience and goals." multiline /></div><div className="mt-6 flex items-center justify-between gap-3"><span className="text-sm text-muted-foreground">Optional photo</span><label className="cv-upload-button inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[var(--brand-orange)]"><FileArrowUp size={18} /> {photo ? "Choose another" : "Upload photo"}<input type="file" accept="image/png,image/jpeg" className="sr-only" onChange={(event) => handlePhoto(event.target.files?.[0])} /></label></div></CvEditorCard>}
       {step === "experience" && <CvEditorCard><div className="flex items-start justify-between gap-4"><div><h2 className="text-2xl font-bold">Work experience</h2><p className="mt-1 text-sm text-muted-foreground">Most recent first. Add every role you want employers to see.</p></div><span className="cv-count-label">{roles.length} {roles.length === 1 ? "role" : "roles"}</span></div><div className="mt-6 space-y-5">{roles.map((role, index) => <div key={role.id} className="cv-role-panel"><div className="mb-4 flex items-center justify-between"><h3 className="font-semibold">Role {index + 1}</h3>{roles.length > 1 && <button type="button" onClick={() => removeRole(role.id)} className="cv-remove-role">Remove</button>}</div><div className="grid gap-5 sm:grid-cols-2"><CvStepField id={`role-${role.id}-title`} label="Job title" value={roleValue(role, "title")} onChange={(v) => setValue(`role-${role.id}-title`, v)} placeholder="e.g. Junior Bookkeeper" /><CvStepField id={`role-${role.id}-company`} label="Company" value={roleValue(role, "company")} onChange={(v) => setValue(`role-${role.id}-company`, v)} placeholder="e.g. Bothaville Motors" /><CvStepField id={`role-${role.id}-startDate`} label="Start date" value={roleValue(role, "startDate")} onChange={(v) => setValue(`role-${role.id}-startDate`, v)} placeholder="e.g. Jan 2022" /><CvStepSelect id={`role-${role.id}-employmentType`} label="Employment type" value={roleValue(role, "employmentType")} onChange={(v) => setValue(`role-${role.id}-employmentType`, v)} options={["Full-time", "Part-time", "Contract", "Freelance", "Internship", "Volunteer"]} /><CvStepSelect id={`role-${role.id}-endDate`} label="End date" value={roleValue(role, "endDate")} onChange={(v) => setValue(`role-${role.id}-endDate`, v)} options={["Present", "2026", "2025", "2024", "2023", "2022", "2021 or earlier"]} /><CvStepField id={`role-${role.id}-responsibilities`} label="Responsibilities and achievements" value={roleValue(role, "responsibilities")} onChange={(v) => setValue(`role-${role.id}-responsibilities`, v)} placeholder="Use a new line for each responsibility or achievement" multiline /></div></div>)}</div><button type="button" onClick={addRole} className="mt-5 flex w-full items-center justify-center gap-2 rounded-[14px] border border-dashed border-[var(--brand-orange)] py-3 text-sm font-semibold text-[var(--brand-orange)]">＋ Add another role</button></CvEditorCard>}
@@ -371,10 +371,22 @@ function IntakeTool() {
   }
 
   return <ToolShell title="Tell us what you need" description="Choose one service first. We will then ask only for the details that help us prepare your request properly.">
-    <div className="abh-card p-5 md:p-8">
-      <label htmlFor="service" className="mb-2 block text-sm font-semibold text-foreground">1. Choose the service you need *</label>
-      <select id="service" required value={values.service ?? ""} onChange={(event) => { setValues({ service: event.target.value }); setSubmitted(false) }} className="w-full rounded-[14px] bg-background px-4 py-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><option value="">Select a service</option>{HUB_ORDER.map((hubId) => <optgroup key={hubId} label={HUBS[hubId].title}>{SERVICE_OPTIONS.filter((option) => option.hubId === hubId).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup>)}</select>
-      {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="mt-8 grid gap-5 sm:grid-cols-2"><div className="sm:col-span-2 rounded-[14px] bg-muted/60 px-4 py-3 text-sm text-muted-foreground"><strong className="text-foreground">Selected:</strong> {selected.label} · {selected.sectionTitle}</div>{fields.map((field, index) => <div key={`${selected.value}-${field.id}`} className={field.section && field.section !== fields[index - 1]?.section ? "contents" : "contents"}>{field.section && field.section !== fields[index - 1]?.section && <h2 className="sm:col-span-2 mt-3 border-b border-border pb-2 text-left text-sm font-bold uppercase tracking-[0.12em] text-foreground">{field.section}</h2>}<InputField field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} /></div>)}<button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
+    <div className="intake-document mx-auto max-w-5xl p-5 text-left md:p-8">
+      <header className="intake-document-header">
+        <div>
+          <p className="intake-brand-line">A P E X B Y T E S H U B</p>
+          <p className="intake-brand-tagline">DESIGN · PRINT · UPGRADE · E-SERVICE HUB</p>
+        </div>
+        <div className="intake-contact-line">WhatsApp &amp; enquiries: {BIZ.phone}</div>
+      </header>
+      <div className="intake-document-title-row">
+        <div>
+          <h2 className="intake-document-title">{selected ? `${selected.label} Intake Form` : "Client Service Intake Form"}</h2>
+          <p className="intake-document-note">Please complete the form clearly. Fields marked * are required.</p>
+        </div>
+        <label htmlFor="service" className="intake-service-picker"><span>Service *</span><select id="service" required value={values.service ?? ""} onChange={(event) => { setValues({ service: event.target.value }); setSubmitted(false) }}><option value="">Select a service</option>{HUB_ORDER.map((hubId) => <optgroup key={hubId} label={HUBS[hubId].title}>{SERVICE_OPTIONS.filter((option) => option.hubId === hubId).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup>)}</select></label>
+      </div>
+      {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="intake-form-grid mt-7"><div className="intake-selected-service sm:col-span-2"><strong>Selected service:</strong> {selected.label} <span>· {selected.sectionTitle}</span></div>{fields.map((field, index) => <div key={`${selected.value}-${field.id}`} className={field.section && field.section !== fields[index - 1]?.section ? "contents" : "contents"}>{field.section && field.section !== fields[index - 1]?.section && <><h2 className="intake-section-heading sm:col-span-2">{field.section}</h2>{field.section === "Client self-service authorisation" && <p className="intake-authorisation sm:col-span-2">I confirm the details above are accurate and belong to me. I authorise ApexBytesHub to assist while I am present to verify entries and approve any SARS One-Time PINs (OTPs).</p>}</>}<InputField field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} /></div>)}<button type="submit" className="abh-btn-primary intake-review-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
     </div>
     {shareError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
       {submitted && selected && <section className="mt-8 abh-card p-5 text-center md:p-8" aria-live="polite"><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 text-center sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{displayFieldValue(values[field.id] || "Not provided")}</dd></div>)}</dl><div className="mt-7 flex flex-wrap justify-center gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
