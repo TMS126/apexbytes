@@ -8,10 +8,12 @@ import {
   Archive,
   CaretRight,
   CaretUp,
+  Calculator,
   ClipboardText,
   CreditCard,
   EnvelopeSimple,
   FileText,
+  FilePdf,
   Gear,
   Globe,
   Image as ImageIcon,
@@ -38,10 +40,10 @@ const SERVICE_LABELS: Record<HubId, string> = {
 }
 
 const TOOL_LINKS = [
-  { id: "quote", label: "Quote Calc", path: "/tools/quote" },
-  { id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf" },
-  { id: "cv-writing", label: "CV Writer", path: "/tools/cv-writing" },
-  { id: "intake-form", label: "Intake Form", path: "/tools/intake-form" },
+  { id: "quote", label: "Quote Calc", path: "/tools/quote", Icon: Calculator },
+  { id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf", Icon: FilePdf },
+  { id: "cv-writing", label: "CV Writer", path: "/tools/cv-writing", Icon: FileText },
+  { id: "intake-form", label: "Intake Form", path: "/tools/intake-form", Icon: ClipboardText },
 ] as const
 
 const SERVICE_ICONS: Record<string, Icon> = {
@@ -200,7 +202,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
           </div>
         </header>
 
-        <nav className="flex-1 py-10" aria-label="Mobile navigation">
+        <nav className="flex-1 py-8 sm:py-10" aria-label="Mobile navigation">
           {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
             const active = isActive(item.path)
             const hasSubmenu = item.id === "services" || item.id === "tools"
@@ -208,14 +210,14 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
 
             return (
               <div key={item.id} className="border-b border-border/70">
-                <div className="flex min-h-[76px] items-center gap-3">
+                <div className="mx-auto flex min-h-[76px] w-full max-w-[34rem] items-center gap-3">
                   <Link
                     href={item.path}
                     onClick={close}
                     aria-current={active ? "page" : undefined}
                     tabIndex={menuOpen ? 0 : -1}
                     className={cn(
-                      "flex-1 py-5 text-center font-heading text-[1.55rem] font-semibold tracking-[-0.035em] transition-colors duration-160 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none",
+                      "flex-1 py-5 text-left font-heading text-[1.55rem] font-semibold tracking-[-0.035em] transition-colors duration-160 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none",
                       active ? "text-brand-blue" : "text-foreground"
                     )}
                   >
@@ -267,10 +269,11 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
                 {item.id === "tools" && (
                   <div id="tools-submenu" aria-hidden={!toolsOpen} className={cn("grid transition-[grid-template-rows,opacity,transform] duration-220 ease-out motion-reduce:transition-none", toolsOpen ? "grid-rows-[1fr] pb-5 opacity-100 translate-y-0" : "pointer-events-none grid-rows-[0fr] opacity-0 -translate-y-1")}>
                     <div className="min-h-0 overflow-hidden">
-                      <div className="grid gap-1 border-l border-border/70 pl-3">
+                      <div className="mx-auto grid max-w-[34rem] gap-1 border-l border-border/70 pl-4">
                         {TOOL_LINKS.map((tool) => {
                           const selected = pathname === tool.path
-                          return <Link key={tool.id} href={tool.path} onClick={close} aria-current={selected ? "page" : undefined} tabIndex={menuOpen && toolsOpen ? 0 : -1} className={cn("flex min-h-12 items-center justify-between rounded-xl px-3 py-2 text-base text-foreground transition-[background-color,color,transform] duration-160 hover:bg-muted hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none", selected && "bg-muted font-semibold text-brand-blue")}><span className="truncate">{tool.label}</span><CaretRight size={17} className="shrink-0 text-muted-foreground" aria-hidden="true" /></Link>
+                          const ToolIcon = tool.Icon
+                          return <Link key={tool.id} href={tool.path} onClick={close} aria-current={selected ? "page" : undefined} tabIndex={menuOpen && toolsOpen ? 0 : -1} className={cn("group flex min-h-12 items-center gap-3 rounded-xl px-3 py-2 text-base text-foreground transition-[background-color,color,transform] duration-160 hover:bg-muted hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none", selected && "bg-muted font-semibold text-brand-blue")}><ToolIcon size={21} weight="regular" className="shrink-0 text-brand-blue" aria-hidden="true" /><span className="min-w-0 flex-1 truncate">{tool.label}</span><CaretRight size={17} className="shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true" /></Link>
                         })}
                       </div>
                     </div>

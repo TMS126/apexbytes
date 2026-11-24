@@ -51,6 +51,23 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-closing-chip:hover,
 .abh-closing-chip:focus-visible { background: #dc2626 !important; color: #fff !important; }
 
+/* The maintenance notice is bottom-fixed, so it must never reserve space
+   above the page or push the fixed navbar down. Its dismiss control is a
+   persistent red chip, not a hover-only affordance. */
+.banner-active {
+  --banner-h: 0px;
+  --nav-h: 74px;
+}
+.abh-maintenance-close-chip {
+  background: #dc2626 !important;
+  color: #fff !important;
+}
+.abh-maintenance-close-chip:hover,
+.abh-maintenance-close-chip:focus-visible {
+  background: #b91c1c !important;
+  color: #fff !important;
+}
+
 .dark .abh-gallery-viewer[role="dialog"] {
   background-color: #09090b !important;
 }
@@ -386,11 +403,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-hub-design: #FFFFFF;
   --on-hub-eservice: #FFFFFF;
   --on-hub-tech: #FFFFFF;
-}
-
-.banner-active {
-  --banner-h: 44px;
-  --nav-h: 118px;
 }
 
 .dark {

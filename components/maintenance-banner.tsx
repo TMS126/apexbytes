@@ -56,7 +56,7 @@ export function MaintenanceBanner() {
         type="button"
         onClick={handleDismiss}
         aria-label="Dismiss notice"
-        className="abh-close-chip absolute left-1/2 top-0 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[var(--maintenance-bg-end)] text-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="abh-close-chip abh-maintenance-close-chip absolute left-1/2 top-0 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <X size={15} weight="bold" />
       </button>

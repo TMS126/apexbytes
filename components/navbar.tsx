@@ -6,7 +6,7 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { Sun, Moon, CaretDown } from "@phosphor-icons/react"
+import { Sun, Moon, CaretDown, Calculator, FilePdf, FileText, ClipboardText } from "@phosphor-icons/react"
 import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
 import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
 import { HUBS } from "@/lib/data"
@@ -111,6 +111,13 @@ export function Navbar() {
   )
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
+
+  const toolNavItems = [
+    { label: "Quote Calc", path: "/tools/quote", Icon: Calculator },
+    { label: "JPG to PDF", path: "/tools/jpg-to-pdf", Icon: FilePdf },
+    { label: "CV Writer", path: "/tools/cv-writing", Icon: FileText },
+    { label: "Intake Form", path: "/tools/intake-form", Icon: ClipboardText },
+  ] as const
 
   if (calculatorOpen) return null
 
@@ -218,11 +225,16 @@ export function Navbar() {
                               </div>
                             </div>
                           )
-                        }) : submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("abh-link-underline py-2 text-sm text-muted-foreground hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "font-semibold text-foreground" : undefined)}>
-                            {subitem.label}
+                        }) : toolNavItems.map((subitem) => {
+                          const selected = pathname === subitem.path || pathname.startsWith(`${subitem.path}/`)
+                          const ToolIcon = subitem.Icon
+                          return (
+                          <Link key={subitem.path} href={subitem.path} aria-current={selected ? "page" : undefined} className={cn("flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground", selected && "bg-muted font-semibold text-foreground")}>
+                            <ToolIcon size={20} weight="regular" aria-hidden="true" />
+                            <span>{subitem.label}</span>
                           </Link>
-                        ))}
+                          )
+                        })}
                       </div>
                     )}
                   </div>

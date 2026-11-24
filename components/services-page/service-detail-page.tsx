@@ -6,8 +6,9 @@ import { ArrowLeft, ArrowUpRight, Clock } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HubKey } from "@/lib/brand"
 import { HUBS, sortItemsByPrice } from "@/lib/data"
+import { cn } from "@/lib/utils"
 import { HubIcon } from "./shared"
-import { getTurnaround, serviceRouteFor, type SelectedService } from "./lib"
+import { getTurnaround, serviceRouteFor, hubRouteFor, HUB_ORDER, type SelectedService } from "./lib"
 import { ServiceDetailModal } from "./service-detail-modal"
 
 export function ServiceDetailPage({ service }: { service: SelectedService }) {
@@ -103,6 +104,30 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
           </div>
         </section>
       )}
+
+      <section className="mx-auto mt-10 max-w-[1080px] border-t border-[var(--line-rule)] px-4 pt-7 md:px-8" aria-labelledby="all-hubs-heading">
+        <p className="abh-eyebrow">Explore the wider service menu</p>
+        <h2 id="all-hubs-heading" className="mt-2 font-heading text-2xl font-medium tracking-tight text-foreground">
+          Browse by hub
+        </h2>
+        <nav className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5" aria-label="Service hubs">
+          {HUB_ORDER.map((hubId) => {
+            const hubSelected = hubId === service.hubId
+            return (
+              <Link
+                key={hubId}
+                href={hubRouteFor(hubId)}
+                aria-current={hubSelected ? "page" : undefined}
+                className={cn("group flex min-h-12 items-center gap-3 rounded-[14px] px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--line-rule)]/50", hubSelected && "bg-muted font-semibold text-foreground")}
+              >
+                <HubIcon id={hubId} size={20} color={hubSelected ? accent : undefined} />
+                <span>{HUBS[hubId].title}</span>
+                <ArrowUpRight size={14} className="ml-auto opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+              </Link>
+            )
+          })}
+        </nav>
+      </section>
 
       <ServiceDetailModal svc={requestOpen ? service : null} onClose={() => setRequestOpen(false)} />
     </main>
