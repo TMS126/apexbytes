@@ -192,9 +192,8 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
     >
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[680px] flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
         <header className="flex items-center justify-between border-b border-border/70 pb-5">
-          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} className="group flex items-center gap-2 font-heading text-[1.7rem] font-bold tracking-[-0.045em] text-foreground transition-colors duration-150 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none">
-            <Image src="/logo.png" alt="" width={36} height={36} className="size-8 shrink-0 object-contain" aria-hidden="true" />
-            ApexBytesHub
+          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="ApexBytesHub — go to homepage" className="group flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[filter,transform] duration-150 hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none">
+            <Image src="/logo.png" alt="ApexBytesHub" width={44} height={44} className="size-10 shrink-0 object-contain transition-[filter] duration-150" style={{ filter: resolvedTheme === "dark" ? "brightness(0) invert(1)" : "brightness(0)" }} />
           </Link>
           <div className="flex items-center gap-1 rounded-[14px] bg-muted/60 p-1">
             <button type="button" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")} tabIndex={menuOpen ? 0 : -1} aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} className="flex size-10 items-center justify-center rounded-[10px] text-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
