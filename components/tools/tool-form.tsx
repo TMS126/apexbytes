@@ -268,13 +268,41 @@ function InputField({ field, value, onChange }: { field: Field; value: string; o
   )
 }
 
-function buildIntakePdf(values: Record<string, string>, selectedLabel: string) {
+function buildIntakePdf(values: Record<string, string>, selectedLabel: string, fields: Field[]) {
   const pdf = new jsPDF({ unit: "mm", format: "a4" })
-  const lines = [`${BIZ.name} — Service Intake`, `Service: ${selectedLabel}`, "", ...Object.entries(values).filter(([, value]) => value.trim()).map(([key, value]) => `${key.replace(/([A-Z])/g, " $1")}: ${displayFieldValue(value)}`)]
-  pdf.setFont("helvetica", "bold"); pdf.setFontSize(18); pdf.text(lines[0], 18, 22)
-  pdf.setFont("helvetica", "normal"); pdf.setFontSize(11)
-  let y = 34
-  lines.slice(1).forEach((line) => { const wrapped = pdf.splitTextToSize(line, 174); pdf.text(wrapped, 18, y); y += wrapped.length * 6 + 2; if (y > 275) { pdf.addPage(); y = 22 } })
+  const pageWidth = 210
+  const left = 18
+  const fieldWidth = pageWidth - left * 2
+  let y = 22
+  let lastSection = ""
+  const addPage = () => { pdf.addPage(); y = 20; lastSection = "" }
+  const ensureSpace = (height: number) => { if (y + height > 278) addPage() }
+
+  pdf.setFont("helvetica", "bold"); pdf.setFontSize(17); pdf.text(`${BIZ.name} — Service Intake`, left, y)
+  y += 8
+  pdf.setFont("helvetica", "normal"); pdf.setFontSize(10); pdf.text(`Service: ${selectedLabel}`, left, y)
+  y += 9; pdf.setDrawColor(210, 214, 220); pdf.line(left, y, pageWidth - left, y); y += 8
+
+  fields.forEach((field, index) => {
+    if (field.section && field.section !== lastSection) {
+      ensureSpace(13)
+      pdf.setFont("helvetica", "bold"); pdf.setFontSize(10); pdf.text(field.section, left, y); y += 6
+      lastSection = field.section
+    }
+    const height = field.multiline ? 17 : 9
+    ensureSpace(height + 9)
+    pdf.setFont("helvetica", "normal"); pdf.setFontSize(8.5); pdf.text(`${field.label}${field.required ? " *" : ""}`, left, y); y += 2
+    const formField = pdf.AcroForm.TextField()
+    formField.fieldName = `intake_${index}_${field.id}`
+    formField.x = left; formField.y = y; formField.width = fieldWidth; formField.height = height
+    formField.fontName = "helvetica"; formField.fontSize = 9; formField.required = Boolean(field.required)
+    formField.multiline = Boolean(field.multiline); formField.value = displayFieldValue(values[field.id] ?? ""); formField.defaultValue = formField.value
+    pdf.addField(formField)
+    y += height + 6
+  })
+
+  ensureSpace(8); pdf.setFont("helvetica", "italic"); pdf.setFontSize(8)
+  pdf.text("Please review the completed fields before sending this form to ApexBytesHub.", left, y)
   return pdf.output("blob")
 }
 
@@ -379,7 +407,7 @@ function IntakeTool() {
   const sharePdf = async () => {
     if (!selected) return
     setShareError(null)
-    const blob = buildIntakePdf(values, selected.label)
+    const blob = buildIntakePdf(values, selected.label, fields)
     const file = new File([blob], "apexbyteshub-service-intake.pdf", { type: "application/pdf" })
     try {
       if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
@@ -393,6 +421,19 @@ function IntakeTool() {
       setShareError("The PDF could not be shared. Please try WhatsApp or try again.")
     }
   }
+  const downloadPdf = () => {
+    if (!selected) return
+    const blob = buildIntakePdf(values, selected.label, fields)
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.download = `apexbyteshub-${selected.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-intake-form.pdf`
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+  }
+
   const shareText = () => {
     if (!selected) return
     const summary = fields.map((field) => `${field.label}: ${displayFieldValue(values[field.id] || "Not provided")}`).join("\n")
@@ -419,7 +460,7 @@ function IntakeTool() {
       {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="intake-form-grid mt-7"><div className="intake-selected-service sm:col-span-2"><strong>Selected service:</strong> {selected.label} <span>· {selected.sectionTitle}</span></div>{fields.map((field, index) => <div key={`${selected.value}-${field.id}`} className={field.section && field.section !== fields[index - 1]?.section ? "contents" : "contents"}>{field.section && field.section !== fields[index - 1]?.section && <><h2 className="intake-section-heading sm:col-span-2">{field.section}</h2>{field.section === "Client self-service authorisation" && <p className="intake-authorisation sm:col-span-2">I confirm the details above are accurate and belong to me. I authorise ApexBytesHub to assist while I am present to verify entries and approve any SARS One-Time PINs (OTPs).</p>}</>}<InputField field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} /></div>)}<button type="submit" className="abh-btn-primary intake-review-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
     </div>
     {shareError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
-      {submitted && selected && <section className="mt-8 abh-card p-5 text-center md:p-8" aria-live="polite"><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 text-center sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{displayFieldValue(values[field.id] || "Not provided")}</dd></div>)}</dl><div className="mt-7 flex flex-wrap justify-center gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
+      {submitted && selected && <section className="mt-8 abh-card p-5 text-center md:p-8" aria-live="polite"><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 text-center sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{displayFieldValue(values[field.id] || "Not provided")}</dd></div>)}</dl><div className="mt-7 flex flex-wrap justify-center gap-3"><button type="button" onClick={downloadPdf} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Download fillable PDF</button><button type="button" onClick={() => void sharePdf()} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-sm font-semibold"><FileArrowUp size={18} /> Share PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">The download contains editable PDF fields. You can complete or update it in a PDF app before sending it to ApexBytesHub.</p></section>}
   </ToolShell>
 }
 

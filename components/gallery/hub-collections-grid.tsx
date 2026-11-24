@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
-import { ArrowsLeftRight, CaretLeft, CaretRight, Stack } from "@phosphor-icons/react"
+import { CaretLeft, CaretRight, Stack } from "@phosphor-icons/react"
 import { HUB_COLORS, type HubKey } from "@/lib/brand"
 import { getContrastText } from "@/lib/color"
 import { HUBS, PROJECTS, type HubId, type ProjectData } from "@/lib/data"
@@ -107,11 +107,6 @@ function HubCollectionCard({
 
         {projects.length > 1 && (
           <>
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20  border border-white/25 text-white text-[0.78rem] font-medium">
-              <ArrowsLeftRight size={12} weight="bold" aria-hidden="true" />
-              Swipe for projects
-            </div>
-
             {/* ---- Desktop prev/next buttons ----
                 Sit where a mouse-only user (no touch/swipe) needs them —
                 flanking the "swipe for more" pill. Hidden on mobile since

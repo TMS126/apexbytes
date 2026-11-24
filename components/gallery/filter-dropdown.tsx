@@ -55,14 +55,14 @@ export function FilterDropdown({
               onClick={() => handleSelect(opt.id)}
               aria-pressed={isActive}
               className={cn(
-                "px-4 py-2 rounded-full text-base font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
+                "abh-underline-button px-3 py-2 text-base font-medium whitespace-nowrap transition-colors duration-150 active:scale-95",
                 "shadow-none",
                 "outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               )}
               style={
                 isActive
-                  ? { backgroundColor: activeBg, color: activeText, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: activeBg }
-                  : { backgroundColor: isDark ? "#18181b" : "#ffffff", color: isDark ? "#e4e4e7" : "#3f3f46", ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
+                  ? { color: activeText, ["--card-rule" as unknown as keyof import("react").CSSProperties]: activeBg, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: activeBg }
+                  : { color: isDark ? "#e4e4e7" : "#3f3f46", ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
               }
             >
               {opt.label}
@@ -82,11 +82,11 @@ export function FilterDropdown({
             aria-expanded={open}
             aria-haspopup="listbox"
             className={cn(
-              "flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-full border-2 bg-transparent",
+              "abh-underline-button flex items-center gap-2 px-1.5 py-1.5 bg-transparent",
               "text-[0.94rem] font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
               "shadow-none",
               "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-              "border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200"
+              "text-zinc-700 dark:text-zinc-200"
             )}
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
@@ -124,15 +124,15 @@ export function FilterDropdown({
                         aria-selected={isActive}
                         onClick={() => handleSelect(opt.id)}
                         className={cn(
-                          "w-full flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-full",
+                          "abh-underline-button w-full flex items-center justify-center gap-1.5 px-3 py-2.5",
                           "text-sm font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
                           "shadow-none",
                           "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                         )}
                         style={
                           isActive
-                            ? { backgroundColor: activeBg, color: activeText, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: activeBg }
-                            : { backgroundColor: isDark ? "#18181b" : "#ffffff", color: accent ?? (isDark ? "#e4e4e7" : "#3f3f46"), ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
+                            ? { color: activeText, ["--card-rule" as unknown as keyof import("react").CSSProperties]: activeBg, ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: activeBg }
+                            : { color: accent ?? (isDark ? "#e4e4e7" : "#3f3f46"), ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
                         }
                       >
                         {opt.id !== "all" && <HubIcon id={opt.id as HubId} size={13} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent} />}
