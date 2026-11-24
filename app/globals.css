@@ -111,7 +111,7 @@ html[data-scroll-locked] body { overflow: hidden; }
   min-height: 54px;
   align-items: center;
   gap: .75rem;
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 14px;
   background: var(--input);
   color: var(--foreground);
@@ -120,7 +120,7 @@ html[data-scroll-locked] body { overflow: hidden; }
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
 .abh-expanding-search-shell {
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 14px;
   background: var(--input);
 }
@@ -1989,7 +1989,7 @@ textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
 
 .abh-reference-search,
 .abh-reference-search:focus-within {
-  border: 1px solid var(--border) !important;
+  border: 0 !important;
   border-radius: 14px !important;
   box-shadow: none !important;
 }
