@@ -308,7 +308,7 @@ onClick={isOpen ? handleClose : handleOpen}
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                placeholder="Search a service..."
+                placeholder=""
                 /* AUDIT FIX: the border-color swap on the pill container above
                    is meant to be the ONLY focus indicator here — added
                    defensive focus:ring-0/focus-visible:ring-0/outline-none

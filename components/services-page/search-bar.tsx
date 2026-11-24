@@ -34,7 +34,7 @@ export function InlineSearchBar({ onSelect }: { onSelect: (svc: SelectedService)
     <ExpandingSearch
       id="inline-search-input"
       label="Find a service"
-      placeholder="Find a service…"
+      placeholder=""
       value={query}
       expanded={expanded}
       onChange={setQuery}

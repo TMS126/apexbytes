@@ -83,10 +83,10 @@
     border-radius: 9999px !important;
   }
 
-  /* 2. Search: slight border around the search BAR and the RESULTS card only.
-        Nothing around the input text itself. */
+  /* 2. Search stays borderless like the rest of the site; only results retain
+        their own surface treatment. */
   :root:root:root:root [role="dialog"][aria-label="Search services"] > div {
-    border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent) !important;
+    border: 0 !important;
   }
 
   /* 3. Keep surfaces borderless without removing keyboard focus visibility. */
