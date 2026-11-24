@@ -96,7 +96,7 @@ export function FilterDropdown({
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
             <span className="sr-only">Current filter: {displayedLabel}</span>
-            <HubFilterIcon id={activeOption.id} size={34} weight="regular" />
+            <HubFilterIcon id={activeOption.id} size={40} weight="regular" />
             <CaretDown size={18} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
           </button>
         )}
@@ -142,7 +142,7 @@ export function FilterDropdown({
                         }
                       >
                         <span className="sr-only">{opt.label}</span>
-                        <HubFilterIcon id={opt.id} size={34} weight="regular" color={isActive ? activeText : accent ?? blueColor} />
+                        <HubFilterIcon id={opt.id} size={40} weight="regular" color={isActive ? activeText : accent ?? blueColor} />
                       </button>
                     )
                   })}
