@@ -112,11 +112,10 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex min-w-0 shrink-0 items-center gap-2 rounded-[14px] bg-secondary/60 px-3 py-2.5 text-left",
+                  "group relative flex min-w-0 shrink-0 items-center gap-2 border-l-2 border-transparent bg-transparent px-3 py-2.5 text-left",
                   embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
-                  isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
-                  GLASS.item
+                  isSelected && "border-l-[3px] border-[var(--hub-accent)] bg-transparent"
                 )}
                 style={{
                   ["--hub-accent" as unknown as string]: accent,
@@ -270,8 +269,8 @@ export function HubBrowser({
                             <div key={iIdx} className="relative">
                               <div
                                 className={cn(
-                                  "group relative ml-3 flex items-center gap-2 rounded-[14px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
-                                  itemQty > 0 && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
+                                  "group relative ml-3 flex items-center gap-2 border-l-2 border-transparent py-2 pl-3 pr-1 transition-[border-color,color] duration-150",
+                                  itemQty > 0 && "border-[var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
