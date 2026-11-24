@@ -21,6 +21,9 @@ type Field = {
   required?: boolean
   multiline?: boolean
   type?: "text" | "email" | "tel" | "date"
+  control?: "text" | "checkbox-group" | "radio-group"
+  options?: string[]
+  section?: string
 }
 
 const SERVICE_OPTIONS = HUB_ORDER.flatMap((hubId) =>
@@ -58,22 +61,105 @@ const INTAKE_BASE_FIELDS: Field[] = [
   { id: "details", label: "What should we know?", placeholder: "Tell us what you need help with, in your own words.", required: true, multiline: true },
 ]
 
+const INTAKE_FORM_END_FIELDS: Field[] = [
+  { id: "clientSignature", label: "Client signature / authorisation", placeholder: "Type your full name to confirm the details are yours", required: true },
+  { id: "signatureDate", label: "Date", placeholder: "Choose a date", type: "date", required: true },
+  { id: "documentsVerified", label: "Documents verified", placeholder: "Select all that apply", control: "checkbox-group", options: ["ID", "Proof of address / bank"] },
+  { id: "addOns", label: "Additional items to include", placeholder: "Select all that apply", control: "checkbox-group", options: ["Printed copy", "Email copy", "WhatsApp / PDF copy"] },
+  { id: "processedBy", label: "Processed by staff", placeholder: "For ApexBytesHub use" },
+]
+
+function displayFieldValue(value: string) {
+  return value.replaceAll("||", ", ")
+}
+
 function serviceFields(selected: (typeof SERVICE_OPTIONS)[number] | undefined): Field[] {
   if (!selected) return []
   const name = selected.label.toLowerCase()
-  if (/sars|tax|efiling|itr12|vat|pay[e|e]|tcs|penalty|compliance|rav01/.test(name)) return [
-    { id: "surname", label: "Surname", placeholder: "As shown on your ID or passport", required: true },
-    { id: "idOrPassport", label: "RSA ID or passport number", placeholder: "13-digit ID or passport number", required: true },
-    { id: "taxReference", label: "SARS tax reference number", placeholder: "If known" },
-    { id: "otpPhone", label: "Active cellphone for SARS OTP", placeholder: "Number that can receive SARS SMS OTPs", required: true, type: "tel" },
-    { id: "taxYear", label: "Tax year or period", placeholder: "e.g. 2026 or 2026/10" },
-    { id: "efilingUsername", label: "SARS eFiling username", placeholder: "If already registered" },
-    { id: "requestType", label: "Document or action needed", placeholder: "Tax status, statement, ITA34, tax number, return, VAT, PAYE, or other" },
-    { id: "address", label: "Residential or postal address", placeholder: "Street, suburb/town, province and postal code", multiline: true },
-    { id: "bankDetails", label: "Bank details or RAV01 changes", placeholder: "Bank name, account type, account number and branch code, if relevant", multiline: true },
-    { id: "supportingDocuments", label: "Supporting documents available", placeholder: "ID, proof of address, certificates, statements, or other documents", multiline: true },
-    { id: "clientAuthorisation", label: "Authorisation or additional notes", placeholder: "Explain the request, dates, penalty reason, or any details we should capture.", multiline: true },
-  ]
+  if (/sars|tax|efiling|itr12|vat|pay[e|e]|tcs|penalty|compliance|rav01/.test(name)) {
+    const common: Field[] = [
+      { id: "fullName", label: "Full names / registered entity name", placeholder: "Exactly as shown on your ID, passport, or registration documents", required: true, section: "1. Taxpayer details and access" },
+      { id: "surname", label: "Surname", placeholder: "As shown on your ID or passport", required: true, section: "1. Taxpayer details and access" },
+      { id: "idOrPassport", label: "RSA ID, passport, or CIPC registration number", placeholder: "13-digit ID, passport, or registration number", required: true, section: "1. Taxpayer details and access" },
+      { id: "taxReference", label: "SARS tax reference number", placeholder: "If known", section: "1. Taxpayer details and access" },
+      { id: "phone", label: "Active cellphone for SARS OTP", placeholder: "Number that can receive SARS SMS OTPs", required: true, type: "tel", section: "1. Taxpayer details and access" },
+      { id: "email", label: "Current email address", placeholder: "For SARS notices, OTPs, or delivery", type: "email", section: "1. Taxpayer details and access" },
+    ]
+
+    if (/registration|new taxpayer|efiling profile/.test(name)) return [
+      ...common,
+      { id: "dateOfBirth", label: "Date of birth", placeholder: "YYYY-MM-DD", type: "date", required: true, section: "1. Personal identification details" },
+      { id: "maritalStatus", label: "Marital status", placeholder: "Choose one", control: "radio-group", options: ["Single", "Married"], section: "1. Personal identification details" },
+      { id: "citizenship", label: "Country of citizenship / passport country", placeholder: "Country", required: true, section: "1. Personal identification details" },
+      { id: "registrationReason", label: "Reason for registration", placeholder: "Select all that apply", control: "checkbox-group", options: ["Employment", "Bank / bursary", "Other"], section: "1. Personal identification details" },
+      { id: "alternativePhone", label: "Alternative contact number", placeholder: "Optional", type: "tel", section: "2. Contact and eFiling login" },
+      { id: "efilingUsername", label: "Preferred eFiling username", placeholder: "Choose a username", required: true, section: "2. Contact and eFiling login" },
+      { id: "newEmailSetup", label: "New email setup needed?", placeholder: "Choose one", control: "radio-group", options: ["Yes", "No"], section: "2. Contact and eFiling login" },
+      { id: "securityQuestion", label: "Security question and answer", placeholder: "For password recovery", section: "2. Contact and eFiling login" },
+      { id: "address", label: "Residential and postal address", placeholder: "Unit/stand, street, suburb/township/village, city, postal code, and postal address", multiline: true, required: true, section: "3. Residential and postal address" },
+      { id: "bankAccountHolder", label: "Bank account holder full name", placeholder: "Must match ID", section: "4. Personal bank account details" },
+      { id: "bankName", label: "Bank name", placeholder: "Capitec, FNB, ABSA, Standard Bank, Nedbank, etc.", section: "4. Personal bank account details" },
+      { id: "bankAccount", label: "Account number and branch code", placeholder: "Account number and branch code", section: "4. Personal bank account details" },
+      { id: "accountType", label: "Account type", placeholder: "Choose one", control: "radio-group", options: ["Savings", "Cheque / Current"], section: "4. Personal bank account details" },
+    ]
+
+    if (/penalty|pin recovery|remission/.test(name)) return [
+      ...common,
+      { id: "efilingUsername", label: "eFiling username", placeholder: "If registered", section: "1. Taxpayer details and eFiling access" },
+      { id: "efilingAccess", label: "eFiling access status", placeholder: "Choose one", control: "radio-group", options: ["Have password", "Forgot password / locked"], section: "1. Taxpayer details and eFiling access" },
+      { id: "requestedAction", label: "Select required action", placeholder: "Choose one", control: "radio-group", options: ["Tax number / IT150 notice retrieval", "Penalty statement / breakdown check", "Request for remission (RFR01)"], required: true, section: "2. Service requested" },
+      { id: "penaltyYears", label: "Tax year(s) penalised", placeholder: "e.g. 2023, 2024, 2025", section: "3. Administrative penalty dispute details" },
+      { id: "penaltyAmount", label: "Total penalty amount shown", placeholder: "Amount shown on the SARS statement", section: "3. Administrative penalty dispute details" },
+      { id: "lateFilingReason", label: "Primary reason for late filing / non-submission", placeholder: "Select all that apply", control: "checkbox-group", options: ["First-time offender / unaware", "Below tax threshold / unemployed", "Medical / hospitalisation", "Other"], section: "3. Administrative penalty dispute details" },
+      { id: "clientExplanation", label: "Client explanation and supporting dates", placeholder: "Explain the circumstances for the RFR01 motivation", multiline: true, required: true, section: "3. Administrative penalty dispute details" },
+    ]
+
+    if (/clearance|good standing|tcs/.test(name)) return [
+      ...common,
+      { id: "applicantType", label: "Applicant type", placeholder: "Choose one", control: "radio-group", options: ["Individual taxpayer", "Registered company (Pty Ltd / CC)"], required: true, section: "1. Applicant / entity details" },
+      { id: "vatReference", label: "VAT reference number", placeholder: "If registered", section: "1. Applicant / entity details" },
+      { id: "payeReference", label: "PAYE / UIF / SDL number", placeholder: "If registered", section: "1. Applicant / entity details" },
+      { id: "efilingUsername", label: "eFiling username", placeholder: "Username", section: "2. eFiling access and OTP verification" },
+      { id: "tcsPurpose", label: "Purpose of Tax Compliance Status PIN", placeholder: "Select all that apply", control: "checkbox-group", options: ["Good standing (general)", "Tender / CSD registration", "Employment / licensing", "Foreign investment (FIA)"], required: true, section: "3. Tax Compliance Status request details" },
+      { id: "complianceChecks", label: "Pre-submission compliance check", placeholder: "Confirm all that apply", control: "checkbox-group", options: ["All tax returns submitted", "No overdue SARS debt / penalties", "RAV01 details up to date"], section: "3. Tax Compliance Status request details" },
+      { id: "requestingInstitution", label: "Requesting institution / tender name", placeholder: "Optional reference", section: "3. Tax Compliance Status request details" },
+    ]
+
+    if (/verification|supporting|upload/.test(name)) return [
+      ...common,
+      { id: "caseReference", label: "SARS case / verification reference number", placeholder: "If available", section: "1. Taxpayer identification and portal access" },
+      { id: "efilingUsername", label: "eFiling username or SOQS upload", placeholder: "Username or portal details", section: "1. Taxpayer identification and portal access" },
+      { id: "submissionChannel", label: "Submission channel", placeholder: "Select all that apply", control: "checkbox-group", options: ["SARS eFiling", "SARS Online Query (SOQS)"], section: "1. Taxpayer identification and portal access" },
+      { id: "supportingDocuments", label: "Supporting documents provided", placeholder: "Tick every document supplied", control: "checkbox-group", options: ["Certified ID / Smart Card", "Selfie holding ID and written note", "Bank statements (3 months)", "Bank confirmation letter", "Proof of residential address", "IRP5 / IT3(a) certificates", "Medical aid / RA certificates", "Logbook / receipts", "Affidavit"], section: "2. Supporting documents provided" },
+      { id: "physicalPages", label: "Total physical pages scanned", placeholder: "Number of pages", section: "2. Supporting documents provided" },
+      { id: "documentFormat", label: "Document format check", placeholder: "Confirm all that apply", control: "checkbox-group", options: ["Merged PDF", "Under 5 MB per file"], section: "2. Supporting documents provided" },
+      { id: "verificationNotes", label: "Additional notes / SARS verification letter instructions", placeholder: "Instructions for the submission", multiline: true, section: "2. Supporting documents provided" },
+    ]
+
+    if (/return|vat|pay[e|e]/.test(name)) return [
+      ...common,
+      { id: "taxPeriod", label: "Tax period / assessment year", placeholder: "e.g. 2026 or 2026/10", required: true, section: "1. Taxpayer / business details" },
+      { id: "efilingUsername", label: "eFiling username", placeholder: "Username", section: "1. Taxpayer / business details" },
+      { id: "returnType", label: "Select return being submitted", placeholder: "Choose all that apply", control: "checkbox-group", options: ["Individual income tax (ITR12)", "Provisional tax (IRP6)", "VAT return (VAT201)", "PAYE / UIF / SDL (EMP201)"], required: true, section: "2. Return type and supporting certificates" },
+      { id: "supportingCertificates", label: "Supporting certificates / schedules provided", placeholder: "Select all supplied", control: "checkbox-group", options: ["IRP5 / IT3(a) salary certificates", "Medical aid tax certificate", "Retirement annuity certificate", "Bank interest IT3(b)", "Travel logbook", "VAT output / input summary", "Payroll / EMP201 figures", "Nil return"], section: "2. Return type and supporting certificates" },
+      { id: "bankDetailsVerified", label: "Are bank details on SARS RAV01 correct?", placeholder: "Choose one", control: "radio-group", options: ["Yes, verified", "Needs update"], section: "2. Return type and supporting certificates" },
+      { id: "additionalIncome", label: "Additional income / deductions declared?", placeholder: "Choose one", control: "radio-group", options: ["None", "Yes — see notes below"], section: "2. Return type and supporting certificates" },
+      { id: "clientFigures", label: "Client figures / declarations to capture", placeholder: "VAT output/input, PAYE totals, other income, or deductions", multiline: true, section: "2. Return type and supporting certificates" },
+    ]
+
+    return [
+      ...common,
+      { id: "documentNeeded", label: "Select document / check needed", placeholder: "Select all that apply", control: "checkbox-group", options: ["Tax status / compliance check", "Statement of Account (SOA)", "Notice of Assessment (ITA34)", "Tax reference number lookup"], required: true, section: "2. Requested enquiry or statement type" },
+      { id: "taxYear", label: "Tax year(s) requested", placeholder: "e.g. 2024, 2025, 2026", section: "2. Requested enquiry or statement type" },
+      { id: "sarsChannel", label: "Preferred SARS channel", placeholder: "Select all that apply", control: "checkbox-group", options: ["SARS eFiling", "SARS Online Query (SOQS)", "SARS WhatsApp"], section: "2. Requested enquiry or statement type" },
+      { id: "newCellphone", label: "New cellphone number", placeholder: "OTP required", type: "tel", section: "3. Profile details to update on RAV01" },
+      { id: "newEmail", label: "New email address", placeholder: "OTP required", type: "email", section: "3. Profile details to update on RAV01" },
+      { id: "newResidentialAddress", label: "New residential address", placeholder: "Street/stand no., suburb, town, postal code", multiline: true, section: "3. Profile details to update on RAV01" },
+      { id: "newPostalAddress", label: "New postal address", placeholder: "Write ‘Same as residential’ if applicable", multiline: true, section: "3. Profile details to update on RAV01" },
+      { id: "newBankName", label: "New bank name and account type", placeholder: "If updating banking", section: "3. Profile details to update on RAV01" },
+      { id: "newBankAccount", label: "New bank account number and branch code", placeholder: "If updating banking", section: "3. Profile details to update on RAV01" },
+    ]
+  }
   if (/print|copy|laminat|photo|scan/.test(name)) return [
     { id: "quantity", label: "Quantity or number of pages", placeholder: "e.g. 20 pages" },
     { id: "fileNote", label: "File or paper details", placeholder: "Colour, paper size, single/double-sided, etc.", multiline: true },
@@ -102,15 +188,51 @@ function updateValue(setValues: React.Dispatch<React.SetStateAction<Record<strin
 }
 
 function InputField({ field, value, onChange }: { field: Field; value: string; onChange: (value: string) => void }) {
+  const selectedOptions = value ? value.split("||").filter(Boolean) : []
+  const toggleOption = (option: string) => {
+    if (field.control === "radio-group") {
+      onChange(option)
+      return
+    }
+    onChange(selectedOptions.includes(option) ? selectedOptions.filter((item) => item !== option).join("||") : [...selectedOptions, option].join("||"))
+  }
+
   return (
     <div className={field.multiline ? "sm:col-span-2" : ""}>
-      <label htmlFor={field.id} className="mb-1.5 block text-center text-sm font-semibold text-foreground">
-        {field.label}{field.required ? " *" : ""}
-      </label>
-      {field.multiline ? (
+      {field.control ? (
+        <fieldset className="sm:col-span-2 text-left">
+          <legend className="mb-2 text-sm font-semibold text-foreground">{field.label}{field.required ? " *" : ""}</legend>
+          <div className="grid gap-2 rounded-[14px] bg-background/70 p-3 sm:grid-cols-2">
+            {field.options?.map((option) => {
+              const checked = field.control === "radio-group" ? value === option : selectedOptions.includes(option)
+              return (
+                <label key={option} className="flex min-h-10 cursor-pointer items-center gap-3 rounded-[14px] px-3 py-2 text-sm text-foreground transition-colors hover:bg-muted">
+                  <input
+                    type={field.control === "radio-group" ? "radio" : "checkbox"}
+                    name={field.id}
+                    value={option}
+                    checked={checked}
+                    required={field.required && field.control === "radio-group" && !value}
+                    onChange={() => toggleOption(option)}
+                    className="size-4 accent-[var(--brand-orange)]"
+                  />
+                  <span>{option}</span>
+                </label>
+              )
+            })}
+          </div>
+        </fieldset>
+      ) : (
+        <>
+          <label htmlFor={field.id} className="mb-1.5 block text-center text-sm font-semibold text-foreground">
+            {field.label}{field.required ? " *" : ""}
+          </label>
+          {field.multiline ? (
         <textarea id={field.id} required={field.required} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} rows={4} className="w-full rounded-[14px] bg-background px-4 py-3 text-center text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
       ) : (
         <input id={field.id} required={field.required} type={field.type ?? "text"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} className="w-full rounded-[14px] bg-background px-4 py-3 text-center text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+      )}
+        </>
       )}
     </div>
   )
@@ -118,7 +240,7 @@ function InputField({ field, value, onChange }: { field: Field; value: string; o
 
 function buildIntakePdf(values: Record<string, string>, selectedLabel: string) {
   const pdf = new jsPDF({ unit: "mm", format: "a4" })
-  const lines = [`${BIZ.name} — Service Intake`, `Service: ${selectedLabel}`, "", ...Object.entries(values).filter(([, value]) => value.trim()).map(([key, value]) => `${key.replace(/([A-Z])/g, " $1")}: ${value}`)]
+  const lines = [`${BIZ.name} — Service Intake`, `Service: ${selectedLabel}`, "", ...Object.entries(values).filter(([, value]) => value.trim()).map(([key, value]) => `${key.replace(/([A-Z])/g, " $1")}: ${displayFieldValue(value)}`)]
   pdf.setFont("helvetica", "bold"); pdf.setFontSize(18); pdf.text(lines[0], 18, 22)
   pdf.setFont("helvetica", "normal"); pdf.setFontSize(11)
   let y = 34
@@ -219,7 +341,11 @@ function IntakeTool() {
   const [submitted, setSubmitted] = useState(false)
   const [shareError, setShareError] = useState<string | null>(null)
   const selected = SERVICE_OPTIONS.find((option) => option.value === values.service)
-  const fields = useMemo(() => selected ? [...INTAKE_BASE_FIELDS.slice(0, 3), ...serviceFields(selected), ...INTAKE_BASE_FIELDS.slice(3)] : [], [selected])
+  const fields = useMemo(() => {
+    if (!selected) return []
+    const isStructuredSars = /sars|tax|efiling|itr12|vat|pay[e|e]|tcs|penalty|compliance|rav01/.test(selected.label.toLowerCase())
+    return isStructuredSars ? [...serviceFields(selected), ...INTAKE_FORM_END_FIELDS] : [...INTAKE_BASE_FIELDS.slice(0, 3), ...serviceFields(selected), ...INTAKE_BASE_FIELDS.slice(3), ...INTAKE_FORM_END_FIELDS]
+  }, [selected])
   const sharePdf = async () => {
     if (!selected) return
     setShareError(null)
@@ -239,7 +365,7 @@ function IntakeTool() {
   }
   const shareText = () => {
     if (!selected) return
-    const summary = fields.map((field) => `${field.label}: ${values[field.id] || "Not provided"}`).join("\n")
+    const summary = fields.map((field) => `${field.label}: ${displayFieldValue(values[field.id] || "Not provided")}`).join("\n")
     const opened = window.open(waChatLink(selected.label, summary), "_blank", "noopener,noreferrer")
     if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.")
   }
@@ -248,10 +374,10 @@ function IntakeTool() {
     <div className="abh-card p-5 md:p-8">
       <label htmlFor="service" className="mb-2 block text-sm font-semibold text-foreground">1. Choose the service you need *</label>
       <select id="service" required value={values.service ?? ""} onChange={(event) => { setValues({ service: event.target.value }); setSubmitted(false) }} className="w-full rounded-[14px] bg-background px-4 py-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><option value="">Select a service</option>{HUB_ORDER.map((hubId) => <optgroup key={hubId} label={HUBS[hubId].title}>{SERVICE_OPTIONS.filter((option) => option.hubId === hubId).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup>)}</select>
-      {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="mt-8 grid gap-5 sm:grid-cols-2"><div className="sm:col-span-2 rounded-[14px] bg-muted/60 px-4 py-3 text-sm text-muted-foreground"><strong className="text-foreground">Selected:</strong> {selected.label} · {selected.sectionTitle}</div>{fields.map((field) => <InputField key={`${selected.value}-${field.id}`} field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} />)}<button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
+      {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="mt-8 grid gap-5 sm:grid-cols-2"><div className="sm:col-span-2 rounded-[14px] bg-muted/60 px-4 py-3 text-sm text-muted-foreground"><strong className="text-foreground">Selected:</strong> {selected.label} · {selected.sectionTitle}</div>{fields.map((field, index) => <div key={`${selected.value}-${field.id}`} className={field.section && field.section !== fields[index - 1]?.section ? "contents" : "contents"}>{field.section && field.section !== fields[index - 1]?.section && <h2 className="sm:col-span-2 mt-3 border-b border-border pb-2 text-left text-sm font-bold uppercase tracking-[0.12em] text-foreground">{field.section}</h2>}<InputField field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} /></div>)}<button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
     </div>
     {shareError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
-    {submitted && selected && <section className="mt-8 abh-card p-5 text-center md:p-8" aria-live="polite"><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 text-center sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{values[field.id] || "Not provided"}</dd></div>)}</dl><div className="mt-7 flex flex-wrap justify-center gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
+      {submitted && selected && <section className="mt-8 abh-card p-5 text-center md:p-8" aria-live="polite"><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 text-center sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{displayFieldValue(values[field.id] || "Not provided")}</dd></div>)}</dl><div className="mt-7 flex flex-wrap justify-center gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
   </ToolShell>
 }
 
