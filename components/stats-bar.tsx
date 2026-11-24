@@ -39,7 +39,7 @@ export function StatsBar() {
                 <Icon size={24} weight="regular" aria-hidden="true" className="mb-0.5 text-muted-foreground transition-colors duration-250 ease-out group-hover:text-[var(--stat-color)]" />
                 <div className="text-2xl font-medium text-foreground">{stat.value}</div>
                 <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground sm:text-sm">{stat.label}</div>
-                <span className="absolute bottom-2 left-1/2 h-0.5 w-10 -translate-x-1/2 origin-left scale-x-0 rounded-full bg-[var(--stat-color)] opacity-0 transition-[transform,opacity,width] duration-250 ease-out group-hover:w-16 group-hover:scale-x-100 group-hover:opacity-100" aria-hidden="true" />
+                <span className="abh-center-line absolute bottom-2 left-1/2 h-0.5 w-10 -translate-x-1/2 rounded-full bg-[var(--stat-color)] opacity-0 group-hover:w-16 group-hover:scale-x-100 group-hover:opacity-100" aria-hidden="true" />
               </div>
             </ScrollBounce>
           )

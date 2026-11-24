@@ -393,7 +393,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             className={cn(
               "flex-1 min-h-0 overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
               embedded ? "overflow-visible" : "overflow-y-auto",
-              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1fr)_minmax(340px,390px)] md:items-start md:gap-6" : ""
+              embedded ? "flex flex-col md:grid md:grid-cols-[280px_minmax(0,1fr)] md:items-start md:gap-0" : ""
             )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
@@ -427,7 +427,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             />
             </div>
 
-            <div className={embedded ? "order-1 min-w-0 md:col-start-1 md:row-start-1" : ""}>
+            <div className={embedded ? "order-1 min-w-0 md:col-start-1 md:row-start-1 md:border-r md:border-border" : ""}>
             <SavedQuotesPanel
               savedQuotes={savedQuotes}
               showSavedList={showSavedList}

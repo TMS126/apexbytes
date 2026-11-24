@@ -1756,6 +1756,11 @@ input:focus, textarea:focus, select:focus,
   background: var(--brand-blue) !important;
   color: var(--on-brand-blue) !important;
 }
+.dark .abh-navbar-quote-cta:hover,
+.dark .abh-navbar-quote-cta:focus-visible {
+  background: var(--brand-blue-mid) !important;
+  color: #25283E !important;
+}
 .abh-navbar-quote-cta:hover,
 .abh-navbar-quote-cta:focus-visible {
   transform: translateY(-2px);
@@ -1778,6 +1783,15 @@ input:focus, textarea:focus, select:focus,
 .dark .abh-bulk-label {
   background: var(--brand-orange) !important;
   color: #fff !important;
+}
+
+.abh-center-line {
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out, opacity 220ms ease-out, width 220ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .abh-center-line { transition: none; }
 }
 
 /* Buttons and button-like controls get one restrained, consistent lift. */

@@ -147,7 +147,7 @@ export function Navbar() {
               aria-label="ApexBytesHub — go to homepage"
               className={cn(
                 glassPillClass,
-                "flex items-center gap-2 cursor-pointer select-none pointer-events-auto group transition-all duration-300 px-1", 
+                "flex items-center gap-2 cursor-pointer select-none pointer-events-auto group bg-transparent hover:bg-transparent active:bg-transparent focus-visible:bg-transparent transition-all duration-300 px-1",
                 menuOpen || !navVisible
                   ? "opacity-0 -translate-y-20 pointer-events-none"
                   : "opacity-100 translate-y-0 pointer-events-auto"

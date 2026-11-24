@@ -69,8 +69,8 @@ export function CartItemCard({
         <span className="font-medium text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
       </div>
 
-      <div className={cn("flex items-center justify-between gap-3", embedded && "md:col-start-3 md:col-span-2")}>
-        <div className="flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10">
+      <div className={cn("flex items-center justify-between gap-3", embedded && "md:contents")}>
+        <div className={cn("flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10", embedded && "md:col-start-3 md:justify-self-start")}>
           <button
             onClick={() => onClickStep(item.id, -1)}
             onPointerDown={() => onPressStart(item.id, -1)}
@@ -103,7 +103,7 @@ export function CartItemCard({
             <Plus size={13} weight="bold" aria-hidden="true" />
           </button>
         </div>
-        <span className="text-base font-medium text-zinc-900 dark:text-zinc-50">R{lineTotal}</span>
+        <span className={cn("text-base font-medium text-zinc-900 dark:text-zinc-50", embedded && "md:col-start-4 md:justify-self-end")}>R{lineTotal}</span>
       </div>
 
       {progress?.showDots && (

@@ -57,11 +57,11 @@ export function MaintenanceBanner() {
         onClick={handleDismiss}
         aria-label="Dismiss notice"
         data-no-lift="true"
-        className="abh-close-chip abh-maintenance-close-chip absolute left-1/2 top-0 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-red-600 text-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        className="abh-close-chip abh-maintenance-close-chip absolute right-3 top-3 flex size-8 items-center justify-center rounded-full bg-red-600 text-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <X size={15} weight="bold" />
       </button>
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-3 pr-9">
         <Wrench size={18} weight="regular" className="mt-0.5 shrink-0 opacity-90" aria-hidden="true" />
         <p className="min-w-0 text-left text-sm leading-relaxed">
         {MAINTENANCE_BANNER.message}{" "}
