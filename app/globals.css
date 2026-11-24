@@ -1803,9 +1803,10 @@ input:focus, textarea:focus, select:focus,
   outline-offset: 3px;
 }
 .abh-mobile-nav {
-  background: color-mix(in srgb, var(--background) 92%, transparent) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(135%);
-  backdrop-filter: blur(16px) saturate(135%);
+  background: color-mix(in srgb, var(--background) 76%, transparent) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  backdrop-filter: blur(14px) saturate(135%);
+  box-shadow: 0 12px 36px -28px color-mix(in srgb, var(--foreground) 45%, transparent);
 }
 .abh-bulk-label {
   background: var(--brand-blue) !important;

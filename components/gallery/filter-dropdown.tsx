@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CaretDown, SquaresFour } from "@phosphor-icons/react"
+import { CaretDown } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -9,7 +9,7 @@ import { BRAND } from "@/lib/brand"
 import { getContrastText } from "@/lib/color"
 import { ROW_ORDER, HubId, playClickSound } from "@/lib/gallery-helpers"
 import { useBackButtonDismiss } from "@/hooks/use-back-button-dismiss"
-import { HubIcon } from "@/components/services-page/shared"
+import { HubFilterIcon } from "@/components/hub-filter-icon"
 
 export function FilterDropdown({
   activeFilter, onSelect, getAccent,
@@ -96,7 +96,7 @@ export function FilterDropdown({
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
             <span className="sr-only">Current filter: {displayedLabel}</span>
-            {activeOption.id === "all" ? <SquaresFour size={34} weight="regular" aria-hidden="true" /> : <HubIcon id={activeOption.id as HubId} size={34} weight="regular" aria-hidden="true" />}
+            <HubFilterIcon id={activeOption.id} size={34} weight="regular" />
             <CaretDown size={18} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
           </button>
         )}
@@ -142,7 +142,7 @@ export function FilterDropdown({
                         }
                       >
                         <span className="sr-only">{opt.label}</span>
-                        {opt.id === "all" ? <SquaresFour size={34} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent ?? blueColor} aria-hidden="true" /> : <HubIcon id={opt.id as HubId} size={34} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent} />}
+                        <HubFilterIcon id={opt.id} size={34} weight="regular" color={isActive ? activeText : accent ?? blueColor} />
                       </button>
                     )
                   })}

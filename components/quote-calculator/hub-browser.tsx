@@ -38,7 +38,8 @@ import { CaretDown, CheckCircle, Minus, Plus, ShoppingBagOpen, Tag } from "@phos
 import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
-import { GLASS, HubIcon } from "./shared"
+import { GLASS } from "./shared"
+import { HubFilterIcon } from "@/components/hub-filter-icon"
 import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
 
 interface Subtotal { total: number; savings: number; count: number }
@@ -132,7 +133,7 @@ export function HubBrowser({
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubIcon id={hubId} size={34} color="currentColor" />
+                    <HubFilterIcon id={hubId} size={34} weight="regular" color="currentColor" />
                   </span>
                   <span className="hidden min-w-0 md:block">
                     <span className="block truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
