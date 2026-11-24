@@ -1794,3 +1794,49 @@ button:not(:disabled):not([data-no-lift]):focus-visible,
   border-bottom-color: var(--line-rule) !important;
   box-shadow: 0 2px 0 -1px var(--line-rule) !important;
 }
+
+/* CV writer workspace: the document stays white, while its editor chrome follows the active theme. */
+.cv-editor-card {
+  background: var(--card);
+  color: var(--card-foreground);
+}
+.cv-preview-panel { background: var(--muted); color: var(--muted-foreground); }
+.cv-step-muted { background: var(--muted); color: var(--muted-foreground); }
+.cv-step-active { color: var(--brand-orange-text); }
+.cv-step-line { background: var(--border); }
+.cv-secondary-button { background: var(--muted); color: var(--foreground); }
+.cv-count-label { color: var(--muted-foreground); font-size: .8rem; }
+.cv-role-panel { border-radius: 14px; background: color-mix(in srgb, var(--muted) 62%, transparent); padding: 1rem; }
+.cv-remove-role { background: transparent !important; color: var(--destructive); font-size: .8rem; font-weight: 600; padding: .25rem 0; }
+.cv-editor-field select {
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid #d7dce3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  padding: .75rem .9rem;
+  color: #172033;
+  box-shadow: 0 1px 2px rgb(15 23 42 / .04) !important;
+}
+.cv-editor-field select:focus-visible { border-color: #7aa9eb !important; box-shadow: 0 0 0 3px rgb(37 99 235 / .12) !important; }
+.dark .cv-editor-card { background: var(--card); }
+.dark .cv-editor-field input,
+.dark .cv-editor-field textarea,
+.dark .cv-editor-field select {
+  border-color: color-mix(in srgb, var(--foreground) 22%, transparent) !important;
+  background: color-mix(in srgb, var(--background) 70%, var(--card)) !important;
+  color: var(--foreground);
+  box-shadow: none !important;
+}
+.dark .cv-editor-field input::placeholder,
+.dark .cv-editor-field textarea::placeholder { color: var(--muted-foreground) !important; }
+.dark .cv-editor-field input:focus,
+.dark .cv-editor-field textarea:focus,
+.dark .cv-editor-field select:focus,
+.dark .cv-editor-field input:focus-visible,
+.dark .cv-editor-field textarea:focus-visible,
+.dark .cv-editor-field select:focus-visible { border-color: var(--brand-orange) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-orange) 22%, transparent) !important; }
+.cv-paper .text-slate-900 { color: #172033 !important; }
+.cv-paper .text-slate-600 { color: #536070 !important; }
+.cv-paper .text-slate-500 { color: #687384 !important; }
+.cv-paper-heading { color: #687384; font-size: .65rem; font-weight: 700; letter-spacing: .2em; }
