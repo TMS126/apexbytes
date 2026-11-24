@@ -95,13 +95,13 @@
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
   }
-  :root:root:root :is(button, a, input, textarea, select, [role="button"], [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible {
-    outline: 2px solid var(--brand-orange) !important;
-    outline-offset: 3px !important;
+    :root:root:root :is(button, a, input, textarea, select, [role="button"], [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--foreground) 22%, transparent) !important;
     --tw-ring-shadow: 0 0 #0000 !important;
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
-  }
+    }
 
   /* 4. No stray outlines unless focused. */
   :root:root:root *:not(:focus):not(:focus-visible) {
