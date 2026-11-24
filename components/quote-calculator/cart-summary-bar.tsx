@@ -74,6 +74,12 @@ export function CartSummaryBar({
         </div>
       )}
 
+      {embedded && cart.length === 0 && (
+        <div className="rounded-[14px] bg-card p-5 text-center text-sm text-muted-foreground" role="status">
+          Your quote is empty. Choose a service below to add it here.
+        </div>
+      )}
+
       {cart.length > 0 && (
         <div
           className={cn("z-10 border-b border-border/40 bg-card/90 md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]", embedded ? "md:sticky md:top-0" : "sticky top-0")}
@@ -139,7 +145,7 @@ export function CartSummaryBar({
               aria-label="Items in your quote"
               className={cn(
                 "gap-2.5 pb-1",
-                embedded ? "hidden md:grid overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
+                embedded ? "grid overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
               )}
               style={{ WebkitOverflowScrolling: "touch" }}
             >

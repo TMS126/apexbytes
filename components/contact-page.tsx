@@ -171,7 +171,7 @@ function ContactPageInner() {
                   <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
                 </div>
 
-                <div className="flex w-full flex-nowrap items-stretch justify-center gap-2 sm:gap-3">
+                <div className="flex w-full flex-wrap items-stretch justify-center gap-2 sm:gap-3">
                   {GRID_CONTACT_LINKS.map((c, index) => {
                     const Icon = CONTACT_ICONS[c.title] ?? Phone
                     const isCopyable = COPYABLE_TITLES.has(c.title)
@@ -181,8 +181,8 @@ function ContactPageInner() {
                         <div className="relative h-full min-w-0 flex-1">
                           <a
                             href={c.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            target={c.href.startsWith("http") ? "_blank" : undefined}
+                            rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                             aria-label={c.title}
                             className="group flex min-h-[112px] h-full flex-col items-center justify-center gap-2 rounded-[14px] border border-transparent p-3 text-center text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97] sm:p-4"
                           >

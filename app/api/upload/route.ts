@@ -111,6 +111,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Document upload is temporarily unavailable." }, { status: 503 })
   }
 
+  const contentLength = Number(request.headers.get("content-length") ?? 0)
+  if (contentLength > MAX_UPLOAD_BYTES + 64 * 1024) {
+    return NextResponse.json({ error: "The upload is too large. Maximum size is 5 MB." }, { status: 413 })
+  }
+
   if (!isSameOriginRequest(request)) {
     return NextResponse.json({ error: "Invalid upload origin." }, { status: 403 })
   }
@@ -137,7 +142,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Document upload is temporarily unavailable." }, { status: 503 })
   }
 
-  const formData = await request.formData()
+  let formData: FormData
+  try {
+    formData = await request.formData()
+  } catch {
+    return NextResponse.json({ error: "The upload could not be read. Please try again." }, { status: 400 })
+  }
   const turnstile = await verifyTurnstileToken({
     token: typeof formData.get("turnstileToken") === "string" ? String(formData.get("turnstileToken")) : null,
     remoteIp: clientIdentifier === "unknown-client" ? null : clientIdentifier,

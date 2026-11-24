@@ -149,16 +149,24 @@ function CvTool() {
   const [template, setTemplate] = useState<CvTemplate>("modern")
   const [photo, setPhoto] = useState<string | null>(null)
   const [submitted, setSubmitted] = useState(false)
+  const [shareError, setShareError] = useState<string | null>(null)
 
   const handlePhoto = (file?: File) => {
     if (!file) return
+    if (!['image/jpeg', 'image/png'].includes(file.type) || file.size > 2 * 1024 * 1024) {
+      setShareError("Please choose a JPG or PNG photo under 2 MB.")
+      return
+    }
+    setShareError(null)
     const reader = new FileReader()
     reader.onload = () => setPhoto(typeof reader.result === "string" ? reader.result : null)
     reader.readAsDataURL(file)
   }
   const shareDetails = () => {
+    setShareError(null)
     const summary = CV_FIELDS.map((field) => `${field.label}: ${values[field.id] || "Not provided"}`).join("\n")
-    window.open(waChatLink("CV Writing / CV Typing", `${summary}\nTemplate: ${template}\nPhoto: ${photo ? "Included" : "Not included"}`), "_blank", "noopener,noreferrer")
+    const opened = window.open(waChatLink("CV Writing / CV Typing", `${summary}\nTemplate: ${template}\nPhoto: ${photo ? "Included" : "Not included"}`), "_blank", "noopener,noreferrer")
+    if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.")
   }
 
   return <ToolShell eyebrow="ApexBytesHub Tools · CV Writing" title="Build a CV that feels like you" description="Add your details, choose a layout, and review a clean on-screen preview before sending it to us. Nothing is downloaded from this tool.">
@@ -168,6 +176,7 @@ function CvTool() {
         <div><label className="mb-2 block text-sm font-semibold">Profile photo</label><label className="flex min-h-[76px] cursor-pointer items-center gap-3 rounded-[14px] bg-background px-4 py-3 text-sm text-muted-foreground"><FileArrowUp size={22} /><span>{photo ? "Photo selected — choose another" : "Optional photo — JPG or PNG"}</span><input type="file" accept="image/png,image/jpeg" className="sr-only" onChange={(event) => handlePhoto(event.target.files?.[0])} /></label></div>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">{CV_FIELDS.map((field) => <InputField key={field.id} field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} />)}</div>
+      {shareError && <p className="text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
       <button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold"><CheckCircle size={19} /> Review my CV</button>
     </form>
     {submitted && <section className="mt-10" aria-live="polite"><div className="mb-4 flex flex-wrap items-end justify-between gap-3"><div><p className="abh-eyebrow">On-page preview</p><h2 className="text-2xl font-semibold">Your {template === "modern" ? "modern" : "classic"} CV</h2></div><button type="button" onClick={shareDetails} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><WhatsappLogo size={18} /> Send to ApexBytesHub</button></div><CvPreview values={values} template={template} photo={photo} /><p className="mt-4 text-center text-sm text-muted-foreground">This is a visual review only. We can polish, format, and prepare the final version with you.</p></section>}
@@ -177,24 +186,31 @@ function CvTool() {
 function IntakeTool() {
   const [values, setValues] = useState<Record<string, string>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [shareError, setShareError] = useState<string | null>(null)
   const selected = SERVICE_OPTIONS.find((option) => option.value === values.service)
   const fields = useMemo(() => selected ? [...INTAKE_BASE_FIELDS.slice(0, 3), ...serviceFields(selected), ...INTAKE_BASE_FIELDS.slice(3)] : [], [selected])
   const sharePdf = async () => {
     if (!selected) return
+    setShareError(null)
     const blob = buildIntakePdf(values, selected.label)
     const file = new File([blob], "apexbyteshub-service-intake.pdf", { type: "application/pdf" })
-    if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
-      await navigator.share({ title: `${BIZ.name} service intake`, text: `Service intake for ${selected.label}`, files: [file] })
-      return
-    }
-    const url = URL.createObjectURL(blob)
+    try {
+      if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+        await navigator.share({ title: `${BIZ.name} service intake`, text: `Service intake for ${selected.label}`, files: [file] })
+        return
+      }
+      const url = URL.createObjectURL(blob)
     window.open(url, "_blank", "noopener,noreferrer")
-    window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+    } catch {
+      setShareError("The PDF could not be shared. Please try WhatsApp or try again.")
+    }
   }
   const shareText = () => {
     if (!selected) return
     const summary = fields.map((field) => `${field.label}: ${values[field.id] || "Not provided"}`).join("\n")
-    window.open(waChatLink(selected.label, summary), "_blank", "noopener,noreferrer")
+    const opened = window.open(waChatLink(selected.label, summary), "_blank", "noopener,noreferrer")
+    if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.")
   }
 
   return <ToolShell eyebrow="ApexBytesHub Tools · Service Intake" title="Tell us what you need" description="Choose one service first. We will then ask only for the details that help us prepare your request properly.">
@@ -203,6 +219,7 @@ function IntakeTool() {
       <select id="service" required value={values.service ?? ""} onChange={(event) => { setValues({ service: event.target.value }); setSubmitted(false) }} className="w-full rounded-[14px] bg-background px-4 py-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><option value="">Select a service</option>{HUB_ORDER.map((hubId) => <optgroup key={hubId} label={HUBS[hubId].title}>{SERVICE_OPTIONS.filter((option) => option.hubId === hubId).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup>)}</select>
       {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="mt-8 grid gap-5 sm:grid-cols-2"><div className="sm:col-span-2 rounded-[14px] bg-muted/60 px-4 py-3 text-sm text-muted-foreground"><strong className="text-foreground">Selected:</strong> {selected.label} · {selected.sectionTitle}</div>{fields.map((field) => <InputField key={`${selected.value}-${field.id}`} field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} />)}<button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
     </div>
+    {shareError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
     {submitted && selected && <section className="mt-8 abh-card p-5 md:p-8" aria-live="polite"><p className="abh-eyebrow mb-2">Review before sending</p><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{values[field.id] || "Not provided"}</dd></div>)}</dl><div className="mt-7 flex flex-wrap gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
   </ToolShell>
 }

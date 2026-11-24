@@ -11,7 +11,7 @@ import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { GLASS, HOME_BLUE } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED, HUB_ORDER,
-  getDisplayName, getEffectiveRate, parsePrice, quoteTotals,
+  getDisplayName, getEffectiveRate, parsePrice, quoteTotals, normalizeCartItems,
 } from "./lib"
 import { HubBrowser } from "./hub-browser"
 import { exportQuotePdf } from "./pdf-export"
@@ -84,7 +84,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      try { const s = localStorage.getItem(STORAGE_KEY); if (s) setCart(JSON.parse(s)) } catch {}
+      try { const s = localStorage.getItem(STORAGE_KEY); if (s) setCart(normalizeCartItems(JSON.parse(s))) } catch {}
       setHydrated(true)
     })
     return () => cancelAnimationFrame(frame)
@@ -191,7 +191,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
     setAnnounce(`${getDisplayName(sectionTitle, name)} added — now ${nextQty} in your quote`)
   }, [])
 
-  const removeItem = (id: string) => {
+  const removeItem = useCallback((id: string) => {
     const index = cart.findIndex(i => i.id === id)
     if (index === -1) return
     const item = cart[index]
@@ -199,7 +199,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
     setUndoStack({ kind: "remove", item, index })
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
     undoTimerRef.current = setTimeout(() => setUndoStack(null), 6000)
-  }
+  }, [cart])
 
   const undoRemove = () => {
     if (!undoStack) return
@@ -316,9 +316,9 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
       : mode === "view" ? "Quote preview could not open. Allow pop-ups and try again." : "Quote PDF could not be created. Please try again.")
   }
   const setQty = useCallback((id: string, qty: number) => {
-    if (qty < 1) { stepQty(id, -1); return }
+    if (qty < 1) { removeItem(id); return }
     setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))
-  }, [stepQty])
+  }, [removeItem])
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
   const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!openHub || (event.target as HTMLElement).closest("[data-calculator-cart-area], input, textarea, [data-calculator-swipe-block]")) {

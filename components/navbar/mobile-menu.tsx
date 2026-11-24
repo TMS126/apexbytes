@@ -111,7 +111,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
       if (!focusable.length) return
       const first = focusable[0]
       const last = focusable[focusable.length - 1]
-      if (event.shiftKey && document.activeElement === first) {
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === containerRef.current)) {
         event.preventDefault()
         last.focus()
       } else if (!event.shiftKey && document.activeElement === last) {
@@ -130,7 +130,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
   }, [menuOpen, close])
 
   const isActive = (path: string) =>
-    pathname === path || (path === "/services" && pathname.startsWith("/services")) || (path === "/tools" && pathname.startsWith("/tools"))
+    pathname === path || (path === "/services" && pathname.startsWith("/services/")) || (path === "/tools" && pathname.startsWith("/tools/"))
 
   const toggleServices = () => {
     setServicesOpen((open) => !open)
@@ -177,6 +177,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
       aria-modal="true"
       aria-label="Main menu"
       aria-hidden={!menuOpen}
+      inert={!menuOpen}
       tabIndex={-1}
       className={cn(
         "abh-mobile-nav fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain bg-background text-foreground xl:hidden outline-none transition-[opacity,transform] duration-300",

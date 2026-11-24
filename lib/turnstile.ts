@@ -47,7 +47,7 @@ export async function verifyTurnstileToken({
     const result = (await response.json()) as TurnstileResponse
     if (!result.success) return { valid: false, reason: "verification-failed" }
     if (result.hostname !== expectedHostname) return { valid: false, reason: "unexpected-hostname" }
-    if (result.action && result.action !== "document_upload") return { valid: false, reason: "unexpected-action" }
+    if (result.action !== "document_upload") return { valid: false, reason: "unexpected-action" }
 
     return { valid: true }
   } catch (error) {

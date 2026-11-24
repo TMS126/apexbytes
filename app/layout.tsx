@@ -84,7 +84,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <LocalBusinessJsonLd nonce={nonce ?? ""} />
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
-          <InstanceGuardProvider><div id="main-content">{children}</div></InstanceGuardProvider>
+          <InstanceGuardProvider><div id="site-shell">{children}</div></InstanceGuardProvider>
           <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 14rem)" }}>
             <FloatingSearchWidget />
           </div>
