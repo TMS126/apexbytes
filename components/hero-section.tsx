@@ -56,7 +56,7 @@ export function HeroSection() {
   const showHolidayBanner = mounted && status?.isHoliday
   const displayCategory = weatherCategory ?? (status ? fallbackCategory(status.greeting) : "clear-day")
   const { Icon: WeatherIcon, color: weatherIconColor } = WEATHER_ICON_MAP[displayCategory]
-  const heroCtaClass = "abh-site-cta group/hero-cta relative inline-flex h-12 w-full items-center justify-center px-7 text-base font-medium focus-visible:outline-none sm:w-[170px]"
+  const heroCtaClass = "abh-site-cta group/hero-cta relative inline-flex h-12 w-full items-center justify-center rounded-full px-7 text-base font-medium focus-visible:outline-none sm:w-[184px]"
 
   return (
     <section
@@ -77,17 +77,16 @@ export function HeroSection() {
           </h1>
           <p className="mt-5 max-w-xl font-heading text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))}
-              className={heroCtaClass}
+            <Link
+              href="/tools/quote"
+              className={`${heroCtaClass} abh-site-cta-primary`}
             >
               Quote
               <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/hero-cta:scale-x-100 group-focus-visible/hero-cta:scale-x-100" />
-            </button>
+            </Link>
             <Link
               href="/services"
-              className={heroCtaClass}
+              className={`${heroCtaClass} abh-site-cta-secondary`}
             >
               Services
               <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/hero-cta:scale-x-100 group-focus-visible/hero-cta:scale-x-100" />

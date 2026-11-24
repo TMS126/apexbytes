@@ -17,7 +17,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ArrowDown, ArrowUp } from "@phosphor-icons/react"
+import { ArrowDown } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { useScrollToBottom } from "@/components/scroll-to-bottom-button"
 
@@ -31,21 +31,15 @@ export function BackToTopButton({
   className?: string
 }) {
   const showScrollToBottom = useScrollToBottom()
+  void visible
   return (
-    <div className={cn("fixed right-4 z-[9990] flex flex-col items-center gap-2 text-foreground", bottomClass, className)}>
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        aria-label="Back to top"
-        className={cn("flex size-10 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-all duration-300 hover:scale-105 hover:text-muted-foreground active:scale-95", visible ? "opacity-100" : "opacity-45")}
-      >
-        <ArrowUp size={20} weight="regular" aria-hidden="true" />
-      </button>
+    <div className={cn("fixed right-4 z-[9990] text-foreground", bottomClass, className)}>
       <button
         onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
         aria-label="Scroll to bottom"
-        className={cn("flex size-10 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-all duration-300 hover:scale-105 hover:text-muted-foreground active:scale-95", showScrollToBottom && !visible ? "opacity-100" : "opacity-45")}
+        className={cn("flex size-11 items-center justify-center rounded-full bg-zinc-950 text-white shadow-lg transition-all duration-300 hover:scale-105 active:scale-95", showScrollToBottom ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none")}
       >
-        <ArrowDown size={20} weight="regular" aria-hidden="true" />
+        <ArrowDown size={20} weight="bold" aria-hidden="true" />
       </button>
     </div>
   )

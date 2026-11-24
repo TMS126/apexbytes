@@ -48,35 +48,34 @@ export function MaintenanceBanner() {
     <div
       role="region"
       aria-label="Site notice"
-      // NEW — lets hooks/use-navbar.ts's useNavContrast exclude this
-      // element the same way it already excludes <header>, so the
-      // banner's own background never gets mistaken for page content
-      // when deciding nav icon contrast.
       data-maintenance-banner="true"
-      className="fixed inset-x-0 top-0 z-[10000] flex items-center justify-center gap-3 border-b border-white/15 px-4 py-2.5 text-sm font-medium shadow-[0_8px_24px_-14px_rgba(0,0,0,0.6)] animate-in fade-in slide-in-from-top-2 duration-500 md:text-[0.92rem]"
-      style={{ color: "var(--maintenance-text)", background: "linear-gradient(180deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 100%)" }}
+      className="fixed bottom-4 left-4 z-[10000] w-[min(22rem,calc(100vw-2rem))] rounded-[14px] px-4 pb-4 pt-5 shadow-[0_18px_46px_-18px_rgba(0,0,0,0.7)] animate-in slide-in-from-bottom-3 fade-in duration-300 sm:bottom-6 sm:left-6"
+      style={{ color: "var(--maintenance-text)", background: "linear-gradient(135deg, var(--maintenance-bg-start) 0%, var(--maintenance-bg-end) 100%)" }}
     >
-      <Wrench size={16} weight="fill" className="shrink-0 hidden sm:block opacity-90" aria-hidden="true" />
-      <p className="flex-1 min-w-0 text-center leading-snug">
+      <button
+        type="button"
+        onClick={handleDismiss}
+        aria-label="Dismiss notice"
+        data-no-lift="true"
+        className="abh-close-chip abh-maintenance-close-chip absolute right-3 top-3 flex size-8 items-center justify-center rounded-full bg-red-600 text-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        <X size={15} weight="bold" />
+      </button>
+      <div className="flex items-start gap-3 pr-9">
+        <Wrench size={18} weight="regular" className="mt-0.5 shrink-0 opacity-90" aria-hidden="true" />
+        <p className="min-w-0 text-left text-sm leading-relaxed">
         {MAINTENANCE_BANNER.message}{" "}
         <a
           href={MAINTENANCE_BANNER.linkHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 font-medium whitespace-nowrap transition-colors"
+          className="whitespace-nowrap font-semibold underline decoration-white/60 underline-offset-2 transition-opacity hover:opacity-80"
           style={{ color: "var(--maintenance-text)" }}
         >
           {MAINTENANCE_BANNER.linkText}
         </a>
-      </p>
-      <button
-        type="button"
-        onClick={handleDismiss}
-        aria-label="Dismiss notice"
-        className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full hover:bg-white/15 active:scale-90 transition-all"
-      >
-        <X size={14} weight="bold" />
-      </button>
+        </p>
+      </div>
     </div>
   )
 }

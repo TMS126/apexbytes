@@ -108,14 +108,14 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
 
   const handleDownload = useCallback(() => {
     const link = document.createElement('a')
-    link.href = '/ApexbytesHub_Pricing_Catalog_v2.pdf'
+    link.href = '/ApexBytesHub_Pricing_Catalog_v2.pdf'
     link.download = 'CAT-ABH-Pricing-Catalog.pdf'
     link.click()
   }, [])
 
   const handleHubDownload = useCallback((hubId: HubId) => {
     const link = document.createElement('a')
-    link.href = `/ApexbytesHub_Pricing_${hubId}.pdf`
+    link.href = `/ApexBytesHub_Pricing_${hubId}.pdf`
     link.download = `CAT-ABH-Pricing-${HUBS[hubId].title.replace(/\s+/g, '-')}.pdf`
     link.click()
   }, [])
@@ -164,7 +164,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
         <Navbar />
         <PageNoticeBell page="pricing" />
 
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
 
           {/* ── Page header ── */}
           <section className="abh-editorial-hero">
@@ -206,7 +206,7 @@ export default function PricingPage({ nonce }: { nonce?: string }) {
                   <div className="no-print flex justify-center">
                     <button
                       onClick={toggleAll}
-                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-medium border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground bg-white dark:bg-zinc-900 shadow-sm transition-all duration-200 active:scale-95 hover:shadow-md"
+                      className="flex items-center gap-1.5 px-4 py-2 rounded-[14px] text-xs font-medium border border-zinc-200 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground bg-white dark:bg-zinc-900 transition-colors duration-200 active:scale-95"
                     >
                       {allOpen ? 'Collapse all' : 'Expand all'}
                     </button>

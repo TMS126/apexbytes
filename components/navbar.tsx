@@ -6,9 +6,11 @@ import { useTheme } from "next-themes"
 import { useRouter, usePathname } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { Sun, Moon, CaretDown } from "@phosphor-icons/react"
+import { Sun, Moon, CaretDown, Calculator, FilePdf, FileText, ClipboardText } from "@phosphor-icons/react"
 import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
-import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
+import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
+import { HUBS } from "@/lib/data"
+import { HubIcon } from "@/components/services-page/shared"
 import { cn } from "@/lib/utils"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 import { useNavVisibility, useMobileMenu, useNavContrast } from "@/hooks/use-navbar"
@@ -110,6 +112,13 @@ export function Navbar() {
 
   const useLightLogoIcon = mounted && (isLogoDarkBehind || theme === "dark")
 
+  const toolNavItems = [
+    { label: "Quote Calc", path: "/tools/quote", Icon: Calculator },
+    { label: "JPG to PDF", path: "/tools/jpg-to-pdf", Icon: FilePdf },
+    { label: "CV Writer", path: "/tools/cv-writing", Icon: FileText },
+    { label: "Intake Form", path: "/tools/intake-form", Icon: ClipboardText },
+  ] as const
+
   if (calculatorOpen) return null
 
   return (
@@ -118,19 +127,27 @@ export function Navbar() {
         data-nav-scrolled={hasScrolled ? "true" : "false"}
         data-nav-visible={navVisible && !menuOpen ? "true" : "false"}
         className={cn(
-          "fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-transparent bg-transparent pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out",
-          !navVisible && !menuOpen ? "xl:-translate-y-full xl:opacity-0" : "translate-y-0 opacity-100",
+          "abh-site-header fixed left-0 right-0 top-[var(--banner-h,0px)] z-[9999] flex flex-col border-b border-transparent bg-transparent pointer-events-none transition-[top,transform,opacity,background-color,backdrop-filter] duration-300 ease-out",
+          !navVisible && !menuOpen ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100",
         )}
       >
+        {activeSubmenu && (
+          <button
+            type="button"
+            aria-label="Close navigation menu"
+            className="fixed inset-0 top-[var(--nav-h)] z-0 bg-black/35 opacity-100 transition-opacity duration-200 pointer-events-auto"
+            onClick={() => setActiveSubmenu(null)}
+          />
+        )}
         <div className="flex h-[var(--nav-h)] items-center justify-center px-5 md:px-10">
           <div className="relative grid w-full max-w-[1320px] grid-cols-[1fr_auto_1fr] items-center gap-4">
             {/* Logo */}
             <button
               type="button"
-              aria-label="ApexbytesHub — go to homepage"
+              aria-label="ApexBytesHub — go to homepage"
               className={cn(
                 glassPillClass,
-                "flex items-center gap-2 cursor-pointer select-none pointer-events-auto group transition-all duration-300 px-1", 
+                "flex items-center gap-2 cursor-pointer select-none pointer-events-auto group bg-transparent hover:bg-transparent active:bg-transparent focus-visible:bg-transparent shadow-none hover:shadow-none transition-all duration-300 px-1",
                 menuOpen || !navVisible
                   ? "opacity-0 -translate-y-20 pointer-events-none"
                   : "opacity-100 translate-y-0 pointer-events-auto"
@@ -140,7 +157,7 @@ export function Navbar() {
             >
               <Image
                 src="/logo.png"
-                alt="ApexbytesHub home"
+                alt="ApexBytesHub home"
                 width={36}
                 height={36}
                 className="relative w-8 h-8 md:w-9 md:h-9 shrink-0 object-contain transition-[filter] duration-300"
@@ -150,10 +167,7 @@ export function Navbar() {
                 className="flex max-w-[200px] items-center overflow-hidden font-sans text-[1.12rem] font-medium leading-none tracking-tight"
               >
                 <span className="whitespace-nowrap transition-colors duration-300 abh-logo-primary">
-                  Apexbytes
-                </span>
-                <span className="whitespace-nowrap transition-colors duration-300 abh-logo-secondary">
-                  Hub
+                  ApexBytesHub
                 </span>
               </div>
             </button>
@@ -164,16 +178,18 @@ export function Navbar() {
                 const submenu = item.id === "services"
                   ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
                   : item.id === "tools"
-                    ? [{ label: "All tools", path: "/tools" }, { label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                    ? [
+                        { label: "Quote Calc", path: "/tools/quote" },
+                        { label: "JPG to PDF", path: "/tools/jpg-to-pdf" },
+                        { label: "CV Writer", path: "/tools/cv-writing" },
+                        { label: "Intake Form", path: "/tools/intake-form" },
+                      ]
                     : null
 
                 return (
                   <div
                     key={item.id}
-                    className={cn(
-                      "group/nav relative flex items-center gap-1 rounded-[14px] transition-[background-color,box-shadow] duration-150 hover:bg-muted/70 focus-within:bg-muted/70",
-                      activeSubmenu === item.id && "bg-muted/70 shadow-sm"
-                    )}
+                    className="group/nav relative flex items-center gap-1"
                     onMouseEnter={() => submenu && openSubmenu(item.id as "services" | "tools")}
                     onMouseLeave={submenu ? closeSubmenuSoon : undefined}
                     onFocus={() => submenu && openSubmenu(item.id as "services" | "tools")}
@@ -181,25 +197,44 @@ export function Navbar() {
                     <Link
                       href={item.path}
                       aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "relative whitespace-nowrap rounded-[14px] px-3 py-2 text-[0.9rem] transition-colors after:absolute after:inset-x-3 after:bottom-0.5 after:h-0.5 after:origin-left after:bg-current after:transition-transform hover:bg-muted hover:text-foreground",
-                        active ? "font-semibold text-foreground after:scale-x-100" : "font-semibold text-muted-foreground after:scale-x-0 hover:after:scale-x-100"
-                      )}
+                      className={cn("abh-link-underline whitespace-nowrap py-3 text-[0.9rem] font-semibold text-muted-foreground hover:text-foreground", active && "text-foreground")}
                     >
                       {item.label}
                     </Link>
                     {submenu && <CaretDown size={12} weight="bold" aria-hidden="true" className={cn("transition-transform", activeSubmenu === item.id && "rotate-180")} />}
                     {submenu && activeSubmenu === item.id && (
                       <div
-                        className="abh-navbar-submenu absolute left-1/2 top-full z-50 mt-0 flex -translate-x-1/2 flex-row items-center gap-2 whitespace-nowrap rounded-[14px] border border-border/60 bg-background p-2 shadow-lg"
+                        className={cn("abh-navbar-submenu absolute left-1/2 top-full z-50 mt-3 -translate-x-1/2 p-5 shadow-xl", item.id === "services" ? "grid w-[min(1120px,calc(100vw-3rem))] grid-cols-5 gap-5" : "flex w-max flex-row items-center gap-6")}
                         onMouseEnter={() => openSubmenu(item.id as "services" | "tools")}
                         onMouseLeave={closeSubmenuSoon}
                       >
-                        {submenu.map((subitem) => (
-                          <Link key={subitem.path} href={subitem.path} aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined} className={cn("rounded-[14px] px-4 py-3 text-[0.95rem] transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold text-foreground" : "text-muted-foreground")}>
-                            {subitem.label}
+                        {item.id === "services" ? HUB_ORDER.map((hubId) => {
+                          const hub = HUBS[hubId]
+                          return (
+                            <div key={hubId} className="min-w-0">
+                              <Link href={hubRouteFor(hubId)} className="abh-link-underline mb-3 inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                                <HubIcon id={hubId} size={20} weight="regular" />
+                                {HUB_NAMES[hubId]}
+                              </Link>
+                              <div className="space-y-1">
+                                {hub.sections.flatMap((section) => section.items.map((service) => ({ ...service, sectionTitle: section.title }))).slice(0, 5).map((service) => (
+                                  <Link key={`${service.sectionTitle}-${service.name}`} href={serviceRouteFor(hubId, service.sectionTitle, service.name)} className="abh-link-underline block w-fit py-1 text-sm text-muted-foreground hover:text-foreground">
+                                    {service.name}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          )
+                        }) : toolNavItems.map((subitem) => {
+                          const selected = pathname === subitem.path || pathname.startsWith(`${subitem.path}/`)
+                          const ToolIcon = subitem.Icon
+                          return (
+                          <Link key={subitem.path} href={subitem.path} aria-current={selected ? "page" : undefined} className={cn("abh-link-underline flex w-fit items-center gap-3 px-1 py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground", selected && "font-semibold text-foreground")}>
+                            <ToolIcon size={20} weight="regular" aria-hidden="true" />
+                            <span>{subitem.label}</span>
                           </Link>
-                        ))}
+                          )
+                        })}
                       </div>
                     )}
                   </div>
@@ -262,11 +297,11 @@ export function Navbar() {
                 {mounted && (theme === "dark" ? <Moon size={19} weight="regular" /> : <Sun size={19} weight="regular" />)}
               </button>
 
-              <div className="order-3 hidden items-center gap-1 rounded-[14px] bg-muted/80 p-1 sm:flex">
-                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:bg-background hover:text-foreground" aria-label="Toggle theme">
+              <div className="order-3 hidden items-center gap-5 xl:flex">
+                <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
                 </button>
-                <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={cn("rounded-[14px] px-4 py-2 text-sm font-medium transition-colors hover:bg-background", pathname === "/contact" ? "bg-background text-brand-blue" : "text-foreground")}>Let&apos;s Talk</Link>
+                <Link href="/tools/quote" aria-current={pathname === "/tools/quote" ? "page" : undefined} className="abh-navbar-quote-cta inline-flex items-center rounded-full px-5 py-2.5 text-sm font-bold transition-transform">Get a quote</Link>
               </div>
             </div>
           </div>

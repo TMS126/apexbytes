@@ -25,11 +25,11 @@ function RecenterButton() {
     <button
       type="button"
       onClick={() => map.flyTo(center, 15, { duration: 0.65 })}
-      className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl  transition-transform hover:-translate-y-0.5 active:scale-95"
-      aria-label="Show ApexbytesHub on the map"
+      className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl  transition-colors active:scale-95"
+      aria-label="Show ApexBytesHub on the map"
     >
       <Target size={16} weight="bold" aria-hidden="true" />
-      <span className="truncate">ApexbytesHub</span>
+      <span className="truncate">ApexBytesHub</span>
     </button>
   )
 }
@@ -58,7 +58,7 @@ function DirectionsButton() {
         <button
           type="button"
           onClick={openDirections}
-          className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl  transition-transform hover:-translate-y-0.5 active:scale-95"
+          className="abh-map-action inline-flex h-12 min-w-0 w-full items-center justify-center gap-2 rounded-[14px] bg-card/95 px-3 text-sm font-semibold text-foreground shadow-xl  transition-colors active:scale-95"
           aria-label={`Open driving directions to ${BIZ.name} in Google Maps`}
         >
           <MapPinLine size={16} weight="bold" aria-hidden="true" />

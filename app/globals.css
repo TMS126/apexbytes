@@ -22,16 +22,18 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-link-underline::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 100%;
+  left: 50%;
+  width: 100%;
   bottom: -0.25rem;
   height: 2px;
   background: var(--line-rule);
-  transition: right 220ms ease-out;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out;
 }
 .abh-link-underline:hover::after,
 .abh-link-underline:focus-visible::after,
-.abh-link-underline[aria-current="page"]::after { right: 0; }
+.abh-link-underline[aria-current="page"]::after { transform: translateX(-50%) scaleX(1); }
 .dark .abh-link-underline::after { background: var(--line-rule); }
 @media (prefers-reduced-motion: reduce) {
   .abh-link-underline::after { transition: none; }
@@ -44,6 +46,26 @@ html[data-scroll-locked] body { overflow: hidden; }
   opacity: 1 !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+}
+
+.abh-closing-chip:hover,
+.abh-closing-chip:focus-visible { background: #dc2626 !important; color: #fff !important; }
+
+/* The maintenance notice is bottom-fixed, so it must never reserve space
+   above the page or push the fixed navbar down. Its dismiss control is a
+   persistent red chip, not a hover-only affordance. */
+.banner-active {
+  --banner-h: 0px;
+  --nav-h: 74px;
+}
+.abh-maintenance-close-chip {
+  background: #dc2626 !important;
+  color: #fff !important;
+}
+.abh-maintenance-close-chip:hover,
+.abh-maintenance-close-chip:focus-visible {
+  background: #b91c1c !important;
+  color: #fff !important;
 }
 
 .dark .abh-gallery-viewer[role="dialog"] {
@@ -67,16 +89,18 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-underline-button::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 100%;
+  left: 50%;
+  width: 100%;
   bottom: .05rem;
   height: 2px;
   background: var(--card-rule);
-  transition: right 220ms ease-out;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out;
 }
 .abh-underline-button:hover::after,
 .abh-underline-button:focus-visible::after,
-.abh-underline-button[aria-current="page"]::after { right: 0; }
+.abh-underline-button[aria-current="page"]::after { transform: translateX(-50%) scaleX(1); }
 
 /* Main search treatment: one theme-aware outer field; the native input stays
    visually unboxed so dark mode never produces a light inner rectangle. */
@@ -96,6 +120,16 @@ html[data-scroll-locked] body { overflow: hidden; }
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
+.abh-expanding-search-shell { border-bottom: 2px solid var(--line-rule-soft); }
+.abh-expanding-search-shell:focus-within { border-bottom-color: var(--line-rule); }
+.abh-expanding-search-shell .abh-search-input,
+.abh-expanding-search-shell .abh-search-input:focus,
+.abh-expanding-search-shell .abh-search-input:focus-visible {
+  border: 0 !important;
+  border-bottom: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 .abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 3px 0 -1px var(--line-rule); }
 .abh-reference-search input,
 .abh-search-input {
@@ -107,8 +141,8 @@ html[data-scroll-locked] body { overflow: hidden; }
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
-  color: var(--foreground);
-  font-size: 1.125rem !important;
+  color: var(--muted-foreground);
+  font-size: 1.37rem !important;
   font-weight: 400;
   line-height: 1.5;
   outline: none !important;
@@ -139,6 +173,18 @@ textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
 .dark .abh-reference-search-results .abh-search-muted { color: #a1a1aa; }
 @media (prefers-reduced-motion: reduce) { .abh-reference-search, .abh-reference-search-row { transition: none; } }
 
+/* Shared FAQ language: one divided list, one trigger, one answer surface. */
+.abh-faq-list { margin-inline: .5rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.abh-faq-item + .abh-faq-item { border-top: 1px solid var(--border); }
+.abh-faq-trigger { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; text-align: left; color: var(--foreground); transition: color 160ms ease; }
+.abh-faq-trigger:hover, .abh-faq-trigger:focus-visible { color: var(--line-rule); }
+.abh-faq-trigger:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+.abh-faq-question { display: flex; min-width: 0; align-items: flex-start; gap: .75rem; font-size: 1.15rem; font-weight: 600; line-height: 1.35; }
+.abh-faq-number { flex: 0 0 auto; color: var(--muted-foreground); font-size: .72rem; font-weight: 500; letter-spacing: .18em; }
+.abh-faq-answer { margin: 0 .25rem 1rem; border-radius: 14px; background: color-mix(in srgb, var(--muted) 50%, transparent); padding: .75rem 1rem; color: color-mix(in srgb, var(--foreground) 82%, transparent); font-size: 1rem; line-height: 1.65; white-space: pre-wrap; }
+@media (min-width: 768px) { .abh-faq-list { margin-inline: 1.5rem; } .abh-faq-answer { margin-inline: 2rem; } }
+@media (prefers-reduced-motion: reduce) { .abh-faq-trigger { transition: none; } }
+
 /* Site-wide text hierarchy: neutral copy stays readable and consistent;
    brand colors remain reserved for links, actions, and meaningful status. */
 [class~="text-zinc-900"], [class~="text-zinc-800"], [class~="text-slate-900"], [class~="text-slate-800"], [class~="text-gray-900"], [class~="text-gray-800"] { color: var(--foreground) !important; }
@@ -146,6 +192,12 @@ textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
 [class~="text-zinc-500"], [class~="text-slate-500"], [class~="text-gray-500"] { color: var(--muted-foreground) !important; }
 [class~="text-blue-900"], [class~="text-blue-800"], [class~="text-blue-700"], [class~="text-blue-600"], [class~="text-blue-500"] { color: var(--link-foreground) !important; }
 [class~="text-orange-900"], [class~="text-orange-800"], [class~="text-orange-700"], [class~="text-orange-600"], [class~="text-orange-500"] { color: var(--brand-orange-text) !important; }
+[class~="text-green-900"], [class~="text-green-800"], [class~="text-green-700"], [class~="text-green-600"], [class~="text-green-500"], [class~="text-green-400"] { color: var(--brand-green-text) !important; }
+.dark [class~="text-green-900"], .dark [class~="text-green-800"], .dark [class~="text-green-700"], .dark [class~="text-green-600"], .dark [class~="text-green-500"], .dark [class~="text-green-400"] { color: var(--brand-green-text) !important; }
+[class~="text-emerald-900"], [class~="text-emerald-800"], [class~="text-emerald-700"], [class~="text-emerald-600"], [class~="text-emerald-500"], [class~="text-emerald-400"] { color: var(--brand-green-text) !important; }
+.dark [class~="text-emerald-900"], .dark [class~="text-emerald-800"], .dark [class~="text-emerald-700"], .dark [class~="text-emerald-600"], .dark [class~="text-emerald-500"], .dark [class~="text-emerald-400"] { color: var(--brand-green-text) !important; }
+[class~="text-red-900"], [class~="text-red-800"], [class~="text-red-700"], [class~="text-red-600"], [class~="text-red-500"], [class~="text-red-400"], [class~="text-red-300"] { color: var(--brand-error-text) !important; }
+.dark [class~="text-red-900"], .dark [class~="text-red-800"], .dark [class~="text-red-700"], .dark [class~="text-red-600"], .dark [class~="text-red-500"], .dark [class~="text-red-400"], .dark [class~="text-red-300"] { color: var(--brand-error-text) !important; }
 
 .services-page-icon { color: var(--neutral-icon-light); }
 .dark .services-page-icon { color: var(--neutral-icon-dark); }
@@ -156,21 +208,46 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   .abh-pill-action { border-radius: 9999px !important; }
   .abh-circle-button { border: 1px solid var(--border) !important; border-radius: 9999px !important; }
 
+/* One box radius across the site. Intentional pills/circles use rounded-full
+   and are deliberately excluded from this normalization rule. */
+[class~="rounded-sm"], [class~="rounded-md"], [class~="rounded-lg"],
+[class~="rounded-xl"], [class~="rounded-2xl"], [class~="rounded-3xl"],
+[class~="rounded-[2px]"], [class~="rounded-[4px]"], [class~="rounded-[6px]"],
+[class~="rounded-[8px]"], [class~="rounded-[10px]"], [class~="rounded-[12px]"],
+[class~="rounded-[16px]"], [class~="rounded-[18px]"], [class~="rounded-[22px]"] {
+  border-radius: 14px !important;
+}
+
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Canonical ApexBytesHub palette. Legacy tokens below alias these values. */
+  --palette-page: #FFFFFF;
+  --palette-surface: #F4F4F2;
+  --palette-ink: #25283E;
+  --palette-muted: #6B6B6B;
+  --palette-blue: #1E6FA8;
+  --palette-blue-dark: #0F3F66;
+  --palette-orange: #FA5215;
+  --palette-orange-dark: #B06225;
+  --palette-whatsapp-surface: #EAF8D5;
+  --palette-whatsapp: #178540;
+  --mobile-service-pill: #DCEBF5;
+  --mobile-service-pill-active: #A9D6F2;
+  --mobile-service-pill-text: #0F3F66;
+  --mobile-whatsapp-surface: var(--palette-whatsapp-surface);
   --brand-green: #4A8011;
-  --brand-orange: #FA5215;
+  --brand-orange: var(--palette-orange);
   --brand-light-blue: #A9D6F2;
   --brand-light-green: #CDEB9F;
   --brand-light-orange: #F9D1B0;
 
-  --brand-blue: #1E6FA8;
+  --brand-blue: var(--palette-blue);
   --brand-blue-mid: #15537D;
-  --brand-blue-dark: #0F3F66;
+  --brand-blue-dark: var(--palette-blue-dark);
   --brand-green-dark: #35600D;
-  --brand-orange-dark: #B06225;
+  --brand-orange-dark: var(--palette-orange-dark);
   --brand-teal: #3E7473;
   --brand-teal-dark: #2C5E60;
   --brand-teal-light: #D3E9E5;
@@ -290,7 +367,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
   --on-brand-blue: #FFFFFF;
   --on-brand-green: #FFFFFF;
-  --on-brand-orange: #FFFFFF;
+  /* Signal orange with white is only 3.34:1; deep ink keeps normal CTA labels AA compliant. */
+  --on-brand-orange: #111827;
   --on-brand-teal: #FFFFFF;
   --on-whatsapp: var(--brand-whatsapp-text);
   --on-whatsapp-accessible: #FFFFFF;
@@ -305,9 +383,9 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --footer-bg: #F4F4F1;
   --shadow: none;
   --card-border: transparent;
-  --background: #FFFFFF;
-  --foreground: #171717;
-  --card: #F6F6F5;
+  --background: var(--palette-page);
+  --foreground: var(--palette-ink);
+  --card: var(--palette-surface);
   --card-foreground: #171717;
   --popover: #FFFFFF;
   --popover-foreground: #171717;
@@ -356,12 +434,11 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --on-hub-tech: #FFFFFF;
 }
 
-.banner-active {
-  --banner-h: 44px;
-  --nav-h: 118px;
-}
-
 .dark {
+  --mobile-service-pill: #2D314B;
+  --mobile-service-pill-active: #0F3F66;
+  --mobile-service-pill-text: #D9EEFA;
+  --mobile-whatsapp-surface: #253A27;
   --brand-blue: #A9D6F2;
   --brand-blue-mid: #D9EEFA;
   --brand-blue-dark: #EEF8FD;
@@ -553,7 +630,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
 @theme inline {
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-poppins), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-manrope), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   --color-background: var(--background);
@@ -685,7 +762,7 @@ body {
   }
 
 h1, h2, h3, h4, h5, h6, .abh-heading {
-  font-family: var(--font-poppins), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-manrope), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
 .abh-popup-title { font-size: 1.18rem; line-height: 1.3; font-weight: 600; }
 .abh-popup-body { font-size: 1rem; line-height: 1.65; }
@@ -719,7 +796,7 @@ code, pre, kbd, samp, .abh-mono {
   outline-offset: 3px;
   border-radius: var(--radius);
 }
-.dark :focus-visible { outline-color: var(--brand-light-blue); }
+.dark :focus-visible { outline-color: var(--brand-orange); }
 
 /* Acrylic is deliberately limited to the desktop submenu. */
 :root {
@@ -759,13 +836,18 @@ input, textarea, select {
   background-color: transparent !important;
   border: 0 !important;
   border-bottom: 1px solid var(--line-rule-soft) !important;
-  border-radius: 0 !important;
+  border-radius: 14px !important;
   box-shadow: none !important;
 }
 input:focus, textarea:focus, select:focus,
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  border-bottom-color: var(--line-rule) !important;
-  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+  border-bottom-color: transparent !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-blue) 30%, transparent) !important;
+}
+.dark input:focus, .dark textarea:focus, .dark select:focus,
+.dark input:focus-visible, .dark textarea:focus-visible, .dark select:focus-visible {
+  border-bottom-color: transparent !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-orange) 34%, transparent) !important;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .abh-navbar-submenu {
@@ -803,8 +885,6 @@ input:focus, input:focus-visible,
 textarea:focus, textarea:focus-visible,
 select:focus, select:focus-visible {
   outline: none !important;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
 }
 
 button, a, [role="button"] {
@@ -851,6 +931,19 @@ button[aria-label^="Close"]:hover {
 }
 
 .animate-marquee { animation: marquee-track 35s linear infinite; }
+.abh-home-marquee::before,
+.abh-home-marquee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(1.5rem, 9vw, 9rem);
+  pointer-events: none;
+  background: linear-gradient(to right, var(--background), transparent);
+}
+.abh-home-marquee::before { left: 0; }
+.abh-home-marquee::after { right: 0; transform: scaleX(-1); }
 .abh-cta-pulse { animation: abh-cta-pulse 1.8s ease-out 2; }
 .abh-inquire-glow-active { animation: abh-inquire-glow 2.4s ease-in-out 1; }
 
@@ -890,15 +983,22 @@ button[aria-label^="Close"]:hover {
 
   .abh-card:is(a, button, [role="button"], [tabindex="0"]):hover,
   .abh-card:is(a, button, [role="button"], [tabindex="0"]):focus-visible {
-    box-shadow: var(--shadow-card-lift) !important;
+    box-shadow: none !important;
   }
 
   .abh-icon-chip {
     border: 0 !important;
-    border-radius: 0 !important;
+    border-radius: 14px !important;
     background: transparent !important;
     box-shadow: none !important;
   }
+
+  .abh-tool-icon {
+    border-radius: 14px;
+    background: transparent;
+  }
+  .group:hover .abh-tool-icon,
+  .group:focus-visible .abh-tool-icon { background: var(--muted); }
 
   .abh-nav-control {
     border: 0 !important;
@@ -944,6 +1044,15 @@ button[aria-label^="Close"]:hover {
   .abh-site-cta:focus-visible { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
   .dark .abh-site-cta:hover,
   .dark .abh-site-cta:focus-visible { background: var(--brand-orange); color: #171717; }
+  .abh-site-cta-primary { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
+  .abh-site-cta-primary:hover,
+  .abh-site-cta-primary:focus-visible { background: var(--brand-orange); color: #fff; }
+  .dark .abh-site-cta-primary { background: var(--brand-orange); color: #171717; }
+  .dark .abh-site-cta-primary:hover,
+  .dark .abh-site-cta-primary:focus-visible { background: var(--brand-orange); color: #fff; }
+  .abh-site-cta-secondary { background: transparent; color: var(--foreground); box-shadow: inset 0 -2px 0 var(--line-rule); }
+  .abh-site-cta-secondary:hover,
+  .abh-site-cta-secondary:focus-visible { background: color-mix(in srgb, var(--line-rule) 10%, transparent); color: var(--foreground); }
   @media (prefers-reduced-motion: reduce) { .abh-site-cta { transition: none; } }
 
   .abh-editorial-hero.abh-service-detail-hero {
@@ -974,7 +1083,7 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-home-title {
-    font-family: var(--font-poppins), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-manrope), var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
     font-size: clamp(2.35rem, 4.2vw, 3.75rem);
     font-weight: 400;
     letter-spacing: -0.045em;
@@ -1059,7 +1168,7 @@ button[aria-label^="Close"]:hover {
   }
 
   @media (max-width: 767px) {
-    .contact-editorial-scroll-cue { bottom: 6rem !important; }
+    .contact-editorial-scroll-cue { bottom: 7.25rem !important; right: 1rem !important; left: auto !important; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -1160,7 +1269,7 @@ button[aria-label^="Close"]:hover {
   [tabindex="0"].abh-shadow-tile:hover,
   a.abh-shadow-tile:hover,
   button.abh-shadow-tile:hover {
-    box-shadow: var(--shadow-card-lift);
+    box-shadow: none;
   }
 
   .abh-shadow-modal { box-shadow: var(--shadow-modal); }
@@ -1183,13 +1292,13 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-shadow-badge {
-    box-shadow: 0 1px 3px 0 rgba(15, 63, 102, 0.1), 0 1px 2px -1px rgba(15, 63, 102, 0.1);
+    box-shadow: none;
   }
   .abh-shadow-icon-inset {
-    box-shadow: inset 0 2px 4px 0 rgba(15, 63, 102, 0.05);
+    box-shadow: none;
   }
   .abh-shadow-handle {
-    box-shadow: 0 20px 25px -5px rgba(15, 63, 102, 0.1), 0 8px 10px -6px rgba(15, 63, 102, 0.1);
+    box-shadow: none;
   }
 
   .abh-line-left {
@@ -1390,8 +1499,8 @@ button[aria-label^="Close"]:hover {
 
 /* Every button starts as a restrained 14px control; interaction styles may
    deliberately turn it into a pill when the control is hovered or pressed. */
-button:not(:hover):not(:focus-visible):not(:active),
-[role="button"]:not(:hover):not(:focus-visible):not(:active) {
+button:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active),
+[role="button"]:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active) {
   border-radius: 14px !important;
 }
 
@@ -1468,6 +1577,16 @@ button:not(:hover):not(:focus-visible):not(:active),
   box-shadow: 0 8px 16px -10px color-mix(in srgb, var(--brand-orange) 75%, transparent);
 }
 
+/* Calculator bulk marks stay readable on both calculator surfaces. */
+.abh-calc-bulk-label {
+  background: #DCEBF5;
+  color: #0F3F66;
+}
+.dark .abh-calc-bulk-label {
+  background: #F1FAFF;
+  color: #25283E;
+}
+
 .abh-press {
   transition: transform 120ms ease-out, opacity 120ms ease-out;
 }
@@ -1492,15 +1611,16 @@ button:not(:hover):not(:focus-visible):not(:active),
   border-color: var(--pill-hover-color) !important;
 }
 
-/* ApexbytesHub tactile interface layer: soft acrylic, paper grain, and quiet depth. */
+/* ApexBytesHub tactile interface layer: soft acrylic, paper grain, and quiet depth. */
 :root {
   --ui-radius-xs: 12px;
   --ui-radius-sm: 18px;
   --ui-radius-md: 26px;
   --ui-radius-lg: 34px;
-  --ui-shadow-soft: 0 20px 50px -30px color-mix(in srgb, var(--foreground) 34%, transparent), 0 8px 20px -16px color-mix(in srgb, var(--foreground) 18%, transparent);
-  --ui-shadow-hover: 0 28px 64px -30px color-mix(in srgb, var(--foreground) 42%, transparent), 0 12px 24px -16px color-mix(in srgb, var(--foreground) 24%, transparent);
-  --ui-shadow-float: 0 32px 80px -34px color-mix(in srgb, var(--foreground) 52%, transparent), 0 10px 28px -18px color-mix(in srgb, var(--foreground) 24%, transparent);
+  --ui-shadow-popup: 0 18px 28px -18px color-mix(in srgb, var(--foreground) 34%, transparent), 0 4px 8px -5px color-mix(in srgb, var(--foreground) 16%, transparent);
+  --ui-shadow-soft: var(--ui-shadow-popup);
+  --ui-shadow-hover: var(--ui-shadow-popup);
+  --ui-shadow-float: var(--ui-shadow-popup);
   --ui-highlight: rgba(255, 255, 255, 0.58);
   --ui-grain: rgba(15, 63, 102, 0.045);
 }
@@ -1543,33 +1663,28 @@ body::before {
   border: 0 !important;
   border-color: transparent !important;
   border-radius: var(--ui-radius-md) !important;
-  box-shadow: var(--ui-shadow-soft) !important;
+  box-shadow: var(--ui-shadow-popup) !important;
   background-image: linear-gradient(145deg, color-mix(in srgb, var(--ui-highlight) 70%, transparent), transparent 48%) !important;
   transition: box-shadow 240ms ease, transform 240ms ease, background-color 240ms ease;
 }
 .glass:hover,
 .abh-navbar-submenu:hover {
-  box-shadow: var(--ui-shadow-hover) !important;
+  box-shadow: var(--ui-shadow-popup) !important;
 }
-.abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-float) !important; }
+.abh-navbar-submenu { border-radius: var(--ui-radius-sm) !important; box-shadow: var(--ui-shadow-popup) !important; }
 
 /* Buttons feel like physical controls rather than flat links. */
-button,
-[role="button"],
+.abh-site-cta { border-radius: 9999px !important; }
+button:not(.abh-site-cta),
+[role="button"]:not(.abh-site-cta),
 .abh-btn-primary,
 .abh-btn-cta,
 .abh-line-cta,
 .abh-wa-btn {
   border: 0 !important;
   border-radius: var(--ui-radius-sm) !important;
-  transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+  transition: box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
 }
-button:hover:not(:disabled),
-[role="button"]:hover,
-.abh-btn-primary:hover,
-.abh-btn-cta:hover,
-.abh-line-cta:hover,
-.abh-wa-btn:hover { transform: translateY(-2px); }
 button:active:not(:disabled),
 [role="button"]:active,
 .abh-btn-primary:active,
@@ -1590,11 +1705,48 @@ button:active:not(:disabled),
 input, textarea, select {
   border: 0 !important;
   border-bottom: 2px solid var(--line-rule-soft) !important;
-  border-radius: 0 !important;
+  border-radius: 14px !important;
   background: transparent !important;
   box-shadow: none !important;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
+.abh-form-control,
+.abh-form-control:focus,
+.abh-form-control:focus-visible { border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.abh-form-control { border: 0 !important; border-bottom: 1px solid var(--line-rule-soft) !important; color: var(--foreground); }
+.abh-form-control:focus, .abh-form-control:focus-visible { border-bottom-color: transparent !important; outline: none !important; }
+input::placeholder, textarea::placeholder, select:invalid {
+  color: var(--muted-foreground) !important;
+  opacity: .72 !important;
+}
+
+/* The CV editor is intentionally a focused document workspace. Its fields
+   use the bordered paper-editor treatment from the tool reference while the
+   rest of ApexBytesHub keeps the underline-only field language. */
+.cv-editor-field input,
+.cv-editor-field textarea {
+  width: 100%;
+  border: 1px solid #d7dce3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  padding: .75rem .9rem;
+  color: #172033;
+  box-shadow: 0 1px 2px rgb(15 23 42 / .04) !important;
+}
+.cv-editor-field input:focus,
+.cv-editor-field textarea:focus,
+.cv-editor-field input:focus-visible,
+.cv-editor-field textarea:focus-visible {
+  border-color: #7aa9eb !important;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / .12) !important;
+}
+.cv-editor-field input::placeholder,
+.cv-editor-field textarea::placeholder { color: #8993a3 !important; opacity: 1 !important; }
+.cv-editor-field-valid input,
+.cv-editor-field-valid textarea,
+.cv-editor-field-valid select,
+.intake-control-valid { border-bottom-color: var(--color-success) !important; }
+.cv-paper { min-height: 740px; }
 input:focus, textarea:focus, select:focus,
   input:focus-visible, textarea:focus-visible, select:focus-visible {
     outline: none !important;
@@ -1613,14 +1765,247 @@ input:focus, textarea:focus, select:focus,
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  transition: transform 150ms ease, filter 150ms ease, color 150ms ease;
+  color: var(--foreground);
+  transition: filter 150ms ease, color 150ms ease;
 }
+.abh-footer-icon-link:focus-visible { outline: 2px solid var(--ring); outline-offset: 4px; }
 .abh-footer-icon-link:hover,
 .abh-footer-icon-link:focus-visible {
-  transform: translateY(-2px);
   filter: drop-shadow(0 5px 8px color-mix(in srgb, currentColor 30%, transparent));
 }
 
 @media (prefers-reduced-motion: reduce) {
   button:hover:not(:disabled), [role="button"]:hover, .abh-btn-primary:hover, .abh-btn-cta:hover, .abh-line-cta:hover, .abh-wa-btn:hover { transform: none; }
+}
+
+/* Minimal navigation language: translucent surfaces, no hover pills, and a
+   single centered underline motion shared by every text link. */
+.abh-site-header[data-nav-scrolled="true"],
+.abh-site-header[data-nav-visible="true"] {
+  background: color-mix(in srgb, var(--background) 76%, transparent) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  backdrop-filter: blur(14px) saturate(135%);
+  box-shadow: 0 12px 36px -28px color-mix(in srgb, var(--foreground) 45%, transparent);
+}
+.abh-mega-menu {
+  border: 0 !important;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--background) 88%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+.abh-mega-backdrop { background: rgb(0 0 0 / 0.34); }
+.abh-navbar-quote-cta {
+  background: var(--brand-orange) !important;
+  color: var(--on-brand-orange) !important;
+  box-shadow: var(--shadow-action-brand);
+}
+.dark .abh-navbar-quote-cta {
+  background: var(--brand-blue) !important;
+  color: var(--on-brand-blue) !important;
+}
+.dark .abh-navbar-quote-cta:hover,
+.dark .abh-navbar-quote-cta:focus-visible {
+  background: var(--brand-blue-mid) !important;
+  color: #25283E !important;
+}
+.abh-navbar-quote-cta:hover,
+.abh-navbar-quote-cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-shadow-popup);
+  color: var(--on-brand-blue) !important;
+}
+.abh-navbar-quote-cta:focus-visible {
+  outline: 3px solid var(--foreground);
+  outline-offset: 3px;
+}
+.abh-mobile-nav {
+  background: color-mix(in srgb, var(--background) 76%, transparent) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  backdrop-filter: blur(14px) saturate(135%);
+  box-shadow: 0 12px 36px -28px color-mix(in srgb, var(--foreground) 45%, transparent);
+}
+.abh-bulk-label {
+  background: var(--brand-blue) !important;
+  color: #fff !important;
+}
+.dark .abh-bulk-label {
+  background: var(--brand-orange) !important;
+  color: #fff !important;
+}
+
+.abh-center-line {
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out, opacity 220ms ease-out, width 220ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .abh-center-line { transition: none; }
+}
+
+/* Buttons and button-like controls get one restrained, consistent lift. */
+button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):hover,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):hover,
+.abh-btn-primary:hover,
+.abh-btn-cta:hover,
+.abh-site-cta:hover,
+.abh-wa-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-shadow-popup) !important;
+}
+button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visible,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent), var(--ui-shadow-popup) !important;
+}
+
+@media (max-width: 1279px) {
+  .abh-site-header[data-nav-visible="true"] {
+    background: color-mix(in srgb, var(--background) 84%, transparent) !important;
+  }
+}
+
+
+/* Final form rule: inputs remain transparent and underline-only, including focus. */
+:where(input, textarea, select):focus,
+:where(input, textarea, select):focus-visible {
+  outline: none !important;
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+}
+
+/* CV writer workspace: the document stays white, while its editor chrome follows the active theme. */
+.cv-editor-card {
+  background: var(--card);
+  color: var(--card-foreground);
+}
+.cv-preview-panel { background: var(--muted); color: var(--muted-foreground); }
+.cv-step-muted { background: var(--muted); color: var(--muted-foreground); }
+.cv-step-active { color: var(--brand-orange-text); }
+.cv-step-line { background: var(--border); }
+.cv-secondary-button { background: var(--muted); color: var(--foreground); }
+.cv-count-label { color: var(--muted-foreground); font-size: .8rem; }
+.cv-role-panel { border-radius: 14px; background: color-mix(in srgb, var(--muted) 62%, transparent); padding: 1rem; }
+.cv-remove-role { background: transparent !important; color: var(--destructive); font-size: .8rem; font-weight: 600; padding: .25rem 0; }
+.tool-date-input { color-scheme: light; }
+.dark .tool-date-input { color-scheme: dark; }
+.cv-editor-field select {
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid #d7dce3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  padding: .75rem .9rem;
+  color: #172033;
+  box-shadow: 0 1px 2px rgb(15 23 42 / .04) !important;
+}
+.cv-editor-field select:focus-visible { border-color: #7aa9eb !important; box-shadow: 0 0 0 3px rgb(37 99 235 / .12) !important; }
+.dark .cv-editor-card { background: var(--card); }
+.dark .cv-editor-field input,
+.dark .cv-editor-field textarea,
+.dark .cv-editor-field select {
+  border-color: color-mix(in srgb, var(--foreground) 22%, transparent) !important;
+  background: color-mix(in srgb, var(--background) 70%, var(--card)) !important;
+  color: var(--foreground);
+  box-shadow: none !important;
+}
+.dark .cv-editor-field input::placeholder,
+.dark .cv-editor-field textarea::placeholder { color: var(--muted-foreground) !important; }
+.dark .cv-editor-field input:focus,
+.dark .cv-editor-field textarea:focus,
+.dark .cv-editor-field select:focus,
+.dark .cv-editor-field input:focus-visible,
+.dark .cv-editor-field textarea:focus-visible,
+.dark .cv-editor-field select:focus-visible { border-color: var(--brand-orange) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-orange) 22%, transparent) !important; }
+.cv-paper .text-slate-900 { color: #172033 !important; }
+.cv-paper .text-slate-600 { color: #536070 !important; }
+.cv-paper .text-slate-500 { color: #687384 !important; }
+.cv-paper-heading { color: #687384; font-size: .65rem; font-weight: 700; letter-spacing: .2em; }
+
+/* SARS intake document treatment: the online form follows the supplied paper
+   pack instead of the rounded-card styling used by the other tools. */
+.intake-document {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  box-shadow: 0 18px 42px -30px rgb(15 23 42 / .55);
+}
+.intake-document-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 2px solid var(--foreground);
+  padding-bottom: .8rem;
+}
+.intake-brand-line { font-family: var(--font-manrope), sans-serif; font-size: .78rem; font-weight: 800; letter-spacing: .26em; line-height: 1.2; }
+.intake-brand-tagline { margin-top: .25rem; color: var(--muted-foreground); font-size: .62rem; font-weight: 700; letter-spacing: .12em; }
+.intake-contact-line { color: var(--muted-foreground); font-size: .7rem; text-align: right; }
+.intake-document-title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--border); padding: 1.1rem 0 1rem; }
+.intake-document-title { font-family: var(--font-manrope), sans-serif; font-size: clamp(1.1rem, 2.5vw, 1.55rem); font-weight: 700; line-height: 1.2; }
+.intake-document-note { margin-top: .35rem; color: var(--muted-foreground); font-size: .75rem; }
+.intake-service-picker { display: grid; min-width: min(100%, 18rem); gap: .35rem; color: var(--muted-foreground); font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.intake-service-picker select { min-height: 2.6rem; border: 1px solid var(--border) !important; border-radius: 0 !important; background: var(--background) !important; padding: .55rem .65rem; color: var(--foreground); font-size: .82rem; text-transform: none; letter-spacing: normal; }
+.intake-form-grid { display: grid; gap: 1.15rem 1.2rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.intake-selected-service { border-left: 3px solid var(--line-rule); background: color-mix(in srgb, var(--muted) 44%, transparent); padding: .65rem .8rem; color: var(--muted-foreground); font-size: .78rem; }
+.intake-selected-service strong { color: var(--foreground); }
+.intake-section-heading { margin-top: .85rem; border-top: 2px solid var(--foreground); border-bottom: 1px solid var(--border); padding: .55rem 0; color: var(--foreground); font-family: var(--font-manrope), sans-serif; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.intake-authorisation { border-left: 2px solid var(--border); padding: .7rem .85rem; color: var(--muted-foreground); font-size: .76rem; line-height: 1.55; }
+.intake-field-label { display: block; margin-bottom: .35rem; color: var(--foreground); font-size: .68rem; font-weight: 800; letter-spacing: .045em; line-height: 1.3; text-transform: uppercase; }
+.intake-control { min-height: 2.5rem; border: 0 !important; border-bottom: 1px solid var(--foreground) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.intake-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem .75rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: .55rem 0; }
+.intake-choice-row { display: flex; min-height: 2.1rem; align-items: center; gap: .55rem; padding: .2rem .35rem; color: var(--foreground); font-size: .78rem; line-height: 1.3; }
+.intake-choice-row:hover { background: color-mix(in srgb, var(--muted) 55%, transparent); }
+.intake-choice-row input { width: 1rem; height: 1rem; flex: 0 0 auto; border: 0 !important; box-shadow: none !important; accent-color: var(--brand-orange); }
+
+/* Final field treatment: a straight neutral rule at rest; the rule disappears
+   on focus and is replaced by one theme-aware accent ring. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+textarea, select {
+  border: 0 !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 1px solid var(--line-rule-soft) !important;
+  border-left: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus-visible,
+textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
+  border-bottom-color: transparent !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  outline-offset: 0;
+  box-shadow: none !important;
+}
+
+.abh-reference-search,
+.abh-reference-search:focus-within {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.abh-reference-search input,
+.abh-reference-search input:focus,
+.abh-reference-search input:focus-visible,
+.abh-search-input,
+.abh-search-input:focus,
+.abh-search-input:focus-visible {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.intake-review-button { grid-column: 1 / -1; justify-self: center; margin-top: .5rem; }
+@media (max-width: 640px) {
+  .intake-document-header, .intake-document-title-row { align-items: flex-start; flex-direction: column; }
+  .intake-contact-line { text-align: left; }
+  .intake-service-picker { width: 100%; }
+  .intake-form-grid { grid-template-columns: 1fr; }
+  .intake-choice-grid { grid-template-columns: 1fr; }
+  .intake-review-button { width: 100%; }
 }

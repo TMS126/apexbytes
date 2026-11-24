@@ -13,18 +13,20 @@ import { CartItem, getDisplayName, getEffectiveRate, getBulkHint, getBulkProgres
 
 interface CartItemCardProps {
   item: CartItem
+  embedded?: boolean
   accent: string
   isHighlighted: boolean
   cardRef?: (el: HTMLDivElement | null) => void
   onRemove: (id: string) => void
+  onSetQty?: (id: string, qty: number) => void
   onClickStep: (id: string, delta: number) => void
   onPressStart: (id: string, delta: number) => void
   onPressEnd: (id: string) => void
 }
 
 export function CartItemCard({
-  item, accent, isHighlighted, cardRef,
-  onRemove, onClickStep, onPressStart, onPressEnd,
+  item, embedded = false, accent, isHighlighted, cardRef,
+  onRemove, onSetQty, onClickStep, onPressStart, onPressEnd,
 }: CartItemCardProps) {
   const qty = item.qty || 1
   const effRate = getEffectiveRate(item.id, item.name, qty, item.unitPrice)
@@ -40,16 +42,17 @@ export function CartItemCard({
       ref={cardRef}
       role="listitem"
       className={cn(
-        "shrink-0 w-[250px] snap-start rounded-[14px] border border-border/70 bg-card p-3.5 space-y-2 transition-[border-color,background-color] duration-200 ease-out motion-reduce:transition-none",
+        "relative shrink-0 bg-card p-3.5 space-y-2 transition-[background-color] duration-200 ease-out motion-reduce:transition-none",
+        embedded ? "w-full rounded-none border-b border-border/70 md:grid md:grid-cols-[minmax(0,2.2fr)_minmax(6rem,1fr)_minmax(8rem,1fr)_minmax(6rem,.8fr)] md:items-center md:gap-4 md:space-y-0 md:px-4" : "w-[250px] rounded-[14px] snap-start",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
-      <div className="flex items-start justify-between gap-2">
+      <div className={cn("flex items-start justify-between gap-2", embedded && "md:col-start-1")}>
         <div className="min-w-0">
-          <p className="text-base font-medium text-zinc-800 dark:text-zinc-200 leading-tight">{displayName}</p>
+          <p className="flex items-start gap-1.5 break-words text-base font-medium leading-tight text-zinc-800 dark:text-zinc-200"><span aria-hidden="true" className="mt-1 size-2 shrink-0 rounded-full" style={{ backgroundColor: accent }} />{displayName}</p>
           <p className="text-sm font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
         <button
@@ -61,12 +64,12 @@ export function CartItemCard({
         </button>
       </div>
 
-      <div className="flex items-center gap-2 text-base">
+      <div className={cn("flex items-center gap-2 text-base", embedded && "md:col-start-2 md:block md:text-sm")}>
         {discounted && <span className="text-red-400 line-through">R{item.unitPrice}{item.unit ? `/${item.unit}` : ""}</span>}
         <span className="font-medium text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
       </div>
 
-      <div className="flex items-center justify-between gap-3">
+      <div className={cn("flex items-center justify-between gap-3", embedded && "md:col-start-3 md:justify-self-start")}>
         <div className="flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10">
           <button
             onClick={() => onClickStep(item.id, -1)}
@@ -79,7 +82,15 @@ export function CartItemCard({
           >
             <Minus size={13} weight="bold" aria-hidden="true" />
           </button>
-          <span className="text-base font-medium w-6 text-center text-zinc-800 dark:text-zinc-100" aria-label={`Quantity ${qty}`}>{qty}</span>
+          <input
+            aria-label={`Quantity for ${displayName}`}
+            inputMode="numeric"
+            type="number"
+            min={1}
+            value={qty}
+            onChange={(event) => onSetQty?.(item.id, Math.max(1, Number(event.target.value) || 1))}
+            className="abh-quote-quantity-input w-8 border-0 border-b border-foreground/20 bg-transparent p-0 text-center text-base font-medium text-zinc-800 outline-none dark:text-zinc-100"
+          />
           <button
             onClick={() => onClickStep(item.id, 1)}
             onPointerDown={() => onPressStart(item.id, 1)}
@@ -92,10 +103,13 @@ export function CartItemCard({
             <Plus size={13} weight="bold" aria-hidden="true" />
           </button>
         </div>
-        <span className="text-base font-medium text-zinc-900 dark:text-zinc-50">R{lineTotal}</span>
+        <span className={cn("text-base font-medium text-zinc-900 dark:text-zinc-50", embedded && "md:hidden")}>R{lineTotal}</span>
       </div>
 
-      {progress?.showDots && (
+      {embedded && <span className="hidden text-right text-base font-medium text-zinc-900 dark:text-zinc-50 md:col-start-4 md:block">R{lineTotal}</span>}
+
+      <div className={cn("space-y-1", embedded && "md:col-span-4 md:flex md:items-center md:justify-between md:gap-4 md:space-y-0")}>
+        {progress?.showDots && (
         <div className="flex items-center gap-1" aria-hidden="true">
           {Array.from({ length: progress.target }).map((_, i) => (
             <span
@@ -108,13 +122,14 @@ export function CartItemCard({
             {progress.current}/{progress.target}
           </span>
         </div>
-      )}
+        )}
 
       {hint && (
         <p className={cn("text-xs font-medium leading-snug", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")} role="status">
           {hint}
         </p>
       )}
+      </div>
     </div>
   )
 }

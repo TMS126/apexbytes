@@ -5,8 +5,8 @@
 import { useEffect, useId, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { useMounted } from "@/hooks/use-mounted"
 import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, Megaphone, SealPercent, Wrench } from "@phosphor-icons/react"
-import { ADD_ONS_EFFECTIVE_DATE } from "@/lib/add-ons"
 import { TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
@@ -26,6 +26,7 @@ export interface HomeNotice {
   sourceLabel?: string
   sourceUrl?: string
   date?: string
+  closingDate?: string
 }
 
 // ─── LOOKUP TABLES ─────────────────────────────────────────────────────────
@@ -58,21 +59,21 @@ const PAGE_LABEL: Record<NoticePage, string> = {
 const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
   services: [
     {
-      id: "services-addons",
+      id: "services-dpsa-updates",
       variant: "warning",
       Icon: Megaphone,
-      category: "Add-ons",
-      header: "Add-ons and minor price adjustments",
-      date: ADD_ONS_EFFECTIVE_DATE,
-      body: "A few optional extras are now available when you need a little more from your service. Thank you for your continued support.",
+      category: "Current updates",
+      header: "DPSA Circulars 41 and 42",
+      closingDate: "30 Nov",
+      body: "Circular 41 includes government vacancies and Circular 42 includes Free State posts. Several Circular 41 applications close soon, so review the requirements promptly.",
     },
     {
       id: "services-bulk-deals",
       variant: "info",
       Icon: SealPercent,
       category: "Bulk Deals",
-      header: "Better rates at qualifying quantities",
-      body: "Selected printing and service items have lower rates at qualifying quantities. Look for the Bulk deals marker on each relevant hub and service.",
+      header: "Bulk service markers",
+      body: "Look for the Bulk deals marker on each relevant hub and service to see when a quantity-based option is available.",
     },
   ],
   gallery: [{
@@ -102,9 +103,9 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
     id: "about-local-business",
     variant: "info",
     Icon: Buildings,
-    category: "About ApexbytesHub",
+    category: "About ApexBytesHub",
     header: "Local, practical support",
-    body: "ApexbytesHub brings print, design, digital services, and tech support together for the Bothaville community.",
+    body: "ApexBytesHub brings print, design, digital services, and tech support together for the Bothaville community.",
   }],
   pricing: [
     {
@@ -112,16 +113,16 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
       variant: "warning",
       Icon: Lightning,
       category: "Rush Fee",
-      header: "Urgent turnaround",
-      body: "A 50% surcharge applies when same-session or urgent turnaround is required.",
+      header: "Check turnaround early",
+      body: "If you have a deadline, share it with us early so we can confirm the most suitable turnaround for your request.",
     },
     {
       id: "pricing-bulk-pricing",
       variant: "info",
       Icon: SealPercent,
       category: "Bulk Pricing",
-      header: "Better rates for larger quantities",
-      body: "Look for the Bulk tag — larger quantities get a better rate.",
+      header: "Bulk service markers",
+      body: "Look for the Bulk tag when you are comparing services and quantities.",
     },
   ],
   tools: [{
@@ -146,14 +147,15 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
 function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id: string) => void }) {
   const color = VARIANT_TEXT[notice.variant]
   return (
-    <article className="rounded-xl border border-border/70 bg-card/55 px-4 py-3.5">
+    <article className="rounded-[14px] border border-border/70 bg-card/55 px-4 py-3.5">
       <div className="flex items-start gap-3">
-        <notice.Icon size={19} weight="bold" style={{ color }} className="mt-0.5 shrink-0" aria-hidden="true" />
+        <notice.Icon size={19} weight="bold" className="mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true" />
         <div className="flex min-w-0 flex-col gap-1">
           <h3 className="text-sm font-semibold uppercase tracking-[0.12em]" style={{ color }}>
             {notice.header}
           </h3>
           {notice.date && <p className="text-sm font-medium text-muted-foreground">{notice.date}</p>}
+          {notice.closingDate && <span className="abh-closing-chip mt-1 inline-flex w-fit rounded-full bg-muted px-2 py-0.5 text-xs font-semibold text-muted-foreground transition-colors">Closes {notice.closingDate}</span>}
           <p className="text-base leading-relaxed text-foreground/90">{notice.body}</p>
           {notice.sourceUrl && notice.sourceLabel && (
             <a
@@ -183,7 +185,7 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
   // ── State & refs ──
   const notices = page === "home" ? HOME_NOTICES : PAGE_NOTICES[page]
   const [open, setOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useMounted()
   const [unread, setUnread] = useState(true)
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(() => new Set())
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -211,7 +213,6 @@ export function PageNoticeBell({ page, className }: { page: NoticePage; classNam
   // ── Effects (all hooks stay above the early return below) ──
   // Portal target only exists on the client; gating on `mounted` avoids a
   // hydration mismatch from rendering a portal during server hydration.
-  useEffect(() => setMounted(true), [])
 
   // Escape closes (focus returns to the bell); clicking outside closes
   // without stealing focus from wherever the person clicked.

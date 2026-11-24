@@ -2,19 +2,15 @@
 "use client"
 
 import { useState, useEffect, useMemo, useRef, useCallback, useLayoutEffect } from "react"
-import { useMounted } from "@/hooks/use-mounted"
 import { Broom, MagnifyingGlass, X, Printer, FileText, PaintBrush, Globe, Desktop } from "@phosphor-icons/react"
-import { useTheme } from "next-themes"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { BRAND } from "@/lib/brand"
+import { TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
 
 const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
-
-const SEARCH_ORANGE = { light: BRAND.orange, dark: BRAND.lightOrange }
 
 const FLY_DURATION = 340
 const FADE_DURATION = 200
@@ -89,10 +85,7 @@ function dispatchSelectService(svc: SelectedService) {
 }
 
 export function FloatingSearchWidget() {
-  const { resolvedTheme } = useTheme()
   const pathname = usePathname()
-  const mounted = useMounted()
-  const isDark = mounted && resolvedTheme === "dark"
 
   const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("search")
   const calculatorOpen = useCalculatorOpen()
@@ -107,7 +100,7 @@ export function FloatingSearchWidget() {
   const modalRef = useRef<HTMLDivElement>(null)
   const pendingFabRect = useRef<DOMRect | null>(null)
 
-  const accentColor = isDark ? SEARCH_ORANGE.dark : SEARCH_ORANGE.light
+  const accentColor = TOKEN.orangeText
 
   const hasQuery = query.trim().length > 0
   const isServicesPage = pathname === "/services"
@@ -270,7 +263,7 @@ export function FloatingSearchWidget() {
       >
         <div className="relative flex items-center justify-end gap-2">
           <span
-            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full bg-transparent px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-foreground opacity-0 shadow-none transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
+            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full border border-border bg-background px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-foreground opacity-0 shadow-sm transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
           >
             Search
           </span>
@@ -278,7 +271,7 @@ export function FloatingSearchWidget() {
             ref={fabRef}
 onClick={isOpen ? handleClose : handleOpen}
   aria-label={isOpen ? "Close search" : "Search services"}
-            className="abh-press relative flex size-11 items-center justify-center rounded-full bg-transparent text-foreground shadow-none transition-transform duration-150 ease-out hover:-translate-y-0.5 motion-reduce:transition-none"
+            className="abh-press group/search relative flex size-11 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-md transition-colors duration-150 ease-out hover:border-[var(--search-accent)] hover:text-[var(--search-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none" style={{ ["--search-accent" as string]: accentColor }}
           >
   {isOpen ? (
   <X size={24} weight="regular" aria-hidden="true" />
@@ -287,8 +280,7 @@ onClick={isOpen ? handleClose : handleOpen}
   size={21}
   weight="regular"
   aria-hidden="true"
-  className="transition-all duration-200 ease-out motion-reduce:transition-none"
-  style={{ color: accentColor }}
+  className="text-muted-foreground transition-colors duration-200 ease-out group-hover/search:text-[var(--search-accent)] motion-reduce:transition-none"
   />
   )}
           </button>
@@ -329,7 +321,7 @@ onClick={isOpen ? handleClose : handleOpen}
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="abh-press flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-muted-foreground transition-colors duration-150 hover:text-zinc-700 dark:bg-zinc-700"
+                  className="abh-press flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] duration-150 hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                   aria-label="Clear search"
                 >
                   <Broom size={15} weight="regular" aria-hidden="true" />
@@ -355,7 +347,7 @@ onClick={isOpen ? handleClose : handleOpen}
                             <HubIcon id={s.hubId} size={20} />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="truncate text-sm font-medium text-[#111]">
+                            <p className="truncate text-sm font-medium text-foreground">
                               {s.matchField === "name"
                                 ? <HighlightMatch text={s.name} query={query} color={accentColor} />
                                 : s.name}
@@ -377,7 +369,7 @@ onClick={isOpen ? handleClose : handleOpen}
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-base font-medium text-[#111]">No services found</p>
+                      <p className="text-base font-medium text-foreground">No services found</p>
                       <p className="abh-search-muted mt-1 text-sm">Try a different word.</p>
                     </div>
                   )}

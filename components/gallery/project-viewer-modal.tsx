@@ -76,28 +76,28 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
   return (
     <div className="space-y-10">
       <section aria-labelledby="project-about-title">
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">About the project</p>
+        <p className="abh-eyebrow mb-2">About the project</p>
         <h3 id="project-about-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">A clear outcome, built for the real brief.</h3>
         <ExpandableText text={project.clientGoal} accent={accent} />
       </section>
 
       <section className="grid gap-7 border-y border-border py-7 md:grid-cols-2" aria-label="Project information">
         <div>
-          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Hub</h4>
+          <h4 className="abh-eyebrow mb-2">Hub</h4>
           <p className="text-base font-medium text-foreground">{hubLabelFor(project.hub as HubId)}</p>
         </div>
         <div>
-          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project type</h4>
+          <h4 className="abh-eyebrow mb-2">Project type</h4>
           <p className="text-base font-medium text-foreground">{project.clientType ? CLIENT_TYPE_LABEL[project.clientType] : "ApexBytesHub project"}</p>
         </div>
         <div className="md:col-span-2">
-          <h4 className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Tools and format</h4>
+          <h4 className="abh-eyebrow mb-2">Tools and format</h4>
           <p className="text-base font-medium leading-7 text-foreground">{project.tools.join(" · ")}</p>
         </div>
       </section>
 
       <section aria-labelledby="project-challenges-title">
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Challenges</p>
+        <p className="abh-eyebrow mb-2">Challenges</p>
         <h3 id="project-challenges-title" className="mb-6 text-xl font-medium text-foreground md:text-2xl">From the problem to the finished piece.</h3>
         <div className="space-y-7">
           <div>
@@ -118,7 +118,7 @@ function ProjectDetailsBody({ project, accent }: { project: ProjectData; accent:
       </section>
 
       <section className="border-y border-border py-7" aria-labelledby="project-takeaway-title">
-        <p className="mb-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">Project outcome</p>
+        <p className="abh-eyebrow mb-2">Project outcome</p>
         <h3 id="project-takeaway-title" className="mb-3 text-xl font-medium text-foreground md:text-2xl">Useful, clear, and ready to use.</h3>
         <ExpandableText text={project.result} accent={accent} />
       </section>
@@ -168,10 +168,10 @@ function OtherProjectsPanel({ siblings, currentId, accent, onSelect, compact = f
   if (others.length === 0) return null
   return (
     <aside className={cn("border-l border-zinc-200/80 dark:border-zinc-800/80", compact ? "hidden md:flex md:w-1/3 md:h-full md:min-h-0 md:flex-col md:overflow-y-auto p-6" : "hidden md:block fixed inset-x-0 bottom-24 z-30") } aria-label="Other projects">
-      <h3 className="border-l-2 abh-line-left pl-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">Other projects</h3>
+      <h3 className="abh-eyebrow border-l-2 abh-line-left pl-3">Other projects</h3>
       <div className={cn("mt-4 space-y-2", compact && "max-h-[calc(100vh-13rem)] overflow-y-auto overscroll-contain pr-1")}>
         {others.map((p) => (
-          <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>
+          <button key={p.id} onClick={() => onSelect(p)} title={`View ${p.title}`} aria-label={`View ${p.title}`} className="group flex w-full items-center gap-3 rounded-[14px] p-2 text-left transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2" style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent }}>
             <span className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg"><SafeImage src={p.image} alt="" accent={accent} fill sizes="64px" className="object-cover" /></span>
             <span className="min-w-0 whitespace-normal break-words text-sm font-medium text-zinc-700 dark:text-zinc-200">{p.title}</span>
           </button>
@@ -319,7 +319,7 @@ function ProjectHeader({ project, accent, onClose }: { project: ProjectData; acc
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
           <HubIcon id={project.hub as HubId} size={13} color={accent} />
-          <span className="text-xs font-medium uppercase tracking-widest" style={{ color: accent }}>{hubLabelFor(project.hub as HubId)}</span>
+          <span className="abh-eyebrow">{hubLabelFor(project.hub as HubId)}</span>
         </div>
         <h2 id="project-viewer-title" className="mt-2 max-w-[34rem] text-2xl font-medium leading-tight text-zinc-900 dark:text-zinc-50 md:text-4xl">{project.title}</h2>
         <p className="mt-3 max-w-[40rem] text-base leading-7 text-muted-foreground">{project.shortDesc}</p>

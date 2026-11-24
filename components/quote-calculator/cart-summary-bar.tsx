@@ -7,8 +7,9 @@
    ============================================================ */
 
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowCounterClockwise, ArrowsOutSimple, ArrowsInSimple, FloppyDisk, Trash } from "@phosphor-icons/react"
+import { ArrowCounterClockwise, FloppyDisk, Trash } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
+import { cn } from "@/lib/utils"
 import { CartItem, getDisplayName } from "./lib"
 import { CartItemChip } from "./cart-item-chip"
 import { CartItemCard } from "./cart-item-card"
@@ -20,14 +21,13 @@ interface UndoStack {
 }
 
 interface CartSummaryBarProps {
+  embedded?: boolean
   isDark: boolean
   fabColor: string
   fabTextColor: string
   itemCount: number
   total: number
   cart: CartItem[]
-  expandView: boolean
-  setExpandView: (fn: (v: boolean) => boolean) => void
   showSaveForm: boolean
   setShowSaveForm: (fn: (v: boolean) => boolean) => void
   saveNameDraft: string
@@ -40,22 +40,23 @@ interface CartSummaryBarProps {
   chipRefs: React.MutableRefObject<Record<string, HTMLDivElement | null>>
   getAccent: (id: HubId) => string
   removeItem: (id: string) => void
+  onSetQty: (id: string, qty: number) => void
   handleClickStep: (id: string, delta: number) => void
   handlePressStart: (id: string, delta: number) => void
   handlePressEnd: (id: string) => void
 }
 
 export function CartSummaryBar({
-  fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
+  embedded = false, fabColor, fabTextColor, itemCount, total, cart,
   showSaveForm, setShowSaveForm, saveNameDraft, setSaveNameDraft, confirmSaveQuote, clearCart,
   undoStack, undoRemove, highlightId, chipRefs, getAccent,
-  removeItem, handleClickStep, handlePressStart, handlePressEnd,
+  removeItem, onSetQty, handleClickStep, handlePressStart, handlePressEnd,
 }: CartSummaryBarProps) {
   return (
     <>
       {undoStack && (
         <div className="sticky top-0 z-20 border-b border-border bg-card p-3">
-          <div className="flex items-center justify-between gap-3 rounded-[12px] border border-border bg-foreground p-2.5 text-background animate-in fade-in slide-in-from-top-1 duration-200">
+          <div className="flex items-center justify-between gap-3 rounded-[14px] border border-border bg-foreground p-2.5 text-background animate-in fade-in slide-in-from-top-1 duration-200">
             <span className="text-[0.7rem] font-medium truncate">
               {undoStack.kind === "remove" && undoStack.item
                 ? `${getDisplayName(undoStack.item.sectionTitle, undoStack.item.name)} removed`
@@ -71,25 +72,22 @@ export function CartSummaryBar({
         </div>
       )}
 
+      {embedded && cart.length === 0 && (
+        <div className="rounded-[14px] bg-card p-5 text-center text-sm text-muted-foreground" role="status">
+          Your quote is empty. Choose a service below to add it here.
+        </div>
+      )}
+
       {cart.length > 0 && (
         <div
-          className="sticky top-0 z-10 border-b border-border bg-card"
+          className={cn("z-10 bg-card", embedded ? "md:sticky md:top-0 md:rounded-none md:shadow-none" : "sticky top-0")}
         >
-          <div className="p-4 space-y-2.5">
+          <div className="p-4 space-y-2.5 md:p-5">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[0.72rem] font-medium uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
+              <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                 Your Quote · {itemCount} item{itemCount === 1 ? "" : "s"} · R{total}
               </span>
               <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-100/80 dark:bg-white/5 shrink-0">
-                <button
-                  onClick={() => setExpandView(v => !v)}
-                  aria-pressed={expandView}
-                  aria-label={expandView ? "Switch to compact view" : "Switch to expanded view"}
-                  title={expandView ? "Compact view" : "Expand view"}
-                  className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
-                >
-                  {expandView ? <ArrowsInSimple size={14} weight="bold" aria-hidden="true" /> : <ArrowsOutSimple size={14} weight="bold" aria-hidden="true" />}
-                </button>
                 <button
                   onClick={() => setShowSaveForm(v => !v)}
                   aria-label="Save quote"
@@ -131,10 +129,18 @@ export function CartSummaryBar({
               </div>
             )}
 
+            {embedded && (
+              <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(6rem,1fr)_minmax(8rem,1fr)_minmax(6rem,.8fr)] items-center gap-4 rounded-[10px] bg-muted/70 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground md:grid">
+                <span>Service</span><span>Unit</span><span>Qty</span><span className="text-right">Total</span>
+              </div>
+            )}
             <div
               role="list"
               aria-label="Items in your quote"
-              className="abh-chip-strip flex gap-2.5 overflow-x-auto overscroll-x-contain snap-x snap-mandatory pb-1"
+              className={cn(
+                "gap-2.5 pb-1",
+                embedded ? "grid grid-cols-1 gap-0 overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
+              )}
               style={{ WebkitOverflowScrolling: "touch" }}
             >
               <AnimatePresence initial={false} mode="popLayout">
@@ -146,15 +152,17 @@ export function CartSummaryBar({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.85 }}
                     transition={{ duration: 0.18 }}
-                    className="shrink-0 snap-start"
+                    className={embedded ? "w-full" : "shrink-0 snap-start"}
                   >
-                    {expandView ? (
+                    {embedded ? (
                       <CartItemCard
                         item={item}
+                        embedded={embedded}
                         accent={getAccent(item.hubId)}
                         isHighlighted={highlightId === item.id}
                         cardRef={(el) => { chipRefs.current[item.id] = el }}
                         onRemove={removeItem}
+                        onSetQty={onSetQty}
                         onClickStep={handleClickStep}
                         onPressStart={handlePressStart}
                         onPressEnd={handlePressEnd}

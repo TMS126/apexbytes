@@ -28,7 +28,7 @@ export function ResultsPanel({
   return (
     <AnimatePresence>
       {convertedFiles.length > 0 && (
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="mt-8 abh-card p-6 text-center">
+        <motion.div role="status" aria-live="polite" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="mt-8 abh-card p-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-1">
             <CheckCircle weight="fill" className="w-5 h-5 text-green-600 shrink-0" aria-hidden="true" />
             <span className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -59,11 +59,11 @@ export function ResultsPanel({
             <button
               type="button"
               onClick={() => onSend(convertedFiles.find((f) => f.fileName === fileName) || convertedFiles[0])}
-              className="col-span-2 flex items-center justify-center gap-2 rounded-[12px] py-3 px-4 text-sm font-medium text-white transition-transform active:scale-[0.98]"
+              className="col-span-2 flex items-center justify-center gap-2 rounded-[14px] py-3 px-4 text-sm font-medium text-white transition-transform active:scale-[0.98]"
               style={{ backgroundColor: accentColor }}
             >
               <PaperPlaneTilt weight="fill" className="w-4 h-4" aria-hidden="true" />
-              Send to ApexbytesHub
+              Send to ApexBytesHub
             </button>
           </div>
 

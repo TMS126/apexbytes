@@ -8,11 +8,10 @@ import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, FacebookLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
-import { BRAND, TOKEN, BIZ, CONTACT_LINKS } from "@/lib/brand"
+import { BRAND, BIZ, CONTACT_LINKS, waChatLink } from "@/lib/brand"
 import { cn } from "@/lib/utils"
-import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { FORM_HUB_KEYS, getFormHubColor, CONTACT_GREY, downloadBusinessVCard } from "@/lib/contact-data"
+import { FORM_HUB_KEYS, CONTACT_GREY, downloadBusinessVCard } from "@/lib/contact-data"
 import { FAQAccordion } from "@/components/contact/faq-accordion"
 import { HubSelect } from "@/components/contact/hub-select"
 import { FieldErrorTooltip } from "@/components/contact/field-error-tooltip"
@@ -29,7 +28,7 @@ const CONTACT_ICONS: Record<string, React.ElementType> = {
 const COPYABLE_TITLES = new Set(["Call Us", "Email Us"])
 const GRID_CONTACT_LINKS = [
   ...CONTACT_LINKS.filter((c) => c.title !== "Visit Us"),
-  { title: "Facebook", value: "ApexbytesHub", href: BIZ.facebookUrl },
+  { title: "Facebook", value: "ApexBytesHub", href: BIZ.facebookUrl },
 ]
 const SCROLL_MARGIN = { scrollMarginTop: "calc(var(--nav-h, 74px) + 1rem)" }
 
@@ -55,8 +54,8 @@ function ContactPageInner() {
   const [formData, setFormData] = useState({ name: "", phone: "", service: "", message: "" })
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [vcardDone, setVcardDone] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null)
   const [prefilled, setPrefilled] = useState(false)
-  const [glowActive, setGlowActive] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
   const formCardRef = useRef<HTMLDivElement>(null)
   const showBackToTop = useBackToTop()
@@ -81,16 +80,11 @@ function ContactPageInner() {
     if (!prefilled || !mounted) return
     const id = requestAnimationFrame(() => {
       formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-      setGlowActive(true)
     })
-    const stopTimer = setTimeout(() => setGlowActive(false), 2600)
     return () => {
       cancelAnimationFrame(id)
-      clearTimeout(stopTimer)
     }
   }, [prefilled, mounted])
-
-  const glowColor = formData.service ? getFormHubColor(formData.service, isDark) : BRAND.blue
 
   const isNameValid = (val: string) => val.trim().length >= 2
   const isPhoneValid = (val: string) => /^[0-9+\s-]{10,15}$/.test(val.trim())
@@ -104,7 +98,8 @@ function ContactPageInner() {
       : `I'm interested in your ${formData.service}.`
     const rawMsg = `Hi ${BIZ.name}! My name is ${formData.name.trim()}. ${serviceLine} \n\nMessage: ${formData.message.trim()}`
     const msg = withStatusPrefix(rawMsg)
-    window.open(`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(msg)}`, "_blank")
+    const handoff = window.open(`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer")
+    setSubmitStatus(handoff ? "WhatsApp opened with your message ready to send." : "Your browser blocked WhatsApp. Please allow pop-ups or contact us directly using the details above.")
   }
 
   const handleVCard = () => {
@@ -170,7 +165,7 @@ function ContactPageInner() {
                   <p className="abh-body">WhatsApp, call, email or visit us in {BIZ.location}.</p>
                 </div>
 
-                <div className="flex w-full flex-nowrap items-stretch justify-center gap-2 sm:gap-3">
+                <div className="flex w-full flex-wrap items-stretch justify-center gap-2 sm:gap-3">
                   {GRID_CONTACT_LINKS.map((c, index) => {
                     const Icon = CONTACT_ICONS[c.title] ?? Phone
                     const isCopyable = COPYABLE_TITLES.has(c.title)
@@ -180,8 +175,8 @@ function ContactPageInner() {
                         <div className="relative h-full min-w-0 flex-1">
                           <a
                             href={c.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            target={c.href.startsWith("http") ? "_blank" : undefined}
+                            rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                             aria-label={c.title}
                             className="group flex min-h-[112px] h-full flex-col items-center justify-center gap-2 rounded-[14px] border border-transparent p-3 text-center text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97] sm:p-4"
                           >
@@ -227,9 +222,6 @@ function ContactPageInner() {
             <ScrollBounce delay={0.1}>
               <div className="abh-card overflow-hidden flex-1" id="contact-map" style={SCROLL_MARGIN}>
                 <LocationMap />
-                <div className="flex justify-start p-6" id="contact-hours" style={SCROLL_MARGIN}>
-                  <BusinessStatusFull />
-                </div>
               </div>
             </ScrollBounce>
           </div>
@@ -259,31 +251,31 @@ function ContactPageInner() {
                         type={f.type}
                         value={rawValue}
                         aria-invalid={err}
+                        aria-describedby={err ? `contact-${f.key}-error` : undefined}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className="w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
-                        style={{ borderColor: err ? TOKEN.errorBg : "var(--form-rule)" }}
+                        className="w-full rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-colors outline-none placeholder:text-muted-foreground"
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />
-                      {err && <FieldErrorTooltip message={errMessage} />}
+                      {err && <FieldErrorTooltip id={`contact-${f.key}-error`} message={errMessage} />}
                     </div>
                   )
                 })}
 
                 <div>
-                  <label className="abh-label block mb-1.5">Service Needed</label>
-                  <HubSelect value={formData.service} onChange={(val) => setFormData({ ...formData, service: val })} />
+                  <label htmlFor="contact-service" className="abh-label block mb-1.5">Service Needed</label>
+                  <HubSelect id="contact-service" value={formData.service} onChange={(val) => setFormData({ ...formData, service: val })} />
                 </div>
 
                 <div className="flex-1 flex flex-col">
                   <label htmlFor="contact-message" className="abh-label block mb-1.5">Your Message</label>
-                  <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: glowColor }}>
+                  <div className="flex-1 flex flex-col rounded-[14px]">
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
+                      aria-describedby={touched.message && !isMessageValid(formData.message) ? "contact-message-error" : undefined}
                       maxLength={1000}
-                      className="w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
-                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--form-rule)" }}
+                      className="w-full flex-1 rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-colors outline-none resize-none placeholder:text-muted-foreground"
                       rows={4}
                       value={formData.message}
                       onBlur={() => setTouched({ ...touched, message: true })}
@@ -291,7 +283,7 @@ function ContactPageInner() {
                     />
                   </div>
                   {touched.message && !isMessageValid(formData.message) && (
-                    <FieldErrorTooltip message={!formData.message.trim() ? "This field is required." : "Message too short"} />
+                    <FieldErrorTooltip id="contact-message-error" message={!formData.message.trim() ? "This field is required." : "Message too short"} />
                   )}
                 </div>
 
@@ -299,6 +291,7 @@ function ContactPageInner() {
                   <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
                   Send via WhatsApp
                 </button>
+                {submitStatus && <p role="status" className="mt-3 text-center text-sm text-muted-foreground">{submitStatus}</p>}
               </div>
             </div>
           </ScrollBounce>
@@ -310,7 +303,7 @@ function ContactPageInner() {
       </div>
 
       <div className="md:hidden fixed bottom-0 inset-x-0 z-[9985] px-4 pb-4 pt-2 bg-gradient-to-t from-background via-background to-transparent">
-        <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`} target="_blank" rel="noopener noreferrer" className="abh-wa-btn w-full py-3.5 shadow-lg">
+        <a href={waChatLink()} target="_blank" rel="noopener noreferrer" className="abh-wa-btn w-full py-3.5 shadow-lg">
           <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
           Chat on WhatsApp
         </a>

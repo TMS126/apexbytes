@@ -90,7 +90,7 @@ export function NoticePill({
           className={cn(
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-zinc-400",
             announcement
-              ? "relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[transform,filter] hover:-translate-y-0.5 hover:drop-shadow-[0_5px_8px_color-mix(in_srgb,var(--foreground)_28%,transparent)]"
+              ? "relative flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[filter] hover:drop-shadow-[0_5px_8px_color-mix(in_srgb,var(--foreground)_28%,transparent)]"
               : "flex items-center gap-2 rounded-[14px]",
           )}
         >

@@ -83,6 +83,7 @@ export function DesktopMenu({
       role="menu"
       aria-label="Main navigation"
       aria-hidden={!menuOpen}
+      inert={!menuOpen}
       className={cn(
         "hidden md:block absolute right-0 top-full mt-4 min-w-[230px] rounded-[14px] border border-border/60 bg-background p-3 shadow-[var(--shadow-card-lift)] transition-all duration-200 ease-out origin-top-right",
         menuOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
@@ -140,9 +141,9 @@ export function DesktopMenu({
                 aria-haspopup={isServices ? "true" : undefined}
                 aria-expanded={isServices ? servicesOpen : undefined}
                 style={{ color: isActive ? HOVER_TEXT : neutralColor }}
-                className={cn(
-                  "relative w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150 after:absolute after:left-4 after:right-4 after:bottom-1 after:h-px after:origin-left after:bg-current after:transition-transform",
-                  isActive ? "font-semibold after:scale-x-100" : "font-semibold after:scale-x-0 hover:after:scale-x-100"
+                  className={cn(
+                    "relative w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150 after:absolute after:left-1/2 after:bottom-1 after:h-px after:w-[calc(100%-2rem)] after:-translate-x-1/2 after:origin-center after:bg-current after:transition-transform",
+                    isActive ? "font-semibold after:scale-x-100" : "font-semibold after:scale-x-0 hover:after:scale-x-100"
                 )}
                 onMouseEnter={(e) => {
                   if (!isActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT
@@ -160,7 +161,7 @@ export function DesktopMenu({
                     aria-label="Featured services"
                     aria-hidden={!servicesOpen}
                     className={cn(
-                    "absolute right-full top-0 mr-3 grid min-w-[360px] grid-cols-2 gap-1.5 rounded-[14px] border border-border/60 bg-background p-3 shadow-[var(--shadow-card-lift)] transition-all duration-150 ease-out origin-top-right",
+                    "absolute right-full top-0 mr-3 grid w-[min(360px,calc(100vw-2rem))] max-h-[min(70vh,620px)] overflow-y-auto grid-cols-2 gap-1.5 rounded-[14px] border border-border/60 bg-background p-3 shadow-[var(--shadow-card-lift)] transition-all duration-150 ease-out origin-top-right",
                     servicesOpen ? "opacity-100 translate-x-0 pointer-events-auto" : "opacity-0 translate-x-1 pointer-events-none"
                   )}
                 >

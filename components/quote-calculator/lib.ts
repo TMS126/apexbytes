@@ -147,6 +147,25 @@ export interface SavedQuote {
 export const STORAGE_KEY       = "apexbytes-quote-cart"
 export const STORAGE_KEY_SAVED = "apexbytes-saved-quotes"
 
+/** Drop malformed or stale localStorage entries before they reach quote calculations. */
+export function normalizeCartItems(value: unknown): CartItem[] {
+  if (!Array.isArray(value)) return []
+  return value.filter((item): item is CartItem => {
+    if (!item || typeof item !== "object") return false
+    const candidate = item as Partial<CartItem>
+    const hub = candidate.hubId
+    const qty = Number(candidate.qty)
+    return typeof candidate.id === "string" && candidate.id.length <= 240 &&
+      typeof candidate.sectionTitle === "string" && typeof candidate.name === "string" &&
+      typeof candidate.unitPrice === "number" && Number.isFinite(candidate.unitPrice) && candidate.unitPrice >= 0 &&
+      (typeof candidate.unit === "string" || candidate.unit === null) &&
+      typeof hub === "string" && HUB_ORDER.includes(hub as HubId) &&
+      Number.isInteger(qty) && qty > 0 && qty <= 100000
+  }).map((item) => ({
+    ...item, qty: Math.min(100000, Math.max(1, Math.trunc(Number(item.qty)))),
+  }))
+}
+
 export function quoteTotals(items: CartItem[]) {
   const total = items.reduce((s, i) => s + getEffectiveRate(i.id, i.name, i.qty || 1, i.unitPrice) * (i.qty || 1), 0)
   const savings = items.reduce((s, i) => s + (i.unitPrice - getEffectiveRate(i.id, i.name, i.qty || 1, i.unitPrice)) * (i.qty || 1), 0)

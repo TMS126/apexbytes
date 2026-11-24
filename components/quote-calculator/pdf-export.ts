@@ -40,8 +40,8 @@ function two(n: number) {
   return String(n).padStart(2, "0")
 }
 
-export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view" = "download"): Promise<void> {
-  if (cart.length === 0) return
+export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view" = "download"): Promise<boolean> {
+  if (cart.length === 0) return false
 
   try {
     const { jsPDF } = await import("jspdf")
@@ -221,12 +221,15 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
 
     if (mode === "view") {
       const url = URL.createObjectURL(doc.output("blob"))
-      window.open(url, "_blank", "noopener,noreferrer")
+      const preview = window.open(url, "_blank", "noopener,noreferrer")
       window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+      return !!preview
     } else {
       doc.save(documentFilename("quote", quoteNo))
+      return true
     }
   } catch (err) {
     console.error("Quote PDF failed:", err)
+    return false
   }
-      } 
+}

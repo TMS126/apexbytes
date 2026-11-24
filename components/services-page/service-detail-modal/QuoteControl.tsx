@@ -36,7 +36,7 @@ export function QuoteControl({
   }
 
   return (
-    <div className="flex min-h-11 items-center justify-between gap-2 rounded-[12px] px-2.5 py-1.5" style={{ backgroundColor: "#22c55e10" }}>
+    <div className="flex min-h-11 items-center justify-between gap-2 rounded-[14px] px-2.5 py-1.5" style={{ backgroundColor: "#22c55e10" }}>
       <button
         type="button"
         onClick={() => onStep(-1)}

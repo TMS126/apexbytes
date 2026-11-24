@@ -1,22 +1,78 @@
 // components/navbar/mobile-menu.tsx
 "use client"
 
-import { useEffect, useRef } from "react"
-import Image from "next/image"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { NAV_ITEMS, TOKEN, HUB_NAMES } from "@/lib/brand"
-import { HUB_ORDER, hubRouteFor } from "@/components/services-page/lib"
-import { CaretDown } from "@phosphor-icons/react"
+import Image from "next/image"
+import {
+  Archive,
+  CaretRight,
+  CaretUp,
+  Calculator,
+  ClipboardText,
+  CreditCard,
+  EnvelopeSimple,
+  FileText,
+  FilePdf,
+  Gear,
+  Globe,
+  Image as ImageIcon,
+  Laptop,
+  PenNib,
+  Printer,
+  Scan,
+  ShareNetwork,
+  Wrench,
+  X,
+  Sun,
+  Moon,
+} from "@phosphor-icons/react"
+import type { Icon } from "@phosphor-icons/react"
+import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
+import { HUBS, type HubId } from "@/lib/data"
+import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
+import { useTheme } from "next-themes"
 
-// FIX: was a hardcoded "#F4A261" duplicated from navbar.tsx via a
-// "keep in sync" comment. That hex is the OLD, WCAG-failing --brand-orange
-// value (documented in globals.css as "was #F4A261 at 2.06:1") — still
-// failing here as both text color AND border color (border also needs
-// ≥3:1 for non-text UI components, which 2.06:1 fails too). Now imports
-// the same verified TOKEN.orangeText used in navbar.tsx directly, so
-// there's a real single source of truth instead of a manually-synced copy.
-const HOVER_TEXT = TOKEN.orangeText
+const SERVICE_LABELS: Record<HubId, string> = {
+  print: "Print",
+  doc: "Documents",
+  design: "Design",
+  eservice: "E-Services",
+  tech: "Tech",
+}
+
+const TOOL_LINKS = [
+  { id: "quote", label: "Quote Calc", path: "/tools/quote", Icon: Calculator },
+  { id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf", Icon: FilePdf },
+  { id: "cv-writing", label: "CV Writer", path: "/tools/cv-writing", Icon: FileText },
+  { id: "intake-form", label: "Intake Form", path: "/tools/intake-form", Icon: ClipboardText },
+] as const
+
+const SERVICE_ICONS: Record<string, Icon> = {
+  Printing: Printer,
+  Copying: ClipboardText,
+  "Photo Printing": ImageIcon,
+  "Typing + Printing": FileText,
+  Scanning: Scan,
+  Laminating: Archive,
+  "Business Cards": CreditCard,
+  "Flyers & Posters": FileText,
+  "Social Media": ShareNetwork,
+  Invitations: EnvelopeSimple,
+  "Business Profile": Globe,
+  Revisions: PenNib,
+  SASSA: ClipboardText,
+  SARS: FileText,
+  PSIRA: ClipboardText,
+  "Online Applications": Globe,
+  "Email Services": EnvelopeSimple,
+  "Business Services": Gear,
+  Software: Gear,
+  Hardware: Wrench,
+  Support: Wrench,
+  "Windows & Office": Laptop,
+}
 
 interface MobileMenuProps {
   menuOpen: boolean
@@ -25,37 +81,51 @@ interface MobileMenuProps {
   neutralColor: string
 }
 
-export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: MobileMenuProps) {
+export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps) {
+  const { resolvedTheme, setTheme } = useTheme()
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
+  const [expandedHub, setExpandedHub] = useState<HubId | null>(null)
+
+  const close = useCallback(() => {
+    setServicesOpen(false)
+    setToolsOpen(false)
+    setExpandedHub(null)
+    setMenuOpen(false)
+  }, [setMenuOpen])
 
   useEffect(() => {
     if (!menuOpen) return
+
     const html = document.documentElement
     const previousScrollLock = html.getAttribute("data-scroll-locked")
     html.setAttribute("data-scroll-locked", "true")
     previouslyFocused.current = document.activeElement as HTMLElement
-    containerRef.current?.focus()
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMenuOpen(false)
+    requestAnimationFrame(() => containerRef.current?.focus())
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        close()
         return
       }
-      if (e.key !== "Tab" || !containerRef.current) return
+      if (event.key !== "Tab" || !containerRef.current) return
       const focusable = Array.from(containerRef.current.querySelectorAll<HTMLElement>(
-        'button, summary, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       )).filter((element) => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden")
-      if (focusable.length === 0) return
+      if (!focusable.length) return
       const first = focusable[0]
       const last = focusable[focusable.length - 1]
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault()
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === containerRef.current)) {
+        event.preventDefault()
         last.focus()
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
         first.focus()
       }
     }
+
     document.addEventListener("keydown", handleKeyDown)
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
@@ -63,7 +133,48 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       else html.setAttribute("data-scroll-locked", previousScrollLock)
       previouslyFocused.current?.focus?.()
     }
-  }, [menuOpen, setMenuOpen])
+  }, [menuOpen, close])
+
+  const isActive = (path: string) =>
+    pathname === path || (path === "/services" && pathname.startsWith("/services/")) || (path === "/tools" && pathname.startsWith("/tools/"))
+
+  const toggleServices = () => {
+    setServicesOpen((open) => !open)
+    setToolsOpen(false)
+  }
+  const toggleTools = () => {
+    setToolsOpen((open) => !open)
+    setServicesOpen(false)
+  }
+
+  const renderServiceLinks = (hubId: HubId) => (
+    <div className="grid gap-0.5 border-l border-border/70 pl-3">
+      {HUBS[hubId].sections.flatMap((section) =>
+        section.items.map((service) => {
+          const IconComponent = SERVICE_ICONS[section.title] ?? FileText
+          const servicePath = serviceRouteFor(hubId, section.title, service.name)
+          const selected = pathname === servicePath
+          return (
+            <Link
+              key={servicePath}
+              href={servicePath}
+              onClick={close}
+              aria-current={selected ? "page" : undefined}
+              tabIndex={menuOpen && servicesOpen && expandedHub === hubId ? 0 : -1}
+              className={cn(
+                "group flex min-h-12 items-center gap-3 rounded-xl px-3 py-2 text-[0.98rem] text-foreground transition-[background-color,color,transform] duration-180 ease-out hover:bg-muted hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none",
+                selected && "bg-muted font-semibold text-brand-blue"
+              )}
+            >
+              <IconComponent size={21} weight="regular" className="shrink-0 text-brand-blue" aria-hidden="true" />
+              <span className="min-w-0 flex-1 truncate">{service.name}</span>
+              <CaretRight size={17} className="shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
+            </Link>
+          )
+        })
+      )}
+    </div>
+  )
 
   return (
     <div
@@ -72,113 +183,113 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname, neutralColor }: Mo
       aria-modal="true"
       aria-label="Main menu"
       aria-hidden={!menuOpen}
+      inert={!menuOpen}
       tabIndex={-1}
       className={cn(
-        "fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain md:hidden transition-opacity duration-300 outline-none",
-        menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        "abh-mobile-nav fixed inset-0 z-[10005] h-[100dvh] w-screen overflow-y-auto overscroll-contain bg-background text-foreground xl:hidden outline-none transition-[opacity,transform] duration-300",
+        menuOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "pointer-events-none -translate-y-2 opacity-0"
       )}
     >
-      <div
-        className="absolute inset-0 bg-background/95 backdrop-blur-xl"
-        onClick={() => setMenuOpen(false)}
-        aria-hidden="true"
-      />
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-[680px] flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
+        <header className="flex items-center justify-between border-b border-border/70 pb-5">
+          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="ApexBytesHub — go to homepage" className="group flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[filter,transform] duration-150 hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none">
+            <Image src="/logo.png" alt="ApexBytesHub" width={44} height={44} className="size-10 shrink-0 object-contain transition-[filter] duration-150" style={{ filter: resolvedTheme === "dark" ? "brightness(0) invert(1)" : "brightness(0)" }} />
+          </Link>
+          <div className="flex items-center gap-1 rounded-[14px] bg-muted/60 p-1">
+            <button type="button" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")} tabIndex={menuOpen ? 0 : -1} aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} className="flex size-10 items-center justify-center rounded-[10px] text-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
+              {resolvedTheme === "dark" ? <Sun size={19} weight="regular" aria-hidden="true" /> : <Moon size={19} weight="regular" aria-hidden="true" />}
+            </button>
+            <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="abh-navbar-quote-cta rounded-full px-4 py-2 text-sm font-semibold shadow-[var(--ui-shadow-popup)] transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
+              Get a quote
+            </Link>
+            <button type="button" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-160 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
+              <X size={28} weight="regular" aria-hidden="true" />
+            </button>
+          </div>
+        </header>
 
-      <div className="relative z-10 flex min-h-[100dvh] w-full flex-col items-center justify-center px-6 py-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        <nav className="flex w-full max-w-[380px] flex-col items-center gap-4" aria-label="Mobile navigation">
-          {NAV_ITEMS.map((item, idx) => {
-            const isActive =
-              pathname === item.path || (item.path === "/services" && pathname.startsWith("/services")) || (item.path === "/tools" && pathname.startsWith("/tools"))
-            const submenu = item.id === "services"
-              ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
-              : item.id === "tools"
-                ? [{ label: "All tools", path: "/tools" }, { label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
-                : null
-
-            if (item.isCta) {
-              return (
-                <Link
-                  key={item.id}
-                  href={item.path}
-                  aria-current={isActive ? "page" : undefined}
-                  tabIndex={menuOpen ? 0 : -1}
-                  style={{
-                    transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms",
-                    backgroundColor: "var(--surface-accent)",
-                    color: "var(--text-on-accent)",
-                  }}
-                  className={cn(
-                    "w-full rounded-[14px] px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-all duration-300 active:scale-95",
-                    menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              )
-            }
+        <nav className="flex-1 py-8 sm:py-10" aria-label="Mobile navigation">
+          {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
+            const active = isActive(item.path)
+            const hasSubmenu = item.id === "services" || item.id === "tools"
+            const parentOpen = item.id === "services" ? servicesOpen : toolsOpen
 
             return (
-              <div
-                key={item.id}
-                className={cn("flex w-full flex-col items-center rounded-[14px] bg-card/70 p-2 transition-all duration-300", menuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2")}
-                style={{ transitionDelay: menuOpen ? `${idx * 60}ms` : "0ms" }}
-              >
-                <Link
-                  href={item.path}
-                  aria-current={isActive ? "page" : undefined}
-                  tabIndex={menuOpen ? 0 : -1}
-                  style={{ color: isActive ? HOVER_TEXT : neutralColor, borderColor: isActive ? HOVER_TEXT : "transparent" }}
-                  className="w-full rounded-[14px] bg-transparent px-8 py-3.5 text-center font-sans text-[1.15rem] font-semibold transition-colors active:scale-95"
-                >
-                  {item.label}
-                </Link>
-                {submenu && (
-                  <details className="group w-full">
-                    <summary
+              <div key={item.id} className="border-b border-border/70">
+                <div className="mx-auto flex min-h-[76px] w-full max-w-[34rem] items-center gap-3">
+                  <Link
+                    href={item.path}
+                    onClick={close}
+                    aria-current={active ? "page" : undefined}
+                    tabIndex={menuOpen ? 0 : -1}
+                    className={cn(
+                      "flex-1 py-5 text-left font-heading text-[1.55rem] font-semibold tracking-[-0.035em] transition-colors duration-160 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none",
+                      active ? "text-brand-blue" : "text-foreground"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                  {hasSubmenu ? (
+                    <button
+                      type="button"
+                      onClick={item.id === "services" ? toggleServices : toggleTools}
+                      aria-expanded={parentOpen}
+                      aria-controls={`${item.id}-submenu`}
+                      aria-label={`${parentOpen ? "Collapse" : "Expand"} ${item.label.toLowerCase()}`}
                       tabIndex={menuOpen ? 0 : -1}
-                      className="flex min-h-11 cursor-pointer list-none items-center justify-center gap-2 rounded-[14px] px-4 py-2.5 text-base font-semibold text-foreground [&::-webkit-details-marker]:hidden"
+                      className="flex size-11 shrink-0 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-160 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.9] motion-reduce:transition-none"
                     >
-                      <span className="sr-only">Browse {item.label.toLowerCase()}</span>
-                      <CaretDown size={16} aria-hidden="true" />
-                    </summary>
-                    <div className="mt-2 grid grid-rows-[0fr] border-t border-border/60 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-open:grid-rows-[1fr] group-open:opacity-100 opacity-0">
-                      <div className="min-h-0 overflow-hidden flex flex-col items-center gap-1 p-2 pt-3">
-                      {submenu.map((subitem) => (
-                        <Link
-                          key={subitem.path}
-                          href={subitem.path}
-                          tabIndex={menuOpen ? 0 : -1}
-                          aria-current={pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "page" : undefined}
-                          className={cn("w-full rounded-[14px] px-5 py-3 text-center text-base text-foreground transition-colors hover:bg-muted hover:text-foreground", pathname === subitem.path || pathname.startsWith(`${subitem.path}/`) ? "bg-muted font-semibold" : "font-medium")}
-                        >
-                          {subitem.label}
-                        </Link>
-                      ))}
+                      {parentOpen ? <CaretUp size={24} aria-hidden="true" /> : <CaretRight size={24} aria-hidden="true" />}
+                    </button>
+                  ) : null}
+                </div>
+
+                {item.id === "services" && (
+                  <div id="services-submenu" aria-hidden={!servicesOpen} className={cn("grid transition-[grid-template-rows,opacity,transform] duration-220 ease-out motion-reduce:transition-none", servicesOpen ? "grid-rows-[1fr] pb-5 opacity-100 translate-y-0" : "pointer-events-none grid-rows-[0fr] opacity-0 -translate-y-1")}>
+                    <div className="min-h-0 overflow-hidden">
+                      <div className="grid gap-1">
+                        {HUB_ORDER.map((hubId) => {
+                          const hubOpen = expandedHub === hubId
+                          const hubSelected = pathname.startsWith(hubRouteFor(hubId))
+                          return (
+                            <div key={hubId} className="rounded-xl">
+                              <div className="flex items-center gap-2">
+                                <Link href={hubRouteFor(hubId)} onClick={close} aria-current={hubSelected ? "page" : undefined} tabIndex={menuOpen && servicesOpen ? 0 : -1} className={cn("flex-1 px-3 py-3 text-base font-medium transition-[color,transform] duration-160 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none", hubSelected && "font-semibold text-brand-blue")}>
+                                  {SERVICE_LABELS[hubId] ?? HUB_NAMES[hubId]}
+                                </Link>
+                                <button type="button" onClick={() => setExpandedHub((current) => current === hubId ? null : hubId)} aria-expanded={hubOpen} aria-controls={`hub-${hubId}-services`} aria-label={`${hubOpen ? "Collapse" : "Expand"} ${SERVICE_LABELS[hubId]} services`} tabIndex={menuOpen && servicesOpen ? 0 : -1} className="flex size-10 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-[background-color,transform] duration-160 hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.9] motion-reduce:transition-none">
+                                  {hubOpen ? <CaretUp size={19} aria-hidden="true" /> : <CaretRight size={19} aria-hidden="true" />}
+                                </button>
+                              </div>
+                              <div id={`hub-${hubId}-services`} aria-hidden={!hubOpen} className={cn("grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none", hubOpen ? "grid-rows-[1fr] pb-2 opacity-100" : "grid-rows-[0fr] opacity-0")}>
+                                <div className="min-h-0 overflow-hidden">{renderServiceLinks(hubId)}</div>
+                              </div>
+                            </div>
+                          )
+                        })}
                       </div>
                     </div>
-                  </details>
+                  </div>
+                )}
+
+                {item.id === "tools" && (
+                  <div id="tools-submenu" aria-hidden={!toolsOpen} className={cn("grid transition-[grid-template-rows,opacity,transform] duration-220 ease-out motion-reduce:transition-none", toolsOpen ? "grid-rows-[1fr] pb-5 opacity-100 translate-y-0" : "pointer-events-none grid-rows-[0fr] opacity-0 -translate-y-1")}>
+                    <div className="min-h-0 overflow-hidden">
+                      <div className="mx-auto grid max-w-[34rem] gap-1 border-l border-border/70 pl-4">
+                        {TOOL_LINKS.map((tool) => {
+                          const selected = pathname === tool.path
+                          const ToolIcon = tool.Icon
+                          return <Link key={tool.id} href={tool.path} onClick={close} aria-current={selected ? "page" : undefined} tabIndex={menuOpen && toolsOpen ? 0 : -1} className={cn("group flex min-h-12 items-center gap-3 rounded-xl px-3 py-2 text-base text-foreground transition-[background-color,color,transform] duration-160 hover:bg-muted hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none", selected && "bg-muted font-semibold text-brand-blue")}><ToolIcon size={21} weight="regular" className="shrink-0 text-brand-blue" aria-hidden="true" /><span className="min-w-0 flex-1 truncate">{tool.label}</span><CaretRight size={17} className="shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-0.5" aria-hidden="true" /></Link>
+                        })}
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             )
           })}
         </nav>
-      </div>
 
-      <div
-        className={cn(
-          "absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center select-none transition-all duration-500 z-10",
-          menuOpen ? "opacity-30" : "opacity-0"
-        )}
-        aria-hidden="true"
-      >
-        <Image
-          src="/logo.png"
-          alt=""
-          width={32}
-          height={32}
-          className="relative w-8 h-8 shrink-0 object-contain transition-[filter] duration-300"
-          style={{ filter: "brightness(0) invert(1) contrast(0.6)" }}
-        />
       </div>
     </div>
   )

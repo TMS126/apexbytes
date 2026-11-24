@@ -6,9 +6,8 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import Image from "next/image"
 import Link from "next/link"
-import { WhatsappLogo, EnvelopeSimple, FacebookLogo } from "@phosphor-icons/react"
+import { WhatsappLogo, EnvelopeSimple, FacebookLogo, Phone } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
-import { BusinessStatusFull } from "@/components/business-status"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { TermsGateModal } from "@/components/footer/terms-gate-modal"
 import { FaqAccordion } from "@/components/footer/faq-accordion"
@@ -31,7 +30,7 @@ function FooterContent() {
       )}
 
       <div className="mx-4 md:mx-8">
-      <div className="mx-auto max-w-[1280px] rounded-[14px] bg-[var(--footer-bg)] px-6 py-10 shadow-sm md:px-10">
+      <div className="mx-auto max-w-[1280px] rounded-[14px] bg-[var(--footer-bg)] px-6 py-10 md:px-10">
       <ScrollBounce>
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-16">
           <div className="flex flex-col gap-6">
@@ -48,7 +47,7 @@ function FooterContent() {
                 />
               </div>
               <h2 className="font-sans font-medium text-lg tracking-tight text-zinc-900 dark:text-white">
-                ApexbytesHub
+                ApexBytesHub
               </h2>
             </div>
             <p className="text-base leading-relaxed text-zinc-600 dark:text-muted-foreground max-w-xs">
@@ -60,7 +59,7 @@ function FooterContent() {
             <h3 className="text-[0.84rem] font-medium uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
-                const isActive = page.path === "/tools" ? pathname.startsWith("/tools") : pathname === page.path
+                const isActive = pathname === page.path || pathname.startsWith(`${page.path}/`)
 
                 return (
                   <li key={page.path}>
@@ -84,11 +83,11 @@ function FooterContent() {
           <div className="flex flex-col items-end text-right">
             <h3 className="mb-5 text-[0.84rem] font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
             <div className="flex items-center justify-end gap-4">
-              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} className="abh-footer-icon-link text-brand-whatsapp"><WhatsappLogo weight="regular" size={25} /></a>
-              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} className="abh-footer-icon-link text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
-              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexbytesHub on Facebook" className="abh-footer-icon-link text-brand-blue"><FacebookLogo weight="regular" size={25} /></a>
+              <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} title="WhatsApp" className="abh-footer-icon-link hover:!text-[#25D366]"><WhatsappLogo weight="regular" size={25} /></a>
+              <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} title="Email" className="abh-footer-icon-link hover:!text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
+              <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexBytesHub on Facebook" title="Facebook" className="abh-footer-icon-link hover:!text-[#1877F2]"><FacebookLogo weight="regular" size={25} /></a>
+              <a href={`tel:${BIZ.phoneE164}`} aria-label={`Call ${BIZ.name}`} title="Phone" className="abh-footer-icon-link hover:!text-brand-blue"><Phone weight="regular" size={25} /></a>
             </div>
-            <div className="mt-7"><BusinessStatusFull /></div>
           </div>
         </div>
       </ScrollBounce>

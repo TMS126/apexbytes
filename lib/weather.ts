@@ -1,5 +1,5 @@
 // lib/weather.ts
-// Lightweight current-weather fetch for Bothaville (ApexbytesHub's home
+// Lightweight current-weather fetch for Bothaville (ApexBytesHub's home
 // town), used to give the hero's status icon a small "feels real" touch —
 // the icon reflects actual current weather + time of day, not just a
 // generic dot. Open-Meteo is free and keyless, and since the business has

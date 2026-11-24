@@ -1,5 +1,5 @@
 // components/privacy-page.tsx
-import { BIZ } from "@/lib/brand"
+import { BIZ, waChatLink } from "@/lib/brand"
 
 const LAST_UPDATED = "August 2026"
 
@@ -15,7 +15,7 @@ export function PrivacyPage() {
       <div className="max-w-3xl mx-auto px-6 md:px-8 pb-24">
         {/* Header */}
         <div className="abh-editorial-hero mb-12">
-          <span className="text-[0.84rem] font-medium uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full">
+          <span className="abh-eyebrow">
             Legal
           </span>
           <h1 className="abh-page-title mt-4">
@@ -24,7 +24,7 @@ export function PrivacyPage() {
           <p className="abh-tagline mt-3 max-w-xl">
             {BIZ.name} &mdash; Last updated {LAST_UPDATED}
           </p>
-          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
+          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[14px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
             This Privacy Policy explains how <strong className="text-zinc-800 dark:text-zinc-200">{BIZ.name}</strong>{" "}
             (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, stores, and protects your personal
             information. It is written in compliance with the{" "}
@@ -72,8 +72,9 @@ export function PrivacyPage() {
                 affidavits, certificates, payslips, or any documents you bring or upload for us to work on.
               </li>
               <li>
-                <strong className="text-zinc-700 dark:text-zinc-300">Financial information:</strong> Payment method
-                (cash, card, mobile money) — we do not store card details.
+                <strong className="text-zinc-700 dark:text-zinc-300">Financial information:</strong> Payment and
+                order details you choose to share when arranging a service directly with us. We do not collect or
+                store card details through this website.
               </li>
               <li>
                 <strong className="text-zinc-700 dark:text-zinc-300">Device files:</strong> Files you provide on a
@@ -148,17 +149,7 @@ export function PrivacyPage() {
           <section>
             <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">5. How Long We Keep Your Information</h2>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
-              {/* FIX: this previously promised uploaded files are
-                  "removed as part of our regular account cleanup" — but
-                  a direct audit of app/api/upload/route.ts (the only
-                  upload endpoint in the codebase) found no deletion
-                  mechanism anywhere: no cloudinary.uploader.destroy call,
-                  no scheduled cleanup job, no cron config. This is now
-                  worded to accurately describe what the system actually
-                  does today. If/when automated deletion is implemented,
-                  this line should be updated to describe the real
-                  retention window at that point. */}
-              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Stored on Cloudinary for as long as needed to complete your service. We currently review and remove files manually rather than on an automated schedule — if you&apos;d like a specific file deleted sooner, contact us using the details in Section 10 and we&apos;ll action it directly.</li>
+              <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Uploaded files are retained for up to 30 days by default to complete your service, then scheduled for deletion. If you&apos;d like a specific file deleted sooner, contact us using the details in Section 10 and we&apos;ll action it directly.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Physical documents:</strong> Returned to you immediately after service or destroyed on the same day.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Government application records:</strong> Retained only as long as needed to resolve your application (typically same day to 7 days).</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Contact information:</strong> Not stored in any database unless you have an ongoing order.</li>
@@ -223,7 +214,7 @@ export function PrivacyPage() {
           <section>
             <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">10. Contact Us</h2>
             <p>For any privacy-related questions or requests:</p>
-            <div className="mt-3 p-4 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 space-y-1">
+            <div className="mt-3 p-4 rounded-[14px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 space-y-1">
               <p><strong className="text-zinc-700 dark:text-zinc-300">{BIZ.name}</strong></p>
               <p>{BIZ.addressFull}</p>
               <p>
@@ -231,7 +222,7 @@ export function PrivacyPage() {
               </p>
               <p>
                 Phone:{" "}
-                <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}`} className="text-brand-blue underline underline-offset-2">
+                <a href={waChatLink()} className="text-brand-blue underline underline-offset-2">
                   {BIZ.phone}
                 </a>
               </p>

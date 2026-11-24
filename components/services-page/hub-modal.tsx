@@ -147,7 +147,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
               const hasBulk = sectionHasBulk(hubId, section.title, section.items)
 
               return (
-                <div key={sIdx} className="overflow-hidden rounded-[12px] border border-border/60 bg-card/25">
+                <div key={sIdx} className="overflow-hidden rounded-[14px] border border-border/60 bg-card/25">
                   <button
                     type="button"
                     aria-expanded={isOpen}
@@ -191,10 +191,13 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                 const priceKey = `${activeSection.title}|${item.name}`
                 const isRevealed = revealedPrices.has(priceKey)
                 return (
-                  <button
+                  <div
                     key={iIdx}
-                    onClick={() =>
-                      onSelectService({
+                    className="flex w-full items-center justify-between rounded-[14px] bg-card px-2 py-2 transition-colors duration-150 hover:bg-background"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => onSelectService({
                         name: item.name,
                         price: item.price,
                         hubId,
@@ -203,32 +206,22 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                         desc: item.description,
                         turnaround: getTurnaround(activeSection.title, item.name),
                         tips: item.tips ? [...item.tips] : undefined,
-                      })
-                    }
-                    className="flex w-full items-center justify-between rounded-[14px] bg-card px-4 py-3.5 transition-colors duration-150 hover:bg-background active:scale-[0.99]"
-                  >
-                    <span className="text-[1.02rem] font-medium text-zinc-700 dark:text-zinc-200 text-left flex items-center gap-2">
+                      })}
+                      className="flex min-w-0 flex-1 items-center gap-2 rounded-[10px] px-2 py-1.5 text-left text-[1.02rem] font-medium text-zinc-700 dark:text-zinc-200"
+                    >
                       {itemHasBulk(hubId, activeSection.title, item.name) && (
                         <span className="shrink-0 text-[0.58rem] font-medium uppercase tracking-wide text-muted-foreground">
                           Bulk ·
                         </span>
                       )}
-                      {item.name}
-                    </span>
+                      <span className="truncate">{item.name}</span>
+                    </button>
 
-                    <span
-                      role="button"
-                      tabIndex={0}
-                      onClick={(e) => { e.stopPropagation(); togglePriceReveal(priceKey) }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault()
-                          e.stopPropagation()
-                          togglePriceReveal(priceKey)
-                        }
-                      }}
+                    <button
+                      type="button"
+                      onClick={() => togglePriceReveal(priceKey)}
                       aria-label={isRevealed ? `Hide price for ${item.name}` : `View pricing for ${item.name}`}
-                      className="shrink-0 ml-3 text-[1.02rem] font-medium transition-colors duration-150"
+                      className="ml-3 shrink-0 rounded-[10px] px-2 py-1 text-[1.02rem] font-medium transition-colors duration-150"
                       style={{ color: accent }}
                     >
                       {isRevealed ? item.price : (
@@ -236,8 +229,8 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                           View Pricing
                         </span>
                       )}
-                    </span>
-                  </button>
+                    </button>
+                  </div>
                 )
               })}
             </div>
@@ -330,7 +323,7 @@ export function HubModal({ hubId, onClose, onSelectService, onSwitchHub }: {
                   onClick={() => onSwitchHub(id)}
                   aria-label={`Switch to ${HUBS[id].title}`}
                   title={HUBS[id].title}
-                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:-translate-y-0.5 hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
+                  className="group/otherhub shrink-0 w-11 h-11 flex items-center justify-center rounded-[14px] bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-muted-foreground dark:text-muted-foreground hover:text-[var(--hub-accent)] transition-all duration-150 active:scale-95"
                   style={{ ["--hub-accent" as unknown as keyof import("react").CSSProperties]: otherAccent }}
                 >
                   <HubIcon id={id} size={18} color="currentColor" />

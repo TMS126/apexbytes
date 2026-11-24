@@ -10,16 +10,18 @@
   --ui-radius-sm: 14px;
   --ui-radius-md: 14px;
   --ui-radius-lg: 14px;
-  --ui-shadow-soft: 0 12px 16px -12px rgba(15, 63, 102, 0.30), 0 2px 4px -2px rgba(15, 63, 102, 0.10);
-  --ui-shadow-hover: 0 18px 24px -14px rgba(15, 63, 102, 0.38), 0 3px 6px -3px rgba(15, 63, 102, 0.12);
-  --ui-shadow-float: 0 26px 38px -18px rgba(15, 63, 102, 0.42), 0 4px 8px -4px rgba(15, 63, 102, 0.14);
+  --ui-shadow-popup: 0 18px 28px -18px rgba(15, 63, 102, 0.34), 0 4px 8px -5px rgba(15, 63, 102, 0.14);
+  --ui-shadow-soft: var(--ui-shadow-popup);
+  --ui-shadow-hover: var(--ui-shadow-popup);
+  --ui-shadow-float: var(--ui-shadow-popup);
   --glass-shadow: 0 12px 18px -12px rgba(15, 63, 102, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.58);
 }
 :root.dark {
   --ui-highlight: rgba(255, 255, 255, 0.02);
-  --ui-shadow-soft: 0 12px 16px -12px rgba(0, 0, 0, 0.65), 0 2px 4px -2px rgba(0, 0, 0, 0.40);
-  --ui-shadow-hover: 0 18px 24px -14px rgba(0, 0, 0, 0.72), 0 3px 6px -3px rgba(0, 0, 0, 0.45);
-  --ui-shadow-float: 0 26px 38px -18px rgba(0, 0, 0, 0.80), 0 4px 8px -4px rgba(0, 0, 0, 0.50);
+  --ui-shadow-popup: 0 18px 28px -18px rgba(0, 0, 0, 0.72), 0 4px 8px -5px rgba(0, 0, 0, 0.42);
+  --ui-shadow-soft: var(--ui-shadow-popup);
+  --ui-shadow-hover: var(--ui-shadow-popup);
+  --ui-shadow-float: var(--ui-shadow-popup);
   --glass-shadow: 0 14px 20px -12px rgba(0, 0, 0, 0.70), 0 2px 4px -2px rgba(0, 0, 0, 0.40);
   --shadow-action-brand: 0 8px 14px -8px rgba(0, 0, 0, 0.60);
   --shadow-action-whatsapp: 0 8px 14px -8px rgba(0, 0, 0, 0.60);
@@ -35,13 +37,35 @@
    !important rules that sit in the "components" layer.
    ============================================================ */
 @layer base {
-  /* 1. No borders anywhere. Only exceptions: loading spinner, and the
-        "What we bring to the table" cards (data-hover-border). */
-  :root:root:root *:not(.animate-spin):not([data-hover-border]),
+  /* 1. No borders anywhere. Only exceptions: loading spinner and explicit UI rules. */
+  :root:root:root *:not(.animate-spin):not([data-hover-border]):not(input):not(textarea):not(select):not([role="combobox"]),
   :root:root:root *:not(.animate-spin):not([data-hover-border])::before,
   :root:root:root *:not(.animate-spin):not([data-hover-border])::after {
     border: 0 none transparent !important;
     border-color: transparent !important;
+  }
+
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input) {
+    border: 0 !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    color: var(--foreground) !important;
+  }
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus,
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus-visible {
+    border-bottom-color: var(--line-rule) !important;
+    box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+  }
+  :root:root:root button[aria-haspopup="listbox"] {
+    border: 0 !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+  }
+  :root:root:root button[aria-haspopup="listbox"]:focus-visible {
+    border-bottom-color: var(--line-rule) !important;
+    box-shadow: 0 2px 0 -1px var(--line-rule) !important;
   }
 
   :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):has(> svg:only-child) {
@@ -65,17 +89,15 @@
     border: 1px solid color-mix(in srgb, var(--foreground) 16%, transparent) !important;
   }
 
-  /* 3. No rings. Keyboard focus rings stay on buttons/links, but never inside fields or search. */
+  /* 3. Keep surfaces borderless without removing keyboard focus visibility. */
   :root:root:root *:not(:focus-visible) {
     --tw-ring-shadow: 0 0 #0000 !important;
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
   }
-  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]),
-  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus,
-  :root:root:root :is(input, textarea, select, [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible,
-  :root:root:root [role="dialog"][aria-label="Search services"] *:focus-visible {
-    outline: none !important;
+  :root:root:root :is(button, a, input, textarea, select, [role="button"], [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible {
+    outline: 2px solid var(--brand-orange) !important;
+    outline-offset: 3px !important;
     --tw-ring-shadow: 0 0 #0000 !important;
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
@@ -99,19 +121,20 @@
   }
 
   /* 5. Dark mode fields use a single flat surface with no inset box. */
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input),
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):focus,
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):focus-visible {
-    background-color: var(--input) !important;
+  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input) {
+    background-color: color-mix(in srgb, var(--input) 78%, transparent) !important;
     background-image: none !important;
-    box-shadow: none !important;
   }
 
-  /* 6. About-page style card: surface + radius + shadow, no left rule. */
+  /* 6. About-page style cards stay flat until an interactive card is engaged. */
   :root:root:root .abh-card-rule {
     background: var(--card) !important;
     border-radius: 14px !important;
-    box-shadow: var(--ui-shadow-soft) !important;
+    box-shadow: none !important;
+  }
+  :root:root:root .abh-card-rule:is(a, button, [role="button"], [tabindex="0"]):hover,
+  :root:root:root .abh-card-rule:is(a, button, [role="button"], [tabindex="0"]):focus-visible {
+    box-shadow: var(--ui-shadow-hover) !important;
   }
 
   /* 7. 14px radii for old hard-coded big radii (rounded-full pills are untouched). */
@@ -144,3 +167,23 @@
     z-index: 90 !important;
   }
      }
+
+/* Quote calculator fields are intentionally unboxed: only the underline may change on focus. */
+:root:root:root .abh-quote-calculator :is(input, textarea, select),
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus,
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus-visible {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus,
+:root:root:root .abh-quote-calculator :is(input, textarea, select):focus-visible {
+  border-bottom-color: var(--line-rule) !important;
+  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+}

@@ -11,7 +11,7 @@ import { useScrollHide } from "@/hooks/use-scroll-hide"
 import { GLASS, HOME_BLUE } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED, HUB_ORDER,
-  getDisplayName, getEffectiveRate, parsePrice, quoteTotals,
+  getDisplayName, getEffectiveRate, parsePrice, quoteTotals, normalizeCartItems,
 } from "./lib"
 import { HubBrowser } from "./hub-browser"
 import { exportQuotePdf } from "./pdf-export"
@@ -21,18 +21,21 @@ import { PanelHeader } from "./panel-header"
 import { CartSummaryBar } from "./cart-summary-bar"
 import { SavedQuotesPanel } from "./saved-quotes-panel"
 import { FooterActions } from "./footer-actions"
+import { useFocusTrap } from "@/components/services-page/shared"
 
-const VIEW_KEY = "apexbytes-quote-view"
 type UndoAction =
   | { kind: "remove"; item: CartItem; index: number }
   | { kind: "clear"; items: CartItem[] }
   | { kind: "saved"; quote: SavedQuote; index: number }
 
-export function QuoteCalculatorWidget() {
-  const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
-  const [isOpen, setIsOpen, isOtherOpen] = useExclusiveWidget("calculator")
+export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean } = {}) {
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
+  const [isOpenState, setIsOpenState, isOtherOpen] = useExclusiveWidget("calculator")
+  const isOpen = embedded || isOpenState
+  const setIsOpen = useMemo(() => embedded ? (() => {}) : setIsOpenState, [embedded, setIsOpenState])
   const isScrolling = useScrollHide()
-  const fabVisible = !isOpen && !isOtherOpen
+  const fabVisible = !embedded && !isOpen && !isOtherOpen
 
   const [openHub, setOpenHub] = useState<HubId | null>(null)
   const [openSections, setOpenSections] = useState<Record<HubId, number | null>>({} as Record<HubId, number | null>)
@@ -42,6 +45,8 @@ export function QuoteCalculatorWidget() {
   const [highlightId, setHighlightId] = useState<string | null>(null)
   const chipRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [announce, setAnnounce] = useState("")
+  const calculatorRef = useRef<HTMLDivElement | null>(null)
+  useFocusTrap(!embedded && isOpen, calculatorRef)
 
   const [undoStack, setUndoStack] = useState<UndoAction | null>(null)
   const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -55,31 +60,11 @@ export function QuoteCalculatorWidget() {
   const [miniExpanded, setMiniExpanded] = useState(false)
   const hubSwipeStart = useRef<{ x: number; y: number } | null>(null)
 
-  const [now, setNow] = useState<Date | null>(null)
-  useEffect(() => {
-    const tick = () => setNow(new Date())
-    tick()
-    const id = setInterval(tick, 30_000)
-    return () => clearInterval(id)
-  }, [])
-  const clockLabel = now ? now.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" }) : ""
-
-  const [expandView, setExpandView] = useState(false)
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      try { if (localStorage.getItem(VIEW_KEY) === "expanded") setExpandView(true) } catch {}
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [])
-  useEffect(() => {
-    try { localStorage.setItem(VIEW_KEY, expandView ? "expanded" : "compact") } catch {}
-  }, [expandView])
-
   const pressState = useRef<Record<string, { timeout?: ReturnType<typeof setTimeout>; interval?: ReturnType<typeof setInterval>; longPressed?: boolean }>>({})
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      try { const s = localStorage.getItem(STORAGE_KEY); if (s) setCart(JSON.parse(s)) } catch {}
+      try { const s = localStorage.getItem(STORAGE_KEY); if (s) setCart(normalizeCartItems(JSON.parse(s))) } catch {}
       setHydrated(true)
     })
     return () => cancelAnimationFrame(frame)
@@ -102,29 +87,34 @@ export function QuoteCalculatorWidget() {
   }, [savedQuotes, savedHydrated])
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : ""
-    announceCalculatorState(isOpen)
-    return () => { document.body.style.overflow = ""; announceCalculatorState(false) }
-  }, [isOpen])
-
-  const toggleCalculatorTheme = () => {
-    const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
-    document.documentElement.classList.add("abh-theme-switching")
-    window.setTimeout(() => document.documentElement.classList.remove("abh-theme-switching"), 350)
-    setTheme(nextTheme)
-  }
+    document.body.style.overflow = !embedded && isOpen ? "hidden" : ""
+    if (!embedded) announceCalculatorState(isOpen)
+    return () => { document.body.style.overflow = ""; if (!embedded) announceCalculatorState(false) }
+  }, [embedded, isOpen])
 
   const wasOpenRef = useRef(false)
   useEffect(() => {
-    if (isOpen && !wasOpenRef.current) window.history.pushState({ abhCalc: true }, "")
+    if (!embedded && isOpen && !wasOpenRef.current) window.history.pushState({ abhCalc: true }, "")
     wasOpenRef.current = isOpen
-  }, [isOpen])
+  }, [embedded, isOpen])
 
   useEffect(() => {
-    const onPop = () => { if (isOpen) setIsOpen(false) }
+    const onPop = () => { if (isOpen && !embedded) setIsOpen(false) }
     window.addEventListener("popstate", onPop)
     return () => window.removeEventListener("popstate", onPop)
-  }, [isOpen, setIsOpen])
+  }, [embedded, isOpen, setIsOpen])
+
+  useEffect(() => {
+    if (!isOpen || embedded) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [embedded, isOpen, setIsOpen])
 
   useEffect(() => {
     if (!(isOpen || cart.length === 0)) return
@@ -174,7 +164,7 @@ export function QuoteCalculatorWidget() {
     setAnnounce(`${getDisplayName(sectionTitle, name)} added — now ${nextQty} in your quote`)
   }, [])
 
-  const removeItem = (id: string) => {
+  const removeItem = useCallback((id: string) => {
     const index = cart.findIndex(i => i.id === id)
     if (index === -1) return
     const item = cart[index]
@@ -182,7 +172,7 @@ export function QuoteCalculatorWidget() {
     setUndoStack({ kind: "remove", item, index })
     if (undoTimerRef.current) clearTimeout(undoTimerRef.current)
     undoTimerRef.current = setTimeout(() => setUndoStack(null), 6000)
-  }
+  }, [cart])
 
   const undoRemove = () => {
     if (!undoStack) return
@@ -288,7 +278,20 @@ export function QuoteCalculatorWidget() {
     return msg
   }
 
-  const sendQuote = () => window.open(waLink(buildQuoteMessage(cart)), "_blank")
+  const sendQuote = () => {
+    const handoff = window.open(waLink(buildQuoteMessage(cart)), "_blank", "noopener,noreferrer")
+    setAnnounce(handoff ? "WhatsApp opened with your quote ready to send." : "WhatsApp was blocked. Allow pop-ups or copy the quote and contact us directly.")
+  }
+  const exportPdf = async (mode: "download" | "view") => {
+    const successful = await exportQuotePdf(cart, mode)
+    setAnnounce(successful
+      ? mode === "view" ? "Quote preview opened in a new tab." : "Quote PDF downloaded."
+      : mode === "view" ? "Quote preview could not open. Allow pop-ups and try again." : "Quote PDF could not be created. Please try again.")
+  }
+  const setQty = useCallback((id: string, qty: number) => {
+    if (qty < 1) { removeItem(id); return }
+    setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))
+  }, [removeItem])
   const toggleSection = (hubId: HubId, sIdx: number) => setOpenSections(prev => ({ ...prev, [hubId]: prev[hubId] === sIdx ? null : sIdx }))
   const handleBodyTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     if (!openHub || (event.target as HTMLElement).closest("[data-calculator-cart-area], input, textarea, [data-calculator-swipe-block]")) {
@@ -333,57 +336,61 @@ export function QuoteCalculatorWidget() {
     <>
       <span className="sr-only" role="status" aria-live="polite">{announce}</span>
 
-      {isOpen && (
+      {!embedded && isOpen && (
         <div className="pointer-events-auto fixed inset-0 z-[9993] bg-black/70  transition-opacity duration-200 ease-out motion-reduce:transition-none md:-none" onClick={() => setIsOpen(false)} aria-hidden="true" />
       )}
 
-      <FabTrigger
-        visible={fabVisible}
-        dimmed={isScrolling}
-        miniExpanded={miniExpanded}
-        hubsInCart={hubsInCart}
-        total={total}
-        itemCount={itemCount}
-        fabColor={fabColor}
-        getAccent={getAccent}
-        onOpen={() => setIsOpen(true)}
-        onToggleMini={() => setMiniExpanded(v => !v)}
-      />
+      {!embedded && cart.length > 0 && (
+        <FabTrigger
+          visible={fabVisible}
+          dimmed={isScrolling}
+          miniExpanded={miniExpanded}
+          hubsInCart={hubsInCart}
+          total={total}
+          itemCount={itemCount}
+          fabColor={fabColor}
+          getAccent={getAccent}
+          onOpen={() => setIsOpen(true)}
+          onToggleMini={() => setMiniExpanded(v => !v)}
+        />
+      )}
 
       {isOpen && (
         <div
+          ref={calculatorRef}
           role="dialog"
           aria-modal="true"
           aria-label="Quotation Calculator"
           className={cn(
-            "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5",
-            "abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh]",
-            "rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
+            embedded
+              ? "abh-quote-calculator relative mx-auto min-h-[680px] w-full max-w-[1440px] rounded-[14px] flex flex-col overflow-hidden"
+              : "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5 abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh] rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
-            GLASS.panel,
-            "md:-none"
+            embedded ? "border-0 bg-background shadow-none" : GLASS.panel,
+            embedded ? "" : "md:-none"
           )}
         >
-          <div className="absolute top-0 left-6 right-6 h-px bg-border pointer-events-none" />
-
-          <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} />
+          <PanelHeader hasItems={cart.length > 0} titleAccent={titleAccent} embedded={embedded} />
 
           <div
-            className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]"
+            className={cn(
+              "flex-1 min-h-0 overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
+              embedded ? "overflow-visible" : "overflow-y-auto",
+              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,0.68fr)_minmax(0,0.86fr)_minmax(520px,1.55fr)] md:items-start md:gap-0" : ""
+            )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
-            <div data-calculator-cart-area>
+            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-card md:static md:col-start-3 md:row-start-1 md:min-w-0 md:overflow-hidden md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]" : ""}>
             <CartSummaryBar
+              embedded={embedded}
               isDark={isDark}
               fabColor={fabColor}
               fabTextColor={fabTextColor}
               itemCount={itemCount}
               total={total}
               cart={cart}
-              expandView={expandView}
-              setExpandView={setExpandView}
               showSaveForm={showSaveForm}
               setShowSaveForm={setShowSaveForm}
               saveNameDraft={saveNameDraft}
@@ -396,12 +403,27 @@ export function QuoteCalculatorWidget() {
               chipRefs={chipRefs}
               getAccent={getAccent}
               removeItem={removeItem}
+              onSetQty={setQty}
               handleClickStep={handleClickStep}
               handlePressStart={handlePressStart}
               handlePressEnd={handlePressEnd}
             />
+            <FooterActions
+              hasItems={cart.length > 0}
+              totalSavings={totalSavings}
+              total={total}
+              itemCount={itemCount}
+              fabColor={fabColor}
+              onExportPdf={() => { void exportPdf("download") }}
+              onViewQuote={() => { void exportPdf("view") }}
+              onSendQuote={sendQuote}
+              onClose={() => setIsOpen(false)}
+              showClose={!embedded}
+              embedded={embedded}
+            />
             </div>
 
+            <div className={embedded ? "order-1 min-w-0 md:col-span-2 md:col-start-1 md:row-start-1" : ""}>
             <SavedQuotesPanel
               savedQuotes={savedQuotes}
               showSavedList={showSavedList}
@@ -413,6 +435,7 @@ export function QuoteCalculatorWidget() {
             />
 
             <HubBrowser
+              embedded={embedded}
               openHub={openHub}
               setOpenHub={setOpenHub}
               openSections={openSections}
@@ -423,19 +446,12 @@ export function QuoteCalculatorWidget() {
               sectionSubtotal={sectionSubtotal}
               getItemQty={getItemQty}
               onAddItem={addItem}
+              onStepQty={stepQty}
+              onSetQty={setQty}
             />
+            </div>
           </div>
 
-          <FooterActions
-            hasItems={cart.length > 0}
-            totalSavings={totalSavings}
-            total={total}
-            fabColor={fabColor}
-            onExportPdf={() => exportQuotePdf(cart)}
-            onViewQuote={() => exportQuotePdf(cart, "view")}
-            onSendQuote={sendQuote}
-            onClose={() => setIsOpen(false)}
-          />
         </div>
       )}
     </>

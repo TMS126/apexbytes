@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, type ChangeEvent, type TouchEvent } from "
 import { X, ShareNetwork, Clock, Lightbulb, WarningCircle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
-import { HUB_COLORS, HubKey, BIZ, BRAND } from "@/lib/brand"
+import { HUB_COLORS, HubKey, BIZ, BRAND, waLink } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
 import { useFocusTrap, HubIcon } from "../shared"
 import {
@@ -296,8 +296,15 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
   }
 
   const waMessage = uploadReference
-    ? `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. My secure upload reference: ${uploadReference}`
-    : `Hi ${BIZ.name}! I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. Can you assist?`
+    ? `Hi ${BIZ.name}, I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. My secure upload reference: ${uploadReference}`
+    : `Hi ${BIZ.name}, I'd like to request ${naturalLabel} (${hubTitle}). Price shown: ${svc.price}. Can you assist?`
+  const requestLabel = /printing services?/i.test(naturalLabel)
+    ? `Request a Quote for ${naturalLabel.replace(/\s+services?$/i, "")}`
+    : /tech support/i.test(naturalLabel)
+      ? "Request Tech Support"
+      : /design/i.test(naturalLabel)
+        ? "Book Design Help"
+        : `Request ${naturalLabel}`
 
   const requirements = svc.requirements?.length ? svc.requirements : ["Just bring your file, document or USB — we'll take care of the rest."]
   const desc = svc.desc?.trim() || null
@@ -314,17 +321,17 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
-        aria-label={svc.name}
+              aria-label={naturalLabel}
         className="relative flex w-full max-w-lg flex-col overflow-hidden rounded-[14px] border border-border bg-[var(--surface-modal)] outline-none animate-in fade-in duration-150 md:max-w-2xl md:max-h-[86vh]"
         style={{ boxShadow: "var(--shadow-modal)" }}
       >
         {hasBulk && (
           <div className="absolute top-0 left-0 w-[104px] h-[104px] overflow-hidden pointer-events-none z-10" aria-hidden="true">
             <span
-              className="absolute block text-center text-[0.66rem] font-medium uppercase"
+              className="abh-bulk-label absolute block text-center text-[0.66rem] font-medium uppercase"
               style={{
 top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
-                    backgroundColor: "var(--foreground)", color: "var(--background)", padding: "6px 0",
+                    padding: "6px 0",
                     boxShadow: "var(--shadow-soft)",
               }}
             >
@@ -400,7 +407,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                 <HubIcon id={svc.hubId} size={11} color={accent} />
                 <span className="text-[0.72rem] font-medium uppercase tracking-widest" style={{ color: accent }}>{hubTitle}</span>
               </div>
-              <h3 className="abh-card-heading text-[1.28rem] leading-tight">{svc.name}</h3>
+              <h3 className="abh-card-heading text-[1.28rem] leading-tight">{naturalLabel}</h3>
             </div>
             <div aria-hidden="true" />
           </div>
@@ -577,7 +584,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               consistency. */}
           {showNsfasClosedNotice && (
             <div
-              className="flex items-start gap-2.5 px-3.5 py-3 rounded-[12px]"
+              className="flex items-start gap-2.5 px-3.5 py-3 rounded-[14px]"
               style={{ backgroundColor: `color-mix(in srgb, ${BRAND.orange} 7%, transparent)` }}
             >
               <WarningCircle size={16} weight="fill" className="shrink-0 mt-0.5" style={{ color: BRAND.orange }} aria-hidden="true" />
@@ -590,7 +597,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
           {/* CTA — was text-white on the #25D366 fill; switched to dark
               text (zinc-900) per request. Fill unchanged. */}
           <a
-            href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(waMessage)}`}
+            href={waLink(waMessage)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent("request_whatsapp", { hub_id: svc.hubId, service_name: svc.name, section_title: svc.sectionTitle, price: svc.price, had_file_attached: uploadPhase === "done" })}
@@ -599,7 +606,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
               ICON_BTN_FOCUS
             )}
           >
-            Request {naturalLabel}
+            {requestLabel}
           </a>
         </div>
       </div>

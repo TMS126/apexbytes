@@ -1,12 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { Minus, Plus } from "@phosphor-icons/react"
-import { FAQS } from "@/lib/brand"
+import { FAQAccordionList } from "@/components/faq-accordion-list"
 
 export function FaqAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
   return (
     <section className="w-full px-4 py-2 md:px-8">
       <div className="mx-auto max-w-[980px]">
@@ -14,39 +10,7 @@ export function FaqAccordion() {
           <h2 className="abh-section-heading mb-3 text-left">Frequently Asked Questions</h2>
           <div className="abh-divider !mx-0" />
         </div>
-        <div className="divide-y divide-zinc-100 border-y border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800">
-          {FAQS.map((faq, index) => {
-            const itemOpen = openIndex === index
-            return (
-              <div key={index}>
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex((current) => (current === index ? null : index))}
-                  aria-expanded={itemOpen}
-                  aria-controls={`footer-faq-${index}`}
-                    className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors"
-                >
-                  <h4 className="abh-card-heading text-[1.28rem] leading-snug text-zinc-800 dark:text-zinc-100">
-                    {faq.question}
-                  </h4>
-                  {itemOpen ? <Minus size={18} weight="bold" aria-hidden="true" /> : <Plus size={18} weight="bold" aria-hidden="true" />}
-                </button>
-                <div
-                  id={`footer-faq-${index}`}
-                  role="region"
-                  aria-label={faq.question}
-                  aria-hidden={!itemOpen}
-                  inert={!itemOpen}
-                className={itemOpen ? "block" : "hidden"}
-                >
-                  <div className="min-h-0 overflow-hidden">
-                    <div className="pb-6 text-[1.12rem] leading-relaxed text-muted-foreground whitespace-pre-wrap">{faq.answer}</div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+        <FAQAccordionList idPrefix="footer-faq" />
       </div>
     </section>
   )

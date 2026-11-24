@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 
 export const metadata = {
-  title: "Contact Us — ApexbytesHub",
+  title: "Contact Us — ApexBytesHub",
   description: "WhatsApp, call, email or visit us in Kgotsong. We're here to help.",
 }
 
@@ -14,9 +14,9 @@ export default function ContactRoute() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="contact" />
-      <div>
+      <main id="main-content">
         <ContactPage />
-      </div>
+      </main>
       <Footer />
     </div>
   )

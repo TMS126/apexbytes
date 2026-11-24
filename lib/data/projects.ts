@@ -16,9 +16,9 @@ export const PROJECTS = [
   },
   {
     id: "apexbytes-business-card", hub: "design" as HubId, title: "Apexbytes Business Card Design", tag: HUB_NAMES.design,
-    shortDesc: "Double-sided business card for the (old) Apexbytes brand — clean, minimal, and professional.",
+    shortDesc: "Double-sided business card for the (old) ApexBytesHub brand — clean, minimal, and professional.",
     image: "/abbc.webp", images: ["/abbc.webp"], clientType: "practice" as const,
-    clientGoal: "Design a business card that looks clean and professional — something that represents the (old) Apexbytes brand without being too busy.",
+    clientGoal: "Design a business card that looks clean and professional — something that represents the (old) ApexBytesHub brand without being too busy.",
     whatWeDid: ["Designed front with brand logo, founder name, and role","Back features the brand icon large on a dark navy background in orange","Kept everything minimal — no clutter, just the essentials","Double-sided layout with strong contrast between front and back"],
     tools: ["Adobe Illustrator", "Double-sided business card format"],
     result: "A sharp, professional card that stands out and represents the brand well.",

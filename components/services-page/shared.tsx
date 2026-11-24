@@ -94,12 +94,28 @@ export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTML
   useEffect(() => {
     if (!active) return
     previouslyFocused.current = document.activeElement as HTMLElement
-    containerRef.current?.focus()
+    const getFocusable = () => {
+      if (!containerRef.current) return []
+      return Array.from(containerRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )).filter((element) => {
+        const style = window.getComputedStyle(element)
+        return !element.hasAttribute("disabled") &&
+          !element.hasAttribute("aria-disabled") &&
+          !element.closest("[hidden], [inert]") &&
+          style.visibility !== "hidden" &&
+          style.display !== "none" &&
+          element.getClientRects().length > 0
+      })
+    }
+    requestAnimationFrame(() => {
+      const first = getFocusable()[0]
+      if (first) first.focus()
+      else containerRef.current?.focus()
+    })
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== "Tab" || !containerRef.current) return
-      const focusable = containerRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      )
+      const focusable = getFocusable()
       if (focusable.length === 0) return
       const first = focusable[0]; const last = focusable[focusable.length - 1]
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }

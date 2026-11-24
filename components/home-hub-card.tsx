@@ -6,7 +6,6 @@ import { HUB_COLORS } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { HUB_ICON } from "@/components/services-page/mobile-hub-card"
 import { hubRouteFor } from "@/components/services-page/lib"
-import { cn } from "@/lib/utils"
 
 const CLIENT_TITLE: Record<HubId, string> = {
   print: "Print what matters",

@@ -34,16 +34,18 @@
      hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
-import { CaretDown, CheckCircle, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
+import { CaretDown, CheckCircle, Minus, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
-import { GLASS, HubIcon } from "./shared"
+import { GLASS } from "./shared"
+import { HubFilterIcon } from "@/components/hub-filter-icon"
 import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
 
 interface Subtotal { total: number; savings: number; count: number }
 
 interface HubBrowserProps {
+  embedded?: boolean
   openHub: HubId | null
   setOpenHub: (h: HubId | null) => void
   openSections: Record<HubId, number | null>
@@ -54,6 +56,8 @@ interface HubBrowserProps {
   sectionSubtotal: (hubId: HubId, sectionTitle: string) => Subtotal | null
   getItemQty: (itemId: string) => number
   onAddItem: (hubId: HubId, sectionTitle: string, name: string, price: string) => void
+  onStepQty: (id: string, delta: number) => void
+  onSetQty: (id: string, qty: number) => void
 }
 
 function CountBadge({
@@ -63,7 +67,7 @@ function CountBadge({
     <span
       className={cn(
         "abh-badge-circle absolute font-medium border border-white dark:border-zinc-900 leading-none",
-        big ? "-top-2 -right-2 w-[26px] h-[26px] text-[0.72rem]" : "-top-1.5 -right-1.5 w-[22px] h-[22px] text-[0.66rem]"
+        big ? "top-1 right-1 w-[26px] h-[26px] text-[0.72rem]" : "top-1 right-1 w-[22px] h-[22px] text-[0.66rem]"
       )}
       style={{ backgroundColor: solidAccent, color: onSolid }}
       aria-label={label}
@@ -73,32 +77,21 @@ function CountBadge({
   )
 }
 
-function HubBulkBadge() {
-  return (
-    <span
-      className="pointer-events-none absolute -top-2 -left-3 rounded-full bg-slate-600 px-1.5 py-0.5 text-[0.48rem] font-semibold leading-none tracking-[0.08em] text-slate-50 shadow-sm"
-      aria-label="Bulk pricing available"
-    >
-      BULK
-    </span>
-  )
-}
-
 export function HubBrowser({
-  openHub, setOpenHub, openSections, toggleSection,
-  getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem,
+  embedded = false, openHub, setOpenHub, openSections, toggleSection,
+  getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
 }: HubBrowserProps) {
   const activeHub = openHub ? HUBS[openHub] : null
+  const visibleSections = activeHub?.sections ?? []
 
   return (
-    <div className="p-4 space-y-4">
-      <span className="text-[0.78rem] font-medium uppercase tracking-widest text-muted-foreground px-1">
-        Choose a Hub
-      </span>
+      <div className={cn("min-w-0 space-y-3 p-3 md:space-y-4 md:p-4", embedded && "md:sticky md:top-0 md:self-start")}>
+      <div className="flex items-center justify-between gap-3 px-1">
+        <span className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Services</span>
+      </div>
 
-      {openHub ? (
-        // Compact row — same squircle language as the full grid, smaller.
-        <div className="flex items-center justify-center flex-wrap gap-2" role="tablist" aria-label="Hubs">
+      <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
+      <div className={cn("flex justify-center gap-4 overflow-x-auto pb-1", embedded ? "md:grid md:grid-cols-1 md:overflow-visible" : "md:grid md:grid-cols-5 md:overflow-visible")} role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
@@ -115,10 +108,10 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex items-center justify-center rounded-[14px] w-14 h-14 shrink-0",
+                  "group relative flex min-w-14 shrink-0 items-center justify-center gap-2 border-l-2 border-transparent bg-transparent px-2 py-3 pr-7 text-center md:min-w-[112px] md:justify-start md:px-3 md:py-2.5 md:pr-8 md:text-left",
+                  embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
-                  isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
-                  GLASS.item
+                  isSelected && "md:border-l-[3px] border-[var(--hub-accent)] bg-transparent"
                 )}
                 style={{
                   ["--hub-accent" as unknown as string]: accent,
@@ -132,104 +125,35 @@ export function HubBrowser({
                     label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   />
                 )}
-                <span className="relative">
+                <span className="flex min-w-0 items-center gap-2">
                   <span
                     className={cn(
-                      "transition-colors duration-150",
+                      "flex size-10 shrink-0 items-center justify-center transition-colors duration-150 md:size-8",
                       isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubIcon id={hubId} size={36} color="currentColor" />
+                    <HubFilterIcon id={hubId} size={40} weight="regular" color="currentColor" />
                   </span>
-                  {hubBulk && <HubBulkBadge />}
+                  <span className="hidden min-w-0 md:block">
+                    <span className="block truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
+                    {hubBulk && (
+                      <span
+                        className="mt-1 inline-flex max-w-full items-center gap-0.5 whitespace-nowrap rounded-full bg-[var(--bulk-ribbon-bg)] px-1.5 py-0.5 text-[0.52rem] font-semibold uppercase tracking-wide"
+                        style={{ color: "var(--bulk-ribbon-text)" }}
+                        aria-label={`${hub.title} has bulk pricing services`}
+                      >
+                        <Tag size={8} weight="fill" aria-hidden="true" /> Bulk
+                      </span>
+                    )}
+                  </span>
                 </span>
               </button>
             )
           })}
         </div>
-      ) : (
-        // Full grid, pre-selection — vertically centered in the remaining
-        // scroll space (see note above on what "centered" means here).
-        <div className="flex items-center justify-center min-h-[42vh]">
-          <div className="flex w-full max-w-[420px] flex-col gap-2.5">
-            {HUB_ORDER.map(hubId => {
-              const hub = HUBS[hubId]
-              const accent = getAccent(hubId)
-              const solidAccent = getSolid(hubId)
-              const onSolid = HUB_ON_COLOR[hubId]
-              const isSelected = openHub === hubId
-              const hubSub = hubSubtotal(hubId)
-              const hubBulk = hubHasBulk(hubId)
 
-              return (
-                <button
-                  key={hubId}
-                  onClick={() => setOpenHub(isSelected ? null : hubId)}
-                  aria-pressed={isSelected}
-                  aria-expanded={isSelected}
-                  aria-controls={`hub-panel-${hubId}`}
-                  className={cn(
-                    "group relative flex w-full items-center gap-4 rounded-[14px] px-4 py-3 text-left",
-                    "transition-colors duration-150 ease-out",
-                    isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
-                    GLASS.item
-                  )}
-                  style={{
-                    ["--hub-accent" as unknown as string]: accent,
-                    }}
-                >
-                  {hubSub && (
-                    <CountBadge
-                      count={hubSub.count}
-                      solidAccent={solidAccent}
-                      onSolid={onSolid}
-                      label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
-                      big
-                    />
-                  )}
-                  {/* Single squircle chip — icon sits directly in the button,
-                      no inner background circle, sized to nearly fill it. */}
-                  <span className="relative">
-                    <span
-                      className={cn(
-                        "transition-colors duration-150",
-                        isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                      )}
-                      style={isSelected ? { color: solidAccent } : undefined}
-                    >
-                      <HubIcon id={hubId} size={48} color="currentColor" />
-                    </span>
-                    {hubBulk && <HubBulkBadge />}
-                  </span>
-
-                  <span className="min-w-0 flex-1">
-                    <span
-                    className={cn(
-                      "block text-[0.78rem] font-medium leading-tight transition-colors duration-150",
-                      isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
-                    )}
-                    style={isSelected ? { color: solidAccent } : undefined}
-                  >
-                    {hub.title.replace(" Hub", "")}
-                    </span>
-                    <span className="mt-1 block text-[0.68rem] leading-snug text-muted-foreground">{hub.desc}</span>
-                  </span>
-                  {isSelected && (
-                    <CheckCircle
-                      size={18}
-                      weight="fill"
-                      className="absolute right-2 top-2"
-                      style={{ color: solidAccent }}
-                      aria-label="Selected hub"
-                    />
-                  )}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      )}
+        <div className={embedded ? "min-w-0" : ""}>
 
       {/* Expanded content for whichever hub is selected */}
       {activeHub && openHub && (
@@ -255,8 +179,9 @@ export function HubBrowser({
             </button>
           </div>
 
-          <div className="py-1">
-            {activeHub.sections.map((section, sIdx) => {
+          <div className="max-h-[min(52vh,520px)] overflow-y-auto overscroll-contain py-1 [scrollbar-width:thin]" data-calculator-hub-scroll>
+            {visibleSections.map((section) => {
+              const sIdx = activeHub.sections.indexOf(section)
               const hubId = openHub
               const accent = getAccent(hubId)
               const solidAccent = getSolid(hubId)
@@ -275,14 +200,14 @@ export function HubBrowser({
                       aria-controls={sectionPanelId}
                       style={{ ["--hub-accent" as unknown as string]: accent }}
                       className={cn(
-                        "group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5",
+                        "group w-full flex items-center justify-between pl-5 pr-3 py-2.5 min-h-[2.75rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5",
                         isSectionOpen && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
                       )}
                     >
                       <span className="flex items-center gap-2">
                         <span
                           className={cn(
-                            "text-[0.78rem] font-medium uppercase tracking-[0.15em] transition-colors duration-200",
+                            "text-[0.84rem] font-medium uppercase tracking-[0.1em] transition-colors duration-200",
                             isSectionOpen
                               ? "py-1 font-semibold [color:var(--hub-accent)]"
                               : "py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
@@ -292,9 +217,9 @@ export function HubBrowser({
                           {section.title}
                         </span>
 
-                        {!isSectionOpen && sectionBulk && (
+                        {sectionBulk && (
                           <span
-                            className="inline-flex items-center gap-0.5 rounded-full bg-slate-600 px-2 py-1 text-[0.58rem] font-medium text-slate-50"
+                            className="abh-calc-bulk-label inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-1 text-[0.58rem] font-medium"
                             aria-label="Bulk pricing available in this section"
                           >
                             <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -337,7 +262,7 @@ export function HubBrowser({
                     )}
                   >
                     <div className="min-h-0 overflow-hidden">
-                      <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
+                      <div className="pl-5 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
                         {sortItemsByPrice(section.items).map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)
@@ -346,50 +271,43 @@ export function HubBrowser({
                             <div key={iIdx} className="relative">
                               <div
                                 className={cn(
-                                  "group relative ml-6 flex items-center gap-2 rounded-[12px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
-                                  itemQty > 0 && "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[var(--hub-accent)]"
+                                  "group relative ml-3 flex items-center gap-2 border-l-2 border-transparent py-2 pl-3 pr-1 transition-[border-color,color] duration-150",
+                                  itemQty > 0 && "border-[var(--hub-accent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
-                                {hasBulk && (
-                                  <span
-                                    className="absolute right-11 top-1/2 -translate-y-1/2 rounded-full bg-slate-600 px-2.5 py-1 text-[0.55rem] font-medium tracking-wide text-slate-50"
-                                    aria-hidden="true"
-                                  >
-                                    Bulk
-                                  </span>
-                                )}
                                 <div className="min-w-0 flex-1">
                                   <p className={cn(
-                                    "break-words text-[0.9rem] text-zinc-700 dark:text-zinc-300",
+                                    "break-words text-[0.88rem] text-zinc-700 dark:text-zinc-300",
                                     itemQty > 0 ? "font-semibold" : "font-medium"
                                   )}>
-                                    {getDisplayName(section.title, item.name)}
+                                    <span className="inline-flex flex-wrap items-center gap-1.5">{itemQty > 0 && <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />}{getDisplayName(section.title, item.name)}{hasBulk && <span className="abh-calc-bulk-label inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-1.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wide">Bulk</span>}</span>
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
-                                  <p className="text-[0.78rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
+                                  <p className="text-[0.76rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
                                 </div>
-                                <div className="flex items-center gap-1.5 shrink-0">
-                                  {itemQty > 0 && (
-                                    <span
-                                      className="abh-badge-circle w-6 h-6 gap-0.5 text-[0.6rem] font-medium text-muted-foreground transition-colors duration-150 group-hover:[color:var(--hub-accent)]"
-                                      aria-label={`${itemQty} already in your quote`}
-                                    >
-                                      <ShoppingBagOpen size={10} weight="fill" aria-hidden="true" />
-                                      {itemQty}
-                                    </span>
-                                  )}
+                                <div className="flex items-center gap-1 shrink-0 rounded-full bg-secondary/70 p-0.5" data-calculator-swipe-block>
+                                  <button
+                                    onClick={() => onStepQty(itemId, -1)}
+                                    disabled={itemQty < 1}
+                                    aria-label={`Decrease quantity for ${item.name}`}
+                                    className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-background hover:text-foreground disabled:opacity-35"
+                                  ><Minus size={13} weight="bold" aria-hidden="true" /></button>
+                                  <input
+                                    aria-label={`Quantity for ${item.name}`}
+                                    inputMode="numeric"
+                                    type="number"
+                                    min={itemQty > 0 ? 1 : 0}
+                                    value={itemQty}
+                                    onChange={(event) => onSetQty(itemId, Math.max(0, Number(event.target.value) || 0))}
+                                    className="w-10 min-w-10 border-0 border-b border-foreground/20 bg-transparent p-0 text-center text-sm font-semibold outline-none focus:border-[var(--hub-accent)] focus:ring-0"
+                                  />
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
-                                    style={{
-                                      ["--hub-accent" as unknown as string]: solidAccent,
-                                      ["--hub-on-accent" as unknown as string]: onSolid,
-                                    }}
-                                    className="abh-icon-chip flex h-8 w-8 items-center justify-center bg-secondary text-foreground transition-colors duration-150 hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)] focus-visible:bg-[var(--hub-accent)] focus-visible:text-[var(--hub-on-accent)]"
-                                    aria-label={`Add ${item.name}`}
-                                  >
-                                    <Plus size={13} weight="bold" aria-hidden="true" />
-                                  </button>
+                                    aria-label={`Increase quantity for ${item.name}`}
+                                    style={{ ["--hub-accent" as unknown as string]: solidAccent, ["--hub-on-accent" as unknown as string]: onSolid }}
+                                    className="flex h-8 w-8 items-center justify-center rounded-full text-foreground transition-colors hover:bg-[var(--hub-accent)] hover:text-[var(--hub-on-accent)]"
+                                  ><Plus size={13} weight="bold" aria-hidden="true" /></button>
                                 </div>
                               </div>
                             </div>
@@ -404,6 +322,8 @@ export function HubBrowser({
           </div>
         </div>
       )}
+        </div>
+      </div>
     </div>
   )
                  }

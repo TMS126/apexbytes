@@ -9,7 +9,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'ProfessionalService'],
     name: BIZ.name,
-    alternateName: ['Apexbytes Hub', 'Apexbytes'],
+    // Do not publish alternate brand spellings; ApexBytesHub is canonical.
     image: `${SITE_URL}/logo.png`,
     '@id': SITE_URL,
     url: SITE_URL,
@@ -38,34 +38,6 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
       { '@type': 'AdministrativeArea', name: 'Lejweleputswa District Municipality' },
       { '@type': 'AdministrativeArea', name: 'Free State' },
     ],
-    // FIX: previously a single blanket "07:00–20:00, all 7 days" block that
-    // didn't reflect that Tech/Design/E-Service run shorter hours. Now built
-    // directly from the HOURS object in lib/brand.ts — the same single
-    // source of truth the rest of the site already displays to customers —
-    // instead of a second, separately-hardcoded guess.
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: '07:00',
-        closes: '20:00',
-        // Print Hub · Document Hub — matches HOURS.printAndDoc
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-        opens: '09:00',
-        closes: '17:00',
-        // Tech Hub · Design Hub · E-Service Hub — matches HOURS.techDesignEservice
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Saturday'],
-        opens: '09:00',
-        closes: '12:00',
-        // Tech Hub · Design Hub · E-Service Hub, Saturday — matches HOURS.techDesignEservice
-      },
-    ],
     sameAs: [
       `https://wa.me/${BIZ.phoneE164.replace('+', '')}`,
       BIZ.facebookUrl,
@@ -73,7 +45,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'ApexbytesHub Services',
+      name: 'ApexBytesHub Services',
       itemListElement: [
         {
           '@type': 'OfferCatalog',
@@ -103,7 +75,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
           itemListElement: [
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SASSA Applications' } },
             { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SARS eFiling Assistance' } },
-            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Home Affairs Application Assistance' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Online Application Assistance' } },
           ],
         },
         {

@@ -1,6 +1,6 @@
 // app/layout.tsx
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, Poppins } from 'next/font/google'
+import { DM_Sans, Manrope } from 'next/font/google'
 import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Analytics } from '@vercel/analytics/next'
@@ -9,8 +9,8 @@ import { InstanceGuardProvider } from '@/hooks/use-instance-guard'
 import { BIZ, HEX } from '@/lib/brand'
 import { LocalBusinessJsonLd } from '@/components/ui/json-ld'
 import { FloatingSearchWidget } from '@/components/floating-search-widget'
-import { QuoteCalculatorWidget } from "@/components/quote-calculator"
 import { MaintenanceBanner } from '@/components/maintenance-banner'
+import { SiteScrollDownCue } from '@/components/site-scroll-down-cue'
 import { headers } from 'next/headers'
 import './globals.css'
 import './no-borders.css'
@@ -20,25 +20,28 @@ import './no-borders.css'
 export const dynamic = 'force-dynamic'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-3FJ8QET6RE'
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans', weight: ['400', '500', '600', '700'] })
-const poppins = Poppins({ subsets: ['latin'], variable: '--font-poppins', weight: ['400', '500', '600', '700'] })
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope', weight: ['400', '500', '600', '700', '800'] })
+
+const SITE_TITLE = `${BIZ.name} — ${BIZ.tagline}`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: BIZ.name,
+  title: SITE_TITLE,
   description: `We make technology and important services accessible to everyone — no jargon, no stress. Right here in ${BIZ.address}.`,
-  keywords: ['printing Bothaville','printing Kgotsong','CV writing Kgotsong','SASSA help Kgotsong','ApexbytesHub'],
+  keywords: ['printing Bothaville','printing Kgotsong','CV writing Kgotsong','SASSA help Kgotsong','ApexBytesHub'],
   authors: [{ name: BIZ.name }],
   robots: { index: true, follow: true },
+  alternates: { canonical: './' },
 
   openGraph: {
     type: 'website', locale: 'en_ZA', url: SITE_URL, siteName: BIZ.name,
-    title: BIZ.name,
+    title: SITE_TITLE,
     description: `Printing, CVs, design, SASSA/SARS help, and tech support in ${BIZ.location}.`,
     images: [{ url: '/api/og', width: 1200, height: 630, alt: BIZ.name }],
   },
-  twitter: { card: 'summary_large_image', title: BIZ.name, images: ['/api/og'] },
+  twitter: { card: 'summary_large_image', title: SITE_TITLE, images: ['/api/og'] },
 
   icons: {
     icon: [
@@ -70,7 +73,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${poppins.variable}`}
+      className={`${dmSans.variable} ${manrope.variable}`}
     >
       <body className="font-sans antialiased min-h-screen bg-background text-foreground transition-colors duration-300 text-base leading-relaxed">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[99999] focus:px-4 focus:py-2 focus:bg-background focus:text-brand-blue focus:font-medium focus:rounded-lg focus:shadow-lg focus:outline-none">
@@ -82,17 +85,15 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <LocalBusinessJsonLd nonce={nonce ?? ""} />
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
-          <InstanceGuardProvider><main id="main-content">{children}</main></InstanceGuardProvider>
+          <InstanceGuardProvider><div id="site-shell">{children}</div></InstanceGuardProvider>
+          <SiteScrollDownCue />
           <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 14rem)" }}>
             <FloatingSearchWidget />
-          </div>
-          <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 9rem)" }}>
-            <QuoteCalculatorWidget />
           </div>
           {/* WhatsApp FAB intentionally disabled until we bring it back. */}
         </ThemeProvider>
 
-        {isProd && (
+        {isProd && GA_MEASUREMENT_ID && (
           <>
             <Analytics />
             <SpeedInsights />

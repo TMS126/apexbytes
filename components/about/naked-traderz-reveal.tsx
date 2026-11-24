@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import Image from "next/image"
 import { X, Sparkle } from "@phosphor-icons/react"
 import { BRAND } from "@/lib/brand"
+import { useFocusTrap } from "@/components/services-page/shared"
 
 interface TheNakedTradersZARevealProps {
   accentColor?: string
@@ -20,6 +21,8 @@ export function TheNakedTradersZAReveal({
 
   const triggerRef = useRef<HTMLButtonElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDivElement | null>(null)
+  useFocusTrap(modalOpen, dialogRef)
 
   const openModal = useCallback(() => {
     setModalOpen(true)
@@ -84,6 +87,7 @@ export function TheNakedTradersZAReveal({
             aria-hidden="true"
           />
           <div
+            ref={dialogRef}
             className="relative w-full max-w-sm rounded-[14px] bg-[var(--surface-modal)] p-3 shadow-2xl sm:max-w-xl sm:p-5 transition-all duration-500"
             style={{
               opacity: animateIn ? 1 : 0,

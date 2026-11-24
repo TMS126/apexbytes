@@ -23,7 +23,7 @@ export function ReconvertBanner({ prompt, onResolve }: { prompt: ReconvertPrompt
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-2 mt-3">
-          <button type="button" onClick={() => onResolve("all")} className="px-4 py-2 rounded-[10px] text-sm font-medium bg-amber-600 text-white hover:bg-amber-700 transition-colors">
+          <button type="button" onClick={() => onResolve("all")} className="px-4 py-2 rounded-[10px] text-sm font-medium bg-amber-600 text-[#3f2200] hover:bg-amber-700 hover:text-[#2b1600] transition-colors">
             Convert Again
           </button>
           {hasNew && (

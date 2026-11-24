@@ -25,7 +25,7 @@ export function AboutHeader() {
 
       <ScrollBounce delay={0.1}>
         <section className="mx-auto mt-10 w-full max-w-[560px] px-4" aria-label="About statistics">
-          <div className="grid grid-cols-3 divide-x divide-zinc-200 overflow-hidden rounded-[14px] shadow-lg dark:divide-zinc-700">
+          <div className="grid grid-cols-3 divide-x divide-zinc-200 overflow-hidden rounded-[14px] dark:divide-zinc-700">
             {[
               { value: BIZ.hubCount, label: "Service Hubs" },
               { value: BIZ.serviceCount, label: "Services" },

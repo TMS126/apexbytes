@@ -48,7 +48,7 @@ export const PAGE_TIPS = [
   "Bulk-select photos and merge them into one tidy PDF.",
   "Drag the quality slider down for WhatsApp-friendly file sizes.",
   "Rotate sideways photos with one tap before converting.",
-  "Need it printed? Send your PDF straight to ApexbytesHub.",
+  "Need it printed? Send your PDF straight to ApexBytesHub.",
 ]
 
 export const WHATSAPP_MAGIC_PHRASES = [

@@ -7,7 +7,7 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -22,8 +22,9 @@ import { CropModal } from "./crop-modal"
 import { ReconvertBanner } from "./reconvert-banner"
 import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
-import Link from "next/link"
 import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
+import { ToolBackLink } from "@/components/tools/tool-back-link"
+import { ToolHelpAccordion } from "@/components/tools/tool-help-accordion"
 
 const JPG_TO_PDF_HELP = [
   {
@@ -49,7 +50,6 @@ export default function JpgToPdfPage() {
   const [isDragging, setIsDragging] = useState(false)
   const [zoomId, setZoomId] = useState<string | null>(null)
   const [cropId, setCropId] = useState<string | null>(null)
-  const [openHelpIndex, setOpenHelpIndex] = useState<number | null>(null)
 
   const tip = PAGE_TIPS[0]
   const waPhrase = WHATSAPP_MAGIC_PHRASES[0]
@@ -84,36 +84,20 @@ export default function JpgToPdfPage() {
       <Navbar />
       <PageNoticeBell page="jpg-to-pdf" />
       
-      <main className="flex flex-col min-h-[calc(100vh-var(--nav-h))]">
+      <main id="main-content" className="flex flex-col min-h-[calc(100vh-var(--nav-h))">
         {/* HERO HEADER */}
-        <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+1.5rem)]">
+        <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+2rem)]">
           <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
-            <Link
-              href="/tools"
-              aria-label="Back to all tools"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-foreground shadow-sm transition-[background-color,box-shadow,transform] hover:-translate-y-0.5 hover:bg-card hover:shadow-[var(--shadow-card-lift)]">All</span>
-              <CaretLeft size={15} weight="bold" aria-hidden="true" />
-            </Link>
+            <ToolBackLink />
             
             <div className="flex justify-center mb-5">
-              <FilePdf weight="fill" size={40} style={{ color: accentColor }} aria-hidden="true" />
+              <FilePdf weight="fill" size={40} className="text-muted-foreground" aria-hidden="true" />
             </div>
             
             <h1 className="abh-page-title mb-3">
               JPG to PDF
             </h1>
             
-            <div className="abh-editorial-subtitle">
-              <p className="text-lg text-muted-foreground mb-1">
-                Convert your images into PDF in seconds
-              </p>
-
-              <p className="text-sm text-muted-foreground">
-                No upload • No registration • 100% secure
-              </p>
-            </div>
             <EditorialScrollCue />
           </div>
         </section>
@@ -140,26 +124,26 @@ export default function JpgToPdfPage() {
                       }
                     }}
                     aria-label="Upload images: drag and drop, or press Enter to browse"
-                    className={`relative w-full rounded-[14px] border-2 bg-card/55 shadow-[0_24px_60px_-40px_rgba(15,63,102,0.75)]  transition-all duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                    className={`group relative w-full rounded-[14px] border-2 bg-card/55 transition-colors duration-200 cursor-pointer flex flex-col items-center justify-center py-20 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                       isDragging
                         ? "border-solid bg-primary/8 border-primary"
                         : "border-dashed border-border hover:border-primary/50 hover:bg-primary/3"
                     }`}
                   >
                     <div 
-                      className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transition-colors"
-                      style={{ backgroundColor: `${accentColor}12` }}
+                      className="w-20 h-20 rounded-[14px] flex items-center justify-center mb-6 transition-colors"
+                      style={{ backgroundColor: `color-mix(in srgb, var(--secondary) 72%, transparent)`, ["--tool-accent" as string]: accentColor }}
                     >
                       <UploadSimple 
                         weight="bold" 
                         size={40}
-                        style={{ color: accentColor }}
+                        className="text-muted-foreground transition-colors group-hover:text-[var(--tool-accent)]"
                         aria-hidden="true" 
                       />
                     </div>
                     
                     <h2 className="text-xl font-semibold text-foreground mb-2 text-center">
-                      Select images or drag them here
+                      Upload a JPG image or drag images here
                     </h2>
                     
                     <p className="text-sm text-muted-foreground text-center mb-6">
@@ -272,9 +256,9 @@ accept={ACCEPT_ATTRIBUTE}
                   {/* Add More Button */}
                   <button
                     onClick={() => inputRef.current?.click()}
-                    className="w-full mt-4 rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-all flex flex-col items-center justify-center gap-2"
+                    className="w-full mt-4 rounded-[14px] border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/3 py-8 px-4 transition-colors flex flex-col items-center justify-center gap-2"
                   >
-                    <Plus size={24} style={{ color: accentColor }} weight="bold" />
+                    <Plus size={24} className="text-muted-foreground" weight="bold" />
                     <span className="text-sm font-medium text-foreground">Add More Images</span>
                     <span className="text-xs text-muted-foreground">Add up to {20 - t.images.length} more</span>
                   </button>
@@ -292,7 +276,7 @@ accept={ACCEPT_ATTRIBUTE}
 
                 {/* Error State */}
                 {t.errors.length > 0 && (
-                  <div className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
+                  <div role="alert" className="flex items-center gap-3 rounded-lg bg-red-50 dark:bg-red-950/20 px-4 py-3 mb-8 border border-red-200 dark:border-red-900/30">
                     <WarningCircle weight="fill" size={18} className="text-red-600 dark:text-red-400 shrink-0" aria-hidden="true" />
                     <div>
                       <p className="text-sm font-medium text-red-900 dark:text-red-200">
@@ -313,7 +297,7 @@ accept={ACCEPT_ATTRIBUTE}
                     onClick={t.requestConvert}
                     disabled={t.isConverting || t.selectedCount === 0}
                     aria-busy={t.isConverting}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 rounded-[14px] font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
                     style={{ 
                       backgroundColor: accentColor,
                       boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"
@@ -342,49 +326,7 @@ accept={ACCEPT_ATTRIBUTE}
           </div>
         </section>
 
-        <section className="w-full px-4 pb-16 md:px-6" aria-labelledby="jpg-to-pdf-help-heading">
-          <div className="mx-auto max-w-2xl">
-            <h2 id="jpg-to-pdf-help-heading" className="abh-section-heading mb-5 text-center">JPG to PDF help</h2>
-            <div className="divide-y divide-border border-y border-border">
-              {JPG_TO_PDF_HELP.map((item, index) => {
-                const isOpen = openHelpIndex === index
-                const contentId = `jpg-to-pdf-help-${index}`
-
-                return (
-                  <div key={item.question}>
-                    <button
-                      type="button"
-                      onClick={() => setOpenHelpIndex((current) => (current === index ? null : index))}
-                      aria-expanded={isOpen}
-                      aria-controls={contentId}
-                      className="flex w-full items-center justify-between gap-4 py-4 text-left text-base font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                    >
-                      <span>{item.question}</span>
-                      <CaretDown
-                        size={17}
-                        weight="bold"
-                        aria-hidden="true"
-                        className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                    <div
-                      id={contentId}
-                      role="region"
-                      aria-label={item.question}
-                      aria-hidden={!isOpen}
-                      inert={!isOpen}
-                      className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-                    >
-                      <div className="min-h-0 overflow-hidden">
-                        <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        <ToolHelpAccordion title="JPG to PDF help" items={JPG_TO_PDF_HELP} />
       </main>
 
       {/* CTA Bar */}

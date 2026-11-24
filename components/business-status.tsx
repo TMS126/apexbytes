@@ -39,16 +39,16 @@ function deriveHubStatuses(status: BusinessStatus): { printDoc: HubStatus; techE
 function StatusLine({ status }: { status: HubStatus }) {
   const dotColor = status.open ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 text-sm text-muted-foreground dark:text-muted-foreground">
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-5 gap-y-1.5 text-base text-muted-foreground dark:text-muted-foreground">
       <div className="flex min-w-0 items-center gap-2">
         <span className={cn("size-1.5 shrink-0 rounded-full", dotColor)} />
         <span className="truncate font-medium text-foreground">{status.label}</span>
       </div>
-      <span className={cn("text-xs font-medium", status.open ? "text-green-600 dark:text-green-400" : "text-muted-foreground")}>
+      <span className={cn("text-sm font-medium", status.open ? "text-green-600 dark:text-green-400" : "text-muted-foreground")}>
         {status.open ? "Open" : "Closed"}
       </span>
-      <span className="col-span-2 pl-3.5 text-xs leading-relaxed text-muted-foreground/80">{status.nextEvent}</span>
-      {status.holidayNote && <p className="col-span-2 pl-3.5 text-xs leading-relaxed text-muted-foreground/70">{status.holidayNote}</p>}
+      <span className="col-span-2 pl-3.5 text-sm leading-relaxed text-muted-foreground/85">{status.nextEvent}</span>
+      {status.holidayNote && <p className="col-span-2 pl-3.5 text-sm leading-relaxed text-muted-foreground/80">{status.holidayNote}</p>}
     </div>
   )
 }
@@ -171,22 +171,22 @@ export function BusinessStatusFull() {
       dot
       className="justify-start"
     >
-      <div className="mx-auto grid w-full max-w-[720px] gap-5 text-left">
-        <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
-          <div className="rounded-[14px] border border-border/70 bg-card/35 p-4">
-            <p className="text-sm font-semibold text-foreground">{HOURS.printAndDoc.label}</p>
-            <p className="mt-1 text-base leading-relaxed text-muted-foreground">{HOURS.printAndDoc.hours}</p>
+      <div className="mx-auto grid w-full max-w-[760px] gap-8 text-left">
+        <div className="grid gap-5 sm:grid-cols-2 sm:gap-7">
+          <div className="rounded-[14px] border border-border/60 bg-card/45 p-5 shadow-sm sm:p-6">
+            <p className="text-base font-semibold leading-snug text-foreground">{HOURS.printAndDoc.label}</p>
+            <p className="mt-3 text-[1.08rem] leading-8 text-muted-foreground">{HOURS.printAndDoc.hours}</p>
           </div>
-          <div className="rounded-[14px] border border-border/70 bg-card/35 p-4">
-            <p className="text-sm font-semibold text-foreground">{HOURS.techDesignEservice.label}</p>
-            <div className="mt-1 space-y-1 text-base leading-relaxed text-muted-foreground">
+          <div className="rounded-[14px] border border-border/60 bg-card/45 p-5 shadow-sm sm:p-6">
+            <p className="text-base font-semibold leading-snug text-foreground">{HOURS.techDesignEservice.label}</p>
+            <div className="mt-3 space-y-1.5 text-[1.08rem] leading-8 text-muted-foreground">
               {HOURS.techDesignEservice.lines.map((line) => <p key={line}>{line}</p>)}
             </div>
           </div>
         </div>
-        <div className="border-t border-border/70 pt-4">
-          <p className="abh-eyebrow mb-3">Current status</p>
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-6">
+        <div className="border-t border-border/60 pt-6">
+          <p className="abh-eyebrow mb-4">Current status</p>
+          <div className="grid gap-5 sm:grid-cols-2 sm:gap-7">
             <StatusLine status={printDoc} />
             <StatusLine status={techEtc} />
           </div>

@@ -1,7 +1,7 @@
 // lib/brand.ts
 /**
  * ────────────────────────────────────────────────────────────────────────────
- * APEXBYTES HUB — CORE BUSINESS LAYER
+ * APEXBYTESHUB — CORE BUSINESS LAYER
  * lib/brand.ts
  * ────────────────────────────────────────────────────────────────────────────
  */
@@ -264,7 +264,8 @@ export const NEUTRAL_ICON_COLOR = {
 // BUSINESS INFO
 // ============================================================
 export const BIZ = {
-  name: "ApexbytesHub",
+  name: "ApexBytesHub",
+  tagline: "Your local tech & print partner.",
   location: "Kgotsong, Bothaville",
   phone: "075 333 8260",
   phoneE164: "+27753338260",
@@ -274,7 +275,7 @@ export const BIZ = {
   lat: -27.3790123,
   lng: 26.6599691,
   mapsUrl: "https://maps.app.goo.gl/v25Le9SfmCBfTh616?g_st=ac",
-  facebookUrl: "https://www.facebook.com/ApexbytesHub/",
+  facebookUrl: "https://www.facebook.com/ApexBytesHub/",
   founder: "Theji Meje",
   // Self-updating copyright year (computed at build time).
   year: String(new Date().getFullYear()),
@@ -288,6 +289,14 @@ export const BIZ = {
 // ============================================================
 export const waLink = (message: string) =>
   `https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`
+
+// Build consistent, prefilled WhatsApp messages for contextual and general chats.
+export const waChatLink = (serviceName?: string, details?: string) => {
+  const greeting = serviceName
+    ? `Hi ${BIZ.name}, I'd like a quote for ${serviceName}.`
+    : `Hi ${BIZ.name}, I'd like to ask about your services.`
+  return waLink(details ? `${greeting}\n\n${details}` : greeting)
+}
 
 export const WA = {
   general: waLink(`Hi ${BIZ.name}! I'm interested in your services. Can you tell me more?`),
@@ -364,7 +373,7 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "pricing", label: "Pricing", path: "/pricing" },
   { id: "tools", label: "Tools", path: "/tools" },
   { id: "about", label: "About", path: "/about" },
-  { id: "contact", label: "Contact", path: "/contact", isCta: true },
+  { id: "contact", label: "Contact", path: "/contact" },
 ] as const
 
 // ============================================================
@@ -404,7 +413,7 @@ export const GALLERY_CATEGORIES = [
 ] as const
 
 export const GALLERY_ALERT =
-  "We are currently curating our gallery to feature our latest local business success stories. The current imagery demonstrates the visual aesthetic and service style of ApexbytesHub. Check back often for fresh project work!"
+  "We are currently curating our gallery to feature our latest local business success stories. The current imagery demonstrates the visual aesthetic and service style of ApexBytesHub. Check back often for fresh project work!"
 
 // ============================================================
 // FAQS

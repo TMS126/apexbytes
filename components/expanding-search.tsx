@@ -42,19 +42,12 @@ export function ExpandingSearch({
   }
 
   return (
-    <div
-      className={cn("relative mx-auto w-full max-w-[300px]", className)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-          onExpandedChange(false)
-        }
-      }}
-    >
+    <div className={cn("relative mx-auto w-full max-w-[300px]", className)}>
       <div
         data-hover-border=""
         className={cn(
-          "flex h-12 min-h-12 items-center overflow-hidden border-b-2 border-[var(--line-rule-soft)] bg-transparent transition-[width,border-color] duration-200 ease-out motion-reduce:transition-none",
-          expanded ? "w-full gap-2 px-1 focus-within:border-[var(--line-rule)]" : "mx-auto w-10 justify-center",
+          "abh-expanding-search-shell flex h-12 min-h-12 items-center overflow-hidden bg-transparent transition-[width,border-color] duration-200 ease-out motion-reduce:transition-none",
+          expanded ? "w-full gap-2 px-1" : "mx-auto w-10 justify-center",
         )}
       >
         <button
@@ -63,7 +56,7 @@ export function ExpandingSearch({
           aria-label={expanded ? `Close ${label.toLowerCase()} search` : label}
           aria-expanded={expanded}
           aria-controls={id}
-          className="flex size-10 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[transform,filter,color] hover:-translate-y-0.5 hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="flex size-10 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
         >
           <MagnifyingGlass size={18} weight="regular" aria-hidden="true" />
         </button>
@@ -95,7 +88,7 @@ export function ExpandingSearch({
             type="button"
             onClick={() => onChange("")}
             aria-label="Clear search"
-            className="flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[transform,filter,color] hover:-translate-y-0.5 hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
           >
             <Broom size={15} weight="regular" aria-hidden="true" />
           </button>

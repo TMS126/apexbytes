@@ -1,37 +1,26 @@
 // app/tools/page.tsx
-import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import type { Metadata } from "next"
 import Link from "next/link"
-import { FilePdf, Wrench } from "@phosphor-icons/react/dist/ssr"
+import { FilePdf, FileText, ClipboardText, CurrencyDollar } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { ScrollBounce } from "@/components/scroll-bounce"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 import { BIZ, WA } from "@/lib/brand"
-import { ComingSoonTool } from "@/components/coming-soon-tool"
 import { CtaBar } from "@/components/strip-section"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { PageNoticeBell } from "@/components/page-notice-bell"
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
+import { ScrollBounce } from "@/components/scroll-bounce"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
-  description: "Free browser-based tools from ApexbytesHub — starting with JPG to PDF conversion, with more on the way.",
+  description: "Free tools from ApexBytesHub: convert JPG to PDF, prepare a CV, and send service intake details."
 }
 
 const TOOLS = [
-  {
-    id: "jpg-to-pdf",
-    name: "JPG to PDF",
-    desc: "Convert images into a PDF right in your browser — nothing is uploaded.",
-    href: "/tools/jpg-to-pdf",
-    Icon: FilePdf,
-  },
-  {
-    id: "coming-soon",
-    name: "Coming soon",
-    desc: "Another focused utility is on the way.",
-    href: "#coming-soon",
-    Icon: Wrench,
-  },
+  { id: "jpg-to-pdf", name: "JPG to PDF", href: "/tools/jpg-to-pdf", Icon: FilePdf },
+  { id: "cv-writing", name: "CV Writer", href: "/tools/cv-writing", Icon: FileText },
+  { id: "intake-form", name: "Intake Form", href: "/tools/intake-form", Icon: ClipboardText },
+  { id: "quote", name: "Quote Calc", href: "/tools/quote", Icon: CurrencyDollar },
 ]
 
 export default function ToolsPage() {
@@ -39,12 +28,13 @@ export default function ToolsPage() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <PageNoticeBell page="tools" />
+      <main id="main-content">
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
             <h1 className="abh-page-title mb-3">Tools</h1>
           </ScrollBounce>
-          <p className="abh-tagline max-w-md mx-auto">
+          <p className="abh-tagline mx-auto max-w-md">
             Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
           </p>
           <div className="abh-divider mx-auto" />
@@ -54,42 +44,35 @@ export default function ToolsPage() {
 
       <div className="px-6 md:px-8 pb-24">
         <div className="max-w-[720px] mx-auto">
-          <div className="grid grid-cols-2 items-stretch gap-4">
+          <div id="tool-grid" className="grid scroll-mt-28 grid-cols-2 items-stretch gap-3 md:grid-cols-4">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
-                {tool.id === "coming-soon" ? (
-                  <ComingSoonTool />
-                ) : (
-                  <Link
+                <Link
                     href={tool.href}
-                    className="group flex min-h-24 w-full items-center justify-center rounded-[14px] p-5 text-center transition-transform duration-150 active:translate-y-px"
+                    className="group flex min-h-32 w-full items-center justify-center rounded-[14px] bg-card/70 p-5 text-center shadow-[var(--ui-shadow-popup)] transition-transform duration-150 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:translate-y-px"
                     aria-label={tool.name}
                   >
                     <span className="flex flex-col items-center gap-2 text-center">
-                      <span className="flex size-12 items-center justify-center text-primary transition-colors group-hover:text-foreground">
-                        <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
+                      <span className="abh-tool-icon flex size-10 items-center justify-center text-primary transition-colors group-hover:text-foreground">
+                        <tool.Icon size={24} weight="regular" aria-hidden="true" />
                       </span>
                       <span className="text-sm font-medium text-foreground">{tool.name}</span>
                     </span>
                   </Link>
-                )}
               </ScrollBounce>
             ))}
           </div>
 
-          <p className="mt-8 text-center text-sm font-medium text-muted-foreground">
-            More focused utilities are being built for this workspace.
-          </p>
         </div>
       </div>
       <CtaBar
         badgeText="Need a hand?"
         title="Simple tools, helpful people."
-        description={`Use a tool yourself or reach out to ${BIZ.name} when you would rather have us handle it.`}
         buttonText="Get in Touch"
         buttonHref={WA.general}
       />
       <PageScrollControls />
+      </main>
       <Footer />
     </div>
   )

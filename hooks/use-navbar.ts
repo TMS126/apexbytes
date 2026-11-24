@@ -30,14 +30,9 @@ function luminance(r: number, g: number, b: number) {
   return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2]
 }
 
-// FIX: reads the live --banner-h CSS var (set by MaintenanceBanner toggling
-// `.banner-active` on <html>) so the sample point moves down with the
-// header when the banner is showing. Previously yPx was a fixed pixel
-// position that assumed the header always started at the very top of the
-// viewport — once the banner pushed the header down, that fixed point
-// landed inside the banner's own background instead of behind the nav,
-// making the banner's blue fill (not actual page content) decide icon
-// contrast for as long as the banner was visible.
+// The maintenance notice is bottom-fixed and does not reserve top space.
+// Read the shared token defensively so the contrast sample stays aligned if
+// another top-level notice is introduced later.
 function getBannerOffsetPx(): number {
   if (typeof document === "undefined") return 0
   const raw = getComputedStyle(document.documentElement).getPropertyValue("--banner-h")

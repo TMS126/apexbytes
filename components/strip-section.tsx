@@ -13,7 +13,7 @@ export function StripSection() {
         <ScrollBounce>
           <div className="text-center mb-10">
             <p className="abh-eyebrow mb-2">
-              Why ApexbytesHub
+              Why ApexBytesHub
             </p>
             <h2 className="font-sans font-medium text-2xl md:text-3xl text-foreground">
               Fast, Friendly &amp; Local
@@ -72,7 +72,7 @@ export function CtaBar({
   variant?: "default" | "flat"
   fullBleed?: boolean
   title: string
-  description: string
+  description?: string
   buttonText: string
   buttonHref?: string
   onButtonClick?: () => void
@@ -103,7 +103,7 @@ export function CtaBar({
         </span>
 
         <h2 className="abh-section-heading text-3xl mb-4">{title}</h2>
-        <p className="abh-body text-xl max-w-[500px] mx-auto mb-10">{description}</p>
+        {description ? <p className="abh-body text-xl max-w-[500px] mx-auto mb-10">{description}</p> : <div className="mb-8" aria-hidden="true" />}
 
         <div className="flex justify-center">
           <a
@@ -111,7 +111,7 @@ export function CtaBar({
             target="_blank"
             rel="noopener noreferrer"
             onClick={onButtonClick}
-            className="abh-wa-btn text-lg px-8 py-4 shadow-xl hover:scale-[1.04] hover:-translate-y-0.5 active:scale-95 active:translate-y-0"
+            className="abh-wa-btn text-lg px-8 py-4 shadow-xl active:scale-95"
           >
             <WhatsappLogo weight="fill" className="w-6 h-6 shrink-0" aria-hidden="true" />
             {buttonText}

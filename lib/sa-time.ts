@@ -1,5 +1,5 @@
 // lib/sa-time.ts
-// Single source of truth for "is ApexbytesHub open right now" — SAST-aware,
+// Single source of truth for "is ApexBytesHub open right now" — SAST-aware,
 // SA-public-holiday-aware, and computed (not hardcoded) so it never needs
 // yearly updates. Every component that needs business status (Contact's
 // status panel, WhatsApp message prefixes, hero time-of-day copy) should

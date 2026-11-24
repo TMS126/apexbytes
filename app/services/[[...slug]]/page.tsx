@@ -11,7 +11,7 @@ import { Navbar } from "@/components/navbar"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { Footer } from "@/components/footer"
 import { HUBS } from "@/lib/data"
-import { BIZ } from "@/lib/brand"
+import { BIZ, waChatLink } from "@/lib/brand"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 import { hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor } from "@/components/services-page/lib"
 
@@ -53,7 +53,7 @@ export async function generateMetadata({
     const hubId = hubSlugToId(slug[0])
     if (hubId) {
       const hub = HUBS[hubId]
-      const title = `${hub.title} — ApexbytesHub`
+      const title = `${hub.title} — ApexBytesHub`
       const description = hub.desc || `Explore ${hub.title} services and pricing at ${BIZ.name}.`
       const pageUrl = `${SITE_URL}${hubRouteFor(hubId)}`
       return {
@@ -66,7 +66,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: "Services — ApexbytesHub",
+    title: "Services — ApexBytesHub",
     description: "Printing, documents, design, government services and tech support — all in one place.",
     alternates: { canonical: `${SITE_URL}/services` },
     openGraph: { url: `${SITE_URL}/services` },
@@ -143,9 +143,11 @@ export default async function ServicesRoute({
       <div>
         {slug.length === 1 && <ServiceHubRoutePage hubId={hubSlugToId(slug[0])!} />}
         {slug.length === 0 && (
-          <Suspense fallback={null}>
-            <ServicesPage />
-          </Suspense>
+          <main id="main-content">
+            <Suspense fallback={null}>
+              <ServicesPage />
+            </Suspense>
+          </main>
         )}
         {selectedService && <ServiceDetailPage service={selectedService} />}
         {!selectedService && <TestimonialsSection />}
@@ -153,7 +155,7 @@ export default async function ServicesRoute({
           title="Not sure what you need?"
           description="Just WhatsApp us and we'll guide you in the right direction."
           buttonText="Chat With Us"
-          buttonHref="https://wa.me/27753338260"
+          buttonHref={waChatLink()}
         />
       </div>
       <Footer />

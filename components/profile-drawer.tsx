@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 const FOUNDER_ROLE = "Founder & Lead Designer"
 const FOUNDER_BIO  =
-  "Theji started Apexbytes Hub to bring real, affordable digital services to the Kgotsong community. " +
+  "Theji started ApexBytesHub to bring real, affordable digital services to the Kgotsong community. " +
   "With a passion for design and technology, he handles everything from logo creation to government portal " +
   "applications — personally. You deal directly with the founder, every time."
 
@@ -18,12 +18,12 @@ function downloadPersonalVCard() {
   const vcard = [
     "BEGIN:VCARD",
     "VERSION:3.0",
-    // FIX: was "Theji Meje ApexbytesHub" — name and brand ran together
+    // FIX: was "Theji Meje ApexBytesHub" — name and brand ran together
     // with no separator. Also now uses FOUNDER_ROLE/BIZ.phoneE164 below
     // instead of duplicating those exact values as separate literals.
-    "FN:Theji Meje — Apexbytes Hub",
-    "N:ApexbytesHub;Theji Meje;;;",
-    "ORG:Apexbytes Hub",
+    "FN:Theji Meje — ApexBytesHub",
+    "N:ApexBytesHub;Theji Meje;;;",
+    "ORG:ApexBytesHub",
     `TITLE:${FOUNDER_ROLE}`,
     "TEL;TYPE=CELL,PREF:+27781294939",
     `TEL;TYPE=CELL:${BIZ.phoneE164}`,
@@ -31,7 +31,7 @@ function downloadPersonalVCard() {
     "ADR;TYPE=HOME:;;5878 Mpumalanga Section;Kgotsong;Bothaville;9660;South Africa",
     // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.
     "URL:https://apexbytes.vercel.app/",
-    "NOTE:Founder of Apexbytes Hub — contact directly for personal enquiries.",
+    "NOTE:Founder of ApexBytesHub — contact directly for personal enquiries.",
     "END:VCARD",
   ].join("\r\n")
 
@@ -39,7 +39,7 @@ function downloadPersonalVCard() {
   const url  = URL.createObjectURL(blob)
   const a    = document.createElement("a")
   a.href     = url
-  a.download = "Theji-Meje-ApexbytesHub.vcf"
+  a.download = "Theji-Meje-ApexBytesHub.vcf"
   // FIX: the element was never attached to the DOM before .click() —
   // some browsers (notably Firefox) can silently fail to trigger a
   // download from a detached anchor. Append, click, then clean up.
@@ -184,7 +184,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   href={FOUNDER_WA_LINK}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-colors duration-200 active:scale-95"
                   style={{
                     backgroundColor: BRAND.whatsappAccessible,
                     color: TOKEN.onWhatsappAccessible,
@@ -199,7 +199,7 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
 
                 <button
                   onClick={handleVCard}
-                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-all duration-200 active:scale-95 hover:-translate-y-0.5"
+                  className="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-[14px] font-medium text-sm transition-colors duration-200 active:scale-95"
                   style={{
                     backgroundColor: vcardDone ? BRAND.green : BRAND.blue,
                     color: vcardDone ? TOKEN.onBrandGreen : TOKEN.onBrandBlue,
