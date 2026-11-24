@@ -1657,6 +1657,30 @@ input::placeholder, textarea::placeholder, select:invalid {
   color: var(--muted-foreground) !important;
   opacity: .72 !important;
 }
+
+/* The CV editor is intentionally a focused document workspace. Its fields
+   use the bordered paper-editor treatment from the tool reference while the
+   rest of ApexBytesHub keeps the underline-only field language. */
+.cv-editor-field input,
+.cv-editor-field textarea {
+  width: 100%;
+  border: 1px solid #d7dce3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  padding: .75rem .9rem;
+  color: #172033;
+  box-shadow: 0 1px 2px rgb(15 23 42 / .04) !important;
+}
+.cv-editor-field input:focus,
+.cv-editor-field textarea:focus,
+.cv-editor-field input:focus-visible,
+.cv-editor-field textarea:focus-visible {
+  border-color: #7aa9eb !important;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / .12) !important;
+}
+.cv-editor-field input::placeholder,
+.cv-editor-field textarea::placeholder { color: #8993a3 !important; opacity: 1 !important; }
+.cv-paper { min-height: 740px; }
 input:focus, textarea:focus, select:focus,
   input:focus-visible, textarea:focus-visible, select:focus-visible {
     outline: none !important;

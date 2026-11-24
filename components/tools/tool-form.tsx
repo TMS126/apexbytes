@@ -105,35 +105,6 @@ function InputField({ field, value, onChange }: { field: Field; value: string; o
   )
 }
 
-function CvPreview({ values, template, photo }: { values: Record<string, string>; template: CvTemplate; photo: string | null }) {
-  const section = (title: string, value?: string) => value ? <section className="mt-6"><h3 className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[var(--cv-accent)]">{title}</h3><p className="whitespace-pre-line text-sm leading-6 text-slate-700">{value}</p></section> : null
-  const modern = template === "modern"
-  return (
-    <article className={`cv-preview mx-auto w-full max-w-[820px] overflow-hidden bg-white text-slate-900 shadow-xl ${modern ? "rounded-[10px]" : "rounded-none"}`}>
-      <div className={modern ? "grid md:grid-cols-[0.32fr_0.68fr]" : ""}>
-        {modern && <aside className="bg-slate-950 p-7 text-white md:min-h-[740px]">
-          {photo ? <Image unoptimized src={photo} alt="Profile" width={112} height={112} className="mb-6 size-28 rounded-full object-cover ring-4 ring-white/15" /> : <div className="mb-6 flex size-28 items-center justify-center rounded-full bg-white/10 text-3xl font-semibold">{values.fullName?.slice(0, 1) || "A"}</div>}
-          <h2 className="text-xl font-semibold">{values.fullName || "Your name"}</h2>
-          <p className="mt-1 text-sm text-white/65">{values.professionalTitle || "Professional title"}</p>
-          <div className="mt-8 space-y-3 text-xs text-white/70"><p>{values.phone}</p><p>{values.email}</p><p>{values.location}</p><p>{values.website}</p></div>
-          {section("Skills", values.skills)}
-          {section("Languages", values.languages)}
-        </aside>}
-        <div className={modern ? "p-7 md:p-10" : "p-8 md:p-12"} style={{ ["--cv-accent" as string]: modern ? "#1e6fa8" : "#0f172a" }}>
-          {!modern && <div className="mb-8 flex items-start justify-between gap-5 border-b-2 border-slate-900 pb-5">{photo ? <Image unoptimized src={photo} alt="Profile" width={96} height={96} className="size-24 rounded object-cover" /> : <div />}{<div className="text-right"><h2 className="text-3xl font-bold tracking-tight">{values.fullName || "Your name"}</h2><p className="mt-1 text-base text-slate-600">{values.professionalTitle || "Professional title"}</p></div>}</div>}
-          {modern && <header className="border-b border-slate-200 pb-5"><h1 className="text-3xl font-bold tracking-tight">{values.fullName || "Your name"}</h1><p className="mt-1 text-base text-slate-600">{values.professionalTitle || "Professional title"}</p></header>}
-          {section("Professional summary", values.profile)}
-          {section("Work experience", values.experience)}
-          {section("Education", values.education)}
-          {section("Certificates and achievements", values.certifications)}
-          {!modern && section("Skills", values.skills)}
-          {section("References", values.references)}
-        </div>
-      </div>
-    </article>
-  )
-}
-
 function buildIntakePdf(values: Record<string, string>, selectedLabel: string) {
   const pdf = new jsPDF({ unit: "mm", format: "a4" })
   const lines = [`${BIZ.name} — Service Intake`, `Service: ${selectedLabel}`, "", ...Object.entries(values).filter(([, value]) => value.trim()).map(([key, value]) => `${key.replace(/([A-Z])/g, " $1")}: ${value}`)]
@@ -144,16 +115,65 @@ function buildIntakePdf(values: Record<string, string>, selectedLabel: string) {
   return pdf.output("blob")
 }
 
+type CvStep = "details" | "experience" | "education" | "preview"
+
+const CV_STEPS: { id: CvStep; label: string }[] = [
+  { id: "details", label: "Details" },
+  { id: "experience", label: "Experience" },
+  { id: "education", label: "Education" },
+  { id: "preview", label: "Preview" },
+]
+
+function CvStepField({ id, label, value, onChange, placeholder, multiline = false, type = "text" }: { id: string; label: string; value: string; onChange: (value: string) => void; placeholder: string; multiline?: boolean; type?: string }) {
+  return <label className="cv-editor-field block text-left text-sm font-medium text-foreground" htmlFor={`cv-${id}`}>
+    <span className="mb-2 block">{label}</span>
+    {multiline
+      ? <textarea id={`cv-${id}`} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} rows={4} />
+      : <input id={`cv-${id}`} type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />}
+  </label>
+}
+
+function CvEditorCard({ children }: { children: React.ReactNode }) {
+  return <div className="cv-editor-card rounded-[14px] bg-white p-5 text-slate-900 shadow-[0_8px_28px_-22px_rgba(15,23,42,.55)] md:p-7">{children}</div>
+}
+
+function CvSteps({ step }: { step: CvStep }) {
+  const current = CV_STEPS.findIndex((item) => item.id === step)
+  return <div className="cv-stepper flex items-center gap-2 text-xs text-slate-500 md:gap-3">
+    {CV_STEPS.map((item, index) => <div key={item.id} className="flex min-w-0 flex-1 items-center gap-2 md:gap-3">
+      <div className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${index < current ? "bg-emerald-500 text-white" : index === current ? "bg-blue-600 text-white" : "bg-slate-200 text-slate-500"}`}>{index < current ? "✓" : index + 1}</div>
+      <span className={`hidden truncate md:block ${index === current ? "font-semibold text-blue-700" : ""}`}>{item.label}</span>
+      {index < CV_STEPS.length - 1 && <span className="h-px flex-1 bg-slate-200" />}
+    </div>)}
+  </div>
+}
+
+function CvPaperPreview({ values, photo }: { values: Record<string, string>; photo: string | null }) {
+  return <div className="cv-paper mx-auto w-full max-w-[560px] bg-white p-7 text-left text-slate-900 shadow-[0_18px_42px_-24px_rgba(15,23,42,.6)] md:p-10">
+    <header className="border-b border-slate-200 pb-5">
+      <h2 className="text-3xl font-bold tracking-tight">{values.fullName || "Your name"}</h2>
+      <p className="mt-1 text-base font-semibold text-blue-700">{values.professionalTitle || "Professional title"}</p>
+      <p className="mt-2 text-xs text-slate-500">{[values.location, values.phone, values.email].filter(Boolean).join(" · ") || "Town · phone · email"}</p>
+    </header>
+    {photo && <Image unoptimized src={photo} alt="Profile" width={72} height={72} className="mt-5 size-[72px] rounded object-cover" />}
+    {([["SUMMARY", values.profile], ["EXPERIENCE", values.experience], ["EDUCATION", values.education], ["SKILLS", values.skills]] as [string, string | undefined][]).map(([title, content]) => <section key={title} className="mt-6 border-t border-slate-200 pt-5">
+      <h3 className="text-[0.65rem] font-bold tracking-[0.2em] text-slate-500">{title}</h3>
+      <p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{content || `Your ${title.toLowerCase()} will appear here.`}</p>
+    </section>)}
+  </div>
+}
+
 function CvTool() {
   const [values, setValues] = useState<Record<string, string>>({})
   const [template, setTemplate] = useState<CvTemplate>("modern")
   const [photo, setPhoto] = useState<string | null>(null)
-  const [submitted, setSubmitted] = useState(false)
+  const [step, setStep] = useState<CvStep>("details")
   const [shareError, setShareError] = useState<string | null>(null)
+  const setValue = (id: string, value: string) => updateValue(setValues, id, value)
 
   const handlePhoto = (file?: File) => {
     if (!file) return
-    if (!['image/jpeg', 'image/png'].includes(file.type) || file.size > 2 * 1024 * 1024) {
+    if (!["image/jpeg", "image/png"].includes(file.type) || file.size > 2 * 1024 * 1024) {
       setShareError("Please choose a JPG or PNG photo under 2 MB.")
       return
     }
@@ -169,18 +189,24 @@ function CvTool() {
     if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.")
   }
 
-  return <ToolShell title="Build a CV that feels like you" description="Add your details, choose a layout, and review a clean on-screen preview before sending it to us. Nothing is downloaded from this tool.">
-    <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="abh-card grid gap-6 p-5 md:p-8">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div><label className="mb-2 block text-sm font-semibold">Layout</label><div className="grid grid-cols-2 gap-2">{(["modern", "classic"] as CvTemplate[]).map((option) => <button type="button" key={option} onClick={() => setTemplate(option)} className={`rounded-[14px] px-4 py-3 text-sm font-semibold ${template === option ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}>{option === "modern" ? "Modern" : "Classic"}<span className="mt-1 block text-xs font-normal opacity-75">{option === "modern" ? "Clean sidebar" : "Traditional"}</span></button>)}</div></div>
-        <div><label className="mb-2 block text-sm font-semibold">Profile photo</label><label className="flex min-h-[76px] cursor-pointer items-center gap-3 rounded-[14px] bg-background px-4 py-3 text-sm text-muted-foreground"><FileArrowUp size={22} /><span>{photo ? "Photo selected — choose another" : "Optional photo — JPG or PNG"}</span><input type="file" accept="image/png,image/jpeg" className="sr-only" onChange={(event) => handlePhoto(event.target.files?.[0])} /></label></div>
-      </div>
-      <div className="grid gap-5 sm:grid-cols-2">{CV_FIELDS.map((field) => <InputField key={field.id} field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} />)}</div>
-      {shareError && <p className="text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
-      <button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold"><CheckCircle size={19} /> Review my CV</button>
-    </form>
-    {submitted && <section className="mt-10 text-center" aria-live="polite"><div className="mb-4 flex flex-wrap items-center justify-center gap-3"><div><h2 className="text-2xl font-semibold">Your {template === "modern" ? "modern" : "classic"} CV</h2></div><button type="button" onClick={shareDetails} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><WhatsappLogo size={18} /> Send to ApexBytesHub</button></div><CvPreview values={values} template={template} photo={photo} /><p className="mt-4 text-center text-sm text-muted-foreground">This is a visual review only. We can polish, format, and prepare the final version with you.</p></section>}
-  </ToolShell>
+  const stepIndex = CV_STEPS.findIndex((item) => item.id === step)
+  const next = () => setStep(CV_STEPS[Math.min(stepIndex + 1, CV_STEPS.length - 1)].id)
+  const back = () => setStep(CV_STEPS[Math.max(stepIndex - 1, 0)].id)
+
+  return <div className="min-h-screen bg-[#f1f5fb]"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-[1480px] px-5 pb-20 pt-[calc(var(--nav-h)+2rem)] md:px-8">
+    <div className="mx-auto mb-6 max-w-[1240px]"><ToolBackLink /><div className="mb-7 text-left"><p className="text-xs font-bold uppercase tracking-[0.24em] text-blue-700">Free tool</p><h1 className="mt-2 text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">CV writer</h1><p className="mt-2 text-lg text-slate-600">Fill in the basics — we handle the layout.</p></div><CvSteps step={step} /></div>
+    <div className="cv-editor mx-auto grid max-w-[1240px] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,.9fr)] lg:items-start">
+      <section className="min-w-0">
+        {step === "details" && <CvEditorCard><h2 className="text-2xl font-bold">Your details</h2><p className="mt-1 text-sm text-slate-500">Start with the basics.</p><div className="mt-6 grid gap-5 sm:grid-cols-2"><CvStepField id="fullName" label="Full name" value={values.fullName ?? ""} onChange={(v) => setValue("fullName", v)} placeholder="e.g. Thabo Mokoena" /><CvStepField id="professionalTitle" label="Professional title" value={values.professionalTitle ?? ""} onChange={(v) => setValue("professionalTitle", v)} placeholder="e.g. Junior Bookkeeper" /><CvStepField id="phone" label="Phone number" value={values.phone ?? ""} onChange={(v) => setValue("phone", v)} placeholder="Your best contact number" type="tel" /><CvStepField id="email" label="Email address" value={values.email ?? ""} onChange={(v) => setValue("email", v)} placeholder="you@example.com" type="email" /><CvStepField id="location" label="Location" value={values.location ?? ""} onChange={(v) => setValue("location", v)} placeholder="Town, province" /><CvStepField id="profile" label="Professional summary" value={values.profile ?? ""} onChange={(v) => setValue("profile", v)} placeholder="A short, confident introduction about your experience and goals." multiline /></div><div className="mt-6 flex items-center justify-between gap-3"><span className="text-sm text-slate-500">Optional photo</span><label className="cv-upload-button inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-blue-700"><FileArrowUp size={18} /> {photo ? "Choose another" : "Upload photo"}<input type="file" accept="image/png,image/jpeg" className="sr-only" onChange={(event) => handlePhoto(event.target.files?.[0])} /></label></div></CvEditorCard>}
+        {step === "experience" && <CvEditorCard><h2 className="text-2xl font-bold">Work experience</h2><p className="mt-1 text-sm text-slate-500">Most recent first</p><div className="mt-6 grid gap-5 sm:grid-cols-2"><CvStepField id="experienceTitle" label="Job title" value={values.experienceTitle ?? ""} onChange={(v) => setValue("experienceTitle", v)} placeholder="e.g. Junior Bookkeeper" /><CvStepField id="company" label="Company" value={values.company ?? ""} onChange={(v) => setValue("company", v)} placeholder="e.g. Bothaville Motors" /><CvStepField id="startDate" label="Start date" value={values.startDate ?? ""} onChange={(v) => setValue("startDate", v)} placeholder="Jan 2022" /><CvStepField id="endDate" label="End date" value={values.endDate ?? ""} onChange={(v) => setValue("endDate", v)} placeholder="Present" /><CvStepField id="experience" label="What you did" value={values.experience ?? ""} onChange={(v) => setValue("experience", v)} placeholder="Captured daily invoices and reconciled cash\nPrepared monthly VAT summaries" multiline /></div><button type="button" className="mt-5 flex w-full items-center justify-center gap-2 rounded-[14px] border border-dashed border-blue-300 py-3 text-sm font-semibold text-blue-700">＋ Add another role</button></CvEditorCard>}
+        {step === "education" && <CvEditorCard><h2 className="text-2xl font-bold">Education and skills</h2><p className="mt-1 text-sm text-slate-500">Add the details employers need.</p><div className="mt-6 grid gap-5"><CvStepField id="education" label="Education" value={values.education ?? ""} onChange={(v) => setValue("education", v)} placeholder="Qualification — Institution — Year" multiline /><CvStepField id="skills" label="Skills" value={values.skills ?? ""} onChange={(v) => setValue("skills", v)} placeholder="Bookkeeping, Sage, Excel, Reconciliation" multiline /><CvStepField id="certifications" label="Certificates and achievements" value={values.certifications ?? ""} onChange={(v) => setValue("certifications", v)} placeholder="Optional certificates, awards or short courses" multiline /></div></CvEditorCard>}
+        {step === "preview" && <CvEditorCard><div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="text-2xl font-bold">Your CV is ready to review</h2><p className="mt-1 text-sm text-slate-500">One page · A4 · print-ready preview</p></div><button type="button" onClick={shareDetails} className="inline-flex items-center gap-2 rounded-[14px] bg-[#fa5215] px-4 py-3 text-sm font-semibold text-white"><WhatsappLogo size={18} /> Send to ApexBytesHub</button></div>{shareError && <p className="mt-4 text-sm text-red-600" role="alert">{shareError}</p>}<div className="mt-6 grid grid-cols-2 gap-3"><button type="button" onClick={() => setTemplate("modern")} className={`rounded-[14px] px-4 py-3 text-sm font-semibold ${template === "modern" ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700"}`}>Modern layout</button><button type="button" onClick={() => setTemplate("classic")} className={`rounded-[14px] px-4 py-3 text-sm font-semibold ${template === "classic" ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-700"}`}>Classic layout</button></div></CvEditorCard>}
+        <div className="mt-5 flex gap-3"><button type="button" onClick={back} disabled={stepIndex === 0} className="min-h-12 flex-1 rounded-[14px] bg-slate-200 px-5 font-semibold text-slate-700 disabled:opacity-45">Back</button><button type="button" onClick={next} disabled={step === "preview"} className="min-h-12 flex-1 rounded-[14px] bg-[#fa5215] px-5 font-semibold text-white shadow-[0_10px_20px_-12px_rgba(250,82,21,.8)] disabled:opacity-45">{step === "preview" ? "Done" : "Continue"}</button></div>
+      </section>
+      <aside className="cv-preview-panel hidden rounded-[14px] bg-[#e4eaf2] p-5 lg:block"><div className="mb-4 flex items-center justify-between text-sm text-slate-600"><span>📄 A4 — 1 page</span><span>− &nbsp; 100% &nbsp; +</span></div><CvPaperPreview values={values} photo={photo} /></aside>
+      {step === "preview" && <div className="lg:hidden"><CvPaperPreview values={values} photo={photo} /></div>}
+    </div>
+  </main><PageScrollControls /><Footer /></div>
 }
 
 function IntakeTool() {
