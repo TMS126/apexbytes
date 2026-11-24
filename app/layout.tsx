@@ -10,6 +10,7 @@ import { BIZ, HEX } from '@/lib/brand'
 import { LocalBusinessJsonLd } from '@/components/ui/json-ld'
 import { FloatingSearchWidget } from '@/components/floating-search-widget'
 import { MaintenanceBanner } from '@/components/maintenance-banner'
+import { SiteScrollDownCue } from '@/components/site-scroll-down-cue'
 import { headers } from 'next/headers'
 import './globals.css'
 import './no-borders.css'
@@ -85,6 +86,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
         <ThemeProvider nonce={nonce} attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
           <InstanceGuardProvider><div id="site-shell">{children}</div></InstanceGuardProvider>
+          <SiteScrollDownCue />
           <div className="pointer-events-none fixed right-3 z-[9992] md:right-5" style={{ bottom: "calc(env(safe-area-inset-bottom, 0px) + 14rem)" }}>
             <FloatingSearchWidget />
           </div>

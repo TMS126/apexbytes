@@ -241,6 +241,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --card-rule: var(--line-rule);
   --form-rule: var(--brand-blue);
+  --form-focus-ring: var(--brand-blue);
   --brand-adobe-pdf-red: #EC1C24;
 
   --hub-print-primary: #1E6FA8;
@@ -419,6 +420,7 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --line-rule: var(--brand-orange);
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --form-rule: var(--brand-orange);
+  --form-focus-ring: var(--brand-orange);
   --brand-orange-dark: #F9D1B0;
   --brand-orange-brown: #FFE5D3;
   --brand-green-dark: #B8D993;
@@ -1909,19 +1911,27 @@ button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visib
 .intake-choice-row:hover { background: color-mix(in srgb, var(--muted) 55%, transparent); }
 .intake-choice-row input { width: 1rem; height: 1rem; flex: 0 0 auto; border: 0 !important; box-shadow: none !important; accent-color: var(--brand-orange); }
 
-/* Final input treatment: fields are completely line-free and never show a
-   colored focus ring. Keyboard focus remains programmatic/semantic, while
-   the UI stays visually quiet across every theme and tool. */
-input[class], textarea[class], select[class],
-input[class]:focus, textarea[class]:focus, select[class]:focus,
-input[class]:focus-visible, textarea[class]:focus-visible, select[class]:focus-visible,
-input, textarea, select {
+/* Final field treatment: a straight neutral rule at rest; the rule disappears
+   on focus and is replaced by one theme-aware accent ring. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+textarea, select {
   border: 0 !important;
   border-top: 0 !important;
   border-right: 0 !important;
-  border-bottom: 0 !important;
+  border-bottom: 1px solid var(--line-rule-soft) !important;
   border-left: 0 !important;
+  border-radius: 0 !important;
   outline: none !important;
+  box-shadow: none !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus-visible,
+textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
+  border-bottom-color: transparent !important;
+  border-radius: 14px !important;
+  outline: 2px solid var(--form-focus-ring) !important;
+  outline-offset: 2px;
   box-shadow: none !important;
 }
 
