@@ -218,8 +218,7 @@ export function HubBrowser({
 
                         {sectionBulk && (
                           <span
-                            className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-[var(--bulk-ribbon-bg)] px-2 py-1 text-[0.58rem] font-medium"
-                            style={{ color: "var(--bulk-ribbon-text)" }}
+                            className="abh-calc-bulk-label inline-flex shrink-0 items-center gap-0.5 rounded-full px-2 py-1 text-[0.58rem] font-medium"
                             aria-label="Bulk pricing available in this section"
                           >
                             <Tag size={9} weight="fill" aria-hidden="true" /> Bulk
@@ -281,7 +280,7 @@ export function HubBrowser({
                                     "break-words text-[0.88rem] text-zinc-700 dark:text-zinc-300",
                                     itemQty > 0 ? "font-semibold" : "font-medium"
                                   )}>
-                                    <span className="inline-flex flex-wrap items-center gap-1.5">{itemQty > 0 && <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />}{getDisplayName(section.title, item.name)}{hasBulk && <span className="inline-flex shrink-0 items-center whitespace-nowrap rounded-full bg-[var(--bulk-ribbon-bg)] px-1.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wide" style={{ color: "var(--bulk-ribbon-text)" }}>Bulk</span>}</span>
+                                    <span className="inline-flex flex-wrap items-center gap-1.5">{itemQty > 0 && <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />}{getDisplayName(section.title, item.name)}{hasBulk && <span className="abh-calc-bulk-label inline-flex shrink-0 items-center whitespace-nowrap rounded-full px-1.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wide">Bulk</span>}</span>
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
                                   <p className="text-[0.76rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>

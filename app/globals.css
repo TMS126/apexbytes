@@ -1548,6 +1548,16 @@ button:not(.abh-site-cta):not(:hover):not(:focus-visible):not(:active),
   box-shadow: 0 8px 16px -10px color-mix(in srgb, var(--brand-orange) 75%, transparent);
 }
 
+/* Calculator bulk marks stay readable on both calculator surfaces. */
+.abh-calc-bulk-label {
+  background: #DCEBF5;
+  color: #0F3F66;
+}
+.dark .abh-calc-bulk-label {
+  background: #F1FAFF;
+  color: #25283E;
+}
+
 .abh-press {
   transition: transform 120ms ease-out, opacity 120ms ease-out;
 }
