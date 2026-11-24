@@ -111,17 +111,19 @@ html[data-scroll-locked] body { overflow: hidden; }
   min-height: 54px;
   align-items: center;
   gap: .75rem;
-  border: 0;
-  border-bottom: 2px solid var(--line-rule-soft);
-  border-radius: 0;
-  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--input);
   color: var(--foreground);
   padding: 0 .875rem;
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
-.abh-expanding-search-shell { border-bottom: 2px solid var(--line-rule-soft); }
-.abh-expanding-search-shell:focus-within { border-bottom-color: var(--line-rule); }
+.abh-expanding-search-shell {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--input);
+}
 .abh-expanding-search-shell .abh-search-input,
 .abh-expanding-search-shell .abh-search-input:focus,
 .abh-expanding-search-shell .abh-search-input:focus-visible {
@@ -130,7 +132,6 @@ html[data-scroll-locked] body { overflow: hidden; }
   outline: none !important;
   box-shadow: none !important;
 }
-.abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 3px 0 -1px var(--line-rule); }
 .abh-reference-search input,
 .abh-search-input {
   min-width: 0;
@@ -155,10 +156,12 @@ html[data-scroll-locked] body { overflow: hidden; }
 .dark .abh-reference-search,
 .dark .abh-reference-search input,
 .dark .abh-search-input {
-  background: transparent !important;
+  background: var(--input) !important;
   background-image: none !important;
-  border: 0 !important;
-  box-shadow: none !important;
+}
+.dark .abh-reference-search input,
+.dark .abh-search-input {
+  background: transparent !important;
 }
 .abh-reference-search input::placeholder,
 .abh-search-input::placeholder,
@@ -1986,7 +1989,8 @@ textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
 
 .abh-reference-search,
 .abh-reference-search:focus-within {
-  border: 0 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
   box-shadow: none !important;
 }
 
