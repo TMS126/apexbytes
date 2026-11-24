@@ -80,7 +80,7 @@ export function CartSummaryBar({
 
       {cart.length > 0 && (
         <div
-          className={cn("z-10 border-b border-border/40 bg-card/90 md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]", embedded ? "md:sticky md:top-0" : "sticky top-0")}
+          className={cn("z-10 bg-card", embedded ? "md:sticky md:top-0 md:rounded-none md:shadow-none" : "sticky top-0")}
         >
           <div className="p-4 space-y-2.5 md:p-5">
             <div className="flex items-center justify-between gap-2">

@@ -385,8 +385,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             embedded ? "" : "md:-none"
           )}
         >
-          <div className="absolute top-0 left-6 right-6 h-px bg-border pointer-events-none" />
-
           <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} embedded={embedded} />
 
           <div
@@ -399,7 +397,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
-            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-background/95 md:static md:col-start-3 md:row-start-1 md:min-w-0" : ""}>
+            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-card md:static md:col-start-3 md:row-start-1 md:min-w-0 md:overflow-hidden md:rounded-[18px] md:shadow-[var(--ui-shadow-popup)]" : ""}>
             <CartSummaryBar
               embedded={embedded}
               isDark={isDark}
@@ -440,7 +438,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             />
             </div>
 
-            <div className={embedded ? "order-1 min-w-0 md:col-span-2 md:col-start-1 md:row-start-1 md:border-r md:border-border" : ""}>
+            <div className={embedded ? "order-1 min-w-0 md:col-span-2 md:col-start-1 md:row-start-1" : ""}>
             <SavedQuotesPanel
               savedQuotes={savedQuotes}
               showSavedList={showSavedList}

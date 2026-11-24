@@ -99,9 +99,10 @@ export function HubBrowser({
             onClick={() => setSearchOpen(value => !value)}
             aria-label="Search services"
             aria-expanded={searchOpen}
-            className="flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+            className="inline-flex h-9 items-center gap-1.5 px-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             <MagnifyingGlass size={19} aria-hidden="true" />
+            <span>Search</span>
           </button>
           {searchOpen && (
             <div className="absolute right-0 top-10 z-30 w-[min(22rem,calc(100vw-2rem))] rounded-[14px] border border-border bg-card p-3 shadow-[var(--ui-shadow-popup)]">

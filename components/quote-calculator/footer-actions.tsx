@@ -28,7 +28,7 @@ export function FooterActions({ hasItems, totalSavings, total, itemCount, fabCol
   return (
     <>
       {hasItems && (
-        <div className={cn("shrink-0 border-t border-border bg-card px-4 py-3", embedded && "sticky bottom-0 z-30")}>
+        <div className={cn("shrink-0 bg-card px-4 py-3", embedded && "sticky bottom-0 z-30")}>
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="flex items-baseline gap-2">
@@ -71,7 +71,7 @@ export function FooterActions({ hasItems, totalSavings, total, itemCount, fabCol
         </div>
       )}
 
-      {showClose && <div className="shrink-0 flex justify-center border-t border-zinc-100 py-2 dark:border-white/10" style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
+      {showClose && <div className="shrink-0 flex justify-center bg-card py-2" style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
         <button
           onClick={onClose}
           aria-label="Close quotation calculator"
