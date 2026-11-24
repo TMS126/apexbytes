@@ -69,8 +69,8 @@ export function CartItemCard({
         <span className="font-medium text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
       </div>
 
-      <div className={cn("flex items-center justify-between gap-3", embedded && "md:contents")}>
-        <div className={cn("flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10", embedded && "md:col-start-3 md:justify-self-start")}>
+      <div className={cn("flex items-center justify-between gap-3", embedded && "md:col-start-3 md:justify-self-start")}>
+        <div className="flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10">
           <button
             onClick={() => onClickStep(item.id, -1)}
             onPointerDown={() => onPressStart(item.id, -1)}
@@ -103,10 +103,13 @@ export function CartItemCard({
             <Plus size={13} weight="bold" aria-hidden="true" />
           </button>
         </div>
-        <span className={cn("text-base font-medium text-zinc-900 dark:text-zinc-50", embedded && "md:col-start-4 md:justify-self-end")}>R{lineTotal}</span>
+        <span className={cn("text-base font-medium text-zinc-900 dark:text-zinc-50", embedded && "md:hidden")}>R{lineTotal}</span>
       </div>
 
-      {progress?.showDots && (
+      {embedded && <span className="hidden text-right text-base font-medium text-zinc-900 dark:text-zinc-50 md:col-start-4 md:block">R{lineTotal}</span>}
+
+      <div className={cn("space-y-1", embedded && "md:col-span-4 md:flex md:items-center md:justify-between md:gap-4 md:space-y-0")}>
+        {progress?.showDots && (
         <div className="flex items-center gap-1" aria-hidden="true">
           {Array.from({ length: progress.target }).map((_, i) => (
             <span
@@ -119,13 +122,14 @@ export function CartItemCard({
             {progress.current}/{progress.target}
           </span>
         </div>
-      )}
+        )}
 
       {hint && (
         <p className={cn("text-xs font-medium leading-snug", discounted ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground")} role="status">
           {hint}
         </p>
       )}
+      </div>
     </div>
   )
 }
