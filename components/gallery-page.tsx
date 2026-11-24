@@ -69,7 +69,7 @@ function ProjectCard({
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${p.id}` : `${pathname}?project=${p.id}`
   return (
     <div className="flex flex-col">
-      <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 transition-[box-shadow,transform] duration-200 ease-out hover:shadow-[var(--shadow-card-lift)] focus-within:shadow-[var(--shadow-card-lift)] dark:bg-zinc-900">
+      <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 dark:bg-zinc-900">
         <button
           type="button"
           onClick={() => onSelect(p)}

@@ -41,7 +41,7 @@ function ProjectCard({
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(project) } }}
       className="group w-full h-full text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue"
     >
-      <div className="relative w-full h-full rounded-[14px] overflow-hidden shadow-none transition-shadow duration-200 group-hover:shadow-[var(--shadow-card-lift)] group-focus-visible:shadow-[var(--shadow-card-lift)]">
+      <div className="relative w-full h-full rounded-[14px] overflow-hidden shadow-none">
         <SafeImage src={project.image} alt={project.title} accent={accent} fill sizes="(max-width: 640px) 100vw, 448px" className="object-cover" />
 
         {/* ---- Header bar: hub label + before/after badge ---- */}

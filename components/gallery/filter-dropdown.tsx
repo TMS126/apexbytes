@@ -110,7 +110,7 @@ export function FilterDropdown({
                 className="relative z-50 w-[calc(100vw-2rem)] max-w-sm"
                 style={{ isolation: "isolate" }}
               >
-                <div className={cn("flex flex-wrap justify-center gap-2 rounded-[14px] bg-card p-2.5", "shadow-[var(--shadow-card-lift)]")}>
+                <div className="flex flex-wrap justify-center gap-2 rounded-[14px] bg-card p-2.5 shadow-none">
                   {options.map((opt) => {
                     const accent = opt.id !== "all" ? getAccent(opt.id as HubId) : undefined
                     const isActive = activeFilter === opt.id

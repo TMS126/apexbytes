@@ -954,7 +954,7 @@ button[aria-label^="Close"]:hover {
 
   .abh-card:is(a, button, [role="button"], [tabindex="0"]):hover,
   .abh-card:is(a, button, [role="button"], [tabindex="0"]):focus-visible {
-    box-shadow: var(--shadow-card-lift) !important;
+    box-shadow: none !important;
   }
 
   .abh-icon-chip {
@@ -1240,7 +1240,7 @@ button[aria-label^="Close"]:hover {
   [tabindex="0"].abh-shadow-tile:hover,
   a.abh-shadow-tile:hover,
   button.abh-shadow-tile:hover {
-    box-shadow: var(--shadow-card-lift);
+    box-shadow: none;
   }
 
   .abh-shadow-modal { box-shadow: var(--shadow-modal); }
@@ -1263,13 +1263,13 @@ button[aria-label^="Close"]:hover {
   }
 
   .abh-shadow-badge {
-    box-shadow: 0 1px 3px 0 rgba(15, 63, 102, 0.1), 0 1px 2px -1px rgba(15, 63, 102, 0.1);
+    box-shadow: none;
   }
   .abh-shadow-icon-inset {
-    box-shadow: inset 0 2px 4px 0 rgba(15, 63, 102, 0.05);
+    box-shadow: none;
   }
   .abh-shadow-handle {
-    box-shadow: 0 20px 25px -5px rgba(15, 63, 102, 0.1), 0 8px 10px -6px rgba(15, 63, 102, 0.1);
+    box-shadow: none;
   }
 
   .abh-line-left {
