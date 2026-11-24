@@ -390,7 +390,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
           aria-label="Quotation Calculator"
           className={cn(
             embedded
-              ? "abh-quote-calculator relative mx-auto min-h-[680px] w-full max-w-[1440px] rounded-[22px] flex flex-col overflow-hidden"
+              ? "abh-quote-calculator relative mx-auto min-h-[680px] w-full max-w-[1440px] rounded-[14px] flex flex-col overflow-hidden"
               : "pointer-events-auto fixed inset-0 left-auto z-[9995] md:inset-auto md:bottom-24 md:right-5 abh-quote-calculator w-full h-full md:w-[min(600px,calc(100vw-2rem))] md:max-w-[calc(100vw-2rem)] md:max-h-[82vh] rounded-none md:rounded-[14px] flex flex-col overflow-hidden",
             "transform-gpu will-change-transform abh-calc-anim",
             embedded ? "border-0 bg-background shadow-none" : GLASS.panel,

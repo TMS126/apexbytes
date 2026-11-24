@@ -160,6 +160,16 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   .abh-pill-action { border-radius: 9999px !important; }
   .abh-circle-button { border: 1px solid var(--border) !important; border-radius: 9999px !important; }
 
+/* One box radius across the site. Intentional pills/circles use rounded-full
+   and are deliberately excluded from this normalization rule. */
+[class~="rounded-sm"], [class~="rounded-md"], [class~="rounded-lg"],
+[class~="rounded-xl"], [class~="rounded-2xl"], [class~="rounded-3xl"],
+[class~="rounded-[2px]"], [class~="rounded-[4px]"], [class~="rounded-[6px]"],
+[class~="rounded-[8px]"], [class~="rounded-[10px]"], [class~="rounded-[12px]"],
+[class~="rounded-[16px]"], [class~="rounded-[18px]"], [class~="rounded-[22px]"] {
+  border-radius: 14px !important;
+}
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -1686,15 +1696,24 @@ input:focus, textarea:focus, select:focus,
 .abh-mega-backdrop { background: rgb(0 0 0 / 0.34); }
 .abh-navbar-quote-cta {
   background: var(--brand-orange) !important;
-  color: var(--on-brand-orange) !important;
+  /* #FA5215 with white text is below WCAG AA for normal-size CTA text. */
+  color: var(--brand-dark-100) !important;
   box-shadow: var(--shadow-action-brand);
 }
 .dark .abh-navbar-quote-cta {
   background: var(--brand-blue) !important;
-  color: var(--on-brand-blue) !important;
+  color: var(--brand-dark-100) !important;
 }
 .abh-navbar-quote-cta:hover,
-.abh-navbar-quote-cta:focus-visible { transform: translateY(-2px); box-shadow: var(--ui-shadow-popup); }
+.abh-navbar-quote-cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--ui-shadow-popup);
+  color: var(--brand-dark-100) !important;
+}
+.abh-navbar-quote-cta:focus-visible {
+  outline: 3px solid var(--foreground);
+  outline-offset: 3px;
+}
 .abh-mobile-nav {
   background: color-mix(in srgb, var(--background) 92%, transparent) !important;
   -webkit-backdrop-filter: blur(16px) saturate(135%);

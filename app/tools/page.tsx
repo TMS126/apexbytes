@@ -43,12 +43,12 @@ export default function ToolsPage() {
               <ScrollBounce key={tool.id}>
                 <Link
                     href={tool.href}
-                    className="group flex min-h-32 w-full items-center justify-center rounded-[16px] bg-card/70 p-5 text-center shadow-[var(--ui-shadow-popup)] transition-transform duration-150 hover:-translate-y-1 active:translate-y-px"
+                    className="group flex min-h-32 w-full items-center justify-center rounded-[14px] bg-card/70 p-5 text-center shadow-[var(--ui-shadow-popup)] transition-transform duration-150 hover:-translate-y-1 active:translate-y-px"
                     aria-label={tool.name}
                   >
                     <span className="flex flex-col items-center gap-2 text-center">
                       <span className="flex size-12 items-center justify-center text-primary transition-colors group-hover:text-foreground">
-                        <tool.Icon weight="regular" className="size-7" aria-hidden="true" />
+                        <tool.Icon size={28} weight="regular" aria-hidden="true" />
                       </span>
                       <span className="text-sm font-medium text-foreground">{tool.name}</span>
                     </span>

@@ -40,7 +40,7 @@ import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
 import { GLASS, HubIcon } from "./shared"
-import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
+import { HUB_ORDER, BULK_TIERS, isScanItem, sectionHasBulk, getDisplayName } from "./lib"
 
 interface Subtotal { total: number; savings: number; count: number }
 
@@ -76,17 +76,6 @@ function CountBadge({
   )
 }
 
-function HubBulkBadge() {
-  return (
-    <span
-      className="pointer-events-none absolute -top-2 -left-3 rounded-full bg-slate-600 px-1.5 py-0.5 text-[0.48rem] font-semibold leading-none tracking-[0.08em] text-slate-50 shadow-sm"
-      aria-label="Bulk pricing available"
-    >
-      BULK
-    </span>
-  )
-}
-
 export function HubBrowser({
   openHub, setOpenHub, openSections, toggleSection,
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
@@ -113,7 +102,6 @@ export function HubBrowser({
             const onSolid = HUB_ON_COLOR[hubId]
             const isSelected = openHub === hubId
             const hubSub = hubSubtotal(hubId)
-            const hubBulk = hubHasBulk(hubId)
 
             return (
               <button
@@ -149,7 +137,6 @@ export function HubBrowser({
                   >
                     <HubIcon id={hubId} size={25} color="currentColor" />
                   </span>
-                  {hubBulk && <HubBulkBadge />}
                   <span className="min-w-0 truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
                 </span>
               </button>
@@ -187,7 +174,7 @@ export function HubBrowser({
             </button>
           </div>
 
-          <div className="py-1">
+          <div className="max-h-[min(52vh,520px)] overflow-y-auto overscroll-contain py-1 [scrollbar-width:thin]" data-calculator-hub-scroll>
             {visibleSections.map((section) => {
               const sIdx = activeHub.sections.indexOf(section)
               const hubId = openHub
@@ -284,14 +271,6 @@ export function HubBrowser({
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
-                                {hasBulk && (
-                                  <span
-                                    className="absolute right-11 top-1/2 -translate-y-1/2 rounded-full bg-slate-600 px-2.5 py-1 text-[0.55rem] font-medium tracking-wide text-slate-50"
-                                    aria-hidden="true"
-                                  >
-                                    Bulk
-                                  </span>
-                                )}
                                 <div className="min-w-0 flex-1">
                                   <p className={cn(
                                     "break-words text-[0.9rem] text-zinc-700 dark:text-zinc-300",

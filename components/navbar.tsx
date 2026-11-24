@@ -166,7 +166,7 @@ export function Navbar() {
             </button>
 
             <nav aria-label="Primary navigation" className="hidden items-center gap-8 pointer-events-auto xl:flex">
-              {NAV_ITEMS.filter((item) => !item.isCta && item.id !== "contact").map((item) => {
+              {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
                 const active = pathname === item.path || (item.path !== "/" && pathname.startsWith(`${item.path}/`))
                 const submenu = item.id === "services"
                   ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
@@ -289,7 +289,6 @@ export function Navbar() {
                 <button type="button" onClick={handleThemeToggle} className="flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground" aria-label="Toggle theme">
                   {mounted && (theme === "dark" ? <Moon size={18} weight="fill" /> : <Sun size={18} weight="fill" />)}
                 </button>
-                <Link href="/contact" aria-current={pathname === "/contact" ? "page" : undefined} className={cn("abh-link-underline text-sm font-semibold", pathname === "/contact" ? "text-foreground" : "text-muted-foreground hover:text-foreground")}>Contact</Link>
                 <Link href="/tools/quote" aria-current={pathname === "/tools/quote" ? "page" : undefined} className="abh-navbar-quote-cta inline-flex items-center rounded-full px-5 py-2.5 text-sm font-bold transition-transform">Get a quote</Link>
               </div>
             </div>
