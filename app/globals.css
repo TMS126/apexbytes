@@ -792,7 +792,7 @@ input, textarea, select {
   background-color: transparent !important;
   border: 0 !important;
   border-bottom: 1px solid var(--line-rule-soft) !important;
-  border-radius: 0 !important;
+  border-radius: 14px !important;
   box-shadow: none !important;
 }
 input:focus, textarea:focus, select:focus,

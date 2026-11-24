@@ -30,13 +30,11 @@ export function StatsBar() {
           const Icon = stat.icon
           return (
             <ScrollBounce key={stat.label} delay={i * 0.08} className="h-full">
-              {/* data-hover-border = the ONLY element on the site allowed to show a border (hover only). */}
               <div
                 role="listitem"
                 aria-label={`${stat.value} ${stat.label}`}
                 style={{ ["--stat-color" as string]: stat.color }}
-                data-hover-border=""
-                className="group relative flex min-h-[150px] flex-col items-center justify-center gap-2 border border-transparent px-3 py-6 text-center transition-colors duration-250 ease-out hover:border-[var(--stat-color)]"
+                className="group relative flex min-h-[150px] flex-col items-center justify-center gap-2 px-3 py-6 text-center"
               >
                 <Icon size={24} weight="regular" aria-hidden="true" className="mb-0.5 text-muted-foreground transition-colors duration-250 ease-out group-hover:text-[var(--stat-color)]" />
                 <div className="text-2xl font-medium text-foreground">{stat.value}</div>

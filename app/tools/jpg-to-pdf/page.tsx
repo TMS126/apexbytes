@@ -7,7 +7,7 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretLeft, CaretDown, Download, Plus } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, CaretDown, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -22,8 +22,8 @@ import { CropModal } from "./crop-modal"
 import { ReconvertBanner } from "./reconvert-banner"
 import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
-import Link from "next/link"
 import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
+import { ToolBackLink } from "@/components/tools/tool-back-link"
 
 const JPG_TO_PDF_HELP = [
   {
@@ -88,14 +88,7 @@ export default function JpgToPdfPage() {
         {/* HERO HEADER */}
         <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+1.5rem)]">
           <div className="max-w-2xl mx-auto px-4 md:px-6 text-center">
-            <Link
-              href="/tools"
-              aria-label="Back to all tools"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <span className="inline-flex size-10 items-center justify-center rounded-full bg-secondary text-xs font-medium text-muted-foreground transition-colors hover:bg-card hover:text-foreground">All</span>
-              <CaretLeft size={15} weight="bold" aria-hidden="true" />
-            </Link>
+            <ToolBackLink />
             
             <div className="flex justify-center mb-5">
               <FilePdf weight="fill" size={40} className="text-muted-foreground" aria-hidden="true" />

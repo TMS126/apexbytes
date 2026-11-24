@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 import { PageScrollControls } from "@/components/page-scroll-controls"
 import { BIZ } from "@/lib/brand"
+import { ToolBackLink } from "@/components/tools/tool-back-link"
 
 export const metadata: Metadata = {
   title: `Quote Calculator — ${BIZ.name}`,
@@ -18,7 +19,7 @@ export default function QuotePage() {
       <PageNoticeBell page="tools" />
       <main id="main-content" className="mx-auto w-full max-w-[1520px] px-4 pb-20 pt-[calc(var(--nav-h)+2rem)] sm:px-6 lg:px-8">
         <header className="mx-auto mb-8 max-w-3xl text-center">
-          <p className="abh-eyebrow mb-2">ApexBytesHub · Quote Calculator</p>
+          <ToolBackLink />
           <h1 className="abh-page-title mb-3">Build your quote</h1>
         </header>
         <QuoteCalculatorWidget embedded />

@@ -48,8 +48,8 @@
   :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input) {
     border: 0 !important;
     border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
-    border-radius: 0 !important;
-    background: color-mix(in srgb, var(--secondary) 72%, transparent) !important;
+    border-radius: 14px !important;
+    background: transparent !important;
     color: var(--foreground) !important;
   }
   :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus,
@@ -60,8 +60,8 @@
   :root:root:root button[aria-haspopup="listbox"] {
     border: 0 !important;
     border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
-    border-radius: 0 !important;
-    background: color-mix(in srgb, var(--secondary) 72%, transparent) !important;
+    border-radius: 14px !important;
+    background: transparent !important;
   }
   :root:root:root button[aria-haspopup="listbox"]:focus-visible {
     border-bottom-color: var(--line-rule) !important;

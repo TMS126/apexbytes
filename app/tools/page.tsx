@@ -4,11 +4,12 @@ import Link from "next/link"
 import { FilePdf, FileText, ClipboardText, CurrencyDollar } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { ScrollBounce } from "@/components/scroll-bounce"
+import { PageNoticeBell } from "@/components/page-notice-bell"
 import { BIZ, WA } from "@/lib/brand"
 import { CtaBar } from "@/components/strip-section"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { PageNoticeBell } from "@/components/page-notice-bell"
+import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
+import { ScrollBounce } from "@/components/scroll-bounce"
 
 export const metadata: Metadata = {
   title: `Tools — ${BIZ.name}`,
@@ -31,8 +32,13 @@ export default function ToolsPage() {
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
           <ScrollBounce>
-            <h1 className="abh-page-title">Tools</h1>
+            <h1 className="abh-page-title mb-3">Tools</h1>
           </ScrollBounce>
+          <p className="abh-tagline mx-auto max-w-md">
+            Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
+          </p>
+          <div className="abh-divider mx-auto" />
+          <EditorialScrollCue />
         </div>
       </section>
 

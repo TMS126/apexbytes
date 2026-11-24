@@ -1,9 +1,8 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, PaperPlaneTilt, FileArrowUp, WhatsappLogo, CheckCircle, DownloadSimple } from "@phosphor-icons/react"
+import { PaperPlaneTilt, FileArrowUp, WhatsappLogo, CheckCircle, DownloadSimple } from "@phosphor-icons/react"
 import { jsPDF } from "jspdf"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -12,6 +11,7 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 import { BIZ, waChatLink } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
 import { HUB_ORDER } from "@/components/quote-calculator/lib"
+import { ToolBackLink } from "@/components/tools/tool-back-link"
 
 type ToolMode = "cv" | "intake"
 type CvTemplate = "modern" | "classic"
@@ -93,13 +93,13 @@ function updateValue(setValues: React.Dispatch<React.SetStateAction<Record<strin
 function InputField({ field, value, onChange }: { field: Field; value: string; onChange: (value: string) => void }) {
   return (
     <div className={field.multiline ? "sm:col-span-2" : ""}>
-      <label htmlFor={field.id} className="mb-1.5 block text-sm font-semibold text-foreground">
+      <label htmlFor={field.id} className="mb-1.5 block text-center text-sm font-semibold text-foreground">
         {field.label}{field.required ? " *" : ""}
       </label>
       {field.multiline ? (
-        <textarea id={field.id} required={field.required} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} rows={4} className="w-full rounded-[14px] bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+        <textarea id={field.id} required={field.required} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} rows={4} className="w-full rounded-[14px] bg-background px-4 py-3 text-center text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
       ) : (
-        <input id={field.id} required={field.required} type={field.type ?? "text"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} className="w-full rounded-[14px] bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
+        <input id={field.id} required={field.required} type={field.type ?? "text"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} className="w-full rounded-[14px] bg-background px-4 py-3 text-center text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" />
       )}
     </div>
   )
@@ -169,7 +169,7 @@ function CvTool() {
     if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.")
   }
 
-  return <ToolShell eyebrow="ApexBytesHub Tools · CV Writing" title="Build a CV that feels like you" description="Add your details, choose a layout, and review a clean on-screen preview before sending it to us. Nothing is downloaded from this tool.">
+  return <ToolShell title="Build a CV that feels like you" description="Add your details, choose a layout, and review a clean on-screen preview before sending it to us. Nothing is downloaded from this tool.">
     <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="abh-card grid gap-6 p-5 md:p-8">
       <div className="grid gap-4 sm:grid-cols-2">
         <div><label className="mb-2 block text-sm font-semibold">Layout</label><div className="grid grid-cols-2 gap-2">{(["modern", "classic"] as CvTemplate[]).map((option) => <button type="button" key={option} onClick={() => setTemplate(option)} className={`rounded-[14px] px-4 py-3 text-sm font-semibold ${template === option ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}>{option === "modern" ? "Modern" : "Classic"}<span className="mt-1 block text-xs font-normal opacity-75">{option === "modern" ? "Clean sidebar" : "Traditional"}</span></button>)}</div></div>
@@ -179,7 +179,7 @@ function CvTool() {
       {shareError && <p className="text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
       <button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold"><CheckCircle size={19} /> Review my CV</button>
     </form>
-    {submitted && <section className="mt-10" aria-live="polite"><div className="mb-4 flex flex-wrap items-end justify-between gap-3"><div><p className="abh-eyebrow">On-page preview</p><h2 className="text-2xl font-semibold">Your {template === "modern" ? "modern" : "classic"} CV</h2></div><button type="button" onClick={shareDetails} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><WhatsappLogo size={18} /> Send to ApexBytesHub</button></div><CvPreview values={values} template={template} photo={photo} /><p className="mt-4 text-center text-sm text-muted-foreground">This is a visual review only. We can polish, format, and prepare the final version with you.</p></section>}
+    {submitted && <section className="mt-10 text-center" aria-live="polite"><div className="mb-4 flex flex-wrap items-center justify-center gap-3"><div><h2 className="text-2xl font-semibold">Your {template === "modern" ? "modern" : "classic"} CV</h2></div><button type="button" onClick={shareDetails} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><WhatsappLogo size={18} /> Send to ApexBytesHub</button></div><CvPreview values={values} template={template} photo={photo} /><p className="mt-4 text-center text-sm text-muted-foreground">This is a visual review only. We can polish, format, and prepare the final version with you.</p></section>}
   </ToolShell>
 }
 
@@ -213,19 +213,19 @@ function IntakeTool() {
     if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.")
   }
 
-  return <ToolShell eyebrow="ApexBytesHub Tools · Service Intake" title="Tell us what you need" description="Choose one service first. We will then ask only for the details that help us prepare your request properly.">
+  return <ToolShell title="Tell us what you need" description="Choose one service first. We will then ask only for the details that help us prepare your request properly.">
     <div className="abh-card p-5 md:p-8">
       <label htmlFor="service" className="mb-2 block text-sm font-semibold text-foreground">1. Choose the service you need *</label>
       <select id="service" required value={values.service ?? ""} onChange={(event) => { setValues({ service: event.target.value }); setSubmitted(false) }} className="w-full rounded-[14px] bg-background px-4 py-3 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><option value="">Select a service</option>{HUB_ORDER.map((hubId) => <optgroup key={hubId} label={HUBS[hubId].title}>{SERVICE_OPTIONS.filter((option) => option.hubId === hubId).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup>)}</select>
       {selected && <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true) }} className="mt-8 grid gap-5 sm:grid-cols-2"><div className="sm:col-span-2 rounded-[14px] bg-muted/60 px-4 py-3 text-sm text-muted-foreground"><strong className="text-foreground">Selected:</strong> {selected.label} · {selected.sectionTitle}</div>{fields.map((field) => <InputField key={`${selected.value}-${field.id}`} field={field} value={values[field.id] ?? ""} onChange={(value) => updateValue(setValues, field.id, value)} />)}<button type="submit" className="abh-btn-primary inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-bold sm:col-span-2"><CheckCircle size={19} /> Review my request</button></form>}
     </div>
     {shareError && <p className="mt-4 text-sm text-red-600 dark:text-red-300" role="alert">{shareError}</p>}
-    {submitted && selected && <section className="mt-8 abh-card p-5 md:p-8" aria-live="polite"><p className="abh-eyebrow mb-2">Review before sending</p><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{values[field.id] || "Not provided"}</dd></div>)}</dl><div className="mt-7 flex flex-wrap gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
+    {submitted && selected && <section className="mt-8 abh-card p-5 text-center md:p-8" aria-live="polite"><h2 className="text-2xl font-semibold">{selected.label}</h2><dl className="mt-6 grid gap-4 text-center sm:grid-cols-2">{fields.map((field) => <div key={field.id}><dt className="text-xs font-bold uppercase tracking-wide text-muted-foreground">{field.label}</dt><dd className="mt-1 whitespace-pre-line break-words text-sm text-foreground">{values[field.id] || "Not provided"}</dd></div>)}</dl><div className="mt-7 flex flex-wrap justify-center gap-3"><button type="button" onClick={() => void sharePdf()} className="abh-btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold"><DownloadSimple size={18} /> Share / open PDF</button><button type="button" onClick={shareText} className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-white"><PaperPlaneTilt size={18} /> Send details on WhatsApp</button></div><p className="mt-4 text-sm text-muted-foreground">On phones that support file sharing, the PDF opens directly into your share sheet. On desktop, it opens as a PDF preview ready to forward.</p></section>}
   </ToolShell>
 }
 
-function ToolShell({ eyebrow, title, description, children }: { eyebrow: string; title: string; description: string; children: React.ReactNode }) {
-  return <div className="min-h-screen bg-background"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-6xl px-5 pb-20 pt-[calc(var(--nav-h)+2.5rem)] md:px-8"><Link href="/tools" className="abh-link-underline mb-7 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground"><ArrowLeft size={17} /> Back to tools</Link><header className="mb-9 max-w-3xl"><p className="abh-eyebrow mb-2">{eyebrow}</p><h1 className="abh-page-title mb-3">{title}</h1><p className="max-w-2xl text-muted-foreground">{description}</p></header>{children}</main><PageScrollControls /><Footer /></div>
+function ToolShell({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
+  return <div className="min-h-screen bg-background"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-6xl px-5 pb-20 pt-[calc(var(--nav-h)+2.5rem)] text-center md:px-8"><ToolBackLink /><header className="mx-auto mb-9 max-w-3xl"><h1 className="abh-page-title mb-3">{title}</h1><p className="mx-auto max-w-2xl text-muted-foreground">{description}</p></header>{children}</main><PageScrollControls /><Footer /></div>
 }
 
 export function ToolForm({ mode }: { mode: ToolMode }) {
