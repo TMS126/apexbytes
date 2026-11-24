@@ -393,13 +393,13 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             className={cn(
               "flex-1 min-h-0 overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
               embedded ? "overflow-visible" : "overflow-y-auto",
-              embedded ? "flex flex-col md:grid md:grid-cols-[280px_minmax(0,1fr)] md:items-start md:gap-0" : ""
+              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(360px,440px)] md:items-start md:gap-0" : ""
             )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
-            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-background/95 md:static md:col-start-2 md:row-start-1 md:min-w-0" : ""}>
+            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-background/95 md:static md:col-start-3 md:row-start-1 md:min-w-0" : ""}>
             <CartSummaryBar
               embedded={embedded}
               isDark={isDark}
@@ -427,7 +427,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             />
             </div>
 
-            <div className={embedded ? "order-1 min-w-0 md:col-start-1 md:row-start-1 md:border-r md:border-border" : ""}>
+            <div className={embedded ? "order-1 min-w-0 md:col-span-2 md:col-start-1 md:row-start-1 md:border-r md:border-border" : ""}>
             <SavedQuotesPanel
               savedQuotes={savedQuotes}
               showSavedList={showSavedList}

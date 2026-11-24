@@ -95,6 +95,7 @@ export function HubBrowser({
         <span className="text-xs text-muted-foreground">Pick a hub, then a service</span>
       </div>
 
+      <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-6" : "space-y-4")}>
       <div className={cn("gap-3", embedded ? "flex overflow-x-auto pb-1 md:grid md:grid-cols-1 md:overflow-visible" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5")} role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
@@ -146,6 +147,7 @@ export function HubBrowser({
           })}
         </div>
 
+        <div className={embedded ? "min-w-0" : ""}>
       <label className="flex min-h-12 items-center gap-2 border-b border-foreground/20 px-1 text-muted-foreground focus-within:border-[var(--line-rule)]" data-calculator-swipe-block>
         <MagnifyingGlass size={18} aria-hidden="true" />
         <span className="sr-only">Search services</span>
@@ -319,6 +321,8 @@ export function HubBrowser({
           </div>
         </div>
       )}
+        </div>
+      </div>
     </div>
   )
                  }
