@@ -1908,6 +1908,39 @@ button:not(:disabled):not([data-no-lift]):focus-visible,
 .intake-choice-row { display: flex; min-height: 2.1rem; align-items: center; gap: .55rem; padding: .2rem .35rem; color: var(--foreground); font-size: .78rem; line-height: 1.3; }
 .intake-choice-row:hover { background: color-mix(in srgb, var(--muted) 55%, transparent); }
 .intake-choice-row input { width: 1rem; height: 1rem; flex: 0 0 auto; border: 0 !important; box-shadow: none !important; accent-color: var(--brand-orange); }
+
+/* Final input treatment: fields are completely line-free and never show a
+   colored focus ring. Keyboard focus remains programmatic/semantic, while
+   the UI stays visually quiet across every theme and tool. */
+input[class], textarea[class], select[class],
+input[class]:focus, textarea[class]:focus, select[class]:focus,
+input[class]:focus-visible, textarea[class]:focus-visible, select[class]:focus-visible,
+input, textarea, select {
+  border: 0 !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.abh-reference-search,
+.abh-reference-search:focus-within {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.abh-reference-search input,
+.abh-reference-search input:focus,
+.abh-reference-search input:focus-visible,
+.abh-search-input,
+.abh-search-input:focus,
+.abh-search-input:focus-visible {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 .intake-review-button { grid-column: 1 / -1; justify-self: center; margin-top: .5rem; }
 @media (max-width: 640px) {
   .intake-document-header, .intake-document-title-row { align-items: flex-start; flex-direction: column; }
