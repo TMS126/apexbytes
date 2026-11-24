@@ -45,6 +45,7 @@ import { HUB_ORDER, BULK_TIERS, isScanItem, sectionHasBulk, getDisplayName } fro
 interface Subtotal { total: number; savings: number; count: number }
 
 interface HubBrowserProps {
+  embedded?: boolean
   openHub: HubId | null
   setOpenHub: (h: HubId | null) => void
   openSections: Record<HubId, number | null>
@@ -77,7 +78,7 @@ function CountBadge({
 }
 
 export function HubBrowser({
-  openHub, setOpenHub, openSections, toggleSection,
+  embedded = false, openHub, setOpenHub, openSections, toggleSection,
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
 }: HubBrowserProps) {
   const [query, setQuery] = useState("")
@@ -88,13 +89,13 @@ export function HubBrowser({
   ) ?? []
 
   return (
-    <div className="min-w-0 p-4 space-y-4 md:p-5">
+    <div className={cn("min-w-0 space-y-4 p-4 md:p-5", embedded && "md:sticky md:top-0 md:self-start")}>
       <div className="flex items-center justify-between gap-3 px-1">
         <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Services</span>
         <span className="text-xs text-muted-foreground">Pick a hub, then a service</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5" role="tablist" aria-label="Hubs">
+      <div className={cn("gap-3", embedded ? "flex overflow-x-auto pb-1 md:grid md:grid-cols-1 md:overflow-visible" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5")} role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
@@ -110,7 +111,8 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex min-w-0 items-center gap-2 rounded-[14px] bg-secondary/60 px-3 py-2.5 text-left",
+                  "group relative flex min-w-0 shrink-0 items-center gap-2 rounded-[14px] bg-secondary/60 px-3 py-2.5 text-left",
+                  embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
                   isSelected && "border border-[var(--hub-accent)] bg-[color-mix(in_srgb,var(--hub-accent)_10%,transparent)] ring-2 ring-[color-mix(in_srgb,var(--hub-accent)_18%,transparent)]",
                   GLASS.item

@@ -439,6 +439,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             />
 
             <HubBrowser
+              embedded={embedded}
               openHub={openHub}
               setOpenHub={setOpenHub}
               openSections={openSections}
@@ -459,12 +460,15 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             hasItems={cart.length > 0}
             totalSavings={totalSavings}
             total={total}
+            itemCount={itemCount}
             fabColor={fabColor}
             onExportPdf={() => { void exportPdf("download") }}
             onViewQuote={() => { void exportPdf("view") }}
             onSendQuote={sendQuote}
             onClose={() => setIsOpen(false)}
             showClose={!embedded}
+            embedded={embedded}
+            isScrolling={isScrolling}
           />
         </div>
       )}

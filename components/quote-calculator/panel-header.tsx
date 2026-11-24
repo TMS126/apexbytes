@@ -43,12 +43,12 @@ export function PanelHeader({ clockLabel, isDark, onToggleTheme, hasItems, title
         </div>
       </div>
 
-      <div className={cn("shrink-0 border-b border-border px-5 pb-3", embedded ? "text-left" : "text-center")}>
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground">ApexBytesHub</p>
-        <h3 className="mt-1 font-sans text-xl font-medium leading-snug" style={{ color: titleAccent }}>
+      <div className={cn("shrink-0 border-b border-border px-5 pb-4", embedded ? "text-left" : "text-center")}>
+        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[var(--brand-blue-text)]">{embedded ? "QUOTE CALCULATOR" : "ApexBytesHub"}</p>
+        <h3 className={cn("mt-1 font-heading text-xl font-semibold leading-snug", embedded && "text-3xl tracking-tight md:text-4xl")} style={{ color: embedded ? "var(--foreground)" : titleAccent }}>
           {embedded ? "Build your quote" : hasItems ? "Looking good so far" : "What can we help you with today?"}
         </h3>
-        <p className="mt-1 text-[0.78rem] font-medium text-muted-foreground">
+        <p className="mt-1 text-sm font-medium text-muted-foreground">
           {embedded ? "Choose a hub, add a service, and review it on the right." : hasItems ? "Add more, or send it through whenever you're ready." : "Tap a hub below and let's put your quote together."}
         </p>
       </div>

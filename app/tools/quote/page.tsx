@@ -18,11 +18,13 @@ export default function QuotePage() {
       <Navbar />
       <PageNoticeBell page="tools" />
       <main id="main-content" className="mx-auto w-full max-w-[1520px] px-4 pb-20 pt-[calc(var(--nav-h)+2rem)] sm:px-6 lg:px-8">
-        <header className="mx-auto mb-8 flex max-w-3xl flex-col items-center text-center">
+        <header className="mx-auto mb-6 flex max-w-3xl flex-col items-center text-center">
           <ToolBackLink />
           <h1 className="abh-page-title mb-3">Build your quote</h1>
         </header>
-        <QuoteCalculatorWidget embedded />
+        <div className="overflow-x-auto">
+          <QuoteCalculatorWidget embedded />
+        </div>
       </main>
       <PageScrollControls />
       <Footer />

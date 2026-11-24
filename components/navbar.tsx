@@ -218,7 +218,7 @@ export function Navbar() {
                               </Link>
                               <div className="space-y-1">
                                 {hub.sections.flatMap((section) => section.items.map((service) => ({ ...service, sectionTitle: section.title }))).slice(0, 5).map((service) => (
-                                  <Link key={`${service.sectionTitle}-${service.name}`} href={serviceRouteFor(hubId, service.sectionTitle, service.name)} className="abh-link-underline block w-fit py-1 text-xs text-muted-foreground hover:text-foreground">
+                                  <Link key={`${service.sectionTitle}-${service.name}`} href={serviceRouteFor(hubId, service.sectionTitle, service.name)} className="abh-link-underline block w-fit py-1 text-sm text-muted-foreground hover:text-foreground">
                                     {service.name}
                                   </Link>
                                 ))}

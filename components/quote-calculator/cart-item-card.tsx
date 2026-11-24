@@ -42,15 +42,15 @@ export function CartItemCard({
       ref={cardRef}
       role="listitem"
       className={cn(
-        "relative shrink-0 rounded-[14px] bg-card p-3.5 space-y-2 transition-[background-color] duration-200 ease-out motion-reduce:transition-none",
-        embedded ? "w-full" : "w-[250px] snap-start",
+        "relative shrink-0 bg-card p-3.5 space-y-2 transition-[background-color] duration-200 ease-out motion-reduce:transition-none",
+        embedded ? "w-full rounded-none border-b border-border/70 md:grid md:grid-cols-[minmax(0,2.2fr)_minmax(6rem,1fr)_minmax(8rem,1fr)_minmax(6rem,.8fr)] md:items-center md:gap-4 md:space-y-0 md:px-4" : "w-[250px] rounded-[14px] snap-start",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
-      <div className="flex items-start justify-between gap-2">
+      <div className={cn("flex items-start justify-between gap-2", embedded && "md:col-start-1")}>
         <div className="min-w-0">
           <p className="flex items-center gap-1.5 text-base font-medium text-zinc-800 dark:text-zinc-200 leading-tight"><span aria-hidden="true" className="size-2 shrink-0 rounded-full" style={{ backgroundColor: accent }} />{displayName}</p>
           <p className="text-sm font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
@@ -64,12 +64,12 @@ export function CartItemCard({
         </button>
       </div>
 
-      <div className="flex items-center gap-2 text-base">
+      <div className={cn("flex items-center gap-2 text-base", embedded && "md:col-start-2 md:block md:text-sm")}>
         {discounted && <span className="text-red-400 line-through">R{item.unitPrice}{item.unit ? `/${item.unit}` : ""}</span>}
         <span className="font-medium text-zinc-700 dark:text-zinc-200" style={{ color: discounted ? accent : undefined }}>R{effRate}{item.unit ? `/${item.unit}` : ""}</span>
       </div>
 
-      <div className="flex items-center justify-between gap-3">
+      <div className={cn("flex items-center justify-between gap-3", embedded && "md:col-start-3 md:col-span-2")}>
         <div className="flex items-center rounded-full overflow-hidden bg-black/5 dark:bg-white/10">
           <button
             onClick={() => onClickStep(item.id, -1)}

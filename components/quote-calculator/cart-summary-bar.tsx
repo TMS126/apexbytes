@@ -84,7 +84,7 @@ export function CartSummaryBar({
         >
           <div className="p-4 space-y-2.5 md:p-5">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[0.72rem] font-medium uppercase tracking-widest text-zinc-600 dark:text-zinc-200">
+              <span className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                 Your Quote · {itemCount} item{itemCount === 1 ? "" : "s"} · R{total}
               </span>
               <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-100/80 dark:bg-white/5 shrink-0">
@@ -129,12 +129,17 @@ export function CartSummaryBar({
               </div>
             )}
 
+            {embedded && (
+              <div className="hidden grid-cols-[minmax(0,2.2fr)_minmax(6rem,1fr)_minmax(8rem,1fr)_minmax(6rem,.8fr)] items-center gap-4 rounded-[10px] bg-muted/70 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground md:grid">
+                <span>Service</span><span>Unit</span><span>Qty</span><span className="text-right">Total</span>
+              </div>
+            )}
             <div
               role="list"
               aria-label="Items in your quote"
               className={cn(
                 "gap-2.5 pb-1",
-                embedded ? "grid grid-cols-1 gap-3 overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
+                embedded ? "grid grid-cols-1 gap-0 overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
               )}
               style={{ WebkitOverflowScrolling: "touch" }}
             >
