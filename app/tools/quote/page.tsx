@@ -6,11 +6,19 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 import { PageScrollControls } from "@/components/page-scroll-controls"
 import { BIZ } from "@/lib/brand"
 import { ToolBackLink } from "@/components/tools/tool-back-link"
+import { ToolHelpAccordion } from "@/components/tools/tool-help-accordion"
 
 export const metadata: Metadata = {
   title: `Quote Calculator — ${BIZ.name}`,
   description: `Build a clear service estimate with ${BIZ.name}, then review and send it on WhatsApp.`,
 }
+
+const QUOTE_HELP = [
+  { question: "How do I build a quote?", answer: "Choose a hub, open a service group, and use the plus button to add the services you need. You can adjust quantities or remove items before reviewing the estimate." },
+  { question: "Are the prices final?", answer: "The calculator provides a clear estimate based on the current service list. ApexBytesHub can confirm the final price after checking your files, quantities, and requirements." },
+  { question: "Can I change an item after adding it?", answer: "Yes. Use the plus and minus controls, edit the quantity where available, or remove the item and choose another service." },
+  { question: "How do I send my quote request?", answer: "Review the total, then use View, PDF, or Send to share your quote request. Sending opens WhatsApp with the selected services and quantities ready for review." },
+]
 
 export default function QuotePage() {
   return (
@@ -25,6 +33,7 @@ export default function QuotePage() {
         <div className="overflow-x-auto">
           <QuoteCalculatorWidget embedded />
         </div>
+        <ToolHelpAccordion title="Quote calculator help" items={QUOTE_HELP} />
       </main>
       <PageScrollControls />
       <Footer />

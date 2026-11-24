@@ -12,6 +12,7 @@ import { BIZ, waChatLink } from "@/lib/brand"
 import { HUBS } from "@/lib/data"
 import { HUB_ORDER } from "@/components/quote-calculator/lib"
 import { ToolBackLink } from "@/components/tools/tool-back-link"
+import { ToolHelpAccordion } from "@/components/tools/tool-help-accordion"
 
 type ToolMode = "cv" | "intake"
 type Field = {
@@ -315,6 +316,20 @@ const CV_STEPS: { id: CvStep; label: string }[] = [
   { id: "preview", label: "Preview" },
 ]
 
+const CV_HELP = [
+  { question: "What information do I need before I start?", answer: "Prepare your contact details, professional title, short summary, work history, education, and skills. Required details are marked with an asterisk and must be completed before you can continue." },
+  { question: "Can I add more than one job?", answer: "Yes. Add each relevant role from the most recent backwards. Include the employer, dates, responsibilities, and achievements so the preview can present your experience clearly." },
+  { question: "Can I include a photo?", answer: "Yes, you can add a JPG or PNG photo under 2 MB. A photo is optional and can be replaced before you review the CV." },
+  { question: "What happens when I finish?", answer: "You can review the sample-based CV layout on this page and send the completed details to ApexBytesHub on WhatsApp for assistance." },
+]
+
+const INTAKE_HELP = [
+  { question: "Why do I choose a service first?", answer: "Choosing a service lets us show only the questions needed for that request, keeping the form shorter and easier to complete." },
+  { question: "Which fields are required?", answer: "Required fields are marked with an asterisk. Your browser will not submit the form while required information is missing." },
+  { question: "Can I review the details before sending them?", answer: "Yes. After reviewing your request, you can download or share a fillable PDF, or send the details to ApexBytesHub on WhatsApp." },
+  { question: "Is my information sent automatically?", answer: "No. You choose whether to download, share, or send your completed details. The form does not send anything without your action." },
+]
+
 const REQUIRED_CV_FIELDS = new Set(["fullName", "professionalTitle", "phone", "profile", "educationType", "educationYear", "qualification", "institution", "skills"])
 
 function isRequiredCvField(id: string) {
@@ -425,7 +440,7 @@ function CvTool() {
       {step === "education" && <CvEditorCard><h2 className="text-2xl font-bold">Education and skills</h2><p className="mt-1 text-sm text-muted-foreground">Add the details employers need.</p><div className="mt-6 grid gap-5 sm:grid-cols-2"><CvStepSelect id="educationType" label="Qualification type" value={values.educationType ?? ""} onChange={(v) => setValue("educationType", v)} options={["High school", "Certificate", "National certificate", "Diploma", "Degree", "Short course", "Other"]} /><CvStepSelect id="educationYear" label="Completion year" value={values.educationYear ?? ""} onChange={(v) => setValue("educationYear", v)} options={["2026", "2025", "2024", "2023", "2022", "2021", "2020", "2019 or earlier", "Currently studying"]} /><CvStepField id="qualification" label="Qualification or subject" value={values.qualification ?? ""} onChange={(v) => setValue("qualification", v)} placeholder="e.g. National Certificate: Accounting" /><CvStepField id="institution" label="Institution" value={values.institution ?? ""} onChange={(v) => setValue("institution", v)} placeholder="School, college, or university" /><CvStepField id="skills" label="Skills" value={values.skills ?? ""} onChange={(v) => setValue("skills", v)} placeholder="Bookkeeping, Sage, Excel, Reconciliation" multiline /><CvStepField id="certifications" label="Certificates and achievements" value={values.certifications ?? ""} onChange={(v) => setValue("certifications", v)} placeholder="Optional certificates, awards or short courses" multiline /><CvStepField id="references" label="References" value={values.references ?? ""} onChange={(v) => setValue("references", v)} placeholder="Available on request, or add contact details" multiline /></div></CvEditorCard>}
       {step === "preview" && <CvEditorCard><div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="text-2xl font-bold">Your CV is ready to review</h2><p className="mt-1 text-sm text-muted-foreground">One polished sample-based layout · A4 preview</p></div><button type="button" onClick={shareDetails} className="inline-flex items-center gap-2 rounded-[14px] bg-[var(--brand-orange)] px-4 py-3 text-sm font-semibold text-white shadow-[0_10px_20px_-12px_rgba(250,82,21,.8)]"><WhatsappLogo size={18} /> Send to ApexBytesHub</button></div>{shareError && <p className="mt-4 text-sm text-red-600" role="alert">{shareError}</p>}</CvEditorCard>}
       <div className="mt-5 flex gap-3"><button type="button" onClick={back} disabled={stepIndex === 0} className="min-h-12 flex-1 rounded-[14px] cv-secondary-button px-5 font-semibold disabled:opacity-45">Back</button><button type="button" onClick={next} disabled={step === "preview"} className="min-h-12 flex-1 rounded-[14px] bg-[var(--brand-orange)] px-5 font-semibold text-white shadow-[0_10px_20px_-12px_rgba(250,82,21,.8)] disabled:opacity-45">{step === "preview" ? "Done" : "Continue"}</button></div>
-    </section><aside className="cv-preview-panel hidden rounded-[14px] p-5 lg:block"><div className="mb-4 flex items-center justify-between text-sm"><span>📄 A4 — 1 page</span><span>− &nbsp; 100% &nbsp; +</span></div><CvPaperPreview values={values} photo={photo} roles={roles} /></aside>{step === "preview" && <div className="lg:hidden"><CvPaperPreview values={values} photo={photo} roles={roles} /></div>}</div>
+    </section><aside className="cv-preview-panel hidden rounded-[14px] p-5 lg:block"><div className="mb-4 flex items-center justify-between text-sm"><span>📄 A4 — 1 page</span><span>− &nbsp; 100% &nbsp; +</span></div><CvPaperPreview values={values} photo={photo} roles={roles} /></aside>{step === "preview" && <div className="lg:hidden"><CvPaperPreview values={values} photo={photo} roles={roles} /></div>}</div><ToolHelpAccordion title="CV Writer help" items={CV_HELP} />
   </main><PageScrollControls /><Footer /></div>
 }
 
@@ -500,7 +515,7 @@ function IntakeTool() {
 }
 
 function ToolShell({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
-  return <div className="min-h-screen bg-background"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-6xl px-5 pb-20 pt-[calc(var(--nav-h)+2.5rem)] text-center md:px-8"><ToolBackLink /><header className="mx-auto mb-9 max-w-3xl"><h1 className="abh-page-title mb-3">{title}</h1><p className="mx-auto max-w-2xl text-muted-foreground">{description}</p></header>{children}</main><PageScrollControls /><Footer /></div>
+  return <div className="min-h-screen bg-background"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-6xl px-5 pb-20 pt-[calc(var(--nav-h)+2.5rem)] text-center md:px-8"><ToolBackLink /><header className="mx-auto mb-9 max-w-3xl"><h1 className="abh-page-title mb-3">{title}</h1><p className="mx-auto max-w-2xl text-muted-foreground">{description}</p></header>{children}<ToolHelpAccordion title="Intake Form help" items={INTAKE_HELP} /></main><PageScrollControls /><Footer /></div>
 }
 
 export function ToolForm({ mode }: { mode: ToolMode }) {

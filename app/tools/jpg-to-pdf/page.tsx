@@ -7,7 +7,7 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
-import { UploadSimple, FilePdf, WarningCircle, CaretDown, Download, Plus } from "@phosphor-icons/react"
+import { UploadSimple, FilePdf, WarningCircle, Download, Plus } from "@phosphor-icons/react"
 import { THEME_HEX, HEX } from "@/lib/brand"
 import { ensureAccessible } from "@/lib/color"
 import { ScrollBounce } from "@/components/scroll-bounce"
@@ -24,6 +24,7 @@ import { ResultsPanel } from "./results-panel"
 import { HistoryPanel } from "./history-panel"
 import { ACCEPT_ATTRIBUTE, PAGE_TIPS, WHATSAPP_MAGIC_PHRASES } from "./constants"
 import { ToolBackLink } from "@/components/tools/tool-back-link"
+import { ToolHelpAccordion } from "@/components/tools/tool-help-accordion"
 
 const JPG_TO_PDF_HELP = [
   {
@@ -49,7 +50,6 @@ export default function JpgToPdfPage() {
   const [isDragging, setIsDragging] = useState(false)
   const [zoomId, setZoomId] = useState<string | null>(null)
   const [cropId, setCropId] = useState<string | null>(null)
-  const [openHelpIndex, setOpenHelpIndex] = useState<number | null>(null)
 
   const tip = PAGE_TIPS[0]
   const waPhrase = WHATSAPP_MAGIC_PHRASES[0]
@@ -335,49 +335,7 @@ accept={ACCEPT_ATTRIBUTE}
           </div>
         </section>
 
-        <section className="w-full px-4 pb-16 md:px-6" aria-labelledby="jpg-to-pdf-help-heading">
-          <div className="mx-auto max-w-2xl">
-            <h2 id="jpg-to-pdf-help-heading" className="abh-section-heading mb-5 text-center">JPG to PDF help</h2>
-            <div className="divide-y divide-border border-y border-border">
-              {JPG_TO_PDF_HELP.map((item, index) => {
-                const isOpen = openHelpIndex === index
-                const contentId = `jpg-to-pdf-help-${index}`
-
-                return (
-                  <div key={item.question}>
-                    <button
-                      type="button"
-                      onClick={() => setOpenHelpIndex((current) => (current === index ? null : index))}
-                      aria-expanded={isOpen}
-                      aria-controls={contentId}
-                      className="flex w-full items-center justify-between gap-4 py-4 text-left text-base font-medium text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                    >
-                      <span>{item.question}</span>
-                      <CaretDown
-                        size={17}
-                        weight="bold"
-                        aria-hidden="true"
-                        className={`shrink-0 text-muted-foreground transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                    <div
-                      id={contentId}
-                      role="region"
-                      aria-label={item.question}
-                      aria-hidden={!isOpen}
-                      inert={!isOpen}
-                      className={`grid min-h-0 transition-[grid-template-rows,opacity] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-                    >
-                      <div className="min-h-0 overflow-hidden">
-                        <p className="pb-4 pr-8 text-sm leading-relaxed text-muted-foreground">{item.answer}</p>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
+        <ToolHelpAccordion title="JPG to PDF help" items={JPG_TO_PDF_HELP} />
       </main>
 
       {/* CTA Bar */}
