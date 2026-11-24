@@ -52,7 +52,7 @@ export function CartItemCard({
     >
       <div className={cn("flex items-start justify-between gap-2", embedded && "md:col-start-1")}>
         <div className="min-w-0">
-          <p className="flex items-center gap-1.5 text-base font-medium text-zinc-800 dark:text-zinc-200 leading-tight"><span aria-hidden="true" className="size-2 shrink-0 rounded-full" style={{ backgroundColor: accent }} />{displayName}</p>
+          <p className="flex items-start gap-1.5 break-words text-base font-medium leading-tight text-zinc-800 dark:text-zinc-200"><span aria-hidden="true" className="mt-1 size-2 shrink-0 rounded-full" style={{ backgroundColor: accent }} />{displayName}</p>
           <p className="text-sm font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
         <button

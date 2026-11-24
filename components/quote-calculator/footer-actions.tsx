@@ -22,14 +22,13 @@ interface FooterActionsProps {
   onClose: () => void
   showClose?: boolean
   embedded?: boolean
-  isScrolling?: boolean
 }
 
-export function FooterActions({ hasItems, totalSavings, total, itemCount, fabColor, onExportPdf, onViewQuote, onSendQuote, onClose, showClose = true, embedded = false, isScrolling = false }: FooterActionsProps) {
+export function FooterActions({ hasItems, totalSavings, total, itemCount, fabColor, onExportPdf, onViewQuote, onSendQuote, onClose, showClose = true, embedded = false }: FooterActionsProps) {
   return (
     <>
       {hasItems && (
-        <div className={cn("shrink-0 border-t border-border bg-card px-4 py-3 transition-[opacity,transform] duration-200", embedded && "sticky bottom-0 z-30", embedded && isScrolling && "pointer-events-none translate-y-3 opacity-0")}>
+        <div className={cn("shrink-0 border-t border-border bg-card px-4 py-3", embedded && "sticky bottom-0 z-30")}>
           <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="flex items-baseline gap-2">

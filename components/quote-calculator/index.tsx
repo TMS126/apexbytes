@@ -468,7 +468,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             onClose={() => setIsOpen(false)}
             showClose={!embedded}
             embedded={embedded}
-            isScrolling={isScrolling}
           />
         </div>
       )}

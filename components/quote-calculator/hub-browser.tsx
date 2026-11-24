@@ -112,7 +112,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex min-w-0 shrink-0 items-center gap-2 border-l-2 border-transparent bg-transparent px-3 py-2.5 text-left",
+                  "group relative flex min-w-[112px] shrink-0 items-center gap-2 border-l-2 border-transparent bg-transparent px-3 py-2.5 text-left",
                   embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
                   isSelected && "border-l-[3px] border-[var(--hub-accent)] bg-transparent"
@@ -129,15 +129,15 @@ export function HubBrowser({
                     label={`${hubSub.count} item${hubSub.count === 1 ? "" : "s"} from ${hub.title}`}
                   />
                 )}
-                <span className="relative">
+                <span className="flex min-w-0 items-center gap-2">
                   <span
                     className={cn(
-                      "transition-colors duration-150",
+                      "flex size-7 shrink-0 items-center justify-center transition-colors duration-150",
                       isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubIcon id={hubId} size={25} color="currentColor" />
+                    <HubIcon id={hubId} size={22} color="currentColor" />
                   </span>
                   <span className="min-w-0 truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
                 </span>
