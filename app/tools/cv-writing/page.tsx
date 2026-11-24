@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { ToolForm } from "@/components/tools/tool-form"
 
 export const metadata: Metadata = {
-  title: "CV Writing / CV Typing — ApexBytesHub",
-  description: "Build and review a modern or classic CV online with ApexBytesHub before sending it for final help.",
+  title: "CV Writer — ApexBytesHub",
+  description: "Build and review a clear, sample-based CV with contact details, experience, skills, education, and optional supporting sections.",
 }
 
 // CV writing tool route.

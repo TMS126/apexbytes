@@ -6,7 +6,7 @@ export function ToolBackLink() {
     <Link
       href="/tools#tool-grid"
       aria-label="Back to all tools"
-      className="abh-tool-back-link mx-auto mb-8 inline-flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+      className="abh-tool-back-link mb-8 inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-card px-4 text-sm font-medium text-muted-foreground shadow-[var(--ui-shadow-popup)] transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <ArrowLeft size={17} weight="regular" aria-hidden="true" />
       <span>Back to tools</span>

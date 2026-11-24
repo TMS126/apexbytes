@@ -61,6 +61,19 @@ const INTAKE_BASE_FIELDS: Field[] = [
 function serviceFields(selected: (typeof SERVICE_OPTIONS)[number] | undefined): Field[] {
   if (!selected) return []
   const name = selected.label.toLowerCase()
+  if (/sars|tax|efiling|itr12|vat|pay[e|e]|tcs|penalty|compliance|rav01/.test(name)) return [
+    { id: "surname", label: "Surname", placeholder: "As shown on your ID or passport", required: true },
+    { id: "idOrPassport", label: "RSA ID or passport number", placeholder: "13-digit ID or passport number", required: true },
+    { id: "taxReference", label: "SARS tax reference number", placeholder: "If known" },
+    { id: "otpPhone", label: "Active cellphone for SARS OTP", placeholder: "Number that can receive SARS SMS OTPs", required: true, type: "tel" },
+    { id: "taxYear", label: "Tax year or period", placeholder: "e.g. 2026 or 2026/10" },
+    { id: "efilingUsername", label: "SARS eFiling username", placeholder: "If already registered" },
+    { id: "requestType", label: "Document or action needed", placeholder: "Tax status, statement, ITA34, tax number, return, VAT, PAYE, or other" },
+    { id: "address", label: "Residential or postal address", placeholder: "Street, suburb/town, province and postal code", multiline: true },
+    { id: "bankDetails", label: "Bank details or RAV01 changes", placeholder: "Bank name, account type, account number and branch code, if relevant", multiline: true },
+    { id: "supportingDocuments", label: "Supporting documents available", placeholder: "ID, proof of address, certificates, statements, or other documents", multiline: true },
+    { id: "clientAuthorisation", label: "Authorisation or additional notes", placeholder: "Explain the request, dates, penalty reason, or any details we should capture.", multiline: true },
+  ]
   if (/print|copy|laminat|photo|scan/.test(name)) return [
     { id: "quantity", label: "Quantity or number of pages", placeholder: "e.g. 20 pages" },
     { id: "fileNote", label: "File or paper details", placeholder: "Colour, paper size, single/double-sided, etc.", multiline: true },
@@ -169,8 +182,7 @@ function CvPaperPreview({ values, photo, roles }: { values: Record<string, strin
     <section className="mt-6"><h3 className="cv-paper-heading">ABOUT ME</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.profile || "Your professional summary will appear here."}</p></section>
     <section className="mt-6 border-t border-slate-200 pt-5"><h3 className="cv-paper-heading">WORK EXPERIENCE</h3><div className="mt-3 space-y-4">{roles.map((role) => <article key={role.id}><div className="flex items-start justify-between gap-3"><div><h4 className="text-sm font-bold">{roleValue(role, "title") || "Job title"}</h4><p className="text-xs text-slate-500">{roleValue(role, "company") || "Company"}{roleValue(role, "employmentType") ? ` · ${roleValue(role, "employmentType")}` : ""}</p></div><span className="shrink-0 text-right text-[0.65rem] text-slate-500">{roleValue(role, "startDate") || "Start"} — {roleValue(role, "endDate") || "Present"}</span></div><p className="mt-1 whitespace-pre-line text-xs leading-5 text-slate-600">{roleValue(role, "responsibilities") || "Responsibilities and achievements will appear here."}</p></article>)}</div></section>
     <div className="mt-6 grid gap-6 border-t border-slate-200 pt-5 sm:grid-cols-2"><section><h3 className="cv-paper-heading">EDUCATION</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.education || "Qualification · Institution · Year"}</p></section><section><h3 className="cv-paper-heading">SKILLS</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.skills || "Your skills will appear here."}</p></section></div>
-    <section className="mt-6 border-t border-slate-200 pt-5"><h3 className="cv-paper-heading">REFERENCES</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.references || "Available on request"}</p></section>
-    <footer className="mt-8 border-t border-slate-200 pt-3 text-[0.6rem] text-slate-400"><span>{values.fullName || "Your name"}</span><span className="float-right">Prepared in Kgotsong, Bothaville.</span></footer>
+    {values.references && <section className="mt-6 border-t border-slate-200 pt-5"><h3 className="cv-paper-heading">REFERENCES</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.references}</p></section>}
   </div>
 }
 

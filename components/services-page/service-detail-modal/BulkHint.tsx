@@ -16,8 +16,8 @@ export function BulkHint({
 }) {
   // Keep both halves on explicit token pairings: the previous soft tint could
   // resolve to a dark surface while retaining a dark foreground in dark mode.
-  const hintBackground = "var(--secondary)"
-  const hintTextColor = "var(--foreground)"
+  const hintBackground = "var(--bulk-hint-bg)"
+  const hintTextColor = "var(--bulk-hint-text)"
 
   return (
     <div className="animate-in fade-in duration-200 flex flex-col items-center gap-2 px-1">

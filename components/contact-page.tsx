@@ -259,8 +259,7 @@ function ContactPageInner() {
                         aria-invalid={err}
                         aria-describedby={err ? `contact-${f.key}-error` : undefined}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className="w-full rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
-                        style={{ borderColor: err ? TOKEN.errorBg : "var(--form-rule)" }}
+                        className={cn("w-full rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", err && "ring-2 ring-[var(--brand-error-bg)]")}
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />

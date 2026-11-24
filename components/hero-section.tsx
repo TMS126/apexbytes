@@ -77,14 +77,13 @@ export function HeroSection() {
           </h1>
           <p className="mt-5 max-w-xl font-heading text-base leading-relaxed text-muted-foreground md:text-lg">Design, print &amp; tech, without the hassle.</p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent("abh:open-quote-calculator"))}
+            <Link
+              href="/tools/quote"
               className={`${heroCtaClass} abh-site-cta-primary`}
             >
               Quote
               <span aria-hidden="true" className="absolute inset-x-7 bottom-1 h-0.5 origin-left scale-x-0 bg-current transition-transform duration-250 ease-out group-hover/hero-cta:scale-x-100 group-focus-visible/hero-cta:scale-x-100" />
-            </button>
+            </Link>
             <Link
               href="/services"
               className={`${heroCtaClass} abh-site-cta-secondary`}

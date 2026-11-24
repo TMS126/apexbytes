@@ -267,7 +267,7 @@ export function HubBrowser({
                               <div
                                 className={cn(
                                   "group relative ml-6 flex items-center gap-2 rounded-[14px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
-                                  itemQty > 0 && "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[var(--hub-accent)]"
+                                  itemQty > 0 && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
@@ -276,7 +276,7 @@ export function HubBrowser({
                                     "break-words text-[0.9rem] text-zinc-700 dark:text-zinc-300",
                                     itemQty > 0 ? "font-semibold" : "font-medium"
                                   )}>
-                                    {getDisplayName(section.title, item.name)}
+                                    <span className="inline-flex items-center gap-1.5">{itemQty > 0 && <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />}{getDisplayName(section.title, item.name)}{hasBulk && <span className="inline-flex items-center rounded-full bg-[var(--bulk-ribbon-bg)] px-1.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wide" style={{ color: "var(--bulk-ribbon-text)" }}>Bulk</span>}</span>
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
                                   <p className="text-[0.78rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>

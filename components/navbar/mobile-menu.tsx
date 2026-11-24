@@ -38,10 +38,10 @@ const SERVICE_LABELS: Record<HubId, string> = {
 }
 
 const TOOL_LINKS = [
-  { id: "quote", label: "Quote Calculator", path: "/tools/quote" },
+  { id: "quote", label: "Quote Calc", path: "/tools/quote" },
   { id: "jpg-to-pdf", label: "JPG to PDF", path: "/tools/jpg-to-pdf" },
-  { id: "cv-writing", label: "CV Writing / CV Typing", path: "/tools/cv-writing" },
-  { id: "intake-form", label: "Intake Form Filling", path: "/tools/intake-form" },
+  { id: "cv-writing", label: "CV Writer", path: "/tools/cv-writing" },
+  { id: "intake-form", label: "Intake Form", path: "/tools/intake-form" },
 ] as const
 
 const SERVICE_ICONS: Record<string, Icon> = {

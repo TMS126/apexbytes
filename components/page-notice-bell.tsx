@@ -7,7 +7,6 @@ import { createPortal } from "react-dom"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useMounted } from "@/hooks/use-mounted"
 import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, Megaphone, SealPercent, Wrench } from "@phosphor-icons/react"
-import { ADD_ONS_EFFECTIVE_DATE } from "@/lib/add-ons"
 import { TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
@@ -27,6 +26,7 @@ export interface HomeNotice {
   sourceLabel?: string
   sourceUrl?: string
   date?: string
+  closingDate?: string
 }
 
 // ─── LOOKUP TABLES ─────────────────────────────────────────────────────────
@@ -59,21 +59,22 @@ const PAGE_LABEL: Record<NoticePage, string> = {
 const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
   services: [
     {
-      id: "services-addons",
+      id: "services-dpsa-updates",
       variant: "warning",
       Icon: Megaphone,
-      category: "Add-ons",
-      header: "Add-ons and minor price adjustments",
-      date: ADD_ONS_EFFECTIVE_DATE,
-      body: "A few optional extras are now available when you need a little more from your service. Thank you for your continued support.",
+      category: "Current updates",
+      header: "DPSA Circulars 41 and 42",
+      date: "Closes 30 November 2026",
+      closingDate: "30 Nov",
+      body: "Circular 41 includes government vacancies and Circular 42 includes Free State posts. Several Circular 41 applications close soon, so review the requirements promptly.",
     },
     {
       id: "services-bulk-deals",
       variant: "info",
       Icon: SealPercent,
       category: "Bulk Deals",
-      header: "Better rates at qualifying quantities",
-      body: "Selected printing and service items have lower rates at qualifying quantities. Look for the Bulk deals marker on each relevant hub and service.",
+      header: "Bulk service markers",
+      body: "Look for the Bulk deals marker on each relevant hub and service to see when a quantity-based option is available.",
     },
   ],
   gallery: [{
@@ -113,16 +114,16 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
       variant: "warning",
       Icon: Lightning,
       category: "Rush Fee",
-      header: "Urgent turnaround",
-      body: "A 50% surcharge applies when same-session or urgent turnaround is required.",
+      header: "Check turnaround early",
+      body: "If you have a deadline, share it with us early so we can confirm the most suitable turnaround for your request.",
     },
     {
       id: "pricing-bulk-pricing",
       variant: "info",
       Icon: SealPercent,
       category: "Bulk Pricing",
-      header: "Better rates for larger quantities",
-      body: "Look for the Bulk tag — larger quantities get a better rate.",
+      header: "Bulk service markers",
+      body: "Look for the Bulk tag when you are comparing services and quantities.",
     },
   ],
   tools: [{
@@ -155,6 +156,7 @@ function NoticeCard({ notice, onDismiss }: { notice: HomeNotice; onDismiss: (id:
             {notice.header}
           </h3>
           {notice.date && <p className="text-sm font-medium text-muted-foreground">{notice.date}</p>}
+          {notice.closingDate && <span className="abh-closing-chip mt-1 inline-flex w-fit rounded-full bg-muted px-2 py-0.5 text-xs font-semibold text-muted-foreground transition-colors">Closes {notice.closingDate}</span>}
           <p className="text-base leading-relaxed text-foreground/90">{notice.body}</p>
           {notice.sourceUrl && notice.sourceLabel && (
             <a

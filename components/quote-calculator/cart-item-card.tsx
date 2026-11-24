@@ -42,7 +42,7 @@ export function CartItemCard({
       ref={cardRef}
       role="listitem"
       className={cn(
-        "shrink-0 rounded-[14px] border border-border/70 bg-card p-3.5 space-y-2 transition-[border-color,background-color] duration-200 ease-out motion-reduce:transition-none",
+        "relative shrink-0 rounded-[14px] bg-card p-3.5 space-y-2 transition-[background-color] duration-200 ease-out motion-reduce:transition-none",
         embedded ? "w-full" : "w-[250px] snap-start",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
@@ -52,7 +52,7 @@ export function CartItemCard({
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-base font-medium text-zinc-800 dark:text-zinc-200 leading-tight">{displayName}</p>
+          <p className="flex items-center gap-1.5 text-base font-medium text-zinc-800 dark:text-zinc-200 leading-tight"><span aria-hidden="true" className="size-2 shrink-0 rounded-full" style={{ backgroundColor: accent }} />{displayName}</p>
           <p className="text-sm font-medium mt-0.5" style={{ color: accent }}>{hubLabel}</p>
         </div>
         <button

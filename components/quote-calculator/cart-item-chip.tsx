@@ -34,17 +34,16 @@ export function CartItemChip({
       ref={chipRef}
       role="listitem"
       className={cn(
-        "shrink-0 flex items-center gap-2 rounded-full border-l-[3px] bg-card pl-3 pr-1.5 py-2 snap-start transition-all duration-300 ease-out motion-reduce:transition-none",
+        "shrink-0 flex items-center gap-2 rounded-full bg-card pl-3 pr-1.5 py-2 snap-start transition-all duration-300 ease-out motion-reduce:transition-none",
         "focus-within:ring-1 focus-within:ring-[var(--hub-accent)]"
       )}
       style={{
-        borderLeftColor: accent,
         boxShadow: `0 4px 12px -2px color-mix(in srgb, ${accent} 25%, transparent), 0 2px 6px -1px rgba(0,0,0,0.18)`,
         ...(isHighlighted ? { ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent } : {}),
       }}
     >
       <div className="flex flex-col leading-tight min-w-0 max-w-[104px]">
-        <span className="text-[0.7rem] font-medium text-zinc-800 dark:text-zinc-200 truncate">{displayName}</span>
+        <span className="flex items-center gap-1.5 text-[0.7rem] font-medium text-zinc-800 dark:text-zinc-200 truncate"><span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />{displayName}</span>
         <span className="text-[0.64rem] font-medium" style={{ color: accent }}>R{lineTotal}</span>
       </div>
 

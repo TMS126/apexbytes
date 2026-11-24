@@ -18,9 +18,9 @@ export const metadata: Metadata = {
 
 const TOOLS = [
   { id: "jpg-to-pdf", name: "JPG to PDF", href: "/tools/jpg-to-pdf", Icon: FilePdf },
-  { id: "cv-writing", name: "CV Writing / CV Typing", href: "/tools/cv-writing", Icon: FileText },
-  { id: "intake-form", name: "Intake Form Filling", href: "/tools/intake-form", Icon: ClipboardText },
-  { id: "quote", name: "Quote Calculator", href: "/tools/quote", Icon: CurrencyDollar },
+  { id: "cv-writing", name: "CV Writer", href: "/tools/cv-writing", Icon: FileText },
+  { id: "intake-form", name: "Intake Form", href: "/tools/intake-form", Icon: ClipboardText },
+  { id: "quote", name: "Quote Calc", href: "/tools/quote", Icon: CurrencyDollar },
 ]
 
 export default function ToolsPage() {

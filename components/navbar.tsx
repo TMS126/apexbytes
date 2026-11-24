@@ -172,10 +172,10 @@ export function Navbar() {
                   ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
                   : item.id === "tools"
                     ? [
-                        { label: "Quote Calculator", path: "/tools/quote" },
+                        { label: "Quote Calc", path: "/tools/quote" },
                         { label: "JPG to PDF", path: "/tools/jpg-to-pdf" },
-                        { label: "CV Writing / CV Typing", path: "/tools/cv-writing" },
-                        { label: "Intake Form Filling", path: "/tools/intake-form" },
+                        { label: "CV Writer", path: "/tools/cv-writing" },
+                        { label: "Intake Form", path: "/tools/intake-form" },
                       ]
                     : null
 

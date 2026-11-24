@@ -48,6 +48,9 @@ html[data-scroll-locked] body { overflow: hidden; }
   backdrop-filter: none !important;
 }
 
+.abh-closing-chip:hover,
+.abh-closing-chip:focus-visible { background: #dc2626 !important; color: #fff !important; }
+
 .dark .abh-gallery-viewer[role="dialog"] {
   background-color: #09090b !important;
 }
@@ -752,7 +755,7 @@ code, pre, kbd, samp, .abh-mono {
   outline-offset: 3px;
   border-radius: var(--radius);
 }
-.dark :focus-visible { outline-color: var(--brand-light-blue); }
+.dark :focus-visible { outline-color: var(--brand-orange); }
 
 /* Acrylic is deliberately limited to the desktop submenu. */
 :root {
@@ -797,8 +800,13 @@ input, textarea, select {
 }
 input:focus, textarea:focus, select:focus,
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  border-bottom-color: var(--line-rule) !important;
-  box-shadow: 0 2px 0 -1px var(--line-rule) !important;
+  border-bottom-color: transparent !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-blue) 30%, transparent) !important;
+}
+.dark input:focus, .dark textarea:focus, .dark select:focus,
+.dark input:focus-visible, .dark textarea:focus-visible, .dark select:focus-visible {
+  border-bottom-color: transparent !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-orange) 34%, transparent) !important;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .abh-navbar-submenu {
@@ -836,8 +844,6 @@ input:focus, input:focus-visible,
 textarea:focus, textarea:focus-visible,
 select:focus, select:focus-visible {
   outline: none !important;
-  box-shadow: none !important;
-  -webkit-box-shadow: none !important;
 }
 
 button, a, [role="button"] {

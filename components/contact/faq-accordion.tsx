@@ -24,7 +24,7 @@ export function FAQAccordion() {
             </div>
           </ScrollBounce>
 
-        <div className="divide-y divide-zinc-100 dark:divide-zinc-800 border-t border-b border-zinc-100 dark:border-zinc-800">
+        <div className="mx-2 divide-y divide-zinc-100 border-y border-zinc-100 dark:divide-zinc-800 dark:border-zinc-800 md:mx-6">
           {FAQS.map((faq, index) => {
             const isOpen = openIndex === index
             return (
@@ -36,7 +36,7 @@ export function FAQAccordion() {
                     aria-controls={`contact-faq-${index}`}
                     className="group w-full py-5 text-left flex items-center justify-between gap-4 transition-colors"
                   >
-                    <h4 className="abh-card-heading flex items-start gap-3 text-[1.2rem] text-zinc-800 dark:text-zinc-100 leading-snug">
+                    <h4 className="abh-card-heading flex items-start gap-3 text-[1.15rem] text-zinc-800 dark:text-zinc-100 leading-snug">
                       <span className="shrink-0 text-[0.72rem] font-medium tracking-[0.18em] text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>
                       <span>{faq.question}</span>
                     </h4>
@@ -51,7 +51,7 @@ export function FAQAccordion() {
                     className={isOpen ? "block" : "hidden"}
                   >
                     <div className="min-h-0 overflow-hidden">
-                      <div className="pb-5 text-[1.1rem] text-muted-foreground dark:text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                      <div className="mx-1 mb-4 rounded-[14px] bg-muted/50 px-4 py-3 text-base text-foreground/80 leading-relaxed whitespace-pre-wrap md:mx-8">
                         {faq.answer}
                       </div>
                     </div>
