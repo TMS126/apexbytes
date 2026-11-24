@@ -229,7 +229,7 @@ export function Navbar() {
                           const selected = pathname === subitem.path || pathname.startsWith(`${subitem.path}/`)
                           const ToolIcon = subitem.Icon
                           return (
-                          <Link key={subitem.path} href={subitem.path} aria-current={selected ? "page" : undefined} className={cn("flex items-center gap-3 rounded-[14px] px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground", selected && "bg-muted font-semibold text-foreground")}>
+                          <Link key={subitem.path} href={subitem.path} aria-current={selected ? "page" : undefined} className={cn("abh-link-underline flex w-fit items-center gap-3 px-1 py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground", selected && "font-semibold text-foreground")}>
                             <ToolIcon size={20} weight="regular" aria-hidden="true" />
                             <span>{subitem.label}</span>
                           </Link>
