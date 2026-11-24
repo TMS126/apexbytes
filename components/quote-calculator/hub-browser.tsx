@@ -34,13 +34,12 @@
      hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
-import { CaretDown, CheckCircle, MagnifyingGlass, Minus, Plus, ShoppingBagOpen, Tag, X } from "@phosphor-icons/react"
-import { useState } from "react"
+import { CaretDown, CheckCircle, Minus, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
 import { HUB_ON_COLOR } from "@/lib/brand"
 import { GLASS, HubIcon } from "./shared"
-import { HUB_ORDER, BULK_TIERS, isScanItem, sectionHasBulk, getDisplayName } from "./lib"
+import { HUB_ORDER, BULK_TIERS, isScanItem, hubHasBulk, sectionHasBulk, getDisplayName } from "./lib"
 
 interface Subtotal { total: number; savings: number; count: number }
 
@@ -81,49 +80,13 @@ export function HubBrowser({
   embedded = false, openHub, setOpenHub, openSections, toggleSection,
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
 }: HubBrowserProps) {
-  const [query, setQuery] = useState("")
-  const [searchOpen, setSearchOpen] = useState(false)
   const activeHub = openHub ? HUBS[openHub] : null
-  const normalizedQuery = query.trim().toLowerCase()
-  const visibleSections = activeHub?.sections.filter(section =>
-    !normalizedQuery || section.title.toLowerCase().includes(normalizedQuery) || section.items.some(item => item.name.toLowerCase().includes(normalizedQuery))
-  ) ?? []
+  const visibleSections = activeHub?.sections ?? []
 
   return (
-    <div className={cn("min-w-0 space-y-3 p-3 md:space-y-4 md:p-4", embedded && "md:sticky md:top-0 md:self-start")}>
+      <div className={cn("min-w-0 space-y-3 p-3 md:space-y-4 md:p-4", embedded && "md:sticky md:top-0 md:self-start")}>
       <div className="flex items-center justify-between gap-3 px-1">
         <span className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Services</span>
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setSearchOpen(value => !value)}
-            aria-label="Search services"
-            aria-expanded={searchOpen}
-            className="inline-flex h-9 items-center gap-1.5 px-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <MagnifyingGlass size={19} aria-hidden="true" />
-            <span>Search</span>
-          </button>
-          {searchOpen && (
-            <div className="absolute right-0 top-10 z-30 w-[min(22rem,calc(100vw-2rem))] rounded-[14px] border border-border bg-card p-3 shadow-[var(--ui-shadow-popup)]">
-              <div className="flex items-center gap-2 border-b border-foreground/20 px-1 text-muted-foreground focus-within:border-[var(--line-rule)]" data-calculator-swipe-block>
-                <MagnifyingGlass size={17} aria-hidden="true" />
-                <span className="sr-only">Search services</span>
-                <input
-                  autoFocus
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder={openHub ? "Search services" : "Choose a hub first"}
-                  disabled={!openHub}
-                  className="min-w-0 flex-1 border-0 bg-transparent px-0 py-2 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60"
-                />
-                <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close service search" className="flex size-7 shrink-0 items-center justify-center text-muted-foreground hover:text-foreground">
-                  <X size={16} aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
 
       <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
@@ -135,6 +98,7 @@ export function HubBrowser({
             const onSolid = HUB_ON_COLOR[hubId]
             const isSelected = openHub === hubId
             const hubSub = hubSubtotal(hubId)
+            const hubBulk = hubHasBulk(hubId)
 
             return (
               <button
@@ -143,7 +107,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex min-w-[112px] shrink-0 items-center gap-2 border-l-2 border-transparent bg-transparent px-3 py-2.5 text-left",
+                  "group relative flex min-w-[112px] shrink-0 items-center gap-2 border-l-2 border-transparent bg-transparent px-3 py-2.5 pr-8 text-left",
                   embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
                   isSelected && "border-l-[3px] border-[var(--hub-accent)] bg-transparent"
@@ -170,7 +134,18 @@ export function HubBrowser({
                   >
                     <HubIcon id={hubId} size={22} color="currentColor" />
                   </span>
-                  <span className="min-w-0 truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
+                    {hubBulk && (
+                      <span
+                        className="mt-1 inline-flex max-w-full items-center gap-0.5 whitespace-nowrap rounded-full bg-[var(--bulk-ribbon-bg)] px-1.5 py-0.5 text-[0.52rem] font-semibold uppercase tracking-wide"
+                        style={{ color: "var(--bulk-ribbon-text)" }}
+                        aria-label={`${hub.title} has bulk pricing services`}
+                      >
+                        <Tag size={8} weight="fill" aria-hidden="true" /> Bulk
+                      </span>
+                    )}
+                  </span>
                 </span>
               </button>
             )
