@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { CaretDown } from "@phosphor-icons/react"
+import { CaretDown, SquaresFour } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
@@ -38,6 +38,7 @@ export function FilterDropdown({
 
   const options: { id: HubId | "all"; label: string }[] = [{ id: "all", label: "All hubs" }, ...ROW_ORDER.map((r) => ({ id: r.id, label: r.label }))]
   const displayedLabel = activeFilter === "all" ? "Select a Hub" : options.find((o) => o.id === activeFilter)?.label ?? "Select a Hub"
+  const activeOption = options.find((o) => o.id === activeFilter) ?? options[0]
 
   return (
     <>
@@ -84,17 +85,19 @@ export function FilterDropdown({
             aria-expanded={open}
             aria-haspopup="listbox"
             className={cn(
-              "abh-underline-button flex items-center gap-2 px-1.5 py-1.5 bg-transparent",
+              "abh-underline-button flex size-12 items-center justify-center gap-1.5 bg-transparent p-0",
               "text-[0.94rem] font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
               "shadow-none",
               "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
               "text-zinc-700 dark:text-zinc-200"
             )}
+            aria-label={`Current filter: ${displayedLabel}. Open hub filters`}
+            title={displayedLabel}
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
-            <span className="sr-only">Current filter:</span>
-            {displayedLabel}
-            <CaretDown size={13} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
+            <span className="sr-only">Current filter: {displayedLabel}</span>
+            {activeOption.id === "all" ? <SquaresFour size={26} weight="regular" aria-hidden="true" /> : <HubIcon id={activeOption.id as HubId} size={26} weight="regular" aria-hidden="true" />}
+            <CaretDown size={16} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
           </button>
         )}
 
@@ -126,8 +129,8 @@ export function FilterDropdown({
                         aria-selected={isActive}
                         onClick={() => handleSelect(opt.id)}
                         data-no-lift
-                        className={cn(
-                          "abh-underline-button w-full flex items-center justify-center gap-1.5 px-3 py-2.5",
+                          className={cn(
+                          "abh-underline-button flex size-12 items-center justify-center p-0",
                           "text-sm font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
                           "shadow-none",
                           "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -138,8 +141,8 @@ export function FilterDropdown({
                             : { color: accent ?? (isDark ? "#e4e4e7" : "#3f3f46"), ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: accent ?? blueColor }
                         }
                       >
-                        {opt.id !== "all" && <HubIcon id={opt.id as HubId} size={13} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent} />}
-                        <span className="truncate">{opt.label}</span>
+                        <span className="sr-only">{opt.label}</span>
+                        {opt.id === "all" ? <SquaresFour size={26} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent ?? blueColor} aria-hidden="true" /> : <HubIcon id={opt.id as HubId} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent} />}
                       </button>
                     )
                   })}
