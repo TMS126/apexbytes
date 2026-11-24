@@ -133,7 +133,7 @@ export function HubBrowser({
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubFilterIcon id={hubId} size={34} weight="regular" color="currentColor" />
+                    <HubFilterIcon id={hubId} size={40} weight="regular" color="currentColor" />
                   </span>
                   <span className="hidden min-w-0 md:block">
                     <span className="block truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>

@@ -4,7 +4,7 @@
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
-import { Funnel, Shuffle } from "@phosphor-icons/react"
+import { Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -15,7 +15,7 @@ import { useGalleryBackStack } from "@/hooks/use-gallery-back-stack"
 import { ProjectViewerModal } from "@/components/gallery/project-viewer-modal"
 import { SafeImage } from "@/components/gallery/safe-image"
 import { LikeButton, ShareButton } from "@/components/gallery/like-share-buttons"
-import { HubIcon } from "@/components/services-page/shared"
+import { HubFilterIcon } from "@/components/hub-filter-icon"
 import { GalleryClosingTagline } from "@/components/gallery/empty-and-tagline"
 import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
@@ -30,7 +30,7 @@ export function HubFilterCircles({
   getAccent: (id: HubId) => string
   isDark: boolean
 }) {
-  const filters = [{ id: "all" as const, label: "All", accent: TOKEN.orangeText, icon: <Funnel size={23} weight="regular" aria-hidden="true" /> }, ...ROW_ORDER.map((row) => ({ id: row.id, label: row.short, accent: getAccent(row.id), icon: <HubIcon id={row.id} size={24} weight="regular" /> }))]
+  const filters = [{ id: "all" as const, label: "All", accent: TOKEN.orangeText, icon: <HubFilterIcon id="all" size={40} weight="regular" /> }, ...ROW_ORDER.map((row) => ({ id: row.id, label: row.short, accent: getAccent(row.id), icon: <HubFilterIcon id={row.id} size={40} weight="regular" /> }))]
   return (
     <div className="flex w-full flex-nowrap items-center justify-center gap-5 overflow-x-auto px-2 pb-3 no-scrollbar md:gap-8">
       {filters.map((filter) => {
