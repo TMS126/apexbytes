@@ -195,7 +195,7 @@ export default async function MaintenancePage() {
           align-items: center;
           gap: 10px;
           background: #25D366;
-          color: var(--brand-white);
+          color: var(--brand-whatsapp-text);
           font-weight: 500;
           font-size: 0.9rem;
           padding: 13px 28px;

@@ -61,7 +61,7 @@ export function FooterActions({ hasItems, totalSavings, total, itemCount, fabCol
             </button>
             <button
               onClick={onSendQuote}
-              className="abh-press flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-white transition-transform duration-150"
+              className="abh-press flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold text-[var(--on-whatsapp)] transition-transform duration-150"
               style={{ backgroundColor: "var(--brand-whatsapp)" }}
             >
               <WhatsappLogo size={18} weight="fill" aria-hidden="true" /> <span>Send</span>

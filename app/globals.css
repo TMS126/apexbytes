@@ -192,6 +192,12 @@ textarea::placeholder { color: var(--muted-foreground); opacity: 1; }
 [class~="text-zinc-500"], [class~="text-slate-500"], [class~="text-gray-500"] { color: var(--muted-foreground) !important; }
 [class~="text-blue-900"], [class~="text-blue-800"], [class~="text-blue-700"], [class~="text-blue-600"], [class~="text-blue-500"] { color: var(--link-foreground) !important; }
 [class~="text-orange-900"], [class~="text-orange-800"], [class~="text-orange-700"], [class~="text-orange-600"], [class~="text-orange-500"] { color: var(--brand-orange-text) !important; }
+[class~="text-green-900"], [class~="text-green-800"], [class~="text-green-700"], [class~="text-green-600"], [class~="text-green-500"], [class~="text-green-400"] { color: var(--brand-green-text) !important; }
+.dark [class~="text-green-900"], .dark [class~="text-green-800"], .dark [class~="text-green-700"], .dark [class~="text-green-600"], .dark [class~="text-green-500"], .dark [class~="text-green-400"] { color: var(--brand-green-text) !important; }
+[class~="text-emerald-900"], [class~="text-emerald-800"], [class~="text-emerald-700"], [class~="text-emerald-600"], [class~="text-emerald-500"], [class~="text-emerald-400"] { color: var(--brand-green-text) !important; }
+.dark [class~="text-emerald-900"], .dark [class~="text-emerald-800"], .dark [class~="text-emerald-700"], .dark [class~="text-emerald-600"], .dark [class~="text-emerald-500"], .dark [class~="text-emerald-400"] { color: var(--brand-green-text) !important; }
+[class~="text-red-900"], [class~="text-red-800"], [class~="text-red-700"], [class~="text-red-600"], [class~="text-red-500"], [class~="text-red-400"], [class~="text-red-300"] { color: var(--brand-error-text) !important; }
+.dark [class~="text-red-900"], .dark [class~="text-red-800"], .dark [class~="text-red-700"], .dark [class~="text-red-600"], .dark [class~="text-red-500"], .dark [class~="text-red-400"], .dark [class~="text-red-300"] { color: var(--brand-error-text) !important; }
 
 .services-page-icon { color: var(--neutral-icon-light); }
 .dark .services-page-icon { color: var(--neutral-icon-dark); }
@@ -361,7 +367,8 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
 
   --on-brand-blue: #FFFFFF;
   --on-brand-green: #FFFFFF;
-  --on-brand-orange: #FFFFFF;
+  /* Signal orange with white is only 3.34:1; deep ink keeps normal CTA labels AA compliant. */
+  --on-brand-orange: #111827;
   --on-brand-teal: #FFFFFF;
   --on-whatsapp: var(--brand-whatsapp-text);
   --on-whatsapp-accessible: #FFFFFF;
