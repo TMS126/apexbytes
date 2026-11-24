@@ -105,7 +105,7 @@ export function HubBrowser({
         <span className="text-xs text-muted-foreground">Pick a hub, then a service</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5" role="tablist" aria-label="Hubs">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5" role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)

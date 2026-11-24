@@ -166,12 +166,17 @@ export function Navbar() {
             </button>
 
             <nav aria-label="Primary navigation" className="hidden items-center gap-8 pointer-events-auto xl:flex">
-              {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
+              {NAV_ITEMS.filter((item) => !item.isCta && item.id !== "contact").map((item) => {
                 const active = pathname === item.path || (item.path !== "/" && pathname.startsWith(`${item.path}/`))
                 const submenu = item.id === "services"
                   ? HUB_ORDER.map((hubId) => ({ label: HUB_NAMES[hubId], path: hubRouteFor(hubId) }))
                   : item.id === "tools"
-                    ? [{ label: "JPG to PDF", path: "/tools/jpg-to-pdf" }]
+                    ? [
+                        { label: "Quote Calculator", path: "/tools/quote" },
+                        { label: "JPG to PDF", path: "/tools/jpg-to-pdf" },
+                        { label: "CV Writing / CV Typing", path: "/tools/cv-writing" },
+                        { label: "Intake Form Filling", path: "/tools/intake-form" },
+                      ]
                     : null
 
                 return (

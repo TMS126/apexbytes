@@ -404,13 +404,13 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
           <div
             className={cn(
               "flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
-              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)] md:items-start md:gap-5" : ""
+              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1fr)_minmax(340px,390px)] md:items-start md:gap-6" : ""
             )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
             onTouchEnd={handleBodyTouchEnd}
           >
-            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-background/95 md:static md:col-start-2 md:row-start-1" : ""}>
+            <div data-calculator-cart-area className={embedded ? "order-2 sticky bottom-0 z-20 min-w-0 bg-background/95 md:static md:col-start-2 md:row-start-1 md:min-w-0" : ""}>
             <CartSummaryBar
               embedded={embedded}
               isDark={isDark}

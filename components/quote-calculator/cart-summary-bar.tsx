@@ -145,7 +145,7 @@ export function CartSummaryBar({
               aria-label="Items in your quote"
               className={cn(
                 "gap-2.5 pb-1",
-                embedded ? "grid overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
+                embedded ? "grid grid-cols-1 gap-3 overflow-visible" : "abh-chip-strip flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory"
               )}
               style={{ WebkitOverflowScrolling: "touch" }}
             >

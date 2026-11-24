@@ -20,7 +20,6 @@ export default function QuotePage() {
         <header className="mx-auto mb-8 max-w-3xl text-center">
           <p className="abh-eyebrow mb-2">ApexBytesHub · Quote Calculator</p>
           <h1 className="abh-page-title mb-3">Build your quote</h1>
-          <p className="mx-auto max-w-2xl text-muted-foreground">Pick what you need, review the estimate clearly, and send it to us on WhatsApp. We confirm the final price with you.</p>
         </header>
         <QuoteCalculatorWidget embedded />
       </main>

@@ -72,7 +72,7 @@ export function CtaBar({
   variant?: "default" | "flat"
   fullBleed?: boolean
   title: string
-  description: string
+  description?: string
   buttonText: string
   buttonHref?: string
   onButtonClick?: () => void
@@ -103,7 +103,7 @@ export function CtaBar({
         </span>
 
         <h2 className="abh-section-heading text-3xl mb-4">{title}</h2>
-        <p className="abh-body text-xl max-w-[500px] mx-auto mb-10">{description}</p>
+        {description ? <p className="abh-body text-xl max-w-[500px] mx-auto mb-10">{description}</p> : <div className="mb-8" aria-hidden="true" />}
 
         <div className="flex justify-center">
           <a

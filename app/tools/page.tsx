@@ -62,7 +62,6 @@ export default function ToolsPage() {
       <CtaBar
         badgeText="Need a hand?"
         title="Simple tools, helpful people."
-        description={`Use a tool yourself or reach out to ${BIZ.name} when you would rather have us handle it.`}
         buttonText="Get in Touch"
         buttonHref={WA.general}
       />
