@@ -425,6 +425,19 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
               handlePressStart={handlePressStart}
               handlePressEnd={handlePressEnd}
             />
+            <FooterActions
+              hasItems={cart.length > 0}
+              totalSavings={totalSavings}
+              total={total}
+              itemCount={itemCount}
+              fabColor={fabColor}
+              onExportPdf={() => { void exportPdf("download") }}
+              onViewQuote={() => { void exportPdf("view") }}
+              onSendQuote={sendQuote}
+              onClose={() => setIsOpen(false)}
+              showClose={!embedded}
+              embedded={embedded}
+            />
             </div>
 
             <div className={embedded ? "order-1 min-w-0 md:col-span-2 md:col-start-1 md:row-start-1 md:border-r md:border-border" : ""}>
@@ -456,19 +469,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             </div>
           </div>
 
-          <FooterActions
-            hasItems={cart.length > 0}
-            totalSavings={totalSavings}
-            total={total}
-            itemCount={itemCount}
-            fabColor={fabColor}
-            onExportPdf={() => { void exportPdf("download") }}
-            onViewQuote={() => { void exportPdf("view") }}
-            onSendQuote={sendQuote}
-            onClose={() => setIsOpen(false)}
-            showClose={!embedded}
-            embedded={embedded}
-          />
         </div>
       )}
     </>

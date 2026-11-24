@@ -34,7 +34,7 @@
      hub-specific); connecting tree lines still neutral border tone.
    ============================================================ */
 
-import { CaretDown, CheckCircle, MagnifyingGlass, Minus, Plus, ShoppingBagOpen, Tag } from "@phosphor-icons/react"
+import { CaretDown, CheckCircle, MagnifyingGlass, Minus, Plus, ShoppingBagOpen, Tag, X } from "@phosphor-icons/react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { HUBS, HubId, sortItemsByPrice } from "@/lib/data"
@@ -82,6 +82,7 @@ export function HubBrowser({
   getAccent, getSolid, hubSubtotal, sectionSubtotal, getItemQty, onAddItem, onStepQty, onSetQty,
 }: HubBrowserProps) {
   const [query, setQuery] = useState("")
+  const [searchOpen, setSearchOpen] = useState(false)
   const activeHub = openHub ? HUBS[openHub] : null
   const normalizedQuery = query.trim().toLowerCase()
   const visibleSections = activeHub?.sections.filter(section =>
@@ -92,7 +93,36 @@ export function HubBrowser({
     <div className={cn("min-w-0 space-y-3 p-3 md:space-y-4 md:p-4", embedded && "md:sticky md:top-0 md:self-start")}>
       <div className="flex items-center justify-between gap-3 px-1">
         <span className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Services</span>
-        <span className="text-[0.72rem] text-muted-foreground">Pick a hub, then a service</span>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setSearchOpen(value => !value)}
+            aria-label="Search services"
+            aria-expanded={searchOpen}
+            className="flex size-9 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <MagnifyingGlass size={19} aria-hidden="true" />
+          </button>
+          {searchOpen && (
+            <div className="absolute right-0 top-10 z-30 w-[min(22rem,calc(100vw-2rem))] rounded-[14px] border border-border bg-card p-3 shadow-[var(--ui-shadow-popup)]">
+              <div className="flex items-center gap-2 border-b border-foreground/20 px-1 text-muted-foreground focus-within:border-[var(--line-rule)]" data-calculator-swipe-block>
+                <MagnifyingGlass size={17} aria-hidden="true" />
+                <span className="sr-only">Search services</span>
+                <input
+                  autoFocus
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder={openHub ? "Search services" : "Choose a hub first"}
+                  disabled={!openHub}
+                  className="min-w-0 flex-1 border-0 bg-transparent px-0 py-2 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60"
+                />
+                <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close service search" className="flex size-7 shrink-0 items-center justify-center text-muted-foreground hover:text-foreground">
+                  <X size={16} aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
@@ -147,11 +177,6 @@ export function HubBrowser({
         </div>
 
         <div className={embedded ? "min-w-0" : ""}>
-      <label className="flex min-h-12 items-center gap-2 border-b border-foreground/20 px-1 text-muted-foreground focus-within:border-[var(--line-rule)]" data-calculator-swipe-block>
-        <MagnifyingGlass size={18} aria-hidden="true" />
-        <span className="sr-only">Search services</span>
-        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={openHub ? "Search services" : "Choose a hub to browse services"} disabled={!openHub} className="min-w-0 flex-1 border-0 bg-transparent px-0 py-2 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60" />
-      </label>
 
       {/* Expanded content for whichever hub is selected */}
       {activeHub && openHub && (
