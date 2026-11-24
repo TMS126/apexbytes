@@ -46,8 +46,8 @@ export function ExpandingSearch({
       <div
         data-hover-border=""
         className={cn(
-          "flex h-12 min-h-12 items-center overflow-hidden border-b-2 border-[var(--line-rule-soft)] bg-transparent transition-[width,border-color] duration-200 ease-out motion-reduce:transition-none",
-          expanded ? "w-full gap-2 px-1 focus-within:border-[var(--line-rule)]" : "mx-auto w-10 justify-center",
+          "abh-expanding-search-shell flex h-12 min-h-12 items-center overflow-hidden bg-transparent transition-[width,border-color] duration-200 ease-out motion-reduce:transition-none",
+          expanded ? "w-full gap-2 px-1" : "mx-auto w-10 justify-center",
         )}
       >
         <button

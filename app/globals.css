@@ -120,6 +120,16 @@ html[data-scroll-locked] body { overflow: hidden; }
   box-shadow: none;
   transition: box-shadow 160ms ease, border-color 160ms ease;
 }
+.abh-expanding-search-shell { border-bottom: 2px solid var(--line-rule-soft); }
+.abh-expanding-search-shell:focus-within { border-bottom-color: var(--line-rule); }
+.abh-expanding-search-shell .abh-search-input,
+.abh-expanding-search-shell .abh-search-input:focus,
+.abh-expanding-search-shell .abh-search-input:focus-visible {
+  border: 0 !important;
+  border-bottom: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 .abh-reference-search:focus-within { border-bottom-color: var(--line-rule); box-shadow: 0 3px 0 -1px var(--line-rule); }
 .abh-reference-search input,
 .abh-search-input {
