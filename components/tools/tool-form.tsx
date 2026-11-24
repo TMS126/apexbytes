@@ -315,17 +315,32 @@ const CV_STEPS: { id: CvStep; label: string }[] = [
   { id: "preview", label: "Preview" },
 ]
 
+const REQUIRED_CV_FIELDS = new Set(["fullName", "professionalTitle", "phone", "profile", "educationType", "educationYear", "qualification", "institution", "skills"])
+
+function isRequiredCvField(id: string) {
+  return REQUIRED_CV_FIELDS.has(id) || /role-\d+-(title|company|startDate|responsibilities)$/.test(id)
+}
+
+function missingCvFields(step: CvStep, values: Record<string, string>, roles: CvRole[]) {
+  if (step === "details") return ["fullName", "professionalTitle", "phone", "profile"].filter((id) => !values[id]?.trim())
+  if (step === "experience") return roles.flatMap((role, index) => ["title", "company", "startDate", "responsibilities"].filter((field) => !values[`role-${role.id}-${field}`]?.trim()).map((field) => `Role ${index + 1}: ${field}`))
+  if (step === "education") return ["educationType", "educationYear", "qualification", "institution", "skills"].filter((id) => !values[id]?.trim())
+  return []
+}
+
 function CvStepField({ id, label, value, onChange, placeholder, multiline = false, type = "text" }: { id: string; label: string; value: string; onChange: (value: string) => void; placeholder: string; multiline?: boolean; type?: string }) {
+  const required = isRequiredCvField(id)
   return <label className="cv-editor-field block text-left text-sm font-medium text-foreground" htmlFor={`cv-${id}`}>
-    <span className="mb-2 block">{label}</span>
-    {multiline ? <textarea id={`cv-${id}`} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} rows={4} /> : <input id={`cv-${id}`} type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />}
+    <span className="mb-2 block">{label}{required ? " *" : ""}</span>
+    {multiline ? <textarea id={`cv-${id}`} required={required} aria-required={required} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} rows={4} /> : <input id={`cv-${id}`} required={required} aria-required={required} type={type} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />}
   </label>
 }
 
 function CvStepSelect({ id, label, value, onChange, options }: { id: string; label: string; value: string; onChange: (value: string) => void; options: string[] }) {
+  const required = isRequiredCvField(id)
   return <label className="cv-editor-field block text-left text-sm font-medium text-foreground" htmlFor={`cv-${id}`}>
-    <span className="mb-2 block">{label}</span>
-    <select id={`cv-${id}`} value={value} onChange={(event) => onChange(event.target.value)}>
+    <span className="mb-2 block">{label}{required ? " *" : ""}</span>
+    <select id={`cv-${id}`} required={required} aria-required={required} value={value} onChange={(event) => onChange(event.target.value)}>
       <option value="">Choose one</option>
       {options.map((option) => <option key={option} value={option}>{option}</option>)}
     </select>
@@ -338,11 +353,11 @@ function CvEditorCard({ children }: { children: React.ReactNode }) {
   return <div className="cv-editor-card rounded-[14px] p-5 shadow-[0_8px_28px_-22px_rgba(15,23,42,.55)] md:p-7">{children}</div>
 }
 
-function CvSteps({ step }: { step: CvStep }) {
+function CvSteps({ step, invalidSteps }: { step: CvStep; invalidSteps: Partial<Record<CvStep, boolean>> }) {
   const current = CV_STEPS.findIndex((item) => item.id === step)
   return <div className="cv-stepper flex items-center gap-2 text-xs md:gap-3">
     {CV_STEPS.map((item, index) => <div key={item.id} className="flex min-w-0 flex-1 items-center gap-2 md:gap-3">
-      <div className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${index < current ? "bg-emerald-500 text-white" : index === current ? "bg-[var(--brand-orange)] text-white" : "cv-step-muted"}`}>{index < current ? "✓" : index + 1}</div>
+      <div className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${index < current && !invalidSteps[item.id] ? "bg-emerald-500 text-white" : index === current ? "bg-[var(--brand-orange)] text-white" : "cv-step-muted"}`}>{index < current ? (invalidSteps[item.id] ? "?" : "✓") : index === current && invalidSteps[item.id] ? "?" : index + 1}</div>
       <span className={`hidden truncate md:block ${index === current ? "font-semibold cv-step-active" : ""}`}>{item.label}</span>
       {index < CV_STEPS.length - 1 && <span className="cv-step-line h-px flex-1" />}
     </div>)}
@@ -351,18 +366,27 @@ function CvSteps({ step }: { step: CvStep }) {
 
 function CvPaperPreview({ values, photo, roles }: { values: Record<string, string>; photo: string | null; roles: CvRole[] }) {
   const roleValue = (role: CvRole, field: string) => values[`role-${role.id}-${field}`] ?? ""
-  return <div className="cv-paper mx-auto w-full max-w-[560px] bg-white p-7 text-left text-slate-900 shadow-[0_18px_42px_-24px_rgba(15,23,42,.6)] md:p-10">
-    <header className="border-b border-slate-200 pb-5">
-      <div className="flex items-start justify-between gap-5">
-        <div><h2 className="text-3xl font-bold tracking-tight">{values.fullName || "Your name"}</h2><p className="mt-1 text-base font-semibold text-[#1e6fa8]">{values.professionalTitle || "Professional title"}</p></div>
-        {photo && <Image unoptimized src={photo} alt="Profile" width={72} height={72} className="size-[72px] rounded object-cover" />}
+  return <div className="cv-paper mx-auto w-full max-w-[560px] bg-white p-6 text-left text-slate-900 shadow-[0_18px_42px_-24px_rgba(15,23,42,.6)] md:p-8">
+    <header className="bg-[#1688c4] px-5 py-4 text-white">
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0"><h2 className="truncate text-2xl font-bold tracking-tight">{values.fullName || "Your name"}</h2><p className="mt-0.5 text-xs font-medium uppercase tracking-[0.12em]">{values.professionalTitle || "Professional title"}</p></div>
+        {photo && <Image unoptimized src={photo} alt="Profile" width={64} height={64} className="size-16 shrink-0 rounded-full object-cover" />}
       </div>
-      <p className="mt-3 text-xs text-slate-500">{[values.location, values.phone, values.email, values.driverLicense && `Licence: ${values.driverLicense}`].filter(Boolean).join(" · ") || "Town · phone · email"}</p>
     </header>
-    <section className="mt-6"><h3 className="cv-paper-heading">ABOUT ME</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.profile || "Your professional summary will appear here."}</p></section>
-    <section className="mt-6 border-t border-slate-200 pt-5"><h3 className="cv-paper-heading">WORK EXPERIENCE</h3><div className="mt-3 space-y-4">{roles.map((role) => <article key={role.id}><div className="flex items-start justify-between gap-3"><div><h4 className="text-sm font-bold">{roleValue(role, "title") || "Job title"}</h4><p className="text-xs text-slate-500">{roleValue(role, "company") || "Company"}{roleValue(role, "employmentType") ? ` · ${roleValue(role, "employmentType")}` : ""}</p></div><span className="shrink-0 text-right text-[0.65rem] text-slate-500">{roleValue(role, "startDate") || "Start"} — {roleValue(role, "endDate") || "Present"}</span></div><p className="mt-1 whitespace-pre-line text-xs leading-5 text-slate-600">{roleValue(role, "responsibilities") || "Responsibilities and achievements will appear here."}</p></article>)}</div></section>
-    <div className="mt-6 grid gap-6 border-t border-slate-200 pt-5 sm:grid-cols-2"><section><h3 className="cv-paper-heading">EDUCATION</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{[values.qualification, values.institution, values.educationYear].filter(Boolean).join(" · ") || "Qualification · Institution · Year"}</p></section><section><h3 className="cv-paper-heading">SKILLS</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.skills || "Your skills will appear here."}</p></section></div>
-    {values.references && <section className="mt-6 border-t border-slate-200 pt-5"><h3 className="cv-paper-heading">REFERENCES</h3><p className="mt-2 whitespace-pre-line text-xs leading-5 text-slate-600">{values.references}</p></section>}
+    <div className="grid gap-6 px-1 pt-6 sm:grid-cols-[0.72fr_1.28fr] sm:gap-7">
+      <aside className="space-y-5 text-[0.68rem] leading-4">
+        <section><h3 className="cv-paper-heading">CONTACT</h3><p className="mt-2 whitespace-pre-line text-slate-600">{[values.phone, values.email, values.location].filter(Boolean).join("\n") || "Phone\nEmail\nTown or city"}</p>{values.website && <p className="mt-2 break-words text-slate-600">{values.website}</p>}</section>
+        <section><h3 className="cv-paper-heading">EDUCATION</h3><p className="mt-2 whitespace-pre-line text-slate-600">{[values.qualification, values.institution, values.educationYear].filter(Boolean).join("\n") || "Qualification\nInstitution\nYear"}</p></section>
+        <section><h3 className="cv-paper-heading">RELEVANT SKILLS</h3><p className="mt-2 whitespace-pre-line text-slate-600">{values.skills || "Your skills will appear here."}</p></section>
+        {values.certifications && <section><h3 className="cv-paper-heading">CERTIFICATIONS</h3><p className="mt-2 whitespace-pre-line text-slate-600">{values.certifications}</p></section>}
+      </aside>
+      <main className="space-y-5 text-[0.68rem] leading-4">
+        <section><h3 className="cv-paper-heading">ABOUT ME</h3><p className="mt-2 whitespace-pre-line text-slate-600">{values.profile || "Your professional summary will appear here."}</p></section>
+        <section><h3 className="cv-paper-heading">PROFESSIONAL EXPERIENCE</h3><div className="mt-3 space-y-4">{roles.map((role) => <article key={role.id}><div className="flex items-start justify-between gap-3"><div><h4 className="text-xs font-bold">{roleValue(role, "title") || "Job title"}</h4><p className="text-[0.65rem] text-slate-500">{roleValue(role, "company") || "Company"}{roleValue(role, "employmentType") ? ` · ${roleValue(role, "employmentType")}` : ""}</p></div><span className="shrink-0 text-right text-[0.6rem] text-slate-500">{roleValue(role, "startDate") || "Start"} — {roleValue(role, "endDate") || "Present"}</span></div><p className="mt-1 whitespace-pre-line text-slate-600">{roleValue(role, "responsibilities") || "Responsibilities and achievements will appear here."}</p></article>)}</div></section>
+        {values.languages && <section><h3 className="cv-paper-heading">LANGUAGES</h3><p className="mt-2 whitespace-pre-line text-slate-600">{values.languages}</p></section>}
+        {values.references && <section><h3 className="cv-paper-heading">REFERENCES</h3><p className="mt-2 whitespace-pre-line text-slate-600">{values.references}</p></section>}
+      </main>
+    </div>
   </div>
 }
 
@@ -371,6 +395,7 @@ function CvTool() {
   const [roles, setRoles] = useState<CvRole[]>([{ id: 1 }])
   const [photo, setPhoto] = useState<string | null>(null)
   const [step, setStep] = useState<CvStep>("details")
+  const [invalidSteps, setInvalidSteps] = useState<Partial<Record<CvStep, boolean>>>({})
   const [shareError, setShareError] = useState<string | null>(null)
   const setValue = (id: string, value: string) => updateValue(setValues, id, value)
   const roleValue = (role: CvRole, field: string) => values[`role-${role.id}-${field}`] ?? ""
@@ -379,11 +404,21 @@ function CvTool() {
   const handlePhoto = (file?: File) => { if (!file) return; if (!["image/jpeg", "image/png"].includes(file.type) || file.size > 2 * 1024 * 1024) { setShareError("Please choose a JPG or PNG photo under 2 MB."); return } setShareError(null); const reader = new FileReader(); reader.onload = () => setPhoto(typeof reader.result === "string" ? reader.result : null); reader.readAsDataURL(file) }
   const shareDetails = () => { setShareError(null); const summary = [...CV_FIELDS, { id: "driverLicense", label: "Driver's licence", placeholder: "" }].map((field) => `${field.label}: ${values[field.id] || "Not provided"}`).join("\n"); const work = roles.map((role, index) => `\nRole ${index + 1}: ${roleValue(role, "title")} at ${roleValue(role, "company")} (${roleValue(role, "startDate")} — ${roleValue(role, "endDate") || "Present"})\n${roleValue(role, "responsibilities")}`).join("\n"); const opened = window.open(waChatLink("CV Writing / CV Typing", `${summary}${work}\nTemplate: ApexBytesHub sample CV\nPhoto: ${photo ? "Included" : "Not included"}`), "_blank", "noopener,noreferrer"); if (!opened) setShareError("WhatsApp could not open. Please allow pop-ups or use the contact page.") }
   const stepIndex = CV_STEPS.findIndex((item) => item.id === step)
-  const next = () => setStep(CV_STEPS[Math.min(stepIndex + 1, CV_STEPS.length - 1)].id)
+  const missing = missingCvFields(step, values, roles)
+  const next = () => {
+    if (missing.length > 0) {
+      setInvalidSteps((current) => ({ ...current, [step]: true }))
+      setShareError(`Please complete the required CV details before continuing (${missing.length} remaining).`)
+      return
+    }
+    setInvalidSteps((current) => ({ ...current, [step]: false }))
+    setShareError(null)
+    setStep(CV_STEPS[Math.min(stepIndex + 1, CV_STEPS.length - 1)].id)
+  }
   const back = () => setStep(CV_STEPS[Math.max(stepIndex - 1, 0)].id)
 
   return <div className="min-h-screen bg-background text-foreground"><Navbar /><PageNoticeBell page="tools" /><main id="main-content" className="mx-auto w-full max-w-[1480px] px-5 pb-20 pt-[calc(var(--nav-h)+2rem)] md:px-8">
-    <div className="mx-auto mb-6 max-w-[1240px] text-center"><ToolBackLink /><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--brand-orange)]">Free tool</p><h1 className="abh-page-title mt-2">CV Writer</h1><p className="mt-2 text-base text-muted-foreground">Fill in the basics — we handle the layout.</p></div><CvSteps step={step} /></div>
+    <div className="mx-auto mb-6 max-w-[1240px] text-center"><ToolBackLink /><div className="mb-7"><p className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--brand-orange)]">Free tool</p><h1 className="abh-page-title mt-2">CV Writer</h1><p className="mt-2 text-base text-muted-foreground">Fill in the basics — we handle the layout.</p></div><CvSteps step={step} invalidSteps={invalidSteps} />{invalidSteps[step] && missing.length > 0 && <p className="mt-4 text-sm font-medium text-red-600 dark:text-red-400" role="alert">Complete the required details marked with * before continuing.</p>}</div>
     <div className="cv-editor mx-auto grid max-w-[1240px] gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(420px,.9fr)] lg:items-start"><section className="min-w-0">
       {step === "details" && <CvEditorCard><h2 className="text-2xl font-bold">Your details</h2><p className="mt-1 text-sm text-muted-foreground">Start with the basics.</p><div className="mt-6 grid gap-5 sm:grid-cols-2"><CvStepField id="fullName" label="Full name" value={values.fullName ?? ""} onChange={(v) => setValue("fullName", v)} placeholder="e.g. Thabo Mokoena" /><CvStepField id="professionalTitle" label="Professional title" value={values.professionalTitle ?? ""} onChange={(v) => setValue("professionalTitle", v)} placeholder="e.g. Junior Bookkeeper" /><CvStepField id="phone" label="Phone number" value={values.phone ?? ""} onChange={(v) => setValue("phone", v)} placeholder="Your best contact number" type="tel" /><CvStepField id="email" label="Email address" value={values.email ?? ""} onChange={(v) => setValue("email", v)} placeholder="you@example.com" type="email" /><CvStepField id="location" label="Town or city" value={values.location ?? ""} onChange={(v) => setValue("location", v)} placeholder="e.g. Bothaville" /><CvStepSelect id="province" label="Province" value={values.province ?? ""} onChange={(v) => setValue("province", v)} options={["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "Northern Cape", "North West", "Western Cape"]} /><CvStepSelect id="driverLicense" label="Driver's licence" value={values.driverLicense ?? ""} onChange={(v) => setValue("driverLicense", v)} options={["No licence", "Code 8 / B", "Code 10 / C1", "Code 14 / EC", "Other"]} /><CvStepField id="profile" label="About me" value={values.profile ?? ""} onChange={(v) => setValue("profile", v)} placeholder="A short, confident introduction about your experience and goals." multiline /></div><div className="mt-6 flex items-center justify-between gap-3"><span className="text-sm text-muted-foreground">Optional photo</span><label className="cv-upload-button inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-[var(--brand-orange)]"><FileArrowUp size={18} /> {photo ? "Choose another" : "Upload photo"}<input type="file" accept="image/png,image/jpeg" className="sr-only" onChange={(event) => handlePhoto(event.target.files?.[0])} /></label></div></CvEditorCard>}
       {step === "experience" && <CvEditorCard><div className="flex items-start justify-between gap-4"><div><h2 className="text-2xl font-bold">Work experience</h2><p className="mt-1 text-sm text-muted-foreground">Most recent first. Add every role you want employers to see.</p></div><span className="cv-count-label">{roles.length} {roles.length === 1 ? "role" : "roles"}</span></div><div className="mt-6 space-y-5">{roles.map((role, index) => <div key={role.id} className="cv-role-panel"><div className="mb-4 flex items-center justify-between"><h3 className="font-semibold">Role {index + 1}</h3>{roles.length > 1 && <button type="button" onClick={() => removeRole(role.id)} className="cv-remove-role">Remove</button>}</div><div className="grid gap-5 sm:grid-cols-2"><CvStepField id={`role-${role.id}-title`} label="Job title" value={roleValue(role, "title")} onChange={(v) => setValue(`role-${role.id}-title`, v)} placeholder="e.g. Junior Bookkeeper" /><CvStepField id={`role-${role.id}-company`} label="Company" value={roleValue(role, "company")} onChange={(v) => setValue(`role-${role.id}-company`, v)} placeholder="e.g. Bothaville Motors" /><CvStepField id={`role-${role.id}-startDate`} label="Start date" value={roleValue(role, "startDate")} onChange={(v) => setValue(`role-${role.id}-startDate`, v)} placeholder="e.g. Jan 2022" /><CvStepSelect id={`role-${role.id}-employmentType`} label="Employment type" value={roleValue(role, "employmentType")} onChange={(v) => setValue(`role-${role.id}-employmentType`, v)} options={["Full-time", "Part-time", "Contract", "Freelance", "Internship", "Volunteer"]} /><CvStepSelect id={`role-${role.id}-endDate`} label="End date" value={roleValue(role, "endDate")} onChange={(v) => setValue(`role-${role.id}-endDate`, v)} options={["Present", "2026", "2025", "2024", "2023", "2022", "2021 or earlier"]} /><CvStepField id={`role-${role.id}-responsibilities`} label="Responsibilities and achievements" value={roleValue(role, "responsibilities")} onChange={(v) => setValue(`role-${role.id}-responsibilities`, v)} placeholder="Use a new line for each responsibility or achievement" multiline /></div></div>)}</div><button type="button" onClick={addRole} className="mt-5 flex w-full items-center justify-center gap-2 rounded-[14px] border border-dashed border-[var(--brand-orange)] py-3 text-sm font-semibold text-[var(--brand-orange)]">＋ Add another role</button></CvEditorCard>}
