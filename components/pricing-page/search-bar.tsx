@@ -16,7 +16,7 @@ export function PricingSearchInput({ query, setQuery }: { query: string; setQuer
     <ExpandingSearch
       id="pricing-search"
       label="Search any service or price"
-      placeholder="Search any service or price…"
+      placeholder=""
       value={query}
       expanded={expanded}
       onChange={setQuery}

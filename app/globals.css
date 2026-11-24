@@ -2001,6 +2001,7 @@ textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
 .abh-search-input:focus,
 .abh-search-input:focus-visible {
   border: 0 !important;
+  border-bottom: 0 !important;
   outline: none !important;
   box-shadow: none !important;
 }
