@@ -241,7 +241,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --card-rule: var(--line-rule);
   --form-rule: var(--brand-blue);
-  --form-focus-ring: var(--brand-blue);
   --brand-adobe-pdf-red: #EC1C24;
 
   --hub-print-primary: #1E6FA8;
@@ -420,7 +419,6 @@ input, button, textarea, select { font: inherit; max-width: 100%; }
   --line-rule: var(--brand-orange);
   --line-rule-soft: color-mix(in srgb, var(--line-rule) 70%, transparent);
   --form-rule: var(--brand-orange);
-  --form-focus-ring: var(--brand-orange);
   --brand-orange-dark: #F9D1B0;
   --brand-orange-brown: #FFE5D3;
   --brand-green-dark: #B8D993;
@@ -1929,9 +1927,9 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="r
 input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus-visible,
 textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
   border-bottom-color: transparent !important;
-  border-radius: 14px !important;
-  outline: 2px solid var(--form-focus-ring) !important;
-  outline-offset: 2px;
+  border-radius: 0 !important;
+  outline: none !important;
+  outline-offset: 0;
   box-shadow: none !important;
 }
 
