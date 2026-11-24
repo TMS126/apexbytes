@@ -98,15 +98,6 @@ export default function JpgToPdfPage() {
               JPG to PDF
             </h1>
             
-            <div className="abh-editorial-subtitle">
-              <p className="text-lg text-muted-foreground mb-1">
-                Convert your images into PDF in seconds
-              </p>
-
-              <p className="text-sm text-muted-foreground">
-                No upload • No registration • 100% secure
-              </p>
-            </div>
             <EditorialScrollCue />
           </div>
         </section>

@@ -33,7 +33,7 @@ export function HubFilterCircles({
 }) {
   const filters = [{ id: "all" as const, label: "All", accent: TOKEN.orangeText, icon: <Funnel size={23} weight="regular" aria-hidden="true" /> }, ...ROW_ORDER.map((row) => ({ id: row.id, label: row.short, accent: getAccent(row.id), icon: <HubIcon id={row.id} size={24} weight="regular" /> }))]
   return (
-    <div className="flex w-full flex-nowrap items-center justify-start gap-5 overflow-x-auto px-2 pb-3 no-scrollbar md:justify-center md:gap-8">
+    <div className="flex w-full flex-nowrap items-center justify-center gap-5 overflow-x-auto px-2 pb-3 no-scrollbar md:gap-8">
       {filters.map((filter) => {
         const isActive = activeFilter === filter.id
         return (

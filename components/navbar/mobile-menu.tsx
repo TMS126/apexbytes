@@ -24,12 +24,15 @@ import {
   ShareNetwork,
   Wrench,
   X,
+  Sun,
+  Moon,
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
 import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
 import { HUBS, type HubId } from "@/lib/data"
 import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
+import { useTheme } from "next-themes"
 
 const SERVICE_LABELS: Record<HubId, string> = {
   print: "Print",
@@ -79,6 +82,7 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps) {
+  const { resolvedTheme, setTheme } = useTheme()
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
   const [servicesOpen, setServicesOpen] = useState(false)
@@ -192,7 +196,10 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
             <Image src="/logo.png" alt="" width={36} height={36} className="size-8 shrink-0 object-contain" aria-hidden="true" />
             ApexBytesHub
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 rounded-[14px] bg-muted/60 p-1">
+            <button type="button" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")} tabIndex={menuOpen ? 0 : -1} aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} className="flex size-10 items-center justify-center rounded-[10px] text-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
+              {resolvedTheme === "dark" ? <Sun size={19} weight="regular" aria-hidden="true" /> : <Moon size={19} weight="regular" aria-hidden="true" />}
+            </button>
             <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="abh-navbar-quote-cta rounded-full px-4 py-2 text-sm font-semibold shadow-[var(--ui-shadow-popup)] transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
               Get a quote
             </Link>

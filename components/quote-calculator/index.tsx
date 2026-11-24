@@ -29,7 +29,8 @@ type UndoAction =
   | { kind: "saved"; quote: SavedQuote; index: number }
 
 export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean } = {}) {
-  const { resolvedTheme, setTheme } = useTheme(); const isDark = resolvedTheme === "dark"
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === "dark"
   const [isOpenState, setIsOpenState, isOtherOpen] = useExclusiveWidget("calculator")
   const isOpen = embedded || isOpenState
   const setIsOpen = useMemo(() => embedded ? (() => {}) : setIsOpenState, [embedded, setIsOpenState])
@@ -58,15 +59,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
 
   const [miniExpanded, setMiniExpanded] = useState(false)
   const hubSwipeStart = useRef<{ x: number; y: number } | null>(null)
-
-  const [now, setNow] = useState<Date | null>(null)
-  useEffect(() => {
-    const tick = () => setNow(new Date())
-    tick()
-    const id = setInterval(tick, 30_000)
-    return () => clearInterval(id)
-  }, [])
-  const clockLabel = now ? now.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" }) : ""
 
   const pressState = useRef<Record<string, { timeout?: ReturnType<typeof setTimeout>; interval?: ReturnType<typeof setInterval>; longPressed?: boolean }>>({})
 
@@ -99,13 +91,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
     if (!embedded) announceCalculatorState(isOpen)
     return () => { document.body.style.overflow = ""; if (!embedded) announceCalculatorState(false) }
   }, [embedded, isOpen])
-
-  const toggleCalculatorTheme = () => {
-    const nextTheme = resolvedTheme === "dark" ? "light" : "dark"
-    document.documentElement.classList.add("abh-theme-switching")
-    window.setTimeout(() => document.documentElement.classList.remove("abh-theme-switching"), 350)
-    setTheme(nextTheme)
-  }
 
   const wasOpenRef = useRef(false)
   useEffect(() => {
@@ -385,7 +370,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             embedded ? "" : "md:-none"
           )}
         >
-          <PanelHeader clockLabel={clockLabel} isDark={isDark} onToggleTheme={toggleCalculatorTheme} hasItems={cart.length > 0} titleAccent={titleAccent} embedded={embedded} />
+          <PanelHeader hasItems={cart.length > 0} titleAccent={titleAccent} embedded={embedded} />
 
           <div
             className={cn(

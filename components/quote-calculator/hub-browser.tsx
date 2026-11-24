@@ -67,7 +67,7 @@ function CountBadge({
     <span
       className={cn(
         "abh-badge-circle absolute font-medium border border-white dark:border-zinc-900 leading-none",
-        big ? "-top-2 -right-2 w-[26px] h-[26px] text-[0.72rem]" : "-top-1.5 -right-1.5 w-[22px] h-[22px] text-[0.66rem]"
+        big ? "top-1 right-1 w-[26px] h-[26px] text-[0.72rem]" : "top-1 right-1 w-[22px] h-[22px] text-[0.66rem]"
       )}
       style={{ backgroundColor: solidAccent, color: onSolid }}
       aria-label={label}
@@ -324,7 +324,7 @@ export function HubBrowser({
                                     min={itemQty > 0 ? 1 : 0}
                                     value={itemQty}
                                     onChange={(event) => onSetQty(itemId, Math.max(0, Number(event.target.value) || 0))}
-                                    className="w-8 border-0 border-b border-foreground/20 bg-transparent p-0 text-center text-sm font-semibold outline-none focus:border-[var(--hub-accent)] focus:ring-0"
+                                    className="w-10 min-w-10 border-0 border-b border-foreground/20 bg-transparent p-0 text-center text-sm font-semibold outline-none focus:border-[var(--hub-accent)] focus:ring-0"
                                   />
                                   <button
                                     onClick={() => onAddItem(hubId, section.title, item.name, item.price)}
