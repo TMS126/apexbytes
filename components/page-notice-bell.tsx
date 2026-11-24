@@ -64,7 +64,6 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
       Icon: Megaphone,
       category: "Current updates",
       header: "DPSA Circulars 41 and 42",
-      date: "Closes 30 November 2026",
       closingDate: "30 Nov",
       body: "Circular 41 includes government vacancies and Circular 42 includes Free State posts. Several Circular 41 applications close soon, so review the requirements promptly.",
     },

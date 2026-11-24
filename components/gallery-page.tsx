@@ -5,7 +5,6 @@ import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
 import { useSearchParams, usePathname } from "next/navigation"
 import { Funnel, Shuffle } from "@phosphor-icons/react"
-import { ExpandingSearch } from "@/components/expanding-search"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
@@ -37,7 +36,7 @@ export function HubFilterCircles({
       {filters.map((filter) => {
         const isActive = activeFilter === filter.id
         return (
-          <button key={filter.id} type="button" onClick={() => onSelect(filter.id)} aria-pressed={isActive} aria-label={filter.id === "all" ? "All projects" : filter.label} className="group relative flex min-h-11 shrink-0 flex-col items-center gap-1.5 whitespace-nowrap pb-2 text-muted-foreground transition-colors hover:text-[var(--filter-accent)] focus-visible:text-[var(--filter-accent)] md:flex-row md:gap-2 md:text-[1.18rem] md:font-medium" style={{ ["--filter-accent" as string]: filter.accent, color: isActive ? filter.accent : undefined }}>
+          <button data-no-lift key={filter.id} type="button" onClick={() => onSelect(filter.id)} aria-pressed={isActive} aria-label={filter.id === "all" ? "All projects" : filter.label} className="group relative flex min-h-11 shrink-0 flex-col items-center gap-1.5 whitespace-nowrap pb-2 text-muted-foreground transition-colors hover:text-[var(--filter-accent)] focus-visible:text-[var(--filter-accent)] md:flex-row md:gap-2 md:text-[1.18rem] md:font-medium" style={{ ["--filter-accent" as string]: filter.accent, color: isActive ? filter.accent : undefined }}>
             <span className="flex items-center justify-center text-muted-foreground transition-colors group-hover:text-[var(--filter-accent)] md:hidden" aria-hidden="true">
               {filter.icon}
             </span>
@@ -128,8 +127,6 @@ function GalleryPageInner() {
   const [activeFilter,    setActiveFilter]    = useState<HubId | "all">("all")
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
   const [zoomIndex,       setZoomIndex]       = useState<number | null>(null)
-  const [searchQuery,     setSearchQuery]     = useState("")
-  const [searchExpanded,  setSearchExpanded]  = useState(true)
   const [surpriseFlash,   setSurpriseFlash]   = useState(false)
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const showBackToTop = useBackToTop()
@@ -199,18 +196,8 @@ function GalleryPageInner() {
     [isDark]
   )
 
-  const searchLower = searchQuery.trim().toLowerCase()
-  const matchesSearch = useCallback((p: ProjectData) => {
-    if (!searchLower) return true
-    return (
-      p.title.toLowerCase().includes(searchLower) ||
-      p.tag.toLowerCase().includes(searchLower) ||
-      p.shortDesc.toLowerCase().includes(searchLower)
-    )
-  }, [searchLower])
-
   const visibleProjects = PROJECTS.filter(
-    p => (activeFilter === "all" || p.hub === activeFilter) && matchesSearch(p)
+    p => activeFilter === "all" || p.hub === activeFilter
   )
 
   const handleSurprise = useCallback(() => {
@@ -248,17 +235,7 @@ function GalleryPageInner() {
         </ScrollBounce>
 
         <ScrollBounce delay={0.1}>
-          <div className="mx-auto mb-8 flex w-full max-w-md flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-            <ExpandingSearch
-              id="gallery-search"
-              label="Search projects"
-              placeholder="Search..."
-              value={searchQuery}
-              expanded={searchExpanded}
-              onChange={setSearchQuery}
-              onExpandedChange={setSearchExpanded}
-              className="w-full max-w-none sm:max-w-[300px]"
-            />
+          <div className="mx-auto mb-8 flex w-full justify-center">
             <button
               onClick={handleSurprise}
               aria-label="Surprise me with a random project"
@@ -281,17 +258,7 @@ function GalleryPageInner() {
 
         {visibleProjects.length === 0 ? (
           <div className="max-w-md mx-auto text-center py-16 px-6">
-            <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">
-              {searchLower ? `No projects match "${searchQuery.trim()}"` : "No projects in this category yet"}
-            </p>
-            {searchLower && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="mt-3 text-sm font-medium underline text-brand-orange"
-              >
-                Clear search
-              </button>
-            )}
+            <p className="text-base font-medium text-muted-foreground dark:text-muted-foreground">No projects in this category yet</p>
           </div>
         ) : (
           <ScrollBounce>
