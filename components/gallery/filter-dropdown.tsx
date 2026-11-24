@@ -85,7 +85,7 @@ export function FilterDropdown({
             aria-expanded={open}
             aria-haspopup="listbox"
             className={cn(
-              "abh-underline-button flex size-12 items-center justify-center gap-1.5 bg-transparent p-0",
+              "abh-underline-button flex size-14 items-center justify-center gap-2 bg-transparent p-0",
               "text-[0.94rem] font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
               "shadow-none",
               "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
@@ -96,8 +96,8 @@ export function FilterDropdown({
             style={{ ["--tw-ring-color" as unknown as keyof import("react").CSSProperties]: blueColor }}
           >
             <span className="sr-only">Current filter: {displayedLabel}</span>
-            {activeOption.id === "all" ? <SquaresFour size={26} weight="regular" aria-hidden="true" /> : <HubIcon id={activeOption.id as HubId} size={26} weight="regular" aria-hidden="true" />}
-            <CaretDown size={16} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
+            {activeOption.id === "all" ? <SquaresFour size={34} weight="regular" aria-hidden="true" /> : <HubIcon id={activeOption.id as HubId} size={34} weight="regular" aria-hidden="true" />}
+            <CaretDown size={18} weight="bold" aria-hidden="true" className="transition-transform duration-200 shrink-0" />
           </button>
         )}
 
@@ -115,7 +115,7 @@ export function FilterDropdown({
                 className="relative z-50 w-[calc(100vw-2rem)] max-w-sm"
                 style={{ isolation: "isolate" }}
               >
-                <div className="flex flex-wrap justify-center gap-2 rounded-[14px] bg-card p-2.5 shadow-none">
+                <div className="flex max-w-full flex-nowrap justify-start gap-4 overflow-x-auto rounded-[14px] bg-card p-3 shadow-none">
                   {options.map((opt) => {
                     const accent = opt.id !== "all" ? getAccent(opt.id as HubId) : undefined
                     const isActive = activeFilter === opt.id
@@ -130,7 +130,7 @@ export function FilterDropdown({
                         onClick={() => handleSelect(opt.id)}
                         data-no-lift
                           className={cn(
-                          "abh-underline-button flex size-12 items-center justify-center p-0",
+                          "abh-underline-button flex size-14 shrink-0 items-center justify-center p-0",
                           "text-sm font-medium whitespace-nowrap transition-all duration-150 active:scale-95",
                           "shadow-none",
                           "outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -142,7 +142,7 @@ export function FilterDropdown({
                         }
                       >
                         <span className="sr-only">{opt.label}</span>
-                        {opt.id === "all" ? <SquaresFour size={26} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent ?? blueColor} aria-hidden="true" /> : <HubIcon id={opt.id as HubId} size={26} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent} />}
+                        {opt.id === "all" ? <SquaresFour size={34} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent ?? blueColor} aria-hidden="true" /> : <HubIcon id={opt.id as HubId} size={34} weight={isActive ? "fill" : "regular"} color={isActive ? activeText : accent} />}
                       </button>
                     )
                   })}

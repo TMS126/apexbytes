@@ -90,7 +90,7 @@ export function HubBrowser({
       </div>
 
       <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
-      <div className={cn("gap-3", embedded ? "flex overflow-x-auto pb-1 md:grid md:grid-cols-1 md:overflow-visible" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5")} role="tablist" aria-label="Hubs">
+      <div className={cn("flex justify-center gap-4 overflow-x-auto pb-1", embedded ? "md:grid md:grid-cols-1 md:overflow-visible" : "md:grid md:grid-cols-5 md:overflow-visible")} role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
@@ -107,10 +107,10 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex min-w-[60px] shrink-0 items-center justify-center gap-2 border-l-2 border-transparent bg-transparent px-2 py-3 pr-7 text-center md:min-w-[112px] md:justify-start md:px-3 md:py-2.5 md:pr-8 md:text-left",
+                  "group relative flex min-w-14 shrink-0 items-center justify-center gap-2 border-l-2 border-transparent bg-transparent px-2 py-3 pr-7 text-center md:min-w-[112px] md:justify-start md:px-3 md:py-2.5 md:pr-8 md:text-left",
                   embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
-                  isSelected && "border-l-[3px] border-[var(--hub-accent)] bg-transparent"
+                  isSelected && "md:border-l-[3px] border-[var(--hub-accent)] bg-transparent"
                 )}
                 style={{
                   ["--hub-accent" as unknown as string]: accent,
@@ -127,12 +127,12 @@ export function HubBrowser({
                 <span className="flex min-w-0 items-center gap-2">
                   <span
                     className={cn(
-                      "flex size-9 shrink-0 items-center justify-center transition-colors duration-150 md:size-8",
+                      "flex size-10 shrink-0 items-center justify-center transition-colors duration-150 md:size-8",
                       isSelected ? "" : "text-muted-foreground group-hover:[color:var(--hub-accent)]"
                     )}
                     style={isSelected ? { color: solidAccent } : undefined}
                   >
-                    <HubIcon id={hubId} size={30} color="currentColor" />
+                    <HubIcon id={hubId} size={34} color="currentColor" />
                   </span>
                   <span className="hidden min-w-0 md:block">
                     <span className="block truncate text-xs font-semibold">{hub.title.replace(" Hub", "")}</span>
