@@ -23,7 +23,6 @@ import { SavedQuotesPanel } from "./saved-quotes-panel"
 import { FooterActions } from "./footer-actions"
 import { useFocusTrap } from "@/components/services-page/shared"
 
-const VIEW_KEY = "apexbytes-quote-view"
 type UndoAction =
   | { kind: "remove"; item: CartItem; index: number }
   | { kind: "clear"; items: CartItem[] }
@@ -68,17 +67,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
     return () => clearInterval(id)
   }, [])
   const clockLabel = now ? now.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" }) : ""
-
-  const [expandView, setExpandView] = useState(false)
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => {
-      try { if (localStorage.getItem(VIEW_KEY) === "expanded") setExpandView(true) } catch {}
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [])
-  useEffect(() => {
-    try { localStorage.setItem(VIEW_KEY, expandView ? "expanded" : "compact") } catch {}
-  }, [expandView])
 
   const pressState = useRef<Record<string, { timeout?: ReturnType<typeof setTimeout>; interval?: ReturnType<typeof setInterval>; longPressed?: boolean }>>({})
 
@@ -403,7 +391,8 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
 
           <div
             className={cn(
-              "flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
+              "flex-1 min-h-0 overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
+              embedded ? "overflow-visible" : "overflow-y-auto",
               embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1fr)_minmax(340px,390px)] md:items-start md:gap-6" : ""
             )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
@@ -419,8 +408,6 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
               itemCount={itemCount}
               total={total}
               cart={cart}
-              expandView={expandView}
-              setExpandView={setExpandView}
               showSaveForm={showSaveForm}
               setShowSaveForm={setShowSaveForm}
               saveNameDraft={saveNameDraft}

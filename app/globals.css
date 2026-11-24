@@ -941,10 +941,17 @@ button[aria-label^="Close"]:hover {
 
   .abh-icon-chip {
     border: 0 !important;
-    border-radius: 0 !important;
+    border-radius: 14px !important;
     background: transparent !important;
     box-shadow: none !important;
   }
+
+  .abh-tool-icon {
+    border-radius: 14px;
+    background: transparent;
+  }
+  .group:hover .abh-tool-icon,
+  .group:focus-visible .abh-tool-icon { background: var(--muted); }
 
   .abh-nav-control {
     border: 0 !important;
@@ -1641,10 +1648,14 @@ button:active:not(:disabled),
 input, textarea, select {
   border: 0 !important;
   border-bottom: 2px solid var(--line-rule-soft) !important;
-  border-radius: 0 !important;
+  border-radius: 14px !important;
   background: transparent !important;
   box-shadow: none !important;
   transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+input::placeholder, textarea::placeholder, select:invalid {
+  color: var(--muted-foreground) !important;
+  opacity: .72 !important;
 }
 input:focus, textarea:focus, select:focus,
   input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -1696,19 +1707,18 @@ input:focus, textarea:focus, select:focus,
 .abh-mega-backdrop { background: rgb(0 0 0 / 0.34); }
 .abh-navbar-quote-cta {
   background: var(--brand-orange) !important;
-  /* #FA5215 with white text is below WCAG AA for normal-size CTA text. */
-  color: var(--brand-dark-100) !important;
+  color: var(--on-brand-orange) !important;
   box-shadow: var(--shadow-action-brand);
 }
 .dark .abh-navbar-quote-cta {
   background: var(--brand-blue) !important;
-  color: var(--brand-dark-100) !important;
+  color: var(--on-brand-blue) !important;
 }
 .abh-navbar-quote-cta:hover,
 .abh-navbar-quote-cta:focus-visible {
   transform: translateY(-2px);
   box-shadow: var(--ui-shadow-popup);
-  color: var(--brand-dark-100) !important;
+  color: var(--on-brand-blue) !important;
 }
 .abh-navbar-quote-cta:focus-visible {
   outline: 3px solid var(--foreground);

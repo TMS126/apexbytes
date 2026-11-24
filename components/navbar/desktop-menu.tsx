@@ -141,9 +141,9 @@ export function DesktopMenu({
                 aria-haspopup={isServices ? "true" : undefined}
                 aria-expanded={isServices ? servicesOpen : undefined}
                 style={{ color: isActive ? HOVER_TEXT : neutralColor }}
-                className={cn(
-                  "relative w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150 after:absolute after:left-4 after:right-4 after:bottom-1 after:h-px after:origin-left after:bg-current after:transition-transform",
-                  isActive ? "font-semibold after:scale-x-100" : "font-semibold after:scale-x-0 hover:after:scale-x-100"
+                  className={cn(
+                    "relative w-full text-left px-4 py-2.5 text-base whitespace-nowrap transition-colors duration-150 after:absolute after:left-1/2 after:bottom-1 after:h-px after:w-[calc(100%-2rem)] after:-translate-x-1/2 after:origin-center after:bg-current after:transition-transform",
+                    isActive ? "font-semibold after:scale-x-100" : "font-semibold after:scale-x-0 hover:after:scale-x-100"
                 )}
                 onMouseEnter={(e) => {
                   if (!isActive) (e.currentTarget as HTMLElement).style.color = HOVER_TEXT

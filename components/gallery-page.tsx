@@ -40,10 +40,10 @@ export function HubFilterCircles({
           <button key={filter.id} type="button" onClick={() => onSelect(filter.id)} aria-pressed={isActive} aria-label={filter.id === "all" ? "All projects" : filter.label} className="group relative flex min-h-11 shrink-0 flex-col items-center gap-1.5 whitespace-nowrap pb-2 text-muted-foreground transition-colors hover:text-[var(--filter-accent)] focus-visible:text-[var(--filter-accent)] md:flex-row md:gap-2 md:text-[1.18rem] md:font-medium" style={{ ["--filter-accent" as string]: filter.accent, color: isActive ? filter.accent : undefined }}>
             <span className="relative flex items-center justify-center text-muted-foreground transition-colors group-hover:text-[var(--filter-accent)] md:hidden" aria-hidden="true">
               {filter.icon}
-              <span className={cn("absolute -bottom-2 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-[var(--filter-accent)] transition-all", isActive ? "w-7 opacity-100" : "w-0 opacity-0")} />
+              <span className={cn("absolute -bottom-2 left-1/2 h-0.5 w-7 -translate-x-1/2 origin-center scale-x-0 rounded-full bg-[var(--filter-accent)] transition-transform", isActive ? "scale-x-100 opacity-100" : "opacity-0")} />
             </span>
             <span className="hidden md:block">{filter.label}</span>
-            <span aria-hidden="true" className={cn("absolute bottom-0 left-0 h-0.5 rounded-full bg-[var(--filter-accent)] transition-all", isActive ? "w-full opacity-100" : "w-0 opacity-0")} />
+            <span aria-hidden="true" className={cn("absolute bottom-0 left-1/2 h-0.5 w-full -translate-x-1/2 origin-center scale-x-0 rounded-full bg-[var(--filter-accent)] transition-transform", isActive ? "scale-x-100 opacity-100" : "opacity-0")} />
           </button>
         )
       })}

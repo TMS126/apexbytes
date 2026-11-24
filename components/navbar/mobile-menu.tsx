@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import {
   Archive,
   CaretRight,
@@ -13,18 +14,17 @@ import {
   FileText,
   Gear,
   Globe,
-  Image,
+  Image as ImageIcon,
   Laptop,
   PenNib,
   Printer,
   Scan,
   ShareNetwork,
-  WhatsappLogo,
   Wrench,
   X,
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
-import { NAV_ITEMS, BIZ, HUB_NAMES } from "@/lib/brand"
+import { NAV_ITEMS, HUB_NAMES } from "@/lib/brand"
 import { HUBS, type HubId } from "@/lib/data"
 import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
@@ -47,7 +47,7 @@ const TOOL_LINKS = [
 const SERVICE_ICONS: Record<string, Icon> = {
   Printing: Printer,
   Copying: ClipboardText,
-  "Photo Printing": Image,
+  "Photo Printing": ImageIcon,
   "Typing + Printing": FileText,
   Scanning: Scan,
   Laminating: Archive,
@@ -186,11 +186,12 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
     >
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[680px] flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
         <header className="flex items-center justify-between border-b border-border/70 pb-5">
-          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} className="font-heading text-[1.7rem] font-bold tracking-[-0.045em] text-foreground transition-colors duration-150 hover:text-brand-blue active:scale-[0.985] motion-reduce:transition-none">
+          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} className="group flex items-center gap-2 font-heading text-[1.7rem] font-bold tracking-[-0.045em] text-foreground transition-colors duration-150 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none">
+            <Image src="/logo.png" alt="" width={36} height={36} className="size-8 shrink-0 object-contain" aria-hidden="true" />
             ApexBytesHub
           </Link>
           <div className="flex items-center gap-2">
-            <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="rounded-full bg-brand-orange px-4 py-2 text-sm font-semibold text-white shadow-[var(--ui-shadow-popup)] transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
+            <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="abh-navbar-quote-cta rounded-full px-4 py-2 text-sm font-semibold shadow-[var(--ui-shadow-popup)] transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
               Get a quote
             </Link>
             <button type="button" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-160 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
@@ -199,7 +200,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
           </div>
         </header>
 
-        <nav className="flex-1" aria-label="Mobile navigation">
+        <nav className="flex-1 py-10" aria-label="Mobile navigation">
           {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {
             const active = isActive(item.path)
             const hasSubmenu = item.id === "services" || item.id === "tools"
@@ -214,7 +215,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
                     aria-current={active ? "page" : undefined}
                     tabIndex={menuOpen ? 0 : -1}
                     className={cn(
-                      "flex-1 py-5 font-heading text-[1.55rem] font-semibold tracking-[-0.035em] transition-[color,transform] duration-160 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none",
+                      "flex-1 py-5 text-center font-heading text-[1.55rem] font-semibold tracking-[-0.035em] transition-colors duration-160 hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none",
                       active ? "text-brand-blue" : "text-foreground"
                     )}
                   >
@@ -280,13 +281,6 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
           })}
         </nav>
 
-        <aside className="mt-5 rounded-[18px] bg-[#10251b] p-5 text-white shadow-[var(--ui-shadow-popup)]">
-          <p className="font-heading text-lg font-semibold">Need it done today?</p>
-          <a href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexBytesHub! I'd like to get help today.")}`} onClick={close} tabIndex={menuOpen ? 0 : -1} className="mt-4 flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[var(--brand-whatsapp-accessible)] px-5 text-lg font-semibold text-white transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
-            <WhatsappLogo size={26} weight="regular" aria-hidden="true" />
-            Chat on WhatsApp
-          </a>
-        </aside>
       </div>
     </div>
   )

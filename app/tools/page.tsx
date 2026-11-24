@@ -44,17 +44,17 @@ export default function ToolsPage() {
 
       <div className="px-6 md:px-8 pb-24">
         <div className="max-w-[720px] mx-auto">
-          <div className="grid grid-cols-2 items-stretch gap-3 md:grid-cols-4">
+          <div id="tool-grid" className="grid scroll-mt-28 grid-cols-2 items-stretch gap-3 md:grid-cols-4">
             {TOOLS.map((tool) => (
               <ScrollBounce key={tool.id}>
                 <Link
                     href={tool.href}
-                    className="group flex min-h-32 w-full items-center justify-center rounded-[14px] bg-card/70 p-5 text-center shadow-[var(--ui-shadow-popup)] transition-transform duration-150 hover:-translate-y-1 active:translate-y-px"
+                    className="group flex min-h-32 w-full items-center justify-center rounded-[14px] bg-card/70 p-5 text-center shadow-[var(--ui-shadow-popup)] transition-transform duration-150 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:translate-y-px"
                     aria-label={tool.name}
                   >
                     <span className="flex flex-col items-center gap-2 text-center">
-                      <span className="flex size-12 items-center justify-center text-primary transition-colors group-hover:text-foreground">
-                        <tool.Icon size={28} weight="regular" aria-hidden="true" />
+                      <span className="abh-tool-icon flex size-10 items-center justify-center text-primary transition-colors group-hover:text-foreground">
+                        <tool.Icon size={24} weight="regular" aria-hidden="true" />
                       </span>
                       <span className="text-sm font-medium text-foreground">{tool.name}</span>
                     </span>

@@ -7,7 +7,7 @@
    ============================================================ */
 
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowCounterClockwise, ArrowsOutSimple, ArrowsInSimple, FloppyDisk, Trash } from "@phosphor-icons/react"
+import { ArrowCounterClockwise, FloppyDisk, Trash } from "@phosphor-icons/react"
 import { HubId } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import { CartItem, getDisplayName } from "./lib"
@@ -28,8 +28,6 @@ interface CartSummaryBarProps {
   itemCount: number
   total: number
   cart: CartItem[]
-  expandView: boolean
-  setExpandView: (fn: (v: boolean) => boolean) => void
   showSaveForm: boolean
   setShowSaveForm: (fn: (v: boolean) => boolean) => void
   saveNameDraft: string
@@ -49,7 +47,7 @@ interface CartSummaryBarProps {
 }
 
 export function CartSummaryBar({
-  embedded = false, fabColor, fabTextColor, itemCount, total, cart, expandView, setExpandView,
+  embedded = false, fabColor, fabTextColor, itemCount, total, cart,
   showSaveForm, setShowSaveForm, saveNameDraft, setSaveNameDraft, confirmSaveQuote, clearCart,
   undoStack, undoRemove, highlightId, chipRefs, getAccent,
   removeItem, onSetQty, handleClickStep, handlePressStart, handlePressEnd,
@@ -90,15 +88,6 @@ export function CartSummaryBar({
                 Your Quote · {itemCount} item{itemCount === 1 ? "" : "s"} · R{total}
               </span>
               <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-100/80 dark:bg-white/5 shrink-0">
-                <button
-                  onClick={() => setExpandView(v => !v)}
-                  aria-pressed={expandView}
-                  aria-label={expandView ? "Switch to compact view" : "Switch to expanded view"}
-                  title={expandView ? "Compact view" : "Expand view"}
-                  className="abh-press abh-icon-chip w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground dark:text-zinc-300 hover:text-zinc-800 dark:hover:text-zinc-100 hover:bg-white dark:hover:bg-white/10 transition-colors"
-                >
-                  {expandView ? <ArrowsInSimple size={14} weight="bold" aria-hidden="true" /> : <ArrowsOutSimple size={14} weight="bold" aria-hidden="true" />}
-                </button>
                 <button
                   onClick={() => setShowSaveForm(v => !v)}
                   aria-label="Save quote"
@@ -160,7 +149,7 @@ export function CartSummaryBar({
                     transition={{ duration: 0.18 }}
                     className={embedded ? "w-full" : "shrink-0 snap-start"}
                   >
-                    {embedded || expandView ? (
+                    {embedded ? (
                       <CartItemCard
                         item={item}
                         embedded={embedded}
