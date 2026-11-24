@@ -1854,6 +1854,8 @@ button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visib
 .cv-count-label { color: var(--muted-foreground); font-size: .8rem; }
 .cv-role-panel { border-radius: 14px; background: color-mix(in srgb, var(--muted) 62%, transparent); padding: 1rem; }
 .cv-remove-role { background: transparent !important; color: var(--destructive); font-size: .8rem; font-weight: 600; padding: .25rem 0; }
+.tool-date-input { color-scheme: light; }
+.dark .tool-date-input { color-scheme: dark; }
 .cv-editor-field select {
   width: 100%;
   min-height: 3rem;
