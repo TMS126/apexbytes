@@ -8,10 +8,10 @@ import dynamic from "next/dynamic"
 import { useSearchParams } from "next/navigation"
 import { useTheme } from "next-themes"
 import { DownloadSimple, AddressBook, Clock, Sparkle, WhatsappLogo, FacebookLogo, Phone, EnvelopeSimple, Copy, Check } from "@phosphor-icons/react"
-import { BRAND, TOKEN, BIZ, CONTACT_LINKS, waChatLink } from "@/lib/brand"
+import { BRAND, BIZ, CONTACT_LINKS, waChatLink } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { FORM_HUB_KEYS, getFormHubColor, CONTACT_GREY, downloadBusinessVCard } from "@/lib/contact-data"
+import { FORM_HUB_KEYS, CONTACT_GREY, downloadBusinessVCard } from "@/lib/contact-data"
 import { FAQAccordion } from "@/components/contact/faq-accordion"
 import { HubSelect } from "@/components/contact/hub-select"
 import { FieldErrorTooltip } from "@/components/contact/field-error-tooltip"
@@ -56,7 +56,6 @@ function ContactPageInner() {
   const [vcardDone, setVcardDone] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<string | null>(null)
   const [prefilled, setPrefilled] = useState(false)
-  const [glowActive, setGlowActive] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
   const formCardRef = useRef<HTMLDivElement>(null)
   const showBackToTop = useBackToTop()
@@ -81,16 +80,11 @@ function ContactPageInner() {
     if (!prefilled || !mounted) return
     const id = requestAnimationFrame(() => {
       formCardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-      setGlowActive(true)
     })
-    const stopTimer = setTimeout(() => setGlowActive(false), 2600)
     return () => {
       cancelAnimationFrame(id)
-      clearTimeout(stopTimer)
     }
   }, [prefilled, mounted])
-
-  const glowColor = formData.service ? getFormHubColor(formData.service, isDark) : BRAND.blue
 
   const isNameValid = (val: string) => val.trim().length >= 2
   const isPhoneValid = (val: string) => /^[0-9+\s-]{10,15}$/.test(val.trim())
@@ -259,7 +253,7 @@ function ContactPageInner() {
                         aria-invalid={err}
                         aria-describedby={err ? `contact-${f.key}-error` : undefined}
                         maxLength={f.key === "name" ? 80 : 20}
-                        className={cn("w-full rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", err && "ring-2 ring-[var(--brand-error-bg)]")}
+                        className="w-full rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-colors outline-none placeholder:text-muted-foreground"
                         onBlur={() => setTouched({ ...touched, [f.key]: true })}
                         onChange={(e) => setFormData({ ...formData, [f.key]: e.target.value })}
                       />
@@ -275,14 +269,13 @@ function ContactPageInner() {
 
                 <div className="flex-1 flex flex-col">
                   <label htmlFor="contact-message" className="abh-label block mb-1.5">Your Message</label>
-                  <div className={cn("flex-1 flex flex-col rounded-[14px]", glowActive && "abh-inquire-glow-active")} style={{ ["--glow-color" as unknown as keyof import("react").CSSProperties]: glowColor }}>
+                  <div className="flex-1 flex flex-col rounded-[14px]">
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
                       aria-describedby={touched.message && !isMessageValid(formData.message) ? "contact-message-error" : undefined}
                       maxLength={1000}
-                      className="w-full flex-1 rounded-[14px] border border-[var(--form-rule)] bg-card px-4 py-3 text-base font-normal text-foreground transition-all outline-none resize-none placeholder:text-muted-foreground focus:border-[var(--form-rule)] focus:ring-2 focus:ring-[var(--form-rule)]/20"
-                      style={{ borderColor: touched.message && !isMessageValid(formData.message) ? TOKEN.errorBg : "var(--form-rule)" }}
+                      className="w-full flex-1 rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-colors outline-none resize-none placeholder:text-muted-foreground"
                       rows={4}
                       value={formData.message}
                       onBlur={() => setTouched({ ...touched, message: true })}
