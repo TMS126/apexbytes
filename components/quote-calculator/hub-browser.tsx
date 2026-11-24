@@ -89,13 +89,13 @@ export function HubBrowser({
   ) ?? []
 
   return (
-    <div className={cn("min-w-0 space-y-4 p-4 md:p-5", embedded && "md:sticky md:top-0 md:self-start")}>
+    <div className={cn("min-w-0 space-y-3 p-3 md:space-y-4 md:p-4", embedded && "md:sticky md:top-0 md:self-start")}>
       <div className="flex items-center justify-between gap-3 px-1">
-        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Services</span>
-        <span className="text-xs text-muted-foreground">Pick a hub, then a service</span>
+        <span className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Services</span>
+        <span className="text-[0.72rem] text-muted-foreground">Pick a hub, then a service</span>
       </div>
 
-      <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-6" : "space-y-4")}>
+      <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
       <div className={cn("gap-3", embedded ? "flex overflow-x-auto pb-1 md:grid md:grid-cols-1 md:overflow-visible" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5")} role="tablist" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
@@ -199,14 +199,14 @@ export function HubBrowser({
                       aria-controls={sectionPanelId}
                       style={{ ["--hub-accent" as unknown as string]: accent }}
                       className={cn(
-                        "group w-full flex items-center justify-between pl-8 pr-3 py-2 min-h-[2.5rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5",
+                        "group w-full flex items-center justify-between pl-5 pr-3 py-2.5 min-h-[2.75rem] transition-colors duration-150 hover:bg-zinc-100/70 dark:hover:bg-white/5",
                         isSectionOpen && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
                       )}
                     >
                       <span className="flex items-center gap-2">
                         <span
                           className={cn(
-                            "text-[0.78rem] font-medium uppercase tracking-[0.15em] transition-colors duration-200",
+                            "text-[0.84rem] font-medium uppercase tracking-[0.1em] transition-colors duration-200",
                             isSectionOpen
                               ? "py-1 font-semibold [color:var(--hub-accent)]"
                               : "py-1 text-muted-foreground group-hover:[color:var(--hub-accent)]"
@@ -261,7 +261,7 @@ export function HubBrowser({
                     )}
                   >
                     <div className="min-h-0 overflow-hidden">
-                      <div className="pl-8 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
+                      <div className="pl-5 pb-2 space-y-1" data-calculator-item-area style={{ touchAction: "pan-y" }}>
                         {sortItemsByPrice(section.items).map((item, iIdx) => {
                           const itemId = `${hubId}-${section.title}-${item.name}`
                           const hasBulk = !!BULK_TIERS[itemId] || isScanItem(item.name)
@@ -270,20 +270,20 @@ export function HubBrowser({
                             <div key={iIdx} className="relative">
                               <div
                                 className={cn(
-                                  "group relative ml-6 flex items-center gap-2 rounded-[14px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
+                                  "group relative ml-3 flex items-center gap-2 rounded-[14px] py-2 pl-3 pr-1 transition-[background-color,box-shadow] duration-150",
                                   itemQty > 0 && "bg-[color-mix(in_srgb,var(--hub-accent)_7%,transparent)]"
                                 )}
                                 style={{ ["--hub-accent" as unknown as string]: accent }}
                               >
                                 <div className="min-w-0 flex-1">
                                   <p className={cn(
-                                    "break-words text-[0.9rem] text-zinc-700 dark:text-zinc-300",
+                                    "break-words text-[0.88rem] text-zinc-700 dark:text-zinc-300",
                                     itemQty > 0 ? "font-semibold" : "font-medium"
                                   )}>
                                     <span className="inline-flex items-center gap-1.5">{itemQty > 0 && <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: accent }} />}{getDisplayName(section.title, item.name)}{hasBulk && <span className="inline-flex items-center rounded-full bg-[var(--bulk-ribbon-bg)] px-1.5 py-0.5 text-[0.55rem] font-semibold uppercase tracking-wide" style={{ color: "var(--bulk-ribbon-text)" }}>Bulk</span>}</span>
                                     {hasBulk && <span className="sr-only"> — bulk pricing available</span>}
                                   </p>
-                                  <p className="text-[0.78rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
+                                  <p className="text-[0.76rem] font-medium text-muted-foreground" style={itemQty > 0 ? { color: accent } : undefined}>{item.price}</p>
                                 </div>
                                 <div className="flex items-center gap-1 shrink-0 rounded-full bg-secondary/70 p-0.5" data-calculator-swipe-block>
                                   <button
