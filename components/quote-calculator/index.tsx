@@ -393,7 +393,7 @@ export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean
             className={cn(
               "flex-1 min-h-0 overscroll-contain scroll-smooth px-1 md:px-2 [scrollbar-width:thin]",
               embedded ? "overflow-visible" : "overflow-y-auto",
-              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(360px,440px)] md:items-start md:gap-0" : ""
+              embedded ? "flex flex-col md:grid md:grid-cols-[minmax(0,0.68fr)_minmax(0,0.86fr)_minmax(520px,1.55fr)] md:items-start md:gap-0" : ""
             )}
             style={{ WebkitOverflowScrolling: "touch", touchAction: openHub ? "pan-y" : "auto" }}
             onTouchStart={handleBodyTouchStart}
