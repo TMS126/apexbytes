@@ -6,11 +6,11 @@ import { useEffect, useId, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useMounted } from "@/hooks/use-mounted"
-import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, Megaphone, SealPercent, Wrench } from "@phosphor-icons/react"
+import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, SealPercent, Wrench } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
-import { HOME_NOTICES } from "@/lib/home-notices"
+import { HOME_NOTICES, OFFICIAL_NOTICES } from "@/lib/home-notices"
 
 // ─── TYPES ─────────────────────────────────────────────────────────────────
 export type NoticeVariant = "success" | "info" | "warning" | "error"
@@ -58,22 +58,14 @@ const PAGE_LABEL: Record<NoticePage, string> = {
 // ─── PER-PAGE NOTICE CONTENT ───────────────────────────────────────────────
 const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
   services: [
-    {
-      id: "services-dpsa-updates",
-      variant: "warning",
-      Icon: Megaphone,
-      category: "Current updates",
-      header: "DPSA Circulars 41 and 42",
-      closingDate: "30 Nov",
-      body: "Circular 41 includes government vacancies and Circular 42 includes Free State posts. Several Circular 41 applications close soon, so review the requirements promptly.",
-    },
+    ...OFFICIAL_NOTICES,
     {
       id: "services-bulk-deals",
       variant: "info",
       Icon: SealPercent,
       category: "Bulk Deals",
       header: "Bulk service markers",
-      body: "Look for the Bulk deals marker on each relevant hub and service to see when a quantity-based option is available.",
+      body: "Look for the Bulk pricing ribbon on a hub or the Bulk tag on a service to see when a quantity-based option is available.",
     },
   ],
   gallery: [{

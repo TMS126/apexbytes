@@ -4,7 +4,9 @@
 import { Info, Megaphone, Buildings } from "@phosphor-icons/react"
 import type { HomeNotice } from "@/components/page-notice-bell"
 
-export const HOME_NOTICES: HomeNotice[] = [
+// Official public-service updates. Shared by the home and services bells so
+// both pages stay in step; re-verify every date against the linked source.
+export const OFFICIAL_NOTICES: HomeNotice[] = [
   {
     id: "sars-filing-season-2026",
     variant: "info",
@@ -46,3 +48,5 @@ export const HOME_NOTICES: HomeNotice[] = [
     sourceUrl: "https://www.nsfas.org.za/content/appeals.html",
   },
 ]
+
+export const HOME_NOTICES: HomeNotice[] = OFFICIAL_NOTICES
