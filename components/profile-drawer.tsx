@@ -19,14 +19,15 @@ function downloadPersonalVCard() {
     "BEGIN:VCARD",
     "VERSION:3.0",
     // FIX: was "Theji Meje ApexBytesHub" — name and brand ran together
-    // with no separator. Also now uses FOUNDER_ROLE/BIZ.phoneE164 below
+    // with no separator. Also now uses FOUNDER_ROLE/BIZ.callPhoneE164 below
     // instead of duplicating those exact values as separate literals.
     "FN:Theji Meje — ApexBytesHub",
     "N:ApexBytesHub;Theji Meje;;;",
     "ORG:ApexBytesHub",
     `TITLE:${FOUNDER_ROLE}`,
     "TEL;TYPE=CELL,PREF:+27781294939",
-    `TEL;TYPE=CELL:${BIZ.phoneE164}`,
+    `TEL;TYPE=CELL:${BIZ.callPhoneE164}`,
+    `TEL;TYPE=CELL:${BIZ.whatsappPhoneE164}`,
     "EMAIL;TYPE=PERSONAL:teggyb.meje@gmail.com",
     "ADR;TYPE=HOME:;;5878 Mpumalanga Section;Kgotsong;Bothaville;9660;South Africa",
     // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.

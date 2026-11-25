@@ -40,8 +40,9 @@ export function downloadBusinessVCard() {
     // brand form specifically for places like vCards.
     `ORG:ApexBytesHub`,
     `TITLE:Founder & Lead Designer`,
-    // FIX: was a hardcoded literal duplicating BIZ.phoneE164.
-    `TEL;TYPE=CELL,PREF:${BIZ.phoneE164}`,
+    // Calls and WhatsApp are separate lines; the call number is preferred.
+    `TEL;TYPE=CELL,PREF:${BIZ.callPhoneE164}`,
+    `TEL;TYPE=CELL:${BIZ.whatsappPhoneE164}`,
     // FIX: was a hardcoded literal duplicating BIZ.email.
     `EMAIL;TYPE=WORK:${BIZ.email}`,
     `ADR;TYPE=WORK:;;5878 Mpumalanga Section;Kgotsong;Bothaville;9660;South Africa`,

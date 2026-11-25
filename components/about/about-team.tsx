@@ -29,7 +29,7 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
         <ScrollBounce delay={0.05}>
           <div className="flex justify-center mb-10">
             <a
-              href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I'd like to get in touch.`)}`}
+              href={`https://wa.me/${BIZ.whatsappPhoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I'd like to get in touch.`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="abh-underline-button group text-[0.88rem] font-medium text-muted-foreground transition-colors hover:text-brand-blue dark:hover:text-brand-orange"

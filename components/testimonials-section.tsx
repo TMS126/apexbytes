@@ -121,7 +121,7 @@ export function TestimonialsSection({
 
         <div className="mt-8 flex justify-center">
           <a
-            href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexBytesHub! I'd like to share my experience with you.")}`}
+            href={`https://wa.me/${BIZ.whatsappPhoneE164.replace("+", "")}?text=${encodeURIComponent("Hi ApexBytesHub! I'd like to share my experience with you.")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-2.5 rounded-full border border-border bg-card px-5 py-2.5 text-[0.88rem] font-medium text-muted-foreground transition-colors duration-200 hover:border-brand-whatsapp hover:text-brand-whatsapp active:scale-95"

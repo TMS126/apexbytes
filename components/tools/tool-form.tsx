@@ -498,7 +498,7 @@ function IntakeTool() {
           <p className="intake-brand-line">A P E X B Y T E S H U B</p>
           <p className="intake-brand-tagline">DESIGN · PRINT · UPGRADE · E-SERVICE HUB</p>
         </div>
-        <div className="intake-contact-line">WhatsApp &amp; enquiries: {BIZ.phone}</div>
+        <div className="intake-contact-line">WhatsApp &amp; enquiries: {BIZ.whatsappPhone}</div>
       </header>
       <div className="intake-document-title-row">
         <div>

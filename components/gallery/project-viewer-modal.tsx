@@ -133,7 +133,7 @@ function FloatingCTAPill({ project, onClose, accent, visible = true, desktop = f
         className="pointer-events-auto flex w-full max-w-sm items-stretch overflow-hidden rounded-[14px] border border-border bg-card shadow-lg"
       >
         <a
-          href={`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I saw "${project.title}" in your gallery and I'd like something similar.`)}`}
+          href={`https://wa.me/${BIZ.whatsappPhoneE164.replace("+", "")}?text=${encodeURIComponent(`Hi ${BIZ.name}! I saw "${project.title}" in your gallery and I'd like something similar.`)}`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={onClose}

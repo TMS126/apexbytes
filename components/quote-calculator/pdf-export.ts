@@ -215,7 +215,7 @@ export async function exportQuotePdf(cart: CartItem[], mode: "download" | "view"
       doc.setFont("helvetica", "normal")
       doc.setFontSize(8)
       doc.setTextColor(...SLATE_500)
-      doc.text(`${BIZ.phone} \u2014 ${BIZ.email}`, M, 284.2)
+      doc.text(`${BIZ.callPhone} \u2014 ${BIZ.email}`, M, 284.2)
       doc.text(`Page ${i} of ${pages}`, R, 284.2, { align: "right" })
     }
 

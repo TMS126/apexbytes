@@ -50,7 +50,7 @@ export function PrivacyPage() {
                 {BIZ.email}
               </a>
               <br />
-              Phone: {BIZ.phone}
+              Phone: {BIZ.callPhone}
             </p>
           </section>
 
@@ -176,7 +176,7 @@ export function PrivacyPage() {
             <p className="mt-3">
               To exercise any of these rights, contact us at{" "}
               <a href={`mailto:${BIZ.email}`} className="text-brand-blue underline underline-offset-2">{BIZ.email}</a>{" "}
-              or WhatsApp us on {BIZ.phone}.
+              or WhatsApp us on {BIZ.whatsappPhone}.
             </p>
           </section>
 
@@ -222,8 +222,14 @@ export function PrivacyPage() {
               </p>
               <p>
                 Phone:{" "}
+                <a href={`tel:${BIZ.callPhoneE164}`} className="text-brand-blue underline underline-offset-2">
+                  {BIZ.callPhone}
+                </a>
+              </p>
+              <p>
+                WhatsApp:{" "}
                 <a href={waChatLink()} className="text-brand-blue underline underline-offset-2">
-                  {BIZ.phone}
+                  {BIZ.whatsappPhone}
                 </a>
               </p>
             </div>

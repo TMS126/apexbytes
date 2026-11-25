@@ -98,7 +98,7 @@ function ContactPageInner() {
       : `I'm interested in your ${formData.service}.`
     const rawMsg = `Hi ${BIZ.name}! My name is ${formData.name.trim()}. ${serviceLine} \n\nMessage: ${formData.message.trim()}`
     const msg = withStatusPrefix(rawMsg)
-    const handoff = window.open(`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer")
+    const handoff = window.open(`https://wa.me/${BIZ.whatsappPhoneE164.replace("+", "")}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer")
     setSubmitStatus(handoff ? "WhatsApp opened with your message ready to send." : "Your browser blocked WhatsApp. Please allow pop-ups or contact us directly using the details above.")
   }
 

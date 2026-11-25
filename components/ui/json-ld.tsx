@@ -13,7 +13,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
     image: `${SITE_URL}/logo.png`,
     '@id': SITE_URL,
     url: SITE_URL,
-    telephone: BIZ.phoneE164,
+    telephone: BIZ.callPhoneE164,
     address: {
       '@type': 'PostalAddress',
       streetAddress: BIZ.address,
@@ -39,7 +39,7 @@ export function LocalBusinessJsonLd({ nonce }: { nonce?: string }) {
       { '@type': 'AdministrativeArea', name: 'Free State' },
     ],
     sameAs: [
-      `https://wa.me/${BIZ.phoneE164.replace('+', '')}`,
+      `https://wa.me/${BIZ.whatsappPhoneE164.replace('+', '')}`,
       BIZ.facebookUrl,
       BIZ.mapsUrl,
     ],

@@ -63,7 +63,7 @@ export function ChatHeader({ onClose, onGalleryClick, shakeKey, onShake }: ChatH
         </button>
         {/* Real navigation — no shake, per request */}
         <a
-          href={`tel:${BIZ.phoneE164}`}
+          href={`tel:${BIZ.callPhoneE164}`}
           aria-label="Call us"
           className="abh-press w-8 h-8 rounded-full flex items-center justify-center text-white/85 hover:bg-white/10 transition-colors duration-150"
         >

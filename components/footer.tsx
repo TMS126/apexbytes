@@ -86,7 +86,7 @@ function FooterContent() {
               <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} title="WhatsApp" className="abh-footer-icon-link hover:!text-[#25D366]"><WhatsappLogo weight="regular" size={25} /></a>
               <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} title="Email" className="abh-footer-icon-link hover:!text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
               <a href={BIZ.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label="Visit ApexBytesHub on Facebook" title="Facebook" className="abh-footer-icon-link hover:!text-[#1877F2]"><FacebookLogo weight="regular" size={25} /></a>
-              <a href={`tel:${BIZ.phoneE164}`} aria-label={`Call ${BIZ.name}`} title="Phone" className="abh-footer-icon-link hover:!text-brand-blue"><Phone weight="regular" size={25} /></a>
+              <a href={`tel:${BIZ.callPhoneE164}`} aria-label={`Call ${BIZ.name}`} title="Phone" className="abh-footer-icon-link hover:!text-brand-blue"><Phone weight="regular" size={25} /></a>
             </div>
           </div>
         </div>

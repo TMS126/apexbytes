@@ -191,7 +191,7 @@ export function WhatsAppFAB() {
       `I need help with: *${selectedHub?.label ?? hub}*`,
       note.trim() ? `More details: ${note.trim()}` : "",
     ].filter(Boolean).join("\n")
-    window.open(`https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`, "_blank")
+    window.open(`https://wa.me/${BIZ.whatsappPhoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`, "_blank")
     setSentTime(formatTime())
     setStep("sent")
   }

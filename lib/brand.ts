@@ -267,8 +267,12 @@ export const BIZ = {
   name: "ApexBytesHub",
   tagline: "Your local tech & print partner.",
   location: "Kgotsong, Bothaville",
-  phone: "075 333 8260",
-  phoneE164: "+27753338260",
+  // Calls and WhatsApp use different numbers: the WhatsApp line is not
+  // answered for voice calls, so keep the two explicit.
+  callPhone: "078 497 8755",
+  callPhoneE164: "+27784978755",
+  whatsappPhone: "075 333 8260",
+  whatsappPhoneE164: "+27753338260",
   email: "apexbytesza@gmail.com",
   address: "5878 Mpumalanga Section, Kgotsong, Bothaville",
   addressFull: "5878 Mpumalanga Section, Kgotsong, Bothaville, Free State, 9660",
@@ -288,7 +292,7 @@ export const BIZ = {
 // WHATSAPP LINKS
 // ============================================================
 export const waLink = (message: string) =>
-  `https://wa.me/${BIZ.phoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`
+  `https://wa.me/${BIZ.whatsappPhoneE164.replace("+", "")}?text=${encodeURIComponent(message)}`
 
 // Build consistent, prefilled WhatsApp messages for contextual and general chats.
 export const waChatLink = (serviceName?: string, details?: string) => {
@@ -445,8 +449,8 @@ export const ABOUT_STANDARDS = [
 // CONTACT LINKS
 // ============================================================
 export const CONTACT_LINKS = [
-  { title: "WhatsApp Us", value: BIZ.phone, href: WA.contact, dot: BRAND.whatsapp },
-  { title: "Call Us", value: BIZ.phone, href: `tel:${BIZ.phoneE164}`, dot: BRAND.blue },
+  { title: "WhatsApp Us", value: BIZ.whatsappPhone, href: WA.contact, dot: BRAND.whatsapp },
+  { title: "Call Us", value: BIZ.callPhone, href: `tel:${BIZ.callPhoneE164}`, dot: BRAND.blue },
   { title: "Email Us", value: BIZ.email, href: `mailto:${BIZ.email}`, dot: BRAND.orange },
   { title: "Visit Us", value: BIZ.addressFull, href: BIZ.mapsUrl, dotLight: BRAND.blueDark, dotDark: BRAND.lightBlue },
 ] as const
