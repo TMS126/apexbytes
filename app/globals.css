@@ -1170,8 +1170,13 @@ button[aria-label^="Close"]:hover {
     opacity: 0.62;
   }
 
+  .contact-editorial-scroll-cue {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+  }
   @media (max-width: 767px) {
-    .contact-editorial-scroll-cue { bottom: 7.25rem !important; right: 1rem !important; left: auto !important; }
+    .contact-editorial-scroll-cue { bottom: 7.25rem !important; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
