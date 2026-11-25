@@ -1,41 +1,25 @@
 // components/privacy-page.tsx
-import { BIZ, waChatLink } from "@/lib/brand"
+import { BIZ } from "@/lib/brand"
+import { LegalContactCard, LegalPage, LegalSection } from "@/components/legal-page"
 
 const LAST_UPDATED = "August 2026"
 
 export function PrivacyPage() {
   return (
-    // FIX: was a hardcoded pt-[74px] — that's the old static header
-    // height, from before the maintenance banner system existed. The
-    // fixed header now grows to 118px (via --nav-h) whenever the banner
-    // is showing, so this page's content was starting underneath the
-    // header/banner instead of below it during that state. Now tracks
-    // the same live --nav-h variable every other route already uses.
-    <div className="min-h-screen bg-background">
-      <div className="max-w-3xl mx-auto px-6 md:px-8 pb-24">
-        {/* Header */}
-        <div className="abh-editorial-hero mb-12">
-          <span className="abh-eyebrow">
-            Legal
-          </span>
-          <h1 className="abh-page-title mt-4">
-            Privacy Policy
-          </h1>
-          <p className="abh-tagline mt-3 max-w-xl">
-            {BIZ.name} &mdash; Last updated {LAST_UPDATED}
-          </p>
-          <p className="mt-6 text-[1.08rem] leading-relaxed text-zinc-600 dark:text-muted-foreground p-4 rounded-[14px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
-            This Privacy Policy explains how <strong className="text-zinc-800 dark:text-zinc-200">{BIZ.name}</strong>{" "}
-            (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, stores, and protects your personal
-            information. It is written in compliance with the{" "}
-            <strong className="text-zinc-800 dark:text-zinc-200">Protection of Personal Information Act, 2013 (POPIA)</strong>{" "}
-            of South Africa.
-          </p>
-        </div>
-
-        <div className="space-y-10 text-[1.08rem] text-zinc-600 dark:text-muted-foreground leading-relaxed">
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">1. Who We Are</h2>
+    <LegalPage
+      title="Privacy Policy"
+      lastUpdated={LAST_UPDATED}
+      intro={
+        <>
+          This Privacy Policy explains how <strong className="text-zinc-800 dark:text-zinc-200">{BIZ.name}</strong>{" "}
+          (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) collects, uses, stores, and protects your personal
+          information. It is written in compliance with the{" "}
+          <strong className="text-zinc-800 dark:text-zinc-200">Protection of Personal Information Act, 2013 (POPIA)</strong>{" "}
+          of South Africa.
+        </>
+      }
+    >
+          <LegalSection title="1. Who We Are">
             <p>
               <strong className="text-zinc-700 dark:text-zinc-300">{BIZ.name}</strong> is a local technology and
               print services business based at {BIZ.addressFull}. We provide printing, document services, graphic
@@ -52,10 +36,9 @@ export function PrivacyPage() {
               <br />
               Phone: {BIZ.callPhone}
             </p>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">2. What Information We Collect</h2>
+          <LegalSection title="2. What Information We Collect">
             <p>We may collect the following personal information when you use our services:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li>
@@ -93,10 +76,9 @@ export function PrivacyPage() {
                 message.
               </li>
             </ul>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">3. How We Use Your Information</h2>
+          <LegalSection title="3. How We Use Your Information">
             <p>We use your personal information only to:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li>Provide the specific service you requested (printing, CV creation, government application, etc.).</li>
@@ -108,10 +90,9 @@ export function PrivacyPage() {
               We do <strong className="text-zinc-700 dark:text-zinc-300">not</strong> use your information for
               marketing, sell it to third parties, or share it with anyone without your consent.
             </p>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">4. Third-Party Services</h2>
+          <LegalSection title="4. Third-Party Services">
             <p>We use the following third-party services that may process your data:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li>
@@ -144,20 +125,18 @@ export function PrivacyPage() {
                 WhatsApp, your message and phone number are handled according to Meta&apos;s privacy policy.
               </li>
             </ul>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">5. How Long We Keep Your Information</h2>
+          <LegalSection title="5. How Long We Keep Your Information">
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li><strong className="text-zinc-700 dark:text-zinc-300">Uploaded files:</strong> Uploaded files are retained for up to 30 days by default to complete your service, then scheduled for deletion. If you&apos;d like a specific file deleted sooner, contact us using the details in Section 10 and we&apos;ll action it directly.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Physical documents:</strong> Returned to you immediately after service or destroyed on the same day.</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Government application records:</strong> Retained only as long as needed to resolve your application (typically same day to 7 days).</li>
               <li><strong className="text-zinc-700 dark:text-zinc-300">Contact information:</strong> Not stored in any database unless you have an ongoing order.</li>
             </ul>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">6. Your Rights Under POPIA</h2>
+          <LegalSection title="6. Your Rights Under POPIA">
             <p>As a data subject under POPIA, you have the right to:</p>
             <ul className="mt-3 space-y-2 list-disc list-inside pl-1">
               <li><strong className="text-zinc-700 dark:text-zinc-300">Access:</strong> Request a copy of any personal information we hold about you.</li>
@@ -178,10 +157,9 @@ export function PrivacyPage() {
               <a href={`mailto:${BIZ.email}`} className="text-brand-blue underline underline-offset-2">{BIZ.email}</a>{" "}
               or WhatsApp us on {BIZ.whatsappPhone}.
             </p>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">7. Security</h2>
+          <LegalSection title="7. Security">
             <p>
               We take reasonable precautions to protect your information. Our website uses HTTPS, security headers,
               and rate limiting. Sensitive documents handled in-store are treated with strict confidentiality and are
@@ -191,51 +169,28 @@ export function PrivacyPage() {
               No method of transmission over the internet is 100% secure. If you believe your data has been
               compromised, please contact us immediately.
             </p>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">8. Children&apos;s Privacy</h2>
+          <LegalSection title="8. Children&apos;s Privacy">
             <p>
               We do not knowingly collect personal information from children under the age of 18 without parental
               consent. If a parent or guardian brings a child in for services, we process only the minimum
               information needed.
             </p>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">9. Changes to This Policy</h2>
+          <LegalSection title="9. Changes to This Policy">
             <p>
               We may update this Privacy Policy from time to time. When we do, we will update the &quot;Last
               updated&quot; date at the top of this page. Continued use of our services after any changes means you
               accept the updated policy.
             </p>
-          </section>
+          </LegalSection>
 
-          <section>
-            <h2 className="font-medium text-xl text-zinc-900 dark:text-zinc-50 mb-3">10. Contact Us</h2>
+          <LegalSection title="10. Contact Us">
             <p>For any privacy-related questions or requests:</p>
-            <div className="mt-3 p-4 rounded-[14px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 space-y-1">
-              <p><strong className="text-zinc-700 dark:text-zinc-300">{BIZ.name}</strong></p>
-              <p>{BIZ.addressFull}</p>
-              <p>
-                Email: <a href={`mailto:${BIZ.email}`} className="text-brand-blue underline underline-offset-2">{BIZ.email}</a>
-              </p>
-              <p>
-                Phone:{" "}
-                <a href={`tel:${BIZ.callPhoneE164}`} className="text-brand-blue underline underline-offset-2">
-                  {BIZ.callPhone}
-                </a>
-              </p>
-              <p>
-                WhatsApp:{" "}
-                <a href={waChatLink()} className="text-brand-blue underline underline-offset-2">
-                  {BIZ.whatsappPhone}
-                </a>
-              </p>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+            <LegalContactCard />
+          </LegalSection>
+    </LegalPage>
   )
-                } 
+}

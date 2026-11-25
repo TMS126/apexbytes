@@ -1,6 +1,4 @@
 "use client"
-
-import { useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
@@ -9,14 +7,12 @@ import Link from "next/link"
 import { WhatsappLogo, EnvelopeSimple, FacebookLogo, Phone } from "@phosphor-icons/react"
 import { BIZ, WA, FOOTER_NAV } from "@/lib/brand"
 import { ScrollBounce } from "@/components/scroll-bounce"
-import { TermsGateModal } from "@/components/footer/terms-gate-modal"
 import { FaqAccordion } from "@/components/footer/faq-accordion"
 
 function FooterContent() {
   const pathname = usePathname()
   const { theme } = useTheme()
   const mounted = useMounted()
-  const [isTermsOpen, setIsTermsOpen] = useState(false)
   const showFaq = pathname !== "/contact"
 
   return (
@@ -100,14 +96,13 @@ function FooterContent() {
             </p>
 
             <div className="flex items-center justify-center gap-4 relative z-10">
-              <button
-                type="button"
-                onClick={() => setIsTermsOpen(true)}
-                style={{ fontSize: "0.78rem", lineHeight: "1.1rem" }}
-                className="font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
+              <Link
+                href="/terms"
+                prefetch
+                className="text-[0.78rem] font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Terms
-              </button>
+              </Link>
               <span className="text-zinc-200 dark:text-zinc-700" aria-hidden="true">
                 ·
               </span>
@@ -126,8 +121,6 @@ function FooterContent() {
       </ScrollBounce>
       </div>
       </div>
-
-      <TermsGateModal open={isTermsOpen} onAgree={() => setIsTermsOpen(false)} />
     </div>
   )
 }

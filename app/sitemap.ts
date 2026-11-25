@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/tools/cv-writing',   priority: 0.6, freq: 'monthly' },
     { path: '/tools/intake-form',  priority: 0.6, freq: 'monthly' },
     { path: '/privacy',            priority: 0.3, freq: 'yearly' },
+    { path: '/terms',              priority: 0.3, freq: 'yearly' },
   ]
 
   const serviceRoutes: RouteConfig[] = HUB_ORDER.flatMap((hubId) => {

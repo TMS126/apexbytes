@@ -1,13 +1,7 @@
-import {
-  Printer, FileText, Palette, Globe, Cpu, Info, CurrencyDollar,
-} from "@phosphor-icons/react"
-import { BRAND, BIZ } from "@/lib/brand"
+import { BIZ } from "@/lib/brand"
 
 export const TERMS_SECTIONS = [
   {
-    icon: "Printer",
-    colorLight: BRAND.blue,
-    colorDark: BRAND.lightBlue,
     title: "Print Hub – Everything Paper",
     points: [
       { label: "Printing Services", text: "B&W, Colour, and Bulk printing. For bulk discounts, submit your entire order together." },
@@ -18,9 +12,6 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    icon: "FileText",
-    colorLight: BRAND.green,
-    colorDark: BRAND.lightGreen,
     title: "Document Hub – All Document Work",
     points: [
       { label: "Document Assistance", text: "Full CV creation, typing, editing, and formatting. You are responsible for the accuracy of all content you provide." },
@@ -31,9 +22,6 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    icon: "Palette",
-    colorLight: BRAND.orangeDark,
-    colorDark: BRAND.lightOrange,
     title: "Design Hub – Creative Work",
     points: [
       { label: "Branding Design", text: "Logos and business cards built in Adobe Illustrator. No generic templates." },
@@ -45,9 +33,6 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    icon: "Globe",
-    colorLight: BRAND.blueDark,
-    colorDark: BRAND.lightBlue,
     title: "E-Service Hub – External Systems",
     points: [
       { label: "Government Services", text: `Admin help across SARS, SASSA, CSD, PSIRA, UIF, etc. ${BIZ.name} is not responsible for government processing delays.` },
@@ -59,9 +44,6 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    icon: "Cpu",
-    colorLight: BRAND.dark100,
-    colorDark: BRAND.techGreyDark,
     title: "Tech Hub – Hardware & Software",
     points: [
       { label: "System Maintenance", text: "Software installations, cleaning, virus removal, and performance optimisation." },
@@ -71,9 +53,6 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    icon: "CurrencyDollar",
-    colorLight: BRAND.dark100,
-    colorDark: "#D4D4D8",
     title: "Payment Terms",
     points: [
       { label: "Standard Services", text: "Payable on execution. Clear, upfront pricing with no hidden fees." },
@@ -82,9 +61,6 @@ export const TERMS_SECTIONS = [
     ],
   },
   {
-    icon: "Info",
-    colorLight: BRAND.dark100,
-    colorDark: "#D4D4D8",
     title: "General Terms",
     points: [
       { label: "Appointments", text: "Confirmed in advance; late arrival may mean rescheduling. Cancellations need 24-hour notice where possible." },
@@ -94,13 +70,3 @@ export const TERMS_SECTIONS = [
     ],
   },
 ]
-
-export const ICON_COMPONENTS: Record<string, React.ElementType> = {
-  Printer: Printer,
-  FileText: FileText,
-  Palette: Palette,
-  Globe: Globe,
-  Cpu: Cpu,
-  CurrencyDollar: CurrencyDollar,
-  Info: Info,
-}
