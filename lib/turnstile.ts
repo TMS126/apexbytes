@@ -21,9 +21,14 @@ export async function verifyTurnstileToken({
   remoteIp: string | null
 }): Promise<TurnstileResult> {
   const secret = process.env.TURNSTILE_SECRET_KEY?.trim()
-  const expectedHostname = process.env.TURNSTILE_EXPECTED_HOSTNAME?.trim()
+  // Comma-separated so the canonical domain and the vercel.app alias can both
+  // verify. A single hostname keeps working exactly as before.
+  const expectedHostnames = (process.env.TURNSTILE_EXPECTED_HOSTNAME ?? "")
+    .split(",")
+    .map((hostname) => hostname.trim())
+    .filter(Boolean)
 
-  if (!secret || !expectedHostname) return { valid: false, reason: "not-configured" }
+  if (!secret || expectedHostnames.length === 0) return { valid: false, reason: "not-configured" }
   if (!token || token.length > 2048) return { valid: false, reason: "missing-token" }
 
   const body = new FormData()
@@ -46,7 +51,9 @@ export async function verifyTurnstileToken({
 
     const result = (await response.json()) as TurnstileResponse
     if (!result.success) return { valid: false, reason: "verification-failed" }
-    if (result.hostname !== expectedHostname) return { valid: false, reason: "unexpected-hostname" }
+    if (!result.hostname || !expectedHostnames.includes(result.hostname)) {
+      return { valid: false, reason: "unexpected-hostname" }
+    }
     if (result.action !== "document_upload") return { valid: false, reason: "unexpected-action" }
 
     return { valid: true }
