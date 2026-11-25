@@ -181,7 +181,7 @@ export function ServiceDetailModal({ svc, onClose }: { svc: SelectedService | nu
       return
     }
     if (!turnstileToken) {
-      setUploadErr("Complete the upload verification before selecting a file.")
+      setUploadErr("Finish the quick verification above, then choose your file.")
       setUploadPhase("error")
       return
     }
@@ -532,7 +532,7 @@ top: "28px", left: "-34px", width: "150px", transform: "rotate(-45deg)",
                   return
                 }
                 if (!turnstileToken) {
-                  setUploadErr("Complete the upload verification first.")
+                  setUploadErr("Finish the quick verification above, then choose your file.")
                   setUploadPhase("error")
                   return
                 }
