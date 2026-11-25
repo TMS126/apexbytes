@@ -102,9 +102,13 @@ html[data-scroll-locked] body { overflow: hidden; }
 .abh-underline-button:focus-visible::after,
 .abh-underline-button[aria-current="page"]::after { transform: translateX(-50%) scaleX(1); }
 
-/* Main search treatment: one theme-aware outer field; the native input stays
-   visually unboxed so dark mode never produces a light inner rectangle. */
+/* Floating search treatment: the field sits on a dark modal scrim, so it uses
+   fixed light ink and one rule instead of a filled, rounded container. The
+   native input stays visually unboxed in both themes. */
 .abh-reference-search {
+  --abh-search-ink: #ffffff;
+  --abh-search-muted: rgba(255, 255, 255, 0.66);
+  --abh-search-rule: rgba(255, 255, 255, 0.46);
   display: flex;
   width: 100%;
   min-width: 0;
@@ -112,13 +116,15 @@ html[data-scroll-locked] body { overflow: hidden; }
   align-items: center;
   gap: .75rem;
   border: 0;
-  border-radius: 14px;
-  background: var(--input);
-  color: var(--foreground);
-  padding: 0 .875rem;
+  border-bottom: 1px solid var(--abh-search-rule);
+  border-radius: 0;
+  background: transparent;
+  color: var(--abh-search-ink);
+  padding: 0 .25rem;
   box-shadow: none;
-  transition: box-shadow 160ms ease, border-color 160ms ease;
+  transition: border-color 160ms ease;
 }
+.abh-reference-search:focus-within { border-bottom-color: var(--abh-search-ink); }
 .abh-expanding-search-shell {
   border: 0;
   border-radius: 14px;
@@ -142,21 +148,25 @@ html[data-scroll-locked] body { overflow: hidden; }
   border: 0 !important;
   border-radius: 0 !important;
   background: transparent !important;
-  color: var(--muted-foreground);
   font-size: 1.37rem !important;
   font-weight: 400;
   line-height: 1.5;
   outline: none !important;
   box-shadow: none !important;
 }
+.abh-reference-search input { color: var(--abh-search-ink); caret-color: var(--abh-search-ink); }
+.abh-search-input { color: var(--muted-foreground); }
 .abh-reference-search input:focus,
 .abh-reference-search input:focus-visible,
 .abh-search-input:focus,
 .abh-search-input:focus-visible { outline: none !important; box-shadow: none !important; }
+.abh-reference-search input::placeholder { color: var(--abh-search-muted) !important; opacity: 1 !important; }
+.abh-reference-search .abh-search-clear { color: var(--abh-search-muted); }
+.abh-reference-search .abh-search-clear:hover { color: var(--abh-search-ink); }
 .dark .abh-reference-search,
 .dark .abh-reference-search input,
 .dark .abh-search-input {
-  background: var(--input) !important;
+  background: transparent !important;
   background-image: none !important;
 }
 .dark .abh-reference-search input,
@@ -1140,8 +1150,9 @@ button[aria-label^="Close"]:hover {
     display: none;
   }
 
-  /* Keep non-home titles and their supporting copy together as a centered,
-     balanced hero group while the scroll cue remains at the viewport edge. */
+  /* Keep non-home titles, supporting copy and the scroll cue together as one
+     centered hero group. The cue sits in normal flow just below the subtitle
+     rather than being pinned to the bottom edge of the viewport. */
   .abh-editorial-hero:not(.abh-home-hero) .abh-tagline,
   .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-subtitle {
     position: static;
@@ -1155,11 +1166,6 @@ button[aria-label^="Close"]:hover {
     text-wrap: balance;
   }
   .abh-editorial-hero:not(.abh-home-hero) .abh-divider { display: none; }
-  .abh-editorial-hero:not(.abh-home-hero) .abh-editorial-scroll-cue {
-    position: absolute;
-    bottom: 1.75rem;
-    margin-top: 0;
-  }
   .abh-editorial-hero::after {
     content: none;
   }
@@ -1168,15 +1174,6 @@ button[aria-label^="Close"]:hover {
     width: 2rem;
     height: 2rem;
     opacity: 0.62;
-  }
-
-  .contact-editorial-scroll-cue {
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%);
-  }
-  @media (max-width: 767px) {
-    .contact-editorial-scroll-cue { bottom: 7.25rem !important; }
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -1970,7 +1967,7 @@ button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visib
 
 /* Final field treatment: a straight neutral rule at rest; the rule disappears
    on focus and is replaced by one theme-aware accent ring. */
-input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(.abh-search-input),
 textarea, select {
   border: 0 !important;
   border-top: 0 !important;
@@ -1982,8 +1979,8 @@ textarea, select {
   box-shadow: none !important;
 }
 
-input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
-input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus-visible,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(.abh-search-input):focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(.abh-search-input):focus-visible,
 textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
   border-bottom-color: transparent !important;
   border-radius: 0 !important;
@@ -1995,8 +1992,10 @@ textarea:focus, textarea:focus-visible, select:focus, select:focus-visible {
 .abh-reference-search,
 .abh-reference-search:focus-within {
   border: 0 !important;
-  border-radius: 14px !important;
+  border-bottom: 1px solid var(--abh-search-rule) !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
+  background: transparent !important;
 }
 
 .abh-reference-search input,

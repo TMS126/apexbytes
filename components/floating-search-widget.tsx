@@ -262,16 +262,11 @@ export function FloatingSearchWidget() {
         )}
       >
         <div className="relative flex items-center justify-end gap-2">
-          <span
-            className="pointer-events-none absolute right-full mr-2 max-w-0 overflow-hidden whitespace-nowrap rounded-full border border-border bg-background px-2.5 py-1 text-[0.65rem] font-medium uppercase tracking-widest text-foreground opacity-0 shadow-sm transition-all duration-200 group-hover/search:max-w-[100px] group-hover/search:opacity-100 group-focus-within/search:max-w-[100px] group-focus-within/search:opacity-100"
-          >
-            Search
-          </span>
           <button
             ref={fabRef}
 onClick={isOpen ? handleClose : handleOpen}
   aria-label={isOpen ? "Close search" : "Search services"}
-            className="abh-press group/search relative flex size-11 items-center justify-center rounded-full border border-border bg-background text-foreground shadow-md transition-colors duration-150 ease-out hover:border-[var(--search-accent)] hover:text-[var(--search-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none" style={{ ["--search-accent" as string]: accentColor }}
+            className="abh-press group/search relative flex size-11 items-center justify-center rounded-full text-foreground transition-colors duration-150 ease-out hover:text-[var(--search-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none" style={{ ["--search-accent" as string]: accentColor }}
           >
   {isOpen ? (
   <X size={24} weight="regular" aria-hidden="true" />
@@ -280,7 +275,7 @@ onClick={isOpen ? handleClose : handleOpen}
   size={21}
   weight="regular"
   aria-hidden="true"
-  className="text-muted-foreground transition-colors duration-200 ease-out group-hover/search:text-[var(--search-accent)] motion-reduce:transition-none"
+  className="text-current transition-colors duration-200 ease-out motion-reduce:transition-none"
   />
   )}
           </button>
@@ -308,7 +303,7 @@ onClick={isOpen ? handleClose : handleOpen}
                 type="text"
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                placeholder=""
+                placeholder="Search a service"
                 /* AUDIT FIX: the border-color swap on the pill container above
                    is meant to be the ONLY focus indicator here — added
                    defensive focus:ring-0/focus-visible:ring-0/outline-none
@@ -321,7 +316,7 @@ onClick={isOpen ? handleClose : handleOpen}
               {query && (
                 <button
                   onClick={() => setQuery("")}
-                  className="abh-press flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] duration-150 hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                  className="abh-press abh-search-clear flex size-8 shrink-0 items-center justify-center rounded-[14px] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
                   aria-label="Clear search"
                 >
                   <Broom size={15} weight="regular" aria-hidden="true" />

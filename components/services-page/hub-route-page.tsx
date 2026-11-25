@@ -29,8 +29,8 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
       <div className="mx-auto flex max-w-[1248px] flex-col gap-14 px-4 md:px-8">
         <p className="text-center text-sm text-muted-foreground">{hub.sections.length} service categories · {hub.turnaround}</p>
         {hub.sections.map((section, sectionIndex) => (
-          <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[14px] border border-border/60 bg-card/40 transition-shadow hover:shadow-[var(--shadow-card-lift)]">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 transition-colors hover:bg-card/70 [&::-webkit-details-marker]:hidden md:px-6">
+          <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[14px] border border-border/60 bg-card/40 transition-shadow hover:shadow-[var(--shadow-card-lift)] open:hover:shadow-none">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 transition-colors hover:bg-card/70 group-open:hover:bg-transparent [&::-webkit-details-marker]:hidden md:px-6">
               <span className="min-w-0">
                 <span className="abh-eyebrow mb-1 block">{hub.title}</span>
                 <span id={`section-${sectionIndex}`} className="block font-heading text-2xl font-medium tracking-tight text-foreground md:text-3xl">{section.title}</span>

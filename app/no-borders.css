@@ -68,7 +68,7 @@
     box-shadow: 0 2px 0 -1px var(--line-rule) !important;
   }
 
-  :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):has(> svg:only-child) {
+  :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):not(.abh-bulk-label):has(> svg:only-child) {
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -83,10 +83,11 @@
     border-radius: 9999px !important;
   }
 
-  /* 2. Search stays borderless like the rest of the site; only results retain
-        their own surface treatment. */
-  :root:root:root:root [role="dialog"][aria-label="Search services"] > div {
+  /* 2. Search keeps its single bottom rule; only results retain their own
+        surface treatment. */
+  :root:root:root:root [role="dialog"][aria-label="Search services"] > .abh-reference-search {
     border: 0 !important;
+    border-bottom: 1px solid var(--abh-search-rule, rgba(255, 255, 255, 0.46)) !important;
   }
 
   /* 3. Keep surfaces borderless without removing keyboard focus visibility. */

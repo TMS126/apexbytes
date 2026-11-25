@@ -1,7 +1,6 @@
 // app/tools/jpg-to-pdf/page.tsx
 "use client"
 
-import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { PageScrollControls } from "@/components/page-scroll-controls"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
@@ -97,8 +96,6 @@ export default function JpgToPdfPage() {
             <h1 className="abh-page-title mb-3">
               JPG to PDF
             </h1>
-            
-            <EditorialScrollCue />
           </div>
         </section>
 

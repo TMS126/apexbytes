@@ -8,7 +8,6 @@ import { PageNoticeBell } from "@/components/page-notice-bell"
 import { BIZ, WA } from "@/lib/brand"
 import { CtaBar } from "@/components/strip-section"
 import { PageScrollControls } from "@/components/page-scroll-controls"
-import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { ScrollBounce } from "@/components/scroll-bounce"
 
 export const metadata: Metadata = {
@@ -38,7 +37,6 @@ export default function ToolsPage() {
             Free, browser-based tools from {BIZ.name} — no sign-up, nothing leaves your device unless you choose to send it.
           </p>
           <div className="abh-divider mx-auto" />
-          <EditorialScrollCue />
         </div>
       </section>
 

@@ -27,7 +27,7 @@ export function SiteScrollDownCue() {
       type="button"
       aria-label="Scroll to bottom"
       onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
-      className={`abh-site-scroll-down fixed bottom-28 left-1/2 z-[9991] inline-flex size-8 -translate-x-1/2 items-center justify-center rounded-full text-muted-foreground transition-[opacity,transform,color] duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:bottom-7 ${visible ? "translate-y-0 opacity-[0.62]" : "pointer-events-none translate-y-2 opacity-0"}`}
+      className={`abh-site-scroll-down fixed bottom-28 right-4 z-[9991] inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-[opacity,transform,color] duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:bottom-7 sm:right-6 ${visible ? "translate-y-0 opacity-[0.62]" : "pointer-events-none translate-y-2 opacity-0"}`}
     >
       <ArrowDown size={16} weight="regular" aria-hidden="true" />
     </button>

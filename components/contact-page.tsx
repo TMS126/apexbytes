@@ -132,7 +132,7 @@ function ContactPageInner() {
           </ScrollBounce>
           <p className="abh-tagline max-w-xl mx-auto text-center">We&apos;re here and ready to help — reach out any way you prefer.</p>
           <div className="abh-divider" />
-            <EditorialScrollCue className="contact-editorial-scroll-cue" />
+            <EditorialScrollCue />
         </div>
       </section>
 
@@ -178,9 +178,20 @@ function ContactPageInner() {
                             target={c.href.startsWith("http") ? "_blank" : undefined}
                             rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                             aria-label={c.title}
+                            aria-describedby={`contact-tooltip-${index}`}
                             className="group flex min-h-[112px] h-full flex-col items-center justify-center gap-2 rounded-[14px] border border-transparent p-3 text-center text-muted-foreground transition-all duration-200 hover:border-foreground/30 hover:text-foreground active:scale-[0.97] sm:p-4"
                           >
-                            <Icon size={34} weight="regular" aria-hidden="true" className="text-current transition-colors duration-200" />
+                            <span className="relative inline-flex items-center justify-center">
+                              <Icon size={34} weight="regular" aria-hidden="true" className="text-current transition-colors duration-200" />
+                              <span
+                                id={`contact-tooltip-${index}`}
+                                role="tooltip"
+                                className="pointer-events-none absolute left-1/2 top-[calc(100%+0.45rem)] z-20 w-max -translate-x-1/2 rounded-[10px] border border-border bg-popover px-2.5 py-1.5 text-center text-[0.68rem] leading-snug text-popover-foreground opacity-0 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.45)] transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
+                              >
+                                <span className="block font-medium text-foreground">{c.title}</span>
+                                <span className="block whitespace-nowrap text-muted-foreground">{c.value}</span>
+                              </span>
+                            </span>
                             <span className="sr-only">{c.value}</span>
                           </a>
                           {isCopyable && (
