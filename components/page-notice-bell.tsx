@@ -80,8 +80,8 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
     variant: "info",
     Icon: ImageIcon,
     category: "Photography",
-    header: "A note on our photos",
-    body: "We use high-quality sample photos to represent our services — the professional standard shown is exactly what you receive.",
+    header: "How to read this gallery",
+    body: "Some images are representative examples rather than photos of finished client work. Each project is labelled Real Client Work, Representative Example or Practice Project so you know what you are looking at.",
   }],
   contact: [{
     id: "contact-before-visit",
@@ -97,7 +97,7 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
     Icon: Buildings,
     category: "About ApexBytesHub",
     header: "Local, practical support",
-    body: "ApexBytesHub brings print, design, digital services, and tech support together for the Bothaville community.",
+    body: "ApexBytesHub brings print, document, design, e-service and tech support together for the Kgotsong community in Bothaville.",
   }],
   pricing: [
     {
@@ -106,7 +106,7 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
       Icon: Lightning,
       category: "Rush Fee",
       header: "Check turnaround early",
-      body: "If you have a deadline, share it with us early so we can confirm the most suitable turnaround for your request.",
+      body: "If you have a deadline, ask about the Rush 30-Minutes add-on when you request a quote so we can confirm it fits the current queue.",
     },
     {
       id: "pricing-bulk-pricing",
