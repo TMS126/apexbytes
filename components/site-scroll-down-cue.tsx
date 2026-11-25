@@ -25,11 +25,11 @@ export function SiteScrollDownCue() {
   return (
     <button
       type="button"
-      aria-label="Scroll down"
-      onClick={() => window.scrollBy({ top: Math.max(window.innerHeight * 0.78, 480), behavior: "smooth" })}
-      className={`abh-site-scroll-down fixed bottom-5 right-4 z-[9991] inline-flex size-10 items-center justify-center rounded-full text-[var(--line-rule)] transition-[opacity,transform,color] duration-200 md:bottom-6 md:right-6 ${visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}
+      aria-label="Scroll to bottom"
+      onClick={() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })}
+      className={`abh-site-scroll-down fixed bottom-28 left-1/2 z-[9991] inline-flex size-8 -translate-x-1/2 items-center justify-center rounded-full text-muted-foreground transition-[opacity,transform,color] duration-200 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:bottom-7 ${visible ? "translate-y-0 opacity-[0.62]" : "pointer-events-none translate-y-2 opacity-0"}`}
     >
-      <ArrowDown size={19} weight="regular" aria-hidden="true" />
+      <ArrowDown size={16} weight="regular" aria-hidden="true" />
     </button>
   )
 }
