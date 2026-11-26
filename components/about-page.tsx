@@ -4,7 +4,6 @@
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
 import { BRAND, THEME_BG } from "@/lib/brand"
-import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 import { ensureAccessible } from "@/lib/color"
 import { AboutHeader } from "@/components/about/about-header"
 import { AboutStory } from "@/components/about/about-story"
@@ -16,8 +15,6 @@ import { AboutMission } from "@/components/about/about-mission"
 const ABOUT_NEUTRAL = { light: BRAND.dark100, dark: BRAND.techGreyDark }
 
 export function AboutPage() {
-  const showBackToTop = useBackToTop()
-
   const { resolvedTheme } = useTheme()
   const mounted = useMounted()
   const isDark = mounted && resolvedTheme === "dark"
@@ -40,7 +37,6 @@ export function AboutPage() {
         <AboutTestimonials />
         <AboutMission />
       </main>
-      <BackToTopButton visible={showBackToTop} />
     </div>
   )
 } 

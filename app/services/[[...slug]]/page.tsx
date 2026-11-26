@@ -14,6 +14,7 @@ import { HUBS } from "@/lib/data"
 import { BIZ, waChatLink } from "@/lib/brand"
 import { PageNoticeBell } from "@/components/page-notice-bell"
 import { hubSlugToId, resolveServiceRoute, serviceRouteFor, hubRouteFor } from "@/components/services-page/lib"
+import { pageMetadata } from "@/lib/seo"
 
 export const dynamic = "force-dynamic"
 
@@ -53,24 +54,20 @@ export async function generateMetadata({
     const hubId = hubSlugToId(slug[0])
     if (hubId) {
       const hub = HUBS[hubId]
-      const title = `${hub.title} — ApexBytesHub`
       const description = hub.desc || `Explore ${hub.title} services and pricing at ${BIZ.name}.`
-      const pageUrl = `${SITE_URL}${hubRouteFor(hubId)}`
-      return {
-        title,
+      return pageMetadata({
+        title: hub.title,
         description,
-        alternates: { canonical: pageUrl },
-        openGraph: { url: pageUrl },
-      }
+        path: hubRouteFor(hubId),
+      })
     }
   }
 
-  return {
-    title: "Services — ApexBytesHub",
+  return pageMetadata({
+    title: "Services",
     description: "Printing, documents, design, government services and tech support — all in one place.",
-    alternates: { canonical: `${SITE_URL}/services` },
-    openGraph: { url: `${SITE_URL}/services` },
-  }
+    path: "/services",
+  })
 }
 
 export default async function ServicesRoute({

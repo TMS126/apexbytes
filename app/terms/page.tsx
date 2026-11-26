@@ -2,12 +2,13 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { TermsPage } from "@/components/terms-page"
-import { PageScrollControls } from "@/components/page-scroll-controls"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata = {
-  title:       "Terms & Service Policies — ApexBytesHub",
+export const metadata = pageMetadata({
+  title:       "Terms & Service Policies",
   description: "The service, payment, and operational terms that apply to ApexBytesHub's print, document, design, e-service, and tech services.",
-}
+  path:        "/terms",
+})
 
 export default function TermsRoute() {
   return (
@@ -16,7 +17,6 @@ export default function TermsRoute() {
       <main id="main-content">
         <TermsPage />
       </main>
-      <PageScrollControls />
       <Footer />
     </div>
   )

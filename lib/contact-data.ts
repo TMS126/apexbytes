@@ -5,6 +5,7 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 import { BRAND, BIZ, HUB_COLORS, type HubKey } from "@/lib/brand"
+import { downloadVCard } from "@/lib/vcard"
 
 export const FORM_HUB_KEYS: Record<string, HubKey | null> = {
   "Print Hub":                  "print",
@@ -28,9 +29,7 @@ export function getFormHubColor(opt: string, isDark: boolean): string {
 export const CONTACT_GREY = { light: BRAND.dark100, dark: BRAND.techGreyDark }
 
 export function downloadBusinessVCard() {
-  const vcard = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
+  downloadVCard("ApexBytesHub.vcf", [
     `FN:Theji Meje — ApexBytesHub`,
     `N:ApexBytesHub;Theji Meje;;;`,
     // FIX: was "ORG:ApexBytesHub" (no space) — contradicted this same
@@ -49,20 +48,7 @@ export function downloadBusinessVCard() {
     // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.
     `URL:https://apexbytes.vercel.app/`,
     `NOTE:ApexBytesHub — Print\\, Design\\, Docs\\, Tech & E-Services in Kgotsong\\, Bothaville.`,
-    "END:VCARD",
-  ].join("\r\n")
-
-  const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" })
-  const url  = URL.createObjectURL(blob)
-  const a    = document.createElement("a")
-  a.href     = url
-  a.download = "ApexBytesHub.vcf"
-  // FIX: same detached-element / premature-revoke issue as
-  // profile-drawer.tsx — see that file's comment for the reasoning.
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
+  ])
 }
 
 export function buildOsmEmbedSrc(lat: number, lng: number) {

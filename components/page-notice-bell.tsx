@@ -6,7 +6,7 @@ import { useEffect, useId, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useMounted } from "@/hooks/use-mounted"
-import { Buildings, ChatCircleText, FilePdf, Image as ImageIcon, Lightning, SealPercent, Wrench } from "@phosphor-icons/react"
+import { Buildings, ChatCircleText, Image as ImageIcon, Lightning, SealPercent } from "@phosphor-icons/react"
 import { TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
 import { AnnouncementIconChip } from "@/components/announcement-icon-chip"
@@ -14,7 +14,7 @@ import { HOME_NOTICES, OFFICIAL_NOTICES } from "@/lib/home-notices"
 
 // ─── TYPES ─────────────────────────────────────────────────────────────────
 export type NoticeVariant = "success" | "info" | "warning" | "error"
-export type NoticePage = "home" | "services" | "gallery" | "contact" | "about" | "pricing" | "tools" | "jpg-to-pdf"
+export type NoticePage = "home" | "services" | "gallery" | "contact" | "about" | "pricing"
 
 export interface HomeNotice {
   id: string
@@ -51,8 +51,6 @@ const PAGE_LABEL: Record<NoticePage, string> = {
   contact: "Contact",
   about: "About",
   pricing: "Pricing",
-  tools: "Tools",
-  "jpg-to-pdf": "JPG to PDF",
 }
 
 // ─── PER-PAGE NOTICE CONTENT ───────────────────────────────────────────────
@@ -108,31 +106,7 @@ const PAGE_NOTICES: Record<Exclude<NoticePage, "home">, HomeNotice[]> = {
       header: "Check turnaround early",
       body: "If you have a deadline, ask about the Rush 30-Minutes add-on when you request a quote so we can confirm it fits the current queue.",
     },
-    {
-      id: "pricing-bulk-pricing",
-      variant: "info",
-      Icon: SealPercent,
-      category: "Bulk Pricing",
-      header: "Bulk service markers",
-      body: "Look for the Bulk tag when you are comparing services and quantities.",
-    },
   ],
-  tools: [{
-    id: "tools-privacy",
-    variant: "info",
-    Icon: Wrench,
-    category: "Privacy",
-    header: "Browser-based tools",
-    body: "The JPG to PDF converter processes images in your browser. Your files stay on your device unless you choose to share them.",
-  }],
-  "jpg-to-pdf": [{
-    id: "jpg-to-pdf-limits",
-    variant: "info",
-    Icon: FilePdf,
-    category: "File limits",
-    header: "Supported images",
-    body: "Convert JPG, JPEG, PNG, or WEBP images up to 15 MB each, with a maximum of 20 images per conversion. Processing happens in your browser.",
-  }],
 }
 
 // ─── NOTICE CARD ───────────────────────────────────────────────────────────

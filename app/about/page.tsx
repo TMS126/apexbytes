@@ -3,11 +3,13 @@ import { AboutPage } from "@/components/about-page"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata = {
-  title: "About Us — ApexBytesHub",
+export const metadata = pageMetadata({
+  title: "About Us",
   description: "A local business built on community, trust, and real results.",
-}
+  path: "/about",
+})
 
 export default function AboutRoute() {
   return (

@@ -1,8 +1,6 @@
 // app/tools/jpg-to-pdf/page.tsx
 "use client"
 
-import { PageScrollControls } from "@/components/page-scroll-controls"
-import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
@@ -81,8 +79,7 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageNoticeBell page="jpg-to-pdf" />
-      
+
       <main id="main-content" className="flex flex-col min-h-[calc(100vh-var(--nav-h))">
         {/* HERO HEADER */}
         <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+2rem)]">
@@ -354,7 +351,6 @@ accept={ACCEPT_ATTRIBUTE}
           onClose={() => setCropId(null)}
         />
       )}
-      <PageScrollControls />
     </div>
   )
 }

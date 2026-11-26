@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { X, WhatsappLogo, DownloadSimple, AddressBook } from "@phosphor-icons/react"
 import { BIZ, BRAND, TOKEN } from "@/lib/brand"
 import { cn } from "@/lib/utils"
+import { downloadVCard } from "@/lib/vcard"
 
 const FOUNDER_ROLE = "Founder & Lead Designer"
 const FOUNDER_BIO  =
@@ -15,9 +16,7 @@ const FOUNDER_BIO  =
 const FOUNDER_WA_LINK = `https://wa.me/27781294939?text=${encodeURIComponent(`Hi ${BIZ.founder}! I'd like to get in touch with you directly.`)}`
 
 function downloadPersonalVCard() {
-  const vcard = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
+  downloadVCard("Theji-Meje-ApexBytesHub.vcf", [
     // FIX: was "Theji Meje ApexBytesHub" — name and brand ran together
     // with no separator. Also now uses FOUNDER_ROLE/BIZ.callPhoneE164 below
     // instead of duplicating those exact values as separate literals.
@@ -33,24 +32,7 @@ function downloadPersonalVCard() {
     // FIX: was the stale v0-apexbytes-hub-website.vercel.app domain.
     "URL:https://apexbytes.vercel.app/",
     "NOTE:Founder of ApexBytesHub — contact directly for personal enquiries.",
-    "END:VCARD",
-  ].join("\r\n")
-
-  const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" })
-  const url  = URL.createObjectURL(blob)
-  const a    = document.createElement("a")
-  a.href     = url
-  a.download = "Theji-Meje-ApexBytesHub.vcf"
-  // FIX: the element was never attached to the DOM before .click() —
-  // some browsers (notably Firefox) can silently fail to trigger a
-  // download from a detached anchor. Append, click, then clean up.
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  // FIX: revoking the object URL synchronously right after click() risks
-  // a race against the browser actually starting the download in some
-  // engines. A short deferred revoke is the standard-practice fix.
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
+  ])
 }
 
 interface ProfileDrawerProps {
