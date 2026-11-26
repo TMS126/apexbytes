@@ -3,7 +3,8 @@
 
 import { EditorialScrollCue } from "@/components/editorial-scroll-cue"
 import { useCallback, useEffect, useRef, useState, Suspense } from "react"
-import { useSearchParams, usePathname } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
+import Link from "next/link"
 import { Shuffle } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
@@ -11,8 +12,6 @@ import { HUB_COLORS, HubKey, TOKEN } from "@/lib/brand"
 import { PROJECTS, ProjectData } from "@/lib/data"
 import { ScrollBounce } from "@/components/scroll-bounce"
 import { ROW_ORDER, HubId } from "@/lib/gallery-helpers"
-import { useGalleryBackStack } from "@/hooks/use-gallery-back-stack"
-import { ProjectViewerModal } from "@/components/gallery/project-viewer-modal"
 import { SafeImage } from "@/components/gallery/safe-image"
 import { LikeButton, ShareButton } from "@/components/gallery/like-share-buttons"
 import { HubFilterIcon } from "@/components/hub-filter-icon"
@@ -31,7 +30,7 @@ export function HubFilterCircles({
 }) {
   const filters = [{ id: "all" as const, label: "All", accent: TOKEN.orangeText, icon: <HubFilterIcon id="all" size={40} weight="regular" /> }, ...ROW_ORDER.map((row) => ({ id: row.id, label: row.short, accent: getAccent(row.id), icon: <HubFilterIcon id={row.id} size={40} weight="regular" /> }))]
   return (
-    <div className="flex w-full flex-nowrap items-center justify-center gap-5 overflow-x-auto px-2 pb-3 no-scrollbar md:gap-8">
+    <div className="w-full overflow-x-auto px-2 pb-3 no-scrollbar"><div className="mx-auto flex w-max min-w-full items-center justify-center gap-5 md:gap-8">
       {filters.map((filter) => {
         const isActive = activeFilter === filter.id
         return (
@@ -44,7 +43,7 @@ export function HubFilterCircles({
           </button>
         )
       })}
-    </div>
+    </div></div>
   )
 }
 
@@ -55,21 +54,18 @@ export function HubFilterCircles({
 // for a single active hub filter, the filter circle above already
 // says which hub you're looking at).
 function ProjectCard({
-  p, liked, onToggleLike, onSelect, pathname,
+  p, liked, onToggleLike,
 }: {
   p: ProjectData
   liked: boolean
   onToggleLike: (id: string) => void
-  onSelect: (p: ProjectData) => void
-  pathname: string
 }) {
-  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${pathname}?project=${p.id}` : `${pathname}?project=${p.id}`
+  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/gallery/${p.id}` : `/gallery/${p.id}`
   return (
     <div className="flex flex-col">
       <div className="group relative aspect-[4/3] overflow-hidden rounded-[14px] bg-zinc-100 dark:bg-zinc-900">
-        <button
-          type="button"
-          onClick={() => onSelect(p)}
+        <Link
+          href={`/gallery/${p.id}`}
           aria-label={`View ${p.title}`}
           className="absolute inset-0 z-0 h-full w-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
         >
@@ -81,7 +77,7 @@ function ProjectCard({
             sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
             className="object-cover"
           />
-        </button>
+        </Link>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-2">
           <div className="pointer-events-auto">
             <ShareButton url={shareUrl} title={p.title} />
@@ -92,27 +88,25 @@ function ProjectCard({
         </div>
       </div>
 
-      <button type="button" onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
+      <Link href={`/gallery/${p.id}`} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
         <span className="block text-base md:text-lg font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
         <span className="mt-1 block text-xs md:text-sm uppercase tracking-[0.14em] text-muted-foreground">{p.tag}</span>
-      </button>
+      </Link>
     </div>
   )
 }
 
 function ProjectGrid({
-  projects, likedIds, onToggleLike, onSelect, pathname,
+  projects, likedIds, onToggleLike,
 }: {
   projects: ProjectData[]
   likedIds: Set<string>
   onToggleLike: (id: string) => void
-  onSelect: (p: ProjectData) => void
-  pathname: string
 }) {
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
       {projects.map((p) => (
-        <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} onSelect={onSelect} pathname={pathname} />
+        <ProjectCard key={p.id} p={p} liked={likedIds.has(p.id)} onToggleLike={onToggleLike} />
       ))}
     </div>
   )
@@ -122,10 +116,8 @@ function GalleryPageInner() {
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
   const searchParams = useSearchParams()
-  const pathname      = usePathname()
+  const router = useRouter()
   const [activeFilter,    setActiveFilter]    = useState<HubId | "all">("all")
-  const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null)
-  const [zoomIndex,       setZoomIndex]       = useState<number | null>(null)
   const [surpriseFlash,   setSurpriseFlash]   = useState(false)
   const [likedIds,        setLikedIds]        = useState<Set<string>>(new Set())
   const likesHydrated = useRef(false)
@@ -154,20 +146,6 @@ function GalleryPageInner() {
     })
   }, [])
 
-  const { closeProject, closeZoom } = useGalleryBackStack(selectedProject, setSelectedProject, zoomIndex, setZoomIndex)
-
-  useEffect(() => {
-    const projectId = searchParams.get("project")
-    if (!projectId) return
-    const match = PROJECTS.find(p => p.id === projectId)
-    if (!match) return
-    const frame = requestAnimationFrame(() => {
-      setActiveFilter(match.hub as HubId)
-      setSelectedProject(match)
-    })
-    return () => cancelAnimationFrame(frame)
-  }, [searchParams])
-
   useEffect(() => {
     const hubParam = searchParams.get("hub")
     if (!hubParam) return
@@ -176,18 +154,6 @@ function GalleryPageInner() {
     const frame = requestAnimationFrame(() => setActiveFilter(hubParam as HubId))
     return () => cancelAnimationFrame(frame)
   }, [searchParams])
-
-  useEffect(() => {
-    if (!selectedProject) return
-    const scrollY = window.scrollY
-    const { style } = document.body
-    style.position = "fixed"; style.top = `-${scrollY}px`
-    style.left = "0"; style.right = "0"; style.width = "100%"; style.overflow = "hidden"
-    return () => {
-      style.position = ""; style.top = ""; style.left = ""; style.right = ""; style.width = ""; style.overflow = ""
-      window.scrollTo(0, scrollY)
-    }
-  }, [selectedProject])
 
   const getAccent = useCallback(
     (id: HubId) => { const c = HUB_COLORS[id as HubKey]; return isDark ? c.accentDark : c.accentLight },
@@ -201,17 +167,11 @@ function GalleryPageInner() {
   const handleSurprise = useCallback(() => {
     setSurpriseFlash(true)
     setTimeout(() => {
-      const pool = selectedProject && PROJECTS.length > 1
-        ? PROJECTS.filter((project) => project.id !== selectedProject.id)
-        : PROJECTS
-      const pick = pool[Math.floor(Math.random() * pool.length)]
-      setActiveFilter(pick.hub as HubId)
-      setSelectedProject(pick)
+      const pick = PROJECTS[Math.floor(Math.random() * PROJECTS.length)]
+      router.push(`/gallery/${pick.id}`)
       setSurpriseFlash(false)
     }, 220)
-  }, [selectedProject])
-
-  const modalSiblings = selectedProject ? PROJECTS.filter(p => p.hub === selectedProject.hub) : []
+  }, [router])
 
   return (
     // FIX: was a framer-motion `motion.div` with `layout` — the exact
@@ -265,8 +225,6 @@ function GalleryPageInner() {
                 projects={visibleProjects}
                 likedIds={likedIds}
                 onToggleLike={toggleLike}
-                onSelect={setSelectedProject}
-                pathname={pathname}
               />
             </div>
           </ScrollBounce>
@@ -277,18 +235,6 @@ function GalleryPageInner() {
         </ScrollBounce>
       </div>
 
-      <ProjectViewerModal
-        project={selectedProject}
-        onClose={closeProject}
-        zoomIndex={zoomIndex}
-        setZoomIndex={setZoomIndex}
-        onCloseZoom={closeZoom}
-        pathname={pathname}
-        siblings={modalSiblings}
-        onNavigate={setSelectedProject}
-        likedIds={likedIds}
-        onToggleLike={toggleLike}
-      />
 
     </section>
   )

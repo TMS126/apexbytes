@@ -3,6 +3,8 @@ import { GalleryPage } from "@/components/gallery-page"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
+import { redirect } from "next/navigation"
+import { PROJECTS } from "@/lib/data"
 import { pageMetadata } from "@/lib/seo"
 
 export const metadata = pageMetadata({
@@ -11,7 +13,9 @@ export const metadata = pageMetadata({
   path: "/gallery",
 })
 
-export default function GalleryRoute() {
+export default async function GalleryRoute({ searchParams }: { searchParams: Promise<{ project?: string | string[] }> }) {
+  const { project } = await searchParams
+  if (typeof project === "string" && PROJECTS.some((item) => item.id === project)) redirect(`/gallery/${project}`)
   return (
     <div className="min-h-screen bg-background">
       <Navbar />

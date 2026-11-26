@@ -39,6 +39,7 @@ export function HubSelect({ value, onChange, id = "contact-service" }: { value: 
         id={id}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
+        data-valid={!!value || undefined}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Select a service hub"

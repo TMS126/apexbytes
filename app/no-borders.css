@@ -188,3 +188,26 @@
   border-bottom-color: var(--line-rule) !important;
   box-shadow: 0 2px 0 -1px var(--line-rule) !important;
 }
+
+/* Validation feedback follows each form's own validation rules. */
+@layer base {
+  :root:root:root:root:root:root:root:root :is(input, textarea, select)[data-valid="true"],
+  :root:root:root:root:root:root:root:root :is(input, textarea, select)[data-valid="true"]:focus,
+  :root:root:root:root:root:root:root:root :is(.cv-editor-field-valid input, .cv-editor-field-valid textarea, .cv-editor-field-valid select, .intake-control-valid),
+  :root:root:root:root:root:root:root:root :is(.cv-editor-field-valid input, .cv-editor-field-valid textarea, .cv-editor-field-valid select, .intake-control-valid):focus,
+  :root:root:root:root:root:root:root:root button[aria-haspopup="listbox"][data-valid="true"] {
+    border-bottom-color: #16a34a !important;
+  }
+  :root:root:root:root:root:root:root:root :is(input, textarea, select)[aria-invalid="true"],
+  :root:root:root:root:root:root:root:root :is(input, textarea, select)[aria-invalid="true"]:focus {
+    border-bottom-color: #dc2626 !important;
+  }
+}
+@keyframes cv-shake {
+  0%, 100% { transform: translateX(0); }
+  25%, 75% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cv-shake { animation: cv-shake 350ms ease-in-out; }
+}
