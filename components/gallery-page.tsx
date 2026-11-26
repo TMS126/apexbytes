@@ -41,7 +41,7 @@ export function HubFilterCircles({
               {filter.icon}
             </span>
             <span className="hidden md:block">{filter.label}</span>
-            <span aria-hidden="true" className={cn("absolute bottom-0 left-1/2 h-0.5 w-full -translate-x-1/2 origin-center scale-x-0 rounded-full bg-[var(--filter-accent)] transition-transform", isActive ? "scale-x-100 opacity-100" : "opacity-0")} />
+            <span aria-hidden="true" className={cn("absolute bottom-0 left-1/2 h-0.5 w-full -translate-x-1/2 origin-center scale-x-0 rounded-full bg-[var(--filter-accent)] transition-[transform,opacity] duration-200 group-hover:scale-x-100 group-focus-visible:scale-x-100", isActive ? "scale-x-100 opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100")} />
           </button>
         )
       })}

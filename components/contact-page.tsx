@@ -224,7 +224,7 @@ function ContactPageInner() {
                   </div>
                   <button onClick={handleVCard} aria-label={vcardDone ? "Contact saved" : "Download contact card"} className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium">
                     <DownloadSimple size={16} weight="bold" aria-hidden="true" />
-                    {vcardDone ? "Saved!" : "Download"}
+                    <span className="abh-action-underline">{vcardDone ? "Saved!" : "Download"}</span>
                   </button>
                 </div>
               </div>

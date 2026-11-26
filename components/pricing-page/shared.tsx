@@ -65,7 +65,7 @@ export function PdfPillButton({
       }}
     >
       <FilePdf size={isLg ? 20 : 16} weight="fill" aria-hidden="true" />
-      {label}
+      <span className="abh-action-underline">{label}</span>
     </button>
   )
         } 

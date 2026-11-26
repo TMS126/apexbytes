@@ -81,7 +81,7 @@ export function ServiceCard({
       type="button"
       onClick={onClick}
       style={{ ["--card-accent" as string]: accent }}
-      className="group/svccard min-h-[184px] flex flex-col overflow-hidden rounded-[14px] border border-border bg-card p-5 text-left transition-[background-color,color,box-shadow] duration-200 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] hover:shadow-[var(--shadow-card-lift)] active:scale-[0.98]"
+      className="group/svccard min-h-[184px] flex flex-col overflow-hidden rounded-[14px] border border-border bg-card p-5 text-left transition-[background-color,color] duration-200 hover:bg-[var(--card-accent)] hover:text-[var(--on-brand-blue)] active:scale-[0.98]"
     >
       <div className="relative mb-3 min-h-[2.6rem]">
         <span className="flex min-w-0 items-start gap-2 pr-14 text-[0.98rem] font-medium leading-snug text-foreground transition-colors group-hover/svccard:text-[var(--on-brand-blue)]">

@@ -30,7 +30,7 @@ export function HomeHubCard({ hubId }: { hubId: HubId }) {
   const card = (
     <Link
       href={hubRouteFor(hubId)}
-      className="group/hub-icon relative flex min-h-[120px] w-full flex-col items-center justify-center gap-3 rounded-[14px] px-3 py-5 text-center transition-[background-color,box-shadow] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--hub-primary)_6%,transparent)] hover:shadow-md focus-visible:outline-none sm:min-h-[148px] sm:px-5 sm:py-6"
+      className="group/hub-icon relative flex min-h-[120px] w-full flex-col items-center justify-center gap-3 rounded-[14px] px-3 py-5 text-center transition-colors duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--hub-primary)_6%,transparent)] focus-visible:outline-none sm:min-h-[148px] sm:px-5 sm:py-6"
       aria-label={`Explore ${hub.title}`}
     >
       <span className="flex size-12 items-center justify-center sm:size-14">

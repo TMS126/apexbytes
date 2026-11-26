@@ -29,7 +29,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
       <div className="mx-auto flex max-w-[1248px] flex-col gap-14 px-4 md:px-8">
         <p className="text-center text-sm text-muted-foreground">{hub.sections.length} service categories · {hub.turnaround}</p>
         {hub.sections.map((section, sectionIndex) => (
-          <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[14px] border border-border/60 bg-card/40 transition-shadow hover:shadow-[var(--shadow-card-lift)] open:hover:shadow-none">
+          <details key={section.title} open={sectionIndex === 0} className="group overflow-hidden rounded-[14px] border border-border/60 bg-card/40 transition-colors">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 transition-colors hover:bg-card/70 group-open:hover:bg-transparent [&::-webkit-details-marker]:hidden md:px-6">
               <span className="min-w-0">
                 <span className="abh-eyebrow mb-1 block">{hub.title}</span>
@@ -49,7 +49,7 @@ export function ServiceHubRoutePage({ hubId }: { hubId: HubId }) {
                 <li key={item.name}>
                   <Link
                     href={serviceRouteFor(hubId, section.title, item.name)}
-                    className="group flex h-full min-h-48 flex-col rounded-[14px] border border-border/50 bg-card/60 p-5 transition-[background-color,border-color,box-shadow] duration-200 hover:border-foreground/20 hover:bg-card hover:shadow-[var(--shadow-card-lift)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="group flex h-full min-h-48 flex-col rounded-[14px] border border-border/50 bg-card/60 p-5 transition-[background-color,border-color] duration-200 hover:border-foreground/20 hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <div className="mb-6 flex items-start justify-between gap-4">
                       <span className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">{String(itemIndex + 1).padStart(2, "0")}</span>

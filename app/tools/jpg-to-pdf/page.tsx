@@ -294,14 +294,13 @@ accept={ACCEPT_ATTRIBUTE}
                     onClick={t.requestConvert}
                     disabled={t.isConverting || t.selectedCount === 0}
                     aria-busy={t.isConverting}
-                    className="inline-flex items-center justify-center gap-2 rounded-[14px] font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 rounded-[14px] font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ 
                       backgroundColor: accentColor,
-                      boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"
                     }}
                   >
                     <Download size={20} weight="bold" />
-                    <span>{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
+                    <span className="abh-action-underline">{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
                   </button>
                   <span className="sr-only" aria-live="polite">
                     {t.isConverting ? `Converting, ${t.progress} percent complete` : ""}

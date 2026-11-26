@@ -210,12 +210,12 @@ export function ProfileDrawer({ open, onClose }: ProfileDrawerProps) {
                   {vcardDone ? (
                     <>
                       <AddressBook size={18} weight="fill" aria-hidden="true" />
-                      <span className="text-sm font-medium leading-tight">Saved!</span>
+                      <span className="abh-action-underline text-sm font-medium leading-tight">Saved!</span>
                     </>
                   ) : (
                     <>
                       <DownloadSimple size={18} weight="fill" aria-hidden="true" />
-                      <span className="text-sm font-medium leading-tight">Save Contact</span>
+                      <span className="abh-action-underline text-sm font-medium leading-tight">Save Contact</span>
                     </>
                   )}
                 </button>
