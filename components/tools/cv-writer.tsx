@@ -363,8 +363,8 @@ function buildCvMessage(data: CvData): string {
     add("Date of birth", formatPickerValue(data.dateOfBirth, "day"))
     add("Nationality", data.nationality)
     add("Marital status", data.maritalStatus)
+    add("Driver's licence", data.driverLicense)
   }
-  add("Driver's licence", data.driverLicense)
   add("About me", data.profile)
   if (data.noExperience) lines.push("Work experience: none yet")
   else data.roles.forEach((role, index) => {
@@ -492,9 +492,9 @@ export function CvTool() {
                       <TextField id="country" label="Country" value={data.country} onChange={(value) => set("country", value)} placeholder="Where you live" />
                     )}
                     <TextField id="website" label="LinkedIn or portfolio" value={data.website} onChange={(value) => set("website", value)} placeholder="Optional link" />
-                    <SelectField id="driverLicense" label="Driver's licence" value={data.driverLicense} onChange={(value) => set("driverLicense", value)} options={LICENCES} />
                     {sa && (
                       <>
+                        <SelectField id="driverLicense" label="Driver's licence" value={data.driverLicense} onChange={(value) => set("driverLicense", value)} options={LICENCES} />
                         <TextField id="idNumber" label="ID number" value={data.idNumber} onChange={(value) => set("idNumber", value)} placeholder="13-digit ID number (optional)" hint="Only add this if the employer asks for it." inputMode="numeric" />
                         <DateField id="dateOfBirth" label="Date of birth" mode="day" value={data.dateOfBirth} onChange={(value) => set("dateOfBirth", value)} max={todayValue("day")} initialView="1995-01" hint="Optional" />
                         <TextField id="nationality" label="Nationality" value={data.nationality} onChange={(value) => set("nationality", value)} placeholder="Country of citizenship (optional)" />

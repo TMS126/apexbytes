@@ -101,8 +101,8 @@ export function personalDetails(data: CvData): Array<{ label: string; value: str
     if (data.dateOfBirth) rows.push({ label: "Date of birth", value: formatPickerValue(data.dateOfBirth, "day") })
     if (data.nationality.trim()) rows.push({ label: "Nationality", value: data.nationality.trim() })
     if (data.maritalStatus) rows.push({ label: "Marital status", value: data.maritalStatus })
+    if (data.driverLicense) rows.push({ label: "Driver's licence", value: data.driverLicense })
   }
-  if (data.driverLicense) rows.push({ label: "Driver's licence", value: data.driverLicense })
   return rows
 }
 

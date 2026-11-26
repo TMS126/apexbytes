@@ -282,19 +282,26 @@ export function IntakeTool() {
     try {
       const { blob } = await makePdf()
       const file = new File([blob], pdfName, { type: "application/pdf" })
-      const canShareFiles = typeof navigator.share === "function" && (typeof navigator.canShare !== "function" || navigator.canShare({ files: [file] }))
+      let canShareFiles = false
+      try {
+        canShareFiles = typeof navigator.share === "function" && (typeof navigator.canShare !== "function" || navigator.canShare({ files: [file] }))
+      } catch {
+        // Some browsers expose canShare but reject file checks.
+      }
       if (canShareFiles) {
         try {
           await navigator.share({ title: `${BIZ.name} service intake`, text: `Service intake for ${selected.label}`, files: [file] })
           return
         } catch (error) {
           if (error instanceof DOMException && error.name === "AbortError") return
-          throw error
+          // Fall back to a download if the share sheet cannot be opened.
         }
       }
       saveBlob(blob, pdfName)
       setFallbackUrl(URL.createObjectURL(blob))
-      setNotice({ tone: "info", text: "Sharing files is not supported in this browser, so the PDF was downloaded instead." })
+      setNotice({ tone: "info", text: canShareFiles
+        ? "The share sheet could not open, so the PDF was downloaded instead."
+        : "Sharing files is not supported in this browser, so the PDF was downloaded instead." })
     } catch (error) {
       console.error(error)
       setNotice({ tone: "error", text: "The PDF could not be shared. Please try “Download fillable PDF” or WhatsApp." })
