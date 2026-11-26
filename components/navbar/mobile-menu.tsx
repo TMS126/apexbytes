@@ -33,6 +33,7 @@ import { HUBS, type HubId } from "@/lib/data"
 import { HUB_ORDER, hubRouteFor, serviceRouteFor } from "@/components/services-page/lib"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
+import { useMounted } from "@/hooks/use-mounted"
 
 const SERVICE_LABELS: Record<HubId, string> = {
   print: "Print",
@@ -83,6 +84,8 @@ interface MobileMenuProps {
 
 export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps) {
   const { resolvedTheme, setTheme } = useTheme()
+  const mounted = useMounted()
+  const isDark = mounted && resolvedTheme === "dark"
   const containerRef = useRef<HTMLDivElement>(null)
   const previouslyFocused = useRef<HTMLElement | null>(null)
   const [servicesOpen, setServicesOpen] = useState(false)
@@ -162,12 +165,12 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
               aria-current={selected ? "page" : undefined}
               tabIndex={menuOpen && servicesOpen && expandedHub === hubId ? 0 : -1}
               className={cn(
-                "group flex min-h-12 items-center gap-3 rounded-xl px-3 py-2 text-[0.98rem] text-foreground transition-[background-color,color,transform] duration-180 ease-out hover:bg-muted hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none",
+                "group flex min-h-12 items-center gap-3 rounded-xl px-3 py-2 text-base text-foreground transition-[background-color,color,transform] duration-180 ease-out hover:bg-muted hover:text-brand-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.985] motion-reduce:transition-none",
                 selected && "bg-muted font-semibold text-brand-blue"
               )}
             >
               <IconComponent size={21} weight="regular" className="shrink-0 text-brand-blue" aria-hidden="true" />
-              <span className="min-w-0 flex-1 truncate">{service.name}</span>
+              <span className="min-w-0 flex-1">{service.name}</span>
               <CaretRight size={17} className="shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transition-none" aria-hidden="true" />
             </Link>
           )
@@ -191,22 +194,22 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
       )}
     >
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[680px] flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
-        <header className="flex items-center justify-between border-b border-border/70 pb-5">
+        <div className="flex items-center justify-between border-b border-border/70 pb-5">
           <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="ApexBytesHub — go to homepage" className="group flex size-11 items-center justify-center rounded-[14px] text-foreground transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none">
-            <Image src="/logo.png" alt="ApexBytesHub" width={44} height={44} className="size-10 shrink-0 object-contain transition-[filter] duration-150" style={{ filter: resolvedTheme === "dark" ? "brightness(0) invert(1)" : "brightness(0)" }} />
+            <Image src="/logo.png" alt="ApexBytesHub" width={44} height={44} className="size-10 shrink-0 object-contain transition-[filter] duration-150" style={{ filter: isDark ? "brightness(0) invert(1)" : "brightness(0)" }} />
           </Link>
           <div className="flex items-center gap-1 rounded-[14px] bg-muted/60 p-1">
-            <button type="button" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")} tabIndex={menuOpen ? 0 : -1} aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"} className="flex size-10 items-center justify-center rounded-[10px] text-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
-              {resolvedTheme === "dark" ? <Sun size={19} weight="regular" aria-hidden="true" /> : <Moon size={19} weight="regular" aria-hidden="true" />}
+            <button type="button" onClick={() => setTheme(isDark ? "light" : "dark")} tabIndex={menuOpen ? 0 : -1} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"} className="flex size-10 items-center justify-center rounded-[10px] text-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
+              {isDark ? <Sun size={19} weight="regular" aria-hidden="true" /> : <Moon size={19} weight="regular" aria-hidden="true" />}
             </button>
-            <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="abh-navbar-quote-cta rounded-full px-4 py-2 text-sm font-semibold shadow-[var(--ui-shadow-popup)] transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
+            <Link href="/tools/quote" onClick={close} tabIndex={menuOpen ? 0 : -1} className="abh-navbar-quote-cta shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-base font-semibold shadow-[var(--ui-shadow-popup)] transition-[transform,box-shadow] duration-160 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.97] motion-reduce:transition-none">
               Get a quote
             </Link>
             <button type="button" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="Close menu" className="flex size-11 items-center justify-center rounded-full text-foreground transition-[background-color,transform] duration-160 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.94] motion-reduce:transition-none">
               <X size={28} weight="regular" aria-hidden="true" />
             </button>
           </div>
-        </header>
+        </div>
 
         <nav className="flex-1 py-8 sm:py-10" aria-label="Mobile navigation">
           {NAV_ITEMS.filter((item) => !item.isCta).map((item) => {

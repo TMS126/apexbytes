@@ -91,7 +91,7 @@ export function HubBrowser({
       </div>
 
       <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
-      <div className={cn("flex justify-center gap-4 overflow-x-auto pb-1", embedded ? "md:grid md:grid-cols-1 md:overflow-visible" : "md:grid md:grid-cols-5 md:overflow-visible")} role="tablist" aria-label="Hubs">
+      <div className={cn("flex justify-start gap-4 overflow-x-auto pb-1", embedded ? "md:grid md:grid-cols-1 md:overflow-visible" : "md:grid md:grid-cols-5 md:overflow-visible")} role="group" aria-label="Hubs">
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)

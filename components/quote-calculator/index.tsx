@@ -8,6 +8,7 @@ import { HUB_COLORS, HubKey, BIZ, waLink } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useScrollHide } from "@/hooks/use-scroll-hide"
+import { useMounted } from "@/hooks/use-mounted"
 import { GLASS, HOME_BLUE } from "./shared"
 import {
   CartItem, SavedQuote, STORAGE_KEY, STORAGE_KEY_SAVED, HUB_ORDER,
@@ -30,7 +31,8 @@ type UndoAction =
 
 export function QuoteCalculatorWidget({ embedded = false }: { embedded?: boolean } = {}) {
   const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
+  const mounted = useMounted()
+  const isDark = mounted && resolvedTheme === "dark"
   const [isOpenState, setIsOpenState, isOtherOpen] = useExclusiveWidget("calculator")
   const isOpen = embedded || isOpenState
   const setIsOpen = useMemo(() => embedded ? (() => {}) : setIsOpenState, [embedded, setIsOpenState])

@@ -75,7 +75,7 @@ function ProjectCard({
         >
           <SafeImage
             src={p.image}
-            alt={p.title}
+            alt=""
             accent={TOKEN.orangeText}
             fill
             sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 44vw"
@@ -94,7 +94,7 @@ function ProjectCard({
 
       <button type="button" onClick={() => onSelect(p)} className="mt-3 min-w-0 text-left px-0.5 active:scale-[0.99] transition-transform duration-150">
         <span className="block text-base md:text-lg font-medium text-zinc-800 dark:text-zinc-100 truncate leading-tight">{p.title}</span>
-        <span className="mt-1 block text-xs md:text-sm uppercase tracking-[0.14em] text-muted-foreground">{p.tag}</span>
+        <span className="mt-1 block text-sm uppercase tracking-[0.14em] text-muted-foreground">{p.tag}</span>
       </button>
     </div>
   )

@@ -195,8 +195,7 @@ export function HubCompactCard({
       {/* Footer — service count accented on hover */}
       <div className="flex items-center justify-between mt-auto">
         <span
-          className="text-[10px] font-medium transition-colors duration-200"
-          style={{ color: isActive ? hubColor : '#a1a1aa' }}
+          className="text-sm font-medium text-muted-foreground transition-colors duration-200"
         >
           {total} services
         </span>
@@ -393,7 +392,7 @@ export function HubAccordionCard({
             <p className="text-lg font-medium text-zinc-900 dark:text-white truncate">
               {hub.title}
             </p>
-            <p className="text-[0.95rem] mt-0.5" style={{ color: isOpen ? hubColor : '#a1a1aa' }}>
+            <p className="text-base mt-0.5 text-muted-foreground">
               <span className="font-medium">{total} services</span>
               {hubHasBulk ? ' · Bulk deals available' : ''}
             </p>

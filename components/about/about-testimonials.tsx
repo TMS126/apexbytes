@@ -10,22 +10,18 @@ function CompactTestimonials() {
     <ul className="grid auto-rows-fr grid-cols-1 items-stretch gap-5 sm:grid-cols-3" aria-label="What clients say">
       {SAMPLE_REVIEWS.map((r, i) => {
         return (
-          <ScrollBounce key={r.name + i} delay={i * 0.1} className="h-full">
-            <li
-              className="abh-card abh-card-rule flex h-full min-w-0 flex-col items-center p-5 text-center"
-            >
+          <ScrollBounce as="li" key={r.name + i} delay={i * 0.1} className="abh-card abh-card-rule flex h-full min-w-0 flex-col items-center p-5 text-center">
               <Quotes size={16} weight="regular" className="mb-2 text-muted-foreground" aria-hidden="true" />
               <p className="text-[0.92rem] font-normal text-zinc-600 dark:text-zinc-300 leading-relaxed mb-3">{r.quote}</p>
               <div className="abh-icon-chip flex h-12 w-12 items-center justify-center mb-1.5 bg-background text-muted-foreground dark:text-muted-foreground" aria-hidden="true">
                 <UserCircle size={30} weight="regular" />
               </div>
               <p className="abh-card-heading text-[0.9rem] truncate max-w-full">{r.name}</p>
-              <div className="flex items-center gap-0.5 mt-1">
+              <div role="img" aria-label={`${r.rating} out of 5 stars`} className="flex items-center gap-0.5 mt-1">
                 {Array.from({ length: 5 }).map((_, si) => (
-                  <Star key={si} size={11} weight="regular" className={si < r.rating ? "text-muted-foreground dark:text-muted-foreground" : "text-zinc-200 dark:text-zinc-700"} />
+                  <Star key={si} size={11} weight="regular" aria-hidden="true" className={si < r.rating ? "text-muted-foreground dark:text-muted-foreground" : "text-zinc-200 dark:text-zinc-700"} />
                 ))}
               </div>
-            </li>
           </ScrollBounce>
         )
       })}

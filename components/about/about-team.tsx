@@ -41,9 +41,8 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
         </ScrollBounce>
 
         <ul className="abh-card flex flex-col gap-0 overflow-hidden p-2" aria-label="Team members">
-          {TEAM.map((member, index) => {
-            const card = (
-                <li key={member.initials} className="flex items-center gap-4 border-b border-border/60 p-5 text-left last:border-b-0">
+          {TEAM.map((member, index) => (
+              <ScrollBounce as="li" key={member.initials} delay={index * 0.1} className="flex items-center gap-4 border-b border-border/60 p-5 text-left last:border-b-0">
                 <div className="abh-icon-chip flex h-14 w-14 items-center justify-center bg-background font-medium text-lg shrink-0" style={{ color: blueColor }} aria-hidden="true">
                   {member.initials}
                 </div>
@@ -52,10 +51,8 @@ export function AboutTeam({ blueColor }: { blueColor: string }) {
                   <p className="abh-eyebrow mt-1 text-[#0f172a] dark:text-white">{member.role}</p>
                   <p className="abh-body text-sm mt-2 leading-relaxed">{member.note}</p>
                 </div>
-              </li>
-            )
-            return index === 0 ? card : <ScrollBounce key={member.initials} delay={index * 0.1}>{card}</ScrollBounce>
-          })}
+              </ScrollBounce>
+          ))}
         </ul>
       </div>
     </section>

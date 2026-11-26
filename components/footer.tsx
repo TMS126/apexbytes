@@ -52,7 +52,7 @@ function FooterContent() {
           </div>
 
           <nav aria-label="Footer navigation">
-            <h3 className="text-[0.84rem] font-medium uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
+            <h3 className="text-sm font-medium uppercase tracking-widest mb-8 text-muted-foreground">Quick Links</h3>
             <ul className="flex flex-col gap-4">
               {FOOTER_NAV.map((page) => {
                 const isActive = pathname === page.path || pathname.startsWith(`${page.path}/`)
@@ -77,7 +77,7 @@ function FooterContent() {
           </nav>
 
           <div className="flex flex-col items-end text-right">
-            <h3 className="mb-5 text-[0.84rem] font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
+            <h3 className="mb-5 text-sm font-medium uppercase tracking-widest text-muted-foreground">Connect With us:</h3>
             <div className="flex items-center justify-end gap-4">
               <a href={WA.general} target="_blank" rel="noopener noreferrer" aria-label={`Contact ${BIZ.name} on WhatsApp`} title="WhatsApp" className="abh-footer-icon-link hover:!text-[#25D366]"><WhatsappLogo weight="regular" size={25} /></a>
               <a href={`mailto:${BIZ.email}`} aria-label={`Email ${BIZ.name}`} title="Email" className="abh-footer-icon-link hover:!text-brand-blue"><EnvelopeSimple weight="regular" size={25} /></a>
@@ -91,7 +91,7 @@ function FooterContent() {
       <ScrollBounce>
         <div className="mt-8 border-t border-border/50">
           <div className="max-w-[1280px] mx-auto pt-8 pb-8 px-6 md:px-10 flex flex-col md:grid md:grid-cols-3 items-center gap-4 text-center md:text-left">
-            <p className="text-[0.78rem] font-medium text-muted-foreground md:text-left text-center">
+            <p className="text-sm font-medium text-muted-foreground md:text-left text-center">
               © {new Date().getFullYear()} {BIZ.name}. All rights reserved.
             </p>
 
@@ -99,7 +99,7 @@ function FooterContent() {
               <Link
                 href="/terms"
                 prefetch
-                className="text-[0.78rem] font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
+                className="text-sm font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Terms
               </Link>
@@ -109,7 +109,7 @@ function FooterContent() {
               <Link
                 href="/privacy"
                 prefetch
-                className="text-[0.78rem] font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
+                className="text-sm font-medium text-muted-foreground hover:text-brand-blue transition-colors py-2 px-1"
               >
                 Privacy Policy
               </Link>

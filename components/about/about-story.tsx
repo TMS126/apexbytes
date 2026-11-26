@@ -58,7 +58,7 @@ export function AboutStory({
               />
             </div>
             <div className="bg-card px-6 py-3 sm:px-7 sm:py-8 md:p-8 -mt-px">
-              <h3 className="abh-card-heading text-xl mb-3">How It Started</h3>
+              <h2 className="abh-card-heading text-xl mb-3">How It Started</h2>
               <p className="abh-body text-base leading-relaxed">
                 There was no ApexBytesHub yet — just a phone, WhatsApp, and a status update. A friend spotted a
                 simple edited image Theji had posted and asked if he could design a logo. That request was for

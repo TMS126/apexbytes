@@ -27,7 +27,7 @@ export const HUB_ICON: Record<HubId, React.ElementType> = {
 function BulkPill() {
   return (
     <span
-      className="px-3 py-1 rounded-full text-[0.68rem] font-medium whitespace-nowrap abh-shadow-badge border"
+      className="px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap abh-shadow-badge border"
       style={{ backgroundColor: "var(--bulk-ribbon-bg)", color: "var(--bulk-ribbon-text)", borderColor: "var(--border)" }}
     >
       Bulk pricing
@@ -76,7 +76,7 @@ export function MobileHubCard({
         )}
       </div>
 
-      <h3 className="font-heading font-semibold text-foreground mb-2 break-words text-[1.2rem] leading-tight">{hub.title}</h3>
+      <h2 className="font-heading font-semibold text-foreground mb-2 break-words text-[1.2rem] leading-tight">{hub.title}</h2>
       <p className="text-muted-foreground flex-1 text-[1.125rem] leading-7">{hub.desc}</p>
 
       <div className="flex items-center justify-between mt-3">

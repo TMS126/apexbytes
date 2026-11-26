@@ -22,10 +22,7 @@ export function AboutStandards({ neutralColor }: { neutralColor: string }) {
         <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5" aria-label="Standards">
           {ABOUT_STANDARDS.map((item, index) => {
             return (
-              <ScrollBounce key={item.id} delay={index * 0.1}>
-                <li
-                  className="group abh-card abh-card-rule flex h-full flex-col rounded-[14px] p-6"
-                >
+              <ScrollBounce as="li" key={item.id} delay={index * 0.1} className="group abh-card abh-card-rule flex h-full flex-col rounded-[14px] p-6">
                   <div
                     className="abh-icon-chip mb-5 flex h-11 w-11 shrink-0 items-center justify-center bg-background text-muted-foreground transition-colors group-hover:text-[var(--about-accent)]"
                     style={{ ["--about-accent" as string]: neutralColor }}
@@ -35,7 +32,6 @@ export function AboutStandards({ neutralColor }: { neutralColor: string }) {
                   </div>
                   <h3 className="abh-card-heading text-base mb-2">{item.title}</h3>
                   <p className="abh-body text-sm leading-relaxed grow">{item.description}</p>
-                </li>
               </ScrollBounce>
             )
           })}

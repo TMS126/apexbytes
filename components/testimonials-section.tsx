@@ -45,7 +45,7 @@ export const SAMPLE_REVIEWS: Review[] = [
 
 function Stars({ rating, color }: { rating: number; color: string }) {
   return (
-    <div className="flex items-center justify-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
+    <div role="img" className="flex items-center justify-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
@@ -82,7 +82,7 @@ export function TestimonialsSection({
   }
 
   return (
-    <section className="px-4 py-16 md:px-8">
+    <section aria-label={title} className="px-4 py-16 md:px-8">
       <div className="mx-auto max-w-[1300px]">
         <ScrollBounce>
           <div className="mb-12 text-center">

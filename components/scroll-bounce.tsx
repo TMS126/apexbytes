@@ -8,6 +8,7 @@ interface ScrollBounceProps {
   children: ReactNode
   className?: string
   delay?: number
+  as?: "div" | "li"
 }
 
 // Easing = Material Design 3's "Emphasized Decelerate" curve — the one
@@ -18,9 +19,10 @@ interface ScrollBounceProps {
 // "Android" bounce feel being asked for here.
 const ANDROID_EMPHASIZED_DECELERATE: [number, number, number, number] = [0.05, 0.7, 0.1, 1.0]
 
-export function ScrollBounce({ children, className, delay = 0 }: ScrollBounceProps) {
+export function ScrollBounce({ children, className, delay = 0, as = "div" }: ScrollBounceProps) {
+  const MotionElement = as === "li" ? motion.li : motion.div
   return (
-    <motion.div
+    <MotionElement
       className={className}
       style={{ willChange: "transform, opacity" }}
       initial={false}
@@ -43,6 +45,6 @@ export function ScrollBounce({ children, className, delay = 0 }: ScrollBouncePro
       }}
     >
       {children}
-    </motion.div>
+    </MotionElement>
   )
 } 
