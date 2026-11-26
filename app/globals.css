@@ -39,6 +39,38 @@ html[data-scroll-locked] body { overflow: hidden; }
   .abh-link-underline::after { transition: none; }
 }
 
+/* Same centre-out rule as the navbar links, for flat action labels such as
+   downloads and filters. Apply to the label span so the rule hugs the text
+   instead of the whole pill. */
+.abh-action-underline {
+  position: relative;
+  display: inline-block;
+}
+.abh-action-underline::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  bottom: -0.18rem;
+  height: 2px;
+  border-radius: 9999px;
+  background: currentColor;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 220ms ease-out;
+  pointer-events: none;
+}
+.abh-action-underline:hover::after,
+.abh-action-underline:focus-visible::after,
+button:not(:disabled):hover .abh-action-underline::after,
+button:not(:disabled):focus-visible .abh-action-underline::after,
+a:hover .abh-action-underline::after,
+a:focus-visible .abh-action-underline::after,
+.abh-action-underline[data-active="true"]::after { transform: translateX(-50%) scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .abh-action-underline::after { transition: none; }
+}
+
 .abh-gallery-viewer[role="dialog"] {
   isolation: isolate;
   border-radius: 0 !important;
@@ -904,13 +936,22 @@ button, a, [role="button"] {
   -webkit-tap-highlight-color: transparent;
 }
 
-.abh-close-chip:hover,
-button[aria-label^="Close"]:hover {
+:root:root .abh-close-chip:not(.abh-maintenance-close-chip),
+:root:root button[aria-label^="Close"]:not(.abh-maintenance-close-chip):not(.abh-close-backdrop) {
+  border: 0 !important;
+  border-radius: 9999px !important;
+  background: rgba(127, 127, 127, 0.2) !important;
+  box-shadow: none !important;
+  transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+:root:root .abh-close-chip:not(.abh-maintenance-close-chip):hover,
+:root:root .abh-close-chip:not(.abh-maintenance-close-chip):focus-visible,
+:root:root button[aria-label^="Close"]:not(.abh-maintenance-close-chip):not(.abh-close-backdrop):hover,
+:root:root button[aria-label^="Close"]:not(.abh-maintenance-close-chip):not(.abh-close-backdrop):focus-visible {
   color: #fff !important;
   background: #dc2626 !important;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .abh-close-chip { transition: background-color 140ms ease, color 140ms ease, transform 140ms ease; }
+  border-radius: 9999px !important;
+  box-shadow: none !important;
 }
 
 @keyframes float { 0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)} }
@@ -1050,11 +1091,11 @@ button[aria-label^="Close"]:hover {
     background: #eceeef;
     color: #171717;
     box-shadow: none;
-    transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+    transition: color 160ms ease, background-color 160ms ease;
   }
   .dark .abh-site-cta { background: #292c30; color: var(--foreground); }
   .abh-site-cta:hover,
-  .abh-site-cta:focus-visible { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
+  .abh-site-cta:focus-visible { background: var(--brand-blue); color: #fff; }
   .dark .abh-site-cta:hover,
   .dark .abh-site-cta:focus-visible { background: var(--brand-orange); color: #171717; }
   .abh-site-cta-primary { background: var(--brand-blue); color: #fff; box-shadow: var(--shadow-soft); }
@@ -1341,7 +1382,7 @@ button[aria-label^="Close"]:hover {
     position: relative;
     padding: .35rem 0 .45rem;
   }
-  .abh-wa-btn:hover, .abh-wa-btn:focus-visible, .abh-wa-btn:active { background: color-mix(in srgb, var(--brand-whatsapp) 12%, transparent); border-radius: 14px; box-shadow: var(--shadow-action-whatsapp); }
+  .abh-wa-btn:hover, .abh-wa-btn:focus-visible, .abh-wa-btn:active { background: color-mix(in srgb, var(--brand-whatsapp) 12%, transparent); border-radius: 14px; }
 
   .abh-btn-primary,
   .abh-btn-cta {
@@ -1358,7 +1399,7 @@ button[aria-label^="Close"]:hover {
   .abh-btn-primary:hover,
   .abh-btn-primary:focus-visible,
   .abh-btn-cta:hover,
-  .abh-btn-cta:focus-visible { background: color-mix(in srgb, var(--cta-action) 10%, transparent); border-radius: 14px; box-shadow: var(--shadow-action-brand); }
+  .abh-btn-cta:focus-visible { background: color-mix(in srgb, var(--cta-action) 10%, transparent); border-radius: 14px; }
 
   .abh-line-cta {
     @apply inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 active:scale-95;
@@ -1374,7 +1415,7 @@ button[aria-label^="Close"]:hover {
   .abh-line-cta:active {
     background: color-mix(in srgb, currentColor 10%, transparent);
     border-radius: 14px;
-    box-shadow: var(--shadow-action-brand);
+    box-shadow: none;
   }
 
   .abh-identity-btn {
@@ -1388,7 +1429,7 @@ button[aria-label^="Close"]:hover {
   }
   .abh-identity-btn:hover,
   .abh-identity-btn:focus-visible,
-  .abh-identity-btn:active { background: color-mix(in srgb, currentColor 10%, transparent); border-radius: 14px; box-shadow: var(--shadow-action-brand); }
+  .abh-identity-btn:active { background: color-mix(in srgb, currentColor 10%, transparent); border-radius: 14px; }
 
   .abh-mission-cta {
     background: color-mix(in srgb, var(--cta-action) 7%, transparent);
@@ -1400,7 +1441,7 @@ button[aria-label^="Close"]:hover {
   .abh-mission-cta:active {
     background: color-mix(in srgb, var(--cta-action) 16%, transparent);
     color: var(--cta-action);
-    box-shadow: var(--shadow-action-brand);
+    box-shadow: none;
   }
   .abh-mission-cta-secondary {
     background: color-mix(in srgb, var(--link-foreground) 7%, transparent);
@@ -1412,7 +1453,7 @@ button[aria-label^="Close"]:hover {
   .abh-mission-cta-secondary:active {
     background: color-mix(in srgb, var(--link-foreground) 16%, transparent);
     color: var(--link-foreground);
-    box-shadow: var(--shadow-action-brand);
+    box-shadow: none;
   }
 
   .abh-google-action {
@@ -1425,7 +1466,7 @@ button[aria-label^="Close"]:hover {
   .abh-google-action:active {
     color: #4285f4;
     background: #fff;
-    box-shadow: 0 5px 16px -8px rgba(66, 133, 244, .75);
+    box-shadow: none;
   }
 
   .abh-logo-primary { color: var(--logo-primary); }
@@ -1817,7 +1858,6 @@ input:focus, textarea:focus, select:focus,
 .abh-navbar-quote-cta:hover,
 .abh-navbar-quote-cta:focus-visible {
   transform: translateY(-2px);
-  box-shadow: var(--ui-shadow-popup);
   color: var(--on-brand-blue) !important;
 }
 .abh-navbar-quote-cta:focus-visible {
@@ -1849,18 +1889,18 @@ input:focus, textarea:focus, select:focus,
 }
 
 /* Buttons and button-like controls get one restrained, consistent lift. */
-button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):hover,
-[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):hover,
+button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):not(.abh-close-chip):not([aria-label^="Close"]):hover,
+[role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):not(.abh-close-chip):not([aria-label^="Close"]):hover,
 .abh-btn-primary:hover,
 .abh-btn-cta:hover,
 .abh-site-cta:hover,
 .abh-wa-btn:hover {
   transform: translateY(-2px);
-  box-shadow: var(--ui-shadow-popup) !important;
+  box-shadow: none !important;
 }
 button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visible,
 [role="button"]:not([aria-disabled="true"]):not([data-no-lift]):not(.abh-underline-button):focus-visible {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent), var(--ui-shadow-popup) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent) !important;
 }
 
 @media (max-width: 1279px) {

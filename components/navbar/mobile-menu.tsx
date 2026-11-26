@@ -192,7 +192,7 @@ export function MobileMenu({ menuOpen, setMenuOpen, pathname }: MobileMenuProps)
     >
       <div className="mx-auto flex min-h-[100dvh] w-full max-w-[680px] flex-col px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
         <header className="flex items-center justify-between border-b border-border/70 pb-5">
-          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="ApexBytesHub — go to homepage" className="group flex size-11 items-center justify-center rounded-[14px] text-foreground transition-[filter,transform] duration-150 hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none">
+          <Link href="/" onClick={close} tabIndex={menuOpen ? 0 : -1} aria-label="ApexBytesHub — go to homepage" className="group flex size-11 items-center justify-center rounded-[14px] text-foreground transition-transform duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.96] motion-reduce:transition-none">
             <Image src="/logo.png" alt="ApexBytesHub" width={44} height={44} className="size-10 shrink-0 object-contain transition-[filter] duration-150" style={{ filter: resolvedTheme === "dark" ? "brightness(0) invert(1)" : "brightness(0)" }} />
           </Link>
           <div className="flex items-center gap-1 rounded-[14px] bg-muted/60 p-1">

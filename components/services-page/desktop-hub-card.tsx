@@ -41,9 +41,9 @@ export function DesktopHubCard({ hubId, hub, hubHasBulk, hubHasNotice, onClick }
       }}
       className={cn(
         "group relative flex h-full min-h-[280px] w-full flex-col justify-end overflow-hidden rounded-[14px] border-2 border-[color-mix(in_srgb,var(--hub-fill)_48%,var(--border))] p-6 text-left",
-        "bg-card text-foreground transition-[border-color,box-shadow,transform] duration-200 motion-reduce:transition-none",
-        "hover:border-[var(--hub-fill)] hover:shadow-[var(--shadow-card-lift)]",
-        "focus-visible:border-[var(--hub-fill)] focus-visible:shadow-[var(--shadow-card-lift)]",
+        "bg-card text-foreground transition-[border-color,transform] duration-200 motion-reduce:transition-none",
+        "hover:border-[var(--hub-fill)]",
+        "focus-visible:border-[var(--hub-fill)]",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hub-fill)]"
       )}
     >

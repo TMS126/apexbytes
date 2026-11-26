@@ -16,7 +16,6 @@ import { FAQAccordion } from "@/components/contact/faq-accordion"
 import { HubSelect } from "@/components/contact/hub-select"
 import { FieldErrorTooltip } from "@/components/contact/field-error-tooltip"
 import { withStatusPrefix } from "@/lib/sa-time"
-import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 
 const CONTACT_ICONS: Record<string, React.ElementType> = {
   "WhatsApp Us": WhatsappLogo,
@@ -58,7 +57,6 @@ function ContactPageInner() {
   const [prefilled, setPrefilled] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null)
   const formCardRef = useRef<HTMLDivElement>(null)
-  const showBackToTop = useBackToTop()
 
   useEffect(() => {
     const serviceParam = searchParams.get("service")
@@ -224,7 +222,7 @@ function ContactPageInner() {
                   </div>
                   <button onClick={handleVCard} aria-label={vcardDone ? "Contact saved" : "Download contact card"} className="abh-btn-primary shrink-0 px-4 py-2.5 font-medium">
                     <DownloadSimple size={16} weight="bold" aria-hidden="true" />
-                    {vcardDone ? "Saved!" : "Download"}
+                    <span className="abh-action-underline">{vcardDone ? "Saved!" : "Download"}</span>
                   </button>
                 </div>
               </div>
@@ -320,7 +318,6 @@ function ContactPageInner() {
         </a>
       </div>
 
-      <BackToTopButton visible={showBackToTop} bottomClass="bottom-[18rem] md:bottom-6" />
     </div>
   )
 }

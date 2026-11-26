@@ -9,41 +9,13 @@ import { TOKEN } from "@/lib/brand"
 import { HUBS, HubId } from "@/lib/data"
 import { useExclusiveWidget } from "@/hooks/use-exclusive-widget"
 import { useCalculatorOpen } from "@/hooks/use-calculator-open"
-
-const HUB_ORDER: HubId[] = ["print", "doc", "design", "eservice", "tech"]
+import { buildSearchIndex, type SearchableService, type SelectedService } from "@/components/services-page/lib"
 
 const FLY_DURATION = 340
 const FADE_DURATION = 200
 
-interface SearchableService {
-  hubId: HubId; sectionTitle: string; name: string
-  price: string; description: string; requirements: string[]
-}
-
 interface SearchResult extends SearchableService {
   matchField: "name" | "section" | "description"
-}
-
-interface SelectedService {
-  name: string; price: string; hubId: HubId
-  sectionTitle: string; requirements: string[]; desc?: string
-}
-
-function buildSearchIndex(): SearchableService[] {
-  const all: SearchableService[] = []
-  HUB_ORDER.forEach((hubId) => {
-    HUBS[hubId].sections.forEach((section) => {
-      section.items.forEach((item) => {
-        all.push({
-          hubId, sectionTitle: section.title,
-          name: item.name, price: item.price,
-          description: item.description ?? "",
-          requirements: item.requirements,
-        })
-      })
-    })
-  })
-  return all
 }
 
 function HubIcon({ id, size = 16, color }: { id: HubId; size?: number; color?: string }) {

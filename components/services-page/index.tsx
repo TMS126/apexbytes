@@ -21,7 +21,6 @@ import {
 } from "./lib"
 import { itemHasBulk, sectionHasBulk } from "../quote-calculator/lib"
 import { AddOnsCard } from "@/components/pricing-page/addons-card"
-import { BackToTopButton, useBackToTop } from "@/components/back-to-top-button"
 import { MobileHubCard } from "./mobile-hub-card"
 import { DesktopHubGrid } from "./desktop-hub-grid"
 import { ClosingTagline, SectionCard, ServiceCard } from "./cards"
@@ -69,7 +68,6 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
     : null
 
   const [hubOriginSide, setHubOriginSide] = useState<"left" | "right">("right")
-  const showBackToTop = useBackToTop()
 
   const [desktopActiveHub, setDesktopActiveHub] = useState<HubId | null>(null)
   const [desktopActiveSection, setDesktopActiveSection] = useState<number | null>(null)
@@ -354,7 +352,6 @@ export function ServicesPage({ showServiceDetail = true }: { showServiceDetail?:
           )}
       </AnimatePresence>
 
-      <BackToTopButton visible={showBackToTop && !isModalOpen} />
     </section>
   )
                         }

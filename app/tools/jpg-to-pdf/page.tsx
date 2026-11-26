@@ -1,8 +1,6 @@
 // app/tools/jpg-to-pdf/page.tsx
 "use client"
 
-import { PageScrollControls } from "@/components/page-scroll-controls"
-import { PageNoticeBell } from "@/components/page-notice-bell"
 import { useRef, useState } from "react"
 import { useMounted } from "@/hooks/use-mounted"
 import { useTheme } from "next-themes"
@@ -81,8 +79,7 @@ export default function JpgToPdfPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageNoticeBell page="jpg-to-pdf" />
-      
+
       <main id="main-content" className="flex flex-col min-h-[calc(100vh-var(--nav-h))">
         {/* HERO HEADER */}
         <section className="abh-editorial-hero abh-tool-hero w-full !pt-[calc(var(--nav-h)+2rem)]">
@@ -294,14 +291,13 @@ accept={ACCEPT_ATTRIBUTE}
                     onClick={t.requestConvert}
                     disabled={t.isConverting || t.selectedCount === 0}
                     aria-busy={t.isConverting}
-                    className="inline-flex items-center justify-center gap-2 rounded-[14px] font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 rounded-[14px] font-semibold py-3.5 px-12 text-white transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ 
                       backgroundColor: accentColor,
-                      boxShadow: !t.isConverting && t.selectedCount > 0 ? `0 4px 16px ${accentColor}40` : "none"
                     }}
                   >
                     <Download size={20} weight="bold" />
-                    <span>{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
+                    <span className="abh-action-underline">{t.isConverting ? `Converting… ${t.progress}%` : "Download PDF"}</span>
                   </button>
                   <span className="sr-only" aria-live="polite">
                     {t.isConverting ? `Converting, ${t.progress} percent complete` : ""}
@@ -355,7 +351,6 @@ accept={ACCEPT_ATTRIBUTE}
           onClose={() => setCropId(null)}
         />
       )}
-      <PageScrollControls />
     </div>
   )
 }

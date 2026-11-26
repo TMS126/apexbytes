@@ -68,7 +68,7 @@
     box-shadow: 0 2px 0 -1px var(--line-rule) !important;
   }
 
-  :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):not(.abh-bulk-label):has(> svg:only-child) {
+  :root:root:root :where(span, div, button, a):not(.abh-service-request-cta):not(.abh-bulk-label):not(.abh-close-chip):not(.abh-fixed-scroll-cue):not([aria-label^="Close"]):has(> svg:only-child) {
     border: 0 !important;
     border-radius: 0 !important;
     background: transparent !important;
@@ -135,7 +135,7 @@
   }
   :root:root:root .abh-card-rule:is(a, button, [role="button"], [tabindex="0"]):hover,
   :root:root:root .abh-card-rule:is(a, button, [role="button"], [tabindex="0"]):focus-visible {
-    box-shadow: var(--ui-shadow-hover) !important;
+    box-shadow: none !important;
   }
 
   /* 7. 14px radii for old hard-coded big radii (rounded-full pills are untouched). */

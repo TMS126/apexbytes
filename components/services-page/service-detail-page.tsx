@@ -69,7 +69,7 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
         <section className="abh-service-info-card abh-card-rule p-6 md:p-8" aria-labelledby="service-overview">
           <p className="abh-eyebrow mb-3">Service overview</p>
           <h2 id="service-overview" className="font-heading text-2xl font-medium tracking-tight text-foreground">How it works</h2>
-          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">Bring the listed items and we&apos;ll walk through {service.name.toLowerCase()} with you. We&apos;ll confirm the details before getting started. Typical turnaround: {turnaround}.</p>
+          <p className="mt-6 text-sm leading-relaxed text-muted-foreground">We&apos;ll walk through {service.name.toLowerCase()} with you and confirm the details before getting started.</p>
           {service.tips?.length ? (
             <div className="mt-6 border-t border-border/60 pt-5">
               <h3 className="text-sm font-medium text-foreground">Helpful tips</h3>
@@ -78,9 +78,6 @@ export function ServiceDetailPage({ service }: { service: SelectedService }) {
               </ul>
             </div>
           ) : null}
-          <button type="button" onClick={() => setRequestOpen(true)} className="mt-7 inline-flex items-center gap-2 text-sm font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground">
-            Start a request <ArrowUpRight size={14} aria-hidden="true" />
-          </button>
         </section>
       </div>
 

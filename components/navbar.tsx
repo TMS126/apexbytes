@@ -135,7 +135,7 @@ export function Navbar() {
           <button
             type="button"
             aria-label="Close navigation menu"
-            className="fixed inset-0 top-[var(--nav-h)] z-0 bg-black/35 opacity-100 transition-opacity duration-200 pointer-events-auto"
+            className="abh-close-backdrop fixed inset-0 top-[var(--nav-h)] z-0 bg-black/35 opacity-100 transition-opacity duration-200 pointer-events-auto"
             onClick={() => setActiveSubmenu(null)}
           />
         )}

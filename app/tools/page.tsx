@@ -4,16 +4,16 @@ import Link from "next/link"
 import { FilePdf, FileText, ClipboardText, CurrencyDollar } from "@phosphor-icons/react/dist/ssr"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { PageNoticeBell } from "@/components/page-notice-bell"
 import { BIZ, WA } from "@/lib/brand"
 import { CtaBar } from "@/components/strip-section"
-import { PageScrollControls } from "@/components/page-scroll-controls"
 import { ScrollBounce } from "@/components/scroll-bounce"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: `Tools — ${BIZ.name}`,
-  description: "Free tools from ApexBytesHub: convert JPG to PDF, prepare a CV, and send service intake details."
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Tools",
+  description: "Free tools from ApexBytesHub: convert JPG to PDF, prepare a CV, and send service intake details.",
+  path: "/tools",
+})
 
 const TOOLS = [
   { id: "jpg-to-pdf", name: "JPG to PDF", href: "/tools/jpg-to-pdf", Icon: FilePdf },
@@ -26,7 +26,6 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <PageNoticeBell page="tools" />
       <main id="main-content">
       <section className="abh-editorial-hero">
         <div className="max-w-[720px] mx-auto text-center">
@@ -69,7 +68,6 @@ export default function ToolsPage() {
         buttonText="Get in Touch"
         buttonHref={WA.general}
       />
-      <PageScrollControls />
       </main>
       <Footer />
     </div>

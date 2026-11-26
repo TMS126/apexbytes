@@ -3,11 +3,13 @@ import { GalleryPage } from "@/components/gallery-page"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { PageNoticeBell } from "@/components/page-notice-bell"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata = {
-  title: "Portfolio — ApexBytesHub",
-  description: "Real clients', sample and practice projects from ApexBytesHub and real clients across all five hubs.",
-}
+export const metadata = pageMetadata({
+  title: "Portfolio",
+  description: "Real client work, samples and practice projects from ApexBytesHub across all five hubs.",
+  path: "/gallery",
+})
 
 export default function GalleryRoute() {
   return (

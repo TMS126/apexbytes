@@ -56,7 +56,7 @@ export function ExpandingSearch({
           aria-label={expanded ? `Close ${label.toLowerCase()} search` : label}
           aria-expanded={expanded}
           aria-controls={id}
-          className="flex size-10 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="flex size-10 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
         >
           <MagnifyingGlass size={18} weight="regular" aria-hidden="true" />
         </button>
@@ -88,7 +88,7 @@ export function ExpandingSearch({
             type="button"
             onClick={() => onChange("")}
             aria-label="Clear search"
-            className="flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-[filter,color] hover:text-foreground hover:drop-shadow-[0_4px_7px_color-mix(in_srgb,var(--foreground)_26%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="flex size-8 shrink-0 items-center justify-center rounded-[14px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
           >
             <Broom size={15} weight="regular" aria-hidden="true" />
           </button>

@@ -57,7 +57,7 @@ export function MobileHubCard({
       onClick={onClick}
       aria-label={`Open ${hub.title}`}
       style={{ ["--hub-accent" as string]: accent } as CSSProperties}
-      className="group relative w-full text-left border-y border-l-2 border-[color-mix(in_srgb,var(--hub-accent)_48%,var(--border))] bg-transparent overflow-visible transition-[border-color,box-shadow,transform] duration-200 active:scale-[0.98] transform-gpu flex flex-col min-h-[170px] p-5 sm:min-h-[184px] sm:p-6 hover:border-[var(--hub-accent)] hover:shadow-[var(--shadow-card-lift)]"
+      className="group relative w-full text-left border-y border-l-2 border-[color-mix(in_srgb,var(--hub-accent)_48%,var(--border))] bg-transparent overflow-visible transition-[border-color,transform] duration-200 active:scale-[0.98] transform-gpu flex flex-col min-h-[170px] p-5 sm:min-h-[184px] sm:p-6 hover:border-[var(--hub-accent)]"
     >
       <div className="flex items-start justify-between mb-5">
         <Icon
