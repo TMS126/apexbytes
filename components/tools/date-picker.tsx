@@ -297,7 +297,7 @@ export function DatePicker({
             type="button"
             data-no-lift
             disabled={isBlocked(today)}
-            onClick={() => onChange(today) || close()}
+            onClick={() => { onChange(today); close() }}
             className="px-2 py-2 text-foreground disabled:opacity-40"
           >
             <span>{mode === "month" ? "This month" : "Today"}</span>
