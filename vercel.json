@@ -1,5 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": [
+    "cpt1"
+  ],
   "crons": [
     {
       "path": "/api/admin/cleanup",
