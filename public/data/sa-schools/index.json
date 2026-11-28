@@ -1,0 +1,38 @@
+{
+  "Eastern Cape":{
+    "file":"/data/sa-schools/eastern-cape.json",
+    "count":5300
+  },
+  "Free State":{
+    "file":"/data/sa-schools/free-state.json",
+    "count":1015
+  },
+  "Gauteng":{
+    "file":"/data/sa-schools/gauteng.json",
+    "count":3046
+  },
+  "KwaZulu-Natal":{
+    "file":"/data/sa-schools/kwazulu-natal.json",
+    "count":6057
+  },
+  "Limpopo":{
+    "file":"/data/sa-schools/limpopo.json",
+    "count":3829
+  },
+  "Mpumalanga":{
+    "file":"/data/sa-schools/mpumalanga.json",
+    "count":1771
+  },
+  "Northern Cape":{
+    "file":"/data/sa-schools/northern-cape.json",
+    "count":589
+  },
+  "North West":{
+    "file":"/data/sa-schools/north-west.json",
+    "count":1548
+  },
+  "Western Cape":{
+    "file":"/data/sa-schools/western-cape.json",
+    "count":1786
+  }
+}

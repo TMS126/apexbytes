@@ -1,6 +1,6 @@
 // components/testimonials-section.tsx
 "use client"
-
+import { useEffect, useState } from "react"
 import { Star, Quotes, WhatsappLogo } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import { HUB_COLORS, HUB_NAMES, HubKey, BIZ } from "@/lib/brand"
@@ -70,7 +70,12 @@ export function TestimonialsSection({
   subtitle?: string
 }) {
   const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
+  const [mounted, setMounted] = useState(false)
+  // next-themes can report a stale resolvedTheme after a reload with a saved
+  // dark preference; the <html> class is the source of truth once mounted.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setMounted(true), [])
+  const isDark = mounted && (resolvedTheme === "dark" || document.documentElement.classList.contains("dark"))
 
   const colorFor = (review: Review) => {
     const colors = HUB_COLORS[review.hubId as HubKey]

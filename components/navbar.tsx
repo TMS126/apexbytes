@@ -140,7 +140,7 @@ export function Navbar() {
           />
         )}
         <div className="flex h-[var(--nav-h)] items-center justify-center px-5 md:px-10">
-          <div className="relative grid w-full max-w-[1320px] grid-cols-[1fr_auto_1fr] items-center gap-4">
+          <div className="relative grid w-full max-w-[1320px] grid-cols-[auto_1fr_auto] items-center gap-4 xl:grid-cols-[1fr_auto_1fr]">
             {/* Logo */}
             <button
               type="button"
@@ -164,7 +164,7 @@ export function Navbar() {
                 style={{ filter: useLightLogoIcon ? "brightness(0) invert(1)" : "brightness(0)" }}
               />
               <div
-                className="flex max-w-[200px] items-center overflow-hidden font-sans text-[1.12rem] font-medium leading-none tracking-tight"
+                className="flex max-w-[200px] items-center overflow-hidden font-sans text-[1rem] font-medium min-[360px]:text-[1.12rem] leading-none tracking-tight"
               >
                 <span className="whitespace-nowrap transition-colors duration-300 abh-logo-primary">
                   ApexBytesHub

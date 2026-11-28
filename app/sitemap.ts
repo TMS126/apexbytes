@@ -1,6 +1,6 @@
 // app/sitemap.ts
 import { MetadataRoute } from 'next'
-import { HUBS } from '@/lib/data'
+import { HUBS, PROJECTS } from '@/lib/data'
 import { HUB_ORDER, serviceRouteFor, hubRouteFor } from '@/components/services-page/lib'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://apexbytes.vercel.app'
@@ -47,7 +47,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [hubRoute, ...itemRoutes]
   })
 
-  return [...coreRoutes, ...serviceRoutes].map(({ path, priority, freq }) => ({
+  const projectRoutes: RouteConfig[] = PROJECTS.map((project) => ({ path: `/gallery/${project.id}`, priority: 0.6, freq: 'monthly' }))
+
+  return [...coreRoutes, ...serviceRoutes, ...projectRoutes].map(({ path, priority, freq }) => ({
     url: `${SITE_URL}${path}`,
     lastModified: LAST_CONTENT_UPDATE,
     changeFrequency: freq,

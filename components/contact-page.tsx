@@ -260,6 +260,7 @@ function ContactPageInner() {
                         type={f.type}
                         value={rawValue}
                         aria-invalid={err}
+                        data-valid={f.validate(rawValue) || undefined}
                         aria-describedby={err ? `contact-${f.key}-error` : undefined}
                         maxLength={f.key === "name" ? 80 : 20}
                         className="w-full rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-colors outline-none placeholder:text-muted-foreground"
@@ -282,6 +283,7 @@ function ContactPageInner() {
                     <textarea
                       id="contact-message"
                       aria-invalid={touched.message && !isMessageValid(formData.message)}
+                      data-valid={isMessageValid(formData.message) || undefined}
                       aria-describedby={touched.message && !isMessageValid(formData.message) ? "contact-message-error" : undefined}
                       maxLength={1000}
                       className="w-full flex-1 rounded-[14px] bg-card px-4 py-3 text-base font-normal text-foreground transition-colors outline-none resize-none placeholder:text-muted-foreground"

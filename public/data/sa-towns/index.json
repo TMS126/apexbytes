@@ -1,0 +1,38 @@
+{
+  "Eastern Cape": {
+    "file": "/data/sa-towns/eastern-cape.json",
+    "count": 115
+  },
+  "Free State": {
+    "file": "/data/sa-towns/free-state.json",
+    "count": 84
+  },
+  "Gauteng": {
+    "file": "/data/sa-towns/gauteng.json",
+    "count": 70
+  },
+  "KwaZulu-Natal": {
+    "file": "/data/sa-towns/kwazulu-natal.json",
+    "count": 172
+  },
+  "Limpopo": {
+    "file": "/data/sa-towns/limpopo.json",
+    "count": 53
+  },
+  "Mpumalanga": {
+    "file": "/data/sa-towns/mpumalanga.json",
+    "count": 72
+  },
+  "Northern Cape": {
+    "file": "/data/sa-towns/northern-cape.json",
+    "count": 68
+  },
+  "North West": {
+    "file": "/data/sa-towns/north-west.json",
+    "count": 51
+  },
+  "Western Cape": {
+    "file": "/data/sa-towns/western-cape.json",
+    "count": 144
+  }
+}

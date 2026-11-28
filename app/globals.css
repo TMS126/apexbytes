@@ -1947,6 +1947,52 @@ button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visib
   box-shadow: 0 1px 2px rgb(15 23 42 / .04) !important;
 }
 .cv-editor-field select:focus-visible { border-color: #7aa9eb !important; box-shadow: 0 0 0 3px rgb(37 99 235 / .12) !important; }
+.cv-combobox-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  border: 1px solid #d7dce3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  padding: .75rem .9rem;
+  color: #172033;
+  font-size: .875rem;
+  font-weight: 400;
+  text-align: left;
+  box-shadow: 0 1px 2px rgb(15 23 42 / .04) !important;
+}
+.cv-combobox-trigger:focus-visible { border-color: #7aa9eb !important; box-shadow: 0 0 0 3px rgb(37 99 235 / .12) !important; }
+.cv-combobox-trigger--error { border-color: var(--destructive) !important; }
+.cv-combobox-trigger.is-placeholder .cv-combobox-value { color: #8993a3; }
+.cv-combobox-value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-combobox-caret { flex-shrink: 0; opacity: .55; }
+.cv-combobox-popover { background: var(--popover) !important; color: var(--popover-foreground) !important; }
+.cv-combobox-popover [cmdk-input-wrapper] { border-bottom: 1px solid var(--border); }
+.cv-combobox-popover [cmdk-input] { border: 0 !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
+.cv-combobox-popover [cmdk-input]:focus,
+.cv-combobox-popover [cmdk-input]:focus-visible { outline: none !important; box-shadow: none !important; }
+:root:root:root:root:root:root:root:root .cv-combobox-popover [cmdk-input],
+:root:root:root:root:root:root:root:root .cv-combobox-popover [cmdk-input]:focus,
+:root:root:root:root:root:root:root:root .cv-combobox-popover [cmdk-input]:focus-visible {
+  height: 100% !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.cv-combobox-item { display: flex; align-items: flex-start; gap: .5rem; padding: .6rem .65rem; border-radius: 8px; font-size: .875rem; line-height: 1.35; cursor: pointer; }
+.cv-combobox-item[data-selected="true"] { background: var(--accent); color: var(--accent-foreground); }
+.cv-combobox-custom { display: flex; align-items: center; gap: .5rem; padding: .65rem; border-radius: 8px; font-size: .875rem; font-weight: 600; color: var(--brand-orange-text); cursor: pointer; }
+.cv-combobox-custom[data-selected="true"] { background: var(--accent); }
+.cv-combobox-check { flex-shrink: 0; margin-top: .15rem; color: var(--brand-orange-text); }
+.cv-combobox-note { padding: .7rem .75rem; font-size: .75rem; line-height: 1.4; color: var(--muted-foreground); }
+.cv-field-help { margin-top: .375rem; display: block; font-size: .75rem; font-weight: 400; line-height: 1.4; color: var(--muted-foreground); }
+.cv-field-error-text { margin-top: .375rem; display: block; font-size: .75rem; font-weight: 500; color: var(--destructive); }
 .dark .cv-editor-card { background: var(--card); }
 .dark .cv-editor-field input,
 .dark .cv-editor-field textarea,
@@ -1958,6 +2004,14 @@ button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visib
 }
 .dark .cv-editor-field input::placeholder,
 .dark .cv-editor-field textarea::placeholder { color: var(--muted-foreground) !important; }
+.dark .cv-combobox-trigger {
+  border-color: color-mix(in srgb, var(--foreground) 22%, transparent) !important;
+  background: color-mix(in srgb, var(--background) 70%, var(--card)) !important;
+  color: var(--foreground);
+  box-shadow: none !important;
+}
+.dark .cv-combobox-trigger.is-placeholder .cv-combobox-value { color: var(--muted-foreground); }
+.dark .cv-combobox-trigger:focus-visible { border-color: var(--brand-orange) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand-orange) 22%, transparent) !important; }
 .dark .cv-editor-field input:focus,
 .dark .cv-editor-field textarea:focus,
 .dark .cv-editor-field select:focus,
@@ -1998,6 +2052,22 @@ button:not(:disabled):not([data-no-lift]):not(.abh-underline-button):focus-visib
 .intake-selected-service strong { color: var(--foreground); }
 .intake-section-heading { margin-top: .85rem; border-top: 2px solid var(--foreground); border-bottom: 1px solid var(--border); padding: .55rem 0; color: var(--foreground); font-family: var(--font-manrope), sans-serif; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .intake-authorisation { border-left: 2px solid var(--border); padding: .7rem .85rem; color: var(--muted-foreground); font-size: .76rem; line-height: 1.55; }
+.intake-prep {
+  display: grid;
+  gap: .75rem 1.5rem;
+  margin-top: 1rem;
+  border-left: 3px solid var(--brand-orange);
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+  padding: .9rem 1rem;
+}
+.intake-prep-title { margin-bottom: .3rem; font-size: .7rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.intake-prep-copy { color: var(--muted-foreground); font-size: .8rem; line-height: 1.55; }
+.intake-prep-list { display: grid; gap: .3rem; margin: 0; padding-left: 1.1rem; color: var(--muted-foreground); font-size: .78rem; line-height: 1.5; }
+.intake-prep-list li::marker { color: var(--brand-orange); }
+.intake-field-help { margin-top: .35rem; color: var(--muted-foreground); font-size: .72rem; line-height: 1.45; }
+@media (min-width: 768px) {
+  .intake-prep { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); }
+}
 .intake-field-label { display: block; margin-bottom: .35rem; color: var(--foreground); font-size: .68rem; font-weight: 800; letter-spacing: .045em; line-height: 1.3; text-transform: uppercase; }
 .intake-control { min-height: 2.5rem; border: 0 !important; border-bottom: 1px solid var(--foreground) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; }
 .intake-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem .75rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: .55rem 0; }

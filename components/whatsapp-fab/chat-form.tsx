@@ -92,6 +92,7 @@ export function ChatForm({
         <label className={cn(TXT.label, "block mb-1.5")} style={{ color: WA.sub }}>Your Name</label>
         <input
           type="text"
+          data-valid={name.trim().length > 1 || undefined}
           value={name}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => {
@@ -147,6 +148,7 @@ export function ChatForm({
           Anything else? <span className="normal-case font-medium opacity-60">(optional)</span>
         </label>
         <textarea
+          data-valid={!!note.trim() || undefined}
           value={note}
           onChange={(e) => setNote(e.target.value)}
           onKeyDown={(e) => {

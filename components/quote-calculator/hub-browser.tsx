@@ -91,7 +91,8 @@ export function HubBrowser({
       </div>
 
       <div className={cn(embedded ? "md:grid md:grid-cols-[180px_minmax(0,1fr)] md:items-start md:gap-4" : "space-y-4")}>
-      <div className={cn("flex justify-center gap-4 overflow-x-auto pb-1", embedded ? "md:grid md:grid-cols-1 md:overflow-visible" : "md:grid md:grid-cols-5 md:overflow-visible")} role="tablist" aria-label="Hubs">
+      <div className={cn("flex gap-4 overflow-x-auto pb-1", embedded ? "md:grid md:grid-cols-1 md:overflow-visible" : "md:justify-center")} role="tablist" aria-label="Hubs">
+          <div className={cn("mx-auto flex w-max min-w-full shrink-0 justify-center gap-3", embedded && "md:contents")}>
           {HUB_ORDER.map(hubId => {
             const hub = HUBS[hubId]
             const accent = getAccent(hubId)
@@ -108,7 +109,7 @@ export function HubBrowser({
                 aria-pressed={isSelected}
                 aria-label={hub.title}
                 className={cn(
-                  "group relative flex min-w-14 shrink-0 items-center justify-center gap-2 border-l-2 border-transparent bg-transparent px-2 py-3 pr-7 text-center md:min-w-[112px] md:justify-start md:px-3 md:py-2.5 md:pr-8 md:text-left",
+                  "group relative flex w-12 shrink-0 items-center justify-center gap-2 border-l-2 border-transparent bg-transparent px-1 py-3 text-center md:w-auto md:min-w-[112px] md:justify-start md:px-3 md:py-2.5 md:pr-8 md:text-left",
                   embedded && "md:w-full",
                   "transition-colors duration-150 ease-out",
                   isSelected && "md:border-l-[3px] border-[var(--hub-accent)] bg-transparent"
@@ -151,6 +152,7 @@ export function HubBrowser({
               </button>
             )
           })}
+          </div>
         </div>
 
         <div className={embedded ? "min-w-0" : ""}>
