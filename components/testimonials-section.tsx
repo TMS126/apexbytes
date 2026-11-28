@@ -18,12 +18,12 @@ interface Review {
 
 export const SAMPLE_REVIEWS: Review[] = [
   {
-    name: "Sthembiso",
+    name: "Sethembiso",
     initials: "SM",
     hubId: "doc",
-    serviceUsed: "CV Creation",
+    serviceUsed: "CV Writing & Design",
     rating: 5,
-    quote: "My friend, I went to check at home — there's a great job there. I'm so happy!",
+    quote: "They got my CV finished quickly and made sure it was ready before I even needed it. I'm really happy with how it turned out.",
   },
   {
     name: "Tseleng",
