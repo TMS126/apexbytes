@@ -12,7 +12,7 @@ import { HUB_ORDER } from "@/components/quote-calculator/lib"
 import { ToolBackLink } from "@/components/tools/tool-back-link"
 import { ToolHelpAccordion } from "@/components/tools/tool-help-accordion"
 import { DatePicker, formatPickerValue, todayValue } from "./date-picker"
-import { SERVICE_OPTIONS, buildIntakeFields, displayFieldValue, type Field } from "./intake-fields"
+import { SERVICE_OPTIONS, buildIntakeFields, displayFieldValue, visibleFields, type Field } from "./intake-fields"
 import { buildIntakePdf } from "./intake-pdf"
 
 const INTAKE_HELP = [
@@ -78,6 +78,7 @@ function InputField({ field, value, error, theme, onChange }: { field: Field; va
   const validClass = value.trim() && !error ? "intake-control-valid" : ""
   const invalid = error ? true : undefined
   const errorNode = error ? <p className="mt-1 text-xs font-medium text-red-600 dark:text-red-300" role="alert">{error}</p> : null
+  const helpNode = field.help ? <p className="intake-field-help">{field.help}</p> : null
   const controlBase = "intake-control w-full px-1 py-2 text-left text-sm text-foreground focus-visible:outline-none"
 
   if (field.type === "date") {
@@ -99,6 +100,7 @@ function InputField({ field, value, error, theme, onChange }: { field: Field; va
           accent={theme.accent}
           onAccent={theme.onAccent}
         />
+        {helpNode}
         {errorNode}
       </div>
     )
@@ -112,6 +114,7 @@ function InputField({ field, value, error, theme, onChange }: { field: Field; va
           <option value="">{field.placeholder}</option>
           {field.options?.map((option) => <option key={option} value={option}>{option}</option>)}
         </select>
+        {helpNode}
         {errorNode}
       </div>
     )
@@ -141,6 +144,7 @@ function InputField({ field, value, error, theme, onChange }: { field: Field; va
             })}
           </div>
         </fieldset>
+        {helpNode}
         {errorNode}
       </div>
     )
@@ -154,6 +158,7 @@ function InputField({ field, value, error, theme, onChange }: { field: Field; va
       ) : (
         <input id={field.id} aria-invalid={invalid} type={field.type ?? "text"} value={value} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} className={`${controlBase} placeholder:text-muted-foreground ${validClass}`} />
       )}
+      {helpNode}
       {errorNode}
     </div>
   )
@@ -183,7 +188,8 @@ export function IntakeTool() {
   const [fallbackUrl, setFallbackUrl] = useState<string | null>(null)
 
   const selected = SERVICE_OPTIONS.find((option) => option.value === values.service)
-  const fields = useMemo(() => buildIntakeFields(selected), [selected])
+  const allFields = useMemo(() => buildIntakeFields(selected), [selected])
+  const fields = useMemo(() => visibleFields(allFields, values), [allFields, values])
   const errors = useMemo(() => validateFields(fields, values), [fields, values])
 
   useEffect(() => {
@@ -206,7 +212,14 @@ export function IntakeTool() {
     : undefined
   const tint = selected ? { background: `color-mix(in srgb, ${theme.accent} 10%, transparent)` } : undefined
 
-  const setField = (id: string, value: string) => setValues((current) => ({ ...current, [id]: value }))
+  const setField = (id: string, value: string) => setValues((current) => {
+    const next = { ...current, [id]: value }
+    const allowed = new Set(visibleFields(allFields, next).map((field) => field.id))
+    for (const key of Object.keys(next)) {
+      if (key !== "service" && !allowed.has(key)) delete next[key]
+    }
+    return next
+  })
 
   const chooseService = (value: string) => {
     setValues({ service: value })
@@ -320,7 +333,7 @@ export function IntakeTool() {
       )
     : "#"
 
-  const solidButton = "inline-flex min-h-11 items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold disabled:opacity-60"
+  const solidButton = "inline-flex min-h-11 min-w-0 items-center justify-center gap-2 py-2.5 text-sm font-semibold disabled:opacity-60"
   const solidStyle: CSSProperties = { backgroundColor: theme.accent, color: theme.onAccent }
 
   return (
@@ -353,6 +366,20 @@ export function IntakeTool() {
               </select>
             </label>
           </div>
+
+          {selected && (
+            <div className="intake-prep" style={{ borderLeftColor: theme.accent }}>
+              <div>
+                <p className="intake-prep-title" style={{ color: theme.accent }}>What to prepare</p>
+                <p className="intake-prep-copy">{selected.description}</p>
+              </div>
+              {selected.requirements.length > 0 && (
+                <ul className="intake-prep-list">
+                  {selected.requirements.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              )}
+            </div>
+          )}
 
           {selected && (
             <form noValidate onSubmit={handleSubmit} className="intake-form-grid mt-7">
@@ -403,18 +430,18 @@ export function IntakeTool() {
                 </div>
               ))}
             </dl>
-            <div className="mt-7 flex flex-wrap justify-center gap-3">
-              <button type="button" onClick={() => void downloadPdf()} disabled={busy !== null} style={solidStyle} className={solidButton}>
-                <DownloadSimple size={18} aria-hidden="true" />
-                <span>{busy === "download" ? "Preparing PDF…" : "Download fillable PDF"}</span>
+            <div className="mt-7 grid grid-cols-[1.25fr_0.75fr_1fr] gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3">
+              <button type="button" data-no-lift onClick={() => void downloadPdf()} disabled={busy !== null} style={solidStyle} className={`${solidButton} min-h-14 flex-col gap-1 px-2 py-2 text-[0.7rem] leading-tight sm:min-h-11 sm:flex-row sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm`} aria-label="Download fillable PDF">
+                <DownloadSimple size={16} className="shrink-0 sm:size-[18px]" aria-hidden="true" />
+                <span className="text-center"><span className="sm:hidden">{busy === "download" ? "Preparing…" : "Download"}</span><span className="hidden sm:inline">{busy === "download" ? "Preparing PDF…" : "Download fillable PDF"}</span></span>
               </button>
-              <button type="button" data-no-lift onClick={() => void sharePdf()} disabled={busy !== null} className="inline-flex min-h-11 items-center justify-center gap-2 bg-muted px-4 py-2.5 text-sm font-semibold text-foreground disabled:opacity-60">
-                <FileArrowUp size={18} aria-hidden="true" />
-                <span>{busy === "share" ? "Preparing PDF…" : "Share PDF"}</span>
+              <button type="button" data-no-lift onClick={() => void sharePdf()} disabled={busy !== null} className="inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[14px] bg-muted px-2 py-2 text-[0.7rem] font-semibold leading-tight text-foreground disabled:opacity-60 sm:min-h-11 sm:flex-row sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm" aria-label="Share PDF">
+                <FileArrowUp size={16} className="shrink-0 sm:size-[18px]" aria-hidden="true" />
+                <span className="text-center"><span className="sm:hidden">{busy === "share" ? "Preparing…" : "Share"}</span><span className="hidden sm:inline">{busy === "share" ? "Preparing PDF…" : "Share PDF"}</span></span>
               </button>
-              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[14px] bg-[var(--brand-whatsapp)] px-4 py-2.5 text-sm font-semibold text-[var(--on-whatsapp)]">
-                <PaperPlaneTilt size={18} aria-hidden="true" />
-                <span>Send details on WhatsApp</span>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-14 min-w-0 flex-col items-center justify-center gap-1 rounded-[14px] bg-[var(--brand-whatsapp)] px-2 py-2 text-[0.7rem] font-semibold leading-tight text-[var(--on-whatsapp)] sm:min-h-11 sm:flex-row sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm" aria-label="Send details on WhatsApp">
+                <PaperPlaneTilt size={16} className="shrink-0 sm:size-[18px]" aria-hidden="true" />
+                <span className="text-center"><span className="sm:hidden">WhatsApp</span><span className="hidden sm:inline">Send details on WhatsApp</span></span>
               </a>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">The PDF has editable fields. If your phone viewer cannot edit them, open it in Adobe Acrobat Reader or Google Drive before sending it to ApexBytesHub.</p>

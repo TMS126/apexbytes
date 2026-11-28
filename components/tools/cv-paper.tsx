@@ -4,12 +4,27 @@
 import Image from "next/image"
 import type { CSSProperties, ReactNode } from "react"
 import { formatPickerValue } from "./date-picker"
+import { SA_PROVINCES } from "@/lib/data/cv-options"
 
 export type CvStyle = "traditional" | "modern"
 export type CvRegion = "sa" | "intl"
 
 export type CvRole = { id: number; title: string; company: string; employmentType: string; startDate: string; endDate: string; current: boolean; responsibilities: string }
-export type CvEducation = { id: number; type: string; qualification: string; institution: string; startDate: string; endDate: string; current: boolean; notes: string }
+export type CvEducationLevel = "school" | "tertiary" | "other"
+export type CvEducation = {
+  id: number
+  level: CvEducationLevel
+  institutionType: string
+  province: string
+  country: string
+  type: string
+  qualification: string
+  institution: string
+  startDate: string
+  endDate: string
+  current: boolean
+  notes: string
+}
 export type CvReferee = { id: number; name: string; position: string; phone: string; email: string }
 export type CvLanguage = { name: string; level: string }
 
@@ -42,7 +57,7 @@ export type CvData = {
 }
 
 export const newRole = (id: number): CvRole => ({ id, title: "", company: "", employmentType: "", startDate: "", endDate: "", current: false, responsibilities: "" })
-export const newEducation = (id: number): CvEducation => ({ id, type: "", qualification: "", institution: "", startDate: "", endDate: "", current: false, notes: "" })
+export const newEducation = (id: number): CvEducation => ({ id, level: "school", institutionType: "", province: "", country: "", type: "", qualification: "", institution: "", startDate: "", endDate: "", current: false, notes: "" })
 export const newReferee = (id: number): CvReferee => ({ id, name: "", position: "", phone: "", email: "" })
 
 export const EMPTY_CV: CvData = {
@@ -73,7 +88,7 @@ export const EMPTY_CV: CvData = {
   referees: [],
 }
 
-export const PROVINCES = ["Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "Northern Cape", "North West", "Western Cape"]
+export const PROVINCES = SA_PROVINCES
 
 export function splitLines(text: string): string[] {
   return text

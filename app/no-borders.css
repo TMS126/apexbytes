@@ -45,15 +45,15 @@
     border-color: transparent !important;
   }
 
-  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input) {
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):not([cmdk-input]) {
     border: 0 !important;
     border-bottom: 1px solid color-mix(in srgb, var(--foreground) 24%, transparent) !important;
     border-radius: 14px !important;
     background: transparent !important;
     color: var(--foreground) !important;
   }
-  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus,
-  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):focus-visible {
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):not([cmdk-input]):focus,
+  :root:root:root :is(input, textarea, select, [role="combobox"]):not(.abh-search-input):not(.abh-reference-search input):not([cmdk-input]):focus-visible {
     border-bottom-color: var(--line-rule) !important;
     box-shadow: 0 2px 0 -1px var(--line-rule) !important;
   }
@@ -96,7 +96,7 @@
     --tw-ring-offset-shadow: 0 0 #0000 !important;
     --tw-inset-ring-shadow: 0 0 #0000 !important;
   }
-    :root:root:root :is(button, a, input, textarea, select, [role="button"], [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):focus-visible {
+    :root:root:root :is(button, a, input, textarea, select, [role="button"], [role="combobox"], [role="searchbox"], [role="textbox"], [contenteditable="true"]):not([cmdk-input]):focus-visible {
     outline: none !important;
     box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--foreground) 22%, transparent) !important;
     --tw-ring-shadow: 0 0 #0000 !important;
@@ -122,7 +122,7 @@
   }
 
   /* 5. Dark mode fields use a single flat surface with no inset box. */
-  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input) {
+  :root:root.dark :is(input, textarea, select):not(.abh-search-input):not(.abh-reference-search input):not([cmdk-input]) {
     background-color: color-mix(in srgb, var(--input) 78%, transparent) !important;
     background-image: none !important;
   }

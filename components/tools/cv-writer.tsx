@@ -2,7 +2,7 @@
 "use client"
 
 import { createContext, useContext, useRef, useState } from "react"
-import type { ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import { FileArrowUp, Plus, WhatsappLogo, X } from "@phosphor-icons/react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -12,6 +12,29 @@ import { ToolHelpAccordion } from "@/components/tools/tool-help-accordion"
 import { DatePicker, formatPickerValue, todayValue } from "./date-picker"
 import { CvPaper, EMPTY_CV, PROVINCES, dateRange, newEducation, newReferee, newRole, splitLines } from "./cv-paper"
 import type { CvData, CvEducation, CvReferee, CvRole } from "./cv-paper"
+import { SearchableSelect } from "./searchable-select"
+import { useSaSchools, useSaTowns } from "./use-sa-locations"
+import {
+  CERTIFICATION_SUGGESTIONS,
+  COUNTRY_OPTIONS,
+  EDUCATION_LEVELS,
+  EMPLOYMENT_TYPES,
+  FIELD_OF_STUDY_SUGGESTIONS,
+  INSTITUTION_TYPES_INTERNATIONAL,
+  INSTITUTION_TYPES_SA,
+  INTERNATIONAL_QUALIFICATION_TYPES,
+  JOB_TITLE_SUGGESTIONS,
+  LANGUAGE_LEVELS,
+  LANGUAGE_SUGGESTIONS,
+  LICENCES,
+  MARITAL_STATUS,
+  SCHOOL_QUALIFICATIONS,
+  SCHOOL_QUALIFICATION_TYPES,
+  SKILL_SUGGESTIONS,
+  TERTIARY_QUALIFICATION_TYPES,
+} from "@/lib/data/cv-options"
+import { institutionsFor, programmesFor } from "@/lib/data/tertiary"
+import type { TertiaryType } from "@/lib/data/tertiary"
 
 const STEPS = [
   { id: "style", label: "Style" },
@@ -49,15 +72,6 @@ const REGION_NOTE: Record<CvData["region"], string> = {
   sa: "South Africa: adds optional ID number, date of birth, nationality, marital status, driver's licence and a photo. Only include what the employer asks for.",
   intl: "International: leaves out photo, ID number, date of birth and marital status, which employers abroad usually do not want.",
 }
-
-const EDUCATION_TYPES: Record<CvData["region"], string[]> = {
-  sa: ["Matric / Grade 12 (NSC)", "Higher Certificate", "National Certificate (NQF)", "Diploma", "Advanced Diploma", "Bachelor's degree", "Honours degree", "Master's degree", "Doctoral degree", "Short course / training", "Other"],
-  intl: ["High school diploma", "Certificate", "Diploma", "Associate degree", "Bachelor's degree", "Master's degree", "Doctorate", "Short course / training", "Other"],
-}
-const EMPLOYMENT_TYPES = ["Full-time", "Part-time", "Contract", "Freelance", "Internship", "Volunteer"]
-const LICENCES = ["No licence", "Learner's licence", "Code 8 / B", "Code 10 / C1", "Code 14 / EC", "Other"]
-const MARITAL = ["Single", "Married", "Divorced", "Widowed"]
-const LANGUAGE_LEVELS = ["Home language", "Fluent", "Good", "Basic"]
 
 type Option = string | { value: string; label: string }
 const optionValue = (option: Option) => (typeof option === "string" ? option : option.value)
@@ -114,6 +128,11 @@ function SelectField({ id, label, value, onChange, options, required = false, al
   )
 }
 
+function SearchableField({ errorId, ...props }: ComponentProps<typeof SearchableSelect> & { errorId: string }) {
+  const error = useFieldError(errorId)
+  return <SearchableSelect {...props} error={error} />
+}
+
 function DateField({ id, label, value, onChange, required = false, mode = "month", min, max, hint, initialView, disabled = false, placeholder }: {
   id: string; label: string; value: string; onChange: (value: string) => void; required?: boolean; mode?: "day" | "month"
   min?: string; max?: string; hint?: string; initialView?: string; disabled?: boolean; placeholder?: string
@@ -142,9 +161,9 @@ function CheckField({ label, checked, onChange, span2 = false }: { label: string
   )
 }
 
-function ChipField({ id, label, hint, placeholder, chips, required = false, levels, onAdd, onRemove }: {
+function ChipField({ id, label, hint, placeholder, chips, required = false, levels, suggestions, onAdd, onRemove }: {
   id: string; label: string; hint?: string; placeholder: string; chips: string[]; required?: boolean
-  levels?: string[]; onAdd: (text: string, level: string) => void; onRemove: (index: number) => void
+  levels?: string[]; suggestions?: string[]; onAdd: (text: string, level: string) => void; onRemove: (index: number) => void
 }) {
   const error = useFieldError(id)
   const [draft, setDraft] = useState("")
@@ -162,6 +181,8 @@ function ChipField({ id, label, hint, placeholder, chips, required = false, leve
         <div className="cv-editor-field min-w-0 flex-1">
           <input
             id={`cv-${id}`}
+            list={suggestions ? `cv-${id}-suggestions` : undefined}
+            autoComplete="off"
             aria-invalid={error ? true : undefined}
             value={draft}
             placeholder={placeholder}
@@ -174,6 +195,11 @@ function ChipField({ id, label, hint, placeholder, chips, required = false, leve
               }
             }}
           />
+          {suggestions ? (
+            <datalist id={`cv-${id}-suggestions`}>
+              {suggestions.map((suggestion) => <option key={suggestion} value={suggestion} />)}
+            </datalist>
+          ) : null}
         </div>
         {levels && (
           <div className="cv-editor-field w-36 shrink-0">
@@ -252,6 +278,16 @@ function RoleEditor({ role, index, canRemove, onChange, onRemove }: { role: CvRo
 
 function EducationEditor({ item, index, canRemove, region, onChange, onRemove }: { item: CvEducation; index: number; canRemove: boolean; region: CvData["region"]; onChange: (patch: Partial<CvEducation>) => void; onRemove: () => void }) {
   const key = `edu-${item.id}`
+  const sa = region === "sa"
+  const schoolData = useSaSchools(sa && item.level === "school" ? item.province : "")
+  const tertiaryTypes: TertiaryType[] = item.institutionType && item.institutionType !== "Other"
+    ? [item.institutionType as TertiaryType]
+    : ["University", "University of Technology", "TVET College", "Private Higher Education Institution"]
+  const tertiaryOptions = sa && item.level === "tertiary"
+    ? institutionsFor(item.province, tertiaryTypes).map((institution) => institution.name)
+    : []
+  const programmeOptions = sa && item.level === "tertiary" ? programmesFor(item.institution) : []
+
   return (
     <div className="cv-role-panel">
       <div className="mb-4 flex items-center justify-between">
@@ -259,9 +295,144 @@ function EducationEditor({ item, index, canRemove, region, onChange, onRemove }:
         {canRemove && <button type="button" onClick={onRemove} className="cv-remove-role"><span>Remove</span></button>}
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <SelectField id={`${key}-type`} label="Qualification type" value={item.type} onChange={(value) => onChange({ type: value })} options={EDUCATION_TYPES[region]} required />
-        <TextField id={`${key}-qualification`} label="Qualification or field of study" value={item.qualification} onChange={(value) => onChange({ qualification: value })} placeholder="Name of qualification or subject area" required />
-        <TextField span2 id={`${key}-institution`} label="School, college or university" value={item.institution} onChange={(value) => onChange({ institution: value })} placeholder="Name of institution" required />
+        <SelectField
+          id={`${key}-level`}
+          label="What are you adding?"
+          value={item.level}
+          onChange={(value) => onChange({ level: value as CvEducation["level"], institution: "", institutionType: "", qualification: "", type: "" })}
+          options={EDUCATION_LEVELS}
+          allowEmpty={false}
+          required
+        />
+        {sa ? (
+          <SelectField
+            id={`${key}-province`}
+            label="Province"
+            value={item.province}
+            onChange={(value) => onChange({ province: value, institution: "", qualification: "" })}
+            options={PROVINCES}
+            required
+          />
+        ) : (
+          <SelectField
+            id={`${key}-country`}
+            label="Country of study"
+            value={item.country}
+            onChange={(value) => onChange({ country: value, institution: "", qualification: "" })}
+            options={COUNTRY_OPTIONS}
+            required
+          />
+        )}
+
+        {sa && item.level === "school" && (
+          <>
+            <SearchableField
+              span2
+              id={`cv-${key}-institution`}
+              errorId={`${key}-institution`}
+              label="School"
+              value={item.institution}
+              onChange={(value) => onChange({ institution: value, qualification: "" })}
+              options={schoolData.options}
+              loading={schoolData.loading}
+              allowCustom
+              required
+              placeholder="Search for your school"
+              searchPlaceholder="Type a school name…"
+              hint={schoolData.error ?? "The list is the DBE 2023 school masterlist. If your school is missing or renamed, type its name."}
+            />
+            <SelectField id={`${key}-type`} label="Qualification type" value={item.type} onChange={(value) => onChange({ type: value })} options={SCHOOL_QUALIFICATION_TYPES} required />
+            <SelectField id={`${key}-qualification`} label="Qualification or grade" value={item.qualification} onChange={(value) => onChange({ qualification: value })} options={SCHOOL_QUALIFICATIONS} required />
+          </>
+        )}
+
+        {sa && item.level === "tertiary" && (
+          <>
+            <SelectField
+              id={`${key}-institutionType`}
+              label="Institution type"
+              value={item.institutionType}
+              onChange={(value) => onChange({ institutionType: value, institution: "", qualification: "" })}
+              options={INSTITUTION_TYPES_SA}
+              required
+            />
+            <span className="hidden sm:block" />
+            <SearchableField
+              span2
+              id={`cv-${key}-institution`}
+              errorId={`${key}-institution`}
+              label="Institution"
+              value={item.institution}
+              onChange={(value) => onChange({ institution: value, qualification: "" })}
+              options={tertiaryOptions}
+              allowCustom
+              required
+              placeholder="Search universities, colleges or TVET colleges"
+              searchPlaceholder="Type an institution name…"
+              hint="Public universities, universities of technology, 50 public TVET colleges and selected private institutions. Type your institution if it is not listed."
+            />
+            <SearchableField
+              span2
+              id={`cv-${key}-qualification`}
+              errorId={`${key}-qualification`}
+              label="Course or field of study"
+              value={item.qualification}
+              onChange={(value) => onChange({ qualification: value })}
+              options={programmeOptions}
+              allowCustom
+              required
+              placeholder={item.institution ? "Search courses at this institution" : "Choose an institution first, or type your course"}
+              searchPlaceholder="Type a course or field of study…"
+              hint="Course availability differs by campus. Type your exact course if it is not listed."
+            />
+            <SelectField id={`${key}-type`} label="Qualification type" value={item.type} onChange={(value) => onChange({ type: value })} options={TERTIARY_QUALIFICATION_TYPES} required />
+          </>
+        )}
+
+        {sa && item.level === "other" && (
+          <>
+            <TextField span2 id={`${key}-institution`} label="Training provider" value={item.institution} onChange={(value) => onChange({ institution: value })} placeholder="Name of training provider" required />
+            <TextField span2 id={`${key}-qualification`} label="Course or qualification" value={item.qualification} onChange={(value) => onChange({ qualification: value })} placeholder="Name of course or qualification" required />
+            <SelectField id={`${key}-type`} label="Qualification type" value={item.type} onChange={(value) => onChange({ type: value })} options={TERTIARY_QUALIFICATION_TYPES} required />
+          </>
+        )}
+
+        {!sa && (
+          <>
+            <SelectField
+              id={`${key}-institutionType`}
+              label="Institution type"
+              value={item.institutionType}
+              onChange={(value) => onChange({ institutionType: value, institution: "" })}
+              options={INSTITUTION_TYPES_INTERNATIONAL}
+            />
+            <TextField
+              span2
+              id={`${key}-institution`}
+              label="School, college or university"
+              value={item.institution}
+              onChange={(value) => onChange({ institution: value })}
+              placeholder="Name of institution"
+              required
+            />
+            <SearchableField
+              span2
+              id={`cv-${key}-qualification`}
+              errorId={`${key}-qualification`}
+              label="Course or field of study"
+              value={item.qualification}
+              onChange={(value) => onChange({ qualification: value })}
+              options={FIELD_OF_STUDY_SUGGESTIONS}
+              allowCustom
+              required
+              placeholder="Search a subject area"
+              searchPlaceholder="Type a course or subject…"
+              hint="Pick a common field or type the exact course name used in that country."
+            />
+            <SelectField id={`${key}-type`} label="Qualification type" value={item.type} onChange={(value) => onChange({ type: value })} options={INTERNATIONAL_QUALIFICATION_TYPES} required />
+          </>
+        )}
+
         <DateField id={`${key}-startDate`} label="Start date" value={item.startDate} onChange={(value) => onChange({ startDate: value })} hint="Optional" initialView={item.endDate || undefined} />
         <DateField id={`${key}-endDate`} label="Completion date" value={item.endDate} onChange={(value) => onChange({ endDate: value })} required={!item.current} min={item.startDate || undefined} disabled={item.current} initialView={item.startDate || undefined} />
         <CheckField span2 label="I am still studying here" checked={item.current} onChange={(checked) => onChange({ current: checked, endDate: checked ? "" : item.endDate })} />
@@ -322,6 +493,13 @@ function validateStep(step: StepId, data: CvData): Record<string, string> {
   if (step === "education") {
     for (const item of data.education) {
       const key = `edu-${item.id}`
+      required(`${key}-level`, item.level)
+      if (data.region === "sa") {
+        required(`${key}-province`, item.province)
+        if (item.level === "tertiary") required(`${key}-institutionType`, item.institutionType)
+      } else {
+        required(`${key}-country`, item.country)
+      }
       required(`${key}-type`, item.type)
       required(`${key}-qualification`, item.qualification)
       required(`${key}-institution`, item.institution)
@@ -373,7 +551,11 @@ function buildCvMessage(data: CvData): string {
     splitLines(role.responsibilities).forEach((line) => lines.push(`- ${line}`))
   })
   data.education.forEach((item, index) => {
-    lines.push(`\nEducation ${index + 1}: ${item.qualification} (${item.type}) at ${item.institution}`)
+    const typeSuffix = item.level !== "school" && item.type && item.type !== item.qualification ? ` (${item.type})` : ""
+    lines.push(`\nEducation ${index + 1}: ${item.qualification}${typeSuffix} at ${item.institution}`)
+    add("Level", item.level === "school" ? "School" : item.level === "tertiary" ? "Tertiary" : "Other training")
+    add(data.region === "sa" ? "Province" : "Country", data.region === "sa" ? item.province : item.country)
+    add("Institution type", item.institutionType)
     lines.push(dateRange(item.startDate, item.endDate, item.current, "Studying"))
     add("Notes", item.notes)
   })
@@ -393,6 +575,8 @@ export function CvTool() {
   const [shakeCount, setShakeCount] = useState(0)
   const [notice, setNotice] = useState<string | null>(null)
   const idCounter = useRef(100)
+  const sa = data.region === "sa"
+  const townData = useSaTowns(sa ? data.province : "")
   const takeId = () => {
     idCounter.current += 1
     return idCounter.current
@@ -446,8 +630,6 @@ export function CvTool() {
   }
 
   const addUnique = (list: string[], text: string) => (list.some((item) => item.toLowerCase() === text.toLowerCase()) ? list : [...list, text])
-  const thisMonth = todayValue("month")
-  const sa = data.region === "sa"
 
   const whatsappHref = waChatLink("CV Writing / CV Typing", buildCvMessage(data))
 
@@ -482,14 +664,42 @@ export function CvTool() {
                 <CvCard title="Your details" subtitle="Start with the basics. Fields marked * are required.">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <TextField id="fullName" label="Full name" value={data.fullName} onChange={(value) => set("fullName", value)} placeholder="Your first name and surname" required />
-                    <TextField id="professionalTitle" label="Professional title" value={data.professionalTitle} onChange={(value) => set("professionalTitle", value)} placeholder="e.g. Office Administrator" hint="The job you are looking for or do best." required />
+                    <SearchableField
+                      errorId="professionalTitle"
+                      id="cv-professionalTitle"
+                      label="Professional title"
+                      value={data.professionalTitle}
+                      onChange={(value) => set("professionalTitle", value)}
+                      options={JOB_TITLE_SUGGESTIONS}
+                      allowCustom
+                      required
+                      placeholder="Search a job title"
+                      searchPlaceholder="Type a job title…"
+                      hint="The job you are looking for or do best. Pick a common title or type your own."
+                    />
                     <TextField id="phone" label="Phone number" value={data.phone} onChange={(value) => set("phone", value)} placeholder="A number employers can reach you on" type="tel" inputMode="tel" required />
                     <TextField id="email" label="Email address" value={data.email} onChange={(value) => set("email", value)} placeholder="name@example.com" type="email" inputMode="email" />
-                    <TextField id="city" label="Town or city" value={data.city} onChange={(value) => set("city", value)} placeholder="Where you live" />
+                    {sa ? (
+                      <SearchableField
+                        errorId="city"
+                        id="cv-city"
+                        label="Town or city"
+                        value={data.city}
+                        onChange={(value) => set("city", value)}
+                        options={townData.options}
+                        loading={townData.loading}
+                        allowCustom
+                        placeholder="Search a town or city"
+                        searchPlaceholder="Type a town or city…"
+                        hint={townData.error ?? "Pick a town in your province, or type your own."}
+                      />
+                    ) : (
+                      <TextField id="city" label="Town or city" value={data.city} onChange={(value) => set("city", value)} placeholder="Where you live" />
+                    )}
                     {sa ? (
                       <SelectField id="province" label="Province" value={data.province} onChange={(value) => set("province", value)} options={PROVINCES} />
                     ) : (
-                      <TextField id="country" label="Country" value={data.country} onChange={(value) => set("country", value)} placeholder="Where you live" />
+                      <SelectField id="country" label="Country" value={data.country} onChange={(value) => set("country", value)} options={COUNTRY_OPTIONS} />
                     )}
                     <TextField id="website" label="LinkedIn or portfolio" value={data.website} onChange={(value) => set("website", value)} placeholder="Optional link" />
                     {sa && (
@@ -497,8 +707,8 @@ export function CvTool() {
                         <SelectField id="driverLicense" label="Driver's licence" value={data.driverLicense} onChange={(value) => set("driverLicense", value)} options={LICENCES} />
                         <TextField id="idNumber" label="ID number" value={data.idNumber} onChange={(value) => set("idNumber", value)} placeholder="13-digit ID number (optional)" hint="Only add this if the employer asks for it." inputMode="numeric" />
                         <DateField id="dateOfBirth" label="Date of birth" mode="day" value={data.dateOfBirth} onChange={(value) => set("dateOfBirth", value)} max={todayValue("day")} initialView="1995-01" hint="Optional" />
-                        <TextField id="nationality" label="Nationality" value={data.nationality} onChange={(value) => set("nationality", value)} placeholder="Country of citizenship (optional)" />
-                        <SelectField id="maritalStatus" label="Marital status" value={data.maritalStatus} onChange={(value) => set("maritalStatus", value)} options={MARITAL} />
+                        <SelectField id="nationality" label="Nationality" value={data.nationality} onChange={(value) => set("nationality", value)} options={COUNTRY_OPTIONS} />
+                        <SelectField id="maritalStatus" label="Marital status" value={data.maritalStatus} onChange={(value) => set("maritalStatus", value)} options={MARITAL_STATUS} />
                       </>
                     )}
                     <TextField span2 multiline required id="profile" label="About me" value={data.profile} onChange={(value) => set("profile", value)} placeholder="Who you are, what you do best and the role you want." hint="Two to four sentences. Be specific and honest." />
@@ -557,9 +767,9 @@ export function CvTool() {
               {step === "skills" && (
                 <CvCard title="Skills and more" subtitle="Add one item at a time and tap Add (or press Enter).">
                   <div className="grid gap-6 sm:grid-cols-2">
-                    <ChipField id="skills" label="Skills" required placeholder="One skill, e.g. Customer service" hint="Add skills you can honestly demonstrate." chips={data.skills} onAdd={(text) => set("skills", addUnique(data.skills, text))} onRemove={(index) => set("skills", data.skills.filter((_, i) => i !== index))} />
-                    <ChipField id="languages" label="Languages" placeholder="One language" levels={LANGUAGE_LEVELS} chips={data.languages.map((item) => `${item.name} — ${item.level}`)} onAdd={(text, level) => set("languages", data.languages.some((item) => item.name.toLowerCase() === text.toLowerCase()) ? data.languages : [...data.languages, { name: text, level }])} onRemove={(index) => set("languages", data.languages.filter((_, i) => i !== index))} />
-                    <ChipField id="certifications" label="Certificates and short courses" placeholder="One certificate or course" hint="Optional. You can add the year in brackets." chips={data.certifications} onAdd={(text) => set("certifications", addUnique(data.certifications, text))} onRemove={(index) => set("certifications", data.certifications.filter((_, i) => i !== index))} />
+                    <ChipField id="skills" label="Skills" required placeholder="One skill, e.g. Customer service" hint="Add skills you can honestly demonstrate. Start typing for suggestions." suggestions={SKILL_SUGGESTIONS} chips={data.skills} onAdd={(text) => set("skills", addUnique(data.skills, text))} onRemove={(index) => set("skills", data.skills.filter((_, i) => i !== index))} />
+                    <ChipField id="languages" label="Languages" placeholder="One language" levels={LANGUAGE_LEVELS} suggestions={LANGUAGE_SUGGESTIONS} chips={data.languages.map((item) => `${item.name} — ${item.level}`)} onAdd={(text, level) => set("languages", data.languages.some((item) => item.name.toLowerCase() === text.toLowerCase()) ? data.languages : [...data.languages, { name: text, level }])} onRemove={(index) => set("languages", data.languages.filter((_, i) => i !== index))} />
+                    <ChipField id="certifications" label="Certificates and short courses" placeholder="One certificate or course" hint="Optional. Start typing for common certificates, or add your own." suggestions={CERTIFICATION_SUGGESTIONS} chips={data.certifications} onAdd={(text) => set("certifications", addUnique(data.certifications, text))} onRemove={(index) => set("certifications", data.certifications.filter((_, i) => i !== index))} />
                     <div className="sm:col-span-2">
                       <CheckField label="References available on request" checked={data.refsOnRequest} onChange={(checked) => set("refsOnRequest", checked)} />
                       {!data.refsOnRequest && (
